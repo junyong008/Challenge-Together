@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 도형 생성 / shape 속성에서 padding / shape 설정-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:shape="rectangle">
+    <!-- 배경 색 설정 / 제가 color에 지정한 색입니다 ㅎㅎ -->
+    <gradient
+        android:angle="62"
+        android:endColor="#F7CE68"
+        android:startColor="#FBAB7E"
+        android:type="linear"/>
+    <!-- 모서리 곡선 설정 : topLeftRadius, topRightRadius는 제외-->
+    <corners
+        android:bottomLeftRadius="20dp"
+        android:bottomRightRadius="20dp"/>
+    <!-- 선 크기 및 색 지정  -->
+    <stroke
+        android:width="0dp"
+        android:color="#FFFF" />
+</shape>

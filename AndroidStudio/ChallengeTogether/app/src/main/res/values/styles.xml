@@ -1,0 +1,61 @@
+<resources>
+    <style name="Widget.Theme.ChallengeTogether.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.Theme.ChallengeTogether.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
+
+
+    <!-- change font of bottom nav : activity_mainpage.xml -->
+    <style name="BottomNavigationViewTextStyle">
+        <item name="android:fontFamily">@font/fontstyle_culture</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+
+    <!-- customtoast : https://github.com/Muddz/StyleableToast -->
+    <style name="exampletoast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#fff</item>
+        <!-- <item name="stFont">@font/retrofont</item> -->
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">#fff</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#fff</item>
+        <item name="stIconStart">@drawable/ic_success</item>
+        <item name="stIconEnd">@drawable/ic_success</item>
+        <item name="stLength">LONG</item> LONG or SHORT
+        <item name="stGravity">top</item> top or center
+        <item name="stRadius">5dp</item>
+    </style>
+
+    <style name="errorToast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#FFFFFF</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">#000000</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#000000</item>
+        <item name="stIconStart">@drawable/ic_error</item>
+        <item name="stLength">LONG</item> LONG or SHORT
+        <item name="stRadius">10dp</item>
+    </style>
+
+    <style name="successToast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#FFFFFF</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">#000000</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#000000</item>
+        <item name="stIconStart">@drawable/ic_success</item>
+        <item name="stLength">LONG</item> LONG or SHORT
+        <item name="stRadius">10dp</item>
+    </style>
+
+    <!--ffcc00는 노랑 경고표시 추후 필요하면 추가 -->
+</resources>
