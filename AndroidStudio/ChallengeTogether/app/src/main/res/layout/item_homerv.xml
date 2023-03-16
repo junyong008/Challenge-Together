@@ -41,7 +41,7 @@
                 android:gravity="center_vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toEndOf="@+id/imageView_icon"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -72,13 +72,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_pawprint" />
 
-            <ProgressBar
+            <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/progressBar_percent"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="5dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="4dp"
+                app:donut_circle_starting_degree="270"
+                app:donut_finished_color="@color/main_theme"
+                app:donut_finished_stroke_width="5dp"
+                app:donut_progress="100"
+                app:donut_show_text="false"
+                app:donut_unfinished_color="#f5f5f5"
+                app:donut_unfinished_stroke_width="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView_time"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -95,18 +101,34 @@
                 app:layout_constraintTop_toTopOf="@+id/progressBar_percent" />
 
             <TextView
+                android:id="@+id/textView_usernum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="4dp"
+                android:drawableLeft="@drawable/ic_people"
+                android:visibility="invisible"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/fontstyle_culture"
+                android:gravity="center"
+                android:text="1 / 4"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/textView_time"
                 android:layout_width="match_parent"
                 android:layout_height="39dp"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/button_round"
+                android:drawableLeft="@drawable/ic_timer"
+                android:drawablePadding="10dp"
                 android:fontFamily="@font/fontstyle_culture"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:drawableLeft="@drawable/ic_timer"
-                android:textColor="#FFFFFF"
-                android:drawablePadding="10dp"
                 android:text="15일 14시간 4분 23초"
+                android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"

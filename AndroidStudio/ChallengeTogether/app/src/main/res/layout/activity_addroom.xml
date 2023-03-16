@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_theme"
-    tools:context=".activity.PostroomActivity">
+    tools:context=".activity.AddRoomActivity">
 
     <TextView
         android:id="@+id/textView_background"

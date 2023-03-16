@@ -1,6 +1,7 @@
 package com.yjy.challengetogether.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
+import com.yjy.challengetogether.util.CustomProgressDialog;
 import com.yjy.challengetogether.util.HttpAsyncTask;
 import com.yjy.challengetogether.util.Util;
 
@@ -25,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tbutton_signup;
     private TextView tbutton_findpwd;
     private com.yjy.challengetogether.util.Util util = new Util(LoginActivity.this);
+    private CustomProgressDialog customProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
         tbutton_signup = findViewById(R.id.tbutton_signup);
         tbutton_findpwd = findViewById(R.id.tbutton_findpwd);
 
+        // 진행 프로그레스 시작
+        customProgressDialog = new CustomProgressDialog(LoginActivity.this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        customProgressDialog.show();
 
         // 스토리지에서 세션키를 받아오고, 세션키가 서버에 유효하면 바로 메인페이지 입성
         String SessionKeyFromStorage = util.getSessionKey();
@@ -54,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         // 세션키는 스토리지에 있으나 서버에서 더이상 유효하지 않은 경우 스토리지에서 세션키 삭제
                         util.saveSessionKey("");
+                        customProgressDialog.dismiss();
                         StyleableToast.makeText(LoginActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
                         return;
                     }
@@ -65,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
             String postParameters = "service=";
 
             checkSessionTask.execute(phpFile, postParameters, SessionKeyFromStorage);
+        } else {
+            customProgressDialog.dismiss();
         }
 
         // 로그인 버튼 클릭

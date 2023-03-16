@@ -19,7 +19,7 @@
             android:theme="@style/AppCompatDialogTheme"
             android:exported="false" />
         <activity
-            android:name=".activity.PostroomActivity"
+            android:name=".activity.AddRoomActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ChangepwdActivity"

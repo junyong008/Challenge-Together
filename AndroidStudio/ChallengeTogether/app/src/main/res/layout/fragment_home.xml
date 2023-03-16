@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".fragment.HomeFragment">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/ScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,7 +82,6 @@
                     android:fontFamily="@font/fontstyle_culture"
                     android:gravity="center"
                     android:lineSpacingExtra="-8dp"
-                    android:text="준용"
                     android:textColor="@color/black"
                     android:textSize="25sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -196,13 +195,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_mychallenges"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/textView_mychallengetitle"
                 tools:layout_editor_absoluteX="0dp" />
@@ -236,7 +235,7 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

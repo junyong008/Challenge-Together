@@ -25,7 +25,7 @@ import com.yjy.challengetogether.util.Util;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
-public class PostroomActivity extends AppCompatActivity {
+public class AddRoomActivity extends AppCompatActivity {
 
     private ImageButton ibutton_close;
     private EditText edit_title;
@@ -40,7 +40,7 @@ public class PostroomActivity extends AppCompatActivity {
     private HorizontalQuantitizer hq_particicount;
     private EditText edit_passwd;
     private Button postroom;
-    private com.yjy.challengetogether.util.Util util = new Util(PostroomActivity.this);
+    private com.yjy.challengetogether.util.Util util = new Util(AddRoomActivity.this);
 
 
     @Override
@@ -52,7 +52,7 @@ public class PostroomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_postroom);
+        setContentView(R.layout.activity_addroom);
 
         ibutton_close = findViewById(R.id.ibutton_close);
         edit_title = findViewById(R.id.edit_title);
@@ -80,7 +80,7 @@ public class PostroomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 리스트뷰 액티비티를 다이얼로그 형식으로 띄운다.
-                Intent intent = new Intent(PostroomActivity.this, SelecticonActivity.class);
+                Intent intent = new Intent(AddRoomActivity.this, SelecticonActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_DIALOG_ACTIVITY);
             }
         });
@@ -136,9 +136,9 @@ public class PostroomActivity extends AppCompatActivity {
                 // 아이콘을 따로 안정했으면 트로피
                 String postIcon;
                 if (TextUtils.isEmpty(outputIcon)) {
-                    postIcon = outputIcon;
-                } else {
                     postIcon = "ic_trop";
+                } else {
+                    postIcon = outputIcon;
                 }
 
                 // 내용이 비어있을 경우, 제목을 내용으로
@@ -166,11 +166,11 @@ public class PostroomActivity extends AppCompatActivity {
 
                 // 예외 처리
                 if (TextUtils.isEmpty(postTitle) || TextUtils.isEmpty(postTargetday)) {
-                    StyleableToast.makeText(PostroomActivity.this, "제목과 목표일은 필수로 입력해 주세요.", R.style.errorToast).show();
+                    StyleableToast.makeText(AddRoomActivity.this, "제목과 목표일은 필수로 입력해 주세요.", R.style.errorToast).show();
                     return;
                 }
                 if (Integer.parseInt(postTargetday) == 0) {
-                    StyleableToast.makeText(PostroomActivity.this, "목표일은 최소 1일 이상으로 설정해주세요.", R.style.errorToast).show();
+                    StyleableToast.makeText(AddRoomActivity.this, "목표일은 최소 1일 이상으로 설정해주세요.", R.style.errorToast).show();
                     return;
                 }
 
@@ -182,10 +182,14 @@ public class PostroomActivity extends AppCompatActivity {
 
                         if (result.indexOf("ADD SUCCESS") != -1) {
                             // StyleableToast.makeText(PostroomActivity.this, "로그인 성공", R.style.successToast).show();
+                            // 로그인 액티비티 실행 후 그 외 모두 삭제
+                            Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
                             finish();
                             overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
                         } else if (result.indexOf("NO SESSION") != -1) {
-                            StyleableToast.makeText(PostroomActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
+                            StyleableToast.makeText(AddRoomActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
 
                             // 로그인 액티비티 실행 후 그 외 모두 삭제
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -193,13 +197,13 @@ public class PostroomActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            StyleableToast.makeText(PostroomActivity.this, result, R.style.errorToast).show();
+                            StyleableToast.makeText(AddRoomActivity.this, result, R.style.errorToast).show();
                             return;
                         }
                     }
                 };
 
-                HttpAsyncTask addRoomTask = new HttpAsyncTask(PostroomActivity.this, onAddRoomTaskCompleted);
+                HttpAsyncTask addRoomTask = new HttpAsyncTask(AddRoomActivity.this, onAddRoomTaskCompleted);
                 String phpFile = "service.php";
                 String postParameters = "service=addroom&roomtitle=" + postTitle + "&roomcontent=" + postContent + "&roomicon=" + postIcon + "&targetperiod=" + postTargetday + "&maxparticipant=" + postMaxperson + "&roompwd=" + postPwd;
 
