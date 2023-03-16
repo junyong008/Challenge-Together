@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".SignupActivity"
+    tools:context=".activity.SignupActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="82dp">
 
     <ImageView
-        android:id="@+id/signup_back"
+        android:id="@+id/ivbutton_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -37,7 +37,7 @@
 
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/fontstyle_culture"
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/signup_id"
+            android:id="@+id/edit_email"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_gravity="center"
@@ -62,10 +62,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
-            android:id="@+id/signup_pwd"
+            android:id="@+id/edit_pwd"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_gravity="center"
@@ -78,10 +78,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signup_id" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_email" />
 
         <EditText
-            android:id="@+id/signup_pwd2"
+            android:id="@+id/edit_pwdcheck"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_gravity="center"
@@ -94,11 +94,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signup_pwd" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_pwd" />
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/signup_button"
+            android:id="@+id/button_signup"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -111,7 +111,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signup_pwd2" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_pwdcheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient"
     android:theme="@style/ThemeOverlay.ChallengeTogether.FullscreenContainer"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity">
 
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView"
         android:layout_width="260dp"
         android:layout_height="137dp"
         android:layout_gravity="center_horizontal"
@@ -30,10 +30,10 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4">
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <EditText
-            android:id="@+id/login_id"
+            android:id="@+id/edit_email"
 
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -50,7 +50,7 @@
             android:text="" />
 
         <EditText
-            android:id="@+id/login_pw"
+            android:id="@+id/edit_pw"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -64,7 +64,7 @@
             android:paddingLeft="15dp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/login_submit"
+            android:id="@+id/button_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -85,7 +85,7 @@
             android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/login_findpasswd"
+                android:id="@+id/tbutton_findpwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -105,7 +105,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/login_signin"
+                android:id="@+id/tbutton_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

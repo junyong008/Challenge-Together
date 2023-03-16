@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChangepwdActivity">
+    tools:context=".activity.ChangepwdActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -37,7 +37,7 @@
         app:layout_constraintVertical_bias="0.49" />
 
     <EditText
-        android:id="@+id/changepwd_pwd"
+        android:id="@+id/edit_changepwd"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="center"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/changepwd_pwdcheck"
+        android:id="@+id/edit_changepwdcheck"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="center"
@@ -72,10 +72,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changepwd_pwd" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_changepwd" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/changepwd_button"
+        android:id="@+id/button_changepwd"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -90,12 +90,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changepwd_pwdcheck" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_changepwdcheck" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="399dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

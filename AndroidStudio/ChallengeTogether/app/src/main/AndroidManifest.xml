@@ -15,36 +15,40 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".PostroomActivity"
+            android:name=".activity.SelecticonActivity"
+            android:theme="@style/AppCompatDialogTheme"
             android:exported="false" />
         <activity
-            android:name=".ChangepwdActivity"
+            android:name=".activity.PostroomActivity"
             android:exported="false" />
         <activity
-            android:name=".CheckVerifyCodeActivity"
+            android:name=".activity.ChangepwdActivity"
             android:exported="false" />
         <activity
-            android:name=".FindpwdActivity"
+            android:name=".activity.CheckVerifyCodeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainpageActivity"
+            android:name=".activity.FindpwdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainpageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/title_activity_mainpage"
             android:theme="@style/Theme.ChallengeTogether.Fullscreen" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".activity.SignupActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/title_activity_signup"
             android:theme="@style/Theme.ChallengeTogether.Fullscreen" />
         <activity
-            android:name=".SignupActivity2"
+            android:name=".activity.SignupActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:theme="@style/Theme.ChallengeTogether.Fullscreen" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:label="@string/title_activity_login"

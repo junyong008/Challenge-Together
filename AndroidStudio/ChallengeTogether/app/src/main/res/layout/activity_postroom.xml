@@ -5,10 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_theme"
-    tools:context=".PostroomActivity">
+    tools:context=".activity.PostroomActivity">
+
+    <TextView
+        android:id="@+id/textView_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="300dp"
+        android:background="@color/white" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout1"
+        android:id="@+id/constraintLayout_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -21,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/home_text"
+            android:id="@+id/textView_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/fontstyle_impact"
@@ -35,75 +42,315 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/postroom_back"
+            android:id="@+id/ibutton_close"
             android:layout_width="36dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/home_text"
+            app:layout_constraintEnd_toStartOf="@+id/textView_title"
             app:layout_constraintHorizontal_bias="0.06"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_close" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="300dp"
-        android:background="@color/white" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/constraintLayout_mainbackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginVertical="90dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="92dp"
-        android:layout_marginBottom="36dp"
+
         android:background="@drawable/edit_round"
         android:elevation="9dp"
+        app:layout_constraintBottom_toTopOf="@+id/postroom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout_title">
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_round_gradient"
-            android:padding="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_pawprint" />
-
-        <EditText
-            android:id="@+id/login_id"
-
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_marginStart="76dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="match_parent">
 
-            android:background="@drawable/edit_round_border"
-            android:drawableLeft="@drawable/ic_mail"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_mainbackground">
 
-            android:layout_gravity="center"
-            android:drawablePadding="10dp"
-            android:ems="10"
-            android:hint="EMAIL"
-            android:inputType="textEmailAddress"
-            android:maxLength="30"
-            android:paddingLeft="15dp"
-            android:text=""
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:text="제목"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <EditText
+                    android:id="@+id/edit_title"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="46dp"
+                    android:layout_marginRight="70dp"
+
+                    android:background="@drawable/edit_round_border"
+                    android:ems="10"
+                    android:maxLength="35"
+                    android:paddingLeft="15dp"
+                    android:text=""
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/ibutton_listoficon"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="46dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/button_round_gradient"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="108dp"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:text="내용"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/edit_content"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="146dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="134dp"
+
+                    android:background="@drawable/edit_round_border"
+                    android:ems="10"
+                    android:hint=""
+                    android:inputType="textMultiLine"
+                    android:maxLength="300"
+                    android:paddingLeft="15dp"
+                    android:text=""
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#e3e3e3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_content" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="29dp"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:text="도전 목표일"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view" />
+
+                <EditText
+                    android:id="@+id/edit_targetday"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginRight="100dp"
+                    android:background="@drawable/edit_round_border"
+                    android:drawableRight="@drawable/ic_days"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:paddingLeft="15dp"
+                    android:paddingEnd="7dp"
+                    android:singleLine="true"
+                    android:text=""
+                    app:layout_constraintEnd_toStartOf="@+id/switch_targetday"
+                    app:layout_constraintStart_toEndOf="@+id/textView5"
+                    app:layout_constraintTop_toBottomOf="@+id/view" />
+
+                <com.github.angads25.toggle.widget.LabeledSwitch
+                    android:id="@+id/switch_targetday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="12sp"
+                    app:colorBorder="@color/main_theme"
+                    app:colorOff="@color/white"
+                    app:colorOn="@color/main_theme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    app:on="true"
+                    app:textOff="무제한"
+                    app:textOn="설정" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#e3e3e3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_targetday" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="13dp"
+                    android:drawableLeft="@drawable/ic_people"
+                    android:drawablePadding="3dp"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:gravity="center"
+                    android:text="같이하기"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_together"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="1dp"
+                    android:text=""
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_together">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/fontstyle_culture"
+                        android:gravity="center_vertical"
+                        android:text="최대 참여 인원수 : "
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/fontstyle_culture"
+                        android:gravity="center_vertical"
+                        android:text=" 명"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toEndOf="@+id/hq_particicount"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <com.mcdev.quantitizerlibrary.HorizontalQuantitizer
+                        android:id="@+id/hq_particicount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="0dp"
+                        app:layout_constraintStart_toEndOf="@+id/textView7"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
+                        android:fontFamily="@font/fontstyle_culture"
+                        android:gravity="center_vertical"
+                        android:text="비밀번호 : "
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/hq_particicount" />
+
+                    <EditText
+                        android:id="@+id/edit_passwd"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="62dp"
+                        android:layout_marginTop="5dp"
+
+                        android:background="@drawable/edit_round_border"
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:maxLength="10"
+                        android:paddingLeft="15dp"
+                        android:text=""
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/hq_particicount" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/postroom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="9dp"
+        android:background="@drawable/button_round"
+        android:fontFamily="@font/fontstyle_culture"
+        android:src="@drawable/ic_circleadd"
+        android:text="생성하기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

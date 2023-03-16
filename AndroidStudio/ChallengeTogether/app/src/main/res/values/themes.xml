@@ -15,6 +15,14 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+    <style name="AppCompatDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Customize your dialog theme here. -->
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+
     <style name="Theme.ChallengeTogether.Fullscreen" parent="Theme.ChallengeTogether">
         <item name="android:actionBarStyle">
             @style/Widget.Theme.ChallengeTogether.ActionBar.Fullscreen
