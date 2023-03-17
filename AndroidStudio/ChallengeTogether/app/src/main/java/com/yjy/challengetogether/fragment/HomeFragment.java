@@ -1,7 +1,10 @@
 package com.yjy.challengetogether.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.AddRoomActivity;
+import com.yjy.challengetogether.activity.RecordActivity;
 import com.yjy.challengetogether.adapter.HomeFragmentRvAdapter;
 import com.yjy.challengetogether.etc.HomeItem;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
@@ -27,8 +31,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
@@ -38,6 +46,7 @@ public class HomeFragment extends Fragment {
     private String TAG  = "HOME 프레그먼트";
 
 
+    private ImageButton ibutton_moreinfo;
     private TextView textView_nickname;
     private TextView textView_record;
     private RecyclerView recyclerView_mychallenges;
@@ -46,12 +55,14 @@ public class HomeFragment extends Fragment {
     private List<HomeItem> items;
     private ImageButton ibutton_addchallenge;
     private Util util;
+    private Handler mHandler;
 
     @Override
     public void onStop() {
         super.onStop();
         if (adapter != null) {
             adapter.stopUpdatingTime();
+            mHandler.removeCallbacksAndMessages(null);
         }
     }
 
@@ -61,11 +72,13 @@ public class HomeFragment extends Fragment {
         Log.d(TAG, "onCreateView");
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        ibutton_moreinfo = view.findViewById(R.id.ibutton_moreinfo);
         textView_nickname = view.findViewById(R.id.textView_nickname);
         textView_record = view.findViewById(R.id.textView_record);
 
 
         util = new Util(requireActivity());
+
 
         ibutton_addchallenge = view.findViewById(R.id.ibutton_addchallenge);
         recyclerView_mychallenges = view.findViewById(R.id.recyclerView_mychallenges);
@@ -85,7 +98,7 @@ public class HomeFragment extends Fragment {
                         String userName = obj1.getString("NAME");
                         String userBest = obj1.getString("BESTTIME");
                         textView_nickname.setText(userName);
-                        textView_record.setText(userBest);
+                        textView_record.setText(secondsToDHMS(Integer.parseInt(userBest)));
 
                         // 방이 없으면 리턴
                         if (!result.contains("roomList")) {
@@ -110,6 +123,25 @@ public class HomeFragment extends Fragment {
                             item.setRoomPasswd(obj2.getString("PASSWD"));
 
                             items.add(item);
+                        }
+
+                        // 리스트중 현재 자신의 최고기록을 갱신한게 있는지 확인
+                        // RecentStartTime 초기값은 "9999-12-31 23:59:59"으로 설정
+                        String oldestRecentStartTime = "9999-12-31 23:59:59";
+                        HomeItem oldestItem = null;
+
+                        // items 배열을 반복하면서 가장 과거의 RecentStartTime 값을 가진 항목을 찾음
+                        for (HomeItem item : items) {
+                            String recentStartTime = item.getRecentStartTime();
+                            if (!recentStartTime.equals("0000-00-00 00:00:00") && recentStartTime.compareTo(oldestRecentStartTime) < 0) {
+                                oldestRecentStartTime = recentStartTime;
+                                oldestItem = item;
+                            }
+                        }
+
+                        // 가장 과거의 RecentStartTime 값을 가진 항목을 찾았으면, 계속해서 비교하며 현재 항목중 기록을 깨는 항목이 있는지 검사
+                        if (oldestItem != null) {
+                            updateTextViewTime(oldestItem.getRecentStartTime(), Integer.parseInt(userBest));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -139,6 +171,19 @@ public class HomeFragment extends Fragment {
 
         loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
 
+
+
+        // 유저 정보 버튼 클릭
+        ibutton_moreinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), RecordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         // 도전 추가 버튼 클릭
         ibutton_addchallenge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,11 +191,80 @@ public class HomeFragment extends Fragment {
                 Log.d("Count", "ADD BUTTON PRESSED");
                 Intent intent = new Intent(getActivity(), AddRoomActivity.class);
                 startActivity(intent);
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
+                // requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
             }
 
         });
 
         return view;
+    }
+
+    private void updateTextViewTime(String oldestDate, int userBest) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date inputTimeDate = null;
+
+        try {
+            inputTimeDate = sdf.parse(oldestDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long currentTimeMillis = System.currentTimeMillis();
+        long inputTimeMillis = inputTimeDate.getTime();
+
+        long diffMillis = currentTimeMillis - inputTimeMillis;
+        long diffSeconds = diffMillis / 1000;
+
+        // 만약 현재 도전 중 가장 높은 참은시간이 유저의 최고기록을 넘는순간
+        if (diffSeconds >= userBest) {
+            textView_record.setTextColor(Color.parseColor("#DC143C"));
+            textView_record.setText(secondsToDHMS(diffSeconds));
+        } else {
+            textView_record.setTextColor(Color.parseColor("#000000"));
+            textView_record.setText(secondsToDHMS(userBest));
+        }
+
+
+        // 1초마다 업데이트
+        if (mHandler == null) {
+            mHandler = new Handler(Looper.getMainLooper());
+        }
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updateTextViewTime(oldestDate, userBest);
+            }
+        }, 1000);
+    }
+
+    private String secondsToDHMS(long intputSeconds) {
+        StringBuilder formattedTime = new StringBuilder();
+
+        long days = intputSeconds / (24 * 60 * 60);
+        intputSeconds %= (24 * 60 * 60);
+
+        if (days > 0) {
+            formattedTime.append(days).append(" DAYS ");
+        }
+
+        long hours = intputSeconds / (60 * 60);
+        intputSeconds %= (60 * 60);
+
+        if (hours > 0) {
+            formattedTime.append(hours).append(" HRS\n");
+        }
+
+        long minutes = intputSeconds / 60;
+        intputSeconds %= 60;
+
+        if (minutes > 0) {
+            formattedTime.append(minutes).append(" MINS ");
+        }
+
+
+        long seconds = intputSeconds;
+        formattedTime.append(seconds).append(" SECS");
+
+        return formattedTime.toString().trim();
     }
 }
