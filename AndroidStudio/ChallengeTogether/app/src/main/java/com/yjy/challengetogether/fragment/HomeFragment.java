@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.AddRoomActivity;
+import com.yjy.challengetogether.activity.LoginActivity;
 import com.yjy.challengetogether.activity.RecordActivity;
 import com.yjy.challengetogether.adapter.HomeFragmentRvAdapter;
 import com.yjy.challengetogether.etc.HomeItem;
@@ -46,6 +48,7 @@ public class HomeFragment extends Fragment {
     private String TAG  = "HOME 프레그먼트";
 
 
+    private ImageView imageView_grade;
     private ImageButton ibutton_moreinfo;
     private TextView textView_nickname;
     private TextView textView_record;
@@ -58,10 +61,12 @@ public class HomeFragment extends Fragment {
     private Handler mHandler;
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         if (adapter != null) {
             adapter.stopUpdatingTime();
+        }
+        if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
         }
     }
@@ -72,6 +77,7 @@ public class HomeFragment extends Fragment {
         Log.d(TAG, "onCreateView");
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        imageView_grade = view.findViewById(R.id.imageView_grade);
         ibutton_moreinfo = view.findViewById(R.id.ibutton_moreinfo);
         textView_nickname = view.findViewById(R.id.textView_nickname);
         textView_record = view.findViewById(R.id.textView_record);
@@ -96,9 +102,31 @@ public class HomeFragment extends Fragment {
                         // 전달받은 JSON에서 userInfo 부분만 추출 ( 이름, 최대기록 )
                         JSONObject obj1 = new JSONObject(jsonObject.getString("userInfo"));
                         String userName = obj1.getString("NAME");
-                        String userBest = obj1.getString("BESTTIME");
+                        long userBest = obj1.getLong("BESTTIME");
                         textView_nickname.setText(userName);
-                        textView_record.setText(secondsToDHMS(Integer.parseInt(userBest)));
+                        textView_record.setText(util.secondsToDHMS(userBest, "DHMS"));
+
+                        // 등급별 초(second) 값을 상수로 정의
+                        final int BRONZE_SECONDS = 0;
+                        final long SILVER_SECONDS = 604800;
+                        final int GOLD_SECONDS = 2592000;
+                        final int PLATINUM_SECONDS = 7776000;
+                        final int DIAMOND_SECONDS = 15552000;
+                        final int MASTER_SECONDS = 31536000;
+
+                        if (userBest >= MASTER_SECONDS) {
+                            imageView_grade.setImageResource(R.drawable.ic_master);
+                        } else if (userBest >= DIAMOND_SECONDS) {
+                            imageView_grade.setImageResource(R.drawable.ic_diamond);
+                        } else if (userBest >= PLATINUM_SECONDS) {
+                            imageView_grade.setImageResource(R.drawable.ic_platinum);
+                        } else if (userBest >= GOLD_SECONDS) {
+                            imageView_grade.setImageResource(R.drawable.ic_gold);
+                        } else if (userBest >= SILVER_SECONDS) {
+                            imageView_grade.setImageResource(R.drawable.ic_silver);
+                        } else {
+                            imageView_grade.setImageResource(R.drawable.ic_bronze);
+                        }
 
                         // 방이 없으면 리턴
                         if (!result.contains("roomList")) {
@@ -141,7 +169,7 @@ public class HomeFragment extends Fragment {
 
                         // 가장 과거의 RecentStartTime 값을 가진 항목을 찾았으면, 계속해서 비교하며 현재 항목중 기록을 깨는 항목이 있는지 검사
                         if (oldestItem != null) {
-                            updateTextViewTime(oldestItem.getRecentStartTime(), Integer.parseInt(userBest));
+                            updateTextViewTime(oldestItem.getRecentStartTime(), userBest);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -156,8 +184,14 @@ public class HomeFragment extends Fragment {
                     adapter = new HomeFragmentRvAdapter(getActivity().getApplication(), items);
                     recyclerView_mychallenges.setAdapter(adapter);
 
-                } else if (result.indexOf("ROOM NOT FOUND") != -1) {
-                    StyleableToast.makeText(getActivity(), result, R.style.errorToast).show();
+                } else if (result.indexOf("NO SESSION") != -1) {
+                    StyleableToast.makeText(getActivity(), "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
+
+                    // 로그인 액티비티 실행 후 그 외 모두 삭제
+                    Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    getActivity().finish();
                 } else {
                     StyleableToast.makeText(getActivity(), result, R.style.errorToast).show();
                     return;
@@ -179,9 +213,9 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
-
 
 
         // 도전 추가 버튼 클릭
@@ -191,6 +225,7 @@ public class HomeFragment extends Fragment {
                 Log.d("Count", "ADD BUTTON PRESSED");
                 Intent intent = new Intent(getActivity(), AddRoomActivity.class);
                 startActivity(intent);
+                getActivity().finish();
                 // requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
             }
 
@@ -199,7 +234,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void updateTextViewTime(String oldestDate, int userBest) {
+    private void updateTextViewTime(String oldestDate, long userBest) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date inputTimeDate = null;
 
@@ -218,10 +253,10 @@ public class HomeFragment extends Fragment {
         // 만약 현재 도전 중 가장 높은 참은시간이 유저의 최고기록을 넘는순간
         if (diffSeconds >= userBest) {
             textView_record.setTextColor(Color.parseColor("#DC143C"));
-            textView_record.setText(secondsToDHMS(diffSeconds));
+            textView_record.setText(util.secondsToDHMS(diffSeconds, "DHMS"));
         } else {
             textView_record.setTextColor(Color.parseColor("#000000"));
-            textView_record.setText(secondsToDHMS(userBest));
+            textView_record.setText(util.secondsToDHMS(userBest, "DHMS"));
         }
 
 
@@ -237,34 +272,4 @@ public class HomeFragment extends Fragment {
         }, 1000);
     }
 
-    private String secondsToDHMS(long intputSeconds) {
-        StringBuilder formattedTime = new StringBuilder();
-
-        long days = intputSeconds / (24 * 60 * 60);
-        intputSeconds %= (24 * 60 * 60);
-
-        if (days > 0) {
-            formattedTime.append(days).append(" DAYS ");
-        }
-
-        long hours = intputSeconds / (60 * 60);
-        intputSeconds %= (60 * 60);
-
-        if (hours > 0) {
-            formattedTime.append(hours).append(" HRS\n");
-        }
-
-        long minutes = intputSeconds / 60;
-        intputSeconds %= 60;
-
-        if (minutes > 0) {
-            formattedTime.append(minutes).append(" MINS ");
-        }
-
-
-        long seconds = intputSeconds;
-        formattedTime.append(seconds).append(" SECS");
-
-        return formattedTime.toString().trim();
-    }
 }
