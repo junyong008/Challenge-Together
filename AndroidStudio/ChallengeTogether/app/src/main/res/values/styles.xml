@@ -16,21 +16,7 @@
     </style>
 
     <!-- customtoast : https://github.com/Muddz/StyleableToast -->
-    <style name="exampletoast">
-        <item name="stTextBold">true</item>
-        <item name="stTextColor">#fff</item>
-        <!-- <item name="stFont">@font/retrofont</item> -->
-        <item name="stTextSize">14sp</item>
-        <item name="stColorBackground">#fff</item>
-        <item name="stSolidBackground">true</item>
-        <item name="stStrokeWidth">3dp</item>
-        <item name="stStrokeColor">#fff</item>
-        <item name="stIconStart">@drawable/ic_success</item>
-        <item name="stIconEnd">@drawable/ic_success</item>
-        <item name="stLength">LONG</item> LONG or SHORT
-        <item name="stGravity">top</item> top or center
-        <item name="stRadius">5dp</item>
-    </style>
+
 
     <style name="errorToast">
         <item name="stTextBold">true</item>
