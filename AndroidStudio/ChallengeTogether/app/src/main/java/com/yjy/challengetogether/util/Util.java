@@ -76,4 +76,30 @@ public class Util extends Application {
         }
         return true;
     }
+
+    /** 시간(초)를 nDAYS nHRS nMINS nSECS 형식으로 변환 */
+    public String secondsToDHMS(long intputSeconds, String Type) {
+        StringBuilder formattedTime = new StringBuilder();
+
+        long days = intputSeconds / (24 * 60 * 60);
+        intputSeconds %= (24 * 60 * 60);
+        formattedTime.append(days).append(" DAYS ");
+
+        long hours = intputSeconds / (60 * 60);
+        intputSeconds %= (60 * 60);
+        formattedTime.append(hours).append(" HRS\n");
+
+
+        if (Type.indexOf("DHMS") != -1) {
+            long minutes = intputSeconds / 60;
+            intputSeconds %= 60;
+            formattedTime.append(minutes).append(" MINS ");
+
+
+            long seconds = intputSeconds;
+            formattedTime.append(seconds).append(" SECS");
+        }
+
+        return formattedTime.toString().trim();
+    }
 }

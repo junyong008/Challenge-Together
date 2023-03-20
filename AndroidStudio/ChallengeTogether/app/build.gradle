@@ -41,7 +41,8 @@ dependencies {
         }
     }
 
-    implementation 'com.github.lzyzsd:circleprogress:1.2.1'
+    implementation 'com.akexorcist:round-corner-progress-bar:2.1.2' // 커스텀 프로그레스
+    implementation 'com.github.lzyzsd:circleprogress:1.2.1' // 커스텀 동그란 프로그레스
     implementation "com.github.kojofosu:Quantitizer:1.6.8" // 커스텀 넘버피커
     implementation 'com.github.angads25:toggle:1.1.0'   // 커스텀 스위치
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc03"    // 리사이클러뷰

@@ -15,9 +15,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.SelecticonActivity"
-            android:theme="@style/AppCompatDialogTheme"
+            android:name=".activity.RecordActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.SelecticonActivity"
+            android:exported="false"
+            android:theme="@style/AppCompatDialogTheme" />
         <activity
             android:name=".activity.AddRoomActivity"
             android:exported="false" />
@@ -59,6 +62,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.yjy.challengetogether.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>
