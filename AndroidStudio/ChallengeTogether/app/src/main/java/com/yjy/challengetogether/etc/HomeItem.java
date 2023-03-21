@@ -2,8 +2,18 @@ package com.yjy.challengetogether.etc;
 
 public class HomeItem {
 
-    private String icon, title, content, recentstarttime, currentusernum, maxusernum, roompasswd;
+    private String roomidx, icon, title, content, recentstarttime, currentusernum, maxusernum, roompasswd;
     private long endtime;
+
+
+    public String getRoomidx() {
+        return roomidx;
+    }
+
+    public void setRoomidx(String roomidx) {
+        this.roomidx = roomidx;
+    }
+
     public String getIcon() {
         return icon;
     }

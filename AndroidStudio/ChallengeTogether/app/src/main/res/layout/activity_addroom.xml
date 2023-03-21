@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="300dp"
-        android:background="@color/white" />
+        android:background="@drawable/bg_topround" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/edit_round"
@@ -31,10 +31,11 @@
             android:id="@+id/textView_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/fontstyle_impact"
-            android:text="NEW CHALLENGE"
+            android:fontFamily="@font/fontstyle_culture"
+            android:text="새로운 챌린지"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="28sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -47,9 +48,9 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView_title"
-            app:layout_constraintHorizontal_bias="0.06"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.94"
+            app:layout_constraintStart_toEndOf="@+id/textView_title"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_close" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -64,7 +65,7 @@
 
         android:background="@drawable/edit_round"
         android:elevation="9dp"
-        app:layout_constraintBottom_toTopOf="@+id/postroom"
+        app:layout_constraintBottom_toTopOf="@+id/button_addroom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -338,7 +339,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/postroom"
+        android:id="@+id/button_addroom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
@@ -347,7 +348,6 @@
         android:elevation="9dp"
         android:background="@drawable/button_round"
         android:fontFamily="@font/fontstyle_culture"
-        android:src="@drawable/ic_circleadd"
         android:text="생성하기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,6 +1,7 @@
 package com.yjy.challengetogether.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.yjy.challengetogether.R;
+import com.yjy.challengetogether.activity.ReadyRoomActivity;
 import com.yjy.challengetogether.etc.HomeItem;
 
 import java.text.ParseException;
@@ -24,8 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import io.github.muddz.styleabletoast.StyleableToast;
 
 public class HomeFragmentRvAdapter extends RecyclerView.Adapter<HomeFragmentRvAdapter.CustomViewHolder> {
 
@@ -77,7 +77,12 @@ public class HomeFragmentRvAdapter extends RecyclerView.Adapter<HomeFragmentRvAd
             @Override
             public void onClick(View v) {
                 // CardView가 클릭되었을 때 실행할 코드
-                StyleableToast.makeText(holder.itemView.getContext(), item.getTitle(), R.style.successToast).show();
+                String roomIdx = item.getRoomidx();
+                Intent intent = new Intent(holder.itemView.getContext(), ReadyRoomActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("roomidx", roomIdx);
+                intent.putExtra("befoActivity", "HomeFragment");
+                holder.itemView.getContext().startActivity(intent);
             }
         });
 

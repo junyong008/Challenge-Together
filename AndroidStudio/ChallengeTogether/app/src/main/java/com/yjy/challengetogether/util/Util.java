@@ -1,8 +1,17 @@
 package com.yjy.challengetogether.util;
 
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.yjy.challengetogether.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -101,5 +110,43 @@ public class Util extends Application {
         }
 
         return formattedTime.toString().trim();
+    }
+
+
+    public interface OnConfirmListener {
+        void onConfirm(boolean isConfirmed);
+    }
+
+    public void showCustomDialog(final OnConfirmListener listener, String Message){
+        Dialog dialog = new Dialog(context); // Dialog 초기화
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
+        dialog.setCancelable(false); // 배경 클릭해도 닫히지 않게
+        dialog.setContentView(R.layout.dialog_confirm); // xml 레이아웃 파일과 연결
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // 투명 배경
+
+        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+        confirmTextView.setText(Message);
+
+        // 아니오 버튼
+        Button noBtn = dialog.findViewById(R.id.noButton);
+        noBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss(); // 다이얼로그 닫기
+                listener.onConfirm(false); // 취소 버튼 클릭 시 false를 전달
+            }
+        });
+
+        // 네 버튼
+        Button yesButton = dialog.findViewById(R.id.yesButton);
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                listener.onConfirm(true); // 확인 버튼 클릭 시 true를 전달
+            }
+        });
+
+        dialog.show(); // 다이얼로그 띄우기
     }
 }
