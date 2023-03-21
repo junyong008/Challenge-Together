@@ -39,14 +39,12 @@ public class AddRoomActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout4;
     private HorizontalQuantitizer hq_particicount;
     private EditText edit_passwd;
-    private Button postroom;
+    private Button button_addroom;
     private com.yjy.challengetogether.util.Util util = new Util(AddRoomActivity.this);
 
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(AddRoomActivity.this, MainpageActivity.class);
-        startActivity(intent);
         finish();
         //overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
     }
@@ -66,16 +64,13 @@ public class AddRoomActivity extends AppCompatActivity {
         constraintLayout4 = findViewById(R.id.constraintLayout4);
         hq_particicount = findViewById(R.id.hq_particicount);
         edit_passwd = findViewById(R.id.edit_passwd);
-        postroom = findViewById(R.id.postroom);
+        button_addroom = findViewById(R.id.button_addroom);
 
         // 뒤로가기 버튼 클릭
         ibutton_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddRoomActivity.this, MainpageActivity.class);
-                startActivity(intent);
                 finish();
-                //overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
             }
         });
 
@@ -129,7 +124,7 @@ public class AddRoomActivity extends AppCompatActivity {
         hq_particicount.setPlusIconColor("#FFFFFF");
 
         // 생성하기 버튼 클릭
-        postroom.setOnClickListener(new View.OnClickListener() {
+        button_addroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // DB에 저장해야할 모든 정보를 가져옴
@@ -185,8 +180,6 @@ public class AddRoomActivity extends AppCompatActivity {
                     public void onTaskCompleted(String result) {
 
                         if (result.indexOf("ADD SUCCESS") != -1) {
-                            // StyleableToast.makeText(PostroomActivity.this, "로그인 성공", R.style.successToast).show();
-                            // 로그인 액티비티 실행 후 그 외 모두 삭제
                             Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);

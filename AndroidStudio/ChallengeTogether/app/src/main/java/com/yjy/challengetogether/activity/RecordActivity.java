@@ -41,8 +41,6 @@ public class RecordActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(RecordActivity.this, MainpageActivity.class);
-        startActivity(intent);
         finish();
         //overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
     }
@@ -66,8 +64,6 @@ public class RecordActivity extends AppCompatActivity {
         ivbutton_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecordActivity.this, MainpageActivity.class);
-                startActivity(intent);
                 finish();
             }
         });

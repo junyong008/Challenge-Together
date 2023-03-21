@@ -15,6 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.ReadyRoomActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.RecordActivity"
             android:exported="false" />
         <activity
@@ -66,8 +69,8 @@
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.yjy.challengetogether.fileprovider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />

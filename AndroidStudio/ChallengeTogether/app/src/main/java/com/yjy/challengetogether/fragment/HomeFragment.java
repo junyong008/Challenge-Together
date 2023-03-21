@@ -85,7 +85,6 @@ public class HomeFragment extends Fragment {
 
         util = new Util(requireActivity());
 
-
         ibutton_addchallenge = view.findViewById(R.id.ibutton_addchallenge);
         recyclerView_mychallenges = view.findViewById(R.id.recyclerView_mychallenges);
         llm = new LinearLayoutManager(getActivity());
@@ -141,6 +140,7 @@ public class HomeFragment extends Fragment {
                             JSONObject obj2 = jsonArray2.getJSONObject(i);
                             HomeItem item = new HomeItem();
 
+                            item.setRoomidx(obj2.getString("ROOM_IDX"));
                             item.setIcon(obj2.getString("CHALLENGETYPE"));
                             item.setTitle(obj2.getString("TITLE"));
                             item.setContent(obj2.getString("CONTENT"));
@@ -213,7 +213,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
                 startActivity(intent);
-                getActivity().finish();
             }
         });
 
@@ -225,7 +224,6 @@ public class HomeFragment extends Fragment {
                 Log.d("Count", "ADD BUTTON PRESSED");
                 Intent intent = new Intent(getActivity(), AddRoomActivity.class);
                 startActivity(intent);
-                getActivity().finish();
                 // requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
             }
 
