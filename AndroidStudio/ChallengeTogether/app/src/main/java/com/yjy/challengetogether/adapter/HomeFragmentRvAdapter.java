@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.ReadyRoomActivity;
+import com.yjy.challengetogether.activity.StartRoomActivity;
 import com.yjy.challengetogether.etc.HomeItem;
 
 import java.text.ParseException;
@@ -78,11 +79,21 @@ public class HomeFragmentRvAdapter extends RecyclerView.Adapter<HomeFragmentRvAd
             public void onClick(View v) {
                 // CardView가 클릭되었을 때 실행할 코드
                 String roomIdx = item.getRoomidx();
-                Intent intent = new Intent(holder.itemView.getContext(), ReadyRoomActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("roomidx", roomIdx);
-                intent.putExtra("befoActivity", "HomeFragment");
-                holder.itemView.getContext().startActivity(intent);
+                // 시작을 했을떄만 유저의 최근 리셋 시작이 등록되기에 대기방인지 진행중인 방인지 구분
+                if (item.getRecentStartTime().equals("0000-00-00 00:00:00")) {
+                    // 대기방
+                    Intent intent = new Intent(holder.itemView.getContext(), ReadyRoomActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("roomidx", roomIdx);
+                    holder.itemView.getContext().startActivity(intent);
+                } else {
+                    // 시작방
+                    Intent intent = new Intent(holder.itemView.getContext(), StartRoomActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("roomidx", roomIdx);
+                    holder.itemView.getContext().startActivity(intent);
+                }
+
             }
         });
 

@@ -132,7 +132,6 @@ public class ReadyRoomActivity extends AppCompatActivity {
                 if (Status.equals("시작하기")) {
                     Log.d("ReadyRoomActivity", "시작하기");
 
-
                     util.showCustomDialog(new Util.OnConfirmListener() {
                         @Override
                         public void onConfirm(boolean isConfirmed) {
@@ -174,14 +173,6 @@ public class ReadyRoomActivity extends AppCompatActivity {
                         }
                     }, "챌린지를 시작하시겠습니까?");
 
-
-
-
-
-
-
-
-
                 } else {
                     Log.d("ReadyRoomActivity", "참여하기");
                 }
@@ -193,8 +184,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
         llm = new LinearLayoutManager(ReadyRoomActivity.this);
 
 
-
-        OnTaskCompleted onLoadRoomInfoTaskCompleted = new OnTaskCompleted() {
+        OnTaskCompleted onLoadReadyRoomInfoTaskCompleted = new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(String result) {
                 Boolean isJSON = util.isJson(result);
@@ -284,11 +274,11 @@ public class ReadyRoomActivity extends AppCompatActivity {
             }
         };
 
-        HttpAsyncTask loadRoomInfoTask = new HttpAsyncTask(ReadyRoomActivity.this, onLoadRoomInfoTaskCompleted);
+        HttpAsyncTask loadReadyRoomInfoTask = new HttpAsyncTask(ReadyRoomActivity.this, onLoadReadyRoomInfoTaskCompleted);
         String phpFile = "service.php";
-        String postParameters = "service=getroominfos&roomidx=" + roomidx;
+        String postParameters = "service=getreadyroominfos&roomidx=" + roomidx;
 
-        loadRoomInfoTask.execute(phpFile, postParameters, util.getSessionKey());
+        loadReadyRoomInfoTask.execute(phpFile, postParameters, util.getSessionKey());
 
 
     }

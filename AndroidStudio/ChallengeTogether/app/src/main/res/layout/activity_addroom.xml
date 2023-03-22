@@ -199,7 +199,7 @@
                     android:ems="10"
                     android:gravity="center"
                     android:inputType="number"
-                    android:maxLength="5"
+                    android:maxLength="4"
                     android:paddingLeft="15dp"
                     android:paddingEnd="7dp"
                     android:singleLine="true"

@@ -112,7 +112,6 @@ public class Util extends Application {
         return formattedTime.toString().trim();
     }
 
-
     public interface OnConfirmListener {
         void onConfirm(boolean isConfirmed);
     }

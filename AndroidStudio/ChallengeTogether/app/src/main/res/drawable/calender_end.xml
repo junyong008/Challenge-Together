@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 아래쪽 Drawable: main_theme 색상으로 채워진 모양 -->
+    <item>
+        <inset android:insetTop="8dp" android:insetBottom="8dp">
+            <shape android:shape="rectangle">
+                <solid android:color="#ffd7a9" />
+                <corners android:topRightRadius="50dp" android:bottomRightRadius="50dp" />
+            </shape>
+        </inset>
+    </item>
+
+    <!-- 위쪽 Drawable: 동그란 모양 -->
+    <item>
+            <shape android:shape="rectangle">
+                <solid android:color="@color/main_theme" />
+                <corners android:topRightRadius="50dp"
+                    android:bottomRightRadius="50dp"
+                    android:bottomLeftRadius="50dp"
+                    android:topLeftRadius="50dp"/>
+            </shape>
+    </item>
+
+</layer-list>

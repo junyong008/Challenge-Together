@@ -40,7 +40,7 @@ dependencies {
             replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk8 is now part of kotlin-stdlib")
         }
     }
-
+    implementation 'com.github.prolificinteractive:material-calendarview:1.6.0'
     implementation 'com.akexorcist:round-corner-progress-bar:2.1.2' // 커스텀 프로그레스
     implementation 'com.github.lzyzsd:circleprogress:1.2.1' // 커스텀 동그란 프로그레스
     implementation "com.github.kojofosu:Quantitizer:1.6.8" // 커스텀 넘버피커
@@ -48,7 +48,6 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc03"    // 리사이클러뷰
     implementation "androidx.recyclerview:recyclerview:1.1.0"   // 리사이클러뷰
     implementation 'io.github.muddz:styleabletoast:2.4.0'   // 커스텀 토스트
-    implementation 'com.github.prolificinteractive:material-calendarview:1.4.3' // 커스텀 캘린더
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'

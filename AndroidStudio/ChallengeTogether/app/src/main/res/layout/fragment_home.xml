@@ -130,6 +130,7 @@
                     android:fontFamily="@font/fontstyle_record"
                     android:gravity="center"
                     android:text="YOUR BEST RECORD"
+                    android:textColor="@color/darkgray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.923"
                     app:layout_constraintStart_toStartOf="parent"

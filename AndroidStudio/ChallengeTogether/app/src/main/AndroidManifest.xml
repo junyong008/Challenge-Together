@@ -15,6 +15,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.RankingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.StartRoomActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ReadyRoomActivity"
             android:exported="false" />
         <activity
