@@ -19,6 +19,10 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class Util extends Application {
     private Context context;
@@ -111,6 +115,58 @@ public class Util extends Application {
 
         return formattedTime.toString().trim();
     }
+
+
+    /** "0000-00-00 00:00:00" 형식 String과 현재 로컬시간의 차이를 다양한 형식으로 변환 */
+    public String DiffWithLocalTime(String inputDate, String outputType) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date inputTimeDate = null;
+
+        try {
+            inputTimeDate = sdf.parse(inputDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long currentTimeMillis = System.currentTimeMillis();
+        long inputTimeMillis = inputTimeDate.getTime();
+
+        long diffMillis = currentTimeMillis - inputTimeMillis;
+        long diffSeconds = diffMillis / 1000;
+
+        StringBuilder formattedTime = new StringBuilder();
+
+        if (outputType.equals("SEC")) {
+            return String.valueOf(diffSeconds);
+        }
+
+        long days = diffSeconds / (24 * 60 * 60);
+        diffSeconds %= (24 * 60 * 60);
+
+        if (outputType.equals("DAY")) {
+            return String.valueOf(days);
+        }
+
+        long hours = diffSeconds / (60 * 60);
+        diffSeconds %= (60 * 60);
+
+        long minutes = diffSeconds / 60;
+        diffSeconds %= 60;
+
+        long seconds = diffSeconds;
+
+        if (outputType.equals("DHMS")) {
+            formattedTime.append(days).append("일 ");
+            formattedTime.append(hours).append("시간 ");
+            formattedTime.append(minutes).append("분 ");
+            formattedTime.append(seconds).append("초");
+            return formattedTime.toString().trim();
+        }
+
+        return "";
+    }
+
+
 
     public interface OnConfirmListener {
         void onConfirm(boolean isConfirmed);

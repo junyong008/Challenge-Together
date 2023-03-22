@@ -36,7 +36,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Random;
 
 import io.github.muddz.styleabletoast.StyleableToast;
@@ -48,7 +47,7 @@ public class StartRoomActivity extends AppCompatActivity {
     private TextView textView_title, textView_content, textView_currentTime, textView_TargetTime, textView_remainTime, textView_rank, textView_wisesaying;
     private RoundCornerProgressBar progress_achievement;
     MaterialCalendarView calendarView;
-    private Button button_reset, button_giveup;
+    private Button button_showrank, button_reset, button_giveup;
     private View constraintLayout3;
     private Handler mHandler;
     private com.yjy.challengetogether.util.Util util = new Util(StartRoomActivity.this);
@@ -89,6 +88,7 @@ public class StartRoomActivity extends AppCompatActivity {
         textView_wisesaying = findViewById(R.id.textView_wisesaying);
         progress_achievement = findViewById(R.id.progress_achievement);
         calendarView = findViewById(R.id.calendarView);
+        button_showrank = findViewById(R.id.button_showrank);
         button_reset = findViewById(R.id.button_reset);
         button_giveup = findViewById(R.id.button_giveup);
         constraintLayout3 = findViewById(R.id.constraintLayout3);
@@ -233,17 +233,17 @@ public class StartRoomActivity extends AppCompatActivity {
                             imageView_icon.setImageResource(drawableId);
                             textView_title.setText(roomTitle);
                             textView_content.setText(roomContent);
-                            textView_currentTime.setText(DiffWithLocalTime(userRecentResetTime, "DHMS"));
+                            textView_currentTime.setText(util.DiffWithLocalTime(userRecentResetTime, "DHMS"));
                             updateTextViewTime(userRecentResetTime, Integer.parseInt(roomTargetDay)); // 계속해서 업데이트, 목표달성 순간 검사
 
                             if (Integer.parseInt(roomTargetDay) < 36500) {
                                 textView_TargetTime.setText("/ " + roomTargetDay + "일");
 
-                                long remaindays = Integer.parseInt(roomTargetDay) - Integer.parseInt(DiffWithLocalTime(userRecentResetTime, "DAY"));
+                                long remaindays = Integer.parseInt(roomTargetDay) - Integer.parseInt(util.DiffWithLocalTime(userRecentResetTime, "DAY"));
                                 textView_remainTime.setText(remaindays + "일 남음");
 
                                 // 초로 계산하여 퍼센트를 표시해 더 정확한 퍼센트를 표기
-                                int currentTime_sec = Integer.parseInt(DiffWithLocalTime(userRecentResetTime, "SEC"));
+                                int currentTime_sec = Integer.parseInt(util.DiffWithLocalTime(userRecentResetTime, "SEC"));
                                 double targetTime_sec = Integer.parseInt(roomTargetDay) * 86400;
                                 double archivePercent = currentTime_sec / targetTime_sec * 100;
                                 progress_achievement.setProgress((int)archivePercent);
@@ -309,6 +309,17 @@ public class StartRoomActivity extends AppCompatActivity {
                                 constraintLayout3.setVisibility(View.VISIBLE);
                                 int userRank = Integer.parseInt(rankNumberOfPeopleAbove) + 1;
                                 textView_rank.setText(String.valueOf(userRank) + " / " + roomCurrentUserNum);
+
+                                // 랭킹보기 버튼 클릭
+                                button_showrank.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent(StartRoomActivity.this, RankingActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.putExtra("roomidx", roomidx);
+                                        startActivity(intent);
+                                    }
+                                });
                             }
 
 
@@ -344,10 +355,10 @@ public class StartRoomActivity extends AppCompatActivity {
 
     private void updateTextViewTime(String recentResetDate, int targetTime_day) {
 
-        String viewDHMS = DiffWithLocalTime(recentResetDate, "DHMS");
+        String viewDHMS = util.DiffWithLocalTime(recentResetDate, "DHMS");
         textView_currentTime.setText(viewDHMS);
 
-        int currentTime_sec = Integer.parseInt(DiffWithLocalTime(recentResetDate, "SEC"));
+        int currentTime_sec = Integer.parseInt(util.DiffWithLocalTime(recentResetDate, "SEC"));
 
         // 무한이 아닐경우 목표 달성순간 캐치를 위해 설정
         if (targetTime_day < 10000) {
@@ -367,54 +378,5 @@ public class StartRoomActivity extends AppCompatActivity {
                 updateTextViewTime(recentResetDate, targetTime_day);
             }
         }, 1000);
-    }
-
-    /** "0000-00-00 00:00:00" 형식 String과 현재 로컬시간의 차이를 다양한 형식으로 변환 */
-    private String DiffWithLocalTime(String inputDate, String outputType) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date inputTimeDate = null;
-
-        try {
-            inputTimeDate = sdf.parse(inputDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        long currentTimeMillis = System.currentTimeMillis();
-        long inputTimeMillis = inputTimeDate.getTime();
-
-        long diffMillis = currentTimeMillis - inputTimeMillis;
-        long diffSeconds = diffMillis / 1000;
-
-        StringBuilder formattedTime = new StringBuilder();
-
-        if (outputType.equals("SEC")) {
-            return String.valueOf(diffSeconds);
-        }
-
-        long days = diffSeconds / (24 * 60 * 60);
-        diffSeconds %= (24 * 60 * 60);
-
-        if (outputType.equals("DAY")) {
-            return String.valueOf(days);
-        }
-
-        long hours = diffSeconds / (60 * 60);
-        diffSeconds %= (60 * 60);
-
-        long minutes = diffSeconds / 60;
-        diffSeconds %= 60;
-
-        long seconds = diffSeconds;
-
-        if (outputType.equals("DHMS")) {
-            formattedTime.append(days).append("일 ");
-            formattedTime.append(hours).append("시간 ");
-            formattedTime.append(minutes).append("분 ");
-            formattedTime.append(seconds).append("초");
-            return formattedTime.toString().trim();
-        }
-
-        return "";
     }
 }
