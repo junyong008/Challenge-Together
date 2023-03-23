@@ -2,6 +2,7 @@ package com.yjy.challengetogether.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.AddRoomActivity;
+import com.yjy.challengetogether.activity.CompleteChallengeListActivity;
 import com.yjy.challengetogether.activity.LoginActivity;
 import com.yjy.challengetogether.activity.RecordActivity;
 import com.yjy.challengetogether.adapter.HomeFragmentRvAdapter;
@@ -52,6 +54,7 @@ public class HomeFragment extends Fragment {
     private ImageButton ibutton_moreinfo;
     private TextView textView_nickname;
     private TextView textView_record;
+    private TextView textView_completechallenges;
     private RecyclerView recyclerView_mychallenges;
     private HomeFragmentRvAdapter adapter;
     private LinearLayoutManager llm;
@@ -81,7 +84,16 @@ public class HomeFragment extends Fragment {
         ibutton_moreinfo = view.findViewById(R.id.ibutton_moreinfo);
         textView_nickname = view.findViewById(R.id.textView_nickname);
         textView_record = view.findViewById(R.id.textView_record);
+        textView_completechallenges = view.findViewById(R.id.textView_completechallenges);
 
+        textView_completechallenges.setPaintFlags(textView_completechallenges.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        textView_completechallenges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CompleteChallengeListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         util = new Util(requireActivity());
 
@@ -138,6 +150,17 @@ public class HomeFragment extends Fragment {
                         items = new ArrayList<>();
                         for (int i = 0; i < jsonArray2.length(); i++) {
                             JSONObject obj2 = jsonArray2.getJSONObject(i);
+
+                            // 완료된 챌린지는 추가하지 않음.
+                            if (!obj2.getString("RECENTSTARTTIME").equals("0000-00-00 00:00:00")) {
+                                int dayOfCurrentTime = Integer.parseInt(util.DiffWithLocalTime(obj2.getString("RECENTSTARTTIME"), "DAY"));
+                                int endTime = obj2.getInt("ENDTIME");
+                                if (dayOfCurrentTime >= endTime) {
+                                    continue;
+                                }
+                            }
+
+
                             HomeItem item = new HomeItem();
 
                             item.setRoomidx(obj2.getString("ROOM_IDX"));

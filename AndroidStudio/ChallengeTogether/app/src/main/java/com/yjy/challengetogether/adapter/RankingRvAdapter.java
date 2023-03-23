@@ -17,6 +17,7 @@ import com.yjy.challengetogether.etc.RankingItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -25,11 +26,13 @@ public class RankingRvAdapter extends RecyclerView.Adapter<RankingRvAdapter.Cust
 
     private Context context;
     private List<RankingItem> items;
+    String roomTargetDay;
     private Handler mHandler;
 
-    public RankingRvAdapter(Context context, List<RankingItem> items) {
+    public RankingRvAdapter(Context context, List<RankingItem> items, String roomTargetDay) {
         this.context = context;
         this.items = items;
+        this.roomTargetDay = roomTargetDay;
     }
 
     @Override
@@ -63,8 +66,26 @@ public class RankingRvAdapter extends RecyclerView.Adapter<RankingRvAdapter.Cust
         }
 
         holder.textView_nickname.setText(item.getNickname());
+        if (roomTargetDay.equals("36500")) {
+            updateTextViewTime(holder, item);
+        } else {
+            if (item.getCurrenttime() >= Integer.parseInt(roomTargetDay) * 86400) {
+                // 이미 목표를 달성한 유저는 계속 시간을 표기할 필요 없음. RECENTSTARTTIME에 ENDTIME을 더해서 챌린지 종료일을 대신 작성
 
-        updateTextViewTime(holder, item);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Calendar calendar = Calendar.getInstance();
+                try {
+                    calendar.setTime(dateFormat.parse(item.getRecentstarttime()));
+                    calendar.add(Calendar.DAY_OF_MONTH, Integer.parseInt(roomTargetDay));
+                    String finishDate = dateFormat.format(calendar.getTime());
+                    holder.textView_time.setText(finishDate + " 성공");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                updateTextViewTime(holder, item);
+            }
+        }
     }
 
     private void updateTextViewTime(CustomViewHolder holder, RankingItem item) {

@@ -52,6 +52,7 @@ public class RankingActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String roomidx = intent.getStringExtra("roomidx");
+        String roomTargetDay = intent.getStringExtra("roomtargetday");
 
         ibutton_back = findViewById(R.id.ibutton_back);
 
@@ -115,7 +116,7 @@ public class RankingActivity extends AppCompatActivity {
                     recyclerView_participants.setHasFixedSize(true);
                     recyclerView_participants.setLayoutManager(llm);
 
-                    adapter = new RankingRvAdapter(RankingActivity.this, items);
+                    adapter = new RankingRvAdapter(RankingActivity.this, items, roomTargetDay);
                     recyclerView_participants.setAdapter(adapter);
 
                 } else if (result.indexOf("NO SESSION") != -1) {

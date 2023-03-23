@@ -42,22 +42,25 @@ import io.github.muddz.styleabletoast.StyleableToast;
 
 public class StartRoomActivity extends AppCompatActivity {
 
+    private boolean isCompleteChallenge;
     private ImageButton ibutton_close;
     private ImageView imageView_icon;
     private TextView textView_title, textView_content, textView_currentTime, textView_TargetTime, textView_remainTime, textView_rank, textView_wisesaying;
     private RoundCornerProgressBar progress_achievement;
     MaterialCalendarView calendarView;
     private Button button_showrank, button_reset, button_giveup;
-    private View constraintLayout3;
+    private View constraintLayout3, constraintLayout4;
     private Handler mHandler;
     private com.yjy.challengetogether.util.Util util = new Util(StartRoomActivity.this);
 
     @Override
     public void onBackPressed() {
-        // 방을 추가하거나, 시간을 리셋하는 등 방의 내용을 바꿀 수 있는 액티비티를 실행하고 메인으로 돌아갈땐 액티비티 다시 불러오기. 그 외에는 불필요한 refresh를 줄여 서버 부담 최소화
-        Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (!isCompleteChallenge) {
+            // 방을 추가하거나, 시간을 리셋하는 등 방의 내용을 바꿀 수 있는 액티비티를 실행하고 메인으로 돌아갈땐 액티비티 다시 불러오기. 그 외에는 불필요한 refresh를 줄여 서버 부담 최소화
+            Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
         finish();
     }
 
@@ -92,14 +95,17 @@ public class StartRoomActivity extends AppCompatActivity {
         button_reset = findViewById(R.id.button_reset);
         button_giveup = findViewById(R.id.button_giveup);
         constraintLayout3 = findViewById(R.id.constraintLayout3);
+        constraintLayout4 = findViewById(R.id.constraintLayout4);
 
         // 뒤로가기 버튼 클릭
         ibutton_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                if (!isCompleteChallenge) {
+                    Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
                 finish();
             }
         });
@@ -153,18 +159,23 @@ public class StartRoomActivity extends AppCompatActivity {
         button_giveup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String giveUporDelete;
+                if (isCompleteChallenge) {
+                    giveUporDelete = "삭제";
+                } else {
+                    giveUporDelete = "포기";
+                }
 
                 util.showCustomDialog(new Util.OnConfirmListener() {
                     @Override
                     public void onConfirm(boolean isConfirmed) {
                         if (isConfirmed) {
-
                             OnTaskCompleted onGiveUpTaskCompleted = new OnTaskCompleted() {
                                 @Override
                                 public void onTaskCompleted(String result) {
 
                                     if (result.indexOf("GIVEUP SUCCESS") != -1) {
-                                        StyleableToast.makeText(StartRoomActivity.this, "포기하였습니다.", R.style.successToast).show();
+                                        StyleableToast.makeText(StartRoomActivity.this, giveUporDelete + "하였습니다.", R.style.successToast).show();
 
                                         Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -194,7 +205,7 @@ public class StartRoomActivity extends AppCompatActivity {
                             giveUpTask.execute(phpFile, postParameters, util.getSessionKey());
                         }
                     }
-                }, "챌린지를 포기하시겠습니까?");
+                }, "챌린지를 " + giveUporDelete + "하시겠습니까?");
             }
         });
 
@@ -233,29 +244,24 @@ public class StartRoomActivity extends AppCompatActivity {
                             imageView_icon.setImageResource(drawableId);
                             textView_title.setText(roomTitle);
                             textView_content.setText(roomContent);
-                            textView_currentTime.setText(util.DiffWithLocalTime(userRecentResetTime, "DHMS"));
-                            updateTextViewTime(userRecentResetTime, Integer.parseInt(roomTargetDay)); // 계속해서 업데이트, 목표달성 순간 검사
 
-                            if (Integer.parseInt(roomTargetDay) < 36500) {
+
+                            // 끝난 챌린지인지 진행중인 챌린지인지에 따라서 요소 변경
+                            int dayOfCurrentTime = Integer.parseInt(util.DiffWithLocalTime(userRecentResetTime, "DAY"));
+                            int endTime = Integer.parseInt(roomTargetDay);
+                            if (dayOfCurrentTime >= endTime) {
+                                // 만약 성공한(종료된) 챌린지라면
+                                isCompleteChallenge = true;
+
+                                textView_currentTime.setText(roomTargetDay + "일 0시간 0분 0초");
                                 textView_TargetTime.setText("/ " + roomTargetDay + "일");
-
-                                long remaindays = Integer.parseInt(roomTargetDay) - Integer.parseInt(util.DiffWithLocalTime(userRecentResetTime, "DAY"));
-                                textView_remainTime.setText(remaindays + "일 남음");
-
-                                // 초로 계산하여 퍼센트를 표시해 더 정확한 퍼센트를 표기
-                                int currentTime_sec = Integer.parseInt(util.DiffWithLocalTime(userRecentResetTime, "SEC"));
-                                double targetTime_sec = Integer.parseInt(roomTargetDay) * 86400;
-                                double archivePercent = currentTime_sec / targetTime_sec * 100;
-                                progress_achievement.setProgress((int)archivePercent);
-                            } else {
-                                textView_TargetTime.setText("/ 무제한");
-                                textView_remainTime.setText("");
                                 progress_achievement.setProgress(100);
-                                progress_achievement.setProgressColor(ContextCompat.getColor(StartRoomActivity.this, R.color.gray));
-                            }
+                                textView_remainTime.setText("성공");
 
-                            // 캘린더 설정
-                            {
+                                button_reset.setVisibility(View.GONE);
+                                constraintLayout4.setVisibility(View.GONE);
+                                button_giveup.setText("삭제하기");
+
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 Date forTransFormatDate = dateFormat.parse(roomStartTime);
                                 CalendarDay challengeStartDay = CalendarDay.from(forTransFormatDate);
@@ -263,8 +269,11 @@ public class StartRoomActivity extends AppCompatActivity {
                                 forTransFormatDate = dateFormat.parse(userRecentResetTime);
                                 CalendarDay startDay = CalendarDay.from(forTransFormatDate);
 
-                                Calendar today = Calendar.getInstance();
-                                CalendarDay endDay = CalendarDay.from(today);
+                                // roomTargetDay를 startDay에 더한 값을 endDay로 설정
+                                Calendar endCalendar = Calendar.getInstance();
+                                endCalendar.set(startDay.getYear(), startDay.getMonth(), startDay.getDay());
+                                endCalendar.add(Calendar.DATE, Integer.parseInt(roomTargetDay));
+                                CalendarDay endDay = CalendarDay.from(endCalendar.getTime());
 
                                 // 중간 날짜들의 디자인 변경 (위아래 여백이 있는 옅은 주황)
                                 calendarView.addDecorators(
@@ -272,20 +281,12 @@ public class StartRoomActivity extends AppCompatActivity {
                                 );
 
                                 // 시작 날짜의 디자인 변경 (좌측 테두리 둥글게)
-                                CustomDayDecorator customDayDecorator = new CustomDayDecorator(StartRoomActivity.this, startDay);
+                                CustomDayDecorator customDayDecorator = new CustomDayDecorator(StartRoomActivity.this, startDay, true);
                                 calendarView.addDecorators(customDayDecorator);
 
-                                // 오늘 날짜의 디자인 변경 (Bold, 우측 테두리 둥글게), 만약 시작일과 현재일이 같다면 그냥 동그랗게 표시
-                                boolean isSingleDay;
-                                if (startDay.equals(endDay)) {
-                                    isSingleDay = true;
-                                } else {
-                                    isSingleDay = false;
-                                }
-                                OneDayDecorator oneDayDecorator = new OneDayDecorator(StartRoomActivity.this, isSingleDay);
-                                calendarView.addDecorators(
-                                        oneDayDecorator
-                                );
+                                // 종료 날짜의 디자인 변경 (우측 테두리 둥글게)
+                                CustomDayDecorator customDayDecorator2 = new CustomDayDecorator(StartRoomActivity.this, endDay, false);
+                                calendarView.addDecorators(customDayDecorator2);
 
                                 // 좌우 화살표 커스텀
                                 Drawable leftArrow = ContextCompat.getDrawable(StartRoomActivity.this, R.drawable.ic_leftround);
@@ -300,8 +301,82 @@ public class StartRoomActivity extends AppCompatActivity {
                                 calendarView.setDateSelected(startDay, true);
                                 calendarView.setDateSelected(endDay, true);
                                 calendarView.selectRange(startDay, endDay);
-                                calendarView.addDecorator(new EventDecorator(Color.parseColor("#DB4455"), Collections.singleton(challengeStartDay))); // 챌린지 최초 시작시간 포인트 표시
+                                calendarView.addDecorator(new EventDecorator(Color.parseColor("#DB4455"), Collections.singleton(challengeStartDay)));
+                            } else {
+                                isCompleteChallenge = false;
+
+                                textView_currentTime.setText(util.DiffWithLocalTime(userRecentResetTime, "DHMS"));
+                                updateTextViewTime(userRecentResetTime, Integer.parseInt(roomTargetDay)); // 계속해서 업데이트, 목표달성 순간 검사
+
+                                if (Integer.parseInt(roomTargetDay) < 36500) {
+                                    textView_TargetTime.setText("/ " + roomTargetDay + "일");
+
+                                    long remaindays = Integer.parseInt(roomTargetDay) - Integer.parseInt(util.DiffWithLocalTime(userRecentResetTime, "DAY"));
+                                    textView_remainTime.setText(remaindays + "일 남음");
+
+                                    // 초로 계산하여 퍼센트를 표시해 더 정확한 퍼센트를 표기
+                                    int currentTime_sec = Integer.parseInt(util.DiffWithLocalTime(userRecentResetTime, "SEC"));
+                                    double targetTime_sec = Integer.parseInt(roomTargetDay) * 86400;
+                                    double archivePercent = currentTime_sec / targetTime_sec * 100;
+                                    progress_achievement.setProgress((int)archivePercent);
+                                } else {
+                                    textView_TargetTime.setText("/ 무제한");
+                                    textView_remainTime.setText("");
+                                    progress_achievement.setProgress(100);
+                                    progress_achievement.setProgressColor(ContextCompat.getColor(StartRoomActivity.this, R.color.gray));
+                                }
+
+                                // 캘린더 설정
+                                {
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    Date forTransFormatDate = dateFormat.parse(roomStartTime);
+                                    CalendarDay challengeStartDay = CalendarDay.from(forTransFormatDate);
+
+                                    forTransFormatDate = dateFormat.parse(userRecentResetTime);
+                                    CalendarDay startDay = CalendarDay.from(forTransFormatDate);
+
+                                    Calendar today = Calendar.getInstance();
+                                    CalendarDay endDay = CalendarDay.from(today);
+
+                                    // 중간 날짜들의 디자인 변경 (위아래 여백이 있는 옅은 주황)
+                                    calendarView.addDecorators(
+                                            new MySelectorDecorator(StartRoomActivity.this)
+                                    );
+
+                                    // 시작 날짜의 디자인 변경 (좌측 테두리 둥글게)
+                                    CustomDayDecorator customDayDecorator = new CustomDayDecorator(StartRoomActivity.this, startDay, true);
+                                    calendarView.addDecorators(customDayDecorator);
+
+                                    // 오늘 날짜의 디자인 변경 (Bold, 우측 테두리 둥글게), 만약 시작일과 현재일이 같다면 그냥 동그랗게 표시
+                                    boolean isSingleDay;
+                                    if (startDay.equals(endDay)) {
+                                        isSingleDay = true;
+                                    } else {
+                                        isSingleDay = false;
+                                    }
+                                    OneDayDecorator oneDayDecorator = new OneDayDecorator(StartRoomActivity.this, isSingleDay);
+                                    calendarView.addDecorators(
+                                            oneDayDecorator
+                                    );
+
+                                    // 좌우 화살표 커스텀
+                                    Drawable leftArrow = ContextCompat.getDrawable(StartRoomActivity.this, R.drawable.ic_leftround);
+                                    calendarView.setLeftArrowMask(leftArrow);
+                                    Drawable rightArrow = ContextCompat.getDrawable(StartRoomActivity.this, R.drawable.ic_rightround);
+                                    calendarView.setRightArrowMask(rightArrow);
+
+                                    // 사용자가 선택하지 못하게 설정
+                                    calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
+
+                                    // 날짜 설정
+                                    calendarView.setDateSelected(startDay, true);
+                                    calendarView.setDateSelected(endDay, true);
+                                    calendarView.selectRange(startDay, endDay);
+                                    calendarView.addDecorator(new EventDecorator(Color.parseColor("#DB4455"), Collections.singleton(challengeStartDay))); // 챌린지 최초 시작시간 포인트 표시
+                                }
                             }
+
+
 
                             // 랭킹 설정
                             if (Integer.parseInt(roomCurrentUserNum) > 1) {
@@ -317,6 +392,7 @@ public class StartRoomActivity extends AppCompatActivity {
                                         Intent intent = new Intent(StartRoomActivity.this, RankingActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         intent.putExtra("roomidx", roomidx);
+                                        intent.putExtra("roomtargetday", roomTargetDay);
                                         startActivity(intent);
                                     }
                                 });

@@ -13,9 +13,13 @@ public class CustomDayDecorator implements DayViewDecorator {
     private CalendarDay date;
     private final Drawable drawable;
 
-    public CustomDayDecorator(Activity context, CalendarDay date) {
+    public CustomDayDecorator(Activity context, CalendarDay date, boolean isStart) {
         this.date = date;;
-        drawable = context.getResources().getDrawable(R.drawable.calender_start);
+        if (isStart) {
+            drawable = context.getResources().getDrawable(R.drawable.calender_start);
+        } else {
+            drawable = context.getResources().getDrawable(R.drawable.calender_end);
+        }
     }
 
     @Override
