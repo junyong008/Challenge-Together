@@ -119,7 +119,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                             deleteRoomTask.execute(phpFile, postParameters, util.getSessionKey());
                         }
                     }
-                }, "방을 삭제하시겠습니까?");
+                }, "방을 삭제하시겠습니까?", "confirm");
             }
         });
 
@@ -171,7 +171,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                                 startRoomTask.execute(phpFile, postParameters, util.getSessionKey());
                             }
                         }
-                    }, "챌린지를 시작하시겠습니까?");
+                    }, "챌린지를 시작하시겠습니까?", "confirm");
 
                 } else {
                     Log.d("ReadyRoomActivity", "참여하기");

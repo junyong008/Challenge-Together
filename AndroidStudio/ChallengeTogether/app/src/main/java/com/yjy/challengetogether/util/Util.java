@@ -172,25 +172,34 @@ public class Util extends Application {
         void onConfirm(boolean isConfirmed);
     }
 
-    public void showCustomDialog(final OnConfirmListener listener, String Message){
+    public void showCustomDialog(final OnConfirmListener listener, String Message, String Type){
         Dialog dialog = new Dialog(context); // Dialog 초기화
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         dialog.setCancelable(false); // 배경 클릭해도 닫히지 않게
-        dialog.setContentView(R.layout.dialog_confirm); // xml 레이아웃 파일과 연결
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // 투명 배경
+
+        if (Type.equals("confirm")) {
+            dialog.setContentView(R.layout.dialog_confirm); // xml 레이아웃 파일과 연결
+
+            // 아니오 버튼
+            Button noBtn = dialog.findViewById(R.id.noButton);
+            noBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss(); // 다이얼로그 닫기
+                    listener.onConfirm(false); // 취소 버튼 클릭 시 false를 전달
+                }
+            });
+
+        } else if (Type.equals("congrats")) {
+            dialog.setContentView(R.layout.dialog_congrats);
+
+            TextView TextView2 = dialog.findViewById(R.id.TextView2);
+            TextView2.setText("축하합니다!");
+        }
 
         TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
         confirmTextView.setText(Message);
-
-        // 아니오 버튼
-        Button noBtn = dialog.findViewById(R.id.noButton);
-        noBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss(); // 다이얼로그 닫기
-                listener.onConfirm(false); // 취소 버튼 클릭 시 false를 전달
-            }
-        });
 
         // 네 버튼
         Button yesButton = dialog.findViewById(R.id.yesButton);

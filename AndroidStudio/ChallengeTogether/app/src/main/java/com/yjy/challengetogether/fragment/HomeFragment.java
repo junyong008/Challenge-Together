@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,7 @@ public class HomeFragment extends Fragment {
     private ImageButton ibutton_addchallenge;
     private Util util;
     private Handler mHandler;
+    private String recentCompleteChallengeTitle = "";
 
     @Override
     public void onDestroy() {
@@ -144,6 +146,7 @@ public class HomeFragment extends Fragment {
                             return;
                         }
 
+
                         // 전달받은 JSON에서 roomList 부분만 추출 ( 방 표면에 보여질 정보들 )
                         JSONArray jsonArray2 = new JSONArray(jsonObject.getString("roomList"));
                         // items 이란 배열을 만들고, json 안의 내용을 HomeItem 클래스 객체 형태로 item에 저장후 이걸 items 배열에 주르륵 저장
@@ -151,7 +154,11 @@ public class HomeFragment extends Fragment {
                         for (int i = 0; i < jsonArray2.length(); i++) {
                             JSONObject obj2 = jsonArray2.getJSONObject(i);
 
+
                             // 완료된 챌린지는 추가하지 않음.
+                            // ISCOMPLETE로 서버에서 필터링해 보내줄 수 있는데 어플에서 이걸 계산해서 필터링하는 이유?
+                            // --> HomeFragment정보를 가져올때, 모든 방을 조회하고 방이 있으면 그때 완료된 챌린지를 계산해 검사하고 갱신하기에 과거에 갱신된 완료된 챌린지는 필터링 되지만
+                            // 방을 조회하고 나서 갱신된 챌린지는 필터링이 안되므로 어플에서 그냥 필터링 하도록 설정. 또한 서버에 부담을 줄이는것이 우선이기에 어플에서 계산 수행하는것이 이득.
                             if (!obj2.getString("RECENTSTARTTIME").equals("0000-00-00 00:00:00")) {
                                 int dayOfCurrentTime = Integer.parseInt(util.DiffWithLocalTime(obj2.getString("RECENTSTARTTIME"), "DAY"));
                                 int endTime = obj2.getInt("ENDTIME");
@@ -194,6 +201,22 @@ public class HomeFragment extends Fragment {
                         if (oldestItem != null) {
                             updateTextViewTime(oldestItem.getRecentStartTime(), userBest);
                         }
+
+
+
+                        // 전달받은 JSON에서 completeRoomList 부분만 추출 ( 사용자가 처음 확인한 완료된 챌린지들 제목 )
+                        recentCompleteChallengeTitle = "";
+                        JSONArray jsonArray3 = new JSONArray(jsonObject.getString("completeRoomList"));
+                        for (int i = 0; i < jsonArray3.length(); i++) {
+                            JSONObject obj3 = jsonArray3.getJSONObject(i);
+
+                            if (TextUtils.isEmpty(recentCompleteChallengeTitle)) {
+                                recentCompleteChallengeTitle = recentCompleteChallengeTitle + "\"" + obj3.getString("TITLE") + "\"";
+                            } else {
+                                recentCompleteChallengeTitle = recentCompleteChallengeTitle + ", \"" + obj3.getString("TITLE") + "\"";
+                            }
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -206,6 +229,16 @@ public class HomeFragment extends Fragment {
 
                     adapter = new HomeFragmentRvAdapter(getActivity().getApplication(), items);
                     recyclerView_mychallenges.setAdapter(adapter);
+
+
+                    // 만약 최근에 완료한 챌린지 (유저가 아직 확인을 안한)가 있으면 다이얼로그로 축하메시지와 어디서 확인 가능한지 안내
+                    if (!TextUtils.isEmpty(recentCompleteChallengeTitle)) {
+                        util.showCustomDialog(new Util.OnConfirmListener() {
+                            @Override
+                            public void onConfirm(boolean isConfirmed) {}
+                        }, recentCompleteChallengeTitle  + "\n챌린지를 성공하셨습니다!", "congrats");
+                    }
+
 
                 } else if (result.indexOf("NO SESSION") != -1) {
                     StyleableToast.makeText(getActivity(), "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();

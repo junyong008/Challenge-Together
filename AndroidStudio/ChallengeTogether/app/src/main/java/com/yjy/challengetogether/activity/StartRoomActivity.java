@@ -151,7 +151,7 @@ public class StartRoomActivity extends AppCompatActivity {
                             resetTimeTask.execute(phpFile, postParameters, util.getSessionKey());
                         }
                     }
-                }, "리셋하시겠습니까?");
+                }, "리셋하시겠습니까?", "confirm");
             }
         });
 
@@ -205,7 +205,7 @@ public class StartRoomActivity extends AppCompatActivity {
                             giveUpTask.execute(phpFile, postParameters, util.getSessionKey());
                         }
                     }
-                }, "챌린지를 " + giveUporDelete + "하시겠습니까?");
+                }, "챌린지를 " + giveUporDelete + "하시겠습니까?", "confirm");
             }
         });
 
