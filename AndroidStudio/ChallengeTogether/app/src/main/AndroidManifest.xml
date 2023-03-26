@@ -15,6 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.ResetRecordActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.CompleteChallengeListActivity"
             android:exported="false" />
         <activity

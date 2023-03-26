@@ -56,7 +56,7 @@ public class CompleteChallengeListRvAdapter extends RecyclerView.Adapter<Complet
         // 최근 리셋 시간에 endtime을 더해서 챌린지 종료 날짜 산출
         try {
             String completeDate = addDaysToDate(item.getRecentStartTime(), item.getEndTime());
-            holder.textView_time.setText(completeDate);
+            holder.textView_time.setText("성공 날짜 :   " + completeDate);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

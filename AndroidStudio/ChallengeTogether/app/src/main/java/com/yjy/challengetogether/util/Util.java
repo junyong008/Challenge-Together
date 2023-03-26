@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yjy.challengetogether.R;
@@ -169,7 +170,7 @@ public class Util extends Application {
 
 
     public interface OnConfirmListener {
-        void onConfirm(boolean isConfirmed);
+        void onConfirm(boolean isConfirmed, String message);
     }
 
     public void showCustomDialog(final OnConfirmListener listener, String Message, String Type){
@@ -178,7 +179,7 @@ public class Util extends Application {
         dialog.setCancelable(false); // 배경 클릭해도 닫히지 않게
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // 투명 배경
 
-        if (Type.equals("confirm")) {
+        if (Type.equals("confirm")) {   // 단순 메시지, 확인, 취소 다이얼로그
             dialog.setContentView(R.layout.dialog_confirm); // xml 레이아웃 파일과 연결
 
             // 아니오 버튼
@@ -187,29 +188,67 @@ public class Util extends Application {
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss(); // 다이얼로그 닫기
-                    listener.onConfirm(false); // 취소 버튼 클릭 시 false를 전달
+                    listener.onConfirm(false, ""); // 취소 버튼 클릭 시 false를 전달
                 }
             });
 
-        } else if (Type.equals("congrats")) {
+            // 네 버튼
+            Button yesButton = dialog.findViewById(R.id.yesButton);
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    listener.onConfirm(true, ""); // 확인 버튼 클릭 시 true를 전달
+                }
+            });
+
+        } else if (Type.equals("reset")) {  // 메시지, 에딧창, 확인, 취소 구성
+            dialog.setContentView(R.layout.dialog_reset); // xml 레이아웃 파일과 연결
+
+            TextView TextView_info = dialog.findViewById(R.id.TextView_info);
+            TextView_info.setText("다짐 새기기");
+
+            EditText edit_content = dialog.findViewById(R.id.edit_content);
+
+            // 아니오 버튼
+            Button noBtn = dialog.findViewById(R.id.noButton);
+            noBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss(); // 다이얼로그 닫기
+                    listener.onConfirm(false, ""); // 취소 버튼 클릭 시 false를 전달
+                }
+            });
+
+            // 네 버튼
+            Button yesButton = dialog.findViewById(R.id.yesButton);
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    listener.onConfirm(true, edit_content.getText().toString().trim()); // 확인 버튼 클릭 시 true를 전달하고 다짐 내용을 전달
+                }
+            });
+
+        } else if (Type.equals("congrats")) {   // 이미지, 확인 구성
             dialog.setContentView(R.layout.dialog_congrats);
 
             TextView TextView2 = dialog.findViewById(R.id.TextView2);
             TextView2.setText("축하합니다!");
+
+            // 네 버튼
+            Button yesButton = dialog.findViewById(R.id.yesButton);
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    listener.onConfirm(true, ""); // 확인 버튼 클릭 시 true를 전달
+                }
+            });
         }
 
         TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
         confirmTextView.setText(Message);
-
-        // 네 버튼
-        Button yesButton = dialog.findViewById(R.id.yesButton);
-        yesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                listener.onConfirm(true); // 확인 버튼 클릭 시 true를 전달
-            }
-        });
 
         dialog.show(); // 다이얼로그 띄우기
     }

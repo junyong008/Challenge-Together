@@ -82,7 +82,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
             public void onClick(View v) {
                 util.showCustomDialog(new Util.OnConfirmListener() {
                     @Override
-                    public void onConfirm(boolean isConfirmed) {
+                    public void onConfirm(boolean isConfirmed, String msg) {
                         if (isConfirmed) {  // 안내 Dialog 확인버튼을 눌렀을 경우만
 
                             OnTaskCompleted onDeleteRoomTaskCompleted = new OnTaskCompleted() {
@@ -134,7 +134,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
 
                     util.showCustomDialog(new Util.OnConfirmListener() {
                         @Override
-                        public void onConfirm(boolean isConfirmed) {
+                        public void onConfirm(boolean isConfirmed, String msg) {
                             if (isConfirmed) {
 
                                 OnTaskCompleted onStartRoomTaskCompleted = new OnTaskCompleted() {

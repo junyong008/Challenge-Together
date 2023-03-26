@@ -278,19 +278,41 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_reset"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="16dp"
-            android:background="@drawable/button_round"
-            android:fontFamily="@font/fontstyle_culture"
-            android:text="리셋"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            app:layout_constraintTop_toBottomOf="@+id/textView10" >
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_reset"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/button_round"
+                android:fontFamily="@font/fontstyle_culture"
+                android:text="리셋" />
+
+            <ImageButton
+                android:id="@+id/ibutton_resetlist"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.2"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="8dp"
+                android:background="@drawable/button_round"
+                android:fontFamily="@font/fontstyle_culture"
+                android:padding="5dp"
+                android:elevation="2dp"
+                android:src="@drawable/ic_list" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

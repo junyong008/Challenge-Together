@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.tomergoldst.tooltips.ToolTip;
+import com.tomergoldst.tooltips.ToolTipsManager;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
 import com.yjy.challengetogether.util.HttpAsyncTask;
@@ -30,6 +32,7 @@ public class RecordActivity extends AppCompatActivity {
 
     private ImageView ivbutton_back;
     private ImageView ivbutton_share;
+    private ImageView ivbutton_info;
     private ImageView imageView_grade;
     private RoundCornerProgressBar progress_nextgrade;
     private TextView textView_nextgrade;
@@ -38,6 +41,7 @@ public class RecordActivity extends AppCompatActivity {
     private TextView textView_successcount;
     private TextView textView_resetcount;
     private com.yjy.challengetogether.util.Util util = new Util(RecordActivity.this);
+    private ToolTipsManager mToolTipsManager;
 
     @Override
     public void onBackPressed() {
@@ -52,6 +56,7 @@ public class RecordActivity extends AppCompatActivity {
 
         ivbutton_back = findViewById(R.id.ivbutton_back);
         ivbutton_share = findViewById(R.id.ivbutton_share);
+        ivbutton_info = findViewById(R.id.ivbutton_info);
         imageView_grade = findViewById(R.id.imageView_grade);
         progress_nextgrade = findViewById(R.id.progress_nextgrade);
         textView_nextgrade = findViewById(R.id.textView_nextgrade);
@@ -95,6 +100,19 @@ public class RecordActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        // 안내(info) 버튼 클릭
+        ivbutton_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 툴팁으로 기록이 어떤걸 의미하는지 상세 설명
+                mToolTipsManager = new ToolTipsManager();
+                ToolTip.Builder builder = new ToolTip.Builder(RecordActivity.this, ivbutton_info, findViewById(R.id.ConstraintLayout_parent), "도전 횟수는 무제한 도전을 포함한 횟수에요!", ToolTip.POSITION_ABOVE);
+                builder.setBackgroundColor(getResources().getColor(R.color.black));
+                builder.setTextAppearance(R.style.TooltipTextAppearance);
+                mToolTipsManager.show(builder.build());
             }
         });
 

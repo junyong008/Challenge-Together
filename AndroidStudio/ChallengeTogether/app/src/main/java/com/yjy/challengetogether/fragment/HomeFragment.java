@@ -235,7 +235,7 @@ public class HomeFragment extends Fragment {
                     if (!TextUtils.isEmpty(recentCompleteChallengeTitle)) {
                         util.showCustomDialog(new Util.OnConfirmListener() {
                             @Override
-                            public void onConfirm(boolean isConfirmed) {}
+                            public void onConfirm(boolean isConfirmed, String msg) {}
                         }, recentCompleteChallengeTitle  + "\n챌린지를 성공하셨습니다!", "congrats");
                     }
 

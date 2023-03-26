@@ -8,16 +8,20 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
+    <!-- 툴팁 텍스트 스타일 변경 -->
+    <style name="TooltipTextAppearance">
+        <item name="android:fontFamily">@font/fontstyle_culture</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
-    <!-- change font of bottom nav : activity_mainpage.xml -->
+    <!-- 바텀 네비게이션 텍스트 스타일 변경 -->
     <style name="BottomNavigationViewTextStyle">
         <item name="android:fontFamily">@font/fontstyle_culture</item>
         <item name="android:textSize">10sp</item>
     </style>
 
-    <!-- customtoast : https://github.com/Muddz/StyleableToast -->
-
-
+    <!-- 커스텀 토스트 : https://github.com/Muddz/StyleableToast -->
     <style name="errorToast">
         <item name="stTextBold">true</item>
         <item name="stTextColor">#FFFFFF</item>

@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -49,9 +48,11 @@ public class StartRoomActivity extends AppCompatActivity {
     private RoundCornerProgressBar progress_achievement;
     MaterialCalendarView calendarView;
     private Button button_showrank, button_reset, button_giveup;
+    private ImageButton ibutton_resetlist;
     private View constraintLayout3, constraintLayout4;
     private Handler mHandler;
     private com.yjy.challengetogether.util.Util util = new Util(StartRoomActivity.this);
+    private String userRecentResetTime; // 리셋할때 인자로 넘기기 위하여 밖으로 선언
 
     @Override
     public void onBackPressed() {
@@ -93,6 +94,7 @@ public class StartRoomActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         button_showrank = findViewById(R.id.button_showrank);
         button_reset = findViewById(R.id.button_reset);
+        ibutton_resetlist = findViewById(R.id.ibutton_resetlist);
         button_giveup = findViewById(R.id.button_giveup);
         constraintLayout3 = findViewById(R.id.constraintLayout3);
         constraintLayout4 = findViewById(R.id.constraintLayout4);
@@ -117,7 +119,7 @@ public class StartRoomActivity extends AppCompatActivity {
 
                 util.showCustomDialog(new Util.OnConfirmListener() {
                     @Override
-                    public void onConfirm(boolean isConfirmed) {
+                    public void onConfirm(boolean isConfirmed, String msg) {
                         if (isConfirmed) {
 
                             OnTaskCompleted onResetTimeTaskCompleted = new OnTaskCompleted() {
@@ -146,12 +148,13 @@ public class StartRoomActivity extends AppCompatActivity {
 
                             HttpAsyncTask resetTimeTask = new HttpAsyncTask(StartRoomActivity.this, onResetTimeTaskCompleted);
                             String phpFile = "service.php";
-                            String postParameters = "service=resettime&roomidx=" + roomidx;
+                            String postParameters = "service=resettime&roomidx=" + roomidx + "&abstinencetime=" + util.DiffWithLocalTime(userRecentResetTime, "SEC") + "&resetmemo=" + msg;
 
                             resetTimeTask.execute(phpFile, postParameters, util.getSessionKey());
                         }
+
                     }
-                }, "리셋하시겠습니까?", "confirm");
+                }, "리셋하시겠습니까?", "reset");
             }
         });
 
@@ -168,7 +171,7 @@ public class StartRoomActivity extends AppCompatActivity {
 
                 util.showCustomDialog(new Util.OnConfirmListener() {
                     @Override
-                    public void onConfirm(boolean isConfirmed) {
+                    public void onConfirm(boolean isConfirmed, String msg) {
                         if (isConfirmed) {
                             OnTaskCompleted onGiveUpTaskCompleted = new OnTaskCompleted() {
                                 @Override
@@ -209,6 +212,19 @@ public class StartRoomActivity extends AppCompatActivity {
             }
         });
 
+        // 리셋 기록보기 버튼 클릭
+        ibutton_resetlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(StartRoomActivity.this, ResetRecordActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("roomidx", roomidx);
+                startActivity(intent);
+            }
+        });
+
+
         // 명언 뽑기
         {
             String[] sentences = {"\"자신을 이긴 사람은 세상을 이긴다.\"", "\"나의 내일은 오늘의 선택에 달려있다.\"", "\"나의 오늘은 누군가 그토록 바라는 미래이다.\"", "\"쾌락은 짧고 후회는 길다.\"", "\"가장 잘 견디는 자가 무엇이든지\n가장 잘 할 수 있는 사람이다.\"", "\"성공의 첫번째 법칙은 인내다.\"", "\"성공을 붙잡지 못하는 사람이\n가지지 못한 것은 재능이 아니라\n인내력이다.\"", "\"생각을 바꾸면 행동이 바뀌고,\n행동을 바꾸면 습관이 바뀌고,\n습관을 바꾸면 인격이 바뀌고,\n인격이 바뀌면 운명이 바뀐다.\"", "\"어제와 오늘의 나는 다르다. 그것이 성장이다.\"", "\"어제보다 더 나은 오늘을 위해.\""};
@@ -234,7 +250,7 @@ public class StartRoomActivity extends AppCompatActivity {
                             String roomTitle = jsonObject.getString("TITLE");
                             String roomContent = jsonObject.getString("CONTENT");
                             String roomStartTime = jsonObject.getString("STARTTIME");
-                            String userRecentResetTime = jsonObject.getString("RECENTSTARTTIME");
+                            userRecentResetTime = jsonObject.getString("RECENTSTARTTIME");
                             String roomTargetDay = jsonObject.getString("ENDTIME");
                             String rankNumberOfPeopleAbove = jsonObject.getString("RANK");
                             String roomCurrentUserNum = jsonObject.getString("CURRENTUSERNUM");
@@ -440,7 +456,11 @@ public class StartRoomActivity extends AppCompatActivity {
         if (targetTime_day < 10000) {
             int targetTime_sec = targetTime_day * 86400;
             if (currentTime_sec >= targetTime_sec) {
-                Log.d("StartRoomActivity", "Archive IT!!!!");
+                // 목표달성하는 순간 메인으로 보내기
+                Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
         }
 

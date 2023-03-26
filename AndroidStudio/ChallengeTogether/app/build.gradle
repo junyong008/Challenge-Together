@@ -40,7 +40,8 @@ dependencies {
             replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk8 is now part of kotlin-stdlib")
         }
     }
-    implementation 'com.github.prolificinteractive:material-calendarview:1.6.0'
+    implementation 'com.tomergoldst.android:tooltips:1.1.1' // 커스텀 툴팁
+    implementation 'com.github.prolificinteractive:material-calendarview:1.6.0' // 커스텀 캘린더뷰
     implementation 'com.akexorcist:round-corner-progress-bar:2.1.2' // 커스텀 프로그레스
     implementation 'com.github.lzyzsd:circleprogress:1.2.1' // 커스텀 동그란 프로그레스
     implementation "com.github.kojofosu:Quantitizer:1.6.8" // 커스텀 넘버피커

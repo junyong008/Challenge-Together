@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.yjy.challengetogether.R;
+import com.yjy.challengetogether.activity.MainpageActivity;
 import com.yjy.challengetogether.activity.ReadyRoomActivity;
 import com.yjy.challengetogether.activity.StartRoomActivity;
 import com.yjy.challengetogether.etc.HomeItem;
@@ -123,9 +124,14 @@ public class HomeFragmentRvAdapter extends RecyclerView.Adapter<HomeFragmentRvAd
             holder.progressBar_percent.setVisibility(View.INVISIBLE);
         } else {
             int archivePercent = (int)(((double)diffSeconds / endTime) * 100);
-            if (archivePercent <= 100) {
+            if (archivePercent < 100) {
                 holder.textView_percent.setText(String.valueOf(archivePercent) + "%");
                 holder.progressBar_percent.setProgress(archivePercent);
+            } else {
+                // 성취도 100퍼를 넘어가는 순간 HomeFragment를 다시 불러옴
+                Intent intent = new Intent(context, MainpageActivity.class); // 변경할 액티비티
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // 새로운 태스크를 만들어서 기존의 액티비티 스택을 비움
+                context.startActivity(intent);
             }
         }
 
