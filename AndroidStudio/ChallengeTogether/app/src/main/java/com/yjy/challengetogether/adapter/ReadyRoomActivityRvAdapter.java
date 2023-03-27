@@ -43,7 +43,8 @@ public class ReadyRoomActivityRvAdapter extends RecyclerView.Adapter<ReadyRoomAc
             holder.imageView_crown.setVisibility(View.VISIBLE);
         }
 
-        // 방 소유자이면 2번째 유저부터 삭제표시
+        // 방 소유자이면 2번째 유저부터 삭제표시 : 강퇴 기능은 닉네임만 보이는 상황에선 필요없다 판단. 보류
+        /*
         if (item.getPermission().equals("owner") && position >= 1) {
             holder.ibutton_remove.setVisibility(View.VISIBLE);
 
@@ -55,7 +56,7 @@ public class ReadyRoomActivityRvAdapter extends RecyclerView.Adapter<ReadyRoomAc
                 }
             });
         }
-
+        */
 
 
     }

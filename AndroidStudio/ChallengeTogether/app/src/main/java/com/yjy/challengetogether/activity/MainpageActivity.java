@@ -6,11 +6,12 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.fragment.HomeFragment;
 import com.yjy.challengetogether.fragment.MyFragment;
-import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.fragment.TogetherFragment;
 
 public class MainpageActivity extends AppCompatActivity {
@@ -36,12 +37,15 @@ public class MainpageActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_home:
+                        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE); // TogetherFragment에서 addToBackStack로 쌓인 스택 모두 삭제
                         getSupportFragmentManager().beginTransaction() . replace(R.id.fragment_mainpage,fragment_home).commitAllowingStateLoss();
                         return true;
                     case R.id.action_together:
+                        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE); // TogetherFragment에서 addToBackStack로 쌓인 스택 모두 삭제
                         getSupportFragmentManager().beginTransaction() . replace(R.id.fragment_mainpage,fragment_together).commitAllowingStateLoss();
                         return true;
                     case R.id.action_my:
+                        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE); // TogetherFragment에서 addToBackStack로 쌓인 스택 모두 삭제
                         getSupportFragmentManager().beginTransaction() . replace(R.id.fragment_mainpage,fragment_my).commitAllowingStateLoss();
                         return true;
                 }

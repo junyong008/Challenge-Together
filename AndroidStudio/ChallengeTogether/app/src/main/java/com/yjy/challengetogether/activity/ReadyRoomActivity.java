@@ -3,7 +3,6 @@ package com.yjy.challengetogether.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -130,7 +129,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String Status = button_act.getText().toString();
                 if (Status.equals("시작하기")) {
-                    Log.d("ReadyRoomActivity", "시작하기");
+                    // 시작하기
 
                     util.showCustomDialog(new Util.OnConfirmListener() {
                         @Override
@@ -144,11 +143,15 @@ public class ReadyRoomActivity extends AppCompatActivity {
                                         if (result.indexOf("START SUCCESS") != -1) {
                                             StyleableToast.makeText(ReadyRoomActivity.this, "챌린지가 시작되었습니다!", R.style.successToast).show();
 
-                                            // 메인 액티비티 실행 후 그 외 모두 삭제
-                                            Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            // 바로 시작방으로 화면전환을 하며 현재 액티비티 종료
+                                            Intent intent = new Intent(ReadyRoomActivity.this, StartRoomActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            intent.putExtra("roomidx", roomidx);
                                             startActivity(intent);
                                             finish();
+
+                                            // StartRoomActivty는 CompleteRoom이 아니면 뒤로가기를 했을때 모든 액티비티를 클리어하고 HomeFragment를 띄우므로 isUserClicked는 불필요
+
                                         } else if (result.indexOf("NO SESSION") != -1) {
                                             StyleableToast.makeText(ReadyRoomActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
 
@@ -173,8 +176,86 @@ public class ReadyRoomActivity extends AppCompatActivity {
                         }
                     }, "챌린지를 시작하시겠습니까?", "confirm");
 
+                } else if (Status.equals("참여하기")) {
+                    // 참여하기
+
+                    util.showCustomDialog(new Util.OnConfirmListener() {
+                        @Override
+                        public void onConfirm(boolean isConfirmed, String msg) {
+                            if (isConfirmed) {
+
+                                OnTaskCompleted onStartRoomTaskCompleted = new OnTaskCompleted() {
+                                    @Override
+                                    public void onTaskCompleted(String result) {
+
+                                        if (result.indexOf("PARTICIPATE SUCCESS") != -1) {
+                                            recreate();
+                                        } else if (result.indexOf("FULL ROOM") != -1) {
+                                            StyleableToast.makeText(ReadyRoomActivity.this, "방이 가득 찼습니다.", R.style.errorToast).show();
+                                            recreate();
+                                        } else if (result.indexOf("ALREADY START") != -1) {
+                                            StyleableToast.makeText(ReadyRoomActivity.this, "이미 시작한 방입니다.", R.style.errorToast).show();
+                                            finish();
+                                        } else if (result.indexOf("NO SESSION") != -1) {
+                                            StyleableToast.makeText(ReadyRoomActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
+
+                                            // 로그인 액티비티 실행 후 그 외 모두 삭제
+                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            StyleableToast.makeText(ReadyRoomActivity.this, result, R.style.errorToast).show();
+                                            return;
+                                        }
+                                    }
+                                };
+
+                                HttpAsyncTask startRoomTask = new HttpAsyncTask(ReadyRoomActivity.this, onStartRoomTaskCompleted);
+                                String phpFile = "service.php";
+                                String postParameters = "service=participateroom&roomidx=" + roomidx;
+
+                                startRoomTask.execute(phpFile, postParameters, util.getSessionKey());
+                            }
+                        }
+                    }, "참가하시겠습니까?", "confirm");
                 } else {
-                    Log.d("ReadyRoomActivity", "참여하기");
+                    // 나가기
+
+                    OnTaskCompleted onStartRoomTaskCompleted = new OnTaskCompleted() {
+                        @Override
+                        public void onTaskCompleted(String result) {
+
+                            if (result.indexOf("EXIT SUCCESS") != -1) {
+                                // 바로 메인으로 이동
+                                Intent intent = new Intent(ReadyRoomActivity.this, MainpageActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra("roomidx", roomidx);
+                                startActivity(intent);
+                                finish();
+                            } else if (result.indexOf("ALREADY START") != -1) {
+                                StyleableToast.makeText(ReadyRoomActivity.this, "이미 시작한 방입니다.", R.style.errorToast).show();
+                                finish();
+                            } else if (result.indexOf("NO SESSION") != -1) {
+                                StyleableToast.makeText(ReadyRoomActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
+
+                                // 로그인 액티비티 실행 후 그 외 모두 삭제
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                StyleableToast.makeText(ReadyRoomActivity.this, result, R.style.errorToast).show();
+                                return;
+                            }
+                        }
+                    };
+
+                    HttpAsyncTask startRoomTask = new HttpAsyncTask(ReadyRoomActivity.this, onStartRoomTaskCompleted);
+                    String phpFile = "service.php";
+                    String postParameters = "service=exitroom&roomidx=" + roomidx;
+
+                    startRoomTask.execute(phpFile, postParameters, util.getSessionKey());
                 }
             }
         });
@@ -230,6 +311,8 @@ public class ReadyRoomActivity extends AppCompatActivity {
                         if (roomPermission.equals("owner")) {
                             ibutton_delete.setVisibility(View.VISIBLE);
                             button_act.setText("시작하기");
+                        } else if (roomPermission.equals("participant")) {
+                            button_act.setText("나가기");
                         }
 
 

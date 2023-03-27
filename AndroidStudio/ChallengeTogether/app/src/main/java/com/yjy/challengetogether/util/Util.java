@@ -182,6 +182,9 @@ public class Util extends Application {
         if (Type.equals("confirm")) {   // 단순 메시지, 확인, 취소 다이얼로그
             dialog.setContentView(R.layout.dialog_confirm); // xml 레이아웃 파일과 연결
 
+            TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+            confirmTextView.setText(Message);
+
             // 아니오 버튼
             Button noBtn = dialog.findViewById(R.id.noButton);
             noBtn.setOnClickListener(new View.OnClickListener() {
@@ -204,6 +207,9 @@ public class Util extends Application {
 
         } else if (Type.equals("reset")) {  // 메시지, 에딧창, 확인, 취소 구성
             dialog.setContentView(R.layout.dialog_reset); // xml 레이아웃 파일과 연결
+
+            TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+            confirmTextView.setText(Message);
 
             TextView TextView_info = dialog.findViewById(R.id.TextView_info);
             TextView_info.setText("다짐 새기기");
@@ -233,6 +239,9 @@ public class Util extends Application {
         } else if (Type.equals("congrats")) {   // 이미지, 확인 구성
             dialog.setContentView(R.layout.dialog_congrats);
 
+            TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+            confirmTextView.setText(Message);
+
             TextView TextView2 = dialog.findViewById(R.id.TextView2);
             TextView2.setText("축하합니다!");
 
@@ -245,10 +254,24 @@ public class Util extends Application {
                     listener.onConfirm(true, ""); // 확인 버튼 클릭 시 true를 전달
                 }
             });
-        }
+        } else if (Type.equals("inputpasswd")) {   // 메시지, 에딧창, 확인 구성
+            dialog.setContentView(R.layout.dialog_inputpasswd);
 
-        TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
-        confirmTextView.setText(Message);
+            TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+            confirmTextView.setText(Message);
+
+            EditText edit_content = dialog.findViewById(R.id.edit_content);
+
+            // 네 버튼
+            Button yesButton = dialog.findViewById(R.id.yesButton);
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    listener.onConfirm(true, edit_content.getText().toString().trim());
+                }
+            });
+        }
 
         dialog.show(); // 다이얼로그 띄우기
     }

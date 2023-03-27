@@ -62,7 +62,11 @@ public class HomeFragmentRvAdapter extends RecyclerView.Adapter<HomeFragmentRvAd
 
         // 시작을 했을떄만 유저의 최근 리셋 시작이 등록되기에 대기방인지 진행중인 방인지 구분
         if (item.getRecentStartTime().equals("0000-00-00 00:00:00")) {
-            holder.textView_time.setText("대기방");
+            if (item.getEndTime() / 86400 < 36500) {
+                holder.textView_time.setText("대기방 : " +  item.getEndTime() / 86400 + "일 목표");
+            } else {
+                holder.textView_time.setText("대기방 : 무제한 목표");
+            }
             holder.progressBar_percent.setVisibility(View.INVISIBLE);
             holder.textView_percent.setText("");
 
