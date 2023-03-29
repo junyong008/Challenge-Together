@@ -1,4 +1,5 @@
 <resources>
+
     <style name="Widget.Theme.ChallengeTogether.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
     </style>
@@ -30,7 +31,8 @@
         <item name="stStrokeWidth">3dp</item>
         <item name="stStrokeColor">#000000</item>
         <item name="stIconStart">@drawable/ic_error</item>
-        <item name="stLength">LONG</item> LONG or SHORT
+        <item name="stLength">LONG</item>
+        LONG or SHORT
         <item name="stRadius">10dp</item>
     </style>
 
@@ -42,8 +44,19 @@
         <item name="stStrokeWidth">3dp</item>
         <item name="stStrokeColor">#000000</item>
         <item name="stIconStart">@drawable/ic_success</item>
-        <item name="stLength">LONG</item> LONG or SHORT
+        <item name="stLength">LONG</item>
+        LONG or SHORT
         <item name="stRadius">10dp</item>
+    </style>
+
+    <style name="Widget.ChallengeTogether.AppWidget.Container" parent="android:Widget">
+        <item name="android:id">@android:id/background</item>
+        <item name="android:background">?android:attr/colorBackground</item>
+    </style>
+
+    <style name="Widget.ChallengeTogether.AppWidget.InnerView" parent="android:Widget">
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <!--ffcc00는 노랑 경고표시 추후 필요하면 추가 -->

@@ -164,6 +164,12 @@ public class Util extends Application {
             return formattedTime.toString().trim();
         }
 
+        if (outputType.equals("DH")) {
+            formattedTime.append(days).append("일 ");
+            formattedTime.append(hours).append("시간 ");
+            return formattedTime.toString().trim();
+        }
+
         return "";
     }
 

@@ -16,5 +16,7 @@
     <color name="red">#DB4455</color>
     <color name="gray">#d3d3d3</color>
     <color name="darkgray">#757575</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
 
 </resources>
