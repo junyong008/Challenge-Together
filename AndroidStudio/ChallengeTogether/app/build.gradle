@@ -40,6 +40,7 @@ dependencies {
             replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk8 is now part of kotlin-stdlib")
         }
     }
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"   // 당겨서 새로고침
     implementation 'com.tomergoldst.android:tooltips:1.1.1' // 커스텀 툴팁
     implementation 'com.github.prolificinteractive:material-calendarview:1.6.0' // 커스텀 캘린더뷰
     implementation 'com.akexorcist:round-corner-progress-bar:2.1.2' // 커스텀 프로그레스

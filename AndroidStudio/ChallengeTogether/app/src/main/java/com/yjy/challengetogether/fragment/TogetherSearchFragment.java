@@ -8,14 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.LoginActivity;
@@ -42,11 +45,16 @@ public class TogetherSearchFragment extends Fragment {
     private TextView textView_title, textView_none;
     private EditText edit_search;
     private String categoryicon, categorytitle;
+    private SwipeRefreshLayout refresh;
     private RecyclerView recyclerView_room;
     private TogetherSearchFragmentRvAdapter adapter;
     private LinearLayoutManager llm;
+    private ProgressBar progressBar;
+    private NestedScrollView ScrollView;
     private List<HomeItem> items;
     private Util util;
+    private int limit, maxRoomIdx, countOfLastLoad;
+    private String searchword;
 
     @Nullable
     @Override
@@ -60,6 +68,16 @@ public class TogetherSearchFragment extends Fragment {
         ibutton_search = view.findViewById(R.id.ibutton_search);
         edit_search = view.findViewById(R.id.edit_search);
         textView_none = view.findViewById(R.id.textView_none);
+        refresh = view.findViewById(R.id.refresh);
+        progressBar = view.findViewById(R.id.progressBar);
+        ScrollView = view.findViewById(R.id.ScrollView);
+
+        limit = 10; // 한번에 보여지는 항목 개수
+        maxRoomIdx = 0; // 보여준 항목들의 가장 마지막 ROOM_IDX를 저장했다가 유저가 스크롤을 계속 넘기면 그 이후 항목 10개를 추가로 받아오기 위함
+        searchword = "";
+        countOfLastLoad = 0; // 만약 마지막 받아온 항목이 limit 일때만 추가로 로드작업을 하기 위함.
+        items = new ArrayList<>(); // 외부에 선언하여 계속해서 서버 통신 없이 항목을 적재받기 위함.
+
 
         // 뒤로가기 버튼 클릭 (TogetherFragment로 전환 : 카테고리 선택 영역)
         ibutton_back.setOnClickListener(new View.OnClickListener() {
@@ -90,10 +108,10 @@ public class TogetherSearchFragment extends Fragment {
 
                 if (isJSON) {
                     try {
-                        // 전달받은 JSON에서 roomList 부분만 추출 ( 방 표면에 보여질 정보들 )
                         JSONArray jsonArray = new JSONArray(result);
-                        // items 이란 배열을 만들고, json 안의 내용을 HomeItem 클래스 객체 형태로 item에 저장후 이걸 items 배열에 주르륵 저장
-                        items = new ArrayList<>();
+                        countOfLastLoad = 0;
+
+                        // items를 미리 onCreate 에서 선언해두고 서버요청을 할때마다 계속 쌓는 방식. 서버 부담이 완화된다.
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject obj = jsonArray.getJSONObject(i);
 
@@ -107,6 +125,11 @@ public class TogetherSearchFragment extends Fragment {
                             item.setCurrentUserNum(obj.getString("CURRENTUSERNUM"));
                             item.setMaxUserNum(obj.getString("MAXUSERNUM"));
                             item.setRoomPasswd(obj.getString("PASSWD"));
+
+                            countOfLastLoad++;
+                            if (obj.getInt("ROOM_IDX") > maxRoomIdx) {
+                                maxRoomIdx = obj.getInt("ROOM_IDX");
+                            }
 
                             items.add(item);
                         }
@@ -123,6 +146,9 @@ public class TogetherSearchFragment extends Fragment {
 
                     adapter = new TogetherSearchFragmentRvAdapter(getActivity().getApplication(), items, util);
                     recyclerView_room.setAdapter(adapter);
+
+                    progressBar.setVisibility(View.GONE);
+                    refresh.setRefreshing(false);
 
                     // 방이 존재하면 안내메시지 가리기
                     if(items.size() > 0) {
@@ -146,31 +172,58 @@ public class TogetherSearchFragment extends Fragment {
 
         HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
         String phpFile = "service.php";
-        String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=";
+        String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=&limit=" + limit + "&lastroomidx=" + maxRoomIdx;
 
         loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
 
-
-
-
-        // 검색버튼 클릭 : edit_search의 내용을 받아와서 DB에서 다시 조건 검색.
-        ibutton_search.setOnClickListener(new View.OnClickListener() {
+        // 스크롤바 움직일때
+        ScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onClick(View v) {
-                String searchword = edit_search.getText().toString().trim();
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                // 스크롤이 끝에 닿고, 마지막 받아온 항목이 limit 일때만 로드
+                if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() && countOfLastLoad == limit) {
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
+                    String phpFile = "service.php";
+                    String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + maxRoomIdx;
+
+                    loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
+                }
+            }
+        });
+
+        // 새로고침
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                maxRoomIdx = 0;
+                items = new ArrayList<>();
 
                 HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
                 String phpFile = "service.php";
-                String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword;
+                String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + maxRoomIdx;
 
                 loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
             }
         });
 
+        // 검색버튼 클릭 : edit_search의 내용을 받아와서 DB에서 다시 조건 검색.
+        ibutton_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchword = edit_search.getText().toString().trim();
+                maxRoomIdx = 0;
+                items = new ArrayList<>();
 
+                HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
+                String phpFile = "service.php";
+                String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + maxRoomIdx;
 
-
-
+                loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
+            }
+        });
 
         return view;
     }
