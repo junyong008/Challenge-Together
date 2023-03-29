@@ -52,7 +52,6 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
         RemoteViews listviewWidget = new RemoteViews(context.getPackageName(), R.layout.item_widgetlv);
 
-
         // 아이콘 설정
         int drawableId = context.getResources().getIdentifier(item.getIcon(), "drawable", context.getPackageName());
         listviewWidget.setImageViewResource(R.id.imageView_icon, drawableId);

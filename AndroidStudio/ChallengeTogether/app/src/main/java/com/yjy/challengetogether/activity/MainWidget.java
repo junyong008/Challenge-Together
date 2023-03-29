@@ -3,14 +3,15 @@ package com.yjy.challengetogether.activity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.yjy.challengetogether.R;
-import com.yjy.challengetogether.etc.HomeItem;
 import com.yjy.challengetogether.etc.MyRemoteViewsService;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
 import com.yjy.challengetogether.util.CustomProgressDialog;
@@ -29,29 +30,9 @@ import java.util.Map;
 public class MainWidget extends AppWidgetProvider {
 
     private Util util;
-    private List<HomeItem> items;
-
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.main_widget);
-
-        // 위젯(최상단 레이아웃) 클릭시 어플 이동
-        Intent intent = new Intent(context, MainpageActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.parentLayout, pendingIntent);
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
-        // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
 
         util = new Util(context);
 
@@ -71,12 +52,19 @@ public class MainWidget extends AppWidgetProvider {
                         // RemoteViewsService 실행 등록
                         Intent serviceIntent = new Intent(context, MyRemoteViewsService.class);
                         serviceIntent.putExtra("result", result);
+                        serviceIntent.setData(Uri.fromParts("content", String.valueOf(System.currentTimeMillis()), null)); // 이 부분을 추가하여 Intent 객체를 새로 생성
 
-                        RemoteViews widget = new RemoteViews(context.getPackageName(), R.layout.main_widget);
-                        widget.setRemoteAdapter(R.id.widget_listview, serviceIntent);
+                        // 리스트뷰 Adapter 설정하여 업데이트
+                        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.main_widget);
+                        views.setRemoteAdapter(R.id.widget_listview, serviceIntent);
+
+                        // 위젯(최상단 레이아웃) 클릭시 어플 이동 설정
+                        Intent intent = new Intent(context, MainpageActivity.class);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+                        views.setOnClickPendingIntent(R.id.parentLayout, pendingIntent);
 
                         // 위젯 뷰 업데이트
-                        appWidgetManager.updateAppWidget(appWidgetIds, widget);
+                        appWidgetManager.updateAppWidget(appWidgetIds, views);
                     }
                 }
             };
@@ -87,9 +75,26 @@ public class MainWidget extends AppWidgetProvider {
 
             loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
         } catch (Exception e) {
-            Log.d("test", e.toString());
+            Log.d("MainWidget", e.toString());
         }
     }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        ComponentName testWidget = new ComponentName(context.getPackageName(), MainWidget.class.getName());
+
+        int[] widgetIds = appWidgetManager.getAppWidgetIds(testWidget);
+
+        if (intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+            if(widgetIds != null && widgetIds.length >0) {
+                this.onUpdate(context, AppWidgetManager.getInstance(context), widgetIds);
+            }
+        }
+    }
+
 
     public class HttpAsyncTask_Widget extends AsyncTask<String,Void,String> {
 

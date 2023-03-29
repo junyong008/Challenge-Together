@@ -1,5 +1,6 @@
 package com.yjy.challengetogether.fragment;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -25,6 +26,7 @@ import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.AddRoomActivity;
 import com.yjy.challengetogether.activity.CompleteChallengeListActivity;
 import com.yjy.challengetogether.activity.LoginActivity;
+import com.yjy.challengetogether.activity.MainWidget;
 import com.yjy.challengetogether.activity.RecordActivity;
 import com.yjy.challengetogether.adapter.HomeFragmentRvAdapter;
 import com.yjy.challengetogether.etc.HomeItem;
@@ -230,6 +232,10 @@ public class HomeFragment extends Fragment {
                     adapter = new HomeFragmentRvAdapter(getActivity().getApplication(), items);
                     recyclerView_mychallenges.setAdapter(adapter);
 
+                    // 위젯으로 업데이트하라고 브로드캐스트를 날림
+                    Intent intent = new Intent(getActivity().getApplicationContext(), MainWidget.class);
+                    intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                    getActivity().getApplicationContext().sendBroadcast(intent);
 
                     // 만약 최근에 완료한 챌린지 (유저가 아직 확인을 안한)가 있으면 다이얼로그로 축하메시지와 어디서 확인 가능한지 안내
                     if (!TextUtils.isEmpty(recentCompleteChallengeTitle)) {
