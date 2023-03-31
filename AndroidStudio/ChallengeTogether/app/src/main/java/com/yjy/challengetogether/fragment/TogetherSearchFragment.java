@@ -53,7 +53,7 @@ public class TogetherSearchFragment extends Fragment {
     private NestedScrollView ScrollView;
     private List<HomeItem> items;
     private Util util;
-    private int limit, maxRoomIdx, countOfLastLoad;
+    private int limit, minRoomIdx, countOfLastLoad;
     private String searchword;
 
     @Nullable
@@ -73,7 +73,7 @@ public class TogetherSearchFragment extends Fragment {
         ScrollView = view.findViewById(R.id.ScrollView);
 
         limit = 10; // 한번에 보여지는 항목 개수
-        maxRoomIdx = 0; // 보여준 항목들의 가장 마지막 ROOM_IDX를 저장했다가 유저가 스크롤을 계속 넘기면 그 이후 항목 10개를 추가로 받아오기 위함
+        minRoomIdx = 10000000; // 보여준 항목들의 가장 마지막 ROOM_IDX를 저장했다가 유저가 스크롤을 계속 넘기면 그 이후 항목 10개를 추가로 받아오기 위함
         searchword = "";
         countOfLastLoad = 0; // 만약 마지막 받아온 항목이 limit 일때만 추가로 로드작업을 하기 위함.
         items = new ArrayList<>(); // 외부에 선언하여 계속해서 서버 통신 없이 항목을 적재받기 위함.
@@ -127,8 +127,8 @@ public class TogetherSearchFragment extends Fragment {
                             item.setRoomPasswd(obj.getString("PASSWD"));
 
                             countOfLastLoad++;
-                            if (obj.getInt("ROOM_IDX") > maxRoomIdx) {
-                                maxRoomIdx = obj.getInt("ROOM_IDX");
+                            if (obj.getInt("ROOM_IDX") < minRoomIdx) {
+                                minRoomIdx = obj.getInt("ROOM_IDX");
                             }
 
                             items.add(item);
@@ -172,7 +172,7 @@ public class TogetherSearchFragment extends Fragment {
 
         HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
         String phpFile = "service.php";
-        String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=&limit=" + limit + "&lastroomidx=" + maxRoomIdx;
+        String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=&limit=" + limit + "&lastroomidx=" + minRoomIdx;
 
         loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
 
@@ -187,7 +187,7 @@ public class TogetherSearchFragment extends Fragment {
 
                     HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
                     String phpFile = "service.php";
-                    String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + maxRoomIdx;
+                    String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + minRoomIdx;
 
                     loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
                 }
@@ -198,12 +198,12 @@ public class TogetherSearchFragment extends Fragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                maxRoomIdx = 0;
+                minRoomIdx = 10000000;
                 items = new ArrayList<>();
 
                 HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
                 String phpFile = "service.php";
-                String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + maxRoomIdx;
+                String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + minRoomIdx;
 
                 loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
             }
@@ -214,12 +214,12 @@ public class TogetherSearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 searchword = edit_search.getText().toString().trim();
-                maxRoomIdx = 0;
+                minRoomIdx = 10000000;
                 items = new ArrayList<>();
 
                 HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
                 String phpFile = "service.php";
-                String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + maxRoomIdx;
+                String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + minRoomIdx;
 
                 loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
             }
