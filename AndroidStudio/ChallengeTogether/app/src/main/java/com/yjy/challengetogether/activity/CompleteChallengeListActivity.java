@@ -110,17 +110,8 @@ public class CompleteChallengeListActivity extends AppCompatActivity {
                     adapter = new CompleteChallengeListRvAdapter(CompleteChallengeListActivity.this, items);
                     recyclerView_mychallenges.setAdapter(adapter);
 
-                } else if (result.indexOf("NO SESSION") != -1) {
-                    StyleableToast.makeText(CompleteChallengeListActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
-
-                    // 로그인 액티비티 실행 후 그 외 모두 삭제
-                    Intent intent = new Intent(CompleteChallengeListActivity.this, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
                 } else {
-                    StyleableToast.makeText(CompleteChallengeListActivity.this, result, R.style.errorToast).show();
-                    return;
+                    util.checkHttpResult(result);
                 }
             }
         };

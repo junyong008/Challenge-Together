@@ -188,17 +188,8 @@ public class RecordActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                } else if (result.indexOf("NO SESSION") != -1) {
-                    StyleableToast.makeText(RecordActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
-
-                    // 로그인 액티비티 실행 후 그 외 모두 삭제
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
                 } else {
-                    StyleableToast.makeText(RecordActivity.this, result, R.style.errorToast).show();
-                    return;
+                    util.checkHttpResult(result);
                 }
             }
         };

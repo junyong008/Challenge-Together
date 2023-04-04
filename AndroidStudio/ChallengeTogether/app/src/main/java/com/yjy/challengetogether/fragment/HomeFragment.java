@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.AddRoomActivity;
 import com.yjy.challengetogether.activity.CompleteChallengeListActivity;
-import com.yjy.challengetogether.activity.LoginActivity;
 import com.yjy.challengetogether.activity.MainWidget;
 import com.yjy.challengetogether.activity.RecordActivity;
 import com.yjy.challengetogether.adapter.HomeFragmentRvAdapter;
@@ -44,8 +43,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import io.github.muddz.styleabletoast.StyleableToast;
 
 public class HomeFragment extends Fragment {
 
@@ -246,17 +243,8 @@ public class HomeFragment extends Fragment {
                     }
 
 
-                } else if (result.indexOf("NO SESSION") != -1) {
-                    StyleableToast.makeText(getActivity(), "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
-
-                    // 로그인 액티비티 실행 후 그 외 모두 삭제
-                    Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    getActivity().finish();
                 } else {
-                    StyleableToast.makeText(getActivity(), result, R.style.errorToast).show();
-                    return;
+                    util.checkHttpResult(result);
                 }
             }
         };

@@ -2,6 +2,8 @@ package com.yjy.challengetogether.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,8 @@ import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
 import com.yjy.challengetogether.util.HttpAsyncTask;
 import com.yjy.challengetogether.util.Util;
+
+import java.util.regex.Pattern;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
@@ -51,6 +55,19 @@ public class SignupActivity2 extends AppCompatActivity {
             }
         });
 
+        // 닉네임의 특문, 띄어쓰기 제한
+        edit_nickname.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                Pattern ps = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$");
+                if (source.equals("") || ps.matcher(source).matches()) {
+                    return source;
+                }
+                StyleableToast.makeText(SignupActivity2.this, "한글, 영문, 숫자만 입력 가능합니다.", R.style.errorToast).show();
+                return "";
+            }
+        },new InputFilter.LengthFilter(9)});
+
         // 닉네임 결정 버튼 클릭
         button_endsignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +99,7 @@ public class SignupActivity2 extends AppCompatActivity {
                             StyleableToast.makeText(SignupActivity2.this, "중복된 닉네임입니다.", R.style.errorToast).show();
                             return;
                         } else {
-                            StyleableToast.makeText(SignupActivity2.this, result, R.style.errorToast).show();
-                            return;
+                            util.checkHttpResult(result);
                         }
                     }
                 };

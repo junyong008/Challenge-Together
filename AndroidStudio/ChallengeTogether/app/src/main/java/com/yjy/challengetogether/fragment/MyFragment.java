@@ -131,58 +131,56 @@ public class MyFragment extends Fragment {
             }
         });
 
-        // 회원탈퇴 버튼 클릭
+        // 회원탈퇴 버튼 클릭 : 2차로 확인
         ibutton_deleteaccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 util.showCustomDialog(new Util.OnConfirmListener() {
-                    @Override
+                        @Override
                     public void onConfirm(boolean isConfirmed, String msg) {
                         if (isConfirmed) {
 
-                            OnTaskCompleted onDeleteAccountTaskCompleted = new OnTaskCompleted() {
+                            util.showCustomDialog(new Util.OnConfirmListener() {
                                 @Override
-                                public void onTaskCompleted(String result) {
-                                    Boolean isJSON = util.isJson(result);
+                                public void onConfirm(boolean isConfirmed, String msg) {
+                                    if (isConfirmed) {
+                                        OnTaskCompleted onDeleteAccountTaskCompleted = new OnTaskCompleted() {
+                                            @Override
+                                            public void onTaskCompleted(String result) {
+                                                Boolean isJSON = util.isJson(result);
 
-                                    if (result.indexOf("DELETE ACCOUNT SUCCESS") != -1) {
-                                        StyleableToast.makeText(getActivity().getApplicationContext(), "탈퇴되었습니다.", R.style.errorToast).show();
+                                                if (result.indexOf("DELETE ACCOUNT SUCCESS") != -1) {
+                                                    StyleableToast.makeText(getActivity().getApplicationContext(), "탈퇴되었습니다.", R.style.errorToast).show();
 
-                                        // 기기에 저장된 세션키 삭제
-                                        util.saveSessionKey("");
+                                                    // 기기에 저장된 세션키 삭제
+                                                    util.saveSessionKey("");
 
-                                        // 로그인 액티비티 실행 후 그 외 모두 삭제
-                                        Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        getActivity().finish();
-                                    } else if (result.indexOf("NO SESSION") != -1) {
-                                        StyleableToast.makeText(getActivity().getApplicationContext(), "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
+                                                    // 로그인 액티비티 실행 후 그 외 모두 삭제
+                                                    Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    startActivity(intent);
+                                                    getActivity().finish();
+                                                } else {
+                                                    util.checkHttpResult(result);
+                                                }
+                                            }
+                                        };
 
-                                        // 로그인 액티비티 실행 후 그 외 모두 삭제
-                                        Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        getActivity().finish();
-                                    } else {
-                                        StyleableToast.makeText(getActivity().getApplicationContext(), result, R.style.errorToast).show();
-                                        return;
+                                        HttpAsyncTask deleteAccountTask = new HttpAsyncTask(getActivity(), onDeleteAccountTaskCompleted);
+                                        String phpFile = "service.php";
+                                        String postParameters = "service=deleteaccount";
+
+                                        deleteAccountTask.execute(phpFile, postParameters, util.getSessionKey());
                                     }
                                 }
-                            };
+                            }, "\uD83D\uDE25 정말로 탈퇴하시겠습니까?", "confirm");
 
-                            HttpAsyncTask deleteAccountTask = new HttpAsyncTask(getActivity(), onDeleteAccountTaskCompleted);
-                            String phpFile = "service.php";
-                            String postParameters = "service=deleteaccount";
 
-                            deleteAccountTask.execute(phpFile, postParameters, util.getSessionKey());
                         }
                     }
-                }, "\uD83D\uDE25 정말로 탈퇴하시겠습니까?", "confirm");
+                }, "탈퇴하기", "deleteaccount");
             }
         });
-
-
 
 
 
@@ -251,17 +249,8 @@ public class MyFragment extends Fragment {
 
 
 
-                } else if (result.indexOf("NO SESSION") != -1) {
-                    StyleableToast.makeText(getActivity().getApplicationContext(), "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
-
-                    // 로그인 액티비티 실행 후 그 외 모두 삭제
-                    Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    getActivity().finish();
                 } else {
-                    StyleableToast.makeText(getActivity().getApplicationContext(), result, R.style.errorToast).show();
-                    return;
+                    util.checkHttpResult(result);
                 }
             }
         };

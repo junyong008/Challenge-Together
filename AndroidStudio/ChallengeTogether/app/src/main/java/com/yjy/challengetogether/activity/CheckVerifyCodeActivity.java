@@ -226,8 +226,7 @@ public class CheckVerifyCodeActivity extends AppCompatActivity {
                         editText1.setText(""); editText2.setText(""); editText3.setText(""); editText4.setText(""); editText5.setText(""); editText6.setText(""); editText1.requestFocus();
                         return;
                     } else {
-                        StyleableToast.makeText(CheckVerifyCodeActivity.this, result, R.style.errorToast).show();
-                        return;
+                        util.checkHttpResult(result);
                     }
                 }
             };

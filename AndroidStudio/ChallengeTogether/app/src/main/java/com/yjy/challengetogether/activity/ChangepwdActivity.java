@@ -70,8 +70,7 @@ public class ChangepwdActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            StyleableToast.makeText(ChangepwdActivity.this, result, R.style.errorToast).show();
-                            return;
+                            util.checkHttpResult(result);
                         }
                     }
                 };

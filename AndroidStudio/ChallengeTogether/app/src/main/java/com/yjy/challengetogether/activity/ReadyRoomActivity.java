@@ -96,17 +96,8 @@ public class ReadyRoomActivity extends AppCompatActivity {
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                         finish();
-                                    } else if (result.indexOf("NO SESSION") != -1) {
-                                        StyleableToast.makeText(ReadyRoomActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
-
-                                        // 로그인 액티비티 실행 후 그 외 모두 삭제
-                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        finish();
                                     } else {
-                                        StyleableToast.makeText(ReadyRoomActivity.this, result, R.style.errorToast).show();
-                                        return;
+                                        util.checkHttpResult(result);
                                     }
                                 }
                             };
@@ -152,17 +143,8 @@ public class ReadyRoomActivity extends AppCompatActivity {
 
                                             // StartRoomActivty는 CompleteRoom이 아니면 뒤로가기를 했을때 모든 액티비티를 클리어하고 HomeFragment를 띄우므로 isUserClicked는 불필요
 
-                                        } else if (result.indexOf("NO SESSION") != -1) {
-                                            StyleableToast.makeText(ReadyRoomActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
-
-                                            // 로그인 액티비티 실행 후 그 외 모두 삭제
-                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            startActivity(intent);
-                                            finish();
                                         } else {
-                                            StyleableToast.makeText(ReadyRoomActivity.this, result, R.style.errorToast).show();
-                                            return;
+                                            util.checkHttpResult(result);
                                         }
                                     }
                                 };
@@ -196,17 +178,8 @@ public class ReadyRoomActivity extends AppCompatActivity {
                                         } else if (result.indexOf("ALREADY START") != -1) {
                                             StyleableToast.makeText(ReadyRoomActivity.this, "이미 시작한 방입니다.", R.style.errorToast).show();
                                             finish();
-                                        } else if (result.indexOf("NO SESSION") != -1) {
-                                            StyleableToast.makeText(ReadyRoomActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
-
-                                            // 로그인 액티비티 실행 후 그 외 모두 삭제
-                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            startActivity(intent);
-                                            finish();
                                         } else {
-                                            StyleableToast.makeText(ReadyRoomActivity.this, result, R.style.errorToast).show();
-                                            return;
+                                            util.checkHttpResult(result);
                                         }
                                     }
                                 };
@@ -236,17 +209,8 @@ public class ReadyRoomActivity extends AppCompatActivity {
                             } else if (result.indexOf("ALREADY START") != -1) {
                                 StyleableToast.makeText(ReadyRoomActivity.this, "이미 시작한 방입니다.", R.style.errorToast).show();
                                 finish();
-                            } else if (result.indexOf("NO SESSION") != -1) {
-                                StyleableToast.makeText(ReadyRoomActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
-
-                                // 로그인 액티비티 실행 후 그 외 모두 삭제
-                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                                finish();
                             } else {
-                                StyleableToast.makeText(ReadyRoomActivity.this, result, R.style.errorToast).show();
-                                return;
+                                util.checkHttpResult(result);
                             }
                         }
                     };
@@ -342,17 +306,8 @@ public class ReadyRoomActivity extends AppCompatActivity {
                     adapter = new ReadyRoomActivityRvAdapter(ReadyRoomActivity.this, items);
                     recyclerView_participants.setAdapter(adapter);
 
-                } else if (result.indexOf("NO SESSION") != -1) {
-                    StyleableToast.makeText(ReadyRoomActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
-
-                    // 로그인 액티비티 실행 후 그 외 모두 삭제
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
                 } else {
-                    StyleableToast.makeText(ReadyRoomActivity.this, result, R.style.errorToast).show();
-                    return;
+                    util.checkHttpResult(result);
                 }
             }
         };

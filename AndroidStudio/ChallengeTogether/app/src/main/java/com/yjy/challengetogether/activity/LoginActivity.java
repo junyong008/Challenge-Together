@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -58,11 +59,22 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(LoginActivity.this, MainpageActivity.class);
                         startActivity(intent);
                         finish();
-                    } else {
+                    } else if (result.indexOf("NO SESSION") != -1) {
                         // 세션키는 스토리지에 있으나 서버에서 더이상 유효하지 않은 경우 스토리지에서 세션키 삭제
                         util.saveSessionKey("");
                         customProgressDialog.dismiss();
                         StyleableToast.makeText(LoginActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
+                        return;
+                    } else {
+                        util.showCustomDialog(new Util.OnConfirmListener() {
+                            @Override
+                            public void onConfirm(boolean isConfirmed, String msg) {
+                                if (isConfirmed) {
+                                    System.exit(0); // 어플 종료
+                                }
+                            }
+                        }, "서버와 연결이 원활하지 않습니다.\n잠시후 다시 이용해주세요.", "onlyconfirm");
+                        Log.d("HTTP ERROR", result);
                         return;
                     }
                 }
@@ -113,8 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                             StyleableToast.makeText(LoginActivity.this, "아이디 또는 비밀번호가 일치하지 않습니다.", R.style.errorToast).show();
                             return;
                         } else {
-                            StyleableToast.makeText(LoginActivity.this, result, R.style.errorToast).show();
-                            return;
+                            util.checkHttpResult(result);
                         }
                     }
                 };
