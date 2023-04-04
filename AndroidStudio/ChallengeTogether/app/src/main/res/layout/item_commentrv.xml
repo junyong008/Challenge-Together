@@ -1,0 +1,177 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="0dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView_replyenter"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_replyenter" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView_replyenter"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/trans_profile_fox" />
+
+                <TextView
+                    android:id="@+id/textView_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:gravity="center_vertical"
+                    android:maxWidth="250dp"
+                    android:maxLines="1"
+                    android:text="닉네임"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/imageView_writertag"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="21dp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@+id/textView_name"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_writertag" />
+
+                <TextView
+                    android:id="@+id/textView_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
+
+                    android:ellipsize="end"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:maxLines="10"
+                    android:text="content"
+                    android:textColor="@color/darkgray"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+                <TextView
+                    android:id="@+id/textView_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:visibility="gone"
+                    android:text="더보기"
+                    android:textColor="@color/gray"
+                    android:textSize="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_content" />
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="7dp"
+                    android:layout_marginStart="50dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_more">
+
+                    <TextView
+                        android:id="@+id/textView_createdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/fontstyle_culture"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="01/01 15:40"
+                        android:textColor="@color/gray"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/textView_reply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/fontstyle_culture"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="  ·  답글달기"
+                        android:textColor="@color/gray"
+                        android:textSize="15dp" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView_menu"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/ic_morevert"
+                    android:textColor="#808080"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e3e3e3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="10dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

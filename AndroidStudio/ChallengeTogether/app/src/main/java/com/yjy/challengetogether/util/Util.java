@@ -1,18 +1,29 @@
 package com.yjy.challengetogether.util;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.yjy.challengetogether.R;
+import com.yjy.challengetogether.activity.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +35,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class Util extends Application {
     private Context context;
@@ -174,6 +187,30 @@ public class Util extends Application {
     }
 
 
+    public void checkHttpResult(String result) {
+        if (result.indexOf("NO SESSION") != -1) {
+            StyleableToast.makeText(context, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
+
+            // 세션키 삭제, 로그인 액티비티 실행 후 그 외 모두 삭제
+            saveSessionKey("");
+            Intent intent = new Intent(context, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            ((Activity) context).finish();
+        } else {
+            showCustomDialog(new Util.OnConfirmListener() {
+                @Override
+                public void onConfirm(boolean isConfirmed, String msg) {
+                    if (isConfirmed) {
+                        System.exit(0); // 어플 종료
+                    }
+                }
+            }, "서버와 연결이 원활하지 않습니다.\n잠시후 다시 이용해주세요.", "onlyconfirm");
+            Log.d("HTTP ERROR", result);
+            return;
+        }
+    }
+
 
     public interface OnConfirmListener {
         void onConfirm(boolean isConfirmed, String message);
@@ -200,6 +237,22 @@ public class Util extends Application {
                     listener.onConfirm(false, ""); // 취소 버튼 클릭 시 false를 전달
                 }
             });
+
+            // 네 버튼
+            Button yesButton = dialog.findViewById(R.id.yesButton);
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    listener.onConfirm(true, ""); // 확인 버튼 클릭 시 true를 전달
+                }
+            });
+
+        } else if (Type.equals("onlyconfirm")) {   // 단순 메시지, 확인 다이얼로그
+            dialog.setContentView(R.layout.dialog_onlyconfirm); // xml 레이아웃 파일과 연결
+
+            TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+            confirmTextView.setText(Message);
 
             // 네 버튼
             Button yesButton = dialog.findViewById(R.id.yesButton);
@@ -275,6 +328,85 @@ public class Util extends Application {
                 public void onClick(View view) {
                     dialog.dismiss();
                     listener.onConfirm(true, edit_content.getText().toString().trim());
+                }
+            });
+        } else if (Type.equals("report")) {   // 메시지, 라디오 선택, 확인, 취소 구성
+            dialog.setContentView(R.layout.dialog_report);
+
+            TextView confirmTextView = dialog.findViewById(R.id.confirmTextView);
+            confirmTextView.setText(Message);
+
+            // 라디오 버튼
+            RadioGroup radioGroup = dialog.findViewById(R.id.radioGroup);
+
+            // 신고 버튼
+            Button yesButton = dialog.findViewById(R.id.yesButton);
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+                    RadioButton selectedRadioButton = dialog.findViewById(selectedId);
+                    String selectedValue = selectedRadioButton.getText().toString();
+                    dialog.dismiss();
+                    listener.onConfirm(true, selectedValue); // 확인 버튼 클릭 시 true를 전달하고 선택한 라디오 버튼의 값을 전달
+                }
+            });
+
+            // 닫기 버튼
+            ImageButton ibutton_close = dialog.findViewById(R.id.ibutton_close);
+            ibutton_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss(); // 다이얼로그 닫기
+                    listener.onConfirm(false, "");
+                }
+            });
+
+            // 항목 선택시 신고버튼 활성화
+            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    // yesButton 버튼 활성화
+                    yesButton.setEnabled(true);
+                    yesButton.setBackgroundResource(R.drawable.button_round);
+                }
+            });
+        } else if (Type.equals("deleteaccount")) {   // 메시지, 라디오 선택, 확인, 취소 구성
+            dialog.setContentView(R.layout.dialog_deleteaccount);
+
+            CheckBox checkBox = dialog.findViewById(R.id.checkBox);
+
+            // 탈퇴 버튼
+            Button yesButton = dialog.findViewById(R.id.yesButton);
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    listener.onConfirm(true, ""); // 확인 버튼 클릭 시 true를 전달하고 선택한 라디오 버튼의 값을 전달
+                }
+            });
+
+            // 닫기 버튼
+            ImageButton ibutton_close = dialog.findViewById(R.id.ibutton_close);
+            ibutton_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss(); // 다이얼로그 닫기
+                    listener.onConfirm(false, "");
+                }
+            });
+
+            // 체크박스 클릭시 회원탈퇴 버튼 활성화
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        yesButton.setEnabled(true);
+                        yesButton.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.button_round));
+                    } else {
+                        yesButton.setEnabled(false);
+                        yesButton.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.edit_round_litegray));
+                    }
                 }
             });
         }

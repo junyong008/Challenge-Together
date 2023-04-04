@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/edit_round"
+    android:gravity="center"
+    android:minWidth="300dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/confirmTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fontstyle_culture"
+            android:gravity="center_vertical"
+            android:minHeight="50dp"
+            android:text="탈퇴하기"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ibutton_close"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/TextView_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_round_litegray"
+        android:padding="16dp"
+        android:fontFamily="@font/fontstyle_culture"
+        android:minHeight="50dp"
+        android:textColor="@color/darkgray"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="1. 다음과 같은 정보들이 삭제됩니다.\n\n-  개인 챌린지\n-  아직 시작하지 않은 공개 챌린지\n-  사용자 기록, 닉네임\n\n2. 커뮤니티 작성 게시글 / 댓글은 (탈퇴 회원)으로 변경됩니다.\n\n3. 이미 시작한 공개 챌린지는 참여자 명단에서 제거됩니다.\n\n4. 모든 정보는 즉시 파기되며 복구가 불가능합니다."/>
+
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fontstyle_culture"
+        android:textColor="@color/red"
+        android:text="모두 확인했으며, 탈퇴에 동의합니다." />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/yesButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/edit_round_litegray"
+        android:enabled="false"
+        android:fontFamily="@font/fontstyle_culture"
+        android:text="탈퇴하기"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+</LinearLayout>

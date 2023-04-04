@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_home"
+
         android:icon="@drawable/ic_home"
         android:title="메인"
         android:enabled="true"/>
@@ -10,6 +11,11 @@
         android:id="@+id/action_together"
         android:icon="@drawable/ic_together"
         android:title="같이하기" />
+
+    <item
+        android:id="@+id/action_community"
+        android:icon="@drawable/ic_community"
+        android:title="커뮤니티" />
 
     <item
         android:id="@+id/action_my"
