@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,6 +25,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.AddPostActivity;
+import com.yjy.challengetogether.activity.MyCommentActivity;
+import com.yjy.challengetogether.activity.MyPostActivity;
 import com.yjy.challengetogether.adapter.CommunityFragmentRvAdapter;
 import com.yjy.challengetogether.etc.CommunityPostItem;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
@@ -44,11 +50,12 @@ public class CommunityFragment extends Fragment {
     private LinearLayoutManager llm;
     private List<CommunityPostItem> items;
 
+    private EditText edit_search;
     private TextView textView_none;
     private SwipeRefreshLayout refresh;
     private ProgressBar progressBar;
     private NestedScrollView ScrollView;
-    private ImageButton ibutton_addpost;
+    private ImageButton ibutton_search, ibutton_menu, ibutton_addpost, ibutton_closesearch;
     private Util util;
     private int limit, minPostIdx, countOfLastLoad;
     private String searchword;
@@ -62,6 +69,10 @@ public class CommunityFragment extends Fragment {
 
         util = new Util(requireActivity());
 
+        edit_search = view.findViewById(R.id.edit_search);
+        ibutton_search = view.findViewById(R.id.ibutton_search);
+        ibutton_closesearch = view.findViewById(R.id.ibutton_closesearch);
+        ibutton_menu = view.findViewById(R.id.ibutton_menu);
         textView_none = view.findViewById(R.id.textView_none);
         refresh = view.findViewById(R.id.refresh);
         progressBar = view.findViewById(R.id.progressBar);
@@ -121,7 +132,7 @@ public class CommunityFragment extends Fragment {
                     //SnapHelper snapHelper = new PagerSnapHelper();
                     //snapHelper.attachToRecyclerView(rv);
 
-                    adapter = new CommunityFragmentRvAdapter(getActivity().getApplication(), items, util);
+                    adapter = new CommunityFragmentRvAdapter(getActivity().getApplication(), CommunityFragment.this, items, util);
                     recyclerView_posts.setAdapter(adapter);
 
                     progressBar.setVisibility(View.GONE);
@@ -144,6 +155,64 @@ public class CommunityFragment extends Fragment {
 
         loadPostTask.execute(phpFile, postParameters, util.getSessionKey());
 
+        // 검색 버튼 클릭
+        ibutton_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edit_search.setVisibility(View.VISIBLE);
+                ibutton_closesearch.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // 검색창 닫기 버튼 클릭
+        ibutton_closesearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchword="";
+                edit_search.setText("");
+                edit_search.setVisibility(View.GONE);
+                ibutton_closesearch.setVisibility(View.GONE);
+
+                minPostIdx = 10000000;
+                items = new ArrayList<>();
+
+                HttpAsyncTask loadPostTask = new HttpAsyncTask(getActivity(), onLoadPostTaskCompleted);
+                String phpFile = "service.php";
+                String postParameters = "service=getcommunityposts&searchword=" + searchword + "&limit=" + limit + "&lastpostidx=" + minPostIdx;
+
+                loadPostTask.execute(phpFile, postParameters, util.getSessionKey());
+            }
+        });
+
+        // 엔터를 누르면 문자열을 받아와 검색
+        edit_search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER){
+                    searchword = edit_search.getText().toString();
+
+                    minPostIdx = 10000000;
+                    items = new ArrayList<>();
+
+                    HttpAsyncTask loadPostTask = new HttpAsyncTask(getActivity(), onLoadPostTaskCompleted);
+                    String phpFile = "service.php";
+                    String postParameters = "service=getcommunityposts&searchword=" + searchword + "&limit=" + limit + "&lastpostidx=" + minPostIdx;
+
+                    loadPostTask.execute(phpFile, postParameters, util.getSessionKey());
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+        // 커뮤니티 우측 상단 메뉴 버튼 클릭
+        ibutton_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
+            }
+        });
 
         // 게시글 추가 버튼 클릭
         ibutton_addpost.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +220,7 @@ public class CommunityFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddPostActivity.class);
                 startActivityForResult(intent, 1);
+                getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
             }
         });
 
@@ -187,19 +257,59 @@ public class CommunityFragment extends Fragment {
             }
         });
 
-
-
         return view;
     }
+
+
+    // 팝업 메뉴 표시
+    private void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+        popupMenu.inflate(R.menu.community_menu);
+
+        // 옵션 처리
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_writtenpost:
+                        getWrittenPost();
+                        return true;
+                    case R.id.menu_writtencomment:
+                        getWrittenComment();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        popupMenu.show();
+    }
+
+    // 작성한 게시글 불러오기
+    private void getWrittenPost() {
+        Intent intent = new Intent(getActivity(), MyPostActivity.class);
+        startActivityForResult(intent, 1);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+    }
+
+    // 작성한 댓글이 포함된 게시글 불러오기
+    private void getWrittenComment() {
+        Intent intent = new Intent(getActivity(), MyCommentActivity.class);
+        startActivityForResult(intent, 1);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+    }
+
 
     // AddPostActivity에서 반환된 결과 처리
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             String result = data.getStringExtra("result");
             if (result.equals("success")) {
-                // 게시글 추가 성공 처리
+                // 게시글 목록 다시 불러오기
                 getActivity().recreate();
             }
         }

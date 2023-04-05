@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,8 +26,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import io.github.muddz.styleabletoast.StyleableToast;
 
 public class RecordActivity extends AppCompatActivity {
 
@@ -108,11 +107,25 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 툴팁으로 기록이 어떤걸 의미하는지 상세 설명
+
+                // 이전에 보여진 툴팁이 있다면 제거
+                if (mToolTipsManager != null) {
+                    mToolTipsManager.findAndDismiss(ivbutton_info);
+                }
+
                 mToolTipsManager = new ToolTipsManager();
                 ToolTip.Builder builder = new ToolTip.Builder(RecordActivity.this, ivbutton_info, findViewById(R.id.ConstraintLayout_parent), "도전 횟수는 무제한 도전을 포함한 횟수에요!", ToolTip.POSITION_ABOVE);
                 builder.setBackgroundColor(getResources().getColor(R.color.black));
                 builder.setTextAppearance(R.style.TooltipTextAppearance);
                 mToolTipsManager.show(builder.build());
+
+                // 2초 후에 툴팁을 숨기기
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mToolTipsManager.findAndDismiss(ivbutton_info);
+                    }
+                }, 2000);
             }
         });
 

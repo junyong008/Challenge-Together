@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_writtenpost"
+        android:title="작성한 글" />
+    <item
+        android:id="@+id/menu_writtencomment"
+        android:title="댓글단 글" />
+</menu>

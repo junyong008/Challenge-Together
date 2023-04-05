@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -162,7 +163,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
         }
 
         // 댓글 메뉴 버튼 추가
-        holder.textView_menu.setOnClickListener(new View.OnClickListener() {
+        holder.ibutton_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopupMenu(v, item);
@@ -236,22 +237,29 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
     // 댓글 삭제 처리
     private void deleteComment(CommunityCommentItem selectedItem) {
 
-        OnTaskCompleted onDeleteCommentTaskCompleted = new OnTaskCompleted() {
+        util.showCustomDialog(new Util.OnConfirmListener() {
             @Override
-            public void onTaskCompleted(String result) {
-                if (result.indexOf("DELETE SUCCESS") != -1) {
-                    postActivity.recreate();
-                } else {
-                    util.checkHttpResult(result);
+            public void onConfirm(boolean isConfirmed, String msg) {
+                if (isConfirmed) {
+                    OnTaskCompleted onDeleteCommentTaskCompleted = new OnTaskCompleted() {
+                        @Override
+                        public void onTaskCompleted(String result) {
+                            if (result.indexOf("DELETE SUCCESS") != -1) {
+                                postActivity.reLoadComments();
+                            } else {
+                                util.checkHttpResult(result);
+                            }
+                        }
+                    };
+
+                    HttpAsyncTask deleteCommentTask = new HttpAsyncTask(postActivity, onDeleteCommentTaskCompleted);
+                    String phpFile = "service.php";
+                    String postParameters = "service=deletecomment&commentidx=" + selectedItem.getCommentidx();
+
+                    deleteCommentTask.execute(phpFile, postParameters, util.getSessionKey());
                 }
             }
-        };
-
-        HttpAsyncTask deleteCommentTask = new HttpAsyncTask(postActivity, onDeleteCommentTaskCompleted);
-        String phpFile = "service.php";
-        String postParameters = "service=deletecomment&commentidx=" + selectedItem.getCommentidx();
-
-        deleteCommentTask.execute(phpFile, postParameters, util.getSessionKey());
+        }, "댓글을 삭제하시겠습니까?", "confirm");
     }
 
     // 댓글 신고 처리
@@ -291,8 +299,9 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         CardView cardView_item;
-        TextView textView_name, textView_content, textView_more, textView_createdate, textView_like, textView_dislike, textView_comment, textView_menu, textView_reply;
+        TextView textView_name, textView_content, textView_more, textView_createdate, textView_like, textView_dislike, textView_comment, textView_reply;
         ImageView imageView_replyenter, imageView_writertag;
+        ImageButton ibutton_menu;
         ConstraintLayout constraintLayout;
         View view;
 
@@ -308,7 +317,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
             textView_like = itemView.findViewById(R.id.textView_like);
             textView_dislike = itemView.findViewById(R.id.textView_dislike);
             textView_comment = itemView.findViewById(R.id.textView_comment);
-            textView_menu = itemView.findViewById(R.id.textView_menu);
+            ibutton_menu = itemView.findViewById(R.id.ibutton_menu);
             textView_reply = itemView.findViewById(R.id.textView_reply);
             imageView_replyenter = itemView.findViewById(R.id.imageView_replyenter);
             imageView_writertag = itemView.findViewById(R.id.imageView_writertag);

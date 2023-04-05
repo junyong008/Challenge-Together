@@ -1,8 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_comment_delete"
+        android:id="@+id/menu_post_delete"
         android:title="삭제" />
     <item
-        android:id="@+id/menu_comment_report"
+        android:id="@+id/menu_post_modify"
+        android:title="수정" />
+    <item
+        android:id="@+id/menu_post_report"
         android:title="신고" />
 </menu>
