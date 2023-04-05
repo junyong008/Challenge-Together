@@ -1,9 +1,11 @@
 package com.yjy.challengetogether.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,17 +42,17 @@ import io.github.muddz.styleabletoast.StyleableToast;
 
 public class PostActivity extends AppCompatActivity {
 
-    private ImageButton ibutton_back, ibutton_send;
+    private ImageButton ibutton_back, ibutton_send, ibutton_menu;
     private Button button_like, button_dislike;
-    private TextView textView_name, textView_createdate, textView_menu, textView_content, textView_likecount, textView_dislikecount, textView_commentcount, textView_none;
+    private TextView textView_name, textView_createdate, textView_content, textView_likecount, textView_dislikecount, textView_commentcount, textView_none;
     private RecyclerView recyclerView_comments;
     private PostActivityRvAdapter adapter;
     private LinearLayoutManager llm;
     private List<CommunityCommentItem> items;
     private EditText edit_comment;
-    private String sessionUserIdx;
-    private String writerIdx;
-    private String postidx;
+    private String sessionUserIdx, writerIdx, postidx, postContent;
+    private boolean isChange;
+    private OnTaskCompleted onLoadCommentTaskCompleted;
     private com.yjy.challengetogether.util.Util util = new Util(PostActivity.this);
 
     @Override
@@ -57,7 +60,15 @@ public class PostActivity extends AppCompatActivity {
         if (adapter.replyCommentIdx != -1) {
             adapter.clearHighlight();
         } else {
+
+            // 댓글달기, 좋아요 or 싫어요 클릭과 같은 외부 표시 변경사항이 있으면 뒤로가기할때 다시 불러오기 요청
+            if (isChange) {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("result", "success");
+                setResult(Activity.RESULT_OK, resultIntent);
+            }
             finish();
+            overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
         }
     }
 
@@ -68,11 +79,12 @@ public class PostActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         postidx = intent.getStringExtra("postidx");
+        isChange = false;
 
         ibutton_back = findViewById(R.id.ibutton_back);
         textView_name = findViewById(R.id.textView_name);
         textView_createdate = findViewById(R.id.textView_createdate);
-        textView_menu = findViewById(R.id.textView_menu);
+        ibutton_menu = findViewById(R.id.ibutton_menu);
         textView_content = findViewById(R.id.textView_content);
         textView_likecount = findViewById(R.id.textView_likecount);
         textView_dislikecount = findViewById(R.id.textView_dislikecount);
@@ -92,12 +104,21 @@ public class PostActivity extends AppCompatActivity {
                 if (adapter.replyCommentIdx != -1) {
                     adapter.clearHighlight();
                 } else {
+                    Log.d("test", String.valueOf(isChange));
+                    if (isChange) {
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("result", "success");
+                        setResult(Activity.RESULT_OK, resultIntent);
+                    }
                     finish();
+                    overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
                 }
             }
         });
 
-        OnTaskCompleted onLoadCommentTaskCompleted = new OnTaskCompleted() {
+
+        // 게시글 정보 및 댓글 목록 쭉 받아오기. 댓글을 달거나 추천 등을 클릭하면 아래 로직을 다시 실행시킨다.
+        onLoadCommentTaskCompleted = new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(String result) {
                 Boolean isJSON = util.isJson(result);
@@ -110,11 +131,20 @@ public class PostActivity extends AppCompatActivity {
                         JSONObject obj = new JSONObject(jsonObject.getString("postInfo"));
                         String writerName = obj.getString("NAME");
                         String createdate = obj.getString("CREATEDATE");
+                        String modifydate = obj.getString("MODIFYDATE");
                         writerIdx = obj.getString("USER_IDX");
 
                         try {
                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            Date date = dateFormat.parse(createdate);
+
+                            // 수정된 기록이 존재하면 수정된 날짜를 기준으로 표기
+                            Date date;
+                            if (!modifydate.equals("0000-00-00 00:00:00")) {
+                                date = dateFormat.parse(modifydate);
+                            } else {
+                                date = dateFormat.parse(createdate);
+                            }
+
 
                             Calendar calendar = Calendar.getInstance();
                             long now = calendar.getTimeInMillis();
@@ -135,14 +165,24 @@ public class PostActivity extends AppCompatActivity {
                             throw new RuntimeException(e);
                         }
 
-                        String postContent = obj.getString("CONTENT");
+                        postContent = obj.getString("CONTENT");
                         String likeCount = obj.getString("LIKECOUNT");
                         String dislikeCount = obj.getString("DISLIKECOUNT");
                         String commentCount = obj.getString("COMMENTCOUNT");
                         sessionUserIdx = obj.getString("SESSIONUSER_IDX");   // 현재 세션 주인 (로그인 유저)의 USER_IDX를 받아와 게시글/댓글 주인 여부 확인
 
+                        // 탈퇴 회원이면 닉네임 회색처리
                         textView_name.setText(writerName);
-                        textView_createdate.setText(createdate);
+                        if (writerName.equals("(탈퇴 회원)")) {
+                            textView_name.setTextColor(ContextCompat.getColor(PostActivity.this, R.color.gray));
+                        }
+
+                        // 수정된 게시글이면 '수정됨' 표기를 붙여서 수정됨을 알림
+                        if (!modifydate.equals("0000-00-00 00:00:00")) {
+                            textView_createdate.setText(createdate + "  ·  수정됨");
+                        } else {
+                            textView_createdate.setText(createdate);
+                        }
                         textView_content.setText(postContent);
                         textView_likecount.setText(likeCount);
                         textView_dislikecount.setText(dislikeCount);
@@ -235,16 +275,17 @@ public class PostActivity extends AppCompatActivity {
                     @Override
                     public void onTaskCompleted(String result) {
                         if (result.indexOf("ADD SUCCESS") != -1) {
-
                             // 키보드 내리기
                             InputMethodManager imm = (InputMethodManager) PostActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                             if (imm != null && imm.isActive()) {
                                 imm.hideSoftInputFromWindow(edit_comment.getWindowToken(), 0);
                             }
 
-                            // 댓글 입력 창 비우고 recreate
+                            // 댓글 입력 창 비우기
                             edit_comment.setText("");
-                            recreate();
+
+                            // 다시 게시글 정보 받아와서 최신화 하기
+                            reLoadComments();
                         } else {
                             util.checkHttpResult(result);
                         }
@@ -270,7 +311,7 @@ public class PostActivity extends AppCompatActivity {
 
 
         // 게시글 메뉴 버튼 클릭
-        textView_menu.setOnClickListener(new View.OnClickListener() {
+        ibutton_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopupMenu(v);
@@ -284,7 +325,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onTaskCompleted(String result) {
                 if (result.indexOf("ADD SUCCESS") != -1) {
-                    recreate();
+                    reLoadComments();
                 } else if (result.indexOf("ALREADY LIKE") != -1) {
                     StyleableToast.makeText(PostActivity.this, "이미 추천하셨습니다.", R.style.errorToast).show();
                 } else if (result.indexOf("ALREADY DISLIKE") != -1) {
@@ -321,6 +362,16 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
+    public void reLoadComments() {
+        isChange = true;
+
+        // 서버에서 다시 게시글 정보 받아오기
+        HttpAsyncTask loadCommentTask = new HttpAsyncTask(PostActivity.this, onLoadCommentTaskCompleted);
+        String phpFile = "service.php";
+        String postParameters = "service=getcomments&postidx=" + postidx;
+        loadCommentTask.execute(phpFile, postParameters, util.getSessionKey());
+    }
+
     // 팝업 메뉴 표시
     private void showPopupMenu(View view) {
         PopupMenu popupMenu = new PopupMenu(PostActivity.this, view);
@@ -331,13 +382,15 @@ public class PostActivity extends AppCompatActivity {
         if (writerIdx.equals(sessionUserIdx)) {
             // 게시글을 접속한 사용자가 작성한 경우 - 신고버튼 숨김
 
-            MenuItem reportMenuItem = menu.findItem(R.id.menu_comment_report);
+            MenuItem reportMenuItem = menu.findItem(R.id.menu_post_report);
             reportMenuItem.setVisible(false);
         } else {
-            // 다른 사용자의 댓글일 경우 - 삭제버튼 숨김
+            // 다른 사용자의 댓글일 경우 - 삭제, 수정 버튼 숨김
 
-            MenuItem deleteMenuItem = menu.findItem(R.id.menu_comment_delete);
+            MenuItem deleteMenuItem = menu.findItem(R.id.menu_post_delete);
+            MenuItem modifyMenuItem = menu.findItem(R.id.menu_post_modify);
             deleteMenuItem.setVisible(false);
+            modifyMenuItem.setVisible(false);
         }
 
         // 옵션 처리
@@ -345,10 +398,13 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.menu_comment_delete:
+                    case R.id.menu_post_delete:
                         deletePost();
                         return true;
-                    case R.id.menu_comment_report:
+                    case R.id.menu_post_modify:
+                        modifyPost();
+                        return true;
+                    case R.id.menu_post_report:
                         reportPost();
                         return true;
                     default:
@@ -371,10 +427,9 @@ public class PostActivity extends AppCompatActivity {
                         @Override
                         public void onTaskCompleted(String result) {
                             if (result.indexOf("DELETE SUCCESS") != -1) {
-                                StyleableToast.makeText(PostActivity.this, "삭제되었습니다.", R.style.successToast).show();
-                                Intent intent = new Intent(PostActivity.this, MainpageActivity.class);
-                                intent.putExtra("FRAGMENT_TO_SHOW", "community_fragment");
-                                startActivity(intent);
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra("result", "success");
+                                setResult(Activity.RESULT_OK, resultIntent);
                                 finish();
                             } else {
                                 util.checkHttpResult(result);
@@ -390,6 +445,14 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         }, "게시글을 삭제하시겠습니까?", "confirm");
+    }
+
+    // 게시글 수정 처리
+    private void modifyPost() {
+        Intent intent = new Intent(PostActivity.this, ModifyPostActivity.class);
+        intent.putExtra("postidx", postidx);
+        intent.putExtra("postcontent", postContent);
+        startActivityForResult(intent, 1);
     }
 
     // 게시글 신고 처리
@@ -420,6 +483,18 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         }, "\uD83D\uDCE2   신고사유를 선택해주세요.", "report");
+    }
+
+    // ModifyPostActivity에서 반환된 결과 처리
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            String result = data.getStringExtra("result");
+            if (result.equals("success")) {
+                reLoadComments();
+            }
+        }
     }
 
     // PostActivityRvAdapter 에서 답글달기를 할때 포커스 및 스크롤 이동효과를 주기 위한 접근용 getter 메서드

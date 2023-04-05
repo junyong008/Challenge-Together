@@ -149,15 +149,14 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView_menu"
+                <ImageButton
+                    android:id="@+id/ibutton_menu"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="21dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/ic_morevert"
-                    android:textColor="#808080"
-                    android:textSize="18sp"
+                    android:background="@drawable/ripple_effect"
+                    app:srcCompat="@drawable/ic_morevert"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

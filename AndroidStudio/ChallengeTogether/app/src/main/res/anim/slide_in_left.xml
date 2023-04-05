@@ -1,6 +1,6 @@
 <!-- slide_in_left.xml -->
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="@android:integer/config_mediumAnimTime">
+    android:duration="@android:integer/config_shortAnimTime">
     <translate
         android:fromXDelta="-100%"
         android:toXDelta="0%"

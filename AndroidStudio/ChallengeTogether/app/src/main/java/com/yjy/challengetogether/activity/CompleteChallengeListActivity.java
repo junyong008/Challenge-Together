@@ -1,9 +1,8 @@
 package com.yjy.challengetogether.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,11 +23,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.muddz.styleabletoast.StyleableToast;
-
 public class CompleteChallengeListActivity extends AppCompatActivity {
 
-    private ImageView ivbutton_back;
+    private ImageButton ibutton_back;
     private TextView textView_none;
     private RecyclerView recyclerView_mychallenges;
     private CompleteChallengeListRvAdapter adapter;
@@ -37,19 +34,26 @@ public class CompleteChallengeListActivity extends AppCompatActivity {
     private com.yjy.challengetogether.util.Util util = new Util(CompleteChallengeListActivity.this);
 
     @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completechallengelist);
 
-        ivbutton_back = findViewById(R.id.ivbutton_back);
+        ibutton_back = findViewById(R.id.ibutton_back);
         textView_none = findViewById(R.id.textView_none);
         recyclerView_mychallenges = findViewById(R.id.recyclerView_mychallenges);
 
         // 뒤로가기 버튼 클릭
-        ivbutton_back.setOnClickListener(new View.OnClickListener() {
+        ibutton_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+                overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
             }
         });
 

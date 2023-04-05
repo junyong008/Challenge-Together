@@ -93,6 +93,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CompleteChallengeListActivity.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
             }
         });
 

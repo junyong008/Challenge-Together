@@ -34,7 +34,7 @@
             android:layout_height="36dp"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center_vertical"
-            android:background="@android:color/transparent"
+            android:background="@drawable/ripple_effect"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

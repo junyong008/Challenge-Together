@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.PostActivity;
 import com.yjy.challengetogether.etc.CommunityPostItem;
+import com.yjy.challengetogether.fragment.CommunityFragment;
 import com.yjy.challengetogether.util.Util;
 
 import java.text.SimpleDateFormat;
@@ -24,11 +25,13 @@ import java.util.List;
 public class CommunityFragmentRvAdapter extends RecyclerView.Adapter<CommunityFragmentRvAdapter.CustomViewHolder> {
 
     private Context context;
+    private CommunityFragment communityFragment;
     private List<CommunityPostItem> items;
     private Util util;
 
-    public CommunityFragmentRvAdapter(Context context, List<CommunityPostItem> items, Util util) {
+    public CommunityFragmentRvAdapter(Context context, CommunityFragment communityFragment, List<CommunityPostItem> items, Util util) {
         this.context = context;
+        this.communityFragment = communityFragment;
         this.items = items;
         this.util = util;
     }
@@ -53,10 +56,18 @@ public class CommunityFragmentRvAdapter extends RecyclerView.Adapter<CommunityFr
         holder.textView_dislike.setText(item.getDislike());
         holder.textView_comment.setText(item.getCommentcount());
 
+        String newDateString;
         // yyyy-MM-dd HH:mm:ss 형식을 MM/dd HH:mm로 변환하여 표시
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = dateFormat.parse(item.getCreatedate());
+
+            // 수정된 기록이 존재하면 수정된 날짜를 기준으로 표기
+            Date date;
+            if (!item.getModifydate().equals("0000-00-00 00:00:00")) {
+                date = dateFormat.parse(item.getModifydate());
+            } else {
+                date = dateFormat.parse(item.getCreatedate());
+            }
 
             Calendar calendar = Calendar.getInstance();
             long now = calendar.getTimeInMillis();
@@ -65,16 +76,20 @@ public class CommunityFragmentRvAdapter extends RecyclerView.Adapter<CommunityFr
             if (diff >= 60 * 60 * 1000) {
                 // 1시간 이상 차이나면 "MM/dd HH:mm" 형식으로 표기
                 SimpleDateFormat newDateFormat = new SimpleDateFormat("MM/dd HH:mm");
-                String newDateString = newDateFormat.format(date);
-                holder.textView_createdate.setText(newDateString);
+                newDateString = newDateFormat.format(date);
             } else {
                 // 1시간 이내 차이나면 "mm분 전" 형식으로 표기
                 long minutes = diff / (60 * 1000);
-                String newDateString = minutes + "분 전";
-                holder.textView_createdate.setText(newDateString);
+                newDateString = minutes + "분 전";
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+
+        if (!item.getModifydate().equals("0000-00-00 00:00:00")) {
+            holder.textView_createdate.setText(newDateString + "  ·  수정됨");
+        } else {
+            holder.textView_createdate.setText(newDateString);
         }
 
         CardView cardView_item = holder.itemView.findViewById(R.id.cardView_item);
@@ -82,9 +97,11 @@ public class CommunityFragmentRvAdapter extends RecyclerView.Adapter<CommunityFr
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), PostActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("postidx", item.getPostidx());
-                holder.itemView.getContext().startActivity(intent);
+                communityFragment.startActivityForResult(intent, 1);
+
+                communityFragment.getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+
             }
         });
 

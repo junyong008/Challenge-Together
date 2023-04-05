@@ -26,6 +26,12 @@ public class AddPostActivity extends AppCompatActivity {
     private com.yjy.challengetogether.util.Util util = new Util(AddPostActivity.this);
 
     @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addpost);
@@ -39,6 +45,7 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
             }
         });
 
