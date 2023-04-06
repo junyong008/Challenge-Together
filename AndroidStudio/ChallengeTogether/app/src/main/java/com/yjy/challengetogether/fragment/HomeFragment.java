@@ -1,6 +1,5 @@
 package com.yjy.challengetogether.fragment;
 
-import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -25,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.AddRoomActivity;
 import com.yjy.challengetogether.activity.CompleteChallengeListActivity;
-import com.yjy.challengetogether.activity.MainWidget;
 import com.yjy.challengetogether.activity.RecordActivity;
 import com.yjy.challengetogether.adapter.HomeFragmentRvAdapter;
 import com.yjy.challengetogether.etc.HomeItem;
@@ -98,6 +96,14 @@ public class HomeFragment extends Fragment {
         });
 
         util = new Util(requireActivity());
+
+        // 위젯 최신화
+        // 추가로 서버와 동기화가 필요한 부분 : 방생성(생성시 HomeFragment로 이동하므로 생략), 챌린지포기(동일이유 생략), 챌린지리셋, 챌린지시작-방장, 챌린지시작감지-개인
+        // 왜 아무 서버와 변동 없는 HomeFragment에 접속하는것 만으로 서버에 동기화 해줘야하는가?
+        // -> 만약 참가한 챌린지의 방장이 사용자들이 어플에 접속하지 않았을때 시작을 하면 이는 FCM을 통해 전송되고 사용자들을 이를 받아 서버와 동기화하고 푸시를 수신받는다.
+        //    하지만 이때 모종의 이유로 서버와 접속이 원활치 않는 사용자는 서버와 동기화가 되지않는다. 이렇게 되면 위의 5가지 행동을 하지 않으면 위젯의 정보가 누락된다. 이를 방지
+        util.saveOngoingChallenges();
+
 
         ibutton_addchallenge = view.findViewById(R.id.ibutton_addchallenge);
         recyclerView_mychallenges = view.findViewById(R.id.recyclerView_mychallenges);
@@ -229,11 +235,6 @@ public class HomeFragment extends Fragment {
 
                     adapter = new HomeFragmentRvAdapter(getActivity().getApplication(), items);
                     recyclerView_mychallenges.setAdapter(adapter);
-
-                    // 위젯으로 업데이트하라고 브로드캐스트를 날림
-                    Intent intent = new Intent(getActivity().getApplicationContext(), MainWidget.class);
-                    intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-                    getActivity().getApplicationContext().sendBroadcast(intent);
 
                     // 만약 최근에 완료한 챌린지 (유저가 아직 확인을 안한)가 있으면 다이얼로그로 축하메시지와 어디서 확인 가능한지 안내
                     if (!TextUtils.isEmpty(recentCompleteChallengeTitle)) {

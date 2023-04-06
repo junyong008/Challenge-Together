@@ -41,6 +41,17 @@
         android:layout_marginHorizontal="0dp"
         android:background="#e3e3e3" />
 
+    <TextView
+        android:id="@+id/textView_none"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/fontstyle_culture"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:text="진행중인 도전이 존재하지 않습니다.\n어플에 접속해 새로운 도전을 추가해보세요"
+        android:textColor="@color/gray" />
+
     <ListView
         android:id="@+id/widget_listview"
         android:layout_width="wrap_content"

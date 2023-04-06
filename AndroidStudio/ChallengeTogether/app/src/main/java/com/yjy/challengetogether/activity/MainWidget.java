@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.yjy.challengetogether.R;
@@ -36,47 +38,32 @@ public class MainWidget extends AppWidgetProvider {
 
         util = new Util(context);
 
-        try {
-            OnTaskCompleted onLoadRoomTaskCompleted = new OnTaskCompleted() {
-                @Override
-                public void onTaskCompleted(String result) {
+        String result = util.getOngoingChallenges();
 
-                    Boolean isJSON = util.isJson(result);
+        // 리스트뷰 Adapter 설정하여 업데이트
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.main_widget);
 
-                    if (isJSON) {
+        // 위젯(최상단 레이아웃) 클릭시 어플 이동 설정
+        Intent intent = new Intent(context, LoginActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        views.setOnClickPendingIntent(R.id.parentLayout, pendingIntent);
 
-                        if (!result.contains("roomList")) { // 방이 없으면 리턴
-                            return;
-                        }
+        if (TextUtils.isEmpty(result)) {
+            // 아무항목도 없을경우 없음 메시지 표시
+            views.setViewVisibility(R.id.textView_none, View.VISIBLE);
+        } else {
+            // 항목이 있을경우 메시지 가림
+            views.setViewVisibility(R.id.textView_none, View.GONE);
 
-                        // RemoteViewsService 실행 등록
-                        Intent serviceIntent = new Intent(context, MyRemoteViewsService.class);
-                        serviceIntent.putExtra("result", result);
-                        serviceIntent.setData(Uri.fromParts("content", String.valueOf(System.currentTimeMillis()), null)); // 이 부분을 추가하여 Intent 객체를 새로 생성
-
-                        // 리스트뷰 Adapter 설정하여 업데이트
-                        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.main_widget);
-                        views.setRemoteAdapter(R.id.widget_listview, serviceIntent);
-
-                        // 위젯(최상단 레이아웃) 클릭시 어플 이동 설정
-                        Intent intent = new Intent(context, MainpageActivity.class);
-                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-                        views.setOnClickPendingIntent(R.id.parentLayout, pendingIntent);
-
-                        // 위젯 뷰 업데이트
-                        appWidgetManager.updateAppWidget(appWidgetIds, views);
-                    }
-                }
-            };
-
-            HttpAsyncTask_Widget loadRoomTask = new HttpAsyncTask_Widget(context, onLoadRoomTaskCompleted);
-            String phpFile = "service.php";
-            String postParameters = "service=gethomefraginfos";
-
-            loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
-        } catch (Exception e) {
-            Log.d("MainWidget", e.toString());
+            // RemoteViewsService 실행 등록
+            Intent serviceIntent = new Intent(context, MyRemoteViewsService.class);
+            serviceIntent.putExtra("result", result);
+            serviceIntent.setData(Uri.fromParts("content", String.valueOf(System.currentTimeMillis()), null)); // 이 부분을 추가하여 Intent 객체를 새로 생성
+            views.setRemoteAdapter(R.id.widget_listview, serviceIntent);
         }
+
+        // 위젯 뷰 업데이트
+        appWidgetManager.updateAppWidget(appWidgetIds, views);
     }
 
     @Override

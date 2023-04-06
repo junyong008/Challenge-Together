@@ -117,6 +117,9 @@ public class MyFragment extends Fragment {
                         if (isConfirmed) {
                             StyleableToast.makeText(getActivity().getApplicationContext(), "로그아웃되었습니다.", R.style.errorToast).show();
 
+                            // 기기에 저장된 도전 정보 삭제
+                            util.initOngoingChallenges();
+
                             // 기기에 저장된 세션키 삭제
                             util.saveSessionKey("");
 
@@ -151,6 +154,9 @@ public class MyFragment extends Fragment {
 
                                                 if (result.indexOf("DELETE ACCOUNT SUCCESS") != -1) {
                                                     StyleableToast.makeText(getActivity().getApplicationContext(), "탈퇴되었습니다.", R.style.errorToast).show();
+
+                                                    // 기기에 저장된 도전 정보 삭제
+                                                    util.initOngoingChallenges();
 
                                                     // 기기에 저장된 세션키 삭제
                                                     util.saveSessionKey("");

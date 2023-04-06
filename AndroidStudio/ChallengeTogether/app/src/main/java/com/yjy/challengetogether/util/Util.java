@@ -3,6 +3,7 @@ package com.yjy.challengetogether.util;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Dialog;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +25,8 @@ import androidx.core.content.ContextCompat;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.LoginActivity;
+import com.yjy.challengetogether.activity.MainWidget;
+import com.yjy.challengetogether.etc.OnTaskCompleted;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -89,6 +92,62 @@ public class Util extends Application {
         SharedPreferences sharedPreferences = context.getSharedPreferences("logininfo", context.MODE_PRIVATE);
         return sharedPreferences.getString("sessionKey", "");
     }
+
+    /** 스토리지에 저장된 도전 정보 삭제 */
+    public void initOngoingChallenges() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appinfo", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("challenges", "");
+        editor.apply();
+
+        // 위젯 업데이트
+        Intent intent = new Intent(context, MainWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        context.sendBroadcast(intent);
+    }
+
+
+    /** 스토리지에 진행중인 도전 정보들 서버로 부터 받아와 저장 */
+    public void saveOngoingChallenges() {
+        OnTaskCompleted onLoadRoomTaskCompleted = new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(String result) {
+                if (isJson(result) || result.indexOf("NO ROOM") != -1) {
+
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("appinfo", context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    // 방이 없으면 스토리지에 빈값 저장
+                    if (result.indexOf("NO ROOM") != -1) {
+                        editor.putString("challenges", "");
+                    } else {
+                        editor.putString("challenges", result);
+                    }
+                    editor.apply();
+
+                    // 위젯 업데이트
+                    Intent intent = new Intent(context, MainWidget.class);
+                    intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                    context.sendBroadcast(intent);
+                } else {
+                    checkHttpResult(result);
+                }
+            }
+        };
+
+        HttpAsyncTask loadRoomTask = new HttpAsyncTask(context, onLoadRoomTaskCompleted);
+        String phpFile = "service.php";
+        String postParameters = "service=getongoingchallenges";
+
+        loadRoomTask.execute(phpFile, postParameters, getSessionKey());
+    }
+
+    /** 스토리지에 저장된 진행중인 도전 정보들 받아와서 반환해주기 */
+    public String getOngoingChallenges() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appinfo", context.MODE_PRIVATE);
+        return sharedPreferences.getString("challenges", "");
+    }
+
 
     /** 문자열이 JSON인지 검사 */
     public static boolean isJson(String jsonString) {

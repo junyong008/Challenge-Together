@@ -127,6 +127,7 @@ public class StartRoomActivity extends AppCompatActivity {
                                 public void onTaskCompleted(String result) {
 
                                     if (result.indexOf("RESET SUCCESS") != -1) {
+                                        util.saveOngoingChallenges();
                                         StyleableToast.makeText(StartRoomActivity.this, "리셋되었습니다.", R.style.successToast).show();
                                         recreate(); // 현재 액티비티를 다시 불러옴
 

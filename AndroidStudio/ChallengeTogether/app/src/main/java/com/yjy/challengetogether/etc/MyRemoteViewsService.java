@@ -28,10 +28,7 @@ public class MyRemoteViewsService extends RemoteViewsService {
         String result = intent.getStringExtra("result");
 
         try {
-            JSONObject jsonObject = new JSONObject(result);
-
-            // 전달받은 JSON에서 roomList 부분만 추출 ( 방 표면에 보여질 정보들 )
-            JSONArray jsonArray = new JSONArray(jsonObject.getString("roomList"));
+            JSONArray jsonArray = new JSONArray(result);
             // items 이란 배열을 만들고, json 안의 내용을 HomeItem 클래스 객체 형태로 item에 저장후 이걸 items 배열에 주르륵 저장
             items = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -39,18 +36,13 @@ public class MyRemoteViewsService extends RemoteViewsService {
 
                 HomeItem item = new HomeItem();
 
-                // 완료된 챌린지는 추가하지 않음.
+                // 완료된 챌린지는 추가하지 않음. 서버에서 걸러주지만 괜히 한번더
                 if (!obj.getString("RECENTSTARTTIME").equals("0000-00-00 00:00:00")) {
                     int dayOfCurrentTime = Integer.parseInt(util.DiffWithLocalTime(obj.getString("RECENTSTARTTIME"), "DAY"));
                     int endTime = obj.getInt("ENDTIME");
                     if (dayOfCurrentTime >= endTime) {
                         continue;
                     }
-                }
-
-                // 대기중인 챌린지는 추가하지 않음
-                if (!obj.getString("ISSTART").equals("1")) {
-                    continue;
                 }
 
                 item.setIcon(obj.getString("CHALLENGETYPE"));

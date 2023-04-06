@@ -132,6 +132,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                                     public void onTaskCompleted(String result) {
 
                                         if (result.indexOf("START SUCCESS") != -1) {
+                                            util.saveOngoingChallenges();
                                             StyleableToast.makeText(ReadyRoomActivity.this, "챌린지가 시작되었습니다!", R.style.successToast).show();
 
                                             // 바로 시작방으로 화면전환을 하며 현재 액티비티 종료
