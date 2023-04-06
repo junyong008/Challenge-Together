@@ -109,6 +109,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
+                android:id="@+id/ibutton_bookmark"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ripple_effect"
+                app:srcCompat="@drawable/ic_bookmark"
+                app:layout_constraintEnd_toStartOf="@+id/ibutton_menu"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
                 android:id="@+id/ibutton_menu"
                 android:layout_width="20dp"
                 android:layout_height="20dp"

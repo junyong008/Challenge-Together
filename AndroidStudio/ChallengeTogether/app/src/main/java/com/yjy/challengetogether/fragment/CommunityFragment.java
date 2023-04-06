@@ -25,6 +25,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.AddPostActivity;
+import com.yjy.challengetogether.activity.BookmarkPostActivity;
 import com.yjy.challengetogether.activity.MyCommentActivity;
 import com.yjy.challengetogether.activity.MyPostActivity;
 import com.yjy.challengetogether.adapter.CommunityFragmentRvAdapter;
@@ -271,6 +272,9 @@ public class CommunityFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
+                    case R.id.menu_bookmark:
+                        getBookmark();
+                        return true;
                     case R.id.menu_writtenpost:
                         getWrittenPost();
                         return true;
@@ -284,6 +288,13 @@ public class CommunityFragment extends Fragment {
         });
 
         popupMenu.show();
+    }
+
+    // 북마크한 게시글 불러오기
+    private void getBookmark() {
+        Intent intent = new Intent(getActivity(), BookmarkPostActivity.class);
+        startActivityForResult(intent, 1);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
     }
 
     // 작성한 게시글 불러오기

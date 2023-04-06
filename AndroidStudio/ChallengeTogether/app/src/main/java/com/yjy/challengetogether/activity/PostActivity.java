@@ -42,7 +42,7 @@ import io.github.muddz.styleabletoast.StyleableToast;
 
 public class PostActivity extends AppCompatActivity {
 
-    private ImageButton ibutton_back, ibutton_send, ibutton_menu;
+    private ImageButton ibutton_back, ibutton_send, ibutton_bookmark, ibutton_menu;
     private Button button_like, button_dislike;
     private TextView textView_name, textView_createdate, textView_content, textView_likecount, textView_dislikecount, textView_commentcount, textView_none;
     private RecyclerView recyclerView_comments;
@@ -51,7 +51,7 @@ public class PostActivity extends AppCompatActivity {
     private List<CommunityCommentItem> items;
     private EditText edit_comment;
     private String sessionUserIdx, writerIdx, postidx, postContent;
-    private boolean isChange;
+    private boolean isChange, isBookmark;
     private OnTaskCompleted onLoadCommentTaskCompleted;
     private com.yjy.challengetogether.util.Util util = new Util(PostActivity.this);
 
@@ -84,6 +84,7 @@ public class PostActivity extends AppCompatActivity {
         ibutton_back = findViewById(R.id.ibutton_back);
         textView_name = findViewById(R.id.textView_name);
         textView_createdate = findViewById(R.id.textView_createdate);
+        ibutton_bookmark = findViewById(R.id.ibutton_bookmark);
         ibutton_menu = findViewById(R.id.ibutton_menu);
         textView_content = findViewById(R.id.textView_content);
         textView_likecount = findViewById(R.id.textView_likecount);
@@ -170,6 +171,17 @@ public class PostActivity extends AppCompatActivity {
                         String dislikeCount = obj.getString("DISLIKECOUNT");
                         String commentCount = obj.getString("COMMENTCOUNT");
                         sessionUserIdx = obj.getString("SESSIONUSER_IDX");   // 현재 세션 주인 (로그인 유저)의 USER_IDX를 받아와 게시글/댓글 주인 여부 확인
+                        if (obj.getString("ISBOOKMARK").equals("1")) {
+                            isBookmark = true;
+                        } else {
+                            isBookmark = false;
+                        }
+
+
+                        // 북마크 된 게시글이면 색칠하기
+                        if (isBookmark) {
+                            ibutton_bookmark.setImageResource(R.drawable.ic_bookmarkfill);
+                        }
 
                         // 탈퇴 회원이면 닉네임 회색처리
                         textView_name.setText(writerName);
@@ -315,6 +327,60 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showPopupMenu(v);
+            }
+        });
+
+
+
+
+        // 북마크 추가/제거 서버 통신
+        OnTaskCompleted onChangeBookmarkTaskCompleted = new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(String result) {
+                if (result.indexOf("ADD SUCCESS") != -1) {
+                    isChange = true;
+                    isBookmark = true;
+                    ibutton_bookmark.setImageResource(R.drawable.ic_bookmarkfill);
+                    StyleableToast.makeText(PostActivity.this, "북마크가 추가되었습니다.", R.style.successToast).show();
+                } else if (result.indexOf("DELETE SUCCESS") != -1) {
+                    isChange = true;
+                    isBookmark = false;
+                    ibutton_bookmark.setImageResource(R.drawable.ic_bookmark);
+                    StyleableToast.makeText(PostActivity.this, "북마크가 제거되었습니다.", R.style.successToast).show();
+                } else {
+                    util.checkHttpResult(result);
+                }
+            }
+        };
+
+        // 북마크 버튼 클릭
+        ibutton_bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                util.showCustomDialog(new Util.OnConfirmListener() {
+                    @Override
+                    public void onConfirm(boolean isConfirmed, String msg) {
+                        if (isConfirmed) {
+
+                            if (!isBookmark) {
+                                // 북마크 안돼있으면 추가
+                                HttpAsyncTask changeBookmarkTask = new HttpAsyncTask(PostActivity.this, onChangeBookmarkTaskCompleted);
+                                String phpFile = "service.php";
+                                String postParameters = "service=changebookmark&postidx=" + postidx;
+                                changeBookmarkTask.execute(phpFile, postParameters, util.getSessionKey());
+                            } else {
+                                // 북마크 돼있으면 제거
+                                HttpAsyncTask changeBookmarkTask = new HttpAsyncTask(PostActivity.this, onChangeBookmarkTaskCompleted);
+                                String phpFile = "service.php";
+                                String postParameters = "service=changebookmark&postidx=" + postidx;
+                                changeBookmarkTask.execute(phpFile, postParameters, util.getSessionKey());
+                            }
+
+                        }
+                    }
+                }, "북마크를 " + (isBookmark ? "제거" : "추가") + "하시겠습니까?", "confirm");
+
             }
         });
 
