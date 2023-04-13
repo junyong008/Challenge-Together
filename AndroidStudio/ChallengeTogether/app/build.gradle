@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -40,6 +41,12 @@ dependencies {
             replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk8 is now part of kotlin-stdlib")
         }
     }
+    implementation platform('com.google.firebase:firebase-bom:31.3.0')
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.4' // 리사이클러뷰 스와이프 액션
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'  // 권한 허가 요청 알림창
+    implementation "androidx.work:work-runtime:2.8.0"   // workmanager 알람 기능
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"   // 당겨서 새로고침
     implementation 'com.tomergoldst.android:tooltips:1.1.1' // 커스텀 툴팁
     implementation 'com.github.prolificinteractive:material-calendarview:1.6.0' // 커스텀 캘린더뷰

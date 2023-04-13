@@ -3,6 +3,7 @@ package com.yjy.challengetogether.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -197,7 +198,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
 
     // 팝업 메뉴 표시
     private void showPopupMenu(View view, CommunityCommentItem item) {
-        PopupMenu popupMenu = new PopupMenu(context, view);
+        PopupMenu popupMenu = new PopupMenu(context, view, Gravity.END,0,R.style.MyPopupMenu);
         popupMenu.inflate(R.menu.comment_menu);
 
         // 아이템 숨김 처리

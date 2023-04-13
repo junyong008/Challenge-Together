@@ -1,4 +1,4 @@
-package com.yjy.challengetogether.activity;
+package com.yjy.challengetogether.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.yjy.challengetogether.R;
-import com.yjy.challengetogether.etc.MyRemoteViewsService;
+import com.yjy.challengetogether.activity.LoginActivity;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
 import com.yjy.challengetogether.util.CustomProgressDialog;
 import com.yjy.challengetogether.util.Util;
@@ -45,7 +45,7 @@ public class MainWidget extends AppWidgetProvider {
 
         // 위젯(최상단 레이아웃) 클릭시 어플 이동 설정
         Intent intent = new Intent(context, LoginActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.parentLayout, pendingIntent);
 
         if (TextUtils.isEmpty(result)) {

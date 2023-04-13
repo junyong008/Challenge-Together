@@ -3,10 +3,14 @@ package com.yjy.challengetogether.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,17 +35,17 @@ import io.github.muddz.styleabletoast.StyleableToast;
 
 public class ReadyRoomActivity extends AppCompatActivity {
 
-    private ImageButton ibutton_close;
+    private ImageButton ibutton_close, ibutton_menu;
     private TextView textView_roomnum;
     private ImageView imageView_icon;
     private TextView textView_title, textView_writer, textView_targetday, textView_passwd, textView_content, textView_participates;
-    private ImageButton ibutton_delete;
     private Button button_act;
 
     private RecyclerView recyclerView_participants;
     private ReadyRoomActivityRvAdapter adapter;
     private LinearLayoutManager llm;
     private List<RoomItem> items;
+    private String roomidx, roomPermission;
     private com.yjy.challengetogether.util.Util util = new Util(ReadyRoomActivity.this);
 
     @Override
@@ -50,10 +54,11 @@ public class ReadyRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_readyroom);
 
         Intent intent = getIntent();
-        String roomidx = intent.getStringExtra("roomidx");
+        roomidx = intent.getStringExtra("roomidx");
 
 
         ibutton_close = findViewById(R.id.ibutton_close);
+        ibutton_menu = findViewById(R.id.ibutton_menu);
         textView_roomnum = findViewById(R.id.textView_roomnum);
         imageView_icon = findViewById(R.id.imageView_icon);
         textView_title = findViewById(R.id.textView_title);
@@ -62,7 +67,6 @@ public class ReadyRoomActivity extends AppCompatActivity {
         textView_passwd = findViewById(R.id.textView_passwd);
         textView_content = findViewById(R.id.textView_content);
         textView_participates = findViewById(R.id.textView_participates);
-        ibutton_delete = findViewById(R.id.ibutton_delete);
         button_act = findViewById(R.id.button_act);
 
 
@@ -74,44 +78,6 @@ public class ReadyRoomActivity extends AppCompatActivity {
             }
         });
 
-
-        // 삭제 버튼 클릭
-        ibutton_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                util.showCustomDialog(new Util.OnConfirmListener() {
-                    @Override
-                    public void onConfirm(boolean isConfirmed, String msg) {
-                        if (isConfirmed) {  // 안내 Dialog 확인버튼을 눌렀을 경우만
-
-                            OnTaskCompleted onDeleteRoomTaskCompleted = new OnTaskCompleted() {
-                                @Override
-                                public void onTaskCompleted(String result) {
-
-                                    if (result.indexOf("DELETE SUCCESS") != -1) {
-                                        StyleableToast.makeText(ReadyRoomActivity.this, "삭제되었습니다.", R.style.successToast).show();
-
-                                        // 메인 액티비티 실행 후 그 외 모두 삭제
-                                        Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        util.checkHttpResult(result);
-                                    }
-                                }
-                            };
-
-                            HttpAsyncTask deleteRoomTask = new HttpAsyncTask(ReadyRoomActivity.this, onDeleteRoomTaskCompleted);
-                            String phpFile = "service.php";
-                            String postParameters = "service=deleteroom&roomidx=" + roomidx;
-
-                            deleteRoomTask.execute(phpFile, postParameters, util.getSessionKey());
-                        }
-                    }
-                }, "방을 삭제하시겠습니까?", "confirm");
-            }
-        });
 
 
         // 참가하기 or 시작하기 버튼 클릭
@@ -249,7 +215,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                         String roomPasswd = obj1.getString("PASSWD");
                         String roomCurrentUserNum = obj1.getString("CURRENTUSERNUM");
                         String roomMaxUserNum = obj1.getString("MAXUSERNUM");
-                        String roomPermission = obj1.getString("PERMISSION");
+                        roomPermission = obj1.getString("PERMISSION");
 
                         // 방 정보 설정
                         textView_roomnum.setText(roomidx + " 번 방");
@@ -272,9 +238,8 @@ public class ReadyRoomActivity extends AppCompatActivity {
                         textView_content.setText(roomContent);
                         textView_participates.setText("참여할 사람들  [ " + roomCurrentUserNum + " / " + roomMaxUserNum + " ]");
 
-                        // 방 권한에 따라 삭제, 시작 버튼 visible
+                        // 방 권한에 따라 시작 or 참가 or 나가기 버튼으로 변경
                         if (roomPermission.equals("owner")) {
-                            ibutton_delete.setVisibility(View.VISIBLE);
                             button_act.setText("시작하기");
                         } else if (roomPermission.equals("participant")) {
                             button_act.setText("나가기");
@@ -307,6 +272,12 @@ public class ReadyRoomActivity extends AppCompatActivity {
                     adapter = new ReadyRoomActivityRvAdapter(ReadyRoomActivity.this, items);
                     recyclerView_participants.setAdapter(adapter);
 
+                } else if (result.indexOf("DELETED ROOM") != -1) {
+                    StyleableToast.makeText(ReadyRoomActivity.this, "삭제된 방입니다.", R.style.errorToast).show();
+                    finish();
+                } else if (result.indexOf("ALREADY START") != -1) {
+                    StyleableToast.makeText(ReadyRoomActivity.this, "이미 시작된 방입니다.", R.style.errorToast).show();
+                    finish();
                 } else {
                     util.checkHttpResult(result);
                 }
@@ -320,5 +291,89 @@ public class ReadyRoomActivity extends AppCompatActivity {
         loadReadyRoomInfoTask.execute(phpFile, postParameters, util.getSessionKey());
 
 
+        // 메뉴 버튼 클릭
+        ibutton_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
+            }
+        });
+
     }
+
+
+    // 팝업 메뉴 표시
+    private void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(ReadyRoomActivity.this, view, Gravity.END,0,R.style.MyPopupMenu);
+        popupMenu.inflate(R.menu.readyroom_menu);
+
+        // 아이템 숨김 처리
+        Menu menu = popupMenu.getMenu();
+        if (!roomPermission.equals("owner")) {
+            // 방 주인이 아닌경우 삭제 숨김
+            MenuItem deleteMenuItem = menu.findItem(R.id.menu_room_delete);
+            deleteMenuItem.setVisible(false);
+        }
+
+        // 옵션 처리
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_room_refresh:
+                        refreshRoom();
+                        return true;
+                    case R.id.menu_room_delete:
+                        deleteRoom();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        popupMenu.show();
+    }
+
+    // 방 삭제 처리
+    private void deleteRoom() {
+
+        util.showCustomDialog(new Util.OnConfirmListener() {
+            @Override
+            public void onConfirm(boolean isConfirmed, String msg) {
+                if (isConfirmed) {  // 안내 Dialog 확인버튼을 눌렀을 경우만
+
+                    OnTaskCompleted onDeleteRoomTaskCompleted = new OnTaskCompleted() {
+                        @Override
+                        public void onTaskCompleted(String result) {
+
+                            if (result.indexOf("DELETE SUCCESS") != -1) {
+                                StyleableToast.makeText(ReadyRoomActivity.this, "삭제되었습니다.", R.style.successToast).show();
+
+                                // 메인 액티비티 실행 후 그 외 모두 삭제
+                                Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                util.checkHttpResult(result);
+                            }
+                        }
+                    };
+
+                    HttpAsyncTask deleteRoomTask = new HttpAsyncTask(ReadyRoomActivity.this, onDeleteRoomTaskCompleted);
+                    String phpFile = "service.php";
+                    String postParameters = "service=deleteroom&roomidx=" + roomidx;
+
+                    deleteRoomTask.execute(phpFile, postParameters, util.getSessionKey());
+                }
+            }
+        }, "방을 삭제하시겠습니까?", "confirm");
+    }
+
+    // 방 새로고침
+    private void refreshRoom() {
+        recreate();
+    }
+
 }

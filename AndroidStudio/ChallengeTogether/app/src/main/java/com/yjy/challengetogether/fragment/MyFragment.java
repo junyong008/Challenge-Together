@@ -20,6 +20,7 @@ import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.ChangepwdActivity;
 import com.yjy.challengetogether.activity.LoginActivity;
+import com.yjy.challengetogether.activity.PushSettingActivity;
 import com.yjy.challengetogether.activity.RecordActivity;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
 import com.yjy.challengetogether.util.HttpAsyncTask;
@@ -39,7 +40,7 @@ public class MyFragment extends Fragment {
     private TextView textView_nickname, textView_grade;
     private RoundCornerProgressBar progress_nextgrade;
     private ImageView imageView_nextgrade;
-    private Button ibutton_inquire, ibutton_changepwd, ibutton_logout, ibutton_deleteaccount;
+    private Button ibutton_pushsetting, ibutton_inquire, ibutton_changepwd, ibutton_logout, ibutton_deleteaccount;
 
     private Util util;
 
@@ -56,6 +57,7 @@ public class MyFragment extends Fragment {
         textView_grade = view.findViewById(R.id.textView_grade);
         progress_nextgrade = view.findViewById(R.id.progress_nextgrade);
         imageView_nextgrade = view.findViewById(R.id.imageView_nextgrade);
+        ibutton_pushsetting = view.findViewById(R.id.ibutton_pushsetting);
         ibutton_inquire = view.findViewById(R.id.ibutton_inquire);
         ibutton_changepwd = view.findViewById(R.id.ibutton_changepwd);
         ibutton_logout = view.findViewById(R.id.ibutton_logout);
@@ -67,6 +69,16 @@ public class MyFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        // 알림 설정 버튼 클릭
+        ibutton_pushsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PushSettingActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
             }
         });
 
@@ -115,13 +127,10 @@ public class MyFragment extends Fragment {
                     @Override
                     public void onConfirm(boolean isConfirmed, String msg) {
                         if (isConfirmed) {
-                            StyleableToast.makeText(getActivity().getApplicationContext(), "로그아웃되었습니다.", R.style.errorToast).show();
+                            StyleableToast.makeText(getActivity().getApplicationContext(), "로그아웃되었습니다.", R.style.successToast).show();
 
-                            // 기기에 저장된 도전 정보 삭제
-                            util.initOngoingChallenges();
-
-                            // 기기에 저장된 세션키 삭제
-                            util.saveSessionKey("");
+                            // 기기에 저장된 설정값 초기화
+                            util.initSettings();
 
                             // 로그인 액티비티 실행 후 그 외 모두 삭제
                             Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
@@ -153,13 +162,10 @@ public class MyFragment extends Fragment {
                                                 Boolean isJSON = util.isJson(result);
 
                                                 if (result.indexOf("DELETE ACCOUNT SUCCESS") != -1) {
-                                                    StyleableToast.makeText(getActivity().getApplicationContext(), "탈퇴되었습니다.", R.style.errorToast).show();
+                                                    StyleableToast.makeText(getActivity().getApplicationContext(), "탈퇴되었습니다.", R.style.successToast).show();
 
-                                                    // 기기에 저장된 도전 정보 삭제
-                                                    util.initOngoingChallenges();
-
-                                                    // 기기에 저장된 세션키 삭제
-                                                    util.saveSessionKey("");
+                                                    // 기기에 저장된 설정값 초기화
+                                                    util.initSettings();
 
                                                     // 로그인 액티비티 실행 후 그 외 모두 삭제
                                                     Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);

@@ -177,6 +177,8 @@ public class MyCommentActivity extends AppCompatActivity {
                     // 글이 존재하면 안내메시지 가리기
                     if(items.size() > 0) {
                         textView_none.setVisibility(View.GONE);
+                    } else {
+                        textView_none.setVisibility(View.VISIBLE);
                     }
 
                 } else {

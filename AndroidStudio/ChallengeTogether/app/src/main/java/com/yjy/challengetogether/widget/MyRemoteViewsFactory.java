@@ -1,4 +1,4 @@
-package com.yjy.challengetogether.adapter;
+package com.yjy.challengetogether.widget;
 
 import android.content.Context;
 import android.widget.RemoteViews;

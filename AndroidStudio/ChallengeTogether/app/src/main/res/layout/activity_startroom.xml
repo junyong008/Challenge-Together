@@ -61,7 +61,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/edit_round"
@@ -124,25 +124,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteY="151dp" />
 
-            <ScrollView
-                android:id="@+id/scrollView2"
+
+            <TextView
+                android:id="@+id/textView_content"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="16dp"
-                android:fillViewport="true"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/fontstyle_culture"
+                android:minHeight="90dp"
+                android:text="Empty Content"
+                android:textColor="@color/darkgray"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view">
-
-                <TextView
-                    android:id="@+id/textView_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/fontstyle_culture"
-                    android:textColor="@color/darkgray"
-                    android:text="Empty Content" />
-            </ScrollView>
+                app:layout_constraintTop_toBottomOf="@+id/view" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
