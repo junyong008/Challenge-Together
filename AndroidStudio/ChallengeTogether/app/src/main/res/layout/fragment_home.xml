@@ -46,6 +46,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageButton
+                android:id="@+id/ibutton_notification"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ripple_effect"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_notification" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout1"
                 android:layout_width="match_parent"
@@ -161,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/fontstyle_record"
                     android:lineSpacingExtra="-8dp"
-                    android:text="0"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView_recordbackground"

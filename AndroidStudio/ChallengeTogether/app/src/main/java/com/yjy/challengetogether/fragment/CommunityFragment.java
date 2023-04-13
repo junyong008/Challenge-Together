@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -142,6 +143,8 @@ public class CommunityFragment extends Fragment {
                     // 글이 존재하면 안내메시지 가리기
                     if(items.size() > 0) {
                         textView_none.setVisibility(View.GONE);
+                    } else {
+                        textView_none.setVisibility(View.VISIBLE);
                     }
 
                 } else {
@@ -264,7 +267,7 @@ public class CommunityFragment extends Fragment {
 
     // 팝업 메뉴 표시
     private void showPopupMenu(View view) {
-        PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+        PopupMenu popupMenu = new PopupMenu(getActivity(), view, Gravity.END,0,R.style.MyPopupMenu);
         popupMenu.inflate(R.menu.community_menu);
 
         // 옵션 처리

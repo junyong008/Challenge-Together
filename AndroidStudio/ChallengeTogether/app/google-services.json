@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "902714835397",
+    "project_id": "challenge-together-2f3b0",
+    "storage_bucket": "challenge-together-2f3b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902714835397:android:b4bdf8caec4501b7c2cbac",
+        "android_client_info": {
+          "package_name": "com.yjy.challengetogether"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902714835397-apeu6i5pk34etrae5i295dpocq0bbfkd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAarxm1_LtgqgI9sMcILPN72YhBQBCeD2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902714835397-apeu6i5pk34etrae5i295dpocq0bbfkd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

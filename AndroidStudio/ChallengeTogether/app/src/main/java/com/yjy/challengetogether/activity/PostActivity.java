@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -256,6 +257,9 @@ public class PostActivity extends AppCompatActivity {
                     adapter = new PostActivityRvAdapter(PostActivity.this.getApplication(), PostActivity.this, items, sessionUserIdx, writerIdx, util);
                     recyclerView_comments.setAdapter(adapter);
 
+                } else if (result.indexOf("NO POST") != -1) {
+                    StyleableToast.makeText(PostActivity.this, "삭제된 글입니다.", R.style.errorToast).show();
+                    finish();
                 } else {
                     util.checkHttpResult(result);
                 }
@@ -440,7 +444,7 @@ public class PostActivity extends AppCompatActivity {
 
     // 팝업 메뉴 표시
     private void showPopupMenu(View view) {
-        PopupMenu popupMenu = new PopupMenu(PostActivity.this, view);
+        PopupMenu popupMenu = new PopupMenu(PostActivity.this, view, Gravity.END,0,R.style.MyPopupMenu);
         popupMenu.inflate(R.menu.post_menu);
 
         // 아이템 숨김 처리
@@ -464,6 +468,9 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
+                    case R.id.menu_post_refresh:
+                        refreshPost();
+                        return true;
                     case R.id.menu_post_delete:
                         deletePost();
                         return true;
@@ -480,6 +487,11 @@ public class PostActivity extends AppCompatActivity {
         });
 
         popupMenu.show();
+    }
+
+    // 게시글 새로고침
+    private void refreshPost() {
+        recreate();
     }
 
     // 게시글 삭제 처리

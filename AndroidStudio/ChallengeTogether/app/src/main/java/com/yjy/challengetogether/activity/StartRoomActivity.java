@@ -402,6 +402,9 @@ public class StartRoomActivity extends AppCompatActivity {
                             throw new RuntimeException(e);
                         }
 
+                    } else if (result.indexOf("UNPARTICIPATE ROOM") != -1) {
+                        StyleableToast.makeText(StartRoomActivity.this, "참가중인 챌린지가 아닙니다.", R.style.errorToast).show();
+                        finish();
                     } else {
                         util.checkHttpResult(result);
                     }

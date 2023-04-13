@@ -1,10 +1,8 @@
 package com.yjy.challengetogether.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -41,52 +39,12 @@ public class LoginActivity extends AppCompatActivity {
         tbutton_signup = findViewById(R.id.tbutton_signup);
         tbutton_findpwd = findViewById(R.id.tbutton_findpwd);
 
-        // 진행 프로그레스 시작
-        customProgressDialog = new CustomProgressDialog(LoginActivity.this);
-        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        customProgressDialog.show();
-
-        // 스토리지에서 세션키를 받아오고, 세션키가 서버에 유효하면 바로 메인페이지 입성
+        // 스토리지에서 세션키가 있으면 바로 메인 페이지 진입. 메인 페이지에서 세션키 유효성을 검사하기에 여기서 매번 검사할 필요 없음.
         String SessionKeyFromStorage = util.getSessionKey();
         if (SessionKeyFromStorage != null && !SessionKeyFromStorage.isEmpty()) { // SessionKeyFromStorage가 있는경우
-
-            OnTaskCompleted onCheckSessionTaskCompleted = new OnTaskCompleted() {
-                @Override
-                public void onTaskCompleted(String result) {
-
-                    if (result.indexOf("VALID SESSION") != -1) {
-                        // SessionKeyFromStorage가 있으면서 서버에도 세션이 유효한경우 바로 다음 액티비티로 이동.
-                        Intent intent = new Intent(LoginActivity.this, MainpageActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else if (result.indexOf("NO SESSION") != -1) {
-                        // 세션키는 스토리지에 있으나 서버에서 더이상 유효하지 않은 경우 스토리지에서 세션키 삭제
-                        util.saveSessionKey("");
-                        customProgressDialog.dismiss();
-                        StyleableToast.makeText(LoginActivity.this, "세션이 만료되었습니다.\n다시 로그인해주세요.", R.style.errorToast).show();
-                        return;
-                    } else {
-                        util.showCustomDialog(new Util.OnConfirmListener() {
-                            @Override
-                            public void onConfirm(boolean isConfirmed, String msg) {
-                                if (isConfirmed) {
-                                    System.exit(0); // 어플 종료
-                                }
-                            }
-                        }, "서버와 연결이 원활하지 않습니다.\n잠시후 다시 이용해주세요.", "onlyconfirm");
-                        Log.d("HTTP ERROR", result);
-                        return;
-                    }
-                }
-            };
-
-            HttpAsyncTask checkSessionTask = new HttpAsyncTask(LoginActivity.this, onCheckSessionTaskCompleted);
-            String phpFile = "service.php";
-            String postParameters = "service=";
-
-            checkSessionTask.execute(phpFile, postParameters, SessionKeyFromStorage);
-        } else {
-            customProgressDialog.dismiss();
+            Intent intent = new Intent(LoginActivity.this, MainpageActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         // 로그인 버튼 클릭
@@ -142,12 +100,14 @@ public class LoginActivity extends AppCompatActivity {
         tbutton_signup.setOnClickListener(v -> {
             Intent intent = new Intent(this, SignupActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
         });
 
         // 비밀번호 찾기 버튼 클릭
         tbutton_findpwd.setOnClickListener(v -> {
             Intent intent = new Intent(this, FindpwdActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
         });
     }
 }

@@ -33,25 +33,6 @@ public class MainpageActivity extends AppCompatActivity {
         fragment_community = new CommunityFragment();
         fragment_my = new MyFragment();
 
-        // 다른 액티비티에서 메인페이지를 실행할때 특정 Fragment를 실행하는지 여부 확인
-        String fragmentToShow = getIntent().getStringExtra("FRAGMENT_TO_SHOW");
-        if (fragmentToShow != null) {
-            Fragment fragment = null;
-
-            if (fragmentToShow.equals("fragment_home")) {
-                fragment = fragment_home;
-            } else if (fragmentToShow.equals("fragment_together")) {
-                fragment = fragment_together;
-            } else if (fragmentToShow.equals("fragment_community")) {
-                fragment = fragment_community;
-            } else if (fragmentToShow.equals("fragment_my")) {
-                fragment = fragment_my;
-            }
-
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            getSupportFragmentManager().beginTransaction() . replace(R.id.fragment_mainpage, fragment).commitAllowingStateLoss();
-        }
-
         // 바텀 네비게이션
         bottomnav_mainpage = findViewById(R.id.bottomnav_mainpage);
         bottomnav_mainpage.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -79,5 +60,30 @@ public class MainpageActivity extends AppCompatActivity {
             }
         });
 
+        // 다른 액티비티에서 메인페이지를 실행할때 특정 Fragment를 실행하는지 여부 확인
+        String fragmentToShow = getIntent().getStringExtra("FRAGMENT_TO_SHOW");
+
+        if (fragmentToShow != null) {
+            Fragment fragment = null;
+            int bottomnavid = 0;
+
+            if (fragmentToShow.equals("fragment_home")) {
+                fragment = fragment_home;
+                bottomnavid = R.id.action_home;
+            } else if (fragmentToShow.equals("fragment_together")) {
+                fragment = fragment_together;
+                bottomnavid = R.id.action_together;
+            } else if (fragmentToShow.equals("fragment_community")) {
+                fragment = fragment_community;
+                bottomnavid = R.id.action_community;
+            } else if (fragmentToShow.equals("fragment_my")) {
+                fragment = fragment_my;
+                bottomnavid = R.id.action_my;
+            }
+
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            getSupportFragmentManager().beginTransaction() . add(R.id.fragment_mainpage, fragment).commitAllowingStateLoss();
+            bottomnav_mainpage.getMenu().findItem(bottomnavid).setChecked(true);
+        }
     }
 }

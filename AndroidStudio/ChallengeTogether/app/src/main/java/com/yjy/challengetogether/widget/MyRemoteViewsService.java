@@ -1,9 +1,9 @@
-package com.yjy.challengetogether.etc;
+package com.yjy.challengetogether.widget;
 
 import android.content.Intent;
 import android.widget.RemoteViewsService;
 
-import com.yjy.challengetogether.adapter.MyRemoteViewsFactory;
+import com.yjy.challengetogether.etc.HomeItem;
 import com.yjy.challengetogether.util.Util;
 
 import org.json.JSONArray;
@@ -36,7 +36,7 @@ public class MyRemoteViewsService extends RemoteViewsService {
 
                 HomeItem item = new HomeItem();
 
-                // 완료된 챌린지는 추가하지 않음. 서버에서 걸러주지만 괜히 한번더
+                // 완료된 챌린지는 추가하지 않음. 서버에서 걸러주지만 사용자가 접속해서 서버와 동기화하지 않았을때 스토리지에 저장된 도전이 완료되면 바로 제거해서 보여주기 위함.
                 if (!obj.getString("RECENTSTARTTIME").equals("0000-00-00 00:00:00")) {
                     int dayOfCurrentTime = Integer.parseInt(util.DiffWithLocalTime(obj.getString("RECENTSTARTTIME"), "DAY"));
                     int endTime = obj.getInt("ENDTIME");

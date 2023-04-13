@@ -25,6 +25,7 @@ public class FindpwdActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+        overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
     }
 
     @Override
@@ -41,6 +42,7 @@ public class FindpwdActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+                overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
             }
         });
 

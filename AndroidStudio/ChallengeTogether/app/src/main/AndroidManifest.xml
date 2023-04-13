@@ -3,8 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
 
     <application
+        android:name=".alarm.InitApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,6 +18,12 @@
         android:theme="@style/Theme.ChallengeTogether"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.NotificationRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PushSettingActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.BookmarkPostActivity"
             android:exported="false" />
@@ -34,13 +44,13 @@
             android:exported="false" />
 
         <service
-            android:name=".etc.MyRemoteViewsService"
+            android:name=".widget.MyRemoteViewsService"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <receiver
-            android:name=".activity.MainWidget"
+            android:name=".widget.MainWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -50,6 +60,28 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/main_widget_info" />
         </receiver>
+
+        <receiver
+            android:name=".alarm.BootReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".alarm.MyFirebaseMessagingService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/appicongray" />
 
         <activity
             android:name=".activity.ResetRecordActivity"

@@ -9,6 +9,13 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
+    <!-- 팝업메뉴 스타일 변경 -->
+    <style name="MyPopupMenu" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:fontFamily">@font/fontstyle_culture</item>
+        <item name="android:popupBackground">@drawable/popup_menu_bg</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <!-- 툴팁 텍스트 스타일 변경 -->
     <style name="TooltipTextAppearance">
         <item name="android:fontFamily">@font/fontstyle_culture</item>
@@ -31,8 +38,7 @@
         <item name="stStrokeWidth">3dp</item>
         <item name="stStrokeColor">#000000</item>
         <item name="stIconStart">@drawable/ic_error</item>
-        <item name="stLength">LONG</item>
-        LONG or SHORT
+        <item name="stLength">SHORT</item>
         <item name="stRadius">10dp</item>
     </style>
 
@@ -44,8 +50,7 @@
         <item name="stStrokeWidth">3dp</item>
         <item name="stStrokeColor">#000000</item>
         <item name="stIconStart">@drawable/ic_success</item>
-        <item name="stLength">LONG</item>
-        LONG or SHORT
+        <item name="stLength">SHORT</item>
         <item name="stRadius">10dp</item>
     </style>
 

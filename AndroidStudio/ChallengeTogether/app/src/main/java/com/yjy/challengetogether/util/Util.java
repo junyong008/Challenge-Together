@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,22 +23,35 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.LoginActivity;
-import com.yjy.challengetogether.activity.MainWidget;
+import com.yjy.challengetogether.alarm.AlarmWorker;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
+import com.yjy.challengetogether.widget.MainWidget;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
@@ -93,17 +107,47 @@ public class Util extends Application {
         return sharedPreferences.getString("sessionKey", "");
     }
 
-    /** 스토리지에 저장된 도전 정보 삭제 */
-    public void initOngoingChallenges() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("appinfo", context.MODE_PRIVATE);
+    /** 스토리지에 저장된 모든 정보 삭제, 위젯 비우기, WorkManager 해제, FCM 토큰 해제 */
+    public void initSettings() {
+        // DB에 등록된 토큰값 비우기
+        registerTokenToServer("");
+
+        // 스토리지에 저장된 세션키 값 삭제
+        SharedPreferences sharedPreferences = context.getSharedPreferences("logininfo", context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("challenges", "");
+        editor.clear();
+        editor.apply();
+
+        // 스토리지에 저장된 알림 설정값, 진행중인 도전 정보값 삭제
+        sharedPreferences = context.getSharedPreferences("appinfo", context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.clear();
         editor.apply();
 
         // 위젯 업데이트
         Intent intent = new Intent(context, MainWidget.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         context.sendBroadcast(intent);
+
+        // WorkManager 해제
+        WorkManager.getInstance(context).cancelAllWorkByTag("AlarmWorker");
+    }
+
+
+    // WorkManager를 알림 설정이 켜져있으면 15분마다 AlarmWorker 클래스를 실행하도록 설정. AlarmWorker에서 조건을 확인해 조건이 충족돼면 사용자에게 알림 전송
+    public void setWorkManager() {
+
+        // 알림 설정이 켜져있으면 WorkManager 등록. 이미 등록돼 있으면 요청은 무시된다.
+        if (getPushSettings("allpush")) {
+            PeriodicWorkRequest.Builder builder = new PeriodicWorkRequest.Builder(AlarmWorker.class, 15, TimeUnit.MINUTES);
+            builder.addTag("AlarmWorker");
+            PeriodicWorkRequest workRequest = builder.build();
+            WorkManager.getInstance(context).enqueueUniquePeriodicWork("uniqueWork", ExistingPeriodicWorkPolicy.KEEP, workRequest);
+
+        // 알림 설정이 꺼져있으면 기존 WorkManager 해제
+        } else {
+            WorkManager.getInstance(context).cancelAllWorkByTag("AlarmWorker");
+        }
     }
 
 
@@ -120,6 +164,8 @@ public class Util extends Application {
                     // 방이 없으면 스토리지에 빈값 저장
                     if (result.indexOf("NO ROOM") != -1) {
                         editor.putString("challenges", "");
+
+                    // 방이 있으면 해당 방들
                     } else {
                         editor.putString("challenges", result);
                     }
@@ -129,13 +175,16 @@ public class Util extends Application {
                     Intent intent = new Intent(context, MainWidget.class);
                     intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
                     context.sendBroadcast(intent);
+
+                    // 알림 workmanager 갱신
+                    setWorkManager();
                 } else {
                     checkHttpResult(result);
                 }
             }
         };
 
-        HttpAsyncTask loadRoomTask = new HttpAsyncTask(context, onLoadRoomTaskCompleted);
+        HttpAsyncTask_Util loadRoomTask = new HttpAsyncTask_Util(context, onLoadRoomTaskCompleted);
         String phpFile = "service.php";
         String postParameters = "service=getongoingchallenges";
 
@@ -147,6 +196,63 @@ public class Util extends Application {
         SharedPreferences sharedPreferences = context.getSharedPreferences("appinfo", context.MODE_PRIVATE);
         return sharedPreferences.getString("challenges", "");
     }
+
+
+    /** 스토리지에 알림 설정 정보 저장 */
+    public void savePushSettings(String settingItem, boolean isOn) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appinfo", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(settingItem, isOn);
+        editor.apply();
+    }
+
+    /** 스토리지에 저장된 알림 설정 정보 가져오기 */
+    public boolean getPushSettings(String settingItem) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appinfo", context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(settingItem, true);
+    }
+
+
+    /** Firebase의 토큰값을 User 테이블에 등록한다. */
+    public void registerTokenToServer(String token) {
+
+        OnTaskCompleted onRegisterTokenTaskCompleted = new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(String result) {
+                if (result.indexOf("REGISTER SUCCESS") == -1) {
+                    Log.d("registerTokenToServer", "Fail to Register - " + result);
+                    checkHttpResult(result);
+                }
+            }
+        };
+
+        HttpAsyncTask_Util registerTokenTask = new HttpAsyncTask_Util(context, onRegisterTokenTaskCompleted);
+        String phpFile = "service.php";
+        String postParameters = "service=registertoken&token=" + token;
+
+        registerTokenTask.execute(phpFile, postParameters, getSessionKey());
+    }
+
+
+
+    /** UserAlarm 테이블에 새로운 알림을 저장한다. */
+    public void addAlarmRecord(String title, String content, String type) {
+        OnTaskCompleted onAddAlarmTaskCompleted = new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(String result) {
+            }
+        };
+
+        HttpAsyncTask_Util addAlarmTask = new HttpAsyncTask_Util(context, onAddAlarmTaskCompleted);
+        String phpFile = "service.php";
+        String postParameters = "service=addalarm&title=" + title + "&content=" + content + "&type=" + type;
+
+        addAlarmTask.execute(phpFile, postParameters, getSessionKey());
+    }
+
+
+
+
 
 
     /** 문자열이 JSON인지 검사 */
@@ -254,13 +360,14 @@ public class Util extends Application {
             saveSessionKey("");
             Intent intent = new Intent(context, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            ((Activity) context).startActivity(intent);
             ((Activity) context).finish();
         } else {
             showCustomDialog(new Util.OnConfirmListener() {
                 @Override
                 public void onConfirm(boolean isConfirmed, String msg) {
                     if (isConfirmed) {
+                        ((Activity) context).finishAffinity();
                         System.exit(0); // 어플 종료
                     }
                 }
@@ -471,5 +578,126 @@ public class Util extends Application {
         }
 
         dialog.show(); // 다이얼로그 띄우기
+    }
+
+
+
+
+    // 프로그레스 바를 제거한 HttpAsyncTask.
+    // HomeFragment 에서 FCM 토큰 업데이트, 스토리지 정보 동기화 이 두가지 작업을 시행하는데 프로그레스바를 띄우면 3겹으로 프로그레스바가 생기는 것이다.
+    // 또한 AlarmWorker가 완료된 챌린지를 감지하면 UserAlarm 테이블에 항목을 추가하고 스토리지 정보 동기화를 해야하는데 Worker에서 UI를 생성하는 쓰레드를 생성하면 Exception이 뜬다
+    // 위 두가지 이유로 이렇게 프로그레스바를 제거한 별도의 HttpAsyncTask를 생성해서 사용한다.
+    // 하지만 이는 코드의 중복, 구조상 보기싫은건 당연하다.
+    // 추후 AsyncTask는 RxJava로 대체할 예정. 이는 임시로 사용하기에 이런식으로 사용한다.
+    public class HttpAsyncTask_Util extends AsyncTask<String,Void,String> {
+
+        private Context context;
+        private String TAG = "HttpAsyncTask";
+        private CustomProgressDialog customProgressDialog;
+        private OnTaskCompleted listener;
+
+        public HttpAsyncTask_Util(Context context, OnTaskCompleted listener) {
+            this.context = context;
+            this.listener = listener;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            Log.d(TAG, "finalResult - " + result);
+            listener.onTaskCompleted(result);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = null;
+            String postParameters = null;
+            String sessionKey = null;
+
+            try {
+                serverURL = "http://3.37.234.141/" + (String) params[0];   // 서버 URL
+                postParameters = (String) params[1];  // 전송 파라미터
+                sessionKey = (String) params[2];  // 세션키
+            } catch (RuntimeException e) { }
+
+            try {
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+
+                // 시간초과설정 및 메소드
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+
+                // 세션키도 같이 들어오면 헤더에 세션키를 포함
+                if (sessionKey != null) {
+                    httpURLConnection.setRequestProperty("X-Session-ID", sessionKey);
+                }
+
+                httpURLConnection.connect(); // 연결
+
+                // 결과 받고 인코딩 설정
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+
+                // 객체 비우기
+                outputStream.flush();
+                outputStream.close();
+
+                int responseStatusCode = httpURLConnection.getResponseCode(); // 응답 코드 200, 404, 500 ...
+
+                // 응답 헤더들을 읽고, 세션아이디가 헤더에 포함되면 세션아이디를 읽어옴
+                Map<String, List<String>> headers = httpURLConnection.getHeaderFields();
+                List<String> sessionIds = headers.get("X-Session-ID");
+                String sessionId = null;
+
+                if (sessionIds != null && sessionIds.size() > 0) {
+                    sessionId = sessionIds.get(0);
+                }
+
+
+                InputStream inputStream;
+                if(responseStatusCode == httpURLConnection.HTTP_OK) { // 만약 정상적인 응답코드라면
+                    inputStream=httpURLConnection.getInputStream();
+                }
+                else {
+                    inputStream = httpURLConnection.getErrorStream(); // 만약 정상적이지 않은 응답코드라면
+                }
+
+                // StringBuilder를 사용하여 수신되는 데이터를 저장한다.
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+                bufferedReader.close();
+
+                String httpResult = sb.toString();
+
+                // url / postParameters / responseStatusCode / sessionId / httpResult
+                Log.d(TAG, "url - " + url + "\npostParameters - " + postParameters + "\nresponseStatusCode - " + responseStatusCode + "\nsessionId - " + sessionId + "\nhttpResult - " + httpResult);
+
+                // 세션값을 받아오면 세션을 반환해주고, 아니라면 http결괏값을 반환
+                if (sessionId != null) {
+                    return sessionId;
+                }
+                else {
+                    return httpResult;
+                }
+            } catch (Exception e) { // 에러 발생시
+                return  new String("HttpAsyncTask ERROR - " + e.getMessage());
+            }
+        }
     }
 }
