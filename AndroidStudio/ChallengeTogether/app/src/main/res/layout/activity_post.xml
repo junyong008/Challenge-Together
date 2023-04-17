@@ -81,7 +81,7 @@
                 android:fontFamily="@font/fontstyle_culture"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="닉네임"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -100,7 +100,7 @@
                 android:fontFamily="@font/fontstyle_culture"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="01/01 15:40"
+                android:text=""
                 android:textColor="@color/gray"
                 android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -145,7 +145,7 @@
                 android:maxLength="1000"
                 android:minHeight="160dp"
                 android:padding="5dp"
-                android:text="테스트 내용입니다\n테스트 내용입니다\n테스트"
+                android:text=""
                 android:textColor="@color/darkgray"
                 app:layout_constraintTop_toBottomOf="@+id/imageView"
                 tools:layout_editor_absoluteX="16dp" />
@@ -163,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/fontstyle_culture"
-                    android:text="7"
+                    android:text=""
                     android:textColor="@color/main_theme"
                     android:textStyle="bold" />
 
@@ -200,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/fontstyle_culture"
-                    android:text="0"
+                    android:text=""
                     android:textColor="@color/gray" />
 
             </LinearLayout>
@@ -226,7 +226,7 @@
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/fontstyle_culture"
                 android:gravity="center_vertical"
-                android:text="댓글 109"
+                android:text="댓글"
                 android:textColor="@color/gray"
                 android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="parent"

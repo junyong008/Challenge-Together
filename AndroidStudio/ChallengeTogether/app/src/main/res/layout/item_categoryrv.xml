@@ -56,7 +56,7 @@
                 android:fontFamily="@font/fontstyle_culture"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="금연하기"
+                android:text=""
                 android:textColor="@color/darkgray"
                 android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"

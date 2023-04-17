@@ -70,7 +70,7 @@ public class AddRoomActivity extends AppCompatActivity {
         ibutton_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 

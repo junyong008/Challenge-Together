@@ -56,7 +56,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                android:text="닉네임"
+                android:text=""
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />

@@ -52,10 +52,7 @@ public class PushSettingActivity extends AppCompatActivity {
         ibutton_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSettingsToSharedPreferences(); // 뒤로가기 할때 알람 설정 정보들을 스토리지에 저장
-                util.setWorkManager(); // 알림을 사용자가 종료했을 수도 있으니 WorkManger 갱신. 사용자가 알림을 끄면 바로 WorkManager를 해지하도록
-                finish();
-                overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
+                onBackPressed();
             }
         });
 

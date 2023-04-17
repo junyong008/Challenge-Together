@@ -97,6 +97,7 @@ public class CommunityFragmentRvAdapter extends RecyclerView.Adapter<CommunityFr
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), PostActivity.class);
+                intent.putExtra("position", position);
                 intent.putExtra("postidx", item.getPostidx());
                 communityFragment.startActivityForResult(intent, 1);
 

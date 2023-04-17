@@ -95,6 +95,7 @@ public class MyPostCommentRvAdapter extends RecyclerView.Adapter<MyPostCommentRv
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), PostActivity.class);
+                intent.putExtra("position", position);
                 intent.putExtra("postidx", item.getPostidx());
                 ((Activity) context).startActivityForResult(intent, 1);
 

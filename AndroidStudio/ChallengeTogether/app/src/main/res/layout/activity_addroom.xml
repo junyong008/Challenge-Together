@@ -154,7 +154,7 @@
                     android:hint=""
                     android:gravity="top"
                     android:inputType="textMultiLine"
-                    android:maxLength="300"
+                    android:maxLength="600"
                     android:padding="15dp"
                     android:text=""
                     app:layout_constraintEnd_toEndOf="parent"

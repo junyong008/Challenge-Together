@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.ReadyRoomActivity;
 import com.yjy.challengetogether.etc.HomeItem;
+import com.yjy.challengetogether.fragment.TogetherSearchFragment;
 import com.yjy.challengetogether.util.Util;
 
 import java.util.List;
@@ -26,11 +27,13 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class TogetherSearchFragmentRvAdapter extends RecyclerView.Adapter<TogetherSearchFragmentRvAdapter.CustomViewHolder> {
 
     private Context context;
+    private TogetherSearchFragment togetherSearchFragment;
     private List<HomeItem> items;
     private Util util;
 
-    public TogetherSearchFragmentRvAdapter(Context context, List<HomeItem> items, Util util) {
+    public TogetherSearchFragmentRvAdapter(Context context, TogetherSearchFragment togetherSearchFragment, List<HomeItem> items, Util util) {
         this.context = context;
+        this.togetherSearchFragment = togetherSearchFragment;
         this.items = items;
         this.util = util;
     }
@@ -78,9 +81,9 @@ public class TogetherSearchFragmentRvAdapter extends RecyclerView.Adapter<Togeth
                             } else if (inputpwd.equals(item.getRoomPasswd())) {
                                 String roomIdx = item.getRoomidx();
                                 Intent intent = new Intent(holder.itemView.getContext(), ReadyRoomActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra("position", position);
                                 intent.putExtra("roomidx", roomIdx);
-                                holder.itemView.getContext().startActivity(intent);
+                                togetherSearchFragment.startActivityForResult(intent, 1);
                             } else {
                                 StyleableToast.makeText(holder.itemView.getContext(), "비밀번호가 일치하지 않습니다.", R.style.errorToast).show();
                                 return;
@@ -91,9 +94,9 @@ public class TogetherSearchFragmentRvAdapter extends RecyclerView.Adapter<Togeth
                     // 비밀번호가 없으면 바로 방을 보여줌
                     String roomIdx = item.getRoomidx();
                     Intent intent = new Intent(holder.itemView.getContext(), ReadyRoomActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("position", position);
                     intent.putExtra("roomidx", roomIdx);
-                    holder.itemView.getContext().startActivity(intent);
+                    togetherSearchFragment.startActivityForResult(intent, 1);
                 }
             }
         });

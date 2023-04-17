@@ -55,7 +55,7 @@ public class MyCommentActivity extends AppCompatActivity {
     public void onBackPressed() {
         // 뒤로가기 할시 사용자가 자신의 글을 삭제하거나 수정했을 수 있으니 다시 불러오게 result 반환
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("result", "success");
+        resultIntent.putExtra("result", "refresh");
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
 
@@ -86,12 +86,7 @@ public class MyCommentActivity extends AppCompatActivity {
         ibutton_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("result", "success");
-                setResult(Activity.RESULT_OK, resultIntent);
-                finish();
-
-                overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
+                onBackPressed();
             }
         });
 
@@ -232,11 +227,9 @@ public class MyCommentActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            String result = data.getStringExtra("result");
-            if (result.equals("success")) {
-                recreate();
-            }
+            recreate();
         }
     }
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,8 +50,9 @@ public class PostActivity extends AppCompatActivity {
     private LinearLayoutManager llm;
     private List<CommunityCommentItem> items;
     private EditText edit_comment;
-    private String sessionUserIdx, writerIdx, postidx, postContent;
-    private boolean isChange, isBookmark;
+    private int position;
+    private String sessionUserIdx, writerIdx, postidx, postContent, modifydate, likeCount, dislikeCount, commentCount;
+    private boolean isBookmark;
     private OnTaskCompleted onLoadCommentTaskCompleted;
     private com.yjy.challengetogether.util.Util util = new Util(PostActivity.this);
 
@@ -61,13 +61,23 @@ public class PostActivity extends AppCompatActivity {
         if (adapter.replyCommentIdx != -1) {
             adapter.clearHighlight();
         } else {
+            // 뒤로가기 할때 게시글 변경사항을 외부 리사이클러뷰에 최신화
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("result", "changed");
+            resultIntent.putExtra("position", position);
 
-            // 댓글달기, 좋아요 or 싫어요 클릭과 같은 외부 표시 변경사항이 있으면 뒤로가기할때 다시 불러오기 요청
-            if (isChange) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("result", "success");
-                setResult(Activity.RESULT_OK, resultIntent);
-            }
+            // 변경될 수 있는 항목들을 모두 받아와서 전달
+            resultIntent.putExtra("changedContent", postContent);
+            resultIntent.putExtra("changedModifydate", modifydate);
+            resultIntent.putExtra("changedLikeCount", likeCount);
+            resultIntent.putExtra("changedDislikeCount", dislikeCount);
+            resultIntent.putExtra("changedCommentCount", commentCount);
+
+            // 북마크 해제 여부 (북마크 목록 메뉴에서 실시간 제거하기 위함)
+            resultIntent.putExtra("isBookmark", isBookmark);
+
+            setResult(Activity.RESULT_OK, resultIntent);
+
             finish();
             overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
         }
@@ -79,8 +89,8 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         Intent intent = getIntent();
+        position = intent.getIntExtra("position", -1);
         postidx = intent.getStringExtra("postidx");
-        isChange = false;
 
         ibutton_back = findViewById(R.id.ibutton_back);
         textView_name = findViewById(R.id.textView_name);
@@ -103,18 +113,7 @@ public class PostActivity extends AppCompatActivity {
         ibutton_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (adapter.replyCommentIdx != -1) {
-                    adapter.clearHighlight();
-                } else {
-                    Log.d("test", String.valueOf(isChange));
-                    if (isChange) {
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra("result", "success");
-                        setResult(Activity.RESULT_OK, resultIntent);
-                    }
-                    finish();
-                    overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
-                }
+                onBackPressed();
             }
         });
 
@@ -133,7 +132,7 @@ public class PostActivity extends AppCompatActivity {
                         JSONObject obj = new JSONObject(jsonObject.getString("postInfo"));
                         String writerName = obj.getString("NAME");
                         String createdate = obj.getString("CREATEDATE");
-                        String modifydate = obj.getString("MODIFYDATE");
+                        modifydate = obj.getString("MODIFYDATE");
                         writerIdx = obj.getString("USER_IDX");
 
                         try {
@@ -168,9 +167,9 @@ public class PostActivity extends AppCompatActivity {
                         }
 
                         postContent = obj.getString("CONTENT");
-                        String likeCount = obj.getString("LIKECOUNT");
-                        String dislikeCount = obj.getString("DISLIKECOUNT");
-                        String commentCount = obj.getString("COMMENTCOUNT");
+                        likeCount = obj.getString("LIKECOUNT");
+                        dislikeCount = obj.getString("DISLIKECOUNT");
+                        commentCount = obj.getString("COMMENTCOUNT");
                         sessionUserIdx = obj.getString("SESSIONUSER_IDX");   // 현재 세션 주인 (로그인 유저)의 USER_IDX를 받아와 게시글/댓글 주인 여부 확인
                         if (obj.getString("ISBOOKMARK").equals("1")) {
                             isBookmark = true;
@@ -259,7 +258,15 @@ public class PostActivity extends AppCompatActivity {
 
                 } else if (result.indexOf("NO POST") != -1) {
                     StyleableToast.makeText(PostActivity.this, "삭제된 글입니다.", R.style.errorToast).show();
+
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("result", "deleted");
+                    resultIntent.putExtra("position", position);
+
+                    setResult(Activity.RESULT_OK, resultIntent);
+
                     finish();
+                    overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
                 } else {
                     util.checkHttpResult(result);
                 }
@@ -342,12 +349,10 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onTaskCompleted(String result) {
                 if (result.indexOf("ADD SUCCESS") != -1) {
-                    isChange = true;
                     isBookmark = true;
                     ibutton_bookmark.setImageResource(R.drawable.ic_bookmarkfill);
                     StyleableToast.makeText(PostActivity.this, "북마크가 추가되었습니다.", R.style.successToast).show();
                 } else if (result.indexOf("DELETE SUCCESS") != -1) {
-                    isChange = true;
                     isBookmark = false;
                     ibutton_bookmark.setImageResource(R.drawable.ic_bookmark);
                     StyleableToast.makeText(PostActivity.this, "북마크가 제거되었습니다.", R.style.successToast).show();
@@ -433,8 +438,6 @@ public class PostActivity extends AppCompatActivity {
     }
 
     public void reLoadComments() {
-        isChange = true;
-
         // 서버에서 다시 게시글 정보 받아오기
         HttpAsyncTask loadCommentTask = new HttpAsyncTask(PostActivity.this, onLoadCommentTaskCompleted);
         String phpFile = "service.php";
@@ -506,9 +509,13 @@ public class PostActivity extends AppCompatActivity {
                         public void onTaskCompleted(String result) {
                             if (result.indexOf("DELETE SUCCESS") != -1) {
                                 Intent resultIntent = new Intent();
-                                resultIntent.putExtra("result", "success");
+                                resultIntent.putExtra("result", "deleted");
+                                resultIntent.putExtra("position", position);
+
                                 setResult(Activity.RESULT_OK, resultIntent);
+
                                 finish();
+                                overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
                             } else {
                                 util.checkHttpResult(result);
                             }

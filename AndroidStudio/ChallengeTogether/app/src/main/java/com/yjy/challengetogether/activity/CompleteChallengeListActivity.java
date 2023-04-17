@@ -52,8 +52,7 @@ public class CompleteChallengeListActivity extends AppCompatActivity {
         ibutton_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
+                onBackPressed();
             }
         });
 
