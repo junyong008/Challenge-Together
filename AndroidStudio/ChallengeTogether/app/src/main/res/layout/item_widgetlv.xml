@@ -25,7 +25,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="140dp"
             android:layout_marginVertical="4dp"
-            android:text="금연하기"
+            android:text=""
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="15dp"
@@ -46,7 +46,7 @@
         android:background="@drawable/bg_round_litegray"
         android:fontFamily="@font/fontstyle_culture"
         android:gravity="center"
-        android:text="3일 12시간"
+        android:text=""
         android:textColor="@color/darkgray" />
 
 </RelativeLayout>

@@ -49,7 +49,7 @@ public class MyPostActivity extends AppCompatActivity {
     public void onBackPressed() {
         // 뒤로가기 할시 사용자가 자신의 글을 삭제하거나 수정했을 수 있으니 다시 불러오게 result 반환
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("result", "success");
+        resultIntent.putExtra("result", "refresh");
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
 
@@ -79,12 +79,7 @@ public class MyPostActivity extends AppCompatActivity {
         ibutton_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("result", "success");
-                setResult(Activity.RESULT_OK, resultIntent);
-                finish();
-
-                overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
+                onBackPressed();
             }
         });
 
@@ -199,10 +194,49 @@ public class MyPostActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             String result = data.getStringExtra("result");
-            if (result.equals("success")) {
-                recreate();
+
+            // 게시글 내용이 변경됐을 경우
+            if (result.equals("changed")) {
+
+                // 변경된 항목의 위치가 정상적으로 넘어왔다면 리사이클러뷰에서 해당 항목 수정
+                int position = data.getIntExtra("position", -1);
+                if (position != -1) {
+
+                    CommunityPostItem changedItem = items.get(position);
+
+                    // 변경될 수 있는 항목들 받아와서 changedItem 수정
+                    changedItem.setContent(data.getStringExtra("changedContent"));
+                    changedItem.setLike(data.getStringExtra("changedLikeCount"));
+                    changedItem.setDislike(data.getStringExtra("changedDislikeCount"));
+                    changedItem.setCommentcount(data.getStringExtra("changedCommentCount"));
+                    String changedModifydate = data.getStringExtra("changedModifydate");
+                    if (!changedModifydate.equals("0000-00-00 00:00:00")) {
+                        changedItem.setModifydate(changedModifydate);
+                    }
+
+                    // 리사이클러뷰에 해당 아이템이 수정됐음을 알려서 최신화
+                    items.set(position, changedItem);
+                    adapter.notifyItemChanged(position);
+                }
+
+                // 게시글이 삭제됐을 경우
+            } else if (result.equals("deleted")) {
+
+                int position = data.getIntExtra("position", -1);
+                if (position != -1) {
+                    items.remove(position);
+                    adapter.notifyItemRemoved(position);
+
+                    // 글이 존재하지 않으면 안내메시지 띄우기
+                    if(items.size() > 0) {
+                        textView_none.setVisibility(View.GONE);
+                    } else {
+                        textView_none.setVisibility(View.VISIBLE);
+                    }
+                }
             }
         }
     }

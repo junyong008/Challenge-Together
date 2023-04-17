@@ -113,7 +113,7 @@
                     android:fontFamily="@font/fontstyle_culture"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="TITLE"
+                    android:text=""
                     android:textColor="@color/main_theme"
                     android:textSize="25dp"
                     android:textStyle="bold"
@@ -141,7 +141,7 @@
                     android:drawablePadding="8dp"
                     android:fontFamily="@font/fontstyle_culture"
                     android:gravity="center"
-                    android:text="작성자  준용"
+                    android:text="작성자 "
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view" />
@@ -167,7 +167,7 @@
                     android:drawablePadding="8dp"
                     android:fontFamily="@font/fontstyle_culture"
                     android:gravity="center"
-                    android:text="도전 목표일  n일"
+                    android:text="도전 목표일  0일"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView_writer" />
@@ -197,7 +197,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/fontstyle_culture"
                     android:textColor="@color/darkgray"
-                    android:text="Empty Content"
+                    android:text=""
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView_passwd"/>
@@ -214,7 +214,7 @@
                     android:fontFamily="@font/fontstyle_culture"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="참여할 사람들  [ 1 / n ]"
+                    android:text="참여할 사람들  [ 0 / 0 ]"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView_content" />

@@ -1,5 +1,6 @@
 package com.yjy.challengetogether.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.yjy.challengetogether.R;
-import com.yjy.challengetogether.activity.LoginActivity;
 import com.yjy.challengetogether.adapter.TogetherSearchFragmentRvAdapter;
 import com.yjy.challengetogether.etc.HomeItem;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
@@ -35,13 +36,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.muddz.styleabletoast.StyleableToast;
-
 public class TogetherSearchFragment extends Fragment {
 
     private View view;
     private String TAG  = "TOGETHER SEARCH 프레그먼트";
     private ImageButton ibutton_back, ibutton_search;
+    private ImageView imageView_none;
     private TextView textView_title, textView_none;
     private EditText edit_search;
     private String categoryicon, categorytitle;
@@ -67,6 +67,7 @@ public class TogetherSearchFragment extends Fragment {
         textView_title = view.findViewById(R.id.textView_title);
         ibutton_search = view.findViewById(R.id.ibutton_search);
         edit_search = view.findViewById(R.id.edit_search);
+        imageView_none = view.findViewById(R.id.imageView_none);
         textView_none = view.findViewById(R.id.textView_none);
         refresh = view.findViewById(R.id.refresh);
         progressBar = view.findViewById(R.id.progressBar);
@@ -144,7 +145,7 @@ public class TogetherSearchFragment extends Fragment {
                     //SnapHelper snapHelper = new PagerSnapHelper();
                     //snapHelper.attachToRecyclerView(rv);
 
-                    adapter = new TogetherSearchFragmentRvAdapter(getActivity().getApplication(), items, util);
+                    adapter = new TogetherSearchFragmentRvAdapter(getActivity().getApplication(), TogetherSearchFragment.this, items, util);
                     recyclerView_room.setAdapter(adapter);
 
                     progressBar.setVisibility(View.GONE);
@@ -152,7 +153,11 @@ public class TogetherSearchFragment extends Fragment {
 
                     // 방이 존재하면 안내메시지 가리기
                     if(items.size() > 0) {
+                        imageView_none.setVisibility(View.GONE);
                         textView_none.setVisibility(View.GONE);
+                    } else {
+                        imageView_none.setVisibility(View.VISIBLE);
+                        textView_none.setVisibility(View.VISIBLE);
                     }
 
                 } else {
@@ -217,5 +222,50 @@ public class TogetherSearchFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            String result = data.getStringExtra("result");
+
+            // 대기방 참여자 수가 변경됐을 경우
+            if (result.equals("changed")) {
+
+                // 변경된 항목의 위치가 정상적으로 넘어오면 변경
+                int position = data.getIntExtra("position", -1);
+                if (position != -1) {
+
+                    HomeItem changedItem = items.get(position);
+
+                    // 변경될 수 있는 항목들 받아와서 changedItem 수정
+                    changedItem.setCurrentUserNum(data.getStringExtra("changedCurrentUserNum"));
+
+                    // 리사이클러뷰에 해당 아이템이 수정됐음을 알려서 최신화
+                    items.set(position, changedItem);
+                    adapter.notifyItemChanged(position);
+                }
+
+                // 대기방이 이미 시작했거나 삭제됐을 경우
+            } else if (result.equals("deleted")) {
+
+                int position = data.getIntExtra("position", -1);
+                if (position != -1) {
+                    items.remove(position);
+                    adapter.notifyItemRemoved(position);
+
+                    // 방이 존재하면 안내메시지 가리기
+                    if(items.size() > 0) {
+                        imageView_none.setVisibility(View.GONE);
+                        textView_none.setVisibility(View.GONE);
+                    } else {
+                        imageView_none.setVisibility(View.VISIBLE);
+                        textView_none.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        }
     }
 }

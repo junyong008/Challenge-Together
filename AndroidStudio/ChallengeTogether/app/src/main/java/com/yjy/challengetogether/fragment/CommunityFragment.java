@@ -315,14 +315,49 @@ public class CommunityFragment extends Fragment {
     }
 
 
-    // AddPostActivity에서 반환된 결과 처리
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             String result = data.getStringExtra("result");
-            if (result.equals("success")) {
+
+            // 게시글 내용이 변경됐을 경우
+            if (result.equals("changed")) {
+
+                // 변경된 항목의 위치가 정상적으로 넘어왔다면 리사이클러뷰에서 해당 항목 수정
+                int position = data.getIntExtra("position", -1);
+                if (position != -1) {
+
+                    CommunityPostItem changedItem = items.get(position);
+
+                    // 변경될 수 있는 항목들 받아와서 changedItem 수정
+                    changedItem.setContent(data.getStringExtra("changedContent"));
+                    changedItem.setLike(data.getStringExtra("changedLikeCount"));
+                    changedItem.setDislike(data.getStringExtra("changedDislikeCount"));
+                    changedItem.setCommentcount(data.getStringExtra("changedCommentCount"));
+                    String changedModifydate = data.getStringExtra("changedModifydate");
+                    if (!changedModifydate.equals("0000-00-00 00:00:00")) {
+                        changedItem.setModifydate(changedModifydate);
+                    }
+
+                    // 리사이클러뷰에 해당 아이템이 수정됐음을 알려서 최신화
+                    items.set(position, changedItem);
+                    adapter.notifyItemChanged(position);
+                }
+
+            // 게시글이 삭제됐을 경우
+            } else if (result.equals("deleted")) {
+
+                int position = data.getIntExtra("position", -1);
+                if (position != -1) {
+                    items.remove(position);
+                    adapter.notifyItemRemoved(position);
+                }
+
+            // 다시불러오기
+            } else if (result.equals("refresh")) {
                 // 게시글 목록 다시 불러오기
                 getActivity().recreate();
             }

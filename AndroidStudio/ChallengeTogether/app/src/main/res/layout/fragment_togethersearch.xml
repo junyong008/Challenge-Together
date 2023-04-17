@@ -75,18 +75,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_search" />
 
+    <ImageView
+        android:id="@+id/imageView_none"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintVertical_bias="0.44"
+        app:srcCompat="@drawable/ic_noroomperson" />
+
     <TextView
         android:id="@+id/textView_none"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/fontstyle_culture"
         android:gravity="center"
         android:text="아직 같이하기 방이 존재하지 않습니다.\n메인에서 새로운 같이하기 도전방을 만들어보세요!"
         android:textColor="@color/gray"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_none" />
 
 
 

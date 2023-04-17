@@ -44,8 +44,7 @@ public class AddPostActivity extends AppCompatActivity {
         ibutton_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
+                onBackPressed();
             }
         });
 
@@ -69,7 +68,7 @@ public class AddPostActivity extends AppCompatActivity {
                         if (result.indexOf("ADD SUCCESS") != -1) {
 
                             Intent resultIntent = new Intent();
-                            resultIntent.putExtra("result", "success");
+                            resultIntent.putExtra("result", "refresh");
                             setResult(Activity.RESULT_OK, resultIntent);
 
                             finish();

@@ -1,5 +1,6 @@
 package com.yjy.challengetogether.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -45,8 +46,23 @@ public class ReadyRoomActivity extends AppCompatActivity {
     private ReadyRoomActivityRvAdapter adapter;
     private LinearLayoutManager llm;
     private List<RoomItem> items;
+    private int position;
     private String roomidx, roomPermission;
+    private String roomCurrentUserNum;
     private com.yjy.challengetogether.util.Util util = new Util(ReadyRoomActivity.this);
+
+    @Override
+    public void onBackPressed() {
+        // 뒤로가기 할때 변경사항을 외부 리사이클러뷰에 최신화
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("result", "changed");
+        resultIntent.putExtra("position", position);
+        resultIntent.putExtra("changedCurrentUserNum", roomCurrentUserNum);
+
+        setResult(Activity.RESULT_OK, resultIntent);
+
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +70,8 @@ public class ReadyRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_readyroom);
 
         Intent intent = getIntent();
+        position = intent.getIntExtra("position", -1);
         roomidx = intent.getStringExtra("roomidx");
-
 
         ibutton_close = findViewById(R.id.ibutton_close);
         ibutton_menu = findViewById(R.id.ibutton_menu);
@@ -74,7 +90,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
         ibutton_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -144,6 +160,13 @@ public class ReadyRoomActivity extends AppCompatActivity {
                                             recreate();
                                         } else if (result.indexOf("ALREADY START") != -1) {
                                             StyleableToast.makeText(ReadyRoomActivity.this, "이미 시작한 방입니다.", R.style.errorToast).show();
+
+                                            Intent resultIntent = new Intent();
+                                            resultIntent.putExtra("result", "deleted");
+                                            resultIntent.putExtra("position", position);
+
+                                            setResult(Activity.RESULT_OK, resultIntent);
+
                                             finish();
                                         } else {
                                             util.checkHttpResult(result);
@@ -162,19 +185,40 @@ public class ReadyRoomActivity extends AppCompatActivity {
                 } else {
                     // 나가기
 
-                    OnTaskCompleted onStartRoomTaskCompleted = new OnTaskCompleted() {
+                    OnTaskCompleted onExitRoomTaskCompleted = new OnTaskCompleted() {
                         @Override
                         public void onTaskCompleted(String result) {
 
                             if (result.indexOf("EXIT SUCCESS") != -1) {
-                                // 바로 메인으로 이동
-                                Intent intent = new Intent(ReadyRoomActivity.this, MainpageActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.putExtra("roomidx", roomidx);
-                                startActivity(intent);
+
+                                // TogetherSearchFragment를 통해 들어온 경우 recreate() 메인에서 그 외엔 바로 메인이동
+                                if (position != -1) {
+                                    recreate();
+                                } else {
+                                    Intent intent = new Intent(ReadyRoomActivity.this, MainpageActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+                            } else if (result.indexOf("DELETED ROOM") != -1) {
+                                StyleableToast.makeText(ReadyRoomActivity.this, "삭제된 방입니다.", R.style.errorToast).show();
+
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra("result", "deleted");
+                                resultIntent.putExtra("position", position);
+
+                                setResult(Activity.RESULT_OK, resultIntent);
+
                                 finish();
                             } else if (result.indexOf("ALREADY START") != -1) {
                                 StyleableToast.makeText(ReadyRoomActivity.this, "이미 시작한 방입니다.", R.style.errorToast).show();
+
+                                // 나갈때 이미 시작한 방이라는 메시지가 뜨는건 챌린지의 참여자 라는뜻. 고로 바로 StartRoom으로 이동시킨다.
+
+                                Intent intent = new Intent(ReadyRoomActivity.this, StartRoomActivity.class);
+                                intent.putExtra("roomidx", roomidx);
+                                startActivity(intent);
                                 finish();
                             } else {
                                 util.checkHttpResult(result);
@@ -182,11 +226,11 @@ public class ReadyRoomActivity extends AppCompatActivity {
                         }
                     };
 
-                    HttpAsyncTask startRoomTask = new HttpAsyncTask(ReadyRoomActivity.this, onStartRoomTaskCompleted);
+                    HttpAsyncTask exitRoomTask = new HttpAsyncTask(ReadyRoomActivity.this, onExitRoomTaskCompleted);
                     String phpFile = "service.php";
                     String postParameters = "service=exitroom&roomidx=" + roomidx;
 
-                    startRoomTask.execute(phpFile, postParameters, util.getSessionKey());
+                    exitRoomTask.execute(phpFile, postParameters, util.getSessionKey());
                 }
             }
         });
@@ -213,7 +257,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                         String roomWriter = obj1.getString("NAME");
                         String roomTargetDay = obj1.getString("ENDTIME");
                         String roomPasswd = obj1.getString("PASSWD");
-                        String roomCurrentUserNum = obj1.getString("CURRENTUSERNUM");
+                        roomCurrentUserNum = obj1.getString("CURRENTUSERNUM");
                         String roomMaxUserNum = obj1.getString("MAXUSERNUM");
                         roomPermission = obj1.getString("PERMISSION");
 
@@ -274,9 +318,23 @@ public class ReadyRoomActivity extends AppCompatActivity {
 
                 } else if (result.indexOf("DELETED ROOM") != -1) {
                     StyleableToast.makeText(ReadyRoomActivity.this, "삭제된 방입니다.", R.style.errorToast).show();
+
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("result", "deleted");
+                    resultIntent.putExtra("position", position);
+
+                    setResult(Activity.RESULT_OK, resultIntent);
+
                     finish();
                 } else if (result.indexOf("ALREADY START") != -1) {
                     StyleableToast.makeText(ReadyRoomActivity.this, "이미 시작된 방입니다.", R.style.errorToast).show();
+
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("result", "deleted");
+                    resultIntent.putExtra("position", position);
+
+                    setResult(Activity.RESULT_OK, resultIntent);
+
                     finish();
                 } else {
                     util.checkHttpResult(result);

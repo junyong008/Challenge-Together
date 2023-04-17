@@ -103,12 +103,7 @@ public class StartRoomActivity extends AppCompatActivity {
         ibutton_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isCompleteChallenge) {
-                    Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }
-                finish();
+                onBackPressed();
             }
         });
 

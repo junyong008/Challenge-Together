@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment {
     private ImageButton ibutton_notification, ibutton_moreinfo;
     private TextView textView_nickname;
     private TextView textView_record;
+    private TextView textView_none;
     private TextView textView_completechallenges;
     private RecyclerView recyclerView_mychallenges;
     private HomeFragmentRvAdapter adapter;
@@ -96,7 +97,30 @@ public class HomeFragment extends Fragment {
         textView_record = view.findViewById(R.id.textView_record);
         textView_completechallenges = view.findViewById(R.id.textView_completechallenges);
         textView_completechallenges.setPaintFlags(textView_completechallenges.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        textView_none = view.findViewById(R.id.textView_none);
 
+
+        // 알림 권한 요청
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            String[] permissions = new String[] {Manifest.permission.POST_NOTIFICATIONS};
+
+
+            PermissionListener permissionlistener = new PermissionListener() {
+                @Override
+                public void onPermissionGranted() {
+                }
+
+                @Override
+                public void onPermissionDenied(List<String> deniedPermissions) {
+                    StyleableToast.makeText(getActivity().getApplicationContext(), "알림 표시 권한이 거부되었습니다.", R.style.errorToast).show();
+                }
+            };
+
+            TedPermission.create()
+                    .setPermissionListener(permissionlistener)
+                    .setPermissions(Manifest.permission.POST_NOTIFICATIONS)
+                    .check();
+        }
 
         // FCM 토큰값을 받아와 DB에 업데이트
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
@@ -273,29 +297,12 @@ public class HomeFragment extends Fragment {
                         }, recentCompleteChallengeTitle  + "\n챌린지를 성공하셨습니다!", "congrats");
                     }
 
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        String[] permissions = new String[] {Manifest.permission.POST_NOTIFICATIONS};
-
-
-                        PermissionListener permissionlistener = new PermissionListener() {
-                            @Override
-                            public void onPermissionGranted() {
-                            }
-
-                            @Override
-                            public void onPermissionDenied(List<String> deniedPermissions) {
-                                StyleableToast.makeText(getActivity().getApplicationContext(), "알림 표시 권한이 거부되었습니다.", R.style.errorToast).show();
-                            }
-                        };
-
-                        TedPermission.create()
-                                .setPermissionListener(permissionlistener)
-                                .setPermissions(Manifest.permission.POST_NOTIFICATIONS)
-                                .check();
+                    // 챌린지가 존재하면 안내메시지 가리기
+                    if(items.size() > 0) {
+                        textView_none.setVisibility(View.GONE);
+                    } else {
+                        textView_none.setVisibility(View.VISIBLE);
                     }
-
-
                 } else {
                     util.checkHttpResult(result);
                 }

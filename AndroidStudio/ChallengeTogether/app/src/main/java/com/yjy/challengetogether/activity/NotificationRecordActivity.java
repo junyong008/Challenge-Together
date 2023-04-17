@@ -87,8 +87,7 @@ public class NotificationRecordActivity extends AppCompatActivity {
         ibutton_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                overridePendingTransition(R.anim.stay, R.anim.slide_out_right);
+                onBackPressed();
             }
         });
 
