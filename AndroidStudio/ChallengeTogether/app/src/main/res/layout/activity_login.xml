@@ -8,114 +8,205 @@
     android:theme="@style/ThemeOverlay.ChallengeTogether.FullscreenContainer"
     tools:context=".activity.LoginActivity">
 
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="260dp"
-        android:layout_height="137dp"
-        android:layout_gravity="center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17000002"
-        app:srcCompat="@drawable/logo_name" />
-
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/ScrollView"
         android:layout_width="match_parent"
-        android:layout_height="184dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/edit_email"
-
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout_scroll"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edit_round"
-            android:ems="10"
-            android:maxLength="30"
-            android:hint="EMAIL"
-            android:drawableLeft="@drawable/ic_mail"
-            android:drawablePadding="10dp"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="15dp"
-            android:text="" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edit_pw"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:background="@drawable/edit_round"
-            android:ems="10"
-            android:maxLength="30"
-            android:hint="PASSWORD"
-            android:drawableLeft="@drawable/ic_lock"
-            android:inputType="textPassword"
-            android:drawablePadding="10dp"
-            android:paddingLeft="15dp" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="260dp"
+                android:layout_height="137dp"
+                android:layout_gravity="center_horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.17000002"
+                app:srcCompat="@drawable/logo_name" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_border"
-
-            android:text="LOGIN"
-            android:textColor="#000000"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-
-        <LinearLayout
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="6dp"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:id="@+id/tbutton_findpwd"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:text="비밀번호 찾기"
-                android:textColor="@color/black"
-                android:textSize="13dp"
-                android:textStyle="bold" />
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="50dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="  |  "
-                android:textColor="@color/black"
-                android:textSize="13dp"
-                android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/edit_email"
 
-            <TextView
-                android:id="@+id/tbutton_signup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:text="회원가입"
-                android:textColor="@color/black"
-                android:textSize="13dp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edit_round"
+                    android:drawableLeft="@drawable/ic_mail"
+                    android:drawablePadding="10dp"
+                    android:ems="10"
+                    android:hint="EMAIL"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="30"
+                    android:paddingLeft="15dp"
+                    android:text="" />
 
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/edit_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/edit_round"
+                    android:drawableLeft="@drawable/ic_lock"
+                    android:drawablePadding="10dp"
+                    android:ems="10"
+                    android:hint="PASSWORD"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
+                    android:paddingLeft="15dp" />
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_border"
+
+                    android:text="LOGIN"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+
+                <LinearLayout
+                    android:layout_width="195dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/tbutton_findpwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ripple_effect_rec"
+                        android:clickable="true"
+                        android:text="비밀번호 찾기"
+                        android:textColor="@color/black"
+                        android:textSize="13dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="  |  "
+                        android:textColor="@color/black"
+                        android:textSize="13dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tbutton_signup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ripple_effect_rec"
+                        android:clickable="true"
+                        android:text="회원가입"
+                        android:textColor="@color/black"
+                        android:textSize="13dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="100dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:background="@color/darkgray" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginHorizontal="16dp"
+                        android:background="@drawable/ripple_effect_rec"
+                        android:fontFamily="@font/fontstyle_culture"
+                        android:text="간편하게 시작하기"
+                        android:textColor="@color/darkgray"
+                        android:textSize="13dp"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center"
+                        android:background="@color/darkgray" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/ibutton_kakaologin"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/button_kakaologin"
+                        android:src="@drawable/ic_kakao"/>
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/ibutton_googlelogin"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/button_googlelogin"
+                        android:src="@drawable/ic_google"/>
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/ibutton_naverlogin"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/button_naverlogin"
+                        android:src="@drawable/ic_naver"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

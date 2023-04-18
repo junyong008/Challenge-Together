@@ -48,6 +48,7 @@ public class AddPostActivity extends AppCompatActivity {
             }
         });
 
+
         // 게시글 추가 버튼 클릭
         button_addpost.setOnClickListener(new View.OnClickListener() {
             @Override

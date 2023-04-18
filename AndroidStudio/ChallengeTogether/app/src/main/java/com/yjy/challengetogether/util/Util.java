@@ -107,30 +107,46 @@ public class Util extends Application {
         return sharedPreferences.getString("sessionKey", "");
     }
 
-    /** 스토리지에 저장된 모든 정보 삭제, 위젯 비우기, WorkManager 해제, FCM 토큰 해제 */
+    /** 서버에 저장된 세션 삭제 + 스토리지에 저장된 모든 정보 삭제, 위젯 비우기, WorkManager 해제, FCM 토큰 해제 */
     public void initSettings() {
-        // DB에 등록된 토큰값 비우기
+
+        // DB에 등록된 FCM 토큰값 비우기
         registerTokenToServer("");
 
-        // 스토리지에 저장된 세션키 값 삭제
-        SharedPreferences sharedPreferences = context.getSharedPreferences("logininfo", context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
+        // 서버에 저장된 세션 삭제
+        OnTaskCompleted onDeleteSessionTaskCompleted = new OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(String result) {
+                if (result.indexOf("DELETE SESSION SUCCESS") != -1) {
 
-        // 스토리지에 저장된 알림 설정값, 진행중인 도전 정보값 삭제
-        sharedPreferences = context.getSharedPreferences("appinfo", context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
+                    // 스토리지에 저장된 세션키 값 삭제
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("logininfo", context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.apply();
 
-        // 위젯 업데이트
-        Intent intent = new Intent(context, MainWidget.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        context.sendBroadcast(intent);
+                    // 스토리지에 저장된 알림 설정값, 진행중인 도전 정보값 삭제
+                    sharedPreferences = context.getSharedPreferences("appinfo", context.MODE_PRIVATE);
+                    editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.apply();
 
-        // WorkManager 해제
-        WorkManager.getInstance(context).cancelAllWorkByTag("AlarmWorker");
+                    // 위젯 업데이트
+                    Intent intent = new Intent(context, MainWidget.class);
+                    intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                    context.sendBroadcast(intent);
+
+                    // WorkManager 해제
+                    WorkManager.getInstance(context).cancelAllWorkByTag("AlarmWorker");
+                }
+            }
+        };
+
+        HttpAsyncTask_Util deleteSessionTask = new HttpAsyncTask_Util(context, onDeleteSessionTaskCompleted);
+        String phpFile = "service.php";
+        String postParameters = "service=deletesession";
+
+        deleteSessionTask.execute(phpFile, postParameters, getSessionKey());
     }
 
 
@@ -178,8 +194,6 @@ public class Util extends Application {
 
                     // 알림 workmanager 갱신
                     setWorkManager();
-                } else {
-                    checkHttpResult(result);
                 }
             }
         };
@@ -359,7 +373,7 @@ public class Util extends Application {
             // 세션키 삭제, 로그인 액티비티 실행 후 그 외 모두 삭제
             saveSessionKey("");
             Intent intent = new Intent(context, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             ((Activity) context).startActivity(intent);
             ((Activity) context).finish();
         } else {

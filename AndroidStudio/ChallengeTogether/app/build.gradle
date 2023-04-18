@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.google.android.gms.oss-licenses-plugin'
 }
 
 android {
@@ -41,9 +42,13 @@ dependencies {
             replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk8 is now part of kotlin-stdlib")
         }
     }
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0' // 오픈소스 라이선스 목록
     implementation platform('com.google.firebase:firebase-bom:31.3.0')
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.navercorp.nid:oauth:5.5.0' // 네이버 로그인
+    implementation 'com.google.android.gms:play-services-auth:20.5.0' // 구글 로그인
+    implementation "com.kakao.sdk:v2-user:2.13.0" // 카카오 로그인
     implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.4' // 리사이클러뷰 스와이프 액션
     implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'  // 권한 허가 요청 알림창
     implementation "androidx.work:work-runtime:2.8.0"   // workmanager 알람 기능

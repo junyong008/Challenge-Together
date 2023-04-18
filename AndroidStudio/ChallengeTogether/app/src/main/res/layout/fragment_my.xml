@@ -188,7 +188,7 @@
                 android:id="@+id/view1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginHorizontal="32dp"
+                android:layout_marginHorizontal="28dp"
                 android:layout_marginTop="16dp"
                 android:background="#e3e3e3"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -216,18 +216,15 @@
                     android:gravity="left|center_vertical"
                     android:text="알림 설정" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/ibutton_inquire"
+                <View
+                    android:id="@+id/view2"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp"
                     android:layout_marginHorizontal="28dp"
-                    android:background="@drawable/button_round_white"
-                    android:elevation="10dp"
-                    android:fontFamily="@font/fontstyle_culture"
-                    android:drawableRight="@drawable/ic_rightarrow"
-                    android:gravity="left|center_vertical"
-                    android:text="1:1 문의" />
+                    android:background="#f2f2f2"/>
+
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/ibutton_changepwd"
@@ -260,7 +257,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
                     android:layout_marginHorizontal="28dp"
                     android:background="@drawable/button_round_white"
                     android:elevation="10dp"
@@ -268,6 +264,87 @@
                     android:drawableRight="@drawable/ic_rightarrow"
                     android:gravity="left|center_vertical"
                     android:text="회원탈퇴" />
+
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginHorizontal="28dp"
+                    android:background="#f2f2f2" />
+
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/ibutton_inquire"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="28dp"
+                    android:background="@drawable/button_round_white"
+                    android:elevation="10dp"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:drawableRight="@drawable/ic_rightarrow"
+                    android:gravity="left|center_vertical"
+                    android:text="1:1 문의" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/ibutton_privacypolicy"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="28dp"
+                    android:background="@drawable/button_round_white"
+                    android:elevation="10dp"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:drawableRight="@drawable/ic_rightarrow"
+                    android:gravity="left|center_vertical"
+                    android:text="개인정보 처리방침" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/ibutton_license"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="28dp"
+                    android:background="@drawable/button_round_white"
+                    android:elevation="10dp"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:drawableRight="@drawable/ic_rightarrow"
+                    android:gravity="left|center_vertical"
+                    android:text="오픈소스 라이선스" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginHorizontal="28dp"
+                    android:background="@drawable/button_round_white"
+                    android:elevation="2dp"
+                    android:gravity="left|center_vertical" >
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/fontstyle_culture"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:text="앱 버전" />
+
+                    <TextView
+                        android:id="@+id/textView_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/fontstyle_culture"
+                        android:textColor="@color/main_theme"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:text="" />
+                </LinearLayout>
 
 
 

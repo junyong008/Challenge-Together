@@ -410,7 +410,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
 
                                 // 메인 액티비티 실행 후 그 외 모두 삭제
                                 Intent intent = new Intent(getApplicationContext(), MainpageActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
                             } else {

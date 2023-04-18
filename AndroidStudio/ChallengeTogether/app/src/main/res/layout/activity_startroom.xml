@@ -83,22 +83,31 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_pawprint" />
 
-            <TextView
-                android:id="@+id/textView_title"
-                android:layout_width="wrap_content"
-                android:layout_height="46dp"
-                android:layout_marginStart="16dp"
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScroll_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="78dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/fontstyle_culture"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text=""
-                android:textColor="@color/main_theme"
-                android:textSize="25dp"
-                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:fontFamily="@font/fontstyle_culture"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="@color/main_theme"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+            </HorizontalScrollView>
 
             <View
                 android:id="@+id/view"
@@ -107,7 +116,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:background="#e3e3e3"
-                app:layout_constraintTop_toBottomOf="@+id/textView_title"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScroll_title"
                 tools:layout_editor_absoluteX="16dp" />
 
             <TextView
@@ -141,6 +150,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

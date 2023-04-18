@@ -18,6 +18,23 @@
         android:theme="@style/Theme.ChallengeTogether"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="@string/KAKAO_NATIVE_APP_KEY_SCHEME" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/OssLicensesMenuActivityTheme" />
         <activity
             android:name=".activity.NotificationRecordActivity"
             android:exported="false" />

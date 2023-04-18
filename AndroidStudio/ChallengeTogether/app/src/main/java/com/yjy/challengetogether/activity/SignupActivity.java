@@ -86,6 +86,9 @@ public class SignupActivity extends AppCompatActivity {
                             Intent intent = new Intent(SignupActivity.this, SignupActivity2.class);
                             intent.putExtra("email", email);
                             intent.putExtra("password", pwd);
+                            intent.putExtra("kakaoid", "");
+                            intent.putExtra("googleid", "");
+                            intent.putExtra("naverid", "");
                             startActivity(intent);
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         } else {
