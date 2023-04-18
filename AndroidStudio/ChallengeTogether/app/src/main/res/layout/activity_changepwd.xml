@@ -82,7 +82,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="50dp"
-        android:background="@color/main_theme"
+        android:background="@drawable/button_round"
         android:text="변경하기"
         android:textColor="@color/black"
         android:textSize="15dp"

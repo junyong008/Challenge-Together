@@ -2,6 +2,7 @@ package com.yjy.challengetogether.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,14 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
+import com.kakao.sdk.user.UserApiClient;
+import com.navercorp.nid.NaverIdLoginSDK;
+import com.navercorp.nid.oauth.NidOAuthLogin;
+import com.yjy.challengetogether.BuildConfig;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.ChangepwdActivity;
 import com.yjy.challengetogether.activity.LoginActivity;
@@ -30,6 +39,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.github.muddz.styleabletoast.StyleableToast;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 public class MyFragment extends Fragment {
 
@@ -37,10 +48,11 @@ public class MyFragment extends Fragment {
     private String TAG  = "MY 프레그먼트";
 
     private CardView cardView_grade;
-    private TextView textView_nickname, textView_grade;
+    private TextView textView_nickname, textView_grade, textView_version;
     private RoundCornerProgressBar progress_nextgrade;
     private ImageView imageView_nextgrade;
-    private Button ibutton_pushsetting, ibutton_inquire, ibutton_changepwd, ibutton_logout, ibutton_deleteaccount;
+    private Button ibutton_pushsetting, ibutton_inquire, ibutton_privacypolicy, ibutton_license, ibutton_changepwd, ibutton_logout, ibutton_deleteaccount;
+    private GoogleSignInClient mGoogleSignInClient;
 
     private Util util;
 
@@ -59,6 +71,9 @@ public class MyFragment extends Fragment {
         imageView_nextgrade = view.findViewById(R.id.imageView_nextgrade);
         ibutton_pushsetting = view.findViewById(R.id.ibutton_pushsetting);
         ibutton_inquire = view.findViewById(R.id.ibutton_inquire);
+        ibutton_privacypolicy = view.findViewById(R.id.ibutton_privacypolicy);
+        ibutton_license = view.findViewById(R.id.ibutton_license);
+        textView_version = view.findViewById(R.id.textView_version);
         ibutton_changepwd = view.findViewById(R.id.ibutton_changepwd);
         ibutton_logout = view.findViewById(R.id.ibutton_logout);
         ibutton_deleteaccount = view.findViewById(R.id.ibutton_deleteaccount);
@@ -100,6 +115,30 @@ public class MyFragment extends Fragment {
             }
         });
 
+        // 개인정보 처리방침 버튼 클릭
+        ibutton_privacypolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://sites.google.com/view/challenge-together/%ED%99%88"));
+                startActivity(intent);
+            }
+        });
+
+        // 오픈소스 라이선스 버튼 클릭
+        ibutton_license.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), OssLicensesMenuActivity.class);
+                OssLicensesMenuActivity.setActivityTitle("오픈소스 라이선스");
+                startActivity(intent);
+            }
+        });
+
+        // 버전 텍스트 설정
+        String versionName = BuildConfig.VERSION_NAME;
+        textView_version.setText(versionName);
+
         // 비밀번호 변경 버튼 클릭
         ibutton_changepwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,12 +168,39 @@ public class MyFragment extends Fragment {
                         if (isConfirmed) {
                             StyleableToast.makeText(getActivity().getApplicationContext(), "로그아웃되었습니다.", R.style.successToast).show();
 
+                            // 카카오 로그아웃
+                            try {
+                                UserApiClient.getInstance().logout(new Function1<Throwable, Unit>() {
+                                    @Override
+                                    public Unit invoke(Throwable throwable) {
+                                        if (throwable != null) {
+                                            Log.d(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", throwable);
+                                        } else {
+                                            Log.d(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨");
+                                        }
+                                        return null;
+                                    }
+                                });
+                            } catch (Exception e) {}
+
+                            // 구글 로그아웃
+                            try {
+                                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+                                mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+                                mGoogleSignInClient.signOut();
+                            } catch (Exception e) {}
+
+                            // 네이버 로그아웃
+                            try {
+                                NaverIdLoginSDK.INSTANCE.logout();
+                            } catch (Exception e) {}
+
                             // 기기에 저장된 설정값 초기화
                             util.initSettings();
 
                             // 로그인 액티비티 실행 후 그 외 모두 삭제
                             Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             getActivity().finish();
                         }
@@ -159,17 +225,44 @@ public class MyFragment extends Fragment {
                                         OnTaskCompleted onDeleteAccountTaskCompleted = new OnTaskCompleted() {
                                             @Override
                                             public void onTaskCompleted(String result) {
-                                                Boolean isJSON = util.isJson(result);
-
                                                 if (result.indexOf("DELETE ACCOUNT SUCCESS") != -1) {
                                                     StyleableToast.makeText(getActivity().getApplicationContext(), "탈퇴되었습니다.", R.style.successToast).show();
+
+                                                    // 카카오 연결끊기
+                                                    try {
+                                                        UserApiClient.getInstance().unlink(new Function1<Throwable, Unit>() {
+                                                            @Override
+                                                            public Unit invoke(Throwable throwable) {
+                                                                if (throwable != null) {
+                                                                    Log.d(TAG, "연결끊기 실패.", throwable);
+                                                                } else {
+                                                                    Log.d(TAG, "연결끊기 성공. SDK에서 토큰 삭제됨");
+                                                                }
+                                                                return null;
+                                                            }
+                                                        });
+                                                    } catch (Exception e) {}
+
+                                                    // 구글 연결끊기
+                                                    try {
+                                                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+                                                        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+                                                        mGoogleSignInClient.revokeAccess();
+                                                    } catch (Exception e) {}
+
+                                                    // 네이버 연결끊기
+                                                    try {
+                                                        NaverIdLoginSDK.INSTANCE.logout();
+                                                        NidOAuthLogin nidOAuthLogin = new NidOAuthLogin();
+                                                        nidOAuthLogin.callDeleteTokenApi(getActivity(), null);
+                                                    } catch (Exception e) {}
 
                                                     // 기기에 저장된 설정값 초기화
                                                     util.initSettings();
 
                                                     // 로그인 액티비티 실행 후 그 외 모두 삭제
                                                     Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                     startActivity(intent);
                                                     getActivity().finish();
                                                 } else {
