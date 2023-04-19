@@ -11,7 +11,7 @@
         android:type="linear"/>
     -->
 
-    <solid android:color="#f8f8f8"></solid>
+    <solid android:color="@color/litegray"></solid>
     <corners
         android:topLeftRadius="12dp"
         android:topRightRadius="12dp"

@@ -66,6 +66,13 @@ public class LoginActivity extends AppCompatActivity {
         tbutton_signup = findViewById(R.id.tbutton_signup);
         tbutton_findpwd = findViewById(R.id.tbutton_findpwd);
 
+        // 사용자가 Walkthrough를 경험했는지 확인. 안했다면 경험하도록 이동
+        if (!util.checkIsUserWalked()) {
+            Intent intent = new Intent(LoginActivity.this, WalkthroughActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         // 스토리지에서 세션키가 있으면 바로 메인 페이지 진입. 메인 페이지에서 세션키 유효성을 검사하기에 여기서 매번 검사할 필요 없음.
         String SessionKeyFromStorage = util.getSessionKey();
         if (SessionKeyFromStorage != null && !SessionKeyFromStorage.isEmpty()) { // SessionKeyFromStorage가 있는경우

@@ -93,6 +93,24 @@ public class Util extends Application {
         return digest;
     }
 
+    /** 스토리지에서 사용자가 Walkthrough를 경험했는지 확인. 경험안했다면 경험했다고 변경하고 경험시키기 */
+    public boolean checkIsUserWalked() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("walkthrough", context.MODE_PRIVATE);
+        Boolean isWalked = sharedPreferences.getBoolean("isWalked", false);
+
+        // 아직 경험하지 않았다면 경험하게 하도록 하고 스토리지에 경험했음을 저장
+        if (!isWalked) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isWalked", true);
+            editor.apply();
+
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     /** 스토리지에 세션값 저장 */
     public void saveSessionKey(String sessionKey) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("logininfo", context.MODE_PRIVATE);

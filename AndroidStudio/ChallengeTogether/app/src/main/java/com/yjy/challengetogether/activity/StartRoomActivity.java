@@ -134,7 +134,7 @@ public class StartRoomActivity extends AppCompatActivity {
 
                             HttpAsyncTask resetTimeTask = new HttpAsyncTask(StartRoomActivity.this, onResetTimeTaskCompleted);
                             String phpFile = "service.php";
-                            String postParameters = "service=resettime&roomidx=" + roomidx + "&abstinencetime=" + util.DiffWithLocalTime(userRecentResetTime, "SEC") + "&resetmemo=" + msg;
+                            String postParameters = "service=resettime&roomidx=" + roomidx + "&recentresettime=" + userRecentResetTime + "&resetmemo=" + msg;
 
                             resetTimeTask.execute(phpFile, postParameters, util.getSessionKey());
                         }
