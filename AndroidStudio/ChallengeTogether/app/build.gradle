@@ -13,7 +13,7 @@ android {
         minSdk 24
         targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,6 +49,7 @@ dependencies {
     implementation 'com.navercorp.nid:oauth:5.5.0' // 네이버 로그인
     implementation 'com.google.android.gms:play-services-auth:20.5.0' // 구글 로그인
     implementation "com.kakao.sdk:v2-user:2.13.0" // 카카오 로그인
+    implementation 'me.relex:circleindicator:2.1.6' // 페이지 인디케이터
     implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.4' // 리사이클러뷰 스와이프 액션
     implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'  // 권한 허가 요청 알림창
     implementation "androidx.work:work-runtime:2.8.0"   // workmanager 알람 기능
