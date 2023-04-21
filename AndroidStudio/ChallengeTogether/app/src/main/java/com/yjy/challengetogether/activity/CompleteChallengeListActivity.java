@@ -104,7 +104,7 @@ public class CompleteChallengeListActivity extends AppCompatActivity {
                     }
 
 
-                    recyclerView_mychallenges.setHasFixedSize(true);
+                    recyclerView_mychallenges.setHasFixedSize(false);
                     recyclerView_mychallenges.setLayoutManager(llm);
 
                     //SnapHelper snapHelper = new PagerSnapHelper();

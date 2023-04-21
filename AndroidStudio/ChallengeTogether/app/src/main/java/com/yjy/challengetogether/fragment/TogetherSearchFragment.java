@@ -139,7 +139,7 @@ public class TogetherSearchFragment extends Fragment {
                     }
 
 
-                    recyclerView_room.setHasFixedSize(true);
+                    recyclerView_room.setHasFixedSize(false);
                     recyclerView_room.setLayoutManager(llm);
 
                     //SnapHelper snapHelper = new PagerSnapHelper();

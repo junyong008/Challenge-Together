@@ -123,7 +123,7 @@ public class MyPostActivity extends AppCompatActivity {
                     }
 
 
-                    recyclerView_posts.setHasFixedSize(true);
+                    recyclerView_posts.setHasFixedSize(false);
                     recyclerView_posts.setLayoutManager(llm);
 
                     //SnapHelper snapHelper = new PagerSnapHelper();

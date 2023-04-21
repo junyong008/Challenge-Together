@@ -135,7 +135,7 @@ public class NotificationRecordActivity extends AppCompatActivity {
                     }
 
 
-                    recyclerView_notifications.setHasFixedSize(true);
+                    recyclerView_notifications.setHasFixedSize(false);
                     recyclerView_notifications.setLayoutManager(llm);
 
                     adapter = new NotificationRvAdapter(NotificationRecordActivity.this, items, util);
