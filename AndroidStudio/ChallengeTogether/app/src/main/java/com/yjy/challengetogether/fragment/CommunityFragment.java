@@ -128,7 +128,7 @@ public class CommunityFragment extends Fragment {
                     }
 
 
-                    recyclerView_posts.setHasFixedSize(true);
+                    recyclerView_posts.setHasFixedSize(false);
                     recyclerView_posts.setLayoutManager(llm);
 
                     //SnapHelper snapHelper = new PagerSnapHelper();

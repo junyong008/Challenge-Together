@@ -141,7 +141,7 @@ public class TogetherFragment extends Fragment {
         item.setTitle("스마트폰 끊기");
         items.add(item);
 
-        recyclerView_category.setHasFixedSize(true);
+        recyclerView_category.setHasFixedSize(false);
         recyclerView_category.setLayoutManager(glm);
 
         //SnapHelper snapHelper = new PagerSnapHelper();

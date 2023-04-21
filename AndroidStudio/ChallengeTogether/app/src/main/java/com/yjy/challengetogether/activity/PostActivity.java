@@ -250,7 +250,7 @@ public class PostActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    recyclerView_comments.setHasFixedSize(true);
+                    recyclerView_comments.setHasFixedSize(false);
                     recyclerView_comments.setLayoutManager(llm);
 
                     adapter = new PostActivityRvAdapter(PostActivity.this.getApplication(), PostActivity.this, items, sessionUserIdx, writerIdx, util);

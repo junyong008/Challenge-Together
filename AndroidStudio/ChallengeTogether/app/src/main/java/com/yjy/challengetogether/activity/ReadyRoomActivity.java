@@ -307,7 +307,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    recyclerView_participants.setHasFixedSize(true);
+                    recyclerView_participants.setHasFixedSize(false);
                     recyclerView_participants.setLayoutManager(llm);
 
                     //SnapHelper snapHelper = new PagerSnapHelper();

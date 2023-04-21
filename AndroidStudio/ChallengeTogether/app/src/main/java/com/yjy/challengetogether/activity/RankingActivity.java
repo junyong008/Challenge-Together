@@ -113,7 +113,7 @@ public class RankingActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    recyclerView_participants.setHasFixedSize(true);
+                    recyclerView_participants.setHasFixedSize(false);
                     recyclerView_participants.setLayoutManager(llm);
 
                     adapter = new RankingRvAdapter(RankingActivity.this, items, roomTargetDay);
