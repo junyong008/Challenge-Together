@@ -231,7 +231,7 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>ㅁ
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -244,6 +244,7 @@
         android:elevation="9dp"
         android:fontFamily="@font/fontstyle_culture"
         android:text="참여하기"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

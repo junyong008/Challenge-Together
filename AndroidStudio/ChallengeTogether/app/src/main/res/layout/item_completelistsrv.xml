@@ -56,6 +56,7 @@
                 android:maxLines="1"
                 android:text="content"
                 android:textSize="15dp"
+                android:textColor="@color/darkgray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_title" />
@@ -95,6 +96,7 @@
                 android:fontFamily="@font/fontstyle_culture"
                 android:text="100 %"
                 android:textSize="10dp"
+                android:textColor="@color/darkgray"
                 app:layout_constraintBottom_toBottomOf="@+id/progressBar_percent"
                 app:layout_constraintEnd_toEndOf="@+id/progressBar_percent"
                 app:layout_constraintStart_toStartOf="@+id/progressBar_percent"

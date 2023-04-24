@@ -3,7 +3,7 @@
 
     <!-- 배경 색상 설정 -->
     <gradient
-        android:angle="62"
+        android:angle="225"
         android:endColor="#F7CE68"
         android:startColor="#FBAB7E"
         android:type="linear"/>

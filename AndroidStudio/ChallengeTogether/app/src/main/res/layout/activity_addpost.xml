@@ -73,7 +73,7 @@
                 android:maxLength="1000"
                 android:minHeight="160dp"
                 android:padding="15dp"
-                android:text=""
+                android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="16dp" />
 
@@ -100,6 +100,7 @@
                 android:elevation="9dp"
                 android:fontFamily="@font/fontstyle_culture"
                 android:text="작성하기"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

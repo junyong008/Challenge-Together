@@ -46,6 +46,8 @@
         android:maxLength="35"
         android:paddingLeft="15dp"
         android:hint="제목 / 내용 / 방 번호"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.177"
         app:layout_constraintStart_toStartOf="parent"

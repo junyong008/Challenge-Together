@@ -29,7 +29,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginLeft="58dp"
                 android:layout_marginRight="61dp"
-                android:text="NickName"
+                android:text=""
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textSize="25dp"

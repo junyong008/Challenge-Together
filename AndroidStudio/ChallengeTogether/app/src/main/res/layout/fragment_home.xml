@@ -82,6 +82,7 @@
                     android:lineSpacingExtra="-8dp"
                     android:text="님, 안녕하세요!"
                     android:textSize="20sp"
+                    android:textColor="@color/darkgray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView_nickname"
                     app:layout_constraintTop_toTopOf="parent"

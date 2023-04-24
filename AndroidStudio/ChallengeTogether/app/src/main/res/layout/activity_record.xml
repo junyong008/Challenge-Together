@@ -132,6 +132,7 @@
                 android:lineSpacingExtra="-8dp"
                 android:text="최대 기록"
                 android:textSize="15sp"
+                android:textColor="@color/darkgray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_record" />
@@ -184,6 +185,7 @@
                         android:gravity="center"
                         android:lineSpacingExtra="-8dp"
                         android:text="도전 횟수"
+                        android:textColor="@color/darkgray"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -215,6 +217,7 @@
                         android:gravity="center"
                         android:lineSpacingExtra="-8dp"
                         android:text="성공 횟수"
+                        android:textColor="@color/darkgray"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -245,6 +248,7 @@
                         android:gravity="center"
                         android:lineSpacingExtra="-8dp"
                         android:text="리셋 횟수"
+                        android:textColor="@color/darkgray"
                         android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>

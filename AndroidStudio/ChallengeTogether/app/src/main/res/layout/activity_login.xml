@@ -51,7 +51,7 @@
                     android:id="@+id/edit_email"
 
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/edit_round"
@@ -62,18 +62,22 @@
                     android:inputType="textEmailAddress"
                     android:maxLength="30"
                     android:paddingLeft="15dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
                     android:text="" />
 
                 <EditText
                     android:id="@+id/edit_pw"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:background="@drawable/edit_round"
                     android:drawableLeft="@drawable/ic_lock"
                     android:drawablePadding="10dp"
                     android:ems="10"
                     android:hint="PASSWORD"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
                     android:inputType="textPassword"
                     android:maxLength="30"
                     android:paddingLeft="15dp" />
@@ -87,7 +91,7 @@
                     android:background="@drawable/button_border"
 
                     android:text="LOGIN"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textSize="17sp"
                     android:textStyle="bold" />
 
@@ -145,7 +149,7 @@
                         android:layout_height="1dp"
                         android:layout_weight="1"
                         android:layout_gravity="center"
-                        android:background="@color/darkgray" />
+                        android:background="@color/black" />
 
                     <TextView
                         android:id="@+id/textView"
@@ -157,7 +161,7 @@
                         android:background="@drawable/ripple_effect_rec"
                         android:fontFamily="@font/fontstyle_culture"
                         android:text="간편하게 시작하기"
-                        android:textColor="@color/darkgray"
+                        android:textColor="@color/black"
                         android:textSize="13dp"/>
 
                     <View
@@ -165,7 +169,7 @@
                         android:layout_weight="1"
                         android:layout_height="1dp"
                         android:layout_gravity="center"
-                        android:background="@color/darkgray" />
+                        android:background="@color/black" />
 
                 </LinearLayout>
 
