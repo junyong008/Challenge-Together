@@ -1,10 +1,12 @@
 package com.yjy.challengetogether.util;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
 
 import java.io.BufferedReader;
@@ -56,7 +58,10 @@ public class HttpAsyncTask extends AsyncTask<String,Void,String> {
         String sessionKey = null;
 
         try {
-            serverURL = "http://3.37.234.141/" + (String) params[0];   // 서버 URL
+            Resources res = context.getResources();
+            res.getString(R.string.SERVER_IP);
+
+            serverURL = "http://" + res.getString(R.string.SERVER_IP) + "/" + (String) params[0];   // 서버 URL
             postParameters = (String) params[1];  // 전송 파라미터
             sessionKey = (String) params[2];  // 세션키
         } catch (RuntimeException e) { }

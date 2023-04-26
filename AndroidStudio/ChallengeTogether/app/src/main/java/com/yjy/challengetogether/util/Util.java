@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -654,7 +655,10 @@ public class Util extends Application {
             String sessionKey = null;
 
             try {
-                serverURL = "http://3.37.234.141/" + (String) params[0];   // 서버 URL
+                Resources res = context.getResources();
+                res.getString(R.string.SERVER_IP);
+
+                serverURL = "http://" + res.getString(R.string.SERVER_IP) + "/" + (String) params[0];   // 서버 URL
                 postParameters = (String) params[1];  // 전송 파라미터
                 sessionKey = (String) params[2];  // 세션키
             } catch (RuntimeException e) { }

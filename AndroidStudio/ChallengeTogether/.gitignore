@@ -1,6 +1,7 @@
 *.iml
 .gradle
 /local.properties
+/.idea
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -15,3 +16,4 @@
 local.properties
 /app/src/main/res/values/kakao_app_key.xml
 /app/src/main/res/values/naver_app_key.xml
+/app/src/main/res/values/server_info.xml
