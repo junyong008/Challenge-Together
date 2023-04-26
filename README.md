@@ -19,6 +19,7 @@
 
 ### 프로젝트 설계
 ![graphic](https://user-images.githubusercontent.com/69251013/234477690-a1666914-c619-486b-a5e3-db0b296285ee.png)
+![7](https://user-images.githubusercontent.com/69251013/234552152-3f4f2cab-948e-4c62-9a35-8f933b529437.png)
 ![1](https://user-images.githubusercontent.com/69251013/234531462-08144a73-a0db-4672-9676-510c2c67dad6.png)
 ![2](https://user-images.githubusercontent.com/69251013/234531737-6c0f21eb-7567-48e4-89e1-bb541b3fccd4.png)
 ![3](https://user-images.githubusercontent.com/69251013/234531411-4d899913-367d-4168-a6f0-1bfb1c468aa0.png)
