@@ -29,9 +29,7 @@
 
     <!-- 팝업메뉴 스타일 변경 -->
     <style name="MyPopupMenu" parent="@style/Widget.AppCompat.PopupMenu">
-        <item name="android:fontFamily">@font/fontstyle_culture</item>
         <item name="android:popupBackground">@drawable/popup_menu_bg</item>
-        <item name="android:textColor">@color/white</item>
     </style>
 
     <!-- 툴팁 텍스트 스타일 변경 -->

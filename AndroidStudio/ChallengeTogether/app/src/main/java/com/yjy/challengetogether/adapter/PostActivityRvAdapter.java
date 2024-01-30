@@ -1,7 +1,6 @@
 package com.yjy.challengetogether.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -65,7 +64,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
 
     public void clearHighlight() {
         if (replyCommentIdx != -1) {
-            replyCardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+            replyCardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white_darkmode));
             replyCardView = null;
             replyCommentIdx = -1;
         }
@@ -182,7 +181,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
 
                 // 이전에 하이라이트 된 댓글이 있으면 먼저 삭제 후 새로운 댓글 하이라이트
                 if (replyCommentIdx != -1) {
-                    replyCardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                    replyCardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white_darkmode));
                     replyCardView = null;
                     replyCommentIdx = -1;
                 }
@@ -190,7 +189,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
                 // 해당 댓글 하이라이트
                 replyCommentIdx = item.getCommentidx();
                 replyCardView = holder.cardView_item;
-                holder.cardView_item.setCardBackgroundColor(Color.parseColor("#ffe9d0"));
+                holder.cardView_item.setCardBackgroundColor(ContextCompat.getColor(context, R.color.comment_highlight));
             }
         });
     }

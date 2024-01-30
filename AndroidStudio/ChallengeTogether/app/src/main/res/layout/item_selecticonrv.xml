@@ -15,6 +15,7 @@
 
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
+        android:background="@color/white_darkmode"
         app:cardCornerRadius="15dp"
         app:cardElevation="8dp"
         app:cardUseCompatPadding="false">

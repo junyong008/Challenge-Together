@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_darkmode"
     tools:context=".fragment.TogetherSearchFragment">
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -25,7 +26,7 @@
         android:fontFamily="@font/fontstyle_culture"
         android:gravity="center"
         android:text="카테고리"
-        android:textColor="@color/black"
+        android:textColor="@color/black_darkmode"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/edit_search"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +47,7 @@
         android:maxLength="35"
         android:paddingLeft="15dp"
         android:hint="제목 / 내용 / 방 번호"
-        android:textColor="@color/black"
+        android:textColor="@color/black_darkmode"
         android:textColorHint="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.177"
@@ -77,17 +78,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_search" />
 
-    <ImageView
-        android:id="@+id/imageView_none"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintVertical_bias="0.44"
-        app:srcCompat="@drawable/ic_noroomperson" />
-
     <TextView
         android:id="@+id/textView_none"
         android:layout_width="wrap_content"
@@ -97,23 +87,24 @@
         android:gravity="center"
         android:text="아직 같이하기 방이 존재하지 않습니다.\n메인에서 새로운 같이하기 도전방을 만들어보세요!"
         android:textColor="@color/gray"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_none" />
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/view">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="150dp"
             android:overScrollMode="never">
 
             <androidx.constraintlayout.widget.ConstraintLayout
