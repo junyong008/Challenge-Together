@@ -143,6 +143,7 @@ public class MyCommentActivity extends AppCompatActivity {
                             item.setDislike(obj.getString("DISLIKECOUNT"));
                             item.setNickname(obj.getString("NAME"));
                             item.setCommentcount(obj.getString("COMMENTCOUNT"));
+                            item.setBestTime(obj.getLong("BESTTIME"));
 
 
                             countOfLastLoad++;
@@ -184,7 +185,7 @@ public class MyCommentActivity extends AppCompatActivity {
 
 
         HttpAsyncTask loadMyPostTask = new HttpAsyncTask(MyCommentActivity.this, onLoadMyPostTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getcommunitymypostcomment&type=comment&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
         loadMyPostTask.execute(phpFile, postParameters, util.getSessionKey());

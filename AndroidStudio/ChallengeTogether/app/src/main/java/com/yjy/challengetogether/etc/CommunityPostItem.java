@@ -3,6 +3,7 @@ package com.yjy.challengetogether.etc;
 public class CommunityPostItem {
 
     private String postidx, useridx, createdate, content, modifydate, like, dislike, nickname, commentcount;
+    private Long bestTime;
 
     public String getPostidx() {
         return postidx;
@@ -19,6 +20,10 @@ public class CommunityPostItem {
     public void setUseridx(String useridx) {
         this.useridx = useridx;
     }
+
+    public void setBestTime(Long bestTime) { this.bestTime = bestTime; }
+
+    public Long getBestTime() { return bestTime; }
 
     public String getCreatedate() {
         return createdate;

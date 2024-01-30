@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -15,6 +16,7 @@ import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.PostActivity;
 import com.yjy.challengetogether.etc.CommunityPostItem;
 import com.yjy.challengetogether.fragment.CommunityFragment;
+import com.yjy.challengetogether.util.Const;
 import com.yjy.challengetogether.util.Util;
 
 import java.text.SimpleDateFormat;
@@ -55,6 +57,21 @@ public class CommunityFragmentRvAdapter extends RecyclerView.Adapter<CommunityFr
         holder.textView_like.setText(item.getLike());
         holder.textView_dislike.setText(item.getDislike());
         holder.textView_comment.setText(item.getCommentcount());
+
+        Long userBest = item.getBestTime();
+        if (userBest >= Const.MASTER_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_master2);
+        } else if (userBest >= Const.DIAMOND_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_diamond2);
+        } else if (userBest >= Const.PLATINUM_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_platinum2);
+        } else if (userBest >= Const.GOLD_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_gold2);
+        } else if (userBest >= Const.SILVER_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_silver2);
+        } else {
+            holder.imageView_grade.setImageResource(R.drawable.ic_bronze2);
+        }
 
         String newDateString;
         // yyyy-MM-dd HH:mm:ss 형식을 MM/dd HH:mm로 변환하여 표시
@@ -115,6 +132,7 @@ public class CommunityFragmentRvAdapter extends RecyclerView.Adapter<CommunityFr
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         TextView textView_name, textView_content, textView_createdate, textView_like, textView_dislike, textView_comment;
+        ImageView imageView_grade;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
@@ -125,6 +143,7 @@ public class CommunityFragmentRvAdapter extends RecyclerView.Adapter<CommunityFr
             textView_like = itemView.findViewById(R.id.textView_like);
             textView_dislike = itemView.findViewById(R.id.textView_dislike);
             textView_comment = itemView.findViewById(R.id.textView_comment);
+            imageView_grade = itemView.findViewById(R.id.imageView_grade);
         }
     }
 }

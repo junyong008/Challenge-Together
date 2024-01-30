@@ -37,6 +37,7 @@ import com.yjy.challengetogether.activity.RecordActivity;
 import com.yjy.challengetogether.adapter.HomeFragmentRvAdapter;
 import com.yjy.challengetogether.etc.HomeItem;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
+import com.yjy.challengetogether.util.Const;
 import com.yjy.challengetogether.util.HttpAsyncTask;
 import com.yjy.challengetogether.util.Util;
 
@@ -175,23 +176,15 @@ public class HomeFragment extends Fragment {
                             ibutton_notification.setImageResource(R.drawable.ic_notification);
                         }
 
-                        // 등급별 초(second) 값을 상수로 정의
-                        final int BRONZE_SECONDS = 0;
-                        final long SILVER_SECONDS = 604800;
-                        final int GOLD_SECONDS = 2592000;
-                        final int PLATINUM_SECONDS = 7776000;
-                        final int DIAMOND_SECONDS = 15552000;
-                        final int MASTER_SECONDS = 31536000;
-
-                        if (userBest >= MASTER_SECONDS) {
+                        if (userBest >= Const.MASTER_SECONDS) {
                             imageView_grade.setImageResource(R.drawable.ic_master);
-                        } else if (userBest >= DIAMOND_SECONDS) {
+                        } else if (userBest >= Const.DIAMOND_SECONDS) {
                             imageView_grade.setImageResource(R.drawable.ic_diamond);
-                        } else if (userBest >= PLATINUM_SECONDS) {
+                        } else if (userBest >= Const.PLATINUM_SECONDS) {
                             imageView_grade.setImageResource(R.drawable.ic_platinum);
-                        } else if (userBest >= GOLD_SECONDS) {
+                        } else if (userBest >= Const.GOLD_SECONDS) {
                             imageView_grade.setImageResource(R.drawable.ic_gold);
-                        } else if (userBest >= SILVER_SECONDS) {
+                        } else if (userBest >= Const.SILVER_SECONDS) {
                             imageView_grade.setImageResource(R.drawable.ic_silver);
                         } else {
                             imageView_grade.setImageResource(R.drawable.ic_bronze);

@@ -4,6 +4,7 @@ public class CommunityCommentItem {
 
     private String useridx, content, createdate, nickname;
     private int commentidx, parentidx;
+    private Long bestTime;
 
     public String getUseridx() {
         return useridx;
@@ -13,10 +14,12 @@ public class CommunityCommentItem {
         this.useridx = useridx;
     }
 
+    public void setBestTime(Long bestTime) { this.bestTime = bestTime; }
+    public Long getBestTime() { return bestTime; }
+
     public String getCreatedate() {
         return createdate;
     }
-
     public void setCreatedate(String createdate) {
         this.createdate = createdate;
     }
