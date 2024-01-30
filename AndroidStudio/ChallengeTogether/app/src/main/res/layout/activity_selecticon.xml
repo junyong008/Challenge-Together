@@ -31,7 +31,7 @@
         android:drawableLeft="@drawable/ic_list"
         android:drawablePadding="8dp"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/black_darkmode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

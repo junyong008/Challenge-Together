@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -72,6 +73,7 @@ public class HomeFragment extends Fragment {
     private Util util;
     private Handler mHandler;
     private String recentCompleteChallengeTitle = "";
+    private int recordColor;
 
     @Override
     public void onDestroy() {
@@ -95,10 +97,10 @@ public class HomeFragment extends Fragment {
         ibutton_moreinfo = view.findViewById(R.id.ibutton_moreinfo);
         textView_nickname = view.findViewById(R.id.textView_nickname);
         textView_record = view.findViewById(R.id.textView_record);
+        recordColor = ContextCompat.getColor(getContext(), R.color.black_darkmode);
         textView_completechallenges = view.findViewById(R.id.textView_completechallenges);
         textView_completechallenges.setPaintFlags(textView_completechallenges.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         textView_none = view.findViewById(R.id.textView_none);
-
 
         // 알림 권한 요청
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -384,7 +386,7 @@ public class HomeFragment extends Fragment {
             textView_record.setTextColor(Color.parseColor("#DC143C"));
             textView_record.setText(util.secondsToDHMS(diffSeconds, "DHMS"));
         } else {
-            textView_record.setTextColor(Color.parseColor("#000000"));
+            textView_record.setTextColor(recordColor);
             textView_record.setText(util.secondsToDHMS(userBest, "DHMS"));
         }
 

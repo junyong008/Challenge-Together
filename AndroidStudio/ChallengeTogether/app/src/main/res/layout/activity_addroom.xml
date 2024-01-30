@@ -34,7 +34,7 @@
             android:fontFamily="@font/fontstyle_culture"
             android:text="새로운 챌린지"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/black_darkmode"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/fontstyle_culture"
                     android:text="제목"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black_darkmode"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -109,7 +109,7 @@
                     android:ems="10"
                     android:maxLength="35"
                     android:paddingLeft="15dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black_darkmode"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -136,7 +136,7 @@
                     android:layout_marginTop="108dp"
                     android:fontFamily="@font/fontstyle_culture"
                     android:text="내용"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black_darkmode"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -156,7 +156,7 @@
                     android:inputType="textMultiLine"
                     android:maxLength="600"
                     android:padding="15dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black_darkmode"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -182,18 +182,18 @@
                     android:layout_marginTop="29dp"
                     android:fontFamily="@font/fontstyle_culture"
                     android:text="도전 목표일"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black_darkmode"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view" />
 
                 <EditText
                     android:id="@+id/edit_targetday"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="46dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="100dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="14dp"
-                    android:layout_marginRight="100dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/edit_round_border"
                     android:drawableRight="@drawable/ic_days"
                     android:ems="10"
@@ -203,7 +203,7 @@
                     android:paddingLeft="15dp"
                     android:paddingEnd="7dp"
                     android:singleLine="true"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black_darkmode"
                     app:layout_constraintEnd_toStartOf="@+id/switch_targetday"
                     app:layout_constraintStart_toEndOf="@+id/textView5"
                     app:layout_constraintTop_toBottomOf="@+id/view" />
@@ -242,11 +242,11 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="13dp"
                     android:drawableLeft="@drawable/ic_people"
-                    android:drawablePadding="3dp"
+                    android:drawablePadding="5dp"
                     android:fontFamily="@font/fontstyle_culture"
                     android:gravity="center"
                     android:text="같이하기"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black_darkmode"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view2" />
 
@@ -254,10 +254,10 @@
                     android:id="@+id/checkBox_together"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="80dp"
+                    android:layout_marginLeft="-10dp"
                     android:layout_marginTop="1dp"
                     android:text=""
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView6"
                     app:layout_constraintTop_toBottomOf="@+id/view2" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -276,7 +276,7 @@
                         android:fontFamily="@font/fontstyle_culture"
                         android:gravity="center_vertical"
                         android:text="최대 참여 인원수 : "
-                        android:textColor="@color/black"
+                        android:textColor="@color/black_darkmode"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -288,7 +288,7 @@
                         android:fontFamily="@font/fontstyle_culture"
                         android:gravity="center_vertical"
                         android:text=" 명"
-                        android:textColor="@color/black"
+                        android:textColor="@color/black_darkmode"
                         app:layout_constraintStart_toEndOf="@+id/hq_particicount"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -309,27 +309,27 @@
                         android:fontFamily="@font/fontstyle_culture"
                         android:gravity="center_vertical"
                         android:text="비밀번호 : "
-                        android:textColor="@color/black"
+                        android:textColor="@color/black_darkmode"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/hq_particicount" />
 
                     <EditText
                         android:id="@+id/edit_passwd"
 
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="46dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="62dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginStart="8dp"
 
                         android:background="@drawable/edit_round_border"
                         android:ems="10"
                         android:inputType="textPassword"
                         android:maxLength="10"
                         android:paddingLeft="15dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/black_darkmode"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView9"
                         app:layout_constraintTop_toBottomOf="@+id/hq_particicount" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_darkmode"
     tools:context=".activity.PostActivity">
 
     <TextView
@@ -14,7 +15,7 @@
         android:fontFamily="@font/fontstyle_culture"
         android:text="게시글"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/black_darkmode"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -82,7 +83,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/black_darkmode"
                 android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -138,15 +139,16 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
-
-                android:fontFamily="@font/fontstyle_culture"
+                android:textIsSelectable="true"
+                android:autoLink="web"
+                android:fontFamily="@font/kjcgothic"
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:maxLength="1000"
                 android:minHeight="160dp"
                 android:padding="5dp"
                 android:text=""
-                android:textColor="@color/darkgray"
+                android:textColor="@color/black_darkmode"
                 app:layout_constraintTop_toBottomOf="@+id/imageView"
                 tools:layout_editor_absoluteX="16dp" />
 
@@ -178,6 +180,7 @@
                     android:elevation="9dp"
                     android:fontFamily="@font/fontstyle_culture"
                     android:paddingLeft="10dp"
+                    android:textSize="14dp"
                     android:text="추천"
                     android:textColor="@color/white" />
 
@@ -192,6 +195,7 @@
                     android:elevation="9dp"
                     android:fontFamily="@font/fontstyle_culture"
                     android:paddingLeft="10dp"
+                    android:textSize="14dp"
                     android:text="비추천"
                     android:textColor="@color/white" />
 
@@ -280,7 +284,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/white"
+        android:background="@color/white_darkmode"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <EditText
@@ -304,7 +308,7 @@
             android:paddingEnd="41dp"
             android:paddingVertical="13dp"
             android:textSize="15sp"
-            android:textColor="@color/black"
+            android:textColor="@color/black_darkmode"
             android:textColorHint="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

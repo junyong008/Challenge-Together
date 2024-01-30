@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -41,7 +40,6 @@ public class TogetherSearchFragment extends Fragment {
     private View view;
     private String TAG  = "TOGETHER SEARCH 프레그먼트";
     private ImageButton ibutton_back, ibutton_search;
-    private ImageView imageView_none;
     private TextView textView_title, textView_none;
     private EditText edit_search;
     private String categoryicon, categorytitle;
@@ -67,7 +65,6 @@ public class TogetherSearchFragment extends Fragment {
         textView_title = view.findViewById(R.id.textView_title);
         ibutton_search = view.findViewById(R.id.ibutton_search);
         edit_search = view.findViewById(R.id.edit_search);
-        imageView_none = view.findViewById(R.id.imageView_none);
         textView_none = view.findViewById(R.id.textView_none);
         refresh = view.findViewById(R.id.refresh);
         progressBar = view.findViewById(R.id.progressBar);
@@ -153,10 +150,8 @@ public class TogetherSearchFragment extends Fragment {
 
                     // 방이 존재하면 안내메시지 가리기
                     if(items.size() > 0) {
-                        imageView_none.setVisibility(View.GONE);
                         textView_none.setVisibility(View.GONE);
                     } else {
-                        imageView_none.setVisibility(View.VISIBLE);
                         textView_none.setVisibility(View.VISIBLE);
                     }
 
@@ -258,10 +253,8 @@ public class TogetherSearchFragment extends Fragment {
 
                     // 방이 존재하면 안내메시지 가리기
                     if(items.size() > 0) {
-                        imageView_none.setVisibility(View.GONE);
                         textView_none.setVisibility(View.GONE);
                     } else {
-                        imageView_none.setVisibility(View.VISIBLE);
                         textView_none.setVisibility(View.VISIBLE);
                     }
                 }
