@@ -113,6 +113,7 @@
                     android:background="@drawable/button_round_white"
                     android:padding="6dp"
                     android:src="@drawable/ic_more"
+                    android:elevation="4dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -257,7 +258,6 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="68dp"
                 android:elevation="8dp"
-                android:src="@drawable/ic_bronze"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

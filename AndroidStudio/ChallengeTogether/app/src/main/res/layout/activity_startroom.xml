@@ -86,11 +86,11 @@
 
             <HorizontalScrollView
                 android:id="@+id/horizontalScroll_title"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="78dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView_icon"
                 app:layout_constraintTop_toTopOf="parent">
@@ -99,7 +99,7 @@
                     android:id="@+id/textView_title"
                     android:layout_width="wrap_content"
                     android:layout_height="46dp"
-                    android:fontFamily="@font/fontstyle_culture"
+                    android:fontFamily="@font/fontstyle_suseongdotum"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:text=""
