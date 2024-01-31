@@ -166,7 +166,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageView_trophy"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="16dp"
@@ -201,7 +201,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/progress_achievement"
-                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                app:layout_constraintEnd_toStartOf="@+id/imageView_trophy"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.65">
@@ -211,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/fontstyle_culture"
-                    android:text="n일 n시간 n분 n초"
+                    android:text="0일 0시간 0분 0초"
                     android:textColor="@color/red"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -224,7 +224,7 @@
                     android:layout_marginStart="36dp"
                     android:layout_marginTop="25dp"
                     android:fontFamily="@font/fontstyle_culture"
-                    android:text="/ n일"
+                    android:text="/ 0일"
                     android:textColor="@color/gray"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -241,7 +241,7 @@
                 android:fontFamily="@font/fontstyle_culture"
                 android:gravity="center"
                 android:lineSpacingExtra="-8dp"
-                android:text="n일 남음"
+                android:text="0일 남음"
                 android:textSize="15sp"
                 android:textColor="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"

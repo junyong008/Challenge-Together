@@ -1,5 +1,7 @@
 package com.yjy.challengetogether.activity;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,8 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,12 +26,19 @@ import com.mcdev.quantitizerlibrary.HorizontalQuantitizer;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
 import com.yjy.challengetogether.util.HttpAsyncTask;
+import com.yjy.challengetogether.util.RangeTimePickerDialog;
 import com.yjy.challengetogether.util.Util;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
 public class AddRoomActivity extends AppCompatActivity {
 
+    private Boolean isNewChallenge;
+    private TextView textView_title;
     private ImageButton ibutton_close;
     private EditText edit_title;
     private String outputIcon;
@@ -35,11 +47,16 @@ public class AddRoomActivity extends AppCompatActivity {
     private EditText edit_content;
     private EditText edit_targetday;
     private LabeledSwitch switch_targetday;
+    private TextView textView_together;
     private CheckBox checkBox_together;
-    private ConstraintLayout constraintLayout4;
+    private ConstraintLayout constraintLayout_startDay, constraintLayout4;
     private HorizontalQuantitizer hq_particicount;
     private EditText edit_passwd;
-    private Button button_addroom;
+    private Button button_startDay, button_addroom;
+    private View view2;
+    Calendar currentCalendar = Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm", Locale.getDefault());
     private com.yjy.challengetogether.util.Util util = new Util(AddRoomActivity.this);
 
 
@@ -54,17 +71,80 @@ public class AddRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addroom);
 
+        isNewChallenge = getIntent().getBooleanExtra("isNew", true);
+
+        textView_title = findViewById(R.id.textView_title);
         ibutton_close = findViewById(R.id.ibutton_close);
         edit_title = findViewById(R.id.edit_title);
         ibutton_listoficon = findViewById(R.id.ibutton_listoficon);
         edit_content = findViewById(R.id.edit_content);
         switch_targetday = findViewById(R.id.switch_targetday);
         edit_targetday = findViewById(R.id.edit_targetday);
+        textView_together = findViewById(R.id.textView_together);
         checkBox_together = findViewById(R.id.checkBox_together);
+        constraintLayout_startDay = findViewById(R.id.constraintLayout_startDay);
         constraintLayout4 = findViewById(R.id.constraintLayout4);
         hq_particicount = findViewById(R.id.hq_particicount);
         edit_passwd = findViewById(R.id.edit_passwd);
+        button_startDay = findViewById(R.id.button_startDay);
         button_addroom = findViewById(R.id.button_addroom);
+        view2 = findViewById(R.id.view2);
+
+        // 새로운 챌린지가 아니라면 시작일 지정 UI 보여주고 같이하기 UI 숨기기
+        if (!isNewChallenge) {
+            textView_title.setText("자유 챌린지");
+            constraintLayout_startDay.setVisibility(View.VISIBLE);
+            view2.setVisibility(View.INVISIBLE);
+            textView_together.setVisibility(View.INVISIBLE);
+            checkBox_together.setVisibility(View.INVISIBLE);
+
+            // 현재 시간으로 기본값 설정
+            String defaultDateTime = sdf.format(currentCalendar.getTime());
+            button_startDay.setText(defaultDateTime);
+        }
+
+        // 시작일 선택 버튼 클릭
+        button_startDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddRoomActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                // TimePickerDialog를 표시하여 시간 선택
+                                RangeTimePickerDialog timePickerDialog = new RangeTimePickerDialog(AddRoomActivity.this,
+                                        new TimePickerDialog.OnTimeSetListener() {
+                                            @Override
+                                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                                // 선택된 날짜 및 시간을 저장
+                                                calendar.set(Calendar.YEAR, year);
+                                                calendar.set(Calendar.MONTH, month);
+                                                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                                calendar.set(Calendar.MINUTE, minute);
+
+                                                // 선택된 날짜와 시간을 버튼 텍스트에 표시
+                                                String selectedDateTime = sdf.format(calendar.getTime());
+                                                button_startDay.setText(selectedDateTime);
+                                            }
+                                        }, 0, 0, false);
+
+                                // 날짜가 오늘이라면 현재 시간 이후로는 선택 불가하게 막기
+                                if (year == currentCalendar.get(Calendar.YEAR)
+                                        && month == currentCalendar.get(Calendar.MONTH)
+                                        && dayOfMonth == currentCalendar.get(Calendar.DAY_OF_MONTH)
+                                ) {
+                                    timePickerDialog.setMax(currentCalendar.get(Calendar.HOUR_OF_DAY), currentCalendar.get(Calendar.MINUTE));
+                                }
+                                timePickerDialog.show();
+                            }
+                        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                // 현재 날짜 이후의 날짜는 선택하지 못하게 설정
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.show();
+            }
+        });
 
         // 뒤로가기 버튼 클릭
         ibutton_close.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +226,9 @@ public class AddRoomActivity extends AppCompatActivity {
                 }
 
 
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String postStartDay = sdf.format(calendar.getTime());
+
                 String postTargetday = "";
                 if (switch_targetday.isOn()) {
                     // 날짜를 설정했을 경우
@@ -192,8 +275,12 @@ public class AddRoomActivity extends AppCompatActivity {
                 };
 
                 HttpAsyncTask addRoomTask = new HttpAsyncTask(AddRoomActivity.this, onAddRoomTaskCompleted);
-                String phpFile = "service.php";
-                String postParameters = "service=addroom&roomtitle=" + postTitle + "&roomcontent=" + postContent + "&roomicon=" + postIcon + "&targetperiod=" + postTargetday + "&maxparticipant=" + postMaxperson + "&roompwd=" + postPwd;
+                String phpFile = "service 1.1.0.php";
+                String postParameters;
+                if (isNewChallenge)
+                    postParameters = "service=addroom&roomtitle=" + postTitle + "&roomcontent=" + postContent + "&roomicon=" + postIcon + "&targetperiod=" + postTargetday + "&maxparticipant=" + postMaxperson + "&roompwd=" + postPwd;
+                else
+                    postParameters = "service=addfreemoderoom&roomtitle=" + postTitle + "&roomcontent=" + postContent + "&roomicon=" + postIcon + "&targetperiod=" + postTargetday + "&startDate=" + postStartDay;
 
                 addRoomTask.execute(phpFile, postParameters, util.getSessionKey());
                 /*

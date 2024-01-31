@@ -120,7 +120,7 @@ public class CompleteChallengeListActivity extends AppCompatActivity {
         };
 
         HttpAsyncTask loadCompleteRoomTask = new HttpAsyncTask(CompleteChallengeListActivity.this, onLoadCompleteRoomTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getcompleterooms";
 
         loadCompleteRoomTask.execute(phpFile, postParameters, util.getSessionKey());

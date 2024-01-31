@@ -305,7 +305,7 @@ public class HomeFragment extends Fragment {
         };
 
         HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=gethomefraginfos";
 
         loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -347,10 +347,16 @@ public class HomeFragment extends Fragment {
         ibutton_addchallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Count", "ADD BUTTON PRESSED");
-                Intent intent = new Intent(getActivity(), AddRoomActivity.class);
-                startActivity(intent);
-                // requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
+
+                // 다이얼로그 띄워서 [새 챌린지 / 자유 챌린지] 선택 기능 제공
+                util.showCustomDialog(new Util.OnConfirmListener() {
+                    @Override
+                    public void onConfirm(boolean isNewChallenge, String msg) {
+                        Intent intent = new Intent(getActivity(), AddRoomActivity.class);
+                        intent.putExtra("isNew", isNewChallenge);
+                        startActivity(intent);
+                    }
+                }, "", "chooseChallenge");
             }
 
         });

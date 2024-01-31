@@ -270,7 +270,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
                     };
 
                     HttpAsyncTask deleteCommentTask = new HttpAsyncTask(postActivity, onDeleteCommentTaskCompleted);
-                    String phpFile = "service.php";
+                    String phpFile = "service 1.1.0.php";
                     String postParameters = "service=deletecomment&commentidx=" + selectedItem.getCommentidx();
 
                     deleteCommentTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -300,7 +300,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
                     };
 
                     HttpAsyncTask addReportTask = new HttpAsyncTask(postActivity, onAddReportTaskCompleted);
-                    String phpFile = "service.php";
+                    String phpFile = "service 1.1.0.php";
                     String postParameters = "service=addreport&postidx=0&commentidx=" + selectedItem.getCommentidx() + "&reason=" + reportReason;
 
                     addReportTask.execute(phpFile, postParameters, util.getSessionKey());

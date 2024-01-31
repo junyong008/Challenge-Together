@@ -339,7 +339,7 @@ public class PostActivity extends AppCompatActivity {
 
 
                 HttpAsyncTask addCommentTask = new HttpAsyncTask(PostActivity.this, onAddCommentTaskCompleted);
-                String phpFile = "service.php";
+                String phpFile = "service 1.1.0.php";
                 String postParameters;
                 if (adapter.replyCommentIdx != -1) {
                     // 대댓글 달기
@@ -396,13 +396,13 @@ public class PostActivity extends AppCompatActivity {
                             if (!isBookmark) {
                                 // 북마크 안돼있으면 추가
                                 HttpAsyncTask changeBookmarkTask = new HttpAsyncTask(PostActivity.this, onChangeBookmarkTaskCompleted);
-                                String phpFile = "service.php";
+                                String phpFile = "service 1.1.0.php";
                                 String postParameters = "service=changebookmark&postidx=" + postidx;
                                 changeBookmarkTask.execute(phpFile, postParameters, util.getSessionKey());
                             } else {
                                 // 북마크 돼있으면 제거
                                 HttpAsyncTask changeBookmarkTask = new HttpAsyncTask(PostActivity.this, onChangeBookmarkTaskCompleted);
-                                String phpFile = "service.php";
+                                String phpFile = "service 1.1.0.php";
                                 String postParameters = "service=changebookmark&postidx=" + postidx;
                                 changeBookmarkTask.execute(phpFile, postParameters, util.getSessionKey());
                             }
@@ -437,7 +437,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HttpAsyncTask addLikeTask = new HttpAsyncTask(PostActivity.this, onAddActionTaskCompleted);
-                String phpFile = "service.php";
+                String phpFile = "service 1.1.0.php";
                 String postParameters = "service=addaction&postidx=" + postidx + "&actiontype=LIKE";
 
                 addLikeTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -449,7 +449,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HttpAsyncTask addDisLikeTask = new HttpAsyncTask(PostActivity.this, onAddActionTaskCompleted);
-                String phpFile = "service.php";
+                String phpFile = "service 1.1.0.php";
                 String postParameters = "service=addaction&postidx=" + postidx + "&actiontype=DISLIKE";
 
                 addDisLikeTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -544,7 +544,7 @@ public class PostActivity extends AppCompatActivity {
                     };
 
                     HttpAsyncTask deletePostTask = new HttpAsyncTask(PostActivity.this, onDeletePostTaskCompleted);
-                    String phpFile = "service.php";
+                    String phpFile = "service 1.1.0.php";
                     String postParameters = "service=deletepost&postidx=" + postidx;
 
                     deletePostTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -582,7 +582,7 @@ public class PostActivity extends AppCompatActivity {
                     };
 
                     HttpAsyncTask addReportTask = new HttpAsyncTask(PostActivity.this, onAddReportTaskCompleted);
-                    String phpFile = "service.php";
+                    String phpFile = "service 1.1.0.php";
                     String postParameters = "service=addreport&postidx=" + postidx + "&commentidx=0&reason=" + reportReason;
 
                     addReportTask.execute(phpFile, postParameters, util.getSessionKey());

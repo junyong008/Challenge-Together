@@ -162,7 +162,7 @@ public class TogetherSearchFragment extends Fragment {
         };
 
         HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=&limit=" + limit + "&lastroomidx=" + minRoomIdx;
 
         loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -177,7 +177,7 @@ public class TogetherSearchFragment extends Fragment {
                     progressBar.setVisibility(View.VISIBLE);
 
                     HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
-                    String phpFile = "service.php";
+                    String phpFile = "service 1.1.0.php";
                     String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + minRoomIdx;
 
                     loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -193,7 +193,7 @@ public class TogetherSearchFragment extends Fragment {
                 items = new ArrayList<>();
 
                 HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
-                String phpFile = "service.php";
+                String phpFile = "service 1.1.0.php";
                 String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + minRoomIdx;
 
                 loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -209,7 +209,7 @@ public class TogetherSearchFragment extends Fragment {
                 items = new ArrayList<>();
 
                 HttpAsyncTask loadRoomTask = new HttpAsyncTask(getActivity(), onLoadRoomTaskCompleted);
-                String phpFile = "service.php";
+                String phpFile = "service 1.1.0.php";
                 String postParameters = "service=getreadyrooms&roomtype=" + categoryicon + "&searchword=" + searchword + "&limit=" + limit + "&lastroomidx=" + minRoomIdx;
 
                 loadRoomTask.execute(phpFile, postParameters, util.getSessionKey());
