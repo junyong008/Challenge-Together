@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.etc.RankingItem;
+import com.yjy.challengetogether.util.Const;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,6 +65,22 @@ public class RankingRvAdapter extends RecyclerView.Adapter<RankingRvAdapter.Cust
             holder.textView_rank.setText("");
         } else {
             holder.textView_rank.setText(String.valueOf(item.getRanking()));
+        }
+
+        // 각 사용자 랭킹 표시
+        Long userBest = item.getBestTime();
+        if (userBest >= Const.MASTER_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_master2);
+        } else if (userBest >= Const.DIAMOND_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_diamond2);
+        } else if (userBest >= Const.PLATINUM_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_platinum2);
+        } else if (userBest >= Const.GOLD_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_gold2);
+        } else if (userBest >= Const.SILVER_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_silver2);
+        } else {
+            holder.imageView_grade.setImageResource(R.drawable.ic_bronze2);
         }
 
         holder.textView_nickname.setText(item.getNickname());
@@ -160,6 +178,7 @@ public class RankingRvAdapter extends RecyclerView.Adapter<RankingRvAdapter.Cust
 
         TextView textView_nickname, textView_time, textView_rank;
         View constraintLayout;
+        ImageView imageView_grade;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
@@ -168,6 +187,7 @@ public class RankingRvAdapter extends RecyclerView.Adapter<RankingRvAdapter.Cust
             textView_time = itemView.findViewById(R.id.textView_time);
             textView_rank = itemView.findViewById(R.id.textView_rank);
             constraintLayout = itemView.findViewById(R.id.constraintLayout);
+            imageView_grade = itemView.findViewById(R.id.imageView_grade);
         }
     }
 }
