@@ -300,6 +300,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                             item.setUseridx(obj2.getString("USER_IDX"));
                             item.setPermission(roomPermission);
                             item.setUsername(obj2.getString("NAME"));
+                            item.setBestTime(obj2.getLong("BESTTIME"));
 
                             items.add(item);
                         }
@@ -343,7 +344,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
         };
 
         HttpAsyncTask loadReadyRoomInfoTask = new HttpAsyncTask(ReadyRoomActivity.this, onLoadReadyRoomInfoTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getreadyroominfos&roomidx=" + roomidx;
 
         loadReadyRoomInfoTask.execute(phpFile, postParameters, util.getSessionKey());

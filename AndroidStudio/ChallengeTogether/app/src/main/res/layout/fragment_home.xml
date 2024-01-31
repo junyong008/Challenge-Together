@@ -246,6 +246,7 @@
                 android:fontFamily="@font/fontstyle_culture"
                 android:src="@drawable/ic_circleadd"
                 android:text="추가하기"
+                android:elevation="4dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

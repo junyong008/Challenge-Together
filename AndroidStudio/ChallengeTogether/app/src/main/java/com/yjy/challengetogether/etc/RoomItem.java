@@ -3,6 +3,7 @@ package com.yjy.challengetogether.etc;
 public class RoomItem {
 
     private String useridx, username, permission, recentresettime, bestrecord;
+    private Long bestTime;
 
     public String getUseridx() {
         return useridx;
@@ -11,6 +12,8 @@ public class RoomItem {
     public void setUseridx(String useridx) {
         this.useridx = useridx;
     }
+    public void setBestTime(Long bestTime) { this.bestTime = bestTime; }
+    public Long getBestTime() { return bestTime; }
 
     public String getUsername() {
         return username;

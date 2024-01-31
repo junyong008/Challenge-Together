@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.etc.RoomItem;
+import com.yjy.challengetogether.util.Const;
 
 import java.util.List;
 
@@ -43,6 +44,22 @@ public class ReadyRoomActivityRvAdapter extends RecyclerView.Adapter<ReadyRoomAc
             holder.imageView_crown.setVisibility(View.VISIBLE);
         }
 
+        // 각 사용자 등급 표기
+        Long userBest = item.getBestTime();
+        if (userBest >= Const.MASTER_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_master2);
+        } else if (userBest >= Const.DIAMOND_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_diamond2);
+        } else if (userBest >= Const.PLATINUM_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_platinum2);
+        } else if (userBest >= Const.GOLD_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_gold2);
+        } else if (userBest >= Const.SILVER_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_silver2);
+        } else {
+            holder.imageView_grade.setImageResource(R.drawable.ic_bronze2);
+        }
+
         // 방 소유자이면 2번째 유저부터 삭제표시 : 강퇴 기능은 닉네임만 보이는 상황에선 필요없다 판단. 보류
         /*
         if (item.getPermission().equals("owner") && position >= 1) {
@@ -69,7 +86,7 @@ public class ReadyRoomActivityRvAdapter extends RecyclerView.Adapter<ReadyRoomAc
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         TextView textView_name;
         ImageButton ibutton_remove;
-        ImageView imageView_crown;
+        ImageView imageView_crown, imageView_grade;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
@@ -77,6 +94,7 @@ public class ReadyRoomActivityRvAdapter extends RecyclerView.Adapter<ReadyRoomAc
             textView_name = itemView.findViewById(R.id.textView_name);
             ibutton_remove = itemView.findViewById(R.id.ibutton_remove);
             imageView_crown = itemView.findViewById(R.id.imageView_crown);
+            imageView_grade = itemView.findViewById(R.id.imageView_grade);
         }
     }
 }
