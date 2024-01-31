@@ -36,6 +36,9 @@
         <activity android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/OssLicensesMenuActivityTheme" />
         <activity
+            android:name=".activity.ModifyRoomActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.WalkthroughActivity"
             android:exported="false" />
         <activity

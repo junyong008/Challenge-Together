@@ -1,15 +1,19 @@
 package com.yjy.challengetogether.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +46,7 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class StartRoomActivity extends AppCompatActivity {
 
     private boolean isCompleteChallenge;
-    private ImageButton ibutton_close;
+    private ImageButton ibutton_close, ibutton_menu;
     private ImageView imageView_icon, imageView_trophy;
     private TextView textView_info, textView_title, textView_content, textView_currentTime, textView_TargetTime, textView_remainTime, textView_rank, textView_wisesaying;
     private RoundCornerProgressBar progress_achievement;
@@ -52,7 +56,8 @@ public class StartRoomActivity extends AppCompatActivity {
     private View constraintLayout3, constraintLayout4;
     private Handler mHandler;
     private com.yjy.challengetogether.util.Util util = new Util(StartRoomActivity.this);
-    private String userRecentResetTime; // 리셋할때 인자로 넘기기 위하여 밖으로 선언
+    private String userRecentResetTime, roomidx, roomType, roomTitle, roomContent, roomTargetDay; // 리셋할때 인자로 넘기기 위하여 밖으로 선언
+    private OnTaskCompleted onLoadStartRoomInfoTaskCompleted;
 
     @Override
     public void onBackPressed() {
@@ -79,9 +84,10 @@ public class StartRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_startroom);
 
         Intent intent = getIntent();
-        String roomidx = intent.getStringExtra("roomidx");
+        roomidx = intent.getStringExtra("roomidx");
 
         ibutton_close = findViewById(R.id.ibutton_close);
+        ibutton_menu = findViewById(R.id.ibutton_menu);
         imageView_icon = findViewById(R.id.imageView_icon);
         imageView_trophy = findViewById(R.id.imageView_trophy);
         textView_info = findViewById(R.id.textView_info);
@@ -214,7 +220,7 @@ public class StartRoomActivity extends AppCompatActivity {
 
         // 방 정보 불러와서 변경
         {
-            OnTaskCompleted onLoadStartRoomInfoTaskCompleted = new OnTaskCompleted() {
+            onLoadStartRoomInfoTaskCompleted = new OnTaskCompleted() {
                 @Override
                 public void onTaskCompleted(String result) {
                     Boolean isJSON = util.isJson(result);
@@ -224,12 +230,12 @@ public class StartRoomActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(result);
 
                             // 전달받은 JSON에서 roomInfo 부분만 추출
-                            String roomType = jsonObject.getString("CHALLENGETYPE");
-                            String roomTitle = jsonObject.getString("TITLE");
-                            String roomContent = jsonObject.getString("CONTENT");
+                            roomType = jsonObject.getString("CHALLENGETYPE");
+                            roomTitle = jsonObject.getString("TITLE");
+                            roomContent = jsonObject.getString("CONTENT");
                             String roomStartTime = jsonObject.getString("STARTTIME");
                             userRecentResetTime = jsonObject.getString("RECENTSTARTTIME");
-                            String roomTargetDay = jsonObject.getString("ENDTIME");
+                            roomTargetDay = jsonObject.getString("ENDTIME");
                             String rankNumberOfPeopleAbove = jsonObject.getString("RANK");
                             String roomCurrentUserNum = jsonObject.getString("CURRENTUSERNUM");
                             String roomIsFreeMode = jsonObject.getString("ISFREEMODE");
@@ -305,6 +311,11 @@ public class StartRoomActivity extends AppCompatActivity {
                                 calendarView.addDecorator(new EventDecorator(Color.parseColor("#DB4455"), Collections.singleton(challengeStartDay)));
                             } else {
                                 isCompleteChallenge = false;
+
+                                // 현재 방에 혼자있으면 수정가능하게 메뉴 제공
+                                if (Integer.parseInt(roomCurrentUserNum) == 1) {
+                                    ibutton_menu.setVisibility(View.VISIBLE);
+                                }
 
                                 textView_currentTime.setText(util.DiffWithLocalTime(userRecentResetTime, "DHMS"));
                                 updateTextViewTime(userRecentResetTime, Integer.parseInt(roomTargetDay)); // 계속해서 업데이트, 목표달성 순간 검사
@@ -422,6 +433,14 @@ public class StartRoomActivity extends AppCompatActivity {
 
             loadStartRoomInfoTask.execute(phpFile, postParameters, util.getSessionKey());
         }
+
+        // 게시글 메뉴 버튼 클릭
+        ibutton_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
+            }
+        });
     }
 
     private void updateTextViewTime(String recentResetDate, int targetTime_day) {
@@ -453,5 +472,46 @@ public class StartRoomActivity extends AppCompatActivity {
                 updateTextViewTime(recentResetDate, targetTime_day);
             }
         }, 1000);
+    }
+
+    // 팝업 메뉴 표시
+    private void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(StartRoomActivity.this, view, Gravity.END,0,R.style.MyPopupMenu);
+        popupMenu.inflate(R.menu.startroom_menu);
+
+        // 옵션 처리
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.menu_modify:
+                        Intent intent = new Intent(StartRoomActivity.this, ModifyRoomActivity.class);
+                        intent.putExtra("roomidx", roomidx);
+                        intent.putExtra("roomType", roomType);
+                        intent.putExtra("roomTitle", roomTitle);
+                        intent.putExtra("roomContent", roomContent);
+                        intent.putExtra("roomTargetDay", roomTargetDay);
+                        intent.putExtra("roomCurrentDay", util.DiffWithLocalTime(userRecentResetTime, "DAY"));
+                        startActivityForResult(intent, 1);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        popupMenu.show();
+    }
+
+    // ModifyRoomActivity에서 반환된 결과 처리
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            String result = data.getStringExtra("result");
+            if (result.equals("success")) {
+                StyleableToast.makeText(StartRoomActivity.this, "수정되었습니다.", R.style.successToast).show();
+                recreate();
+            }
+        }
     }
 }
