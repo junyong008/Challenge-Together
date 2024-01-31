@@ -151,7 +151,7 @@ public class MyPostActivity extends AppCompatActivity {
 
 
         HttpAsyncTask loadMyPostTask = new HttpAsyncTask(MyPostActivity.this, onLoadMyPostTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=getcommunitymypostcomment&type=post&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
         loadMyPostTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -166,7 +166,7 @@ public class MyPostActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
 
                     HttpAsyncTask loadPostTask = new HttpAsyncTask(MyPostActivity.this, onLoadMyPostTaskCompleted);
-                    String phpFile = "service 1.1.0.php";
+                    String phpFile = "service.php";
                     String postParameters = "service=getcommunitymypostcomment&type=post&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
                     loadPostTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -182,7 +182,7 @@ public class MyPostActivity extends AppCompatActivity {
                 items = new ArrayList<>();
 
                 HttpAsyncTask loadPostTask = new HttpAsyncTask(MyPostActivity.this, onLoadMyPostTaskCompleted);
-                String phpFile = "service 1.1.0.php";
+                String phpFile = "service.php";
                 String postParameters = "service=getcommunitymypostcomment&type=post&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
                 loadPostTask.execute(phpFile, postParameters, util.getSessionKey());

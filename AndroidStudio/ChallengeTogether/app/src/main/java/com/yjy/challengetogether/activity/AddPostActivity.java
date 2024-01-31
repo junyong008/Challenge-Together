@@ -81,7 +81,7 @@ public class AddPostActivity extends AppCompatActivity {
                 };
 
                 HttpAsyncTask addPostTask = new HttpAsyncTask(AddPostActivity.this, onAddPostTaskCompleted);
-                String phpFile = "service 1.1.0.php";
+                String phpFile = "service.php";
                 String postParameters = "service=addpost&postcontent=" + postContent;
 
                 addPostTask.execute(phpFile, postParameters, util.getSessionKey());

@@ -199,7 +199,7 @@ public class RecordActivity extends AppCompatActivity {
         };
 
         HttpAsyncTask loadRecordTask = new HttpAsyncTask(RecordActivity.this, onLoadRecordTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=getrecordactivityinfos";
 
         loadRecordTask.execute(phpFile, postParameters, util.getSessionKey());

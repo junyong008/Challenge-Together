@@ -273,7 +273,7 @@ public class MyFragment extends Fragment {
                                         };
 
                                         HttpAsyncTask deleteAccountTask = new HttpAsyncTask(getActivity(), onDeleteAccountTaskCompleted);
-                                        String phpFile = "service 1.1.0.php";
+                                        String phpFile = "service.php";
                                         String postParameters = "service=deleteaccount";
 
                                         deleteAccountTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -352,7 +352,7 @@ public class MyFragment extends Fragment {
         };
 
         HttpAsyncTask loadRecordTask = new HttpAsyncTask(getActivity(), onLoadRecordTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=getrecordactivityinfos";
 
         loadRecordTask.execute(phpFile, postParameters, util.getSessionKey());

@@ -102,7 +102,7 @@ public class ResetRecordActivity extends AppCompatActivity {
         };
 
         HttpAsyncTask loadResetListTask = new HttpAsyncTask(ResetRecordActivity.this, onLoadResetListTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=getresetrecord&roomidx=" + roomidx;
 
         loadResetListTask.execute(phpFile, postParameters, util.getSessionKey());

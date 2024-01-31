@@ -163,7 +163,7 @@ public class Util extends Application {
         };
 
         HttpAsyncTask_Util deleteSessionTask = new HttpAsyncTask_Util(context, onDeleteSessionTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=deletesession";
 
         deleteSessionTask.execute(phpFile, postParameters, getSessionKey());
@@ -219,7 +219,7 @@ public class Util extends Application {
         };
 
         HttpAsyncTask_Util loadRoomTask = new HttpAsyncTask_Util(context, onLoadRoomTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=getongoingchallenges";
 
         loadRoomTask.execute(phpFile, postParameters, getSessionKey());
@@ -261,7 +261,7 @@ public class Util extends Application {
         };
 
         HttpAsyncTask_Util registerTokenTask = new HttpAsyncTask_Util(context, onRegisterTokenTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=registertoken&token=" + token;
 
         registerTokenTask.execute(phpFile, postParameters, getSessionKey());
@@ -278,7 +278,7 @@ public class Util extends Application {
         };
 
         HttpAsyncTask_Util addAlarmTask = new HttpAsyncTask_Util(context, onAddAlarmTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=addalarm&title=" + title + "&content=" + content + "&type=" + type;
 
         addAlarmTask.execute(phpFile, postParameters, getSessionKey());

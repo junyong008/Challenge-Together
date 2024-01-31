@@ -133,7 +133,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                                 };
 
                                 HttpAsyncTask startRoomTask = new HttpAsyncTask(ReadyRoomActivity.this, onStartRoomTaskCompleted);
-                                String phpFile = "service 1.1.0.php";
+                                String phpFile = "service.php";
                                 String postParameters = "service=startroom&roomidx=" + roomidx;
 
                                 startRoomTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -175,7 +175,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                                 };
 
                                 HttpAsyncTask startRoomTask = new HttpAsyncTask(ReadyRoomActivity.this, onStartRoomTaskCompleted);
-                                String phpFile = "service 1.1.0.php";
+                                String phpFile = "service.php";
                                 String postParameters = "service=participateroom&roomidx=" + roomidx;
 
                                 startRoomTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -227,7 +227,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                     };
 
                     HttpAsyncTask exitRoomTask = new HttpAsyncTask(ReadyRoomActivity.this, onExitRoomTaskCompleted);
-                    String phpFile = "service 1.1.0.php";
+                    String phpFile = "service.php";
                     String postParameters = "service=exitroom&roomidx=" + roomidx;
 
                     exitRoomTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -344,7 +344,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
         };
 
         HttpAsyncTask loadReadyRoomInfoTask = new HttpAsyncTask(ReadyRoomActivity.this, onLoadReadyRoomInfoTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=getreadyroominfos&roomidx=" + roomidx;
 
         loadReadyRoomInfoTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -421,7 +421,7 @@ public class ReadyRoomActivity extends AppCompatActivity {
                     };
 
                     HttpAsyncTask deleteRoomTask = new HttpAsyncTask(ReadyRoomActivity.this, onDeleteRoomTaskCompleted);
-                    String phpFile = "service 1.1.0.php";
+                    String phpFile = "service.php";
                     String postParameters = "service=deleteroom&roomidx=" + roomidx;
 
                     deleteRoomTask.execute(phpFile, postParameters, util.getSessionKey());

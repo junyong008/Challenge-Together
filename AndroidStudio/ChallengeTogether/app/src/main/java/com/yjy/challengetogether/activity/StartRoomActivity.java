@@ -141,7 +141,7 @@ public class StartRoomActivity extends AppCompatActivity {
                             };
 
                             HttpAsyncTask resetTimeTask = new HttpAsyncTask(StartRoomActivity.this, onResetTimeTaskCompleted);
-                            String phpFile = "service 1.1.0.php";
+                            String phpFile = "service.php";
                             String postParameters = "service=resettime&roomidx=" + roomidx + "&recentresettime=" + userRecentResetTime + "&resetmemo=" + msg;
 
                             resetTimeTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -186,7 +186,7 @@ public class StartRoomActivity extends AppCompatActivity {
                             };
 
                             HttpAsyncTask giveUpTask = new HttpAsyncTask(StartRoomActivity.this, onGiveUpTaskCompleted);
-                            String phpFile = "service 1.1.0.php";
+                            String phpFile = "service.php";
                             String postParameters = "service=giveup&roomidx=" + roomidx;
 
                             giveUpTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -428,7 +428,7 @@ public class StartRoomActivity extends AppCompatActivity {
 
 
             HttpAsyncTask loadStartRoomInfoTask = new HttpAsyncTask(StartRoomActivity.this, onLoadStartRoomInfoTaskCompleted);
-            String phpFile = "service 1.1.0.php";
+            String phpFile = "service.php";
             String postParameters = "service=getstartroominfos&roomidx=" + roomidx;
 
             loadStartRoomInfoTask.execute(phpFile, postParameters, util.getSessionKey());

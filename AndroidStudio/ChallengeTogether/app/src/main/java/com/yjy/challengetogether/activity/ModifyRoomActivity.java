@@ -175,7 +175,7 @@ public class ModifyRoomActivity extends AppCompatActivity {
                                 };
 
                                 HttpAsyncTask modifyRoomTask = new HttpAsyncTask(ModifyRoomActivity.this, onModifyRoomTaskCompleted2);
-                                String phpFile = "service 1.1.0.php";
+                                String phpFile = "service.php";
                                 String postParameters = "service=modifyroom&roomidx=" + roomidx + "&roomtitle=" + postTitle + "&roomcontent=" + postContent + "&roomicon=" + postIcon + "&targetperiod=" + postTargetday;
 
                                 modifyRoomTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -201,7 +201,7 @@ public class ModifyRoomActivity extends AppCompatActivity {
                     };
 
                     HttpAsyncTask modifyRoomTask = new HttpAsyncTask(ModifyRoomActivity.this, onModifyRoomTaskCompleted);
-                    String phpFile = "service 1.1.0.php";
+                    String phpFile = "service.php";
                     String postParameters = "service=modifyroom&roomidx=" + roomidx + "&roomtitle=" + postTitle + "&roomcontent=" + postContent + "&roomicon=" + postIcon + "&targetperiod=" + postTargetday;
 
                     modifyRoomTask.execute(phpFile, postParameters, util.getSessionKey());

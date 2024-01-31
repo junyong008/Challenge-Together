@@ -275,7 +275,7 @@ public class AddRoomActivity extends AppCompatActivity {
                 };
 
                 HttpAsyncTask addRoomTask = new HttpAsyncTask(AddRoomActivity.this, onAddRoomTaskCompleted);
-                String phpFile = "service 1.1.0.php";
+                String phpFile = "service.php";
                 String postParameters;
                 if (isNewChallenge)
                     postParameters = "service=addroom&roomtitle=" + postTitle + "&roomcontent=" + postContent + "&roomicon=" + postIcon + "&targetperiod=" + postTargetday + "&maxparticipant=" + postMaxperson + "&roompwd=" + postPwd;

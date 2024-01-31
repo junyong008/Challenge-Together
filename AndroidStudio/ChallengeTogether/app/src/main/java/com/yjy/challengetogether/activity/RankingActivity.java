@@ -125,7 +125,7 @@ public class RankingActivity extends AppCompatActivity {
         };
 
         HttpAsyncTask loadRankingTask = new HttpAsyncTask(RankingActivity.this, onLoadRankingTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=getranking&roomidx=" + roomidx;
 
         loadRankingTask.execute(phpFile, postParameters, util.getSessionKey());

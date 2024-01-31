@@ -151,7 +151,7 @@ public class BookmarkPostActivity extends AppCompatActivity {
 
 
         HttpAsyncTask loadBookmarkPostTask = new HttpAsyncTask(BookmarkPostActivity.this, onLoadBookmarkPostTaskCompleted);
-        String phpFile = "service 1.1.0.php";
+        String phpFile = "service.php";
         String postParameters = "service=getcommunitybookmarks&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
         loadBookmarkPostTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -166,7 +166,7 @@ public class BookmarkPostActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
 
                     HttpAsyncTask loadBookmarkPostTask = new HttpAsyncTask(BookmarkPostActivity.this, onLoadBookmarkPostTaskCompleted);
-                    String phpFile = "service 1.1.0.php";
+                    String phpFile = "service.php";
                     String postParameters = "service=getcommunitybookmarks&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
                     loadBookmarkPostTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -182,7 +182,7 @@ public class BookmarkPostActivity extends AppCompatActivity {
                 items = new ArrayList<>();
 
                 HttpAsyncTask loadBookmarkPostTask = new HttpAsyncTask(BookmarkPostActivity.this, onLoadBookmarkPostTaskCompleted);
-                String phpFile = "service 1.1.0.php";
+                String phpFile = "service.php";
                 String postParameters = "service=getcommunitybookmarks&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
                 loadBookmarkPostTask.execute(phpFile, postParameters, util.getSessionKey());
