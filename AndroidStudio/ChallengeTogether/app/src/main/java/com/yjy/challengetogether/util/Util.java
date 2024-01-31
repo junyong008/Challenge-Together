@@ -23,6 +23,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
@@ -162,7 +163,7 @@ public class Util extends Application {
         };
 
         HttpAsyncTask_Util deleteSessionTask = new HttpAsyncTask_Util(context, onDeleteSessionTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=deletesession";
 
         deleteSessionTask.execute(phpFile, postParameters, getSessionKey());
@@ -218,7 +219,7 @@ public class Util extends Application {
         };
 
         HttpAsyncTask_Util loadRoomTask = new HttpAsyncTask_Util(context, onLoadRoomTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getongoingchallenges";
 
         loadRoomTask.execute(phpFile, postParameters, getSessionKey());
@@ -260,7 +261,7 @@ public class Util extends Application {
         };
 
         HttpAsyncTask_Util registerTokenTask = new HttpAsyncTask_Util(context, onRegisterTokenTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=registertoken&token=" + token;
 
         registerTokenTask.execute(phpFile, postParameters, getSessionKey());
@@ -277,7 +278,7 @@ public class Util extends Application {
         };
 
         HttpAsyncTask_Util addAlarmTask = new HttpAsyncTask_Util(context, onAddAlarmTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=addalarm&title=" + title + "&content=" + content + "&type=" + type;
 
         addAlarmTask.execute(phpFile, postParameters, getSessionKey());
@@ -606,6 +607,37 @@ public class Util extends Application {
                         yesButton.setEnabled(false);
                         yesButton.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.edit_round_litegray));
                     }
+                }
+            });
+        } else if (Type.equals("chooseChallenge")) {
+            dialog.setContentView(R.layout.dialog_choose_challenge);
+
+            // 새 챌린지
+            CardView cardView_new = dialog.findViewById(R.id.cardView_new);
+            cardView_new.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    listener.onConfirm(true, "");
+                }
+            });
+
+            // 자유 챌린지
+            CardView cardView_old = dialog.findViewById(R.id.cardView_old);
+            cardView_old.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    listener.onConfirm(false, "");
+                }
+            });
+
+            // 닫기 버튼
+            ImageButton ibutton_close = dialog.findViewById(R.id.ibutton_close);
+            ibutton_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss(); // 다이얼로그 닫기
                 }
             });
         }

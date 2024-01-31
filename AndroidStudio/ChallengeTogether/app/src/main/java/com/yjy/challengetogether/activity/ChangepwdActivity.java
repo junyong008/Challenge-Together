@@ -76,7 +76,7 @@ public class ChangepwdActivity extends AppCompatActivity {
                 };
 
                 HttpAsyncTask changePwdTask = new HttpAsyncTask(ChangepwdActivity.this, onChangePwdTaskCompleted);
-                String phpFile = "service.php";
+                String phpFile = "service 1.1.0.php";
                 String postParameters = "service=changepwd&changepwd=" + util.getHash(pwd);
 
                 changePwdTask.execute(phpFile, postParameters, util.getSessionKey());

@@ -43,8 +43,8 @@ public class StartRoomActivity extends AppCompatActivity {
 
     private boolean isCompleteChallenge;
     private ImageButton ibutton_close;
-    private ImageView imageView_icon;
-    private TextView textView_title, textView_content, textView_currentTime, textView_TargetTime, textView_remainTime, textView_rank, textView_wisesaying;
+    private ImageView imageView_icon, imageView_trophy;
+    private TextView textView_info, textView_title, textView_content, textView_currentTime, textView_TargetTime, textView_remainTime, textView_rank, textView_wisesaying;
     private RoundCornerProgressBar progress_achievement;
     MaterialCalendarView calendarView;
     private Button button_showrank, button_reset, button_giveup;
@@ -83,6 +83,8 @@ public class StartRoomActivity extends AppCompatActivity {
 
         ibutton_close = findViewById(R.id.ibutton_close);
         imageView_icon = findViewById(R.id.imageView_icon);
+        imageView_trophy = findViewById(R.id.imageView_trophy);
+        textView_info = findViewById(R.id.textView_info);
         textView_title = findViewById(R.id.textView_title);
         textView_content = findViewById(R.id.textView_content);
         textView_currentTime = findViewById(R.id.textView_currentTime);
@@ -133,7 +135,7 @@ public class StartRoomActivity extends AppCompatActivity {
                             };
 
                             HttpAsyncTask resetTimeTask = new HttpAsyncTask(StartRoomActivity.this, onResetTimeTaskCompleted);
-                            String phpFile = "service.php";
+                            String phpFile = "service 1.1.0.php";
                             String postParameters = "service=resettime&roomidx=" + roomidx + "&recentresettime=" + userRecentResetTime + "&resetmemo=" + msg;
 
                             resetTimeTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -178,7 +180,7 @@ public class StartRoomActivity extends AppCompatActivity {
                             };
 
                             HttpAsyncTask giveUpTask = new HttpAsyncTask(StartRoomActivity.this, onGiveUpTaskCompleted);
-                            String phpFile = "service.php";
+                            String phpFile = "service 1.1.0.php";
                             String postParameters = "service=giveup&roomidx=" + roomidx;
 
                             giveUpTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -230,6 +232,7 @@ public class StartRoomActivity extends AppCompatActivity {
                             String roomTargetDay = jsonObject.getString("ENDTIME");
                             String rankNumberOfPeopleAbove = jsonObject.getString("RANK");
                             String roomCurrentUserNum = jsonObject.getString("CURRENTUSERNUM");
+                            String roomIsFreeMode = jsonObject.getString("ISFREEMODE");
 
                             // 방 정보 설정
                             int drawableId = StartRoomActivity.this.getResources().getIdentifier(roomType, "drawable", StartRoomActivity.this.getPackageName());
@@ -237,6 +240,12 @@ public class StartRoomActivity extends AppCompatActivity {
                             textView_title.setText(roomTitle);
                             textView_content.setText(roomContent);
 
+                            // 자유 챌린지 모드는 트로피 모양 변경
+                            if (roomIsFreeMode.equals("1")) {
+                                textView_info.setText("자유 챌린지");
+                                int drawableId2 = StartRoomActivity.this.getResources().getIdentifier("ic_trophy_gray", "drawable", StartRoomActivity.this.getPackageName());
+                                imageView_trophy.setImageResource(drawableId2);
+                            }
 
                             // 끝난 챌린지인지 진행중인 챌린지인지에 따라서 요소 변경
                             int dayOfCurrentTime = Integer.parseInt(util.DiffWithLocalTime(userRecentResetTime, "DAY"));
@@ -408,7 +417,7 @@ public class StartRoomActivity extends AppCompatActivity {
 
 
             HttpAsyncTask loadStartRoomInfoTask = new HttpAsyncTask(StartRoomActivity.this, onLoadStartRoomInfoTaskCompleted);
-            String phpFile = "service.php";
+            String phpFile = "service 1.1.0.php";
             String postParameters = "service=getstartroominfos&roomidx=" + roomidx;
 
             loadStartRoomInfoTask.execute(phpFile, postParameters, util.getSessionKey());

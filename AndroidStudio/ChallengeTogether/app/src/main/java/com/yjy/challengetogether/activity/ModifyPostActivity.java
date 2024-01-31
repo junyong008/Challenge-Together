@@ -80,7 +80,7 @@ public class ModifyPostActivity extends AppCompatActivity {
                 };
 
                 HttpAsyncTask modifyPostTask = new HttpAsyncTask(ModifyPostActivity.this, onModifyPostTaskCompleted);
-                String phpFile = "service.php";
+                String phpFile = "service 1.1.0.php";
                 String postParameters = "service=modifypost&postidx=" + postidx + "&postcontent=" + modiPostContent;
 
                 modifyPostTask.execute(phpFile, postParameters, util.getSessionKey());

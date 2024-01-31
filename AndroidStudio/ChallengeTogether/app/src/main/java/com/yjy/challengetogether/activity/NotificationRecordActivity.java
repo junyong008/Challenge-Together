@@ -183,7 +183,7 @@ public class NotificationRecordActivity extends AppCompatActivity {
                                                     progressBar.setVisibility(View.VISIBLE);
 
                                                     HttpAsyncTask loadAlarmTask = new HttpAsyncTask(NotificationRecordActivity.this, onLoadAlarmTaskCompleted);
-                                                    String phpFile = "service.php";
+                                                    String phpFile = "service 1.1.0.php";
                                                     String postParameters = "service=getnotifications&limit=" + 5 + "&lastalarmidx=" + minAlarmIdx;
 
                                                     loadAlarmTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -195,7 +195,7 @@ public class NotificationRecordActivity extends AppCompatActivity {
                                     };
 
                                     HttpAsyncTask deleteNotiTask = new HttpAsyncTask(NotificationRecordActivity.this, onDeleteNotiTaskCompleted);
-                                    String phpFile = "service.php";
+                                    String phpFile = "service 1.1.0.php";
                                     String postParameters = "service=deletealarm&alarmidx=" + deleteItem.getUseralarmidx();
                                     deleteNotiTask.execute(phpFile, postParameters, util.getSessionKey());
 
@@ -238,7 +238,7 @@ public class NotificationRecordActivity extends AppCompatActivity {
 
 
         HttpAsyncTask loadAlarmTask = new HttpAsyncTask(NotificationRecordActivity.this, onLoadAlarmTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getnotifications&limit=" + limit + "&lastalarmidx=" + minAlarmIdx;
 
         loadAlarmTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -253,7 +253,7 @@ public class NotificationRecordActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
 
                     HttpAsyncTask loadAlarmTask = new HttpAsyncTask(NotificationRecordActivity.this, onLoadAlarmTaskCompleted);
-                    String phpFile = "service.php";
+                    String phpFile = "service 1.1.0.php";
                     String postParameters = "service=getnotifications&limit=" + limit + "&lastalarmidx=" + minAlarmIdx;
 
                     loadAlarmTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -269,7 +269,7 @@ public class NotificationRecordActivity extends AppCompatActivity {
                 items = new ArrayList<>();
 
                 HttpAsyncTask loadAlarmTask = new HttpAsyncTask(NotificationRecordActivity.this, onLoadAlarmTaskCompleted);
-                String phpFile = "service.php";
+                String phpFile = "service 1.1.0.php";
                 String postParameters = "service=getnotifications&limit=" + limit + "&lastalarmidx=" + minAlarmIdx;
 
                 loadAlarmTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -326,7 +326,7 @@ public class NotificationRecordActivity extends AppCompatActivity {
                     };
 
                     HttpAsyncTask deleteNotiTask = new HttpAsyncTask(NotificationRecordActivity.this, onDeleteNotiTaskCompleted);
-                    String phpFile = "service.php";
+                    String phpFile = "service 1.1.0.php";
                     String postParameters = "service=deletealarm&alarmidx=";
 
                     deleteNotiTask.execute(phpFile, postParameters, util.getSessionKey());
