@@ -114,7 +114,7 @@ public class CommunityFragment extends Fragment {
                             item.setDislike(obj.getString("DISLIKECOUNT"));
                             item.setNickname(obj.getString("NAME"));
                             item.setCommentcount(obj.getString("COMMENTCOUNT"));
-
+                            item.setBestTime(obj.getLong("BESTTIME"));
 
                             countOfLastLoad++;
                             if (obj.getInt("COMPOST_IDX") < minPostIdx) {
@@ -126,7 +126,6 @@ public class CommunityFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
 
                     recyclerView_posts.setHasFixedSize(false);
                     recyclerView_posts.setLayoutManager(llm);
@@ -154,7 +153,7 @@ public class CommunityFragment extends Fragment {
         };
 
         HttpAsyncTask loadPostTask = new HttpAsyncTask(getActivity(), onLoadPostTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getcommunityposts&searchword=&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
         loadPostTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -181,7 +180,7 @@ public class CommunityFragment extends Fragment {
                 items = new ArrayList<>();
 
                 HttpAsyncTask loadPostTask = new HttpAsyncTask(getActivity(), onLoadPostTaskCompleted);
-                String phpFile = "service.php";
+                String phpFile = "service 1.1.0.php";
                 String postParameters = "service=getcommunityposts&searchword=" + searchword + "&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
                 loadPostTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -199,7 +198,7 @@ public class CommunityFragment extends Fragment {
                     items = new ArrayList<>();
 
                     HttpAsyncTask loadPostTask = new HttpAsyncTask(getActivity(), onLoadPostTaskCompleted);
-                    String phpFile = "service.php";
+                    String phpFile = "service 1.1.0.php";
                     String postParameters = "service=getcommunityposts&searchword=" + searchword + "&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
                     loadPostTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -238,7 +237,7 @@ public class CommunityFragment extends Fragment {
                     progressBar.setVisibility(View.VISIBLE);
 
                     HttpAsyncTask loadPostTask = new HttpAsyncTask(getActivity(), onLoadPostTaskCompleted);
-                    String phpFile = "service.php";
+                    String phpFile = "service 1.1.0.php";
                     String postParameters = "service=getcommunityposts&searchword=" + searchword + "&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
                     loadPostTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -254,7 +253,7 @@ public class CommunityFragment extends Fragment {
                 items = new ArrayList<>();
 
                 HttpAsyncTask loadPostTask = new HttpAsyncTask(getActivity(), onLoadPostTaskCompleted);
-                String phpFile = "service.php";
+                String phpFile = "service 1.1.0.php";
                 String postParameters = "service=getcommunityposts&searchword=" + searchword + "&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
                 loadPostTask.execute(phpFile, postParameters, util.getSessionKey());

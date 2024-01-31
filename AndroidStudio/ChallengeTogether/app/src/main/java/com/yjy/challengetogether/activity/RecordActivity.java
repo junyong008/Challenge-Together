@@ -17,6 +17,7 @@ import com.tomergoldst.tooltips.ToolTip;
 import com.tomergoldst.tooltips.ToolTipsManager;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
+import com.yjy.challengetogether.util.Const;
 import com.yjy.challengetogether.util.HttpAsyncTask;
 import com.yjy.challengetogether.util.Util;
 
@@ -147,53 +148,43 @@ public class RecordActivity extends AppCompatActivity {
                         textView_successcount.setText(record_successCount);
                         textView_resetcount.setText(record_resetCount);
 
-                        // 브론즈 0초(0일) 실버 604800초(7일) 골드 2592000초(30일) 플레티넘 7776000초(90일) 다이아 15552000초(180일) 마스터 31536000초(365일)
-
-                        // 등급별 초(second) 값을 상수로 정의
-                        final int BRONZE_SECONDS = 0;
-                        final long SILVER_SECONDS = 604800;
-                        final int GOLD_SECONDS = 2592000;
-                        final int PLATINUM_SECONDS = 7776000;
-                        final int DIAMOND_SECONDS = 15552000;
-                        final int MASTER_SECONDS = 31536000;
-
-                        if (record_bestTime >= MASTER_SECONDS) {
+                        if (record_bestTime >= Const.MASTER_SECONDS) {
                             imageView_grade.setImageResource(R.drawable.ic_master);
                             progress_nextgrade.setProgress(100);
                             textView_nextgrade.setText("최고 등급");
-                        } else if (record_bestTime >= DIAMOND_SECONDS) {
+                        } else if (record_bestTime >= Const.DIAMOND_SECONDS) {
                             imageView_grade.setImageResource(R.drawable.ic_diamond);
-                            progress_nextgrade.setProgress((int)((double)(record_bestTime - DIAMOND_SECONDS) / (MASTER_SECONDS - DIAMOND_SECONDS) * 100));
+                            progress_nextgrade.setProgress((int)((double)(record_bestTime - Const.DIAMOND_SECONDS) / (Const.MASTER_SECONDS - Const.DIAMOND_SECONDS) * 100));
 
-                            long requireSecToNextGrade = MASTER_SECONDS - record_bestTime;
+                            long requireSecToNextGrade = Const.MASTER_SECONDS - record_bestTime;
                             long requireDayToNextGrade = requireSecToNextGrade / (24 * 60 * 60) + 1;
                             textView_nextgrade.setText("다음 등급까지 " + requireDayToNextGrade + "일 남음");
-                        } else if (record_bestTime >= PLATINUM_SECONDS) {
+                        } else if (record_bestTime >= Const.PLATINUM_SECONDS) {
                             imageView_grade.setImageResource(R.drawable.ic_platinum);
-                            progress_nextgrade.setProgress((int)((double)(record_bestTime - PLATINUM_SECONDS) / (DIAMOND_SECONDS-PLATINUM_SECONDS) * 100));
+                            progress_nextgrade.setProgress((int)((double)(record_bestTime - Const.PLATINUM_SECONDS) / (Const.DIAMOND_SECONDS-Const.PLATINUM_SECONDS) * 100));
 
-                            long requireSecToNextGrade = DIAMOND_SECONDS - record_bestTime;
+                            long requireSecToNextGrade = Const.DIAMOND_SECONDS - record_bestTime;
                             long requireDayToNextGrade = requireSecToNextGrade / (24 * 60 * 60) + 1;
                             textView_nextgrade.setText("다음 등급까지 " + requireDayToNextGrade + "일 남음");
-                        } else if (record_bestTime >= GOLD_SECONDS) {
+                        } else if (record_bestTime >= Const.GOLD_SECONDS) {
                             imageView_grade.setImageResource(R.drawable.ic_gold);
-                            progress_nextgrade.setProgress((int)((double)(record_bestTime - GOLD_SECONDS) / (PLATINUM_SECONDS - GOLD_SECONDS) * 100));
+                            progress_nextgrade.setProgress((int)((double)(record_bestTime - Const.GOLD_SECONDS) / (Const.PLATINUM_SECONDS - Const.GOLD_SECONDS) * 100));
 
-                            long requireSecToNextGrade = PLATINUM_SECONDS - record_bestTime;
+                            long requireSecToNextGrade = Const.PLATINUM_SECONDS - record_bestTime;
                             long requireDayToNextGrade = requireSecToNextGrade / (24 * 60 * 60) + 1;
                             textView_nextgrade.setText("다음 등급까지 " + requireDayToNextGrade + "일 남음");
-                        } else if (record_bestTime >= SILVER_SECONDS) {
+                        } else if (record_bestTime >= Const.SILVER_SECONDS) {
                             imageView_grade.setImageResource(R.drawable.ic_silver);
-                            progress_nextgrade.setProgress((int)((double)(record_bestTime - SILVER_SECONDS) / (GOLD_SECONDS - SILVER_SECONDS) * 100));
+                            progress_nextgrade.setProgress((int)((double)(record_bestTime - Const.SILVER_SECONDS) / (Const.GOLD_SECONDS - Const.SILVER_SECONDS) * 100));
 
-                            long requireSecToNextGrade = GOLD_SECONDS - record_bestTime;
+                            long requireSecToNextGrade = Const.GOLD_SECONDS - record_bestTime;
                             long requireDayToNextGrade = requireSecToNextGrade / (24 * 60 * 60) + 1;
                             textView_nextgrade.setText("다음 등급까지 " + requireDayToNextGrade + "일 남음");
                         } else {
                             imageView_grade.setImageResource(R.drawable.ic_bronze);
-                            progress_nextgrade.setProgress((int)((double)record_bestTime / SILVER_SECONDS * 100));
+                            progress_nextgrade.setProgress((int)((double)record_bestTime / Const.SILVER_SECONDS * 100));
 
-                            long requireSecToNextGrade = SILVER_SECONDS - record_bestTime;
+                            long requireSecToNextGrade = Const.SILVER_SECONDS - record_bestTime;
                             long requireDayToNextGrade = requireSecToNextGrade / (24 * 60 * 60) + 1;
                             textView_nextgrade.setText("다음 등급까지 " + requireDayToNextGrade + "일 남음");
                         }

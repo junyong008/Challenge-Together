@@ -32,6 +32,7 @@ import com.yjy.challengetogether.activity.LoginActivity;
 import com.yjy.challengetogether.activity.PushSettingActivity;
 import com.yjy.challengetogether.activity.RecordActivity;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
+import com.yjy.challengetogether.util.Const;
 import com.yjy.challengetogether.util.HttpAsyncTask;
 import com.yjy.challengetogether.util.Util;
 
@@ -304,46 +305,36 @@ public class MyFragment extends Fragment {
 
                         textView_nickname.setText(username);
 
-                        // 브론즈 0초(0일) 실버 604800초(7일) 골드 2592000초(30일) 플레티넘 7776000초(90일) 다이아 15552000초(180일) 마스터 31536000초(365일)
-
-                        // 등급별 초(second) 값을 상수로 정의
-                        final int BRONZE_SECONDS = 0;
-                        final long SILVER_SECONDS = 604800;
-                        final int GOLD_SECONDS = 2592000;
-                        final int PLATINUM_SECONDS = 7776000;
-                        final int DIAMOND_SECONDS = 15552000;
-                        final int MASTER_SECONDS = 31536000;
-
-                        if (record_bestTime >= MASTER_SECONDS) {
+                        if (record_bestTime >= Const.MASTER_SECONDS) {
                             textView_grade.setText("마스터");
                             textView_grade.setTextColor(Color.parseColor("#FF7FF7"));
                             imageView_nextgrade.setImageResource(R.drawable.ic_master);
                             progress_nextgrade.setProgress(100);
-                        } else if (record_bestTime >= DIAMOND_SECONDS) {
+                        } else if (record_bestTime >= Const.DIAMOND_SECONDS) {
                             textView_grade.setText("다이아");
                             textView_grade.setTextColor(Color.parseColor("#70D1F4"));
                             imageView_nextgrade.setImageResource(R.drawable.ic_master);
-                            progress_nextgrade.setProgress((int)((double)(record_bestTime - DIAMOND_SECONDS) / (MASTER_SECONDS - DIAMOND_SECONDS) * 100));
-                        } else if (record_bestTime >= PLATINUM_SECONDS) {
+                            progress_nextgrade.setProgress((int)((double)(record_bestTime - Const.DIAMOND_SECONDS) / (Const.MASTER_SECONDS - Const.DIAMOND_SECONDS) * 100));
+                        } else if (record_bestTime >= Const.PLATINUM_SECONDS) {
                             textView_grade.setText("플래티넘");
                             textView_grade.setTextColor(Color.parseColor("#00C9C9"));
                             imageView_nextgrade.setImageResource(R.drawable.ic_diamond);
-                            progress_nextgrade.setProgress((int)((double)(record_bestTime - PLATINUM_SECONDS) / (DIAMOND_SECONDS-PLATINUM_SECONDS) * 100));
-                        } else if (record_bestTime >= GOLD_SECONDS) {
+                            progress_nextgrade.setProgress((int)((double)(record_bestTime - Const.PLATINUM_SECONDS) / (Const.DIAMOND_SECONDS-Const.PLATINUM_SECONDS) * 100));
+                        } else if (record_bestTime >= Const.GOLD_SECONDS) {
                             textView_grade.setText("골드");
                             textView_grade.setTextColor(Color.parseColor("#FFD700"));
                             imageView_nextgrade.setImageResource(R.drawable.ic_platinum);
-                            progress_nextgrade.setProgress((int)((double)(record_bestTime - GOLD_SECONDS) / (PLATINUM_SECONDS - GOLD_SECONDS) * 100));
-                        } else if (record_bestTime >= SILVER_SECONDS) {
+                            progress_nextgrade.setProgress((int)((double)(record_bestTime - Const.GOLD_SECONDS) / (Const.PLATINUM_SECONDS - Const.GOLD_SECONDS) * 100));
+                        } else if (record_bestTime >= Const.SILVER_SECONDS) {
                             textView_grade.setText("실버");
                             textView_grade.setTextColor(Color.parseColor("#E1E1E1"));
                             imageView_nextgrade.setImageResource(R.drawable.ic_gold);
-                            progress_nextgrade.setProgress((int)((double)(record_bestTime - SILVER_SECONDS) / (GOLD_SECONDS - SILVER_SECONDS) * 100));
+                            progress_nextgrade.setProgress((int)((double)(record_bestTime - Const.SILVER_SECONDS) / (Const.GOLD_SECONDS - Const.SILVER_SECONDS) * 100));
                         } else {
                             textView_grade.setText("브론즈");
                             textView_grade.setTextColor(Color.parseColor("#E6A05A"));
                             imageView_nextgrade.setImageResource(R.drawable.ic_silver);
-                            progress_nextgrade.setProgress((int)((double)record_bestTime / SILVER_SECONDS * 100));
+                            progress_nextgrade.setProgress((int)((double)record_bestTime / Const.SILVER_SECONDS * 100));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

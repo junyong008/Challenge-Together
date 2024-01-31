@@ -65,6 +65,14 @@
                     app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:id="@+id/imageView_grade"
+                    android:layout_width="22dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintStart_toEndOf="@+id/textView_name"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageView_writertag"
@@ -73,7 +81,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="21dp"
                     android:visibility="gone"
-                    app:layout_constraintStart_toEndOf="@+id/textView_name"
+                    app:layout_constraintStart_toEndOf="@+id/imageView_grade"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_writertag" />
 

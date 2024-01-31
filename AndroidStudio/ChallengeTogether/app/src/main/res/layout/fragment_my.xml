@@ -120,7 +120,7 @@
                         android:fontFamily="@font/fontstyle_culture"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:text="브론즈"
+                        android:text=""
                         android:textColor="#E6A05A"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toTopOf="@+id/view"
@@ -192,8 +192,7 @@
                         android:layout_marginEnd="16dp"
 
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:srcCompat="@drawable/ic_bronze" />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

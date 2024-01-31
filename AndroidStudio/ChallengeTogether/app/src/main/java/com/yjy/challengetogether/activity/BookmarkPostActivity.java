@@ -109,6 +109,7 @@ public class BookmarkPostActivity extends AppCompatActivity {
                             item.setDislike(obj.getString("DISLIKECOUNT"));
                             item.setNickname(obj.getString("NAME"));
                             item.setCommentcount(obj.getString("COMMENTCOUNT"));
+                            item.setBestTime(obj.getLong("BESTTIME"));
 
 
                             countOfLastLoad++;
@@ -150,7 +151,7 @@ public class BookmarkPostActivity extends AppCompatActivity {
 
 
         HttpAsyncTask loadBookmarkPostTask = new HttpAsyncTask(BookmarkPostActivity.this, onLoadBookmarkPostTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getcommunitybookmarks&limit=" + limit + "&lastpostidx=" + minPostIdx;
 
         loadBookmarkPostTask.execute(phpFile, postParameters, util.getSessionKey());

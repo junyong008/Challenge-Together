@@ -24,22 +24,29 @@
 
             <TextView
                 android:id="@+id/textView_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="46dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="58dp"
-                android:layout_marginRight="61dp"
-                android:text=""
-                android:maxLines="1"
+                android:layout_marginStart="4dp"
                 android:ellipsize="end"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                android:textColor="@color/main_theme"
                 android:fontFamily="@font/fontstyle_culture"
                 android:gravity="center_vertical"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/main_theme"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@+id/imageView_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView_grade"
+                android:layout_width="26dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView_name"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView

@@ -25,8 +25,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import io.github.muddz.styleabletoast.StyleableToast;
-
 public class RankingActivity extends AppCompatActivity {
 
     private com.yjy.challengetogether.util.Util util = new Util(RankingActivity.this);
@@ -85,6 +83,7 @@ public class RankingActivity extends AppCompatActivity {
                             item.setNickname(obj.getString("NAME"));
                             item.setRecentstarttime(obj.getString("RECENTSTARTTIME")); // 타이머로 실시간 업데이트 위함
                             item.setCurrenttime(Integer.parseInt(util.DiffWithLocalTime(obj.getString("RECENTSTARTTIME"), "SEC")));
+                            item.setBestTime(obj.getLong("BESTTIME"));
 
                             items.add(item);
                         }
@@ -126,7 +125,7 @@ public class RankingActivity extends AppCompatActivity {
         };
 
         HttpAsyncTask loadRankingTask = new HttpAsyncTask(RankingActivity.this, onLoadRankingTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getranking&roomidx=" + roomidx;
 
         loadRankingTask.execute(phpFile, postParameters, util.getSessionKey());

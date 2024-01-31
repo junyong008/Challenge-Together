@@ -4,6 +4,7 @@ public class RankingItem {
 
     private String nickname, recentstarttime;
     private int currenttime, ranking;
+    private Long bestTime;
 
     public String getNickname() {
         return nickname;
@@ -12,6 +13,9 @@ public class RankingItem {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+    public void setBestTime(Long bestTime) { this.bestTime = bestTime; }
+    public Long getBestTime() { return bestTime; }
 
     public String getRecentstarttime() {
         return recentstarttime;

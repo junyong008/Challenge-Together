@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.adapter.PostActivityRvAdapter;
 import com.yjy.challengetogether.etc.CommunityCommentItem;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
+import com.yjy.challengetogether.util.Const;
 import com.yjy.challengetogether.util.HttpAsyncTask;
 import com.yjy.challengetogether.util.Util;
 
@@ -45,6 +47,7 @@ public class PostActivity extends AppCompatActivity {
     private ImageButton ibutton_back, ibutton_send, ibutton_bookmark, ibutton_menu;
     private Button button_like, button_dislike;
     private TextView textView_name, textView_createdate, textView_content, textView_likecount, textView_dislikecount, textView_commentcount, textView_none;
+    private ImageView imageView_grade;
     private RecyclerView recyclerView_comments;
     private PostActivityRvAdapter adapter;
     private LinearLayoutManager llm;
@@ -94,6 +97,7 @@ public class PostActivity extends AppCompatActivity {
 
         ibutton_back = findViewById(R.id.ibutton_back);
         textView_name = findViewById(R.id.textView_name);
+        imageView_grade = findViewById(R.id.imageView_grade);
         textView_createdate = findViewById(R.id.textView_createdate);
         ibutton_bookmark = findViewById(R.id.ibutton_bookmark);
         ibutton_menu = findViewById(R.id.ibutton_menu);
@@ -132,6 +136,7 @@ public class PostActivity extends AppCompatActivity {
                         JSONObject obj = new JSONObject(jsonObject.getString("postInfo"));
                         String writerName = obj.getString("NAME");
                         String createdate = obj.getString("CREATEDATE");
+                        Long userBest = obj.getLong("BESTTIME");
                         modifydate = obj.getString("MODIFYDATE");
                         writerIdx = obj.getString("USER_IDX");
 
@@ -189,6 +194,21 @@ public class PostActivity extends AppCompatActivity {
                             textView_name.setTextColor(ContextCompat.getColor(PostActivity.this, R.color.gray));
                         }
 
+                        // 작성자 등급
+                        if (userBest >= Const.MASTER_SECONDS) {
+                            imageView_grade.setImageResource(R.drawable.ic_master2);
+                        } else if (userBest >= Const.DIAMOND_SECONDS) {
+                            imageView_grade.setImageResource(R.drawable.ic_diamond2);
+                        } else if (userBest >= Const.PLATINUM_SECONDS) {
+                            imageView_grade.setImageResource(R.drawable.ic_platinum2);
+                        } else if (userBest >= Const.GOLD_SECONDS) {
+                            imageView_grade.setImageResource(R.drawable.ic_gold2);
+                        } else if (userBest >= Const.SILVER_SECONDS) {
+                            imageView_grade.setImageResource(R.drawable.ic_silver2);
+                        } else {
+                            imageView_grade.setImageResource(R.drawable.ic_bronze2);
+                        }
+
                         // 수정된 게시글이면 '수정됨' 표기를 붙여서 수정됨을 알림
                         if (!modifydate.equals("0000-00-00 00:00:00")) {
                             textView_createdate.setText(createdate + "  ·  수정됨");
@@ -217,6 +237,7 @@ public class PostActivity extends AppCompatActivity {
                             item.setCreatedate(obj.getString("CREATEDATE"));
                             item.setCommentidx(obj.getInt("COMCOMMENT_IDX"));
                             item.setParentidx(obj.getInt("PARENT_IDX"));
+                            item.setBestTime(obj.getLong("BESTTIME"));
 
                             items.add(item);
                         }
@@ -274,7 +295,7 @@ public class PostActivity extends AppCompatActivity {
         };
 
         HttpAsyncTask loadCommentTask = new HttpAsyncTask(PostActivity.this, onLoadCommentTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getcomments&postidx=" + postidx;
 
         loadCommentTask.execute(phpFile, postParameters, util.getSessionKey());
@@ -440,7 +461,7 @@ public class PostActivity extends AppCompatActivity {
     public void reLoadComments() {
         // 서버에서 다시 게시글 정보 받아오기
         HttpAsyncTask loadCommentTask = new HttpAsyncTask(PostActivity.this, onLoadCommentTaskCompleted);
-        String phpFile = "service.php";
+        String phpFile = "service 1.1.0.php";
         String postParameters = "service=getcomments&postidx=" + postidx;
         loadCommentTask.execute(phpFile, postParameters, util.getSessionKey());
     }

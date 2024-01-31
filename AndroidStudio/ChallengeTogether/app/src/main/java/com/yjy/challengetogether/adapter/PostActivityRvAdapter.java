@@ -23,6 +23,7 @@ import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.PostActivity;
 import com.yjy.challengetogether.etc.CommunityCommentItem;
 import com.yjy.challengetogether.etc.OnTaskCompleted;
+import com.yjy.challengetogether.util.Const;
 import com.yjy.challengetogether.util.HttpAsyncTask;
 import com.yjy.challengetogether.util.Util;
 
@@ -80,6 +81,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
             holder.textView_name.setTextColor(ContextCompat.getColor(context, R.color.gray));
             holder.textView_content.setTextColor(ContextCompat.getColor(context, R.color.gray));
             holder.textView_content.setText("삭제된 댓글입니다.");
+            holder.imageView_grade.setVisibility(View.INVISIBLE);
         } else if (item.getNickname().equals("(탈퇴 회원)")) {
             holder.textView_name.setTextColor(ContextCompat.getColor(context, R.color.gray));
             holder.textView_content.setText(item.getContent());
@@ -129,6 +131,21 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
             holder.imageView_writertag.setVisibility(View.VISIBLE);
         }
 
+        // 댓글 작성자 등급 표기
+        Long userBest = item.getBestTime();
+        if (userBest >= Const.MASTER_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_master2);
+        } else if (userBest >= Const.DIAMOND_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_diamond2);
+        } else if (userBest >= Const.PLATINUM_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_platinum2);
+        } else if (userBest >= Const.GOLD_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_gold2);
+        } else if (userBest >= Const.SILVER_SECONDS) {
+            holder.imageView_grade.setImageResource(R.drawable.ic_silver2);
+        } else {
+            holder.imageView_grade.setImageResource(R.drawable.ic_bronze2);
+        }
 
         // 현 댓글 이후 댓글에 대댓글이 있으면 view 숨기기
         if (position + 1 < getItemCount()) {
@@ -300,7 +317,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         CardView cardView_item;
         TextView textView_name, textView_content, textView_more, textView_createdate, textView_like, textView_dislike, textView_comment, textView_reply;
-        ImageView imageView_replyenter, imageView_writertag;
+        ImageView imageView_replyenter, imageView_writertag, imageView_grade;
         ImageButton ibutton_menu;
         ConstraintLayout constraintLayout;
         View view;
@@ -321,6 +338,7 @@ public class PostActivityRvAdapter extends RecyclerView.Adapter<PostActivityRvAd
             textView_reply = itemView.findViewById(R.id.textView_reply);
             imageView_replyenter = itemView.findViewById(R.id.imageView_replyenter);
             imageView_writertag = itemView.findViewById(R.id.imageView_writertag);
+            imageView_grade = itemView.findViewById(R.id.imageView_grade);
             constraintLayout = itemView.findViewById(R.id.constraintLayout);
             view = itemView.findViewById(R.id.view);
         }
