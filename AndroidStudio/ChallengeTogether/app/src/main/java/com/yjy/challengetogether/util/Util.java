@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -23,12 +24,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+import com.yjy.challengetogether.BuildConfig;
 import com.yjy.challengetogether.R;
 import com.yjy.challengetogether.activity.LoginActivity;
 import com.yjy.challengetogether.alarm.AlarmWorker;
@@ -409,6 +416,42 @@ public class Util extends Application {
             Log.d("HTTP ERROR", result);
             return;
         }
+    }
+
+    public void checkAppUpdate() {
+        FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(3600) // 최소 갱신 주기 설정 (예: 3600초 = 1시간)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        mFirebaseRemoteConfig.fetchAndActivate()
+                .addOnCompleteListener((Activity) context, new OnCompleteListener<Boolean>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Boolean> task) {
+                        // Remote Config에서 값을 가져와서 사용
+
+                        String currentVersion = BuildConfig.VERSION_NAME;
+                        String latestVersion = mFirebaseRemoteConfig.getString("latest_version");
+                        int latestMajorVersion = Integer.parseInt(latestVersion.split("\\.")[0]);
+                        int currentMajorVersion = Integer.parseInt(currentVersion.split("\\.")[0]);
+
+                        if (latestMajorVersion > currentMajorVersion) {
+                            showCustomDialog(new Util.OnConfirmListener() {
+                                @Override
+                                public void onConfirm(boolean isConfirmed, String msg) {
+                                    if (isConfirmed) {
+                                        String webUrl = "https://play.google.com/store/apps/details?id=com.yjy.challengetogether";
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webUrl));
+                                        ((Activity) context).startActivity(intent);
+
+                                        ((Activity) context).finishAffinity();
+                                        System.exit(0); // 어플 종료
+                                    }
+                                }
+                            }, "필수 업데이트 버전이 있습니다.", "onlyconfirm");
+                        }
+                    }
+                });
     }
 
 

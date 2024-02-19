@@ -64,7 +64,7 @@
 
         android:background="@drawable/edit_round"
         android:elevation="9dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_addroom"
+        app:layout_constraintBottom_toTopOf="@+id/button_modifyroom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

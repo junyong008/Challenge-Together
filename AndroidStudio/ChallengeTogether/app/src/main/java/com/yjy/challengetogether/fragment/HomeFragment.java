@@ -147,6 +147,7 @@ public class HomeFragment extends Fragment {
         //    하지만 이때 모종의 이유로 서버와 접속이 원활치 않는 사용자는 서버와 동기화가 되지않는다. 이렇게 되면 위의 5가지 행동을 하지 않으면 위젯의 정보가 누락된다. 이를 방지
         util.saveOngoingChallenges();
 
+        util.checkAppUpdate();
 
         ibutton_addchallenge = view.findViewById(R.id.ibutton_addchallenge);
         recyclerView_mychallenges = view.findViewById(R.id.recyclerView_mychallenges);
