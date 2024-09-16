@@ -11,7 +11,7 @@
     <style name="Theme.ChallengeTogether" parent="NightAdjusted.Theme.ChallengeTogether" />
 
     <style name="Theme.ChallengeTogether.Splash" parent="NightAdjusted.Theme.Splash">
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="windowSplashScreenAnimationDuration">1000</item>
         <item name="postSplashScreenTheme">@style/Theme.ChallengeTogether</item>
     </style>
