@@ -8,7 +8,7 @@ android {
     namespace = "com.yjy.challengetogether"
 
     defaultConfig {
-        applicationId = "com.yjy.challengetogether"
+        applicationId = "com.yjy.challengetogether_demo"
         versionCode = 8
         versionName = "2.0.0"
 
