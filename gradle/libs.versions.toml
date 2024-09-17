@@ -6,6 +6,7 @@ androidxHiltNavigationCompose = "1.2.0"
 hilt = "2.51.1"
 kotlin = "2.0.0"
 ksp = "2.0.0-1.0.22"
+mockk = "1.13.11"
 room = "2.6.1"
 secrets = "2.0.1"
 
@@ -19,6 +20,11 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 
 # build-logic에 포함된 gradlePlugins
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
