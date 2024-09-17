@@ -34,3 +34,5 @@ include(":core:model")
 include(":core:network")
 include(":core:notifications")
 include(":core:ui")
+
+include(":feature:login")
