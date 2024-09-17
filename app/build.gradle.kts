@@ -32,5 +32,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.feature.login)
+
+    implementation(projects.core.designsystem)
+
     implementation(libs.androidx.core.splashscreen)
 }
