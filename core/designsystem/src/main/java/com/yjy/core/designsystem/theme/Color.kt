@@ -1,0 +1,31 @@
+package com.yjy.core.designsystem.theme
+
+import androidx.compose.ui.graphics.Color
+
+internal val primaryLight = Color(0xFFF9BB74)
+internal val onPrimaryLight = Color(0xFFFFFFFF)
+internal val primaryContainerLight = Color(0xFFFFE9D0)
+internal val onPrimaryContainerLight = Color(0xFF000000)
+internal val errorLight = Color(0xFFBA1A1A)
+internal val onErrorLight = Color(0xFFFFFFFF)
+internal val backgroundLight = Color(0xFFFFFFFF)
+internal val onBackgroundLight = Color(0xFF000000)
+internal val surfaceLight = Color(0xFFF3F3F3)
+internal val onSurfaceLight = Color(0xFF000000)
+internal val outlineLight = Color(0xFFD9D9D9)
+internal val scrimLight = Color(0xFF000000)
+internal val surfaceBrightLight = Color(0xFFF8F8F8)
+
+internal val primaryDark = Color(0xFFF9BB74)
+internal val onPrimaryDark = Color(0xFFFFFFFF)
+internal val primaryContainerDark = Color(0xFFFFC98D)
+internal val onPrimaryContainerDark = Color(0xFF000000)
+internal val errorDark = Color(0xFFFFB4AB)
+internal val onErrorDark = Color(0xFF690005)
+internal val backgroundDark = Color(0xFF383838)
+internal val onBackgroundDark = Color(0xFFFFFFFF)
+internal val surfaceDark = Color(0xFF454545)
+internal val onSurfaceDark = Color(0xFFFFFFFF)
+internal val outlineDark = Color(0xFFA9A9A9)
+internal val scrimDark = Color(0xFF000000)
+internal val surfaceBrightDark = Color(0xFF6E6E6E)
