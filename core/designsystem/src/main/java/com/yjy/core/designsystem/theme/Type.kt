@@ -119,27 +119,27 @@ internal val ChallengeTogetherTypography = Typography(
     ),
     labelLarge = TextStyle(
         fontFamily = FontFamily(
-            Font(R.font.kimjungchulgothic_regular, FontWeight.Normal)
+            Font(R.font.kimjungchulgothic_bold, FontWeight.Normal)
         ),
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.1.sp,
     ),
     labelMedium = TextStyle(
         fontFamily = FontFamily(
-            Font(R.font.kimjungchulgothic_regular, FontWeight.Normal)
+            Font(R.font.kimjungchulgothic_bold, FontWeight.Normal)
         ),
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp,
     ),
     labelSmall = TextStyle(
         fontFamily = FontFamily(
-            Font(R.font.kimjungchulgothic_regular, FontWeight.Normal)
+            Font(R.font.kimjungchulgothic_bold, FontWeight.Normal)
         ),
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Bold,
         fontSize = 10.sp,
         lineHeight = 14.sp,
         letterSpacing = 0.sp,

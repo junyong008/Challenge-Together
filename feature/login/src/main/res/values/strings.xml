@@ -1,2 +1,16 @@
 <resources>
+    <string name="feature_login_app_logo_content_description">App Logo</string>
+    <string name="feature_login_input_email_content_description">Input Email</string>
+    <string name="feature_login_input_email_place_holder">EMAIL</string>
+    <string name="feature_login_input_password_content_description">Input Password</string>
+    <string name="feature_login_input_password_place_holder">PASSWORD</string>
+    <string name="feature_login_input_password_show_content_description">Show Password</string>
+    <string name="feature_login_input_password_hide_content_description">Hide Password</string>
+    <string name="feature_login_button_text">LOGIN</string>
+    <string name="feature_login_find_password">Find Password</string>
+    <string name="feature_login_sign_up">Sign Up</string>
+    <string name="feature_login_social_login_text">or sign in with</string>
+    <string name="feature_login_kakao_content_description">Sign in with Kakao</string>
+    <string name="feature_login_google_content_description">Sign in with Google</string>
+    <string name="feature_login_naver_content_description">Sign in with Naver</string>
 </resources>

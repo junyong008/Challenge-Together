@@ -17,11 +17,13 @@ private val LightDefaultColorScheme = lightColorScheme(
     onError = onErrorLight,
     background = backgroundLight,
     onBackground = onBackgroundLight,
+    surfaceBright = surfaceBrightLight,
+    surfaceDim = surfaceDimLight,
     surface = surfaceLight,
     onSurface = onSurfaceLight,
     outline = outlineLight,
+    outlineVariant = outlineVariantLight,
     scrim = scrimLight,
-    surfaceBright = surfaceBrightLight,
 )
 
 private val DarkDefaultColorScheme = darkColorScheme(
@@ -33,11 +35,13 @@ private val DarkDefaultColorScheme = darkColorScheme(
     onError = onErrorDark,
     background = backgroundDark,
     onBackground = onBackgroundDark,
+    surfaceBright = surfaceBrightDark,
+    surfaceDim = surfaceDimDark,
     surface = surfaceDark,
     onSurface = onSurfaceDark,
     outline = outlineDark,
+    outlineVariant = outlineVariantDark,
     scrim = scrimDark,
-    surfaceBright = surfaceBrightDark,
 )
 
 @Composable
@@ -48,6 +52,12 @@ fun ChallengeTogetherTheme(
     // Color scheme
     val colorScheme = if (darkTheme) DarkDefaultColorScheme else LightDefaultColorScheme
 
+    // Gradient colors
+    val gradientColors = GradientColors(
+        top = gradientStart,
+        bottom = gradientEnd,
+    )
+
     // Background theme
     val backgroundTheme = BackgroundTheme(
         color = colorScheme.background,
@@ -56,11 +66,13 @@ fun ChallengeTogetherTheme(
 
     // Composition locals
     CompositionLocalProvider(
+        LocalGradientColors provides gradientColors,
         LocalBackgroundTheme provides backgroundTheme,
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = ChallengeTogetherTypography,
+            shapes = Shapes,
             content = content,
         )
     }
