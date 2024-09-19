@@ -8,6 +8,7 @@ androidxCoreSplashscreen = "1.0.1"
 androidxHiltNavigationCompose = "1.2.0"
 hilt = "2.51.1"
 kotlin = "2.0.0"
+kotlinxCoroutines = "1.8.0"
 ksp = "2.0.0-1.0.22"
 mockk = "1.13.11"
 room = "2.6.1"
@@ -25,6 +26,7 @@ androidx-compose-material3-navigationSuite = { group = "androidx.compose.materia
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 
 # build-logic의 커스텀 plugins에 포함된 기본 libraries
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
