@@ -32,7 +32,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `login with invalid email format emits InvalidEmailFormat`() = runTest {
+    fun `login with invalid email format should trigger InvalidEmailFormat event`() = runTest {
         // Given
         val invalidEmail = "invalidEmail"
         val password = "ValidPassword123"
@@ -41,15 +41,14 @@ class LoginViewModelTest {
         viewModel.login(invalidEmail, password)
 
         // Then
-        val state = viewModel.loginUiState.first()
         assertEquals(
-            expected = LoginUiState.Error.InvalidEmailFormat,
-            actual = state
+            expected = LoginUiEvent.LoginFailure.InvalidEmailFormat,
+            actual = viewModel.uiEvent.first()
         )
     }
 
     @Test
-    fun `login with empty password emits EmptyPassword`() = runTest {
+    fun `login with empty password should trigger EmptyPassword event`() = runTest {
         // Given
         val email = "user@example.com"
         val emptyPassword = ""
@@ -58,15 +57,14 @@ class LoginViewModelTest {
         viewModel.login(email, emptyPassword)
 
         // Then
-        val state = viewModel.loginUiState.first()
         assertEquals(
-            expected = LoginUiState.Error.EmptyPassword,
-            actual = state
+            expected = LoginUiEvent.LoginFailure.EmptyPassword,
+            actual = viewModel.uiEvent.first()
         )
     }
 
     @Test
-    fun `login with valid credentials emits Success`() = runTest {
+    fun `login with valid credentials should trigger Success event`() = runTest {
         // Given
         val email = "user@example.com"
         val password = "ValidPassword123"
@@ -76,15 +74,14 @@ class LoginViewModelTest {
         viewModel.login(email, password)
 
         // Then
-        val state = viewModel.loginUiState.first()
         assertEquals(
-            expected = LoginUiState.Success,
-            actual = state
+            expected = LoginUiEvent.LoginSuccess,
+            actual = viewModel.uiEvent.first()
         )
     }
 
     @Test
-    fun `login with non-existing user emits UserNotFound`() = runTest {
+    fun `login with non-existing user should trigger UserNotFound event`() = runTest {
         // Given
         val email = "user@example.com"
         val password = "WrongPassword"
@@ -96,15 +93,14 @@ class LoginViewModelTest {
         viewModel.login(email, password)
 
         // Then
-        val state = viewModel.loginUiState.first()
         assertEquals(
-            expected = LoginUiState.Error.UserNotFound,
-            actual = state
+            expected = LoginUiEvent.LoginFailure.UserNotFound,
+            actual = viewModel.uiEvent.first()
         )
     }
 
     @Test
-    fun `login with server error emits ServerError`() = runTest {
+    fun `login with server error should trigger ServerError event`() = runTest {
         // Given
         val email = "user@example.com"
         val password = "ValidPassword123"
@@ -116,15 +112,14 @@ class LoginViewModelTest {
         viewModel.login(email, password)
 
         // Then
-        val state = viewModel.loginUiState.first()
         assertEquals(
-            expected = LoginUiState.Error.ServerError,
-            actual = state
+            expected = LoginUiEvent.LoginFailure.ServerError,
+            actual = viewModel.uiEvent.first()
         )
     }
 
     @Test
-    fun `login with unknown error emits Unknown error`() = runTest {
+    fun `login with unknown error should trigger Unknown event`() = runTest {
         // Given
         val email = "user@example.com"
         val password = "ValidPassword123"
@@ -137,10 +132,9 @@ class LoginViewModelTest {
         viewModel.login(email, password)
 
         // Then
-        val state = viewModel.loginUiState.first()
         assertEquals(
-            expected = LoginUiState.Error.Unknown,
-            actual = state
+            expected = LoginUiEvent.LoginFailure.Unknown,
+            actual = viewModel.uiEvent.first()
         )
     }
 }
