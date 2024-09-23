@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,9 +43,7 @@ import com.yjy.core.designsystem.component.ChallengeTogetherTextField
 import com.yjy.core.designsystem.component.StableImage
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
-import com.yjy.core.designsystem.theme.googleBackground
-import com.yjy.core.designsystem.theme.kakaoBackground
-import com.yjy.core.designsystem.theme.naverBackground
+import com.yjy.core.designsystem.theme.CustomMaterialTheme
 import com.yjy.core.ui.DevicePreviews
 import com.yjy.feature.login.navigation.LoginStrings
 
@@ -106,13 +103,15 @@ internal fun LoginScreen(
         Spacer(modifier = Modifier.height(16.dp))
         ChallengeTogetherOutlinedButton(
             onClick = { onLoginClick(email, password) },
+            borderColor = CustomMaterialTheme.colorScheme.constantBlack,
+            contentColor = CustomMaterialTheme.colorScheme.constantBlack,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
         ) {
             Text(
                 text = stringResource(id = LoginStrings.feature_login_button_text),
-                style = MaterialTheme.typography.labelLarge,
+                style = CustomMaterialTheme.typography.button,
             )
         }
         Spacer(modifier = Modifier.height(6.dp))
@@ -145,7 +144,7 @@ private fun EmailTextField(
             Icon(
                 painter = painterResource(id = ChallengeTogetherIcons.Mail),
                 contentDescription = stringResource(id = LoginStrings.feature_login_input_email_content_description),
-                tint = MaterialTheme.colorScheme.onBackground,
+                tint = CustomMaterialTheme.colorScheme.onBackground,
             )
         },
         keyboardOptions = KeyboardOptions(
@@ -172,7 +171,7 @@ private fun PasswordTextField(
             Icon(
                 painter = painterResource(id = ChallengeTogetherIcons.Lock),
                 contentDescription = stringResource(id = LoginStrings.feature_login_input_password_content_description),
-                tint = MaterialTheme.colorScheme.onBackground,
+                tint = CustomMaterialTheme.colorScheme.onBackground,
             )
         },
         trailingIcon = {
@@ -190,7 +189,7 @@ private fun PasswordTextField(
                     } else {
                         stringResource(id = LoginStrings.feature_login_input_password_hide_content_description)
                     },
-                    tint = MaterialTheme.colorScheme.surfaceDim,
+                    tint = CustomMaterialTheme.colorScheme.surfaceDim,
                     modifier = Modifier
                         .clip(RoundedCornerShape(32))
                         .clickable {
@@ -230,8 +229,8 @@ private fun LoginTextField(
         maxLines = 1,
         shouldHidePassword = shouldHidePassword,
         placeholderText = placeholderText,
-        borderColor = MaterialTheme.colorScheme.background,
-        backgroundColor = MaterialTheme.colorScheme.background,
+        borderColor = CustomMaterialTheme.colorScheme.background,
+        backgroundColor = CustomMaterialTheme.colorScheme.background,
         modifier = modifier.height(50.dp),
     )
 }
@@ -248,21 +247,21 @@ private fun FindPasswordAndSignUp(
     ) {
         Text(
             text = stringResource(id = LoginStrings.feature_login_find_password),
-            color = MaterialTheme.colorScheme.outline,
-            style = MaterialTheme.typography.labelSmall,
+            color = CustomMaterialTheme.colorScheme.constantBlack,
+            style = CustomMaterialTheme.typography.loginLabel,
             textAlign = TextAlign.End,
             modifier = Modifier.clickable { onFindPasswordClick() }
         )
         Text(
             text = "|",
-            color = MaterialTheme.colorScheme.outline,
-            style = MaterialTheme.typography.labelSmall,
+            color = CustomMaterialTheme.colorScheme.constantBlack,
+            style = CustomMaterialTheme.typography.loginLabel,
             modifier = Modifier.padding(horizontal = 8.dp)
         )
         Text(
             text = stringResource(id = LoginStrings.feature_login_sign_up),
-            color = MaterialTheme.colorScheme.outline,
-            style = MaterialTheme.typography.labelSmall,
+            color = CustomMaterialTheme.colorScheme.constantBlack,
+            style = CustomMaterialTheme.typography.loginLabel,
             textAlign = TextAlign.Start,
             modifier = Modifier.clickable { onSignUpClick() }
         )
@@ -279,12 +278,12 @@ private fun SNSLoginDivider() {
             modifier = Modifier
                 .weight(1f)
                 .height(1.dp)
-                .background(MaterialTheme.colorScheme.outline)
+                .background(CustomMaterialTheme.colorScheme.constantBlack)
         )
         Text(
             text = stringResource(id = LoginStrings.feature_login_social_login_text),
-            color = MaterialTheme.colorScheme.outline,
-            style = MaterialTheme.typography.labelSmall,
+            color = CustomMaterialTheme.colorScheme.constantBlack,
+            style = CustomMaterialTheme.typography.loginLabel,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(horizontal = 16.dp),
@@ -293,7 +292,7 @@ private fun SNSLoginDivider() {
             modifier = Modifier
                 .weight(1f)
                 .height(1.dp)
-                .background(MaterialTheme.colorScheme.outline)
+                .background(CustomMaterialTheme.colorScheme.constantBlack)
         )
     }
 }
@@ -315,7 +314,7 @@ private fun SNSLoginButtons(
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
-                .background(kakaoBackground)
+                .background(CustomMaterialTheme.colorScheme.kakaoBackground)
                 .clickable(
                     onClick = onKakaoLoginClick,
                 ),
@@ -331,7 +330,7 @@ private fun SNSLoginButtons(
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
-                .background(googleBackground)
+                .background(CustomMaterialTheme.colorScheme.googleBackground)
                 .clickable(
                     onClick = onGoogleLoginClick,
                 ),
@@ -347,7 +346,7 @@ private fun SNSLoginButtons(
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
-                .background(naverBackground)
+                .background(CustomMaterialTheme.colorScheme.naverBackground)
                 .clickable(
                     onClick = onNaverLoginClick,
                 ),

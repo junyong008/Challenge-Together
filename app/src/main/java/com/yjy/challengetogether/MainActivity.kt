@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
             }
 
             ChallengeTogetherTheme(
-                darkTheme = isDarkTheme,
+                isDarkTheme = isDarkTheme,
             ) {
                 ChallengeTogetherApp()
             }

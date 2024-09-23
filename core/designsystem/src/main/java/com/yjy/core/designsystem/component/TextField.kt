@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,6 +27,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
+import com.yjy.core.designsystem.theme.CustomMaterialTheme
 
 @Composable
 fun ChallengeTogetherTextField(
@@ -38,10 +42,10 @@ fun ChallengeTogetherTextField(
     maxLines: Int = Int.MAX_VALUE,
     placeholderText: String = "",
     shape: Shape = MaterialTheme.shapes.medium,
-    textColor: Color = MaterialTheme.colorScheme.onBackground,
-    placeholderColor: Color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
-    borderColor: Color = MaterialTheme.colorScheme.primary,
-    backgroundColor: Color = MaterialTheme.colorScheme.background,
+    textColor: Color = CustomMaterialTheme.colorScheme.onBackground,
+    placeholderColor: Color = CustomMaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
+    borderColor: Color = Color.Transparent,
+    backgroundColor: Color = CustomMaterialTheme.colorScheme.background,
     shouldHidePassword: Boolean = false,
 ) {
     Box(
@@ -60,34 +64,44 @@ fun ChallengeTogetherTextField(
             }
         }
 
-        BasicTextField(
-            value = value,
-            onValueChange = onValueChange,
-            singleLine = singleLine,
-            maxLines = maxLines,
-            keyboardOptions = keyboardOptions,
-            keyboardActions = keyboardActions,
-            textStyle = MaterialTheme.typography.bodySmall.copy(color = textColor),
-            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-            visualTransformation = if (shouldHidePassword) {
-                PasswordVisualTransformation()
-            } else {
-                VisualTransformation.None
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = if (leadingIcon != null) 36.dp else 0.dp),
-        ) { innerTextField ->
-            if (value.isEmpty()) {
-                Text(
-                    text = placeholderText,
-                    style = MaterialTheme.typography.bodySmall.copy(color = placeholderColor),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterStart)
-                )
+        CompositionLocalProvider(
+            LocalTextSelectionColors provides TextSelectionColors(
+                handleColor = CustomMaterialTheme.colorScheme.brandBright,
+                backgroundColor = CustomMaterialTheme.colorScheme.brandBright.copy(alpha = 0.5f),
+            )
+        ) {
+            BasicTextField(
+                value = value,
+                onValueChange = onValueChange,
+                singleLine = singleLine,
+                maxLines = maxLines,
+                keyboardOptions = keyboardOptions,
+                keyboardActions = keyboardActions,
+                textStyle = CustomMaterialTheme.typography.textField.copy(color = textColor),
+                cursorBrush = SolidColor(CustomMaterialTheme.colorScheme.brand),
+                visualTransformation = if (shouldHidePassword) {
+                    PasswordVisualTransformation()
+                } else {
+                    VisualTransformation.None
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = if (leadingIcon != null) 36.dp else 0.dp,
+                        end = if (trailingIcon != null) 36.dp else 0.dp,
+                    )
+            ) { innerTextField ->
+                if (value.isEmpty()) {
+                    Text(
+                        text = placeholderText,
+                        style = CustomMaterialTheme.typography.textField.copy(color = placeholderColor),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.CenterStart)
+                    )
+                }
+                innerTextField()
             }
-            innerTextField()
         }
 
         if (trailingIcon != null) {
