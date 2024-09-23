@@ -66,17 +66,17 @@ fun ChallengeTogetherTheme(
 
     val backgroundTheme = BackgroundTheme(
         color = customColorScheme.background,
-        tonalElevation = 2.dp,
+        tonalElevation = 0.dp,
     )
 
     CompositionLocalProvider(
         LocalCustomColorScheme provides customColorScheme,
-        LocalCustomTypography provides CustomTypography(),
         LocalGradientColors provides gradientColors,
         LocalBackgroundTheme provides backgroundTheme,
     ) {
         MaterialTheme(
             colorScheme = debugColors(),
+            typography = ChallengeTogetherTypography,
             shapes = Shapes,
             content = content,
         )

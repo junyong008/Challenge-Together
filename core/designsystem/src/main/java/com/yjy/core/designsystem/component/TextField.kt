@@ -27,7 +27,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
-import com.yjy.core.designsystem.theme.CustomMaterialTheme
+import com.yjy.core.designsystem.theme.CustomColorProvider
 
 @Composable
 fun ChallengeTogetherTextField(
@@ -42,10 +42,10 @@ fun ChallengeTogetherTextField(
     maxLines: Int = Int.MAX_VALUE,
     placeholderText: String = "",
     shape: Shape = MaterialTheme.shapes.medium,
-    textColor: Color = CustomMaterialTheme.colorScheme.onBackground,
-    placeholderColor: Color = CustomMaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
+    textColor: Color = CustomColorProvider.colorScheme.onBackground,
+    placeholderColor: Color = CustomColorProvider.colorScheme.onBackground.copy(alpha = 0.2f),
     borderColor: Color = Color.Transparent,
-    backgroundColor: Color = CustomMaterialTheme.colorScheme.background,
+    backgroundColor: Color = CustomColorProvider.colorScheme.background,
     shouldHidePassword: Boolean = false,
 ) {
     Box(
@@ -66,8 +66,8 @@ fun ChallengeTogetherTextField(
 
         CompositionLocalProvider(
             LocalTextSelectionColors provides TextSelectionColors(
-                handleColor = CustomMaterialTheme.colorScheme.brandBright,
-                backgroundColor = CustomMaterialTheme.colorScheme.brandBright.copy(alpha = 0.5f),
+                handleColor = CustomColorProvider.colorScheme.brandBright,
+                backgroundColor = CustomColorProvider.colorScheme.brandBright.copy(alpha = 0.5f),
             )
         ) {
             BasicTextField(
@@ -77,8 +77,8 @@ fun ChallengeTogetherTextField(
                 maxLines = maxLines,
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActions,
-                textStyle = CustomMaterialTheme.typography.textField.copy(color = textColor),
-                cursorBrush = SolidColor(CustomMaterialTheme.colorScheme.brand),
+                textStyle = MaterialTheme.typography.bodyMedium.copy(color = textColor),
+                cursorBrush = SolidColor(CustomColorProvider.colorScheme.brand),
                 visualTransformation = if (shouldHidePassword) {
                     PasswordVisualTransformation()
                 } else {
@@ -94,7 +94,7 @@ fun ChallengeTogetherTextField(
                 if (value.isEmpty()) {
                     Text(
                         text = placeholderText,
-                        style = CustomMaterialTheme.typography.textField.copy(color = placeholderColor),
+                        style = MaterialTheme.typography.bodyMedium.copy(color = placeholderColor),
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.CenterStart)

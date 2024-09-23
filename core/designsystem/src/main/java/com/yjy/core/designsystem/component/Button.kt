@@ -13,14 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
-import com.yjy.core.designsystem.theme.CustomMaterialTheme
+import com.yjy.core.designsystem.theme.CustomColorProvider
 
 @Composable
 fun ChallengeTogetherOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    contentColor: Color = CustomMaterialTheme.colorScheme.brand,
-    borderColor: Color = CustomMaterialTheme.colorScheme.brand,
+    contentColor: Color = CustomColorProvider.colorScheme.brand,
+    borderColor: Color = CustomColorProvider.colorScheme.brand,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     content: @Composable RowScope.() -> Unit,
 ) {
@@ -51,7 +51,9 @@ fun ChallengeTogetherOutlinedButtonPreview() {
                 modifier = Modifier,
                 contentPadding = ButtonDefaults.ContentPadding,
             ) {
-                Text(text = "Button")
+                Text(
+                    text = "Button",
+                )
             }
         }
     }
