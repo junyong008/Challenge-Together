@@ -12,4 +12,5 @@ dependencies {
     implementation(projects.core.data)
 
     testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.bundles.androidx.compose.ui.test)
 }
