@@ -18,14 +18,22 @@ internal val LocalCustomColorScheme = staticCompositionLocalOf { customLightColo
 @Immutable
 data class CustomColorScheme(
     val brand: Color,
+    val onBrand: Color,
     val brandBright: Color,
+    val onBrandBright: Color,
+    val brandDim: Color,
+    val onBrandDim: Color,
     val background: Color,
     val onBackground: Color,
+    val onBackgroundMuted: Color,
     val surface: Color,
-    val surfaceDim: Color,
+    val onSurface: Color,
+    val onSurfaceMuted: Color,
+    val divider: Color,
+    val disable: Color,
+    val onDisable: Color,
     val snackbar: Color,
     val onSnackbar: Color,
-    val constantBlack: Color,
     val kakaoBackground: Color,
     val googleBackground: Color,
     val naverBackground: Color,
@@ -33,14 +41,22 @@ data class CustomColorScheme(
 
 private object CustomColorLightTokens {
     val brand = brandLight
+    val onBrand = onBrandLight
     val brandBright = brandBrightLight
+    val onBrandBright = onBrandBrightLight
+    val brandDim = brandDimLight
+    val onBrandDim = onBrandDimLight
     val background = backgroundLight
     val onBackground = onBackgroundLight
+    val onBackgroundMuted = onBackgroundMutedLight
     val surface = surfaceLight
-    val surfaceDim = surfaceDimLight
+    val onSurface = onSurfaceLight
+    val onSurfaceMuted = onSurfaceMutedLight
+    val divider = dividerLight
+    val disable = disableLight
+    val onDisable = onDisableLight
     val snackbar = snackbarLight
     val onSnackbar = onSnackbarLight
-    val constantBlack = black
     val kakaoBackground = kakaoBrand
     val googleBackground = googleBrand
     val naverBackground = naverBrand
@@ -48,14 +64,22 @@ private object CustomColorLightTokens {
 
 private object CustomColorDarkTokens {
     val brand = brandDark
+    val onBrand = onBrandDark
     val brandBright = brandBrightDark
+    val onBrandBright = onBrandBrightDark
+    val brandDim = brandDimDark
+    val onBrandDim = onBrandDimDark
     val background = backgroundDark
     val onBackground = onBackgroundDark
+    val onBackgroundMuted = onBackgroundMutedDark
     val surface = surfaceDark
-    val surfaceDim = surfaceDimDark
+    val onSurface = onSurfaceDark
+    val onSurfaceMuted = onSurfaceMutedDark
+    val divider = dividerDark
+    val disable = disableDark
+    val onDisable = onDisableDark
     val snackbar = snackbarDark
     val onSnackbar = onSnackbarDark
-    val constantBlack = black
     val kakaoBackground = kakaoBrand
     val googleBackground = googleBrand
     val naverBackground = naverBrand
@@ -63,27 +87,43 @@ private object CustomColorDarkTokens {
 
 internal fun customLightColorScheme(
     brand: Color = CustomColorLightTokens.brand,
+    onBrand: Color = CustomColorLightTokens.onBrand,
     brandBright: Color = CustomColorLightTokens.brandBright,
+    onBrandBright: Color = CustomColorLightTokens.onBrandBright,
+    brandDim: Color = CustomColorLightTokens.brandDim,
+    onBrandDim: Color = CustomColorLightTokens.onBrandDim,
     background: Color = CustomColorLightTokens.background,
     onBackground: Color = CustomColorLightTokens.onBackground,
+    onBackgroundMuted: Color = CustomColorLightTokens.onBackgroundMuted,
     surface: Color = CustomColorLightTokens.surface,
-    surfaceDim: Color = CustomColorLightTokens.surfaceDim,
+    onSurface: Color = CustomColorLightTokens.onSurface,
+    onSurfaceMuted: Color = CustomColorLightTokens.onSurfaceMuted,
+    divider: Color = CustomColorLightTokens.divider,
+    disable: Color = CustomColorLightTokens.disable,
+    onDisable: Color = CustomColorLightTokens.onDisable,
     snackbar: Color = CustomColorLightTokens.snackbar,
     onSnackbar: Color = CustomColorLightTokens.onSnackbar,
-    constantBlack: Color = CustomColorLightTokens.constantBlack,
     kakaoBackground: Color = CustomColorLightTokens.kakaoBackground,
     googleBackground: Color = CustomColorLightTokens.googleBackground,
     naverBackground: Color = CustomColorLightTokens.naverBackground,
 ) = CustomColorScheme(
     brand = brand,
+    onBrand = onBrand,
     brandBright = brandBright,
+    onBrandBright = onBrandBright,
+    brandDim = brandDim,
+    onBrandDim = onBrandDim,
     background = background,
     onBackground = onBackground,
+    onBackgroundMuted = onBackgroundMuted,
     surface = surface,
-    surfaceDim = surfaceDim,
+    onSurface = onSurface,
+    onSurfaceMuted = onSurfaceMuted,
+    divider = divider,
+    disable = disable,
+    onDisable = onDisable,
     snackbar = snackbar,
     onSnackbar = onSnackbar,
-    constantBlack = constantBlack,
     kakaoBackground = kakaoBackground,
     googleBackground = googleBackground,
     naverBackground = naverBackground,
@@ -91,27 +131,43 @@ internal fun customLightColorScheme(
 
 internal fun customDarkColorScheme(
     brand: Color = CustomColorDarkTokens.brand,
+    onBrand: Color = CustomColorDarkTokens.onBrand,
     brandBright: Color = CustomColorDarkTokens.brandBright,
+    onBrandBright: Color = CustomColorDarkTokens.onBrandBright,
+    brandDim: Color = CustomColorDarkTokens.brandDim,
+    onBrandDim: Color = CustomColorDarkTokens.onBrandDim,
     background: Color = CustomColorDarkTokens.background,
     onBackground: Color = CustomColorDarkTokens.onBackground,
+    onBackgroundMuted: Color = CustomColorDarkTokens.onBackgroundMuted,
     surface: Color = CustomColorDarkTokens.surface,
-    surfaceDim: Color = CustomColorDarkTokens.surfaceDim,
+    onSurface: Color = CustomColorDarkTokens.onSurface,
+    onSurfaceMuted: Color = CustomColorDarkTokens.onSurfaceMuted,
+    divider: Color = CustomColorDarkTokens.divider,
+    disable: Color = CustomColorDarkTokens.disable,
+    onDisable: Color = CustomColorDarkTokens.onDisable,
     snackbar: Color = CustomColorDarkTokens.snackbar,
     onSnackbar: Color = CustomColorDarkTokens.onSnackbar,
-    constantBlack: Color = CustomColorDarkTokens.constantBlack,
     kakaoBackground: Color = CustomColorDarkTokens.kakaoBackground,
     googleBackground: Color = CustomColorDarkTokens.googleBackground,
     naverBackground: Color = CustomColorDarkTokens.naverBackground,
 ) = CustomColorScheme(
     brand = brand,
+    onBrand = onBrand,
     brandBright = brandBright,
+    onBrandBright = onBrandBright,
+    brandDim = brandDim,
+    onBrandDim = onBrandDim,
     background = background,
     onBackground = onBackground,
+    onBackgroundMuted = onBackgroundMuted,
     surface = surface,
-    surfaceDim = surfaceDim,
+    onSurface = onSurface,
+    onSurfaceMuted = onSurfaceMuted,
+    divider = divider,
+    disable = disable,
+    onDisable = onDisable,
     snackbar = snackbar,
     onSnackbar = onSnackbar,
-    constantBlack = constantBlack,
     kakaoBackground = kakaoBackground,
     googleBackground = googleBackground,
     naverBackground = naverBackground,

@@ -6,7 +6,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 
 private fun debugColors(
     debugColor: Color = Color.Magenta
@@ -59,19 +58,12 @@ fun ChallengeTogetherTheme(
         else -> customLightColorScheme()
     }
 
-    val gradientColors = GradientColors(
-        top = gradientStart,
-        bottom = gradientEnd,
-    )
-
     val backgroundTheme = BackgroundTheme(
         color = customColorScheme.background,
-        tonalElevation = 0.dp,
     )
 
     CompositionLocalProvider(
         LocalCustomColorScheme provides customColorScheme,
-        LocalGradientColors provides gradientColors,
         LocalBackgroundTheme provides backgroundTheme,
     ) {
         MaterialTheme(

@@ -24,9 +24,9 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
+import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.core.designsystem.theme.CustomColorProvider
 
 @Composable
@@ -42,10 +42,10 @@ fun ChallengeTogetherTextField(
     maxLines: Int = Int.MAX_VALUE,
     placeholderText: String = "",
     shape: Shape = MaterialTheme.shapes.medium,
-    textColor: Color = CustomColorProvider.colorScheme.onBackground,
-    placeholderColor: Color = CustomColorProvider.colorScheme.onBackground.copy(alpha = 0.2f),
+    textColor: Color = CustomColorProvider.colorScheme.onSurface,
+    placeholderColor: Color = CustomColorProvider.colorScheme.onSurface.copy(alpha = 0.2f),
     borderColor: Color = Color.Transparent,
-    backgroundColor: Color = CustomColorProvider.colorScheme.background,
+    backgroundColor: Color = CustomColorProvider.colorScheme.surface,
     shouldHidePassword: Boolean = false,
 ) {
     Box(
@@ -77,7 +77,7 @@ fun ChallengeTogetherTextField(
                 maxLines = maxLines,
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActions,
-                textStyle = MaterialTheme.typography.bodyMedium.copy(color = textColor),
+                textStyle = MaterialTheme.typography.labelMedium.copy(color = textColor),
                 cursorBrush = SolidColor(CustomColorProvider.colorScheme.brand),
                 visualTransformation = if (shouldHidePassword) {
                     PasswordVisualTransformation()
@@ -94,7 +94,7 @@ fun ChallengeTogetherTextField(
                 if (value.isEmpty()) {
                     Text(
                         text = placeholderText,
-                        style = MaterialTheme.typography.bodyMedium.copy(color = placeholderColor),
+                        style = MaterialTheme.typography.labelMedium.copy(color = placeholderColor),
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.CenterStart)
@@ -114,30 +114,32 @@ fun ChallengeTogetherTextField(
     }
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
 fun ChallengeTogetherTextFieldPreview() {
-    ChallengeTogetherTextField(
-        value = "",
-        onValueChange = {},
-        placeholderText = "Enter text...",
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.Mail),
-                contentDescription = "Email Icon"
+    ChallengeTogetherTheme {
+        ChallengeTogetherBackground(modifier = Modifier.height(100.dp)) {
+            ChallengeTogetherTextField(
+                value = "",
+                onValueChange = {},
+                placeholderText = "Enter text...",
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = ChallengeTogetherIcons.Lock),
+                        contentDescription = "Lock Icon"
+                    )
+                },
+                trailingIcon = {
+                    Icon(
+                        painter = painterResource(id = ChallengeTogetherIcons.Visibility),
+                        contentDescription = "Visibility Icon"
+                    )
+                },
+                singleLine = true,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
             )
-        },
-        trailingIcon = {
-            Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.Visibility),
-                contentDescription = "Visibility Icon"
-            )
-        },
-        singleLine = true,
-        borderColor = Color.Gray,
-        backgroundColor = Color.White,
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-    )
+        }
+    }
 }
