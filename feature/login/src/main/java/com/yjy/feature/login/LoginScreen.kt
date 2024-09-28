@@ -16,10 +16,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,23 +37,28 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yjy.core.designsystem.component.ChallengeTogetherBackground
-import com.yjy.core.designsystem.component.ChallengeTogetherGradientBackground
-import com.yjy.core.designsystem.component.ChallengeTogetherOutlinedButton
+import com.yjy.core.designsystem.component.ChallengeTogetherButton
 import com.yjy.core.designsystem.component.ChallengeTogetherTextField
-import com.yjy.core.designsystem.component.StableImage
+import com.yjy.core.designsystem.component.ClickableText
+import com.yjy.core.designsystem.component.SnackbarType
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
-import com.yjy.core.designsystem.theme.CustomMaterialTheme
+import com.yjy.core.designsystem.theme.CustomColorProvider
 import com.yjy.core.ui.DevicePreviews
 import com.yjy.feature.login.navigation.LoginStrings
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun LoginRoute(
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     loginViewModel: LoginViewModel = hiltViewModel(),
 ) {
     LoginScreen(
         modifier = modifier,
+        eventFlow = loginViewModel.uiEvent,
+        onShowSnackbar = onShowSnackbar,
         onLoginClick = loginViewModel::login,
         onFindPasswordClick = { /* TODO */ },
         onSignUpClick = { /* TODO */ },
@@ -66,12 +71,16 @@ internal fun LoginRoute(
 @Composable
 internal fun LoginScreen(
     modifier: Modifier = Modifier,
+    loginUiState: LoginUiState = LoginUiState.Idle,
+    eventFlow: Flow<LoginUiEvent> = flowOf(),
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
     onLoginClick: (String, String) -> Unit = { _, _ -> },
     onFindPasswordClick: () -> Unit = {},
     onSignUpClick: () -> Unit = {},
     onKakaoLoginClick: () -> Unit = {},
     onGoogleLoginClick: () -> Unit = {},
     onNaverLoginClick: () -> Unit = {},
+    onLoginSuccess: () -> Unit = {},
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -85,10 +94,10 @@ internal fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(32.dp))
-        StableImage(
-            drawableResId = R.drawable.feature_login_app_logo,
-            description = stringResource(id = LoginStrings.feature_login_app_logo_content_description),
-            modifier = Modifier.width(260.dp),
+        Title(
+            title = stringResource(id = LoginStrings.feature_login_title),
+            titleDescription = stringResource(id = LoginStrings.feature_login_title_description),
+            modifier = Modifier.align(Alignment.Start)
         )
         Spacer(modifier = Modifier.height(32.dp))
         EmailTextField(
@@ -101,20 +110,18 @@ internal fun LoginScreen(
             onValueChange = { password = it },
         )
         Spacer(modifier = Modifier.height(16.dp))
-        ChallengeTogetherOutlinedButton(
+        ChallengeTogetherButton(
             onClick = { onLoginClick(email, password) },
-            borderColor = CustomMaterialTheme.colorScheme.constantBlack,
-            contentColor = CustomMaterialTheme.colorScheme.constantBlack,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
         ) {
             Text(
                 text = stringResource(id = LoginStrings.feature_login_button_text),
-                style = CustomMaterialTheme.typography.button,
+                style = MaterialTheme.typography.bodyMedium,
             )
         }
-        Spacer(modifier = Modifier.height(6.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         FindPasswordAndSignUp(
             onFindPasswordClick = onFindPasswordClick,
             onSignUpClick = onSignUpClick,
@@ -132,6 +139,27 @@ internal fun LoginScreen(
 }
 
 @Composable
+private fun Title(
+    title: String,
+    titleDescription: String,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = titleDescription,
+            style = MaterialTheme.typography.labelSmall,
+            color = CustomColorProvider.colorScheme.onBackgroundMuted,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge,
+            color = CustomColorProvider.colorScheme.onBackground,
+        )
+    }
+}
+
+@Composable
 private fun EmailTextField(
     value: String,
     onValueChange: (String) -> Unit,
@@ -144,8 +172,20 @@ private fun EmailTextField(
             Icon(
                 painter = painterResource(id = ChallengeTogetherIcons.Mail),
                 contentDescription = stringResource(id = LoginStrings.feature_login_input_email_content_description),
-                tint = CustomMaterialTheme.colorScheme.onBackground,
+                tint = CustomColorProvider.colorScheme.onSurface,
             )
+        },
+        trailingIcon = {
+            if (value.isNotEmpty()) {
+                Icon(
+                    painter = painterResource(id = ChallengeTogetherIcons.Cancel),
+                    contentDescription = stringResource(id = LoginStrings.feature_login_input_email_clear_content_description),
+                    tint = CustomColorProvider.colorScheme.onSurfaceMuted,
+                    modifier = Modifier
+                        .clip(MaterialTheme.shapes.small)
+                        .clickable { onValueChange("") },
+                )
+            }
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
@@ -171,7 +211,7 @@ private fun PasswordTextField(
             Icon(
                 painter = painterResource(id = ChallengeTogetherIcons.Lock),
                 contentDescription = stringResource(id = LoginStrings.feature_login_input_password_content_description),
-                tint = CustomMaterialTheme.colorScheme.onBackground,
+                tint = CustomColorProvider.colorScheme.onSurface,
             )
         },
         trailingIcon = {
@@ -189,9 +229,9 @@ private fun PasswordTextField(
                     } else {
                         stringResource(id = LoginStrings.feature_login_input_password_hide_content_description)
                     },
-                    tint = CustomMaterialTheme.colorScheme.surfaceDim,
+                    tint = CustomColorProvider.colorScheme.onSurfaceMuted,
                     modifier = Modifier
-                        .clip(RoundedCornerShape(32))
+                        .clip(MaterialTheme.shapes.small)
                         .clickable {
                             shouldHidePassword = !shouldHidePassword
                         },
@@ -229,8 +269,7 @@ private fun LoginTextField(
         maxLines = 1,
         shouldHidePassword = shouldHidePassword,
         placeholderText = placeholderText,
-        borderColor = CustomMaterialTheme.colorScheme.background,
-        backgroundColor = CustomMaterialTheme.colorScheme.background,
+        backgroundColor = CustomColorProvider.colorScheme.surface,
         modifier = modifier.height(50.dp),
     )
 }
@@ -245,25 +284,20 @@ private fun FindPasswordAndSignUp(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        Text(
+        ClickableText(
             text = stringResource(id = LoginStrings.feature_login_find_password),
-            color = CustomMaterialTheme.colorScheme.constantBlack,
-            style = CustomMaterialTheme.typography.loginLabel,
+            onClick = { onFindPasswordClick() },
             textAlign = TextAlign.End,
-            modifier = Modifier.clickable { onFindPasswordClick() }
         )
         Text(
             text = "|",
-            color = CustomMaterialTheme.colorScheme.constantBlack,
-            style = CustomMaterialTheme.typography.loginLabel,
+            color = CustomColorProvider.colorScheme.onBackground,
+            style = MaterialTheme.typography.labelSmall,
             modifier = Modifier.padding(horizontal = 8.dp)
         )
-        Text(
+        ClickableText(
             text = stringResource(id = LoginStrings.feature_login_sign_up),
-            color = CustomMaterialTheme.colorScheme.constantBlack,
-            style = CustomMaterialTheme.typography.loginLabel,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.clickable { onSignUpClick() }
+            onClick = { onSignUpClick() },
         )
     }
 }
@@ -278,12 +312,12 @@ private fun SNSLoginDivider() {
             modifier = Modifier
                 .weight(1f)
                 .height(1.dp)
-                .background(CustomMaterialTheme.colorScheme.constantBlack)
+                .background(CustomColorProvider.colorScheme.onBackground)
         )
         Text(
             text = stringResource(id = LoginStrings.feature_login_social_login_text),
-            color = CustomMaterialTheme.colorScheme.constantBlack,
-            style = CustomMaterialTheme.typography.loginLabel,
+            color = CustomColorProvider.colorScheme.onBackground,
+            style = MaterialTheme.typography.labelSmall,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(horizontal = 16.dp),
@@ -292,7 +326,7 @@ private fun SNSLoginDivider() {
             modifier = Modifier
                 .weight(1f)
                 .height(1.dp)
-                .background(CustomMaterialTheme.colorScheme.constantBlack)
+                .background(CustomColorProvider.colorScheme.onBackground)
         )
     }
 }
@@ -314,7 +348,7 @@ private fun SNSLoginButtons(
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
-                .background(CustomMaterialTheme.colorScheme.kakaoBackground)
+                .background(CustomColorProvider.colorScheme.kakaoBackground)
                 .clickable(
                     onClick = onKakaoLoginClick,
                 ),
@@ -330,7 +364,7 @@ private fun SNSLoginButtons(
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
-                .background(CustomMaterialTheme.colorScheme.googleBackground)
+                .background(CustomColorProvider.colorScheme.googleBackground)
                 .clickable(
                     onClick = onGoogleLoginClick,
                 ),
@@ -346,7 +380,7 @@ private fun SNSLoginButtons(
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
-                .background(CustomMaterialTheme.colorScheme.naverBackground)
+                .background(CustomColorProvider.colorScheme.naverBackground)
                 .clickable(
                     onClick = onNaverLoginClick,
                 ),
@@ -365,11 +399,9 @@ private fun SNSLoginButtons(
 fun LoginScreenPreview() {
     ChallengeTogetherTheme {
         ChallengeTogetherBackground {
-            ChallengeTogetherGradientBackground {
-                LoginScreen(
-                    modifier = Modifier.fillMaxSize(),
-                )
-            }
+            LoginScreen(
+                modifier = Modifier.fillMaxSize(),
+            )
         }
     }
 }

@@ -1,9 +1,12 @@
 <resources>
-    <string name="feature_login_app_logo_content_description">App Logo</string>
+    <string name="feature_login_app_logo_content_description">App logo</string>
+    <string name="feature_login_title_description">The easiest first step to changing myself,</string>
+    <string name="feature_login_title">Challenge Together</string>
     <string name="feature_login_input_email_content_description">Input Email</string>
-    <string name="feature_login_input_email_place_holder">EMAIL</string>
+    <string name="feature_login_input_email_place_holder">Email</string>
+    <string name="feature_login_input_email_clear_content_description">Clear Email</string>
     <string name="feature_login_input_password_content_description">Input Password</string>
-    <string name="feature_login_input_password_place_holder">PASSWORD</string>
+    <string name="feature_login_input_password_place_holder">Password</string>
     <string name="feature_login_input_password_show_content_description">Show Password</string>
     <string name="feature_login_input_password_hide_content_description">Hide Password</string>
     <string name="feature_login_button_text">LOGIN</string>
@@ -13,4 +16,10 @@
     <string name="feature_login_kakao_content_description">Sign in with Kakao</string>
     <string name="feature_login_google_content_description">Sign in with Google</string>
     <string name="feature_login_naver_content_description">Sign in with Naver</string>
+    <string name="feature_login_login_success">Login successful</string>
+    <string name="feature_login_user_not_found">The ID or password is incorrect.</string>
+    <string name="feature_login_server_error">Unable to access the server.\nPlease contact the administrator.</string>
+    <string name="feature_login_invalid_email_format">Please enter a valid email address.</string>
+    <string name="feature_login_empty_password">Please enter your password.</string>
+    <string name="feature_login_unknown_error">An unknown error occurred.\nPlease try again later.</string>
 </resources>
