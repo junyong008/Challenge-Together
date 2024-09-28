@@ -7,10 +7,12 @@ import com.yjy.core.common.network.NetworkResult
 import com.yjy.core.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,45 +21,72 @@ class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository,
 ) : ViewModel() {
 
-    private val _loginUiState = MutableStateFlow<LoginUiState>(LoginUiState.Idle)
-    val loginUiState: StateFlow<LoginUiState> = _loginUiState.asStateFlow()
+    private val _uiState = MutableStateFlow(LoginUiState())
+    val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     private val _uiEvent = Channel<LoginUiEvent>()
-    val uiEvent = _uiEvent.receiveAsFlow()
+    val uiEvent: Flow<LoginUiEvent> = _uiEvent.receiveAsFlow()
 
-    fun login(email: String, password: String) {
-        if (!isValidEmail(email)) {
-            sendEvent(LoginUiEvent.LoginFailure.InvalidEmailFormat)
-            return
+    fun processAction(action: LoginUiAction) {
+        when (action) {
+            is LoginUiAction.OnEmailSubmit -> {}
+            is LoginUiAction.OnEmailUpdated -> updateEmail(action.email)
+            is LoginUiAction.OnPasswordUpdated -> updatePassword(action.password)
+            is LoginUiAction.OnLoginClick -> login(action.email, action.password)
+            is LoginUiAction.OnFindPasswordClick -> {}
+            is LoginUiAction.OnSignUpClick -> {}
+            is LoginUiAction.OnKakaoLoginClick -> {}
+            is LoginUiAction.OnGoogleLoginClick -> {}
+            is LoginUiAction.OnNaverLoginClick -> {}
         }
+    }
 
-        if (password.isEmpty()) {
-            sendEvent(LoginUiEvent.LoginFailure.EmptyPassword)
-            return
-        }
-
+    private fun login(email: String, password: String) {
         viewModelScope.launch {
-            _loginUiState.value = LoginUiState.Loading
+            _uiState.update {
+                it.copy(isLoading = true)
+            }
+
             val event = when (val result = authRepository.login(email, password)) {
-                is NetworkResult.Success ->  LoginUiEvent.LoginSuccess
-                is NetworkResult.Failure.NetworkError -> LoginUiEvent.LoginFailure.Unknown
-                is NetworkResult.Failure.UnknownApiError -> LoginUiEvent.LoginFailure.Unknown
-                is NetworkResult.Failure.HttpError -> {
-                    when (result.code) {
-                        404 -> LoginUiEvent.LoginFailure.UserNotFound
-                        500 -> LoginUiEvent.LoginFailure.ServerError
-                        else -> LoginUiEvent.LoginFailure.Unknown
-                    }
+                is NetworkResult.Success -> LoginUiEvent.LoginSuccess
+                is NetworkResult.Failure.HttpError -> when (result.code) {
+                    404 -> LoginUiEvent.LoginFailure.UserNotFound
+                    else -> LoginUiEvent.LoginFailure.Error
                 }
+
+                is NetworkResult.Failure -> LoginUiEvent.LoginFailure.Error
             }
             sendEvent(event)
-            _loginUiState.value = LoginUiState.Idle
+
+            _uiState.update {
+                it.copy(isLoading = false)
+            }
         }
     }
 
-    private fun isValidEmail(email: String): Boolean {
-        return EMAIL_ADDRESS.matcher(email).matches()
+    private fun updateEmail(email: String) {
+        _uiState.update {
+            it.copy(
+                email = email,
+                isValidEmailFormat = isValidEmail(email),
+                canTryLogin = canLogin(email, it.password)
+            )
+        }
     }
+
+    private fun updatePassword(password: String) {
+        _uiState.update {
+            it.copy(
+                password = password,
+                canTryLogin = canLogin(it.email, password)
+            )
+        }
+    }
+
+    private fun canLogin(email: String, password: String): Boolean =
+        email.isNotEmpty() && password.isNotEmpty() && isValidEmail(email)
+
+    private fun isValidEmail(email: String): Boolean = EMAIL_ADDRESS.matcher(email).matches()
 
     private fun sendEvent(event: LoginUiEvent) {
         viewModelScope.launch {

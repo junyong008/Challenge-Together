@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.core.designsystem.component.ChallengeTogetherBackground
 import com.yjy.core.designsystem.component.ChallengeTogetherButton
 import com.yjy.core.designsystem.component.ChallengeTogetherTextField
@@ -53,37 +55,27 @@ import kotlinx.coroutines.flow.flowOf
 internal fun LoginRoute(
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
-    loginViewModel: LoginViewModel = hiltViewModel(),
+    viewModel: LoginViewModel = hiltViewModel(),
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     LoginScreen(
         modifier = modifier,
-        eventFlow = loginViewModel.uiEvent,
+        uiState = uiState,
+        uiEvent = viewModel.uiEvent,
+        processAction = viewModel::processAction,
         onShowSnackbar = onShowSnackbar,
-        onLoginClick = loginViewModel::login,
-        onFindPasswordClick = { /* TODO */ },
-        onSignUpClick = { /* TODO */ },
-        onKakaoLoginClick = { /* TODO */ },
-        onGoogleLoginClick = { /* TODO */ },
-        onNaverLoginClick = { /* TODO */ },
     )
 }
 
 @Composable
 internal fun LoginScreen(
     modifier: Modifier = Modifier,
-    loginUiState: LoginUiState = LoginUiState.Idle,
-    eventFlow: Flow<LoginUiEvent> = flowOf(),
+    uiState: LoginUiState = LoginUiState(),
+    uiEvent: Flow<LoginUiEvent> = flowOf(),
+    processAction: (LoginUiAction) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
-    onLoginClick: (String, String) -> Unit = { _, _ -> },
-    onFindPasswordClick: () -> Unit = {},
-    onSignUpClick: () -> Unit = {},
-    onKakaoLoginClick: () -> Unit = {},
-    onGoogleLoginClick: () -> Unit = {},
-    onNaverLoginClick: () -> Unit = {},
-    onLoginSuccess: () -> Unit = {},
 ) {
-    var email by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -101,17 +93,30 @@ internal fun LoginScreen(
         )
         Spacer(modifier = Modifier.height(32.dp))
         EmailTextField(
-            value = email,
-            onValueChange = { email = it },
+            value = uiState.email,
+            onValueChange = { processAction(LoginUiAction.OnEmailUpdated(it)) },
+            onSubmit = { processAction(LoginUiAction.OnEmailSubmit(it)) },
         )
+        if (!uiState.isValidEmailFormat) {
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = stringResource(id = LoginStrings.feature_login_invalid_email_format),
+                color = CustomColorProvider.colorScheme.red,
+                style = MaterialTheme.typography.labelSmall,
+                modifier = Modifier.align(Alignment.Start)
+            )
+        }
         Spacer(modifier = Modifier.height(8.dp))
         PasswordTextField(
-            value = password,
-            onValueChange = { password = it },
+            value = uiState.password,
+            onValueChange = { processAction(LoginUiAction.OnPasswordUpdated(it)) },
         )
         Spacer(modifier = Modifier.height(16.dp))
         ChallengeTogetherButton(
-            onClick = { onLoginClick(email, password) },
+            onClick = {
+                processAction(LoginUiAction.OnLoginClick(uiState.email, uiState.password))
+            },
+            enabled = uiState.canTryLogin,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
@@ -123,16 +128,16 @@ internal fun LoginScreen(
         }
         Spacer(modifier = Modifier.height(8.dp))
         FindPasswordAndSignUp(
-            onFindPasswordClick = onFindPasswordClick,
-            onSignUpClick = onSignUpClick,
+            onFindPasswordClick = { processAction(LoginUiAction.OnFindPasswordClick) },
+            onSignUpClick = { processAction(LoginUiAction.OnSignUpClick) },
         )
         Spacer(modifier = Modifier.height(100.dp))
         SNSLoginDivider()
         Spacer(modifier = Modifier.height(16.dp))
         SNSLoginButtons(
-            onKakaoLoginClick = onKakaoLoginClick,
-            onGoogleLoginClick = onGoogleLoginClick,
-            onNaverLoginClick = onNaverLoginClick,
+            onKakaoLoginClick = { processAction(LoginUiAction.OnKakaoLoginClick) },
+            onGoogleLoginClick = { processAction(LoginUiAction.OnGoogleLoginClick) },
+            onNaverLoginClick = { processAction(LoginUiAction.OnNaverLoginClick) },
         )
         Spacer(modifier = Modifier.height(32.dp))
     }
@@ -163,6 +168,7 @@ private fun Title(
 private fun EmailTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    onSubmit: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LoginTextField(
@@ -170,7 +176,7 @@ private fun EmailTextField(
         onValueChange = onValueChange,
         leadingIcon = {
             Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.Mail),
+                painter = painterResource(id = ChallengeTogetherIcons.Email),
                 contentDescription = stringResource(id = LoginStrings.feature_login_input_email_content_description),
                 tint = CustomColorProvider.colorScheme.onSurface,
             )
@@ -192,7 +198,12 @@ private fun EmailTextField(
             imeAction = ImeAction.Next,
         ),
         placeholderText = stringResource(id = LoginStrings.feature_login_input_email_place_holder,),
-        modifier = modifier,
+        modifier = modifier
+            .onFocusChanged { focusState ->
+                if (!focusState.isFocused) {
+                    onSubmit(value)
+                }
+            },
     )
 }
 

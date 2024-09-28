@@ -1,6 +1,9 @@
 package com.yjy.feature.login
 
-sealed interface LoginUiState {
-    data object Idle : LoginUiState
-    data object Loading : LoginUiState
-}
+data class LoginUiState(
+    val isLoading: Boolean = false,
+    val canTryLogin: Boolean = false,
+    val isValidEmailFormat: Boolean = true,
+    val email: String = "",
+    val password: String = "",
+)
