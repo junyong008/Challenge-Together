@@ -14,6 +14,7 @@ lottie = "6.0.0"
 mockk = "1.13.11"
 room = "2.6.1"
 secrets = "2.0.1"
+timber = "5.0.1"
 
 [bundles]
 androidx-compose-ui-test = ["androidx-compose-ui-test", "androidx-compose-ui-testManifest"]
@@ -33,6 +34,7 @@ androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 # build-logic의 커스텀 plugins에 포함된 기본 libraries
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }

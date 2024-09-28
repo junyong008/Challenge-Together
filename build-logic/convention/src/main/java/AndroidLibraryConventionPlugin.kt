@@ -27,6 +27,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             dependencies {
                 add("testImplementation", kotlin("test"))
                 add("testImplementation", libs.findLibrary("mockk").get())
+                add("implementation", libs.findLibrary("timber").get())
             }
         }
     }
