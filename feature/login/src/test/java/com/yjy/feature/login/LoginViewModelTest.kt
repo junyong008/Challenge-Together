@@ -32,38 +32,6 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `login with invalid email format should trigger InvalidEmailFormat event`() = runTest {
-        // Given
-        val invalidEmail = "invalidEmail"
-        val password = "ValidPassword123"
-
-        // When
-        viewModel.login(invalidEmail, password)
-
-        // Then
-        assertEquals(
-            expected = LoginUiEvent.LoginFailure.InvalidEmailFormat,
-            actual = viewModel.uiEvent.first()
-        )
-    }
-
-    @Test
-    fun `login with empty password should trigger EmptyPassword event`() = runTest {
-        // Given
-        val email = "user@example.com"
-        val emptyPassword = ""
-
-        // When
-        viewModel.login(email, emptyPassword)
-
-        // Then
-        assertEquals(
-            expected = LoginUiEvent.LoginFailure.EmptyPassword,
-            actual = viewModel.uiEvent.first()
-        )
-    }
-
-    @Test
     fun `login with valid credentials should trigger Success event`() = runTest {
         // Given
         val email = "user@example.com"
@@ -71,7 +39,8 @@ class LoginViewModelTest {
         coEvery { authRepository.login(email, password) } returns NetworkResult.Success(Unit)
 
         // When
-        viewModel.login(email, password)
+        val action = LoginUiAction.OnLoginClick(email, password)
+        viewModel.processAction(action)
 
         // Then
         assertEquals(
@@ -90,7 +59,8 @@ class LoginViewModelTest {
         } returns NetworkResult.Failure.HttpError(code = 404, message = null, body = "")
 
         // When
-        viewModel.login(email, password)
+        val action = LoginUiAction.OnLoginClick(email, password)
+        viewModel.processAction(action)
 
         // Then
         assertEquals(
@@ -100,7 +70,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `login with server error should trigger ServerError event`() = runTest {
+    fun `login with error should trigger Error event`() = runTest {
         // Given
         val email = "user@example.com"
         val password = "ValidPassword123"
@@ -109,31 +79,12 @@ class LoginViewModelTest {
         } returns NetworkResult.Failure.HttpError(code = 500, message = null, body = "")
 
         // When
-        viewModel.login(email, password)
+        val action = LoginUiAction.OnLoginClick(email, password)
+        viewModel.processAction(action)
 
         // Then
         assertEquals(
-            expected = LoginUiEvent.LoginFailure.ServerError,
-            actual = viewModel.uiEvent.first()
-        )
-    }
-
-    @Test
-    fun `login with unknown error should trigger Unknown event`() = runTest {
-        // Given
-        val email = "user@example.com"
-        val password = "ValidPassword123"
-        val unknownException = Exception("Unexpected error")
-        coEvery {
-            authRepository.login(email, password)
-        } returns NetworkResult.Failure.UnknownApiError(unknownException)
-
-        // When
-        viewModel.login(email, password)
-
-        // Then
-        assertEquals(
-            expected = LoginUiEvent.LoginFailure.Unknown,
+            expected = LoginUiEvent.LoginFailure.Error,
             actual = viewModel.uiEvent.first()
         )
     }
