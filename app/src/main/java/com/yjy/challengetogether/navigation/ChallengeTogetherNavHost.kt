@@ -4,12 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.yjy.challengetogether.ui.ChallengeTogetherAppState
+import com.yjy.core.designsystem.component.SnackbarType
 import com.yjy.feature.login.navigation.LOGIN_ROUTE
 import com.yjy.feature.login.navigation.loginScreen
 
 @Composable
 fun ChallengeTogetherNavHost(
     appState: ChallengeTogetherAppState,
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = LOGIN_ROUTE,
 ) {
@@ -19,6 +21,6 @@ fun ChallengeTogetherNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        loginScreen()
+        loginScreen(onShowSnackbar = onShowSnackbar)
     }
 }
