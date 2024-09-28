@@ -28,8 +28,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -38,10 +40,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.yjy.core.common.ui.ObserveAsEvents
 import com.yjy.core.designsystem.component.ChallengeTogetherBackground
 import com.yjy.core.designsystem.component.ChallengeTogetherButton
 import com.yjy.core.designsystem.component.ChallengeTogetherTextField
 import com.yjy.core.designsystem.component.ClickableText
+import com.yjy.core.designsystem.component.LoadingWheel
 import com.yjy.core.designsystem.component.SnackbarType
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
@@ -76,6 +80,16 @@ internal fun LoginScreen(
     processAction: (LoginUiAction) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val userNotFoundMessage = stringResource(id = LoginStrings.feature_login_user_not_found)
+    val loginErrorMessage = stringResource(id = LoginStrings.feature_login_error)
+
+    ObserveAsEvents(flow = uiEvent) {
+        when (it) {
+            is LoginUiEvent.LoginSuccess -> {}
+            is LoginUiEvent.LoginFailure.UserNotFound -> onShowSnackbar(SnackbarType.ERROR, userNotFoundMessage)
+            is LoginUiEvent.LoginFailure.Error -> onShowSnackbar(SnackbarType.ERROR, loginErrorMessage)
+        }
+    }
 
     Column(
         modifier = modifier
@@ -92,54 +106,69 @@ internal fun LoginScreen(
             modifier = Modifier.align(Alignment.Start)
         )
         Spacer(modifier = Modifier.height(32.dp))
-        EmailTextField(
-            value = uiState.email,
-            onValueChange = { processAction(LoginUiAction.OnEmailUpdated(it)) },
-            onSubmit = { processAction(LoginUiAction.OnEmailSubmit(it)) },
-        )
-        if (!uiState.isValidEmailFormat) {
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = stringResource(id = LoginStrings.feature_login_invalid_email_format),
-                color = CustomColorProvider.colorScheme.red,
-                style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier.align(Alignment.Start)
-            )
+
+        Box {
+            if (uiState.isLoading) {
+                LoadingWheel(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .alpha(if (uiState.isLoading) 0f else 1f)
+            ) {
+                EmailTextField(
+                    value = uiState.email,
+                    onValueChange = { processAction(LoginUiAction.OnEmailUpdated(it)) },
+                    onSubmit = { processAction(LoginUiAction.OnEmailSubmit(it)) },
+                )
+                if (!uiState.isValidEmailFormat) {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = stringResource(id = LoginStrings.feature_login_invalid_email_format),
+                        color = CustomColorProvider.colorScheme.red,
+                        style = MaterialTheme.typography.labelSmall,
+                        modifier = Modifier.align(Alignment.Start)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                PasswordTextField(
+                    value = uiState.password,
+                    onValueChange = { processAction(LoginUiAction.OnPasswordUpdated(it)) },
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                ChallengeTogetherButton(
+                    onClick = {
+                        processAction(LoginUiAction.OnLoginClick(uiState.email, uiState.password))
+                    },
+                    enabled = uiState.canTryLogin,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .testTag("loginButton"),
+                ) {
+                    Text(
+                        text = stringResource(id = LoginStrings.feature_login_button_text),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                FindPasswordAndSignUp(
+                    onFindPasswordClick = { processAction(LoginUiAction.OnFindPasswordClick) },
+                    onSignUpClick = { processAction(LoginUiAction.OnSignUpClick) },
+                )
+                Spacer(modifier = Modifier.height(100.dp))
+                SNSLoginDivider()
+                Spacer(modifier = Modifier.height(16.dp))
+                SNSLoginButtons(
+                    onKakaoLoginClick = { processAction(LoginUiAction.OnKakaoLoginClick) },
+                    onGoogleLoginClick = { processAction(LoginUiAction.OnGoogleLoginClick) },
+                    onNaverLoginClick = { processAction(LoginUiAction.OnNaverLoginClick) },
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+            }
         }
-        Spacer(modifier = Modifier.height(8.dp))
-        PasswordTextField(
-            value = uiState.password,
-            onValueChange = { processAction(LoginUiAction.OnPasswordUpdated(it)) },
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        ChallengeTogetherButton(
-            onClick = {
-                processAction(LoginUiAction.OnLoginClick(uiState.email, uiState.password))
-            },
-            enabled = uiState.canTryLogin,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
-        ) {
-            Text(
-                text = stringResource(id = LoginStrings.feature_login_button_text),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        FindPasswordAndSignUp(
-            onFindPasswordClick = { processAction(LoginUiAction.OnFindPasswordClick) },
-            onSignUpClick = { processAction(LoginUiAction.OnSignUpClick) },
-        )
-        Spacer(modifier = Modifier.height(100.dp))
-        SNSLoginDivider()
-        Spacer(modifier = Modifier.height(16.dp))
-        SNSLoginButtons(
-            onKakaoLoginClick = { processAction(LoginUiAction.OnKakaoLoginClick) },
-            onGoogleLoginClick = { processAction(LoginUiAction.OnGoogleLoginClick) },
-            onNaverLoginClick = { processAction(LoginUiAction.OnNaverLoginClick) },
-        )
-        Spacer(modifier = Modifier.height(32.dp))
     }
 }
 
