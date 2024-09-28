@@ -32,6 +32,7 @@ data class CustomColorScheme(
     val divider: Color,
     val disable: Color,
     val onDisable: Color,
+    val red: Color,
     val snackbar: Color,
     val onSnackbar: Color,
     val kakaoBackground: Color,
@@ -55,6 +56,7 @@ private object CustomColorLightTokens {
     val divider = dividerLight
     val disable = disableLight
     val onDisable = onDisableLight
+    val red = redLight
     val snackbar = snackbarLight
     val onSnackbar = onSnackbarLight
     val kakaoBackground = kakaoBrand
@@ -78,6 +80,7 @@ private object CustomColorDarkTokens {
     val divider = dividerDark
     val disable = disableDark
     val onDisable = onDisableDark
+    val red = redDark
     val snackbar = snackbarDark
     val onSnackbar = onSnackbarDark
     val kakaoBackground = kakaoBrand
@@ -101,6 +104,7 @@ internal fun customLightColorScheme(
     divider: Color = CustomColorLightTokens.divider,
     disable: Color = CustomColorLightTokens.disable,
     onDisable: Color = CustomColorLightTokens.onDisable,
+    red: Color = CustomColorLightTokens.red,
     snackbar: Color = CustomColorLightTokens.snackbar,
     onSnackbar: Color = CustomColorLightTokens.onSnackbar,
     kakaoBackground: Color = CustomColorLightTokens.kakaoBackground,
@@ -122,6 +126,7 @@ internal fun customLightColorScheme(
     divider = divider,
     disable = disable,
     onDisable = onDisable,
+    red = red,
     snackbar = snackbar,
     onSnackbar = onSnackbar,
     kakaoBackground = kakaoBackground,
@@ -145,6 +150,7 @@ internal fun customDarkColorScheme(
     divider: Color = CustomColorDarkTokens.divider,
     disable: Color = CustomColorDarkTokens.disable,
     onDisable: Color = CustomColorDarkTokens.onDisable,
+    red: Color = CustomColorDarkTokens.red,
     snackbar: Color = CustomColorDarkTokens.snackbar,
     onSnackbar: Color = CustomColorDarkTokens.onSnackbar,
     kakaoBackground: Color = CustomColorDarkTokens.kakaoBackground,
@@ -166,6 +172,7 @@ internal fun customDarkColorScheme(
     divider = divider,
     disable = disable,
     onDisable = onDisable,
+    red = red,
     snackbar = snackbar,
     onSnackbar = onSnackbar,
     kakaoBackground = kakaoBackground,
