@@ -88,4 +88,94 @@ class LoginViewModelTest {
             actual = viewModel.uiEvent.first()
         )
     }
+
+    @Test
+    fun `email update should update uiState with valid email format`() = runTest {
+        // Given
+        val email = "user@example.com"
+
+        // When
+        viewModel.processAction(LoginUiAction.OnEmailUpdated(email))
+
+        // Then
+        val updatedState = viewModel.uiState.first()
+        assertEquals(
+            expected = email,
+            actual = updatedState.email
+        )
+        assertEquals(
+            expected = true,
+            actual = updatedState.isValidEmailFormat
+        )
+    }
+
+    @Test
+    fun `password update should update uiState`() = runTest {
+        // Given
+        val password = "ValidPassword123"
+
+        // When
+        viewModel.processAction(LoginUiAction.OnPasswordUpdated(password))
+
+        // Then
+        val updatedState = viewModel.uiState.first()
+        assertEquals(
+            expected = password,
+            actual = updatedState.password
+        )
+    }
+
+    @Test
+    fun `canTryLogin should be true when email and password are valid`() = runTest {
+        // Given
+        val email = "user@example.com"
+        val password = "ValidPassword123"
+
+        // When
+        viewModel.processAction(LoginUiAction.OnEmailUpdated(email))
+        viewModel.processAction(LoginUiAction.OnPasswordUpdated(password))
+
+        // Then
+        val updatedState = viewModel.uiState.first()
+        assertEquals(
+            expected = true,
+            actual = updatedState.canTryLogin
+        )
+    }
+
+    @Test
+    fun `canTryLogin should be false when email is invalid`() = runTest {
+        // Given
+        val email = "invalid-email"
+        val password = "ValidPassword123"
+
+        // When
+        viewModel.processAction(LoginUiAction.OnEmailUpdated(email))
+        viewModel.processAction(LoginUiAction.OnPasswordUpdated(password))
+
+        // Then
+        val updatedState = viewModel.uiState.first()
+        assertEquals(
+            expected = false,
+            actual = updatedState.canTryLogin
+        )
+    }
+
+    @Test
+    fun `canTryLogin should be false when password is empty`() = runTest {
+        // Given
+        val email = "user@example.com"
+        val password = ""
+
+        // When
+        viewModel.processAction(LoginUiAction.OnEmailUpdated(email))
+        viewModel.processAction(LoginUiAction.OnPasswordUpdated(password))
+
+        // Then
+        val updatedState = viewModel.uiState.first()
+        assertEquals(
+            expected = false,
+            actual = updatedState.canTryLogin
+        )
+    }
 }
