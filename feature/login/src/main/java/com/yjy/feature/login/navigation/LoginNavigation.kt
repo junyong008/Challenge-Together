@@ -9,7 +9,7 @@ import com.yjy.feature.login.R
 
 typealias LoginStrings = R.string
 
-fun NavGraphBuilder.loginScreen(
+fun NavGraphBuilder.loginNavGraph(
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     composable<Route.Login> {

@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.yjy.challengetogether.ui.ChallengeTogetherAppState
 import com.yjy.core.designsystem.component.SnackbarType
 import com.yjy.core.navigation.Route
-import com.yjy.feature.login.navigation.loginScreen
+import com.yjy.feature.login.navigation.loginNavGraph
 
 @Composable
 fun ChallengeTogetherNavHost(
@@ -21,6 +21,6 @@ fun ChallengeTogetherNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        loginScreen(onShowSnackbar = onShowSnackbar)
+        loginNavGraph(onShowSnackbar = onShowSnackbar)
     }
 }
