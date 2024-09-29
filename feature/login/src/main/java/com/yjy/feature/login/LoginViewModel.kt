@@ -3,6 +3,7 @@ package com.yjy.feature.login
 import androidx.core.util.PatternsCompat.EMAIL_ADDRESS
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yjy.core.common.network.HttpStatusCodes
 import com.yjy.core.common.network.NetworkResult
 import com.yjy.core.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,7 +51,7 @@ class LoginViewModel @Inject constructor(
             val event = when (val result = authRepository.login(email, password)) {
                 is NetworkResult.Success -> LoginUiEvent.LoginSuccess
                 is NetworkResult.Failure.HttpError -> when (result.code) {
-                    404 -> LoginUiEvent.LoginFailure.UserNotFound
+                    HttpStatusCodes.NOT_FOUND -> LoginUiEvent.LoginFailure.UserNotFound
                     else -> LoginUiEvent.LoginFailure.Error
                 }
 

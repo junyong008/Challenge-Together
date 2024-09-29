@@ -214,7 +214,9 @@ private fun EmailTextField(
             if (value.isNotEmpty()) {
                 Icon(
                     painter = painterResource(id = ChallengeTogetherIcons.Cancel),
-                    contentDescription = stringResource(id = LoginStrings.feature_login_input_email_clear_content_description),
+                    contentDescription = stringResource(
+                        id = LoginStrings.feature_login_input_email_clear_content_description,
+                    ),
                     tint = CustomColorProvider.colorScheme.onSurfaceMuted,
                     modifier = Modifier
                         .clip(MaterialTheme.shapes.small)
