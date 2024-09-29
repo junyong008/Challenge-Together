@@ -4,6 +4,10 @@ complexity:
   LongMethod:
     ignoreAnnotated: [ 'Composable' ]
 
+formatting:
+  Filename:
+    active: false
+
 style:
   MagicNumber:
     ignorePropertyDeclaration: true
