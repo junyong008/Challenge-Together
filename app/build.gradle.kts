@@ -1,3 +1,5 @@
+@file:Suppress("INLINE_FROM_HIGHER_PLATFORM")
+
 plugins {
     alias(libs.plugins.custom.android.application)
     alias(libs.plugins.custom.android.application.compose)
@@ -7,38 +9,41 @@ plugins {
 android {
     namespace = "com.yjy.challengetogether"
 
-    defaultConfig {
-        applicationId = "com.yjy.challengetogether_demo"
-        versionCode = 8
-        versionName = "2.0.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
+            manifestPlaceholders += mapOf(
+                "appName" to "@string/app_name_debug",
+            )
+        }
         release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+            isDebuggable = false
+            manifestPlaceholders += mapOf(
+                "appName" to "@string/app_name",
             )
         }
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    buildFeatures {
-        buildConfig = true
-    }
 }
 
 dependencies {
-    implementation(projects.feature.login)
+    implementations(
+        projects.core.designsystem,
 
-    implementation(projects.core.designsystem)
+        projects.feature.login,
 
-    implementation(libs.androidx.core.splashscreen)
-    implementation(libs.timber)
+        libs.androidx.core.splashscreen,
+        libs.androidx.navigation.compose,
+        libs.timber,
+    )
 }
