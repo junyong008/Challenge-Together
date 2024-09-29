@@ -39,6 +39,7 @@ android {
 dependencies {
     implementations(
         projects.core.designsystem,
+        projects.core.navigation,
 
         projects.feature.login,
 

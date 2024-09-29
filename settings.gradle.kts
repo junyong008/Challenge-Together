@@ -30,6 +30,7 @@ include(
     ":core:designsystem",
     ":core:domain",
     ":core:model",
+    ":core:navigation",
     ":core:network",
     ":core:notifications",
     ":core:ui",

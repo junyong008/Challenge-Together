@@ -25,7 +25,9 @@ internal class AndroidFeatureConventionPlugin : BuildLogicConventionPlugin({
     dependencies {
         implementation(project(":core:ui"))
         implementation(project(":core:designsystem"))
+        implementation(project(":core:navigation"))
 
+        implementation(libs.androidx.navigation.compose)
         implementation(libs.androidx.hilt.navigation.compose)
         testImplementation(libs.kotlinx.coroutines.test)
         androidTestImplementation(libs.bundles.androidx.compose.ui.test)
