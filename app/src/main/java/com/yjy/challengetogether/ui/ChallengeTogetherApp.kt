@@ -34,9 +34,9 @@ fun ChallengeTogetherApp(
                         snackbarHostState.showSnackbar(
                             message = message,
                             actionLabel = type.name,
-                            duration = SnackbarDuration.Short
+                            duration = SnackbarDuration.Short,
                         )
-                    }
+                    },
                 )
             }
         }

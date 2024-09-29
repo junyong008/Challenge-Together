@@ -5,5 +5,4 @@ enum class TopLevelDestination(
     val unselectedIcon: Int,
     val iconTextId: Int,
     val route: String,
-) {
-}
+)

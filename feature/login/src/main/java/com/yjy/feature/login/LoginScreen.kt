@@ -103,20 +103,20 @@ internal fun LoginScreen(
         Title(
             title = stringResource(id = LoginStrings.feature_login_title),
             titleDescription = stringResource(id = LoginStrings.feature_login_title_description),
-            modifier = Modifier.align(Alignment.Start)
+            modifier = Modifier.align(Alignment.Start),
         )
         Spacer(modifier = Modifier.height(32.dp))
 
         Box {
             if (uiState.isLoading) {
                 LoadingWheel(
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
                 )
             }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .alpha(if (uiState.isLoading) 0f else 1f)
+                    .alpha(if (uiState.isLoading) 0f else 1f),
             ) {
                 EmailTextField(
                     value = uiState.email,
@@ -129,7 +129,7 @@ internal fun LoginScreen(
                         text = stringResource(id = LoginStrings.feature_login_invalid_email_format),
                         color = CustomColorProvider.colorScheme.red,
                         style = MaterialTheme.typography.labelSmall,
-                        modifier = Modifier.align(Alignment.Start)
+                        modifier = Modifier.align(Alignment.Start),
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -226,7 +226,7 @@ private fun EmailTextField(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
         ),
-        placeholderText = stringResource(id = LoginStrings.feature_login_input_email_place_holder,),
+        placeholderText = stringResource(id = LoginStrings.feature_login_input_email_place_holder),
         modifier = modifier
             .onFocusChanged { focusState ->
                 if (!focusState.isFocused) {
@@ -262,7 +262,7 @@ private fun PasswordTextField(
                             ChallengeTogetherIcons.VisibilityOff
                         } else {
                             ChallengeTogetherIcons.Visibility
-                        }
+                        },
                     ),
                     contentDescription = if (shouldHidePassword) {
                         stringResource(id = LoginStrings.feature_login_input_password_show_content_description)
@@ -333,7 +333,7 @@ private fun FindPasswordAndSignUp(
             text = "|",
             color = CustomColorProvider.colorScheme.onBackground,
             style = MaterialTheme.typography.labelSmall,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier.padding(horizontal = 8.dp),
         )
         ClickableText(
             text = stringResource(id = LoginStrings.feature_login_sign_up),
@@ -346,13 +346,13 @@ private fun FindPasswordAndSignUp(
 private fun SNSLoginDivider() {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier
                 .weight(1f)
                 .height(1.dp)
-                .background(CustomColorProvider.colorScheme.onBackground)
+                .background(CustomColorProvider.colorScheme.onBackground),
         )
         Text(
             text = stringResource(id = LoginStrings.feature_login_social_login_text),
@@ -366,7 +366,7 @@ private fun SNSLoginDivider() {
             modifier = Modifier
                 .weight(1f)
                 .height(1.dp)
-                .background(CustomColorProvider.colorScheme.onBackground)
+                .background(CustomColorProvider.colorScheme.onBackground),
         )
     }
 }
@@ -375,14 +375,14 @@ private fun SNSLoginDivider() {
 private fun SNSLoginButtons(
     onKakaoLoginClick: () -> Unit,
     onGoogleLoginClick: () -> Unit,
-    onNaverLoginClick: () -> Unit
+    onNaverLoginClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier

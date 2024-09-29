@@ -1,18 +1,23 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     `kotlin-dsl`
+    kotlin("jvm") version libs.versions.kotlin.get()
+    alias(libs.plugins.gradle.dependency.handler.extensions)
+}
+
+repositories {
+    google()
+    mavenCentral()
+    gradlePluginPortal()
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
-    }
+    jvmToolchain(17)
 }
 
 dependencies {
@@ -21,6 +26,8 @@ dependencies {
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.room.gradlePlugin)
+
+    compileOnly(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
 }
 
 tasks {
@@ -31,34 +38,27 @@ tasks {
 }
 
 gradlePlugin {
+    val conventionPluginClasses = listOf(
+        "android.application" to "AndroidApplicationConventionPlugin",
+        "android.application.compose" to "AndroidApplicationComposeConventionPlugin",
+        "android.library" to "AndroidLibraryConventionPlugin",
+        "android.library.compose" to "AndroidLibraryComposeConventionPlugin",
+        "android.feature" to "AndroidFeatureConventionPlugin",
+        "android.hilt" to "AndroidHiltConventionPlugin",
+        "android.room" to "AndroidRoomConventionPlugin",
+    )
+
     plugins {
-        register("androidApplicationCompose") {
-            id = "custom.android.application.compose"
-            implementationClass = "AndroidApplicationComposeConventionPlugin"
+        conventionPluginClasses.forEach { pluginClass ->
+            pluginRegister(pluginClass)
         }
-        register("androidApplication") {
-            id = "custom.android.application"
-            implementationClass = "AndroidApplicationConventionPlugin"
-        }
-        register("androidLibraryCompose") {
-            id = "custom.android.library.compose"
-            implementationClass = "AndroidLibraryComposeConventionPlugin"
-        }
-        register("androidLibrary") {
-            id = "custom.android.library"
-            implementationClass = "AndroidLibraryConventionPlugin"
-        }
-        register("androidRoom") {
-            id = "custom.android.room"
-            implementationClass = "AndroidRoomConventionPlugin"
-        }
-        register("androidFeature") {
-            id = "custom.android.feature"
-            implementationClass = "AndroidFeatureConventionPlugin"
-        }
-        register("androidHilt") {
-            id = "custom.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
-        }
+    }
+}
+
+fun NamedDomainObjectContainer<PluginDeclaration>.pluginRegister(data: Pair<String, String>) {
+    val (pluginName, className) = data
+    register(pluginName) {
+        id = "custom.$pluginName"
+        implementationClass = className
     }
 }

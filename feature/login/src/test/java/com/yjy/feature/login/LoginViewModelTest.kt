@@ -45,7 +45,7 @@ class LoginViewModelTest {
         // Then
         assertEquals(
             expected = LoginUiEvent.LoginSuccess,
-            actual = viewModel.uiEvent.first()
+            actual = viewModel.uiEvent.first(),
         )
     }
 
@@ -65,7 +65,7 @@ class LoginViewModelTest {
         // Then
         assertEquals(
             expected = LoginUiEvent.LoginFailure.UserNotFound,
-            actual = viewModel.uiEvent.first()
+            actual = viewModel.uiEvent.first(),
         )
     }
 
@@ -85,7 +85,7 @@ class LoginViewModelTest {
         // Then
         assertEquals(
             expected = LoginUiEvent.LoginFailure.Error,
-            actual = viewModel.uiEvent.first()
+            actual = viewModel.uiEvent.first(),
         )
     }
 
@@ -101,11 +101,11 @@ class LoginViewModelTest {
         val updatedState = viewModel.uiState.first()
         assertEquals(
             expected = email,
-            actual = updatedState.email
+            actual = updatedState.email,
         )
         assertEquals(
             expected = true,
-            actual = updatedState.isValidEmailFormat
+            actual = updatedState.isValidEmailFormat,
         )
     }
 
@@ -121,7 +121,7 @@ class LoginViewModelTest {
         val updatedState = viewModel.uiState.first()
         assertEquals(
             expected = password,
-            actual = updatedState.password
+            actual = updatedState.password,
         )
     }
 
@@ -139,7 +139,7 @@ class LoginViewModelTest {
         val updatedState = viewModel.uiState.first()
         assertEquals(
             expected = true,
-            actual = updatedState.canTryLogin
+            actual = updatedState.canTryLogin,
         )
     }
 
@@ -157,7 +157,7 @@ class LoginViewModelTest {
         val updatedState = viewModel.uiState.first()
         assertEquals(
             expected = false,
-            actual = updatedState.canTryLogin
+            actual = updatedState.canTryLogin,
         )
     }
 
@@ -175,7 +175,7 @@ class LoginViewModelTest {
         val updatedState = viewModel.uiState.first()
         assertEquals(
             expected = false,
-            actual = updatedState.canTryLogin
+            actual = updatedState.canTryLogin,
         )
     }
 }

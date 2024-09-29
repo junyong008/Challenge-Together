@@ -1,34 +1,30 @@
 
-import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.LibraryExtension
+import com.yjy.convention.Plugins
+import com.yjy.convention.applyPlugins
 import com.yjy.convention.configureKotlinAndroid
-import com.yjy.convention.disableUnnecessaryAndroidTests
+import com.yjy.convention.implementation
 import com.yjy.convention.libs
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.apply
+import com.yjy.convention.testImplementation
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.kotlin
 
-class AndroidLibraryConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            apply(plugin = "com.android.library")
-            apply(plugin = "org.jetbrains.kotlin.android")
+internal class AndroidLibraryConventionPlugin : BuildLogicConventionPlugin({
 
-            extensions.configure<LibraryExtension> {
-                configureKotlinAndroid(this)
-                defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            }
-            extensions.configure<LibraryAndroidComponentsExtension> {
-                disableUnnecessaryAndroidTests(target)
-            }
-            dependencies {
-                add("testImplementation", kotlin("test"))
-                add("testImplementation", libs.findLibrary("mockk").get())
-                add("implementation", libs.findLibrary("timber").get())
-            }
+    applyPlugins(Plugins.ANDROID_LIBRARY, Plugins.KOTLIN_ANDROID)
+
+    extensions.configure<LibraryExtension> {
+        configureKotlinAndroid(this)
+
+        defaultConfig.apply {
+            targetSdk = libs.versions.targetSdk.get().toInt()
         }
     }
-}
+
+    dependencies {
+        testImplementation(kotlin("test"))
+        testImplementation(libs.mockk)
+        implementation(libs.timber)
+    }
+})

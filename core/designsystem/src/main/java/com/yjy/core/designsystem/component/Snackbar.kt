@@ -40,9 +40,9 @@ fun CustomSnackbarHost(
 
             ChallengeTogetherSnackbar(
                 snackbarType = snackbarType,
-                message = snackbarData.visuals.message
+                message = snackbarData.visuals.message,
             )
-        }
+        },
     )
 }
 
@@ -57,14 +57,14 @@ fun ChallengeTogetherSnackbar(
             .clip(MaterialTheme.shapes.extraLarge)
             .background(color = CustomColorProvider.colorScheme.snackbar.copy(alpha = 0.8f))
             .heightIn(min = 0.dp, max = 100.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterStart)
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp),
         ) {
             when (snackbarType) {
                 SnackbarType.SUCCESS -> LottieImage(
@@ -88,7 +88,7 @@ fun ChallengeTogetherSnackbar(
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
-                    .padding(vertical = 20.dp)
+                    .padding(vertical = 20.dp),
             )
         }
     }

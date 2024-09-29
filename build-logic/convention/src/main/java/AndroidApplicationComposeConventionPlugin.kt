@@ -1,18 +1,15 @@
+
 import com.android.build.api.dsl.ApplicationExtension
+import com.yjy.convention.Plugins
+import com.yjy.convention.applyPlugins
 import com.yjy.convention.configureAndroidCompose
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.configure
 
-class AndroidApplicationComposeConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            apply(plugin = "com.android.application")
-            apply(plugin = "org.jetbrains.kotlin.plugin.compose")
+internal class AndroidApplicationComposeConventionPlugin : BuildLogicConventionPlugin({
 
-            val extension = extensions.getByType<ApplicationExtension>()
-            configureAndroidCompose(extension)
-        }
+    applyPlugins(Plugins.ANDROID_APPLICATION, Plugins.COMPOSE_COMPILER)
+
+    extensions.configure<ApplicationExtension> {
+        configureAndroidCompose(this)
     }
-}
+})

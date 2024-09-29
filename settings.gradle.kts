@@ -1,17 +1,15 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+
 pluginManagement {
     includeBuild("build-logic")
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
+        google()
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -22,17 +20,19 @@ dependencyResolutionManagement {
 
 rootProject.name = "ChallengeTogether"
 
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-include(":app")
-include(":core:common")
-include(":core:data")
-include(":core:database")
-include(":core:datastore")
-include(":core:designsystem")
-include(":core:domain")
-include(":core:model")
-include(":core:network")
-include(":core:notifications")
-include(":core:ui")
+include(
+    ":app",
 
-include(":feature:login")
+    ":core:common",
+    ":core:data",
+    ":core:database",
+    ":core:datastore",
+    ":core:designsystem",
+    ":core:domain",
+    ":core:model",
+    ":core:network",
+    ":core:notifications",
+    ":core:ui",
+
+    ":feature:login",
+)

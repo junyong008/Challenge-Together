@@ -1,18 +1,15 @@
+
 import com.android.build.gradle.LibraryExtension
+import com.yjy.convention.Plugins
+import com.yjy.convention.applyPlugins
 import com.yjy.convention.configureAndroidCompose
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.configure
 
-class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            apply(plugin = "com.android.library")
-            apply(plugin = "org.jetbrains.kotlin.plugin.compose")
+internal class AndroidLibraryComposeConventionPlugin : BuildLogicConventionPlugin({
 
-            val extension = extensions.getByType<LibraryExtension>()
-            configureAndroidCompose(extension)
-        }
+    applyPlugins(Plugins.ANDROID_LIBRARY, Plugins.COMPOSE_COMPILER)
+
+    extensions.configure<LibraryExtension> {
+        configureAndroidCompose(this)
     }
-}
+})

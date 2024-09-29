@@ -69,7 +69,7 @@ class LoginViewModel @Inject constructor(
             it.copy(
                 email = email,
                 isValidEmailFormat = isValidEmail(email),
-                canTryLogin = canLogin(email, it.password)
+                canTryLogin = canLogin(email, it.password),
             )
         }
     }
@@ -78,7 +78,7 @@ class LoginViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 password = password,
-                canTryLogin = canLogin(it.email, password)
+                canTryLogin = canLogin(it.email, password),
             )
         }
     }

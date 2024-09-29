@@ -8,7 +8,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 
 private fun debugColors(
-    debugColor: Color = Color.Magenta
+    debugColor: Color = Color.Magenta,
 ) = ColorScheme(
     primary = debugColor,
     onPrimary = debugColor,

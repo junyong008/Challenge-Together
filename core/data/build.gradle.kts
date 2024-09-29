@@ -1,3 +1,5 @@
+@file:Suppress("INLINE_FROM_HIGHER_PLATFORM")
+
 plugins {
     alias(libs.plugins.custom.android.library)
     alias(libs.plugins.custom.android.hilt)
@@ -8,5 +10,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.common)
+    implementations(
+        projects.core.common,
+    )
 }

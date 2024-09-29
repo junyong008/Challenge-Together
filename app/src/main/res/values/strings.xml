@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Challenge Together</string>
+    <string name="app_name_debug">Debug Challenge Together</string>
 </resources>

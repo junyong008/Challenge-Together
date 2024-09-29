@@ -54,11 +54,11 @@ fun ChallengeTogetherTextField(
             .background(backgroundColor, shape = shape)
             .border(1.dp, borderColor, shape = shape)
             .padding(horizontal = 16.dp, vertical = 12.dp),
-        contentAlignment = Alignment.CenterStart
+        contentAlignment = Alignment.CenterStart,
     ) {
         if (leadingIcon != null) {
             Box(
-                modifier = Modifier.align(Alignment.CenterStart)
+                modifier = Modifier.align(Alignment.CenterStart),
             ) {
                 leadingIcon()
             }
@@ -68,7 +68,7 @@ fun ChallengeTogetherTextField(
             LocalTextSelectionColors provides TextSelectionColors(
                 handleColor = CustomColorProvider.colorScheme.brandBright,
                 backgroundColor = CustomColorProvider.colorScheme.brandBright.copy(alpha = 0.5f),
-            )
+            ),
         ) {
             BasicTextField(
                 value = value,
@@ -89,7 +89,7 @@ fun ChallengeTogetherTextField(
                     .padding(
                         start = if (leadingIcon != null) 36.dp else 0.dp,
                         end = if (trailingIcon != null) 36.dp else 0.dp,
-                    )
+                    ),
             ) { innerTextField ->
                 if (value.isEmpty()) {
                     Text(
@@ -97,7 +97,7 @@ fun ChallengeTogetherTextField(
                         style = MaterialTheme.typography.labelMedium.copy(color = placeholderColor),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .align(Alignment.CenterStart)
+                            .align(Alignment.CenterStart),
                     )
                 }
                 innerTextField()
@@ -106,7 +106,7 @@ fun ChallengeTogetherTextField(
 
         if (trailingIcon != null) {
             Box(
-                modifier = Modifier.align(Alignment.CenterEnd)
+                modifier = Modifier.align(Alignment.CenterEnd),
             ) {
                 trailingIcon()
             }
@@ -126,19 +126,19 @@ fun ChallengeTogetherTextFieldPreview() {
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = ChallengeTogetherIcons.Lock),
-                        contentDescription = "Lock Icon"
+                        contentDescription = "Lock Icon",
                     )
                 },
                 trailingIcon = {
                     Icon(
                         painter = painterResource(id = ChallengeTogetherIcons.Visibility),
-                        contentDescription = "Visibility Icon"
+                        contentDescription = "Visibility Icon",
                     )
                 },
                 singleLine = true,
                 modifier = Modifier
                     .padding(16.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             )
         }
     }

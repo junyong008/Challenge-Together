@@ -15,7 +15,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 @Composable
 fun StableImage(
     @DrawableRes drawableResId: Int,
-    description : String,
+    description: String,
     modifier: Modifier = Modifier,
 ) {
     val painter = painterResource(id = drawableResId)
@@ -30,16 +30,16 @@ fun StableImage(
 fun LottieImage(
     modifier: Modifier = Modifier,
     animationResId: Int,
-    repeatCount: Int = LottieConstants.IterateForever
+    repeatCount: Int = LottieConstants.IterateForever,
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(animationResId))
     val progress by animateLottieCompositionAsState(
         composition = composition,
-        iterations = repeatCount
+        iterations = repeatCount,
     )
     LottieAnimation(
         composition = composition,
         progress = { progress },
-        modifier = modifier
+        modifier = modifier,
     )
 }

@@ -27,7 +27,7 @@ class LoginScreenTest {
         // When
         composeTestRule.setContent {
             LoginScreen(
-                uiState = uiState
+                uiState = uiState,
             )
         }
 
@@ -71,7 +71,7 @@ class LoginScreenTest {
                     isSnackbarTriggered = true
                     snackbarType = type
                     snackbarMessage = message
-                }
+                },
             )
         }
 
@@ -97,7 +97,7 @@ class LoginScreenTest {
                     isSnackbarTriggered = true
                     snackbarType = type
                     snackbarMessage = message
-                }
+                },
             )
         }
 

@@ -31,7 +31,7 @@ fun ClickableText(
         text = text,
         color = color,
         style = style.copy(
-            textDecoration = TextDecoration.Underline
+            textDecoration = TextDecoration.Underline,
         ),
         textAlign = textAlign,
         modifier = modifier
@@ -39,8 +39,8 @@ fun ClickableText(
             .clickable(
                 onClick = onClick,
                 interactionSource = interactionSource,
-                indication = LocalIndication.current
+                indication = LocalIndication.current,
             )
-            .padding(8.dp)
+            .padding(8.dp),
     )
 }
