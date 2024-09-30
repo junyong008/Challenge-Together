@@ -3,9 +3,14 @@ package com.yjy.feature.login
 import androidx.core.util.PatternsCompat.EMAIL_ADDRESS
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yjy.core.common.constants.AuthConst.MAX_EMAIL_LENGTH
+import com.yjy.core.common.constants.AuthConst.MAX_PASSWORD_LENGTH
 import com.yjy.core.common.network.HttpStatusCodes
 import com.yjy.core.common.network.NetworkResult
 import com.yjy.core.data.repository.AuthRepository
+import com.yjy.feature.login.model.LoginUiAction
+import com.yjy.feature.login.model.LoginUiEvent
+import com.yjy.feature.login.model.LoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -34,7 +39,7 @@ class LoginViewModel @Inject constructor(
             is LoginUiAction.OnPasswordUpdated -> updatePassword(action.password)
             is LoginUiAction.OnLoginClick -> login(action.email, action.password)
             is LoginUiAction.OnFindPasswordClick -> {}
-            is LoginUiAction.OnSignUpClick -> {}
+            is LoginUiAction.OnSignUpClick -> navigateToSignUp()
             is LoginUiAction.OnKakaoLoginClick -> {}
             is LoginUiAction.OnGoogleLoginClick -> {}
             is LoginUiAction.OnNaverLoginClick -> {}
@@ -67,10 +72,15 @@ class LoginViewModel @Inject constructor(
     private fun updateEmail(email: String) {
         if (email.length > MAX_EMAIL_LENGTH) return
         _uiState.update {
+            val isValidEmailFormat = EMAIL_ADDRESS.matcher(email).matches()
+
             it.copy(
                 email = email,
-                isValidEmailFormat = isValidEmail(email),
-                canTryLogin = canLogin(email, it.password),
+                isValidEmailFormat = isValidEmailFormat,
+                canTryLogin = canLogin(
+                    email = email,
+                    isValidEmailFormat = isValidEmailFormat,
+                ),
             )
         }
     }
@@ -80,24 +90,26 @@ class LoginViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 password = password,
-                canTryLogin = canLogin(it.email, password),
+                canTryLogin = canLogin(password = password),
             )
         }
     }
 
-    private fun canLogin(email: String, password: String): Boolean =
-        email.isNotEmpty() && password.isNotEmpty() && isValidEmail(email)
+    private fun canLogin(
+        email: String = uiState.value.email,
+        password: String = uiState.value.password,
+        isValidEmailFormat: Boolean = uiState.value.isValidEmailFormat,
+    ): Boolean = email.isNotEmpty() && password.isNotEmpty() && isValidEmailFormat
 
-    private fun isValidEmail(email: String): Boolean = EMAIL_ADDRESS.matcher(email).matches()
+    private fun navigateToSignUp() {
+        viewModelScope.launch {
+            _uiEvent.send(LoginUiEvent.NavigateToSignUp)
+        }
+    }
 
     private fun sendEvent(event: LoginUiEvent) {
         viewModelScope.launch {
             _uiEvent.send(event)
         }
-    }
-
-    companion object {
-        private const val MAX_EMAIL_LENGTH = 25
-        private const val MAX_PASSWORD_LENGTH = 20
     }
 }

@@ -1,4 +1,4 @@
-package com.yjy.feature.login
+package com.yjy.feature.login.model
 
 sealed interface LoginUiAction {
     data class OnEmailUpdated(val email: String) : LoginUiAction

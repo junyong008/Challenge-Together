@@ -84,7 +84,7 @@ fun ChallengeTogetherTextField(
                     .align(Alignment.CenterStart)
                     .onGloballyPositioned { coordinates ->
                         leadingIconsWidth = with(density) { coordinates.size.width.toDp() }
-                    }
+                    },
             ) {
                 leadingIcon()
             }
@@ -135,7 +135,7 @@ fun ChallengeTogetherTextField(
                 modifier = Modifier.align(Alignment.CenterEnd)
                     .onGloballyPositioned { coordinates ->
                         trailingIconsWidth = with(density) { coordinates.size.width.toDp() }
-                    }
+                    },
             ) {
                 trailingIcon()
             }

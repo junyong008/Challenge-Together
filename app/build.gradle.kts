@@ -42,6 +42,7 @@ dependencies {
         projects.core.navigation,
 
         projects.feature.login,
+        projects.feature.signup,
 
         libs.androidx.core.splashscreen,
         libs.androidx.navigation.compose,

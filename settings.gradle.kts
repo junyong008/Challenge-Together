@@ -36,4 +36,5 @@ include(
     ":core:ui",
 
     ":feature:login",
+    ":feature:signup",
 )

@@ -48,6 +48,9 @@ import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.core.designsystem.theme.CustomColorProvider
 import com.yjy.core.ui.DevicePreviews
+import com.yjy.feature.login.model.LoginUiAction
+import com.yjy.feature.login.model.LoginUiEvent
+import com.yjy.feature.login.model.LoginUiState
 import com.yjy.feature.login.navigation.LoginStrings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -55,6 +58,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun LoginRoute(
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
+    navigateToSignUp: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
@@ -65,6 +69,7 @@ internal fun LoginRoute(
         uiState = uiState,
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
+        navigateToSignUp = navigateToSignUp,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -75,6 +80,7 @@ internal fun LoginScreen(
     uiState: LoginUiState = LoginUiState(),
     uiEvent: Flow<LoginUiEvent> = flowOf(),
     processAction: (LoginUiAction) -> Unit = {},
+    navigateToSignUp: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val userNotFoundMessage = stringResource(id = LoginStrings.feature_login_user_not_found)
@@ -85,6 +91,7 @@ internal fun LoginScreen(
             is LoginUiEvent.LoginSuccess -> {}
             is LoginUiEvent.LoginFailure.UserNotFound -> onShowSnackbar(SnackbarType.ERROR, userNotFoundMessage)
             is LoginUiEvent.LoginFailure.Error -> onShowSnackbar(SnackbarType.ERROR, loginErrorMessage)
+            is LoginUiEvent.NavigateToSignUp -> navigateToSignUp()
         }
     }
 
@@ -272,7 +279,7 @@ private fun SNSLoginDivider() {
         Box(
             modifier = Modifier
                 .weight(1f)
-                .height(1.dp)
+                .height(0.5.dp)
                 .background(CustomColorProvider.colorScheme.onBackground),
         )
         Text(
@@ -286,7 +293,7 @@ private fun SNSLoginDivider() {
         Box(
             modifier = Modifier
                 .weight(1f)
-                .height(1.dp)
+                .height(0.5.dp)
                 .background(CustomColorProvider.colorScheme.onBackground),
         )
     }
@@ -316,7 +323,7 @@ private fun SNSLoginButtons(
             contentAlignment = Alignment.Center,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_kakao),
+                painter = painterResource(id = ChallengeTogetherIcons.Kakao),
                 contentDescription = stringResource(id = LoginStrings.feature_login_kakao_content_description),
             )
         }
@@ -332,7 +339,7 @@ private fun SNSLoginButtons(
             contentAlignment = Alignment.Center,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_google),
+                painter = painterResource(id = ChallengeTogetherIcons.Google),
                 contentDescription = stringResource(id = LoginStrings.feature_login_google_content_description),
             )
         }
@@ -348,7 +355,7 @@ private fun SNSLoginButtons(
             contentAlignment = Alignment.Center,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_naver),
+                painter = painterResource(id = ChallengeTogetherIcons.Naver),
                 contentDescription = stringResource(id = LoginStrings.feature_login_naver_content_description),
             )
         }

@@ -1,0 +1,10 @@
+<resources>
+    <string name="feature_signup_title">Sign Up</string>
+    <string name="feature_signup_description">Please enter the email and password you will use to log in.\nThe email can be used later to recover your password.</string>
+    <string name="feature_signup_input_email_place_holder">Email</string>
+    <string name="feature_signup_email_format_indicator">Email must be in valid format</string>
+    <string name="feature_signup_password_length_indicator">Password must be at least %1$d characters long</string>
+    <string name="feature_signup_password_number_indicator">Password must contain at least one number</string>
+    <string name="feature_signup_input_password_place_holder">Password</string>
+    <string name="feature_signup_next">Next</string>
+</resources>

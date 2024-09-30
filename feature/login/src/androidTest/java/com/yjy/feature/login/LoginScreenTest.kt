@@ -8,6 +8,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.yjy.core.designsystem.component.SnackbarType
+import com.yjy.feature.login.model.LoginUiEvent
+import com.yjy.feature.login.model.LoginUiState
 import com.yjy.feature.login.navigation.LoginStrings
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert.assertEquals

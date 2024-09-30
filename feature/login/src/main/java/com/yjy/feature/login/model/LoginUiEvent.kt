@@ -1,4 +1,4 @@
-package com.yjy.feature.login
+package com.yjy.feature.login.model
 
 sealed interface LoginUiEvent {
     data object LoginSuccess : LoginUiEvent
@@ -7,4 +7,6 @@ sealed interface LoginUiEvent {
         data object UserNotFound : LoginFailure()
         data object Error : LoginFailure()
     }
+
+    data object NavigateToSignUp : LoginUiEvent
 }
