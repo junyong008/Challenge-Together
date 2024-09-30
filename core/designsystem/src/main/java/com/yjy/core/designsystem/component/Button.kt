@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.core.designsystem.theme.CustomColorProvider
@@ -18,6 +19,7 @@ fun ChallengeTogetherButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    shape: Shape = MaterialTheme.shapes.medium,
     containerColor: Color = CustomColorProvider.colorScheme.brandDim,
     contentColor: Color = CustomColorProvider.colorScheme.onBrandDim,
     content: @Composable RowScope.() -> Unit,
@@ -32,7 +34,7 @@ fun ChallengeTogetherButton(
             disabledContainerColor = CustomColorProvider.colorScheme.disable,
             disabledContentColor = CustomColorProvider.colorScheme.onDisable,
         ),
-        shape = MaterialTheme.shapes.medium,
+        shape = shape,
         content = content,
     )
 }

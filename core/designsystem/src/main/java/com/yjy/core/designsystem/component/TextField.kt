@@ -22,8 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
@@ -42,6 +44,8 @@ fun ChallengeTogetherTextField(
     maxLines: Int = Int.MAX_VALUE,
     placeholderText: String = "",
     shape: Shape = MaterialTheme.shapes.medium,
+    textStyle: TextStyle = MaterialTheme.typography.labelMedium.copy(color = CustomColorProvider.colorScheme.onSurface),
+    textAlign: TextAlign = TextAlign.Start,
     textColor: Color = CustomColorProvider.colorScheme.onSurface,
     placeholderColor: Color = CustomColorProvider.colorScheme.onSurface.copy(alpha = 0.2f),
     borderColor: Color = Color.Transparent,
@@ -77,7 +81,7 @@ fun ChallengeTogetherTextField(
                 maxLines = maxLines,
                 keyboardOptions = keyboardOptions,
                 keyboardActions = keyboardActions,
-                textStyle = MaterialTheme.typography.labelMedium.copy(color = textColor),
+                textStyle = textStyle.copy(color = textColor, textAlign = textAlign),
                 cursorBrush = SolidColor(CustomColorProvider.colorScheme.brand),
                 visualTransformation = if (shouldHidePassword) {
                     PasswordVisualTransformation()
@@ -94,7 +98,7 @@ fun ChallengeTogetherTextField(
                 if (value.isEmpty()) {
                     Text(
                         text = placeholderText,
-                        style = MaterialTheme.typography.labelMedium.copy(color = placeholderColor),
+                        style = textStyle.copy(color = placeholderColor, textAlign = textAlign), // 플레이스홀더에도 정렬 적용
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.CenterStart),
