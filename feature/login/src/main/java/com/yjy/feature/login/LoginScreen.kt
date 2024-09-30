@@ -23,9 +23,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -42,9 +39,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.core.common.ui.ObserveAsEvents
 import com.yjy.core.designsystem.component.ChallengeTogetherBackground
 import com.yjy.core.designsystem.component.ChallengeTogetherButton
-import com.yjy.core.designsystem.component.ChallengeTogetherTextField
 import com.yjy.core.designsystem.component.ClickableText
 import com.yjy.core.designsystem.component.LoadingWheel
+import com.yjy.core.designsystem.component.PasswordTextField
+import com.yjy.core.designsystem.component.SingleLineTextField
 import com.yjy.core.designsystem.component.SnackbarType
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
@@ -117,7 +115,7 @@ internal fun LoginScreen(
                     .fillMaxWidth()
                     .alpha(if (uiState.isLoading) 0f else 1f),
             ) {
-                EmailTextField(
+                LoginEmailTextField(
                     value = uiState.email,
                     onValueChange = { processAction(LoginUiAction.OnEmailUpdated(it)) },
                 )
@@ -131,7 +129,7 @@ internal fun LoginScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                PasswordTextField(
+                LoginPasswordTextField(
                     value = uiState.password,
                     onValueChange = { processAction(LoginUiAction.OnPasswordUpdated(it)) },
                 )
@@ -192,11 +190,11 @@ private fun Title(
 }
 
 @Composable
-private fun EmailTextField(
+private fun LoginEmailTextField(
     value: String,
     onValueChange: (String) -> Unit,
 ) {
-    LoginTextField(
+    SingleLineTextField(
         value = value,
         onValueChange = onValueChange,
         leadingIcon = {
@@ -205,20 +203,6 @@ private fun EmailTextField(
                 contentDescription = stringResource(id = LoginStrings.feature_login_input_email_content_description),
                 tint = CustomColorProvider.colorScheme.onSurface,
             )
-        },
-        trailingIcon = {
-            if (value.isNotEmpty()) {
-                Icon(
-                    painter = painterResource(id = ChallengeTogetherIcons.Cancel),
-                    contentDescription = stringResource(
-                        id = LoginStrings.feature_login_input_email_clear_content_description,
-                    ),
-                    tint = CustomColorProvider.colorScheme.onSurfaceMuted,
-                    modifier = Modifier
-                        .clip(MaterialTheme.shapes.small)
-                        .clickable { onValueChange("") },
-                )
-            }
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
@@ -229,13 +213,11 @@ private fun EmailTextField(
 }
 
 @Composable
-private fun PasswordTextField(
+private fun LoginPasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
 ) {
-    var shouldHidePassword by rememberSaveable { mutableStateOf(true) }
-
-    LoginTextField(
+    PasswordTextField(
         value = value,
         onValueChange = onValueChange,
         leadingIcon = {
@@ -245,59 +227,11 @@ private fun PasswordTextField(
                 tint = CustomColorProvider.colorScheme.onSurface,
             )
         },
-        trailingIcon = {
-            if (value.isNotEmpty()) {
-                Icon(
-                    painter = painterResource(
-                        id = if (shouldHidePassword) {
-                            ChallengeTogetherIcons.VisibilityOff
-                        } else {
-                            ChallengeTogetherIcons.Visibility
-                        },
-                    ),
-                    contentDescription = if (shouldHidePassword) {
-                        stringResource(id = LoginStrings.feature_login_input_password_show_content_description)
-                    } else {
-                        stringResource(id = LoginStrings.feature_login_input_password_hide_content_description)
-                    },
-                    tint = CustomColorProvider.colorScheme.onSurfaceMuted,
-                    modifier = Modifier
-                        .clip(MaterialTheme.shapes.small)
-                        .clickable {
-                            shouldHidePassword = !shouldHidePassword
-                        },
-                )
-            }
-        },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done,
         ),
         placeholderText = stringResource(id = LoginStrings.feature_login_input_password_place_holder),
-        shouldHidePassword = shouldHidePassword,
-    )
-}
-
-@Composable
-private fun LoginTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    leadingIcon: @Composable () -> Unit,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    keyboardOptions: KeyboardOptions,
-    placeholderText: String,
-    shouldHidePassword: Boolean = false,
-) {
-    ChallengeTogetherTextField(
-        value = value,
-        onValueChange = onValueChange,
-        leadingIcon = leadingIcon,
-        trailingIcon = trailingIcon,
-        keyboardOptions = keyboardOptions,
-        singleLine = true,
-        maxLines = 1,
-        shouldHidePassword = shouldHidePassword,
-        placeholderText = placeholderText,
     )
 }
 
