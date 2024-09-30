@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -121,7 +120,6 @@ internal fun LoginScreen(
                 EmailTextField(
                     value = uiState.email,
                     onValueChange = { processAction(LoginUiAction.OnEmailUpdated(it)) },
-                    onSubmit = { processAction(LoginUiAction.OnEmailSubmit(it)) },
                 )
                 if (!uiState.isValidEmailFormat) {
                     Spacer(modifier = Modifier.height(4.dp))
@@ -197,8 +195,6 @@ private fun Title(
 private fun EmailTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    onSubmit: (String) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     LoginTextField(
         value = value,
@@ -229,12 +225,6 @@ private fun EmailTextField(
             imeAction = ImeAction.Next,
         ),
         placeholderText = stringResource(id = LoginStrings.feature_login_input_email_place_holder),
-        modifier = modifier
-            .onFocusChanged { focusState ->
-                if (!focusState.isFocused) {
-                    onSubmit(value)
-                }
-            },
     )
 }
 
@@ -242,7 +232,6 @@ private fun EmailTextField(
 private fun PasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     var shouldHidePassword by rememberSaveable { mutableStateOf(true) }
 
@@ -286,7 +275,6 @@ private fun PasswordTextField(
         ),
         placeholderText = stringResource(id = LoginStrings.feature_login_input_password_place_holder),
         shouldHidePassword = shouldHidePassword,
-        modifier = modifier,
     )
 }
 
@@ -294,7 +282,6 @@ private fun PasswordTextField(
 private fun LoginTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
     leadingIcon: @Composable () -> Unit,
     trailingIcon: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions,
@@ -311,8 +298,6 @@ private fun LoginTextField(
         maxLines = 1,
         shouldHidePassword = shouldHidePassword,
         placeholderText = placeholderText,
-        backgroundColor = CustomColorProvider.colorScheme.surface,
-        modifier = modifier.height(50.dp),
     )
 }
 

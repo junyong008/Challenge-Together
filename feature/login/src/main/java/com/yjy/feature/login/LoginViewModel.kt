@@ -30,7 +30,6 @@ class LoginViewModel @Inject constructor(
 
     fun processAction(action: LoginUiAction) {
         when (action) {
-            is LoginUiAction.OnEmailSubmit -> {}
             is LoginUiAction.OnEmailUpdated -> updateEmail(action.email)
             is LoginUiAction.OnPasswordUpdated -> updatePassword(action.password)
             is LoginUiAction.OnLoginClick -> login(action.email, action.password)
