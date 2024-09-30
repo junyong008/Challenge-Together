@@ -65,6 +65,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun updateEmail(email: String) {
+        if (email.length > MAX_EMAIL_LENGTH) return
         _uiState.update {
             it.copy(
                 email = email,
@@ -75,6 +76,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun updatePassword(password: String) {
+        if (password.length > MAX_PASSWORD_LENGTH) return
         _uiState.update {
             it.copy(
                 password = password,
@@ -92,5 +94,10 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             _uiEvent.send(event)
         }
+    }
+
+    companion object {
+        private const val MAX_EMAIL_LENGTH = 25
+        private const val MAX_PASSWORD_LENGTH = 20
     }
 }
