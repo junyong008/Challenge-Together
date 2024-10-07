@@ -32,6 +32,7 @@ import com.yjy.core.designsystem.component.ChallengeTogetherBottomAppBar
 import com.yjy.core.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.core.designsystem.component.PasswordTextField
 import com.yjy.core.designsystem.component.SingleLineTextField
+import com.yjy.core.designsystem.component.SnackbarType
 import com.yjy.core.designsystem.component.TitleWithDescription
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
@@ -47,6 +48,8 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun EmailPasswordRoute(
     onBackClick: () -> Unit,
+    onContinue: () -> Unit,
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignUpViewModel = hiltViewModel(),
 ) {
@@ -58,6 +61,8 @@ internal fun EmailPasswordRoute(
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
+        onContinue = onContinue,
+        onShowSnackbar = onShowSnackbar,
     )
 }
 
@@ -68,11 +73,18 @@ internal fun EmailPasswordScreen(
     uiEvent: Flow<SignUpUiEvent> = flowOf(),
     processAction: (SignUpUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
+    onContinue: () -> Unit = {},
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val duplicatedEmailMessage = stringResource(id = SignUpStrings.feature_signup_email_already_registered)
+    val errorMessage = stringResource(id = SignUpStrings.feature_signup_error)
+
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is SignUpUiEvent.NavigateBack -> onBackClick()
-            is SignUpUiEvent.NavigateToSignUpNickname -> {}
+            is SignUpUiEvent.EmailPasswordVerified -> onContinue()
+            is SignUpUiEvent.EmailPasswordVerifyFailure.DuplicatedEmail -> onShowSnackbar(SnackbarType.ERROR, duplicatedEmailMessage)
+            is SignUpUiEvent.EmailPasswordVerifyFailure.UnknownError -> onShowSnackbar(SnackbarType.ERROR, errorMessage)
+            else -> Unit
         }
     }
 
@@ -80,14 +92,17 @@ internal fun EmailPasswordScreen(
         topBar = {
             ChallengeTogetherTopAppBar(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                onNavigationClick = { processAction(SignUpUiAction.OnBackClick) },
+                onNavigationClick = onBackClick,
             )
         },
         bottomBar = {
             ChallengeTogetherBottomAppBar(
                 showBackButton = false,
                 enableContinueButton = uiState.canTryContinueToNickname,
-                onContinueClick = { processAction(SignUpUiAction.OnContinueToNicknameClick) },
+                isLoading = uiState.isValidatingEmail,
+                onContinueClick = {
+                    processAction(SignUpUiAction.OnEmailPasswordContinueClick(uiState.email))
+                },
             )
         },
         containerColor = CustomColorProvider.colorScheme.background,
@@ -107,6 +122,7 @@ internal fun EmailPasswordScreen(
             SignUpEmailTextField(
                 value = uiState.email,
                 onValueChange = { processAction(SignUpUiAction.OnEmailUpdated(it)) },
+                enabled = !uiState.isValidatingEmail
             )
             ConditionIndicator(
                 text = stringResource(id = SignUpStrings.feature_signup_email_format_indicator),
@@ -116,6 +132,7 @@ internal fun EmailPasswordScreen(
             SignUpPasswordTextField(
                 value = uiState.password,
                 onValueChange = { processAction(SignUpUiAction.OnPasswordUpdated(it)) },
+                enabled = !uiState.isValidatingEmail
             )
             ConditionIndicator(
                 text = stringResource(id = SignUpStrings.feature_signup_password_length_indicator, MIN_PASSWORD_LENGTH),
@@ -133,10 +150,12 @@ internal fun EmailPasswordScreen(
 private fun SignUpEmailTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    enabled: Boolean,
 ) {
     SingleLineTextField(
         value = value,
         onValueChange = onValueChange,
+        enabled = enabled,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
@@ -149,10 +168,12 @@ private fun SignUpEmailTextField(
 private fun SignUpPasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    enabled: Boolean,
 ) {
     PasswordTextField(
         value = value,
         onValueChange = onValueChange,
+        enabled = enabled,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done,
@@ -165,9 +186,9 @@ private fun SignUpPasswordTextField(
 private fun ConditionIndicator(
     text: String,
     isMatched: Boolean,
+    modifier: Modifier = Modifier,
     unMatchColor: Color = CustomColorProvider.colorScheme.disable,
     matchColor: Color = CustomColorProvider.colorScheme.brand,
-    modifier: Modifier = Modifier,
 ) {
     val icon = if (isMatched) ChallengeTogetherIcons.Check else ChallengeTogetherIcons.UnCheck
     val color = if (isMatched) matchColor else unMatchColor

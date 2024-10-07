@@ -1,48 +1,77 @@
 package com.yjy.feature.signup.navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.yjy.core.common.constants.AnimationConst.DEFAULT_ANIMATION_DURATION
+import com.yjy.core.common.extensions.sharedViewModel
+import com.yjy.core.common.ui.NavigationAnimation.slideInToLeft
+import com.yjy.core.common.ui.NavigationAnimation.slideInToRight
+import com.yjy.core.common.ui.NavigationAnimation.slideOutToLeft
+import com.yjy.core.common.ui.NavigationAnimation.slideOutToRight
+import com.yjy.core.designsystem.component.SnackbarType
 import com.yjy.core.navigation.Route
 import com.yjy.feature.signup.EmailPasswordRoute
 import com.yjy.feature.signup.NicknameRoute
 import com.yjy.feature.signup.R
+import com.yjy.feature.signup.SignUpViewModel
 
 typealias SignUpStrings = R.string
 
-fun NavController.navigateToSignUpEmailPassword() {
-    navigate(Route.SignUp.EmailPassword)
+fun NavController.navigateToSignUp() {
+    navigate(Route.SignUp)
+}
+
+fun NavController.navigateToSignUpNickname(
+    kakaoId: String? = null,
+    googleId: String? = null,
+    naverId: String? = null,
+) {
+    navigate(
+        Route.SignUp.Nickname(
+            kakaoId = kakaoId,
+            googleId = googleId,
+            naverId = naverId,
+        )
+    )
 }
 
 fun NavGraphBuilder.signUpNavGraph(
-    onBackClick: () -> Unit,
+    navController: NavHostController,
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     navigation<Route.SignUp>(
         startDestination = Route.SignUp.EmailPassword::class,
     ) {
         composable<Route.SignUp.EmailPassword>(
-            enterTransition = {
-                slideIntoContainer(
-                    animationSpec = tween(DEFAULT_ANIMATION_DURATION),
-                    towards = AnimatedContentTransitionScope.SlideDirection.Start,
-                )
-            },
-            popExitTransition = {
-                slideOutOfContainer(
-                    animationSpec = tween(DEFAULT_ANIMATION_DURATION),
-                    towards = AnimatedContentTransitionScope.SlideDirection.End,
-                )
-            },
-        ) {
-            EmailPasswordRoute(onBackClick = onBackClick)
+            enterTransition = { slideInToLeft() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInToRight() },
+            popExitTransition = { slideOutToRight() },
+        ) { entry ->
+            val viewModel = entry.sharedViewModel<SignUpViewModel>(navController)
+
+            EmailPasswordRoute(
+                onBackClick = navController::popBackStack,
+                onContinue = navController::navigateToSignUpNickname,
+                onShowSnackbar = onShowSnackbar,
+                viewModel = viewModel,
+            )
         }
 
-        composable<Route.SignUp.Nickname> {
-            NicknameRoute()
+        composable<Route.SignUp.Nickname>(
+            enterTransition = { slideInToLeft() },
+            popExitTransition = { slideOutToRight() },
+        ) { entry ->
+            val viewModel = entry.sharedViewModel<SignUpViewModel>(navController)
+
+            NicknameRoute(
+                onBackClick = navController::popBackStack,
+                onStart = {},
+                onShowSnackbar = onShowSnackbar,
+                viewModel = viewModel,
+            )
         }
     }
 }

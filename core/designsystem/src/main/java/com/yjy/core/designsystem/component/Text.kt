@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -19,19 +20,27 @@ import com.yjy.core.designsystem.theme.CustomColorProvider
 
 @Composable
 fun ClickableText(
-    text: String,
+    text: Any,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     color: Color = CustomColorProvider.colorScheme.onBackground,
     style: TextStyle = MaterialTheme.typography.labelSmall,
     textAlign: TextAlign = TextAlign.Start,
+    textDecoration: TextDecoration? = TextDecoration.Underline,
 ) {
+    val annotatedString = when (text) {
+        is String -> AnnotatedString(text)
+        is AnnotatedString -> text
+        else -> throw IllegalArgumentException("Unsupported text type")
+    }
+
     val interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+
     Text(
-        text = text,
+        text = annotatedString,
         color = color,
         style = style.copy(
-            textDecoration = TextDecoration.Underline,
+            textDecoration = textDecoration,
         ),
         textAlign = textAlign,
         modifier = modifier

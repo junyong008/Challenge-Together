@@ -13,11 +13,9 @@ sealed interface Route {
 
         @Serializable
         data class Nickname(
-            val email: String,
-            val password: String,
-            val kakaoId: String,
-            val googleId: String,
-            val naverId: String,
+            val kakaoId: String? = null,
+            val googleId: String? = null,
+            val naverId: String? = null,
         ) : Route
     }
 }

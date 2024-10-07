@@ -65,6 +65,7 @@ fun ChallengeTogetherTextField(
     borderColor: Color = Color.Transparent,
     backgroundColor: Color = CustomColorProvider.colorScheme.surface,
     shouldHidePassword: Boolean = false,
+    enabled: Boolean = true,
 ) {
     var leadingIconsWidth by remember { mutableStateOf(0.dp) }
     var trailingIconsWidth by remember { mutableStateOf(0.dp) }
@@ -73,7 +74,14 @@ fun ChallengeTogetherTextField(
     Box(
         modifier = modifier
             .height(50.dp)
-            .background(backgroundColor, shape = shape)
+            .background(
+                color = if (enabled) {
+                    backgroundColor
+                } else {
+                    CustomColorProvider.colorScheme.disable
+                },
+                shape = shape,
+            )
             .border(1.dp, borderColor, shape = shape)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         contentAlignment = Alignment.CenterStart,
@@ -105,6 +113,7 @@ fun ChallengeTogetherTextField(
                 keyboardActions = keyboardActions,
                 textStyle = textStyle.copy(color = textColor, textAlign = textAlign),
                 cursorBrush = SolidColor(CustomColorProvider.colorScheme.brand),
+                enabled = enabled,
                 visualTransformation = if (shouldHidePassword) {
                     PasswordVisualTransformation()
                 } else {
@@ -148,6 +157,7 @@ fun SingleLineTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIconColor: Color = CustomColorProvider.colorScheme.onSurfaceMuted,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -165,6 +175,7 @@ fun SingleLineTextField(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier,
+        enabled = enabled,
         leadingIcon = leadingIcon,
         trailingIcon = {
             if (value.isNotEmpty()) {
@@ -176,7 +187,7 @@ fun SingleLineTextField(
                     tint = trailingIconColor,
                     modifier = Modifier
                         .clip(MaterialTheme.shapes.small)
-                        .clickable { onValueChange("") },
+                        .clickable { if (enabled) onValueChange("") },
                 )
             }
         },
@@ -200,6 +211,7 @@ fun PasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIconColor: Color = CustomColorProvider.colorScheme.onSurfaceMuted,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -219,6 +231,7 @@ fun PasswordTextField(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier,
+        enabled = enabled,
         leadingIcon = leadingIcon,
         trailingIcon = {
             if (value.isNotEmpty()) {
@@ -252,7 +265,7 @@ fun PasswordTextField(
                         tint = trailingIconColor,
                         modifier = Modifier
                             .clip(MaterialTheme.shapes.small)
-                            .clickable { onValueChange("") },
+                            .clickable { if (enabled) onValueChange("") },
                     )
                 }
             }

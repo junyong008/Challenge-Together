@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,6 +38,7 @@ fun ChallengeTogetherBottomAppBar(
     showBackButton: Boolean = true,
     showContinueButton: Boolean = true,
     enableContinueButton: Boolean = true,
+    isLoading: Boolean = false,
     onBackClick: () -> Unit = {},
     onContinueClick: () -> Unit = {},
     backgroundColor: Color = CustomColorProvider.colorScheme.background,
@@ -81,17 +84,25 @@ fun ChallengeTogetherBottomAppBar(
         if (showContinueButton) {
             ChallengeTogetherButton(
                 onClick = onContinueClick,
-                enabled = enableContinueButton,
+                enabled = enableContinueButton && isLoading.not(),
                 shape = MaterialTheme.shapes.extraLarge,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .widthIn(min = 120.dp)
                     .height(50.dp),
             ) {
-                Text(
-                    text = stringResource(id = R.string.core_designsystem_app_bar_continue),
-                    style = MaterialTheme.typography.labelMedium,
-                )
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(24.dp),
+                        color = CustomColorProvider.colorScheme.brand,
+                    )
+                } else {
+                    Text(
+                        text = stringResource(id = R.string.core_designsystem_app_bar_continue),
+                        style = MaterialTheme.typography.labelMedium,
+                    )
+                }
             }
         }
     }
@@ -105,6 +116,7 @@ fun ChallengeTogetherBottomAppBarPreview() {
             ChallengeTogetherBottomAppBar(
                 onBackClick = {},
                 onContinueClick = {},
+                isLoading = false,
             )
         }
     }

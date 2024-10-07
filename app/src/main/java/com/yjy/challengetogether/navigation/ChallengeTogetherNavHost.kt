@@ -6,8 +6,8 @@ import androidx.navigation.compose.NavHost
 import com.yjy.challengetogether.ui.ChallengeTogetherAppState
 import com.yjy.core.designsystem.component.SnackbarType
 import com.yjy.core.navigation.Route
-import com.yjy.feature.login.navigation.loginNavGraph
-import com.yjy.feature.signup.navigation.navigateToSignUpEmailPassword
+import com.yjy.feature.login.navigation.loginScreen
+import com.yjy.feature.signup.navigation.navigateToSignUp
 import com.yjy.feature.signup.navigation.signUpNavGraph
 
 @Composable
@@ -23,12 +23,13 @@ fun ChallengeTogetherNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        loginNavGraph(
-            navigateToSignUp = navController::navigateToSignUpEmailPassword,
+        loginScreen(
+            onSignUpClick = navController::navigateToSignUp,
             onShowSnackbar = onShowSnackbar,
         )
         signUpNavGraph(
-            onBackClick = navController::popBackStack,
+            navController = navController,
+            onShowSnackbar = onShowSnackbar,
         )
     }
 }

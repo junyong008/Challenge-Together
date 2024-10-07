@@ -6,5 +6,15 @@
     <string name="feature_signup_password_length_indicator">Password must be at least %1$d characters long</string>
     <string name="feature_signup_password_number_indicator">Password must contain at least one number</string>
     <string name="feature_signup_input_password_place_holder">Password</string>
-    <string name="feature_signup_next">Next</string>
+    <string name="feature_signup_email_already_registered">This email is already registered.</string>
+    <string name="feature_signup_error">An error occurred. Please try again later.</string>
+    <string name="feature_signup_set_nickname_title">Set Your Own Nickname</string>
+    <string name="feature_signup_set_nickname_description">You can change your nickname anytime later in the settings.</string>
+    <string name="feature_signup_smile_image_description">Smile Image</string>
+    <string name="feature_signup_nickname_place_holder">Enter your nickname</string>
+    <string name="feature_signup_start">START</string>
+    <string name="feature_signup_nickname_length_indicator">Nickname must be between %1$d and %2$d characters long</string>
+    <string name="feature_signup_nickname_korean_constraint">Korean nicknames cannot contain only consonants or vowels</string>
+    <string name="feature_signup_privacy_policy_agreement">By clicking the start button, you agree to the <b>Privacy Policy</b>.</string>
+    <string name="feature_signup_privacy_policy">Privacy Policy</string>
 </resources>

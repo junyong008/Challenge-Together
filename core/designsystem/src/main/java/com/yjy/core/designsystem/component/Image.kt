@@ -1,11 +1,13 @@
 package com.yjy.core.designsystem.component
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -15,13 +17,12 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 @Composable
 fun StableImage(
     @DrawableRes drawableResId: Int,
-    description: String,
+    @StringRes descriptionResId: Int,
     modifier: Modifier = Modifier,
 ) {
-    val painter = painterResource(id = drawableResId)
     Image(
-        painter = painter,
-        contentDescription = description,
+        painter = painterResource(id = drawableResId),
+        contentDescription = stringResource(id = descriptionResId),
         modifier = modifier,
     )
 }
