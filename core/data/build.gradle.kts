@@ -12,5 +12,6 @@ android {
 dependencies {
     implementations(
         projects.core.common,
+        projects.core.network,
     )
 }

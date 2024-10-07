@@ -11,4 +11,7 @@ android {
 }
 
 dependencies {
+    implementations(
+        libs.androidx.hilt.navigation.compose,
+    )
 }

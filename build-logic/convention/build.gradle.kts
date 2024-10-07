@@ -45,6 +45,7 @@ gradlePlugin {
         "android.library.compose" to "AndroidLibraryComposeConventionPlugin",
         "android.feature" to "AndroidFeatureConventionPlugin",
         "android.hilt" to "AndroidHiltConventionPlugin",
+        "android.retrofit" to "AndroidRetrofitConventionPlugin",
         "android.room" to "AndroidRoomConventionPlugin",
     )
 

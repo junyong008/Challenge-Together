@@ -2,6 +2,7 @@
 
 plugins {
     alias(libs.plugins.custom.android.library)
+    alias(libs.plugins.custom.android.retrofit)
     alias(libs.plugins.custom.android.hilt)
     alias(libs.plugins.secrets)
 }
@@ -19,4 +20,7 @@ secrets {
 }
 
 dependencies {
+    implementations(
+        projects.core.common,
+    )
 }
