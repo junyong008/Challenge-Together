@@ -17,4 +17,5 @@
     <string name="feature_signup_nickname_korean_constraint">Korean nicknames cannot contain only consonants or vowels</string>
     <string name="feature_signup_privacy_policy_agreement">By clicking the start button, you agree to the <b>Privacy Policy</b>.</string>
     <string name="feature_signup_privacy_policy">Privacy Policy</string>
+    <string name="feature_signup_nickname_already_taken">This nickname is already taken.</string>
 </resources>

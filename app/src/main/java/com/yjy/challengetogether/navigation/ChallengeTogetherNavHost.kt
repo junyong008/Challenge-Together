@@ -29,6 +29,7 @@ fun ChallengeTogetherNavHost(
         )
         signUpNavGraph(
             navController = navController,
+            onSignUpSuccess = {},
             onShowSnackbar = onShowSnackbar,
         )
     }

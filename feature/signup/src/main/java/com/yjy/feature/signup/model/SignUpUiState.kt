@@ -12,4 +12,5 @@ data class SignUpUiState(
     val isPasswordContainNumber: Boolean = false,
     val canTryContinueToNickname: Boolean = false,
     val canTryStart: Boolean = false,
+    val isSigningUp: Boolean = false,
 )

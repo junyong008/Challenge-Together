@@ -24,9 +24,9 @@ fun NavController.navigateToSignUp() {
 }
 
 fun NavController.navigateToSignUpNickname(
-    kakaoId: String? = null,
-    googleId: String? = null,
-    naverId: String? = null,
+    kakaoId: String = "",
+    googleId: String = "",
+    naverId: String = "",
 ) {
     navigate(
         Route.SignUp.Nickname(
@@ -39,6 +39,7 @@ fun NavController.navigateToSignUpNickname(
 
 fun NavGraphBuilder.signUpNavGraph(
     navController: NavHostController,
+    onSignUpSuccess: () -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     navigation<Route.SignUp>(
@@ -68,7 +69,7 @@ fun NavGraphBuilder.signUpNavGraph(
 
             NicknameRoute(
                 onBackClick = navController::popBackStack,
-                onStart = {},
+                onSignUpSuccess = onSignUpSuccess,
                 onShowSnackbar = onShowSnackbar,
                 viewModel = viewModel,
             )

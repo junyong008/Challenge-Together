@@ -8,5 +8,10 @@ sealed interface SignUpUiEvent {
         data object UnknownError : EmailPasswordVerifyFailure()
     }
 
-    data object NicknameVerified : SignUpUiEvent
+    data object SignUpSuccess : SignUpUiEvent
+
+    sealed class SignUpFailure : SignUpUiEvent {
+        data object DuplicatedNickname : SignUpFailure()
+        data object UnknownError : SignUpFailure()
+    }
 }

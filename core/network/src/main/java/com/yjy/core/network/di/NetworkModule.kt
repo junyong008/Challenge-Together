@@ -6,6 +6,7 @@ import com.yjy.core.network.BuildConfig.BASE_URL
 import com.yjy.core.network.ChallengeTogetherApi
 import com.yjy.core.network.ChallengeTogetherCallFactory
 import com.yjy.core.network.adapter.NetworkResultCallAdapterFactory
+import com.yjy.core.network.interceptor.SessionInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,16 +22,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 private const val MAX_TIME_OUT = 10_000L
-
-private val httpLoggingInterceptor: HttpLoggingInterceptor by lazy {
-    HttpLoggingInterceptor().apply {
-        level = if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor.Level.BODY
-        } else {
-            HttpLoggingInterceptor.Level.NONE
-        }
-    }
-}
 
 private val json = Json {
     encodeDefaults = true
@@ -48,13 +39,29 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
+        }
+    }
+
+    @Provides
+    @Singleton
     @ChallengeTogetherCallFactory
-    fun provideOkHttpCallFactory(): Call.Factory {
+    fun provideOkHttpCallFactory(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        sessionInterceptor: SessionInterceptor,
+    ): Call.Factory {
         return OkHttpClient.Builder()
             .connectTimeout(MAX_TIME_OUT, TimeUnit.MILLISECONDS)
             .readTimeout(MAX_TIME_OUT, TimeUnit.MILLISECONDS)
             .writeTimeout(MAX_TIME_OUT, TimeUnit.MILLISECONDS)
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(sessionInterceptor)
             .build()
     }
 

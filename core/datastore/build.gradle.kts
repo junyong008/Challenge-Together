@@ -3,6 +3,7 @@
 plugins {
     alias(libs.plugins.custom.android.library)
     alias(libs.plugins.custom.android.hilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -10,4 +11,8 @@ android {
 }
 
 dependencies {
+    implementations(
+        libs.androidx.datastore.preferences,
+        libs.kotlinx.serialization.json,
+    )
 }

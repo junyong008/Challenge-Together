@@ -31,13 +31,13 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val saveStateHandle: SavedStateHandle,
+    saveStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val arguments = saveStateHandle.toRoute<Route.SignUp.Nickname>()
-    private val kakaoId: String? = arguments.kakaoId
-    private val googleId: String? = arguments.googleId
-    private val naverId: String? = arguments.naverId
+    private val kakaoId = arguments.kakaoId
+    private val googleId = arguments.googleId
+    private val naverId = arguments.naverId
 
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
@@ -47,11 +47,45 @@ class SignUpViewModel @Inject constructor(
 
     fun processAction(action: SignUpUiAction) {
         when (action) {
+            is SignUpUiAction.OnStartClick -> signUp()
             is SignUpUiAction.OnEmailPasswordContinueClick -> checkEmailDuplicate(action.email)
-            is SignUpUiAction.OnStartClick -> {}
             is SignUpUiAction.OnEmailUpdated -> updateEmail(action.email)
             is SignUpUiAction.OnPasswordUpdated -> updatePassword(action.password)
             is SignUpUiAction.OnNicknameUpdated -> updateNickname(action.nickname)
+        }
+    }
+
+    private fun signUp() {
+        if (uiState.value.email.isBlank() &&
+            kakaoId.isBlank() &&
+            googleId.isBlank() &&
+            naverId.isBlank()
+        ) return
+
+        viewModelScope.launch {
+            _uiState.update { it.copy(isSigningUp = true) }
+
+            val result = authRepository.signUp(
+                nickname = uiState.value.nickname,
+                email = uiState.value.email,
+                password = uiState.value.password,
+                kakaoId = kakaoId,
+                googleId = googleId,
+                naverId = naverId,
+            )
+
+            val event = when (result) {
+                is NetworkResult.Success -> SignUpUiEvent.SignUpSuccess
+                is NetworkResult.Failure.HttpError -> when (result.code) {
+                    HttpStatusCodes.CONFLICT -> SignUpUiEvent.SignUpFailure.DuplicatedNickname
+                    else -> SignUpUiEvent.SignUpFailure.UnknownError
+                }
+
+                else -> SignUpUiEvent.SignUpFailure.UnknownError
+            }
+            sendEvent(event)
+
+            _uiState.update { it.copy(isSigningUp = false) }
         }
     }
 

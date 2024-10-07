@@ -50,7 +50,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun NicknameRoute(
     onBackClick: () -> Unit,
-    onStart: () -> Unit,
+    onSignUpSuccess: () -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignUpViewModel = hiltViewModel(),
@@ -63,7 +63,7 @@ internal fun NicknameRoute(
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
-        onStart = onStart,
+        onSignUpSuccess = onSignUpSuccess,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -75,12 +75,17 @@ internal fun NicknameScreen(
     uiEvent: Flow<SignUpUiEvent> = flowOf(),
     processAction: (SignUpUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
-    onStart: () -> Unit = {},
+    onSignUpSuccess: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val duplicatedNicknameMessage = stringResource(id = SignUpStrings.feature_signup_nickname_already_taken)
+    val errorMessage = stringResource(id = SignUpStrings.feature_signup_error)
+
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is SignUpUiEvent.NicknameVerified -> onStart()
+            is SignUpUiEvent.SignUpSuccess -> onSignUpSuccess()
+            is SignUpUiEvent.SignUpFailure.DuplicatedNickname -> onShowSnackbar(SnackbarType.ERROR, duplicatedNicknameMessage)
+            is SignUpUiEvent.SignUpFailure.UnknownError -> onShowSnackbar(SnackbarType.ERROR, errorMessage)
             else -> Unit
         }
     }
@@ -145,7 +150,7 @@ internal fun NicknameScreen(
             }
             Spacer(modifier = Modifier.height(8.dp))
             ChallengeTogetherButton(
-                onClick = {},
+                onClick = { processAction(SignUpUiAction.OnStartClick) },
                 enabled = uiState.canTryStart,
                 modifier = Modifier
                     .fillMaxWidth()
