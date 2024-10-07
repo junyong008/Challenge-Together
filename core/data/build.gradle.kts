@@ -14,5 +14,7 @@ dependencies {
         projects.core.common,
         projects.core.datastore,
         projects.core.network,
+
+        libs.kotlinx.coroutines.test,
     )
 }
