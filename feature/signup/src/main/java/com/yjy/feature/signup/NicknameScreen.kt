@@ -79,13 +79,15 @@ internal fun NicknameScreen(
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val duplicatedNicknameMessage = stringResource(id = SignUpStrings.feature_signup_nickname_already_taken)
-    val errorMessage = stringResource(id = SignUpStrings.feature_signup_error)
+    val checkNetworkMessage = stringResource(id = SignUpStrings.feature_signup_check_network_connection)
+    val unknownErrorMessage = stringResource(id = SignUpStrings.feature_signup_error)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
             is SignUpUiEvent.SignUpSuccess -> onSignUpSuccess()
             is SignUpUiEvent.SignUpFailure.DuplicatedNickname -> onShowSnackbar(SnackbarType.ERROR, duplicatedNicknameMessage)
-            is SignUpUiEvent.SignUpFailure.UnknownError -> onShowSnackbar(SnackbarType.ERROR, errorMessage)
+            is SignUpUiEvent.SignUpFailure.NetworkError -> onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
+            is SignUpUiEvent.SignUpFailure.UnknownError -> onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
             else -> Unit
         }
     }
@@ -150,7 +152,15 @@ internal fun NicknameScreen(
             }
             Spacer(modifier = Modifier.height(8.dp))
             ChallengeTogetherButton(
-                onClick = { processAction(SignUpUiAction.OnStartClick) },
+                onClick = {
+                    processAction(
+                        SignUpUiAction.OnStartClick(
+                            nickname = uiState.nickname,
+                            email = uiState.email,
+                            password = uiState.password,
+                        )
+                    )
+                },
                 enabled = uiState.canTryStart,
                 modifier = Modifier
                     .fillMaxWidth()

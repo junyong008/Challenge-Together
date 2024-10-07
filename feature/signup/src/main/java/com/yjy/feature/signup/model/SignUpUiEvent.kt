@@ -5,6 +5,7 @@ sealed interface SignUpUiEvent {
 
     sealed class EmailPasswordVerifyFailure : SignUpUiEvent {
         data object DuplicatedEmail : EmailPasswordVerifyFailure()
+        data object NetworkError: EmailPasswordVerifyFailure()
         data object UnknownError : EmailPasswordVerifyFailure()
     }
 
@@ -12,6 +13,7 @@ sealed interface SignUpUiEvent {
 
     sealed class SignUpFailure : SignUpUiEvent {
         data object DuplicatedNickname : SignUpFailure()
+        data object NetworkError: SignUpFailure()
         data object UnknownError : SignUpFailure()
     }
 }

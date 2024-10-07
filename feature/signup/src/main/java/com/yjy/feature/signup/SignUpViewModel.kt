@@ -47,7 +47,7 @@ class SignUpViewModel @Inject constructor(
 
     fun processAction(action: SignUpUiAction) {
         when (action) {
-            is SignUpUiAction.OnStartClick -> signUp()
+            is SignUpUiAction.OnStartClick -> signUp(action.nickname, action.email, action.password)
             is SignUpUiAction.OnEmailPasswordContinueClick -> checkEmailDuplicate(action.email)
             is SignUpUiAction.OnEmailUpdated -> updateEmail(action.email)
             is SignUpUiAction.OnPasswordUpdated -> updatePassword(action.password)
@@ -55,8 +55,8 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    private fun signUp() {
-        if (uiState.value.email.isBlank() &&
+    private fun signUp(nickname: String, email: String, password: String) {
+        if (email.isBlank() &&
             kakaoId.isBlank() &&
             googleId.isBlank() &&
             naverId.isBlank()
@@ -66,9 +66,9 @@ class SignUpViewModel @Inject constructor(
             _uiState.update { it.copy(isSigningUp = true) }
 
             val result = authRepository.signUp(
-                nickname = uiState.value.nickname,
-                email = uiState.value.email,
-                password = uiState.value.password,
+                nickname = nickname,
+                email = email,
+                password = password,
                 kakaoId = kakaoId,
                 googleId = googleId,
                 naverId = naverId,
@@ -76,6 +76,9 @@ class SignUpViewModel @Inject constructor(
 
             val event = when (result) {
                 is NetworkResult.Success -> SignUpUiEvent.SignUpSuccess
+                is NetworkResult.Failure.NetworkError ->
+                    SignUpUiEvent.SignUpFailure.NetworkError
+
                 is NetworkResult.Failure.HttpError -> when (result.code) {
                     HttpStatusCodes.CONFLICT -> SignUpUiEvent.SignUpFailure.DuplicatedNickname
                     else -> SignUpUiEvent.SignUpFailure.UnknownError
@@ -95,6 +98,9 @@ class SignUpViewModel @Inject constructor(
 
             val event = when (val result = authRepository.checkEmailDuplicate(email)) {
                 is NetworkResult.Success -> SignUpUiEvent.EmailPasswordVerified
+                is NetworkResult.Failure.NetworkError ->
+                    SignUpUiEvent.EmailPasswordVerifyFailure.NetworkError
+
                 is NetworkResult.Failure.HttpError -> when (result.code) {
                     HttpStatusCodes.CONFLICT -> SignUpUiEvent.EmailPasswordVerifyFailure.DuplicatedEmail
                     else -> SignUpUiEvent.EmailPasswordVerifyFailure.UnknownError

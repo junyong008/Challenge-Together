@@ -77,13 +77,15 @@ internal fun EmailPasswordScreen(
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val duplicatedEmailMessage = stringResource(id = SignUpStrings.feature_signup_email_already_registered)
-    val errorMessage = stringResource(id = SignUpStrings.feature_signup_error)
+    val checkNetworkMessage = stringResource(id = SignUpStrings.feature_signup_check_network_connection)
+    val unknownErrorMessage = stringResource(id = SignUpStrings.feature_signup_error)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
             is SignUpUiEvent.EmailPasswordVerified -> onContinue()
             is SignUpUiEvent.EmailPasswordVerifyFailure.DuplicatedEmail -> onShowSnackbar(SnackbarType.ERROR, duplicatedEmailMessage)
-            is SignUpUiEvent.EmailPasswordVerifyFailure.UnknownError -> onShowSnackbar(SnackbarType.ERROR, errorMessage)
+            is SignUpUiEvent.EmailPasswordVerifyFailure.NetworkError -> onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
+            is SignUpUiEvent.EmailPasswordVerifyFailure.UnknownError -> onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
             else -> Unit
         }
     }
