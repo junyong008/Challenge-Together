@@ -12,28 +12,28 @@ object NavigationAnimation {
     fun <T> AnimatedContentTransitionScope<T>.slideInToLeft(): EnterTransition {
         return slideIntoContainer(
             towards = AnimatedContentTransitionScope.SlideDirection.Left,
-            animationSpec = tween(DEFAULT_ANIMATION_DURATION)
+            animationSpec = tween(DEFAULT_ANIMATION_DURATION),
         )
     }
 
     fun <T> AnimatedContentTransitionScope<T>.slideInToRight(): EnterTransition {
         return slideIntoContainer(
             towards = AnimatedContentTransitionScope.SlideDirection.Right,
-            animationSpec = tween(DEFAULT_ANIMATION_DURATION)
+            animationSpec = tween(DEFAULT_ANIMATION_DURATION),
         )
     }
 
     fun <T> AnimatedContentTransitionScope<T>.slideOutToLeft(): ExitTransition {
         return slideOutOfContainer(
             towards = AnimatedContentTransitionScope.SlideDirection.Left,
-            animationSpec = tween(DEFAULT_ANIMATION_DURATION)
+            animationSpec = tween(DEFAULT_ANIMATION_DURATION),
         )
     }
 
     fun <T> AnimatedContentTransitionScope<T>.slideOutToRight(): ExitTransition {
         return slideOutOfContainer(
             towards = AnimatedContentTransitionScope.SlideDirection.Right,
-            animationSpec = tween(DEFAULT_ANIMATION_DURATION)
+            animationSpec = tween(DEFAULT_ANIMATION_DURATION),
         )
     }
 }

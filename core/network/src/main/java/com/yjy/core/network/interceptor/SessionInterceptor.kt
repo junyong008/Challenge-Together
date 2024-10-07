@@ -8,7 +8,7 @@ import okhttp3.Response
 import javax.inject.Inject
 
 internal class SessionInterceptor @Inject constructor(
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {

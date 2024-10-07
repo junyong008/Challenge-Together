@@ -85,9 +85,16 @@ internal fun NicknameScreen(
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
             is SignUpUiEvent.SignUpSuccess -> onSignUpSuccess()
-            is SignUpUiEvent.SignUpFailure.DuplicatedNickname -> onShowSnackbar(SnackbarType.ERROR, duplicatedNicknameMessage)
-            is SignUpUiEvent.SignUpFailure.NetworkError -> onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
-            is SignUpUiEvent.SignUpFailure.UnknownError -> onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
+
+            is SignUpUiEvent.SignUpFailure.DuplicatedNickname ->
+                onShowSnackbar(SnackbarType.ERROR, duplicatedNicknameMessage)
+
+            is SignUpUiEvent.SignUpFailure.NetworkError ->
+                onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
+
+            is SignUpUiEvent.SignUpFailure.UnknownError ->
+                onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
+
             else -> Unit
         }
     }
@@ -134,10 +141,10 @@ internal fun NicknameScreen(
                 !uiState.isNicknameLengthValid -> stringResource(
                     id = SignUpStrings.feature_signup_nickname_length_indicator,
                     MIN_NICKNAME_LENGTH,
-                    MAX_NICKNAME_LENGTH
+                    MAX_NICKNAME_LENGTH,
                 )
                 uiState.isNicknameHasOnlyConsonantOrVowel -> stringResource(
-                    id = SignUpStrings.feature_signup_nickname_korean_constraint
+                    id = SignUpStrings.feature_signup_nickname_korean_constraint,
                 )
                 else -> null
             }
@@ -147,7 +154,7 @@ internal fun NicknameScreen(
                     text = it,
                     color = CustomColorProvider.colorScheme.red,
                     style = MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.align(Alignment.Start)
+                    modifier = Modifier.align(Alignment.Start),
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -158,7 +165,7 @@ internal fun NicknameScreen(
                             nickname = uiState.nickname,
                             email = uiState.email,
                             password = uiState.password,
-                        )
+                        ),
                     )
                 },
                 enabled = uiState.canTryStart,

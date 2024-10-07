@@ -33,7 +33,7 @@ fun NavController.navigateToSignUpNickname(
             kakaoId = kakaoId,
             googleId = googleId,
             naverId = naverId,
-        )
+        ),
     )
 }
 

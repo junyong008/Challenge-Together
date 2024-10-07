@@ -83,9 +83,16 @@ internal fun EmailPasswordScreen(
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
             is SignUpUiEvent.EmailPasswordVerified -> onContinue()
-            is SignUpUiEvent.EmailPasswordVerifyFailure.DuplicatedEmail -> onShowSnackbar(SnackbarType.ERROR, duplicatedEmailMessage)
-            is SignUpUiEvent.EmailPasswordVerifyFailure.NetworkError -> onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
-            is SignUpUiEvent.EmailPasswordVerifyFailure.UnknownError -> onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
+
+            is SignUpUiEvent.EmailPasswordVerifyFailure.DuplicatedEmail ->
+                onShowSnackbar(SnackbarType.ERROR, duplicatedEmailMessage)
+
+            is SignUpUiEvent.EmailPasswordVerifyFailure.NetworkError ->
+                onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
+
+            is SignUpUiEvent.EmailPasswordVerifyFailure.UnknownError ->
+                onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
+
             else -> Unit
         }
     }
@@ -124,7 +131,7 @@ internal fun EmailPasswordScreen(
             SignUpEmailTextField(
                 value = uiState.email,
                 onValueChange = { processAction(SignUpUiAction.OnEmailUpdated(it)) },
-                enabled = !uiState.isValidatingEmail
+                enabled = !uiState.isValidatingEmail,
             )
             ConditionIndicator(
                 text = stringResource(id = SignUpStrings.feature_signup_email_format_indicator),
@@ -134,7 +141,7 @@ internal fun EmailPasswordScreen(
             SignUpPasswordTextField(
                 value = uiState.password,
                 onValueChange = { processAction(SignUpUiAction.OnPasswordUpdated(it)) },
-                enabled = !uiState.isValidatingEmail
+                enabled = !uiState.isValidatingEmail,
             )
             ConditionIndicator(
                 text = stringResource(id = SignUpStrings.feature_signup_password_length_indicator, MIN_PASSWORD_LENGTH),

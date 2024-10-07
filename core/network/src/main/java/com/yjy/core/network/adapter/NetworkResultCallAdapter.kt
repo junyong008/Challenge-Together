@@ -32,7 +32,7 @@ private class NetworkResultCall<T>(
                     return NetworkResult.Failure.HttpError(
                         code = code(),
                         message = message(),
-                        body = errorBody().toString()
+                        body = errorBody().toString(),
                     )
                 }
 
@@ -43,7 +43,7 @@ private class NetworkResultCall<T>(
 
                 if (body() == null) {
                     return NetworkResult.Failure.UnknownApiError(
-                        IllegalStateException("Response Code: ${code()} / body: Null")
+                        IllegalStateException("Response Code: ${code()} / body: Null"),
                     )
                 }
 
@@ -53,7 +53,7 @@ private class NetworkResultCall<T>(
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 callback.onResponse(
                     this@NetworkResultCall,
-                    Response.success(response.toNetworkResult())
+                    Response.success(response.toNetworkResult()),
                 )
             }
 

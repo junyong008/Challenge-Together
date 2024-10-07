@@ -34,7 +34,7 @@ class SignUpViewModelTest {
 
         viewModel = SignUpViewModel(
             authRepository = authRepository,
-            saveStateHandle = mockk(relaxed = true)
+            saveStateHandle = mockk(relaxed = true),
         )
     }
 
@@ -57,7 +57,7 @@ class SignUpViewModelTest {
                 nickname = nickname,
                 email = email,
                 password = password,
-            )
+            ),
         )
 
         // Then

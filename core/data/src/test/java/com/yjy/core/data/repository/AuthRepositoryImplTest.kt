@@ -45,7 +45,9 @@ class AuthRepositoryImplTest {
         val googleId = ""
         val naverId = ""
         val hashedPassword = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"
-        coEvery { authDataSource.signUp(nickname, email, hashedPassword, kakaoId, googleId, naverId) } returns NetworkResult.Success(Unit)
+        coEvery {
+            authDataSource.signUp(nickname, email, hashedPassword, kakaoId, googleId, naverId)
+        } returns NetworkResult.Success(Unit)
 
         // When
         val result = authRepository.signUp(nickname, email, password, kakaoId, googleId, naverId)

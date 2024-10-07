@@ -49,6 +49,7 @@ class LoginViewModel @Inject constructor(
 
             val event = when (val result = authRepository.login(email, password)) {
                 is NetworkResult.Success -> LoginUiEvent.LoginSuccess
+
                 is NetworkResult.Failure.HttpError -> when (result.code) {
                     HttpStatusCodes.NOT_FOUND -> LoginUiEvent.LoginFailure.UserNotFound
                     else -> LoginUiEvent.LoginFailure.Error

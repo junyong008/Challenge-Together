@@ -16,6 +16,6 @@ internal object ApiModule {
     @Provides
     @Singleton
     fun provideChallengeTogetherApi(
-        @ChallengeTogetherApi retrofit: Retrofit
+        @ChallengeTogetherApi retrofit: Retrofit,
     ): ChallengeTogetherService = retrofit.create(ChallengeTogetherService::class.java)
 }

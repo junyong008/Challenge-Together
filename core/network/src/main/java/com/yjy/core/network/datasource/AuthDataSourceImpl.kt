@@ -27,6 +27,6 @@ internal class AuthDataSourceImpl @Inject constructor(
             kakaoId = kakaoId,
             googleId = googleId,
             naverId = naverId,
-        )
+        ),
     )
 }

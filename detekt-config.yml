@@ -1,8 +1,10 @@
 complexity:
   LongParameterList:
-    ignoreDefaultParameters: true
+    active: false
   LongMethod:
     ignoreAnnotated: [ 'Composable' ]
+  ComplexCondition:
+    threshold: 7
 
 formatting:
   Filename:
@@ -14,6 +16,8 @@ style:
     ignoreCompanionObjectPropertyDeclaration: true
   UnusedPrivateMember:
     ignoreAnnotated: [ 'preview' ]
+  ReturnCount:
+    active: false
 
 naming:
   TopLevelPropertyNaming:

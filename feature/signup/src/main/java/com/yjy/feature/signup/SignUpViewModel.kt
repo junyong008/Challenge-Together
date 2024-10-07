@@ -56,12 +56,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun signUp(nickname: String, email: String, password: String) {
-        if (email.isBlank() &&
-            kakaoId.isBlank() &&
-            googleId.isBlank() &&
-            naverId.isBlank()
-        ) return
-
+        if (email.isBlank() && kakaoId.isBlank() && googleId.isBlank() && naverId.isBlank()) return
         viewModelScope.launch {
             _uiState.update { it.copy(isSigningUp = true) }
 
@@ -76,6 +71,7 @@ class SignUpViewModel @Inject constructor(
 
             val event = when (result) {
                 is NetworkResult.Success -> SignUpUiEvent.SignUpSuccess
+
                 is NetworkResult.Failure.NetworkError ->
                     SignUpUiEvent.SignUpFailure.NetworkError
 
@@ -98,6 +94,7 @@ class SignUpViewModel @Inject constructor(
 
             val event = when (val result = authRepository.checkEmailDuplicate(email)) {
                 is NetworkResult.Success -> SignUpUiEvent.EmailPasswordVerified
+
                 is NetworkResult.Failure.NetworkError ->
                     SignUpUiEvent.EmailPasswordVerifyFailure.NetworkError
 

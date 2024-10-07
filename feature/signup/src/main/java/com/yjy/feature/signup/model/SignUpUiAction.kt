@@ -5,5 +5,5 @@ sealed interface SignUpUiAction {
     data class OnPasswordUpdated(val password: String) : SignUpUiAction
     data class OnNicknameUpdated(val nickname: String) : SignUpUiAction
     data class OnEmailPasswordContinueClick(val email: String) : SignUpUiAction
-    data class OnStartClick(val nickname: String, val email: String, val password: String): SignUpUiAction
+    data class OnStartClick(val nickname: String, val email: String, val password: String) : SignUpUiAction
 }

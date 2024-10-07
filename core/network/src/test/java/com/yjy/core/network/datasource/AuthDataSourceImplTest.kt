@@ -22,7 +22,6 @@ import retrofit2.Retrofit
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-
 class AuthDataSourceTest {
 
     private lateinit var mockWebServer: MockWebServer
@@ -78,7 +77,7 @@ class AuthDataSourceTest {
             password = "password123",
             kakaoId = "",
             googleId = "",
-            naverId = ""
+            naverId = "",
         )
 
         // Then
