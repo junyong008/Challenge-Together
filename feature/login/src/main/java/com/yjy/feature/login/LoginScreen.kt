@@ -58,7 +58,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun LoginRoute(
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
-    navigateToSignUp: () -> Unit,
+    onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
@@ -69,7 +69,7 @@ internal fun LoginRoute(
         uiState = uiState,
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
-        navigateToSignUp = navigateToSignUp,
+        onSignUpClick = onSignUpClick,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -80,7 +80,7 @@ internal fun LoginScreen(
     uiState: LoginUiState = LoginUiState(),
     uiEvent: Flow<LoginUiEvent> = flowOf(),
     processAction: (LoginUiAction) -> Unit = {},
-    navigateToSignUp: () -> Unit = {},
+    onSignUpClick: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val userNotFoundMessage = stringResource(id = LoginStrings.feature_login_user_not_found)
@@ -91,7 +91,6 @@ internal fun LoginScreen(
             is LoginUiEvent.LoginSuccess -> {}
             is LoginUiEvent.LoginFailure.UserNotFound -> onShowSnackbar(SnackbarType.ERROR, userNotFoundMessage)
             is LoginUiEvent.LoginFailure.Error -> onShowSnackbar(SnackbarType.ERROR, loginErrorMessage)
-            is LoginUiEvent.NavigateToSignUp -> navigateToSignUp()
         }
     }
 
@@ -158,16 +157,16 @@ internal fun LoginScreen(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 FindPasswordAndSignUp(
-                    onFindPasswordClick = { processAction(LoginUiAction.OnFindPasswordClick) },
-                    onSignUpClick = { processAction(LoginUiAction.OnSignUpClick) },
+                    onFindPasswordClick = {},
+                    onSignUpClick = onSignUpClick,
                 )
                 Spacer(modifier = Modifier.height(100.dp))
                 SNSLoginDivider()
                 Spacer(modifier = Modifier.height(16.dp))
                 SNSLoginButtons(
-                    onKakaoLoginClick = { processAction(LoginUiAction.OnKakaoLoginClick) },
-                    onGoogleLoginClick = { processAction(LoginUiAction.OnGoogleLoginClick) },
-                    onNaverLoginClick = { processAction(LoginUiAction.OnNaverLoginClick) },
+                    onKakaoLoginClick = {},
+                    onGoogleLoginClick = {},
+                    onNaverLoginClick = {},
                 )
                 Spacer(modifier = Modifier.height(32.dp))
             }

@@ -7,6 +7,4 @@ sealed interface LoginUiEvent {
         data object UserNotFound : LoginFailure()
         data object Error : LoginFailure()
     }
-
-    data object NavigateToSignUp : LoginUiEvent
 }

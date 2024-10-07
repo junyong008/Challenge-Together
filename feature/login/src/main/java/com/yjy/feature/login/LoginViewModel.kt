@@ -38,11 +38,6 @@ class LoginViewModel @Inject constructor(
             is LoginUiAction.OnEmailUpdated -> updateEmail(action.email)
             is LoginUiAction.OnPasswordUpdated -> updatePassword(action.password)
             is LoginUiAction.OnLoginClick -> login(action.email, action.password)
-            is LoginUiAction.OnFindPasswordClick -> {}
-            is LoginUiAction.OnSignUpClick -> navigateToSignUp()
-            is LoginUiAction.OnKakaoLoginClick -> {}
-            is LoginUiAction.OnGoogleLoginClick -> {}
-            is LoginUiAction.OnNaverLoginClick -> {}
         }
     }
 
@@ -99,12 +94,10 @@ class LoginViewModel @Inject constructor(
         email: String = uiState.value.email,
         password: String = uiState.value.password,
         isValidEmailFormat: Boolean = uiState.value.isValidEmailFormat,
-    ): Boolean = email.isNotEmpty() && password.isNotEmpty() && isValidEmailFormat
-
-    private fun navigateToSignUp() {
-        viewModelScope.launch {
-            _uiEvent.send(LoginUiEvent.NavigateToSignUp)
-        }
+    ): Boolean {
+        return email.isNotEmpty() &&
+            password.isNotEmpty() &&
+            isValidEmailFormat
     }
 
     private fun sendEvent(event: LoginUiEvent) {

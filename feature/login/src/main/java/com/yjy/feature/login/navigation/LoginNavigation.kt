@@ -9,13 +9,13 @@ import com.yjy.feature.login.R
 
 typealias LoginStrings = R.string
 
-fun NavGraphBuilder.loginNavGraph(
-    navigateToSignUp: () -> Unit,
+fun NavGraphBuilder.loginScreen(
+    onSignUpClick: () -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     composable<Route.Login> {
         LoginRoute(
-            navigateToSignUp = navigateToSignUp,
+            onSignUpClick = onSignUpClick,
             onShowSnackbar = onShowSnackbar,
         )
     }
