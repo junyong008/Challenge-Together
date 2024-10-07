@@ -22,5 +22,8 @@ secrets {
 dependencies {
     implementations(
         projects.core.common,
+
+        libs.kotlinx.coroutines.test,
+        libs.mockwebserver,
     )
 }
