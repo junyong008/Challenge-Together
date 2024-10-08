@@ -62,6 +62,25 @@ class AuthDataSourceTest {
     }
 
     @Test
+    fun `email login should save session ID from response to session manager`() = runTest {
+        // Given
+        val sessionId = "test-session-id"
+        val mockResponse = MockResponse()
+            .setResponseCode(OK)
+            .addHeader("X-Session-ID", sessionId)
+        mockWebServer.enqueue(mockResponse)
+
+        // When
+        authDataSource.emailLogin(
+            email = "test@example.com",
+            password = "password123",
+        )
+
+        // Then
+        coVerify { sessionManager.setSessionToken(sessionId) }
+    }
+
+    @Test
     fun `signUp should save session ID from response to session manager`() = runTest {
         // Given
         val sessionId = "test-session-id"

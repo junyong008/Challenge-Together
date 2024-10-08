@@ -22,6 +22,24 @@ class AuthRepositoryImplTest {
     }
 
     @Test
+    fun `email login should hash password and call authDataSource with SHA-256 hashed password`() = runTest {
+        // Given
+        val email = "test@example.com"
+        val password = "password123"
+        val hashedPassword = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"
+        coEvery {
+            authDataSource.emailLogin(email, hashedPassword)
+        } returns NetworkResult.Success(Unit)
+
+        // When
+        val result = authRepository.emailLogin(email, password)
+
+        // Then
+        coVerify { authDataSource.emailLogin(email, hashedPassword) }
+        assertEquals(NetworkResult.Success(Unit), result)
+    }
+
+    @Test
     fun `checkEmailDuplicate should call authDataSource and return its result`() = runTest {
         // Given
         val email = "test@example.com"

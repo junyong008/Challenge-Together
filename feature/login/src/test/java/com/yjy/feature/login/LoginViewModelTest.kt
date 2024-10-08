@@ -1,5 +1,6 @@
 package com.yjy.feature.login
 
+import com.yjy.core.common.network.HttpStatusCodes.UNAUTHORIZED
 import com.yjy.core.common.network.NetworkResult
 import com.yjy.core.data.repository.AuthRepository
 import com.yjy.feature.login.model.LoginUiAction
@@ -47,10 +48,10 @@ class LoginViewModelTest {
         // Given
         val email = "user@example.com"
         val password = "ValidPassword123"
-        coEvery { authRepository.login(email, password) } returns NetworkResult.Success(Unit)
+        coEvery { authRepository.emailLogin(email, password) } returns NetworkResult.Success(Unit)
 
         // When
-        val action = LoginUiAction.OnLoginClick(email, password)
+        val action = LoginUiAction.OnEmailLoginClick(email, password)
         viewModel.processAction(action)
 
         // Then
@@ -66,11 +67,11 @@ class LoginViewModelTest {
         val email = "user@example.com"
         val password = "WrongPassword"
         coEvery {
-            authRepository.login(email, password)
-        } returns NetworkResult.Failure.HttpError(code = 404, message = null, body = "")
+            authRepository.emailLogin(email, password)
+        } returns NetworkResult.Failure.HttpError(code = UNAUTHORIZED, message = null, body = "")
 
         // When
-        val action = LoginUiAction.OnLoginClick(email, password)
+        val action = LoginUiAction.OnEmailLoginClick(email, password)
         viewModel.processAction(action)
 
         // Then
@@ -86,16 +87,16 @@ class LoginViewModelTest {
         val email = "user@example.com"
         val password = "ValidPassword123"
         coEvery {
-            authRepository.login(email, password)
+            authRepository.emailLogin(email, password)
         } returns NetworkResult.Failure.HttpError(code = 500, message = null, body = "")
 
         // When
-        val action = LoginUiAction.OnLoginClick(email, password)
+        val action = LoginUiAction.OnEmailLoginClick(email, password)
         viewModel.processAction(action)
 
         // Then
         assertEquals(
-            expected = LoginUiEvent.LoginFailure.Error,
+            expected = LoginUiEvent.LoginFailure.UnknownError,
             actual = viewModel.uiEvent.first(),
         )
     }
