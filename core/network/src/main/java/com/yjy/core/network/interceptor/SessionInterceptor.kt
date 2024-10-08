@@ -5,6 +5,7 @@ import com.yjy.core.network.util.SessionManager
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 internal class SessionInterceptor @Inject constructor(
@@ -17,15 +18,18 @@ internal class SessionInterceptor @Inject constructor(
         val savedSessionToken = runBlocking { sessionManager.getSessionToken() }
         savedSessionToken?.let {
             requestBuilder.addHeader("X-Session-ID", it)
+            Timber.d("savedSessionToken: $savedSessionToken")
         }
 
         val response = chain.proceed(requestBuilder.build())
 
         if (response.code == UNAUTHORIZED) {
             clearSession()
+            Timber.d("clearSessionToken")
         } else {
             val newToken = response.headers["X-Session-ID"]
             updateSessionToken(newToken)
+            Timber.d("newSessionToken: $newToken")
         }
 
         return response

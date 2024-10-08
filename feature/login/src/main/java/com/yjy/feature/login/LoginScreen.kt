@@ -82,14 +82,24 @@ internal fun LoginScreen(
     onSignUpClick: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val loginSuccessMessage = stringResource(id = LoginStrings.feature_login_login_success)
     val userNotFoundMessage = stringResource(id = LoginStrings.feature_login_user_not_found)
-    val loginErrorMessage = stringResource(id = LoginStrings.feature_login_error)
+    val checkNetworkMessage = stringResource(id = LoginStrings.feature_login_check_network_connection)
+    val unknownErrorMessage = stringResource(id = LoginStrings.feature_login_unknown_error)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is LoginUiEvent.LoginSuccess -> {}
-            is LoginUiEvent.LoginFailure.UserNotFound -> onShowSnackbar(SnackbarType.ERROR, userNotFoundMessage)
-            is LoginUiEvent.LoginFailure.Error -> onShowSnackbar(SnackbarType.ERROR, loginErrorMessage)
+            is LoginUiEvent.LoginSuccess ->
+                onShowSnackbar(SnackbarType.SUCCESS, loginSuccessMessage)
+
+            is LoginUiEvent.LoginFailure.UserNotFound ->
+                onShowSnackbar(SnackbarType.ERROR, userNotFoundMessage)
+
+            is LoginUiEvent.LoginFailure.NetworkError ->
+                onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
+
+            is LoginUiEvent.LoginFailure.UnknownError ->
+                onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
         }
     }
 
@@ -131,7 +141,7 @@ internal fun LoginScreen(
         Spacer(modifier = Modifier.height(16.dp))
         ChallengeTogetherButton(
             onClick = {
-                processAction(LoginUiAction.OnLoginClick(uiState.email, uiState.password))
+                processAction(LoginUiAction.OnEmailLoginClick(uiState.email, uiState.password))
             },
             enabled = uiState.canTryLogin && !uiState.isLoading,
             modifier = Modifier

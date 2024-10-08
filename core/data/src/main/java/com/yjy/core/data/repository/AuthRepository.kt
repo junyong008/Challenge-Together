@@ -15,5 +15,5 @@ interface AuthRepository {
 
     suspend fun checkEmailDuplicate(email: String): NetworkResult<Unit>
 
-    suspend fun login(email: String, password: String): NetworkResult<Unit>
+    suspend fun emailLogin(email: String, password: String): NetworkResult<Unit>
 }

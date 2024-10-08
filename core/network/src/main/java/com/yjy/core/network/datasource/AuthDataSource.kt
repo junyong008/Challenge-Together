@@ -4,6 +4,10 @@ import com.yjy.core.common.network.NetworkResult
 
 interface AuthDataSource {
 
+    suspend fun emailLogin(email: String, password: String): NetworkResult<Unit>
+
+    suspend fun checkEmailDuplicate(email: String): NetworkResult<Unit>
+
     suspend fun signUp(
         nickname: String,
         email: String,
@@ -12,6 +16,4 @@ interface AuthDataSource {
         googleId: String,
         naverId: String,
     ): NetworkResult<Unit>
-
-    suspend fun checkEmailDuplicate(email: String): NetworkResult<Unit>
 }

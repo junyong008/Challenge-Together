@@ -37,25 +37,27 @@ class LoginViewModel @Inject constructor(
         when (action) {
             is LoginUiAction.OnEmailUpdated -> updateEmail(action.email)
             is LoginUiAction.OnPasswordUpdated -> updatePassword(action.password)
-            is LoginUiAction.OnLoginClick -> login(action.email, action.password)
+            is LoginUiAction.OnEmailLoginClick -> emailLogin(action.email, action.password)
         }
     }
 
-    private fun login(email: String, password: String) {
+    private fun emailLogin(email: String, password: String) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isLoading = true)
             }
 
-            val event = when (val result = authRepository.login(email, password)) {
+            val event = when (val result = authRepository.emailLogin(email, password)) {
                 is NetworkResult.Success -> LoginUiEvent.LoginSuccess
 
+                is NetworkResult.Failure.NetworkError -> LoginUiEvent.LoginFailure.NetworkError
+
                 is NetworkResult.Failure.HttpError -> when (result.code) {
-                    HttpStatusCodes.NOT_FOUND -> LoginUiEvent.LoginFailure.UserNotFound
-                    else -> LoginUiEvent.LoginFailure.Error
+                    HttpStatusCodes.UNAUTHORIZED -> LoginUiEvent.LoginFailure.UserNotFound
+                    else -> LoginUiEvent.LoginFailure.UnknownError
                 }
 
-                is NetworkResult.Failure -> LoginUiEvent.LoginFailure.Error
+                is NetworkResult.Failure -> LoginUiEvent.LoginFailure.UnknownError
             }
             sendEvent(event)
 

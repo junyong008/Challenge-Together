@@ -5,6 +5,7 @@ sealed interface LoginUiEvent {
 
     sealed class LoginFailure : LoginUiEvent {
         data object UserNotFound : LoginFailure()
-        data object Error : LoginFailure()
+        data object NetworkError : LoginFailure()
+        data object UnknownError : LoginFailure()
     }
 }

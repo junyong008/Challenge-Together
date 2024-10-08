@@ -9,8 +9,11 @@ internal class AuthRepositoryImpl @Inject constructor(
     private val authDataSource: AuthDataSource,
 ) : AuthRepository {
 
-    override suspend fun login(email: String, password: String): NetworkResult<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun emailLogin(email: String, password: String): NetworkResult<Unit> {
+        return authDataSource.emailLogin(
+            email = email,
+            password = hashPassword(password),
+        )
     }
 
     override suspend fun checkEmailDuplicate(email: String): NetworkResult<Unit> =
@@ -23,14 +26,16 @@ internal class AuthRepositoryImpl @Inject constructor(
         kakaoId: String,
         googleId: String,
         naverId: String,
-    ): NetworkResult<Unit> = authDataSource.signUp(
-        nickname = nickname,
-        email = email,
-        password = hashPassword(password),
-        kakaoId = kakaoId,
-        googleId = googleId,
-        naverId = naverId,
-    )
+    ): NetworkResult<Unit> {
+        return authDataSource.signUp(
+            nickname = nickname,
+            email = email,
+            password = hashPassword(password),
+            kakaoId = kakaoId,
+            googleId = googleId,
+            naverId = naverId,
+        )
+    }
 
     private fun hashPassword(password: String): String {
         val bytes = password.toByteArray()
