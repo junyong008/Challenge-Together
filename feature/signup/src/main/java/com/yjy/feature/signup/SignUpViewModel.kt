@@ -2,7 +2,6 @@ package com.yjy.feature.signup
 
 import androidx.core.util.PatternsCompat.EMAIL_ADDRESS
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.yjy.core.common.constants.AuthConst.MAX_EMAIL_LENGTH
@@ -12,19 +11,13 @@ import com.yjy.core.common.constants.AuthConst.MIN_NICKNAME_LENGTH
 import com.yjy.core.common.constants.AuthConst.MIN_PASSWORD_LENGTH
 import com.yjy.core.common.network.HttpStatusCodes
 import com.yjy.core.common.network.NetworkResult
+import com.yjy.core.common.ui.BaseViewModel
 import com.yjy.core.data.repository.AuthRepository
 import com.yjy.core.navigation.Route
 import com.yjy.feature.signup.model.SignUpUiAction
 import com.yjy.feature.signup.model.SignUpUiEvent
 import com.yjy.feature.signup.model.SignUpUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,18 +25,12 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     saveStateHandle: SavedStateHandle,
-) : ViewModel() {
+) : BaseViewModel<SignUpUiState, SignUpUiEvent>(initialState = SignUpUiState()) {
 
     private val arguments = saveStateHandle.toRoute<Route.SignUp.Nickname>()
     private val kakaoId = arguments.kakaoId
     private val googleId = arguments.googleId
     private val naverId = arguments.naverId
-
-    private val _uiState = MutableStateFlow(SignUpUiState())
-    val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
-
-    private val _uiEvent = Channel<SignUpUiEvent>()
-    val uiEvent: Flow<SignUpUiEvent> = _uiEvent.receiveAsFlow()
 
     fun processAction(action: SignUpUiAction) {
         when (action) {
@@ -58,7 +45,7 @@ class SignUpViewModel @Inject constructor(
     private fun signUp(nickname: String, email: String, password: String) {
         if (email.isBlank() && kakaoId.isBlank() && googleId.isBlank() && naverId.isBlank()) return
         viewModelScope.launch {
-            _uiState.update { it.copy(isSigningUp = true) }
+            updateState { copy(isSigningUp = true) }
 
             val result = authRepository.signUp(
                 nickname = nickname,
@@ -82,15 +69,15 @@ class SignUpViewModel @Inject constructor(
 
                 else -> SignUpUiEvent.SignUpFailure.UnknownError
             }
-            sendEvent(event)
 
-            _uiState.update { it.copy(isSigningUp = false) }
+            sendEvent(event)
+            updateState { copy(isSigningUp = false) }
         }
     }
 
     private fun checkEmailDuplicate(email: String) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isValidatingEmail = true) }
+            updateState { copy(isValidatingEmail = true) }
 
             val event = when (val result = authRepository.checkEmailDuplicate(email)) {
                 is NetworkResult.Success -> SignUpUiEvent.EmailPasswordVerified
@@ -107,16 +94,16 @@ class SignUpViewModel @Inject constructor(
             }
             sendEvent(event)
 
-            _uiState.update { it.copy(isValidatingEmail = false) }
+            updateState { copy(isValidatingEmail = false) }
         }
     }
 
     private fun updateEmail(email: String) {
         if (email.length > MAX_EMAIL_LENGTH) return
-        _uiState.update {
+        updateState {
             val isValidEmailFormat = EMAIL_ADDRESS.matcher(email).matches()
 
-            it.copy(
+            copy(
                 email = email,
                 isValidEmailFormat = isValidEmailFormat,
                 canTryContinueToNickname = canContinue(
@@ -129,11 +116,11 @@ class SignUpViewModel @Inject constructor(
 
     private fun updatePassword(password: String) {
         if (password.length > MAX_PASSWORD_LENGTH) return
-        _uiState.update { currentState ->
+        updateState {
             val isPasswordLongEnough = password.length >= MIN_PASSWORD_LENGTH
             val isPasswordContainNumber = password.any { it.isDigit() }
 
-            currentState.copy(
+            copy(
                 password = password,
                 isPasswordLongEnough = isPasswordLongEnough,
                 isPasswordContainNumber = isPasswordContainNumber,
@@ -162,11 +149,11 @@ class SignUpViewModel @Inject constructor(
 
     private fun updateNickname(nickname: String) {
         if (nickname.hasInValidCharacters() || nickname.length > MAX_NICKNAME_LENGTH) return
-        _uiState.update {
+        updateState {
             val isNicknameLengthValid = nickname.length >= MIN_NICKNAME_LENGTH
             val isNicknameHasOnlyConsonantOrVowel = nickname.hasConsonantOrVowel()
 
-            it.copy(
+            copy(
                 nickname = nickname,
                 isNicknameLengthValid = isNicknameLengthValid,
                 isNicknameHasOnlyConsonantOrVowel = isNicknameHasOnlyConsonantOrVowel,
@@ -183,11 +170,5 @@ class SignUpViewModel @Inject constructor(
     private fun String.hasConsonantOrVowel(): Boolean {
         val consonantOrVowelPattern = ".*[ㄱ-ㅎㅏ-ㅣ].*"
         return this.matches(consonantOrVowelPattern.toRegex())
-    }
-
-    private fun sendEvent(event: SignUpUiEvent) {
-        viewModelScope.launch {
-            _uiEvent.send(event)
-        }
     }
 }
