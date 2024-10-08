@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -136,6 +137,7 @@ internal fun NicknameScreen(
                 textStyle = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 placeholderText = stringResource(id = SignUpStrings.feature_signup_nickname_place_holder),
+                enabled = !uiState.isSigningUp,
             )
             val errorMessage = when {
                 !uiState.isNicknameLengthValid -> stringResource(
@@ -168,15 +170,23 @@ internal fun NicknameScreen(
                         ),
                     )
                 },
-                enabled = uiState.canTryStart,
+                enabled = uiState.canTryStart && !uiState.isSigningUp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
             ) {
-                Text(
-                    text = stringResource(id = SignUpStrings.feature_signup_start),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
+                if (uiState.isSigningUp) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(24.dp),
+                        color = CustomColorProvider.colorScheme.brand,
+                    )
+                } else {
+                    Text(
+                        text = stringResource(id = SignUpStrings.feature_signup_start),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
             }
             PrivacyPolicyText()
         }
