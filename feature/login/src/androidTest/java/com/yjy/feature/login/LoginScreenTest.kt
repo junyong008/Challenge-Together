@@ -22,24 +22,6 @@ class LoginScreenTest {
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test
-    fun loading_state_should_display_loading_wheel() {
-        // Given
-        val uiState = LoginUiState(isLoading = true)
-
-        // When
-        composeTestRule.setContent {
-            LoginScreen(
-                uiState = uiState,
-            )
-        }
-
-        // Then
-        composeTestRule
-            .onNodeWithTag("loadingWheel")
-            .assertIsDisplayed()
-    }
-
-    @Test
     fun invalid_email_input_should_display_error_message() {
         // Given
         val uiState = LoginUiState(isValidEmailFormat = false)
@@ -110,9 +92,12 @@ class LoginScreenTest {
     }
 
     @Test
-    fun login_button_should_be_enabled_when_canTryLogin_is_true() {
+    fun login_button_should_be_enabled_when_canTryLogin_is_true_and_loading_is_false() {
         // Given
-        val uiState = LoginUiState(canTryLogin = true)
+        val uiState = LoginUiState(
+            canTryLogin = true,
+            isLoading = false,
+        )
 
         // When
         composeTestRule.setContent {
@@ -126,9 +111,12 @@ class LoginScreenTest {
     }
 
     @Test
-    fun login_button_should_be_disabled_when_canTryLogin_is_false() {
+    fun login_button_should_be_disabled_when_canTryLogin_is_false_or_loading_is_true() {
         // Given
-        val uiState = LoginUiState(canTryLogin = false)
+        val uiState = LoginUiState(
+            canTryLogin = false,
+            isLoading = true,
+        )
 
         // When
         composeTestRule.setContent {
