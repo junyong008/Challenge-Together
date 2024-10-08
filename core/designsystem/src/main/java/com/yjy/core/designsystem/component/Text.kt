@@ -27,6 +27,7 @@ fun ClickableText(
     style: TextStyle = MaterialTheme.typography.labelSmall,
     textAlign: TextAlign = TextAlign.Start,
     textDecoration: TextDecoration? = TextDecoration.Underline,
+    enabled: Boolean = true,
 ) {
     val annotatedString = when (text) {
         is String -> AnnotatedString(text)
@@ -38,7 +39,7 @@ fun ClickableText(
 
     Text(
         text = annotatedString,
-        color = color,
+        color = if (enabled) color else CustomColorProvider.colorScheme.disable,
         style = style.copy(
             textDecoration = textDecoration,
         ),
@@ -46,6 +47,7 @@ fun ClickableText(
         modifier = modifier
             .clip(MaterialTheme.shapes.medium)
             .clickable(
+                enabled = enabled,
                 onClick = onClick,
                 interactionSource = interactionSource,
                 indication = LocalIndication.current,

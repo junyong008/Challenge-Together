@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -40,7 +40,6 @@ import com.yjy.core.common.ui.ObserveAsEvents
 import com.yjy.core.designsystem.component.ChallengeTogetherBackground
 import com.yjy.core.designsystem.component.ChallengeTogetherButton
 import com.yjy.core.designsystem.component.ClickableText
-import com.yjy.core.designsystem.component.LoadingWheel
 import com.yjy.core.designsystem.component.PasswordTextField
 import com.yjy.core.designsystem.component.SingleLineTextField
 import com.yjy.core.designsystem.component.SnackbarType
@@ -109,68 +108,65 @@ internal fun LoginScreen(
             modifier = Modifier.align(Alignment.Start),
         )
         Spacer(modifier = Modifier.height(32.dp))
-
-        Box {
+        LoginEmailTextField(
+            value = uiState.email,
+            onValueChange = { processAction(LoginUiAction.OnEmailUpdated(it)) },
+            enabled = !uiState.isLoading,
+        )
+        if (!uiState.isValidEmailFormat) {
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = stringResource(id = LoginStrings.feature_login_invalid_email_format),
+                color = CustomColorProvider.colorScheme.red,
+                style = MaterialTheme.typography.labelSmall,
+                modifier = Modifier.align(Alignment.Start),
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        LoginPasswordTextField(
+            value = uiState.password,
+            onValueChange = { processAction(LoginUiAction.OnPasswordUpdated(it)) },
+            enabled = !uiState.isLoading,
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        ChallengeTogetherButton(
+            onClick = {
+                processAction(LoginUiAction.OnLoginClick(uiState.email, uiState.password))
+            },
+            enabled = uiState.canTryLogin && !uiState.isLoading,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .testTag("loginButton"),
+        ) {
             if (uiState.isLoading) {
-                LoadingWheel(
-                    modifier = Modifier.align(Alignment.Center),
+                CircularProgressIndicator(
+                    color = CustomColorProvider.colorScheme.brand,
+                    modifier = Modifier.size(24.dp),
                 )
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .alpha(if (uiState.isLoading) 0f else 1f),
-            ) {
-                LoginEmailTextField(
-                    value = uiState.email,
-                    onValueChange = { processAction(LoginUiAction.OnEmailUpdated(it)) },
+            } else {
+                Text(
+                    text = stringResource(id = LoginStrings.feature_login_button_text),
+                    style = MaterialTheme.typography.bodyMedium,
                 )
-                if (!uiState.isValidEmailFormat) {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = stringResource(id = LoginStrings.feature_login_invalid_email_format),
-                        color = CustomColorProvider.colorScheme.red,
-                        style = MaterialTheme.typography.labelSmall,
-                        modifier = Modifier.align(Alignment.Start),
-                    )
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                LoginPasswordTextField(
-                    value = uiState.password,
-                    onValueChange = { processAction(LoginUiAction.OnPasswordUpdated(it)) },
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                ChallengeTogetherButton(
-                    onClick = {
-                        processAction(LoginUiAction.OnLoginClick(uiState.email, uiState.password))
-                    },
-                    enabled = uiState.canTryLogin,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .testTag("loginButton"),
-                ) {
-                    Text(
-                        text = stringResource(id = LoginStrings.feature_login_button_text),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                FindPasswordAndSignUp(
-                    onFindPasswordClick = {},
-                    onSignUpClick = onSignUpClick,
-                )
-                Spacer(modifier = Modifier.height(100.dp))
-                SNSLoginDivider()
-                Spacer(modifier = Modifier.height(16.dp))
-                SNSLoginButtons(
-                    onKakaoLoginClick = {},
-                    onGoogleLoginClick = {},
-                    onNaverLoginClick = {},
-                )
-                Spacer(modifier = Modifier.height(32.dp))
             }
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        FindPasswordAndSignUp(
+            onFindPasswordClick = {},
+            onSignUpClick = onSignUpClick,
+            enabled = !uiState.isLoading
+        )
+        Spacer(modifier = Modifier.height(100.dp))
+        SNSLoginDivider()
+        Spacer(modifier = Modifier.height(16.dp))
+        SNSLoginButtons(
+            onKakaoLoginClick = {},
+            onGoogleLoginClick = {},
+            onNaverLoginClick = {},
+            enabled = !uiState.isLoading,
+        )
+        Spacer(modifier = Modifier.height(32.dp))
     }
 }
 
@@ -199,6 +195,7 @@ private fun Title(
 private fun LoginEmailTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    enabled: Boolean,
 ) {
     SingleLineTextField(
         value = value,
@@ -215,6 +212,7 @@ private fun LoginEmailTextField(
             imeAction = ImeAction.Next,
         ),
         placeholderText = stringResource(id = LoginStrings.feature_login_input_email_place_holder),
+        enabled = enabled,
     )
 }
 
@@ -222,6 +220,7 @@ private fun LoginEmailTextField(
 private fun LoginPasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    enabled: Boolean,
 ) {
     PasswordTextField(
         value = value,
@@ -238,6 +237,7 @@ private fun LoginPasswordTextField(
             imeAction = ImeAction.Done,
         ),
         placeholderText = stringResource(id = LoginStrings.feature_login_input_password_place_holder),
+        enabled = enabled,
     )
 }
 
@@ -245,6 +245,7 @@ private fun LoginPasswordTextField(
 private fun FindPasswordAndSignUp(
     onFindPasswordClick: () -> Unit,
     onSignUpClick: () -> Unit,
+    enabled: Boolean,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -255,6 +256,7 @@ private fun FindPasswordAndSignUp(
             text = stringResource(id = LoginStrings.feature_login_find_password),
             onClick = { onFindPasswordClick() },
             textAlign = TextAlign.End,
+            enabled = enabled,
         )
         Text(
             text = "|",
@@ -265,6 +267,7 @@ private fun FindPasswordAndSignUp(
         ClickableText(
             text = stringResource(id = LoginStrings.feature_login_sign_up),
             onClick = { onSignUpClick() },
+            enabled = enabled,
         )
     }
 }
@@ -303,6 +306,7 @@ private fun SNSLoginButtons(
     onKakaoLoginClick: () -> Unit,
     onGoogleLoginClick: () -> Unit,
     onNaverLoginClick: () -> Unit,
+    enabled: Boolean,
 ) {
     Row(
         modifier = Modifier
@@ -317,6 +321,7 @@ private fun SNSLoginButtons(
                 .clip(CircleShape)
                 .background(CustomColorProvider.colorScheme.kakaoBackground)
                 .clickable(
+                    enabled = enabled,
                     onClick = onKakaoLoginClick,
                 ),
             contentAlignment = Alignment.Center,
@@ -333,6 +338,7 @@ private fun SNSLoginButtons(
                 .clip(CircleShape)
                 .background(CustomColorProvider.colorScheme.googleBackground)
                 .clickable(
+                    enabled = enabled,
                     onClick = onGoogleLoginClick,
                 ),
             contentAlignment = Alignment.Center,
@@ -349,6 +355,7 @@ private fun SNSLoginButtons(
                 .clip(CircleShape)
                 .background(CustomColorProvider.colorScheme.naverBackground)
                 .clickable(
+                    enabled = enabled,
                     onClick = onNaverLoginClick,
                 ),
             contentAlignment = Alignment.Center,
@@ -367,6 +374,7 @@ fun LoginScreenPreview() {
     ChallengeTogetherTheme {
         ChallengeTogetherBackground {
             LoginScreen(
+                uiState = LoginUiState(isLoading = false),
                 modifier = Modifier.fillMaxSize(),
             )
         }
