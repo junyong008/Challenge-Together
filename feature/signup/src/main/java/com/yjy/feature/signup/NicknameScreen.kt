@@ -79,13 +79,17 @@ internal fun NicknameScreen(
     onSignUpSuccess: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val signUpCompleteMessage = stringResource(id = SignUpStrings.feature_signup_complete)
     val duplicatedNicknameMessage = stringResource(id = SignUpStrings.feature_signup_nickname_already_taken)
     val checkNetworkMessage = stringResource(id = SignUpStrings.feature_signup_check_network_connection)
     val unknownErrorMessage = stringResource(id = SignUpStrings.feature_signup_error)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is SignUpUiEvent.SignUpSuccess -> onSignUpSuccess()
+            is SignUpUiEvent.SignUpSuccess -> {
+                onShowSnackbar(SnackbarType.SUCCESS, signUpCompleteMessage)
+                onSignUpSuccess()
+            }
 
             is SignUpUiEvent.DuplicatedNickname ->
                 onShowSnackbar(SnackbarType.ERROR, duplicatedNicknameMessage)
@@ -124,7 +128,7 @@ internal fun NicknameScreen(
             )
             Spacer(modifier = Modifier.height(40.dp))
             StableImage(
-                drawableResId = R.drawable.ic_smile,
+                drawableResId = R.drawable.image_smile,
                 descriptionResId = SignUpStrings.feature_signup_smile_image_description,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)

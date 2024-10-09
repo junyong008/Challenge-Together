@@ -1,24 +1,15 @@
 package com.yjy.feature.signup
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -30,11 +21,11 @@ import com.yjy.core.common.ui.ObserveAsEvents
 import com.yjy.core.designsystem.component.ChallengeTogetherBackground
 import com.yjy.core.designsystem.component.ChallengeTogetherBottomAppBar
 import com.yjy.core.designsystem.component.ChallengeTogetherTopAppBar
+import com.yjy.core.designsystem.component.ConditionIndicator
 import com.yjy.core.designsystem.component.PasswordTextField
 import com.yjy.core.designsystem.component.SingleLineTextField
 import com.yjy.core.designsystem.component.SnackbarType
 import com.yjy.core.designsystem.component.TitleWithDescription
-import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.core.designsystem.theme.CustomColorProvider
 import com.yjy.core.ui.DevicePreviews
@@ -189,36 +180,6 @@ private fun SignUpPasswordTextField(
         ),
         placeholderText = stringResource(id = SignUpStrings.feature_signup_input_password_place_holder),
     )
-}
-
-@Composable
-private fun ConditionIndicator(
-    text: String,
-    isMatched: Boolean,
-    modifier: Modifier = Modifier,
-    unMatchColor: Color = CustomColorProvider.colorScheme.disable,
-    matchColor: Color = CustomColorProvider.colorScheme.brand,
-) {
-    val icon = if (isMatched) ChallengeTogetherIcons.Check else ChallengeTogetherIcons.UnCheck
-    val color = if (isMatched) matchColor else unMatchColor
-
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.padding(top = 8.dp),
-    ) {
-        Icon(
-            painter = painterResource(id = icon),
-            contentDescription = text,
-            tint = color,
-            modifier = Modifier.size(16.dp),
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(
-            text = text,
-            color = color,
-            style = MaterialTheme.typography.labelSmall,
-        )
-    }
 }
 
 @DevicePreviews
