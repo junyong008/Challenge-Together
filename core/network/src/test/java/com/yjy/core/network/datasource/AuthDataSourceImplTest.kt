@@ -61,8 +61,9 @@ class AuthDataSourceTest {
         mockWebServer.shutdown()
     }
 
+    // 세션을 받아오는 경우의 수: emailLogin, signUp, verifyCode
     @Test
-    fun `email login should save session ID from response to session manager`() = runTest {
+    fun `emailLogin should save session ID when session id is in header`() = runTest {
         // Given
         val sessionId = "test-session-id"
         val mockResponse = MockResponse()
@@ -81,7 +82,7 @@ class AuthDataSourceTest {
     }
 
     @Test
-    fun `signUp should save session ID from response to session manager`() = runTest {
+    fun `signUp should save session ID when session id is in header`() = runTest {
         // Given
         val sessionId = "test-session-id"
         val mockResponse = MockResponse()
@@ -97,6 +98,25 @@ class AuthDataSourceTest {
             kakaoId = "",
             googleId = "",
             naverId = "",
+        )
+
+        // Then
+        coVerify { sessionManager.setSessionToken(sessionId) }
+    }
+
+    @Test
+    fun `verifyCode should save session ID when session id is in header`() = runTest {
+        // Given
+        val sessionId = "test-session-id"
+        val mockResponse = MockResponse()
+            .setResponseCode(OK)
+            .addHeader("X-Session-ID", sessionId)
+        mockWebServer.enqueue(mockResponse)
+
+        // When
+        authDataSource.verifyCode(
+            email = "test@example.com",
+            verifyCode = "111111"
         )
 
         // Then
