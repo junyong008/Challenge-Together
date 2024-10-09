@@ -60,14 +60,14 @@ class SignUpViewModel @Inject constructor(
                 is NetworkResult.Success -> SignUpUiEvent.SignUpSuccess
 
                 is NetworkResult.Failure.NetworkError ->
-                    SignUpUiEvent.SignUpFailure.NetworkError
+                    SignUpUiEvent.Failure.NetworkError
 
                 is NetworkResult.Failure.HttpError -> when (result.code) {
-                    HttpStatusCodes.CONFLICT -> SignUpUiEvent.SignUpFailure.DuplicatedNickname
-                    else -> SignUpUiEvent.SignUpFailure.UnknownError
+                    HttpStatusCodes.CONFLICT -> SignUpUiEvent.DuplicatedNickname
+                    else -> SignUpUiEvent.Failure.UnknownError
                 }
 
-                else -> SignUpUiEvent.SignUpFailure.UnknownError
+                else -> SignUpUiEvent.Failure.UnknownError
             }
 
             sendEvent(event)
@@ -83,14 +83,14 @@ class SignUpViewModel @Inject constructor(
                 is NetworkResult.Success -> SignUpUiEvent.EmailPasswordVerified
 
                 is NetworkResult.Failure.NetworkError ->
-                    SignUpUiEvent.EmailPasswordVerifyFailure.NetworkError
+                    SignUpUiEvent.Failure.NetworkError
 
                 is NetworkResult.Failure.HttpError -> when (result.code) {
-                    HttpStatusCodes.CONFLICT -> SignUpUiEvent.EmailPasswordVerifyFailure.DuplicatedEmail
-                    else -> SignUpUiEvent.EmailPasswordVerifyFailure.UnknownError
+                    HttpStatusCodes.CONFLICT -> SignUpUiEvent.DuplicatedEmail
+                    else -> SignUpUiEvent.Failure.UnknownError
                 }
 
-                else -> SignUpUiEvent.EmailPasswordVerifyFailure.UnknownError
+                else -> SignUpUiEvent.Failure.UnknownError
             }
             sendEvent(event)
 

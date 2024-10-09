@@ -87,13 +87,13 @@ internal fun NicknameScreen(
         when (it) {
             is SignUpUiEvent.SignUpSuccess -> onSignUpSuccess()
 
-            is SignUpUiEvent.SignUpFailure.DuplicatedNickname ->
+            is SignUpUiEvent.DuplicatedNickname ->
                 onShowSnackbar(SnackbarType.ERROR, duplicatedNicknameMessage)
 
-            is SignUpUiEvent.SignUpFailure.NetworkError ->
+            is SignUpUiEvent.Failure.NetworkError ->
                 onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
 
-            is SignUpUiEvent.SignUpFailure.UnknownError ->
+            is SignUpUiEvent.Failure.UnknownError ->
                 onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
 
             else -> Unit

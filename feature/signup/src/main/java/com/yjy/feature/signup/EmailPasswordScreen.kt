@@ -84,13 +84,13 @@ internal fun EmailPasswordScreen(
         when (it) {
             is SignUpUiEvent.EmailPasswordVerified -> onContinue()
 
-            is SignUpUiEvent.EmailPasswordVerifyFailure.DuplicatedEmail ->
+            is SignUpUiEvent.DuplicatedEmail ->
                 onShowSnackbar(SnackbarType.ERROR, duplicatedEmailMessage)
 
-            is SignUpUiEvent.EmailPasswordVerifyFailure.NetworkError ->
+            is SignUpUiEvent.Failure.NetworkError ->
                 onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
 
-            is SignUpUiEvent.EmailPasswordVerifyFailure.UnknownError ->
+            is SignUpUiEvent.Failure.UnknownError ->
                 onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
 
             else -> Unit
