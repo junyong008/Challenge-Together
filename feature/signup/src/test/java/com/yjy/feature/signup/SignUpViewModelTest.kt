@@ -1,5 +1,8 @@
 package com.yjy.feature.signup
 
+import com.yjy.core.common.constants.AuthConst.MAX_EMAIL_LENGTH
+import com.yjy.core.common.constants.AuthConst.MAX_PASSWORD_LENGTH
+import com.yjy.core.common.network.HttpStatusCodes
 import com.yjy.core.common.network.NetworkResult
 import com.yjy.core.data.repository.AuthRepository
 import com.yjy.feature.signup.model.SignUpUiAction
@@ -264,4 +267,106 @@ class SignUpViewModelTest {
             actual = updatedState.canTryStart,
         )
     }
+
+    @Test
+    fun `signUp should handle network error`() = runTest {
+        // Given
+        val email = "test@example.com"
+        val password = "Password123"
+        val nickname = "testUser"
+        val throwable = Throwable("Network error")
+        coEvery { authRepository.signUp(any(), any(), any(), any(), any(), any()) } returns NetworkResult.Failure.NetworkError(throwable)
+
+        // When
+        viewModel.processAction(
+            SignUpUiAction.OnStartClick(
+                nickname = nickname,
+                email = email,
+                password = password,
+            ),
+        )
+
+        // Then
+        val event = viewModel.uiEvent.first()
+        assertEquals(
+            expected = SignUpUiEvent.Failure.NetworkError,
+            actual = event,
+        )
+    }
+
+    @Test
+    fun `signUp should handle duplicated nickname`() = runTest {
+        // Given
+        val email = "test@example.com"
+        val password = "Password123"
+        val nickname = "testUser"
+        coEvery { authRepository.signUp(any(), any(), any(), any(), any(), any()) } returns NetworkResult.Failure.HttpError(
+            HttpStatusCodes.CONFLICT, null, "")
+
+        // When
+        viewModel.processAction(
+            SignUpUiAction.OnStartClick(
+                nickname = nickname,
+                email = email,
+                password = password,
+            ),
+        )
+
+        // Then
+        val event = viewModel.uiEvent.first()
+        assertEquals(
+            expected = SignUpUiEvent.DuplicatedNickname,
+            actual = event,
+        )
+    }
+
+    @Test
+    fun `checkEmailDuplicate should handle duplicated email`() = runTest {
+        // Given
+        val email = "duplicate@example.com"
+        coEvery { authRepository.checkEmailDuplicate(email) } returns NetworkResult.Failure.HttpError(HttpStatusCodes.CONFLICT, null, "")
+
+        // When
+        viewModel.processAction(SignUpUiAction.OnEmailPasswordContinueClick(email))
+
+        // Then
+        val event = viewModel.uiEvent.first()
+        assertEquals(
+            expected = SignUpUiEvent.DuplicatedEmail,
+            actual = event,
+        )
+    }
+
+    @Test
+    fun `updateEmail should not update when email exceeds max length`() = runTest {
+        // Given
+        val longEmail = "a".repeat(MAX_EMAIL_LENGTH + 1) + "@example.com"
+
+        // When
+        viewModel.processAction(SignUpUiAction.OnEmailUpdated(longEmail))
+
+        // Then
+        val updatedState = viewModel.uiState.first()
+        assertEquals(
+            expected = "",
+            actual = updatedState.email,
+        )
+    }
+
+    @Test
+    fun `updatePassword should not update when password exceeds max length`() = runTest {
+        // Given
+        val longPassword = "a".repeat(MAX_PASSWORD_LENGTH + 1)
+
+        // When
+        viewModel.processAction(SignUpUiAction.OnPasswordUpdated(longPassword))
+
+        // Then
+        val updatedState = viewModel.uiState.first()
+        assertEquals(
+            expected = "",
+            actual = updatedState.password,
+        )
+    }
+
 }
