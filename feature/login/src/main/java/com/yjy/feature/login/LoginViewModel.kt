@@ -42,7 +42,7 @@ class LoginViewModel @Inject constructor(
                     }
                 },
                 onNetworkError = { LoginUiEvent.LoginFailure.NetworkError },
-                onUnknownError = { LoginUiEvent.LoginFailure.UnknownError }
+                onUnknownError = { LoginUiEvent.LoginFailure.UnknownError },
             )
             sendEvent(event)
             updateState { copy(isLoading = false) }

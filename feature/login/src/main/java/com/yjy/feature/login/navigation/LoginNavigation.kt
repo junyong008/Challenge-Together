@@ -11,11 +11,13 @@ typealias LoginStrings = R.string
 
 fun NavGraphBuilder.loginScreen(
     onSignUpClick: () -> Unit,
+    onFindPasswordClick: () -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     composable<Route.Login> {
         LoginRoute(
             onSignUpClick = onSignUpClick,
+            onFindPasswordClick = onFindPasswordClick,
             onShowSnackbar = onShowSnackbar,
         )
     }

@@ -58,6 +58,7 @@ import kotlinx.coroutines.flow.flowOf
 internal fun LoginRoute(
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     onSignUpClick: () -> Unit,
+    onFindPasswordClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
@@ -69,6 +70,7 @@ internal fun LoginRoute(
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onSignUpClick = onSignUpClick,
+        onFindPasswordClick = onFindPasswordClick,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -80,6 +82,7 @@ internal fun LoginScreen(
     uiEvent: Flow<LoginUiEvent> = flowOf(),
     processAction: (LoginUiAction) -> Unit = {},
     onSignUpClick: () -> Unit = {},
+    onFindPasswordClick: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val loginSuccessMessage = stringResource(id = LoginStrings.feature_login_login_success)
@@ -163,7 +166,7 @@ internal fun LoginScreen(
         }
         Spacer(modifier = Modifier.height(8.dp))
         FindPasswordAndSignUp(
-            onFindPasswordClick = {},
+            onFindPasswordClick = onFindPasswordClick,
             onSignUpClick = onSignUpClick,
             enabled = !uiState.isLoading
         )

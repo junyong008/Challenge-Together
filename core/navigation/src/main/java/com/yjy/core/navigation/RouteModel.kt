@@ -18,4 +18,13 @@ sealed interface Route {
             val naverId: String = "",
         ) : Route
     }
+
+    @Serializable
+    data object FindPassword {
+        @Serializable
+        data object InputEmail : Route
+
+        @Serializable
+        data object VerifyCode : Route
+    }
 }

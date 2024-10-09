@@ -37,6 +37,16 @@ internal class AuthRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun requestVerifyCode(email: String): NetworkResult<Unit> =
+        authDataSource.requestVerifyCode(email)
+
+    override suspend fun verifyCode(email: String, verifyCode: String): NetworkResult<Unit> {
+        return authDataSource.verifyCode(
+            email = email,
+            verifyCode = verifyCode,
+        )
+    }
+
     private fun hashPassword(password: String): String {
         val bytes = password.toByteArray()
         val md = MessageDigest.getInstance("SHA-256")

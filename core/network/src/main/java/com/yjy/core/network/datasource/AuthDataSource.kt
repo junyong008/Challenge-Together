@@ -16,4 +16,8 @@ interface AuthDataSource {
         googleId: String,
         naverId: String,
     ): NetworkResult<Unit>
+
+    suspend fun requestVerifyCode(email: String): NetworkResult<Unit>
+
+    suspend fun verifyCode(email: String, verifyCode: String): NetworkResult<Unit>
 }

@@ -57,7 +57,7 @@ class SignUpViewModel @Inject constructor(
                     }
                 },
                 onNetworkError = { SignUpUiEvent.Failure.NetworkError },
-                onUnknownError = { SignUpUiEvent.Failure.UnknownError }
+                onUnknownError = { SignUpUiEvent.Failure.UnknownError },
             )
             sendEvent(event)
             updateState { copy(isSigningUp = false) }
