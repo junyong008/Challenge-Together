@@ -27,4 +27,7 @@ sealed interface Route {
         @Serializable
         data object VerifyCode : Route
     }
+
+    @Serializable
+    data object ChangePassword : Route
 }

@@ -6,9 +6,12 @@ import androidx.navigation.compose.NavHost
 import com.yjy.challengetogether.ui.ChallengeTogetherAppState
 import com.yjy.core.designsystem.component.SnackbarType
 import com.yjy.core.navigation.Route
+import com.yjy.feature.changepassword.navigation.changePasswordScreen
+import com.yjy.feature.changepassword.navigation.navigateToChangePassword
 import com.yjy.feature.findpassword.navigation.findPasswordNavGraph
 import com.yjy.feature.findpassword.navigation.navigateToFindPassword
 import com.yjy.feature.login.navigation.loginScreen
+import com.yjy.feature.login.navigation.navigateToLogin
 import com.yjy.feature.signup.navigation.navigateToSignUp
 import com.yjy.feature.signup.navigation.signUpNavGraph
 
@@ -26,6 +29,7 @@ fun ChallengeTogetherNavHost(
         modifier = modifier,
     ) {
         loginScreen(
+            onLoginSuccess = {},
             onSignUpClick = navController::navigateToSignUp,
             onFindPasswordClick = navController::navigateToFindPassword,
             onShowSnackbar = onShowSnackbar,
@@ -37,7 +41,15 @@ fun ChallengeTogetherNavHost(
         )
         findPasswordNavGraph(
             navController = navController,
-            onVerifySuccess = {},
+            onVerifySuccess = {
+                navController.popBackStack(route = Route.FindPassword, inclusive = true)
+                navController.navigateToChangePassword()
+            },
+            onShowSnackbar = onShowSnackbar,
+        )
+        changePasswordScreen(
+            onBackClick = navController::popBackStack,
+            onPasswordChanged = navController::navigateToLogin,
             onShowSnackbar = onShowSnackbar,
         )
     }

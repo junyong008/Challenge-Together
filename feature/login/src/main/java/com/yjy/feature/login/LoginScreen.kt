@@ -57,6 +57,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun LoginRoute(
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
+    onLoginSuccess: () -> Unit,
     onSignUpClick: () -> Unit,
     onFindPasswordClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -69,6 +70,7 @@ internal fun LoginRoute(
         uiState = uiState,
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
+        onLoginSuccess = onLoginSuccess,
         onSignUpClick = onSignUpClick,
         onFindPasswordClick = onFindPasswordClick,
         onShowSnackbar = onShowSnackbar,
@@ -81,6 +83,7 @@ internal fun LoginScreen(
     uiState: LoginUiState = LoginUiState(),
     uiEvent: Flow<LoginUiEvent> = flowOf(),
     processAction: (LoginUiAction) -> Unit = {},
+    onLoginSuccess: () -> Unit = {},
     onSignUpClick: () -> Unit = {},
     onFindPasswordClick: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
@@ -92,8 +95,10 @@ internal fun LoginScreen(
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is LoginUiEvent.LoginSuccess ->
+            is LoginUiEvent.LoginSuccess -> {
                 onShowSnackbar(SnackbarType.SUCCESS, loginSuccessMessage)
+                onLoginSuccess()
+            }
 
             is LoginUiEvent.LoginFailure.UserNotFound ->
                 onShowSnackbar(SnackbarType.ERROR, userNotFoundMessage)

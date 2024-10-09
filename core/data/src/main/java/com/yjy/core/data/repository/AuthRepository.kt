@@ -13,11 +13,9 @@ interface AuthRepository {
         naverId: String = "",
     ): NetworkResult<Unit>
 
-    suspend fun checkEmailDuplicate(email: String): NetworkResult<Unit>
-
     suspend fun emailLogin(email: String, password: String): NetworkResult<Unit>
-
+    suspend fun checkEmailDuplicate(email: String): NetworkResult<Unit>
     suspend fun requestVerifyCode(email: String): NetworkResult<Unit>
-
     suspend fun verifyCode(email: String, verifyCode: String): NetworkResult<Unit>
+    suspend fun changePassword(password: String): NetworkResult<Unit>
 }

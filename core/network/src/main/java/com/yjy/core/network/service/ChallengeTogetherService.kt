@@ -1,6 +1,7 @@
 package com.yjy.core.network.service
 
 import com.yjy.core.common.network.NetworkResult
+import com.yjy.core.network.request.ChangePasswordRequest
 import com.yjy.core.network.request.EmailLoginRequest
 import com.yjy.core.network.request.EmailRequest
 import com.yjy.core.network.request.SignUpRequest
@@ -35,5 +36,10 @@ internal interface ChallengeTogetherService {
     @POST("auth/check-verify-code")
     suspend fun verifyCode(
         @Body request: VerifyRequest,
+    ): NetworkResult<Unit>
+
+    @POST("auth/change-password")
+    suspend fun changePassword(
+        @Body request: ChangePasswordRequest,
     ): NetworkResult<Unit>
 }

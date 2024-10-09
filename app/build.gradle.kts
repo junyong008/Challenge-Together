@@ -44,6 +44,7 @@ dependencies {
         projects.feature.login,
         projects.feature.signup,
         projects.feature.findpassword,
+        projects.feature.changepassword,
 
         libs.androidx.core.splashscreen,
         libs.androidx.navigation.compose,

@@ -53,6 +53,7 @@ fun NavGraphBuilder.findPasswordNavGraph(
 
         composable<Route.FindPassword.VerifyCode>(
             enterTransition = { slideInToLeft() },
+            exitTransition = { slideOutToLeft() },
             popExitTransition = { slideOutToRight() },
         ) { entry ->
             val viewModel = entry.sharedViewModel<FindPasswordViewModel>(navController)

@@ -1,6 +1,6 @@
 package com.yjy.core.network.interceptor
 
-import com.yjy.core.common.network.HttpStatusCodes.UNAUTHORIZED
+import com.yjy.core.common.network.HttpStatusCodes.SESSION_EXPIRED
 import com.yjy.core.network.util.SessionManager
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -16,18 +16,20 @@ internal class SessionInterceptor @Inject constructor(
         val requestBuilder = chain.request().newBuilder()
 
         val savedSessionToken = runBlocking { sessionManager.getSessionToken() }
-        savedSessionToken?.let {
-            requestBuilder.addHeader("X-Session-ID", it)
-            Timber.d("savedSessionToken: $savedSessionToken")
+        if (savedSessionToken != null) {
+            requestBuilder.addHeader("X-Session-ID", savedSessionToken)
+            Timber.d("sendSessionToken: $savedSessionToken")
         }
 
         val response = chain.proceed(requestBuilder.build())
+        val newToken = response.headers["X-Session-ID"]
 
-        if (response.code == UNAUTHORIZED) {
+        if (response.code == SESSION_EXPIRED) {
             clearSession()
             Timber.d("clearSessionToken")
-        } else {
-            val newToken = response.headers["X-Session-ID"]
+        }
+
+        if (!newToken.isNullOrBlank()) {
             updateSessionToken(newToken)
             Timber.d("newSessionToken: $newToken")
         }

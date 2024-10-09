@@ -38,4 +38,5 @@ include(
     ":feature:login",
     ":feature:signup",
     ":feature:findpassword",
+    ":feature:changepassword",
 )

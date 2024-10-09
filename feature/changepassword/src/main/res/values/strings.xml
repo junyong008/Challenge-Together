@@ -1,0 +1,16 @@
+<resources>
+    <string name="feature_changepassword_title">Change Password</string>
+    <string name="feature_changepassword_description">Please follow the rules below when creating your password.</string>
+    <string name="feature_changepassword_lock_image_description">Lock Icon Image</string>
+    <string name="feature_changepassword_input_password_place_holder">New Password</string>
+    <string name="feature_changepassword_password_length_indicator">Password must be at least %1$d characters long</string>
+    <string name="feature_changepassword_password_number_indicator">Password must contain at least one number</string>
+    <string name="feature_changepassword_confirm">Confirm</string>
+    <string name="feature_changepassword_change">Change</string>
+    <string name="feature_changepassword_confirm_info">Do you want to change your password?</string>
+    <string name="feature_changepassword_back">Back</string>
+    <string name="feature_changepassword_cancel_prompt">Do you want to cancel the password change?</string>
+    <string name="feature_changepassword_success">Your password has been changed.</string>
+    <string name="feature_changepassword_error">An error occurred. Please try again later.</string>
+    <string name="feature_changepassword_check_network_connection">Please check your network connection.</string>
+</resources>
