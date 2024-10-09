@@ -7,15 +7,19 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.yjy.challengetogether.navigation.ChallengeTogetherNavHost
 import com.yjy.core.designsystem.component.ChallengeTogetherBackground
 import com.yjy.core.designsystem.component.CustomSnackbarHost
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ChallengeTogetherApp(
     appState: ChallengeTogetherAppState = rememberChallengeTogetherAppState(),
+    snackbarScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -30,12 +34,14 @@ fun ChallengeTogetherApp(
                 ChallengeTogetherNavHost(
                     appState = appState,
                     onShowSnackbar = { type, message ->
-                        snackbarHostState.currentSnackbarData?.dismiss()
-                        snackbarHostState.showSnackbar(
-                            message = message,
-                            actionLabel = type.name,
-                            duration = SnackbarDuration.Short,
-                        )
+                        snackbarScope.launch {
+                            snackbarHostState.currentSnackbarData?.dismiss()
+                            snackbarHostState.showSnackbar(
+                                message = message,
+                                actionLabel = type.name,
+                                duration = SnackbarDuration.Short,
+                            )
+                        }
                     },
                 )
             }
