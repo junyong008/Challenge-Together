@@ -1,6 +1,8 @@
 package com.yjy.core.data.repository
 
 import com.yjy.core.common.network.NetworkResult
+import com.yjy.core.datastore.SessionDataSource
+import com.yjy.core.datastore.UserPreferencesDataSource
 import com.yjy.core.network.datasource.AuthDataSource
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -13,12 +15,21 @@ import kotlin.test.assertEquals
 class AuthRepositoryImplTest {
 
     private lateinit var authDataSource: AuthDataSource
+    private lateinit var sessionDataSource: SessionDataSource
+    private lateinit var userPreferencesDataSource: UserPreferencesDataSource
     private lateinit var authRepository: AuthRepositoryImpl
 
     @Before
     fun setup() {
         authDataSource = mockk()
-        authRepository = AuthRepositoryImpl(authDataSource)
+        sessionDataSource = mockk()
+        userPreferencesDataSource = mockk()
+
+        authRepository = AuthRepositoryImpl(
+            authDataSource = authDataSource,
+            sessionDataSource = sessionDataSource,
+            userPreferencesDataSource = userPreferencesDataSource,
+        )
     }
 
     @Test
@@ -30,12 +41,14 @@ class AuthRepositoryImplTest {
         coEvery {
             authDataSource.emailLogin(email, hashedPassword)
         } returns NetworkResult.Success(Unit)
+        coEvery { userPreferencesDataSource.setLoggedIn(any()) } returns Unit
 
         // When
         val result = authRepository.emailLogin(email, password)
 
         // Then
         coVerify { authDataSource.emailLogin(email, hashedPassword) }
+        coVerify { userPreferencesDataSource.setLoggedIn(true) }
         assertEquals(NetworkResult.Success(Unit), result)
     }
 
@@ -66,12 +79,33 @@ class AuthRepositoryImplTest {
         coEvery {
             authDataSource.signUp(nickname, email, hashedPassword, kakaoId, googleId, naverId)
         } returns NetworkResult.Success(Unit)
+        coEvery { userPreferencesDataSource.setLoggedIn(any()) } returns Unit
 
         // When
         val result = authRepository.signUp(nickname, email, password, kakaoId, googleId, naverId)
 
         // Then
         coVerify { authDataSource.signUp(nickname, email, hashedPassword, kakaoId, googleId, naverId) }
+        coVerify { userPreferencesDataSource.setLoggedIn(true) }
+        assertEquals(NetworkResult.Success(Unit), result)
+    }
+
+    @Test
+    fun `changePassword should update session and user preferences on success`() = runTest {
+        // Given
+        val password = "password123"
+        val hashedPassword = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"
+        coEvery { authDataSource.changePassword(hashedPassword) } returns NetworkResult.Success(Unit)
+        coEvery { sessionDataSource.setToken(any()) } returns Unit
+        coEvery { userPreferencesDataSource.setLoggedIn(any()) } returns Unit
+
+        // When
+        val result = authRepository.changePassword(password)
+
+        // Then
+        coVerify { authDataSource.changePassword(hashedPassword) }
+        coVerify { sessionDataSource.setToken(null) }
+        coVerify { userPreferencesDataSource.setLoggedIn(false) }
         assertEquals(NetworkResult.Success(Unit), result)
     }
 }
