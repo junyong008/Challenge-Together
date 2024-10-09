@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.yjy.core.common.constants.AuthConst.MAX_EMAIL_LENGTH
 import com.yjy.core.common.constants.AuthConst.MAX_PASSWORD_LENGTH
 import com.yjy.core.common.network.HttpStatusCodes
-import com.yjy.core.common.network.NetworkResult
+import com.yjy.core.common.network.handleNetworkResult
 import com.yjy.core.common.ui.BaseViewModel
 import com.yjy.core.data.repository.AuthRepository
 import com.yjy.feature.login.model.LoginUiAction
@@ -32,19 +32,18 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             updateState { copy(isLoading = true) }
 
-            val event = when (val result = authRepository.emailLogin(email, password)) {
-                is NetworkResult.Success -> LoginUiEvent.LoginSuccess
-
-                is NetworkResult.Failure.NetworkError -> LoginUiEvent.LoginFailure.NetworkError
-
-                is NetworkResult.Failure.HttpError -> when (result.code) {
-                    HttpStatusCodes.UNAUTHORIZED -> LoginUiEvent.LoginFailure.UserNotFound
-                    else -> LoginUiEvent.LoginFailure.UnknownError
-                }
-
-                is NetworkResult.Failure -> LoginUiEvent.LoginFailure.UnknownError
-            }
-
+            val event = handleNetworkResult(
+                result = authRepository.emailLogin(email, password),
+                onSuccess = { LoginUiEvent.LoginSuccess },
+                onHttpError = { code ->
+                    when (code) {
+                        HttpStatusCodes.UNAUTHORIZED -> LoginUiEvent.LoginFailure.UserNotFound
+                        else -> LoginUiEvent.LoginFailure.UnknownError
+                    }
+                },
+                onNetworkError = { LoginUiEvent.LoginFailure.NetworkError },
+                onUnknownError = { LoginUiEvent.LoginFailure.UnknownError }
+            )
             sendEvent(event)
             updateState { copy(isLoading = false) }
         }

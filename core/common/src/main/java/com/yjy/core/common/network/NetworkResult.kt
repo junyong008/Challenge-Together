@@ -10,3 +10,18 @@ sealed interface NetworkResult<out T> {
         data class UnknownApiError(val throwable: Throwable) : Failure
     }
 }
+
+inline fun <T, E> handleNetworkResult(
+    result: NetworkResult<T>,
+    onSuccess: (T) -> E,
+    onHttpError: (Int) -> E,
+    onNetworkError: () -> E,
+    onUnknownError: () -> E,
+): E {
+    return when (result) {
+        is NetworkResult.Success -> onSuccess(result.data)
+        is NetworkResult.Failure.HttpError -> onHttpError(result.code)
+        is NetworkResult.Failure.NetworkError -> onNetworkError()
+        is NetworkResult.Failure.UnknownApiError -> onUnknownError()
+    }
+}

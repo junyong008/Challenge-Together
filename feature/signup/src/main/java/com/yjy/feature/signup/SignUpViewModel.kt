@@ -10,7 +10,7 @@ import com.yjy.core.common.constants.AuthConst.MAX_PASSWORD_LENGTH
 import com.yjy.core.common.constants.AuthConst.MIN_NICKNAME_LENGTH
 import com.yjy.core.common.constants.AuthConst.MIN_PASSWORD_LENGTH
 import com.yjy.core.common.network.HttpStatusCodes
-import com.yjy.core.common.network.NetworkResult
+import com.yjy.core.common.network.handleNetworkResult
 import com.yjy.core.common.ui.BaseViewModel
 import com.yjy.core.data.repository.AuthRepository
 import com.yjy.core.navigation.Route
@@ -47,29 +47,18 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             updateState { copy(isSigningUp = true) }
 
-            val result = authRepository.signUp(
-                nickname = nickname,
-                email = email,
-                password = password,
-                kakaoId = kakaoId,
-                googleId = googleId,
-                naverId = naverId,
+            val event = handleNetworkResult(
+                result = authRepository.signUp(nickname, email, password, kakaoId, googleId, naverId),
+                onSuccess = { SignUpUiEvent.SignUpSuccess },
+                onHttpError = { code ->
+                    when (code) {
+                        HttpStatusCodes.CONFLICT -> SignUpUiEvent.DuplicatedNickname
+                        else -> SignUpUiEvent.Failure.UnknownError
+                    }
+                },
+                onNetworkError = { SignUpUiEvent.Failure.NetworkError },
+                onUnknownError = { SignUpUiEvent.Failure.UnknownError }
             )
-
-            val event = when (result) {
-                is NetworkResult.Success -> SignUpUiEvent.SignUpSuccess
-
-                is NetworkResult.Failure.NetworkError ->
-                    SignUpUiEvent.Failure.NetworkError
-
-                is NetworkResult.Failure.HttpError -> when (result.code) {
-                    HttpStatusCodes.CONFLICT -> SignUpUiEvent.DuplicatedNickname
-                    else -> SignUpUiEvent.Failure.UnknownError
-                }
-
-                else -> SignUpUiEvent.Failure.UnknownError
-            }
-
             sendEvent(event)
             updateState { copy(isSigningUp = false) }
         }
@@ -79,21 +68,19 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             updateState { copy(isValidatingEmail = true) }
 
-            val event = when (val result = authRepository.checkEmailDuplicate(email)) {
-                is NetworkResult.Success -> SignUpUiEvent.EmailPasswordVerified
-
-                is NetworkResult.Failure.NetworkError ->
-                    SignUpUiEvent.Failure.NetworkError
-
-                is NetworkResult.Failure.HttpError -> when (result.code) {
-                    HttpStatusCodes.CONFLICT -> SignUpUiEvent.DuplicatedEmail
-                    else -> SignUpUiEvent.Failure.UnknownError
-                }
-
-                else -> SignUpUiEvent.Failure.UnknownError
-            }
+            val event = handleNetworkResult(
+                result = authRepository.checkEmailDuplicate(email),
+                onSuccess = { SignUpUiEvent.EmailPasswordVerified },
+                onHttpError = { code ->
+                    when (code) {
+                        HttpStatusCodes.CONFLICT -> SignUpUiEvent.DuplicatedEmail
+                        else -> SignUpUiEvent.Failure.UnknownError
+                    }
+                },
+                onNetworkError = { SignUpUiEvent.Failure.NetworkError },
+                onUnknownError = { SignUpUiEvent.Failure.UnknownError },
+            )
             sendEvent(event)
-
             updateState { copy(isValidatingEmail = false) }
         }
     }
