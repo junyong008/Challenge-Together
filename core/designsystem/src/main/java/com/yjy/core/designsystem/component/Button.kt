@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import com.yjy.core.designsystem.ThemePreviews
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.core.designsystem.theme.CustomColorProvider
 

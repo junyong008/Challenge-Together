@@ -13,6 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.yjy.core.designsystem.ThemePreviews
+import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.core.designsystem.theme.CustomColorProvider
 
 @Composable
@@ -38,5 +40,18 @@ fun TitleWithDescription(
             style = descriptionStyle,
             color = descriptionColor,
         )
+    }
+}
+
+@ThemePreviews
+@Composable
+fun TitleWithDescriptionPreview() {
+    ChallengeTogetherTheme {
+        ChallengeTogetherBackground(modifier = Modifier.height(100.dp)) {
+            TitleWithDescription(
+                titleRes = android.R.string.untitled,
+                descriptionRes = android.R.string.untitled,
+            )
+        }
     }
 }

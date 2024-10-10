@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.yjy.core.designsystem.ComponentPreviews
 import com.yjy.core.designsystem.R
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
@@ -286,32 +287,32 @@ fun PasswordTextField(
     )
 }
 
-@ThemePreviews
+@ComponentPreviews
 @Composable
 fun ChallengeTogetherTextFieldPreview() {
     ChallengeTogetherTheme {
-        ChallengeTogetherBackground(modifier = Modifier.height(100.dp)) {
-            ChallengeTogetherTextField(
-                value = "",
-                onValueChange = {},
-                placeholderText = "Enter text...",
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.Lock),
-                        contentDescription = "Lock Icon",
-                    )
-                },
-                trailingIcon = {
-                    Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.Visibility),
-                        contentDescription = "Visibility Icon",
-                    )
-                },
-                singleLine = true,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-            )
-        }
+        ChallengeTogetherTextField(
+            value = "",
+            onValueChange = {},
+            placeholderText = "Enter text...",
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = ChallengeTogetherIcons.Lock),
+                    contentDescription = "Lock Icon",
+                    tint = CustomColorProvider.colorScheme.onSurface
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    painter = painterResource(id = ChallengeTogetherIcons.Visibility),
+                    contentDescription = "Visibility Icon",
+                    tint = CustomColorProvider.colorScheme.onSurface
+                )
+            },
+            singleLine = true,
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+        )
     }
 }

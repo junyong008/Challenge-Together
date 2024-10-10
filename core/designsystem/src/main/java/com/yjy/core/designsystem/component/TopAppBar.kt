@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.yjy.core.designsystem.ComponentPreviews
 import com.yjy.core.designsystem.R
 import com.yjy.core.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
@@ -62,18 +62,16 @@ fun ChallengeTogetherTopAppBar(
     }
 }
 
-@ThemePreviews
+@ComponentPreviews
 @Composable
 fun ChallengeTogetherTopAppBarPreview() {
     ChallengeTogetherTheme {
-        ChallengeTogetherBackground(modifier = Modifier.height(100.dp)) {
-            ChallengeTogetherTopAppBar(
-                titleRes = android.R.string.untitled,
-                rightContent = {
-                    Text(text = "Info", color = CustomColorProvider.colorScheme.onBackground)
-                },
-                onNavigationClick = {},
-            )
-        }
+        ChallengeTogetherTopAppBar(
+            titleRes = android.R.string.untitled,
+            rightContent = {
+                Text(text = "Info", color = CustomColorProvider.colorScheme.onBackground)
+            },
+            onNavigationClick = {},
+        )
     }
 }

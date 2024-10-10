@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.yjy.core.designsystem.ComponentPreviews
 import com.yjy.core.designsystem.R
 import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.core.designsystem.theme.CustomColorProvider
@@ -100,15 +100,13 @@ enum class SnackbarType {
     MESSAGE,
 }
 
-@ThemePreviews
+@ComponentPreviews
 @Composable
 fun PreviewCustomSnackbar() {
     ChallengeTogetherTheme {
-        ChallengeTogetherBackground(modifier = Modifier.height(100.dp)) {
-            ChallengeTogetherSnackbar(
-                snackbarType = SnackbarType.MESSAGE,
-                message = "커스텀 스낵바",
-            )
-        }
+        ChallengeTogetherSnackbar(
+            snackbarType = SnackbarType.MESSAGE,
+            message = "커스텀 스낵바",
+        )
     }
 }

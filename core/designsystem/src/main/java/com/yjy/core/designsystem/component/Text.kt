@@ -16,6 +16,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.yjy.core.designsystem.ComponentPreviews
+import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.core.designsystem.theme.CustomColorProvider
 
 @Composable
@@ -54,4 +56,12 @@ fun ClickableText(
             )
             .padding(8.dp),
     )
+}
+
+@ComponentPreviews
+@Composable
+fun ClickableTextPreview() {
+    ChallengeTogetherTheme {
+        ClickableText(text = "Clickable Text", onClick = {})
+    }
 }
