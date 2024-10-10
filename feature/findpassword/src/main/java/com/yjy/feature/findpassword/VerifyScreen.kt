@@ -81,23 +81,23 @@ internal fun VerifyScreen(
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is FindPasswordUiEvent.VerifySuccess -> {
+            FindPasswordUiEvent.VerifySuccess -> {
                 onShowSnackbar(SnackbarType.SUCCESS, verifySuccessMessage)
                 onVerifySuccess()
             }
 
-            is FindPasswordUiEvent.VerifyFailure.UnMatchedCode ->
+            FindPasswordUiEvent.VerifyFailure.UnMatchedCode ->
                 onShowSnackbar(SnackbarType.ERROR, unMatchCodeMessage)
 
-            is FindPasswordUiEvent.VerifyFailure.Timeout -> {
+            FindPasswordUiEvent.VerifyFailure.Timeout -> {
                 onShowSnackbar(SnackbarType.ERROR, timeOutMessage)
                 onBackClick()
             }
 
-            is FindPasswordUiEvent.Failure.NetworkError ->
+            FindPasswordUiEvent.Failure.NetworkError ->
                 onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
 
-            is FindPasswordUiEvent.Failure.UnknownError ->
+            FindPasswordUiEvent.Failure.UnknownError ->
                 onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
 
             else -> Unit

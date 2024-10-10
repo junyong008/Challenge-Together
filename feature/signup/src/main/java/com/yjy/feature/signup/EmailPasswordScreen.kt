@@ -73,15 +73,15 @@ internal fun EmailPasswordScreen(
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is SignUpUiEvent.EmailPasswordVerified -> onContinue()
+            SignUpUiEvent.EmailPasswordVerified -> onContinue()
 
-            is SignUpUiEvent.DuplicatedEmail ->
+            SignUpUiEvent.DuplicatedEmail ->
                 onShowSnackbar(SnackbarType.ERROR, duplicatedEmailMessage)
 
-            is SignUpUiEvent.Failure.NetworkError ->
+            SignUpUiEvent.Failure.NetworkError ->
                 onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
 
-            is SignUpUiEvent.Failure.UnknownError ->
+            SignUpUiEvent.Failure.UnknownError ->
                 onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
 
             else -> Unit

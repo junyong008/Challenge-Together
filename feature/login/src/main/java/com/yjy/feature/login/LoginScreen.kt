@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -95,18 +96,18 @@ internal fun LoginScreen(
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is LoginUiEvent.LoginSuccess -> {
+            LoginUiEvent.LoginSuccess -> {
                 onShowSnackbar(SnackbarType.SUCCESS, loginSuccessMessage)
                 onLoginSuccess()
             }
 
-            is LoginUiEvent.LoginFailure.UserNotFound ->
+            LoginUiEvent.LoginFailure.UserNotFound ->
                 onShowSnackbar(SnackbarType.ERROR, userNotFoundMessage)
 
-            is LoginUiEvent.LoginFailure.NetworkError ->
+            LoginUiEvent.LoginFailure.NetworkError ->
                 onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
 
-            is LoginUiEvent.LoginFailure.UnknownError ->
+            LoginUiEvent.LoginFailure.UnknownError ->
                 onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
         }
     }
@@ -296,11 +297,10 @@ private fun SNSLoginDivider() {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .height(0.5.dp)
-                .background(CustomColorProvider.colorScheme.onBackground),
+        HorizontalDivider(
+            modifier = Modifier.weight(1f),
+            color = CustomColorProvider.colorScheme.onBackground,
+            thickness = 0.5.dp,
         )
         Text(
             text = stringResource(id = LoginStrings.feature_login_social_login_text),
@@ -310,11 +310,10 @@ private fun SNSLoginDivider() {
             modifier = Modifier
                 .padding(horizontal = 16.dp),
         )
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .height(0.5.dp)
-                .background(CustomColorProvider.colorScheme.onBackground),
+        HorizontalDivider(
+            modifier = Modifier.weight(1f),
+            color = CustomColorProvider.colorScheme.onBackground,
+            thickness = 0.5.dp,
         )
     }
 }

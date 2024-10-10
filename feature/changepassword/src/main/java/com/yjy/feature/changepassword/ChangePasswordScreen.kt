@@ -81,17 +81,17 @@ internal fun ChangePasswordScreen(
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is ChangePasswordUiEvent.CancelChangePassword -> onBackClick()
+            ChangePasswordUiEvent.CancelChangePassword -> onBackClick()
 
-            is ChangePasswordUiEvent.ChangeSuccess -> {
+            ChangePasswordUiEvent.ChangeSuccess -> {
                 onShowSnackbar(SnackbarType.SUCCESS, changeSuccessMessage)
                 onPasswordChanged()
             }
 
-            is ChangePasswordUiEvent.Failure.NetworkError ->
+            ChangePasswordUiEvent.Failure.NetworkError ->
                 onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
 
-            is ChangePasswordUiEvent.Failure.UnknownError ->
+            ChangePasswordUiEvent.Failure.UnknownError ->
                 onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
         }
     }

@@ -78,21 +78,21 @@ internal fun InputEmailScreen(
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is FindPasswordUiEvent.VerifyCodeSent -> {
+            FindPasswordUiEvent.VerifyCodeSent -> {
                 onShowSnackbar(SnackbarType.SUCCESS, verifyCodeSentMessage)
                 onVerifyCodeSent()
             }
 
-            is FindPasswordUiEvent.SendVerifyCodeFailure.UnregisteredEmail ->
+            FindPasswordUiEvent.SendVerifyCodeFailure.UnregisteredEmail ->
                 onShowSnackbar(SnackbarType.ERROR, unRegisteredEmailMessage)
 
-            is FindPasswordUiEvent.SendVerifyCodeFailure.InvalidEmail ->
+            FindPasswordUiEvent.SendVerifyCodeFailure.InvalidEmail ->
                 onShowSnackbar(SnackbarType.ERROR, invalidEmailMessage)
 
-            is FindPasswordUiEvent.Failure.NetworkError ->
+            FindPasswordUiEvent.Failure.NetworkError ->
                 onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
 
-            is FindPasswordUiEvent.Failure.UnknownError ->
+            FindPasswordUiEvent.Failure.UnknownError ->
                 onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
 
             else -> Unit

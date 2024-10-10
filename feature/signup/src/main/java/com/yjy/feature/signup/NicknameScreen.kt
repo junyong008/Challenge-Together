@@ -86,18 +86,18 @@ internal fun NicknameScreen(
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            is SignUpUiEvent.SignUpSuccess -> {
+            SignUpUiEvent.SignUpSuccess -> {
                 onShowSnackbar(SnackbarType.SUCCESS, signUpCompleteMessage)
                 onSignUpSuccess()
             }
 
-            is SignUpUiEvent.DuplicatedNickname ->
+            SignUpUiEvent.DuplicatedNickname ->
                 onShowSnackbar(SnackbarType.ERROR, duplicatedNicknameMessage)
 
-            is SignUpUiEvent.Failure.NetworkError ->
+            SignUpUiEvent.Failure.NetworkError ->
                 onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
 
-            is SignUpUiEvent.Failure.UnknownError ->
+            SignUpUiEvent.Failure.UnknownError ->
                 onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
 
             else -> Unit
