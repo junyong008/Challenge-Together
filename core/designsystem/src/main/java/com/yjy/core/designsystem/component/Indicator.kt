@@ -51,13 +51,13 @@ fun ConditionIndicator(
 
 @ThemePreviews
 @Composable
-private fun ConditionIndicatorPreviewMatched() {
+fun ConditionIndicatorPreviewMatched() {
     ChallengeTogetherTheme {
         ChallengeTogetherBackground(modifier = Modifier.height(70.dp)) {
             ConditionIndicator(
                 text = "조건 충족",
                 isMatched = true,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             )
         }
     }
@@ -65,13 +65,13 @@ private fun ConditionIndicatorPreviewMatched() {
 
 @ThemePreviews
 @Composable
-private fun ConditionIndicatorPreviewUnmatched() {
+fun ConditionIndicatorPreviewUnmatched() {
     ChallengeTogetherTheme {
         ChallengeTogetherBackground(modifier = Modifier.height(70.dp)) {
             ConditionIndicator(
                 text = "조건 미충족",
                 isMatched = false,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             )
         }
     }

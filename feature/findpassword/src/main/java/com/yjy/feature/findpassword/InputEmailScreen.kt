@@ -128,7 +128,9 @@ internal fun InputEmailScreen(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
                 ),
-                placeholderText = stringResource(id = FindPasswordStrings.feature_findpassword_input_email_place_holder),
+                placeholderText = stringResource(
+                    id = FindPasswordStrings.feature_findpassword_input_email_place_holder,
+                ),
             )
             if (!uiState.isValidEmailFormat) {
                 Spacer(modifier = Modifier.height(4.dp))
@@ -143,7 +145,7 @@ internal fun InputEmailScreen(
             ChallengeTogetherButton(
                 onClick = {
                     processAction(
-                        FindPasswordUiAction.OnSendVerifyCodeClick(email = uiState.email)
+                        FindPasswordUiAction.OnSendVerifyCodeClick(email = uiState.email),
                     )
                 },
                 enabled = uiState.canTrySendVerifyCode && !uiState.isSendingVerifyCode,

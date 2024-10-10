@@ -112,7 +112,7 @@ class FindPasswordViewModel @Inject constructor(
 
         timerJob = viewModelScope.launch {
             while (uiState.value.minutes > 0 || uiState.value.seconds > 0) {
-                delay(1000L)
+                delay(ONE_SECOND)
                 updateState {
                     copy(
                         minutes = if (seconds == 0) minutes - 1 else minutes,
@@ -131,6 +131,7 @@ class FindPasswordViewModel @Inject constructor(
 
     companion object {
         const val VERIFY_CODE_LENGTH = 6
+        const val ONE_SECOND = 1000L
         const val TIMER_MIN = 5
         const val TIMER_SEC = 0
     }

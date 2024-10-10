@@ -173,7 +173,7 @@ internal fun LoginScreen(
         FindPasswordAndSignUp(
             onFindPasswordClick = onFindPasswordClick,
             onSignUpClick = onSignUpClick,
-            enabled = !uiState.isLoading
+            enabled = !uiState.isLoading,
         )
         Spacer(modifier = Modifier.height(100.dp))
         SNSLoginDivider()

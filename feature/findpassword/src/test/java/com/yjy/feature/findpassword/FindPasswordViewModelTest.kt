@@ -82,7 +82,7 @@ class FindPasswordViewModelTest {
         coEvery { authRepository.requestVerifyCode(email) } returns NetworkResult.Failure.HttpError(
             HttpStatusCodes.UNAUTHORIZED,
             message = null,
-            body = ""
+            body = "",
         )
 
         // When

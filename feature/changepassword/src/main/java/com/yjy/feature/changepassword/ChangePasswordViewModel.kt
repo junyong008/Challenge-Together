@@ -42,7 +42,7 @@ class ChangePasswordViewModel @Inject constructor(
     private fun confirmExit() {
         viewModelScope.launch {
             dismissExitConfirmDialog()
-            delay(10)
+            delay(DIALOG_CLOSE_TIME)
             sendEvent(ChangePasswordUiEvent.CancelChangePassword)
         }
     }
@@ -88,5 +88,9 @@ class ChangePasswordViewModel @Inject constructor(
                 isPasswordContainNumber = isPasswordContainNumber,
             )
         }
+    }
+
+    companion object {
+        private const val DIALOG_CLOSE_TIME = 10L
     }
 }

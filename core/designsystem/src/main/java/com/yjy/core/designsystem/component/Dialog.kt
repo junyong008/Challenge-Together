@@ -42,7 +42,7 @@ fun ChallengeTogetherDialog(
         properties = DialogProperties(
             dismissOnBackPress = true,
             dismissOnClickOutside = true,
-        )
+        ),
     ) {
         Card(
             shape = MaterialTheme.shapes.large,
@@ -51,7 +51,7 @@ fun ChallengeTogetherDialog(
                 contentColor = CustomColorProvider.colorScheme.onSurface,
                 disabledContainerColor = CustomColorProvider.colorScheme.disable,
                 disabledContentColor = CustomColorProvider.colorScheme.onDisable,
-            )
+            ),
         ) {
             Column(
                 modifier = Modifier

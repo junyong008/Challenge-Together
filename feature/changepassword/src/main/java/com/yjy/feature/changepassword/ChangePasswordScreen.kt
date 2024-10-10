@@ -156,10 +156,15 @@ internal fun ChangePasswordScreen(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done,
                 ),
-                placeholderText = stringResource(id = ChangePasswordStrings.feature_changepassword_input_password_place_holder),
+                placeholderText = stringResource(
+                    id = ChangePasswordStrings.feature_changepassword_input_password_place_holder,
+                ),
             )
             ConditionIndicator(
-                text = stringResource(id = ChangePasswordStrings.feature_changepassword_password_length_indicator, MIN_PASSWORD_LENGTH),
+                text = stringResource(
+                    id = ChangePasswordStrings.feature_changepassword_password_length_indicator,
+                    MIN_PASSWORD_LENGTH,
+                ),
                 isMatched = uiState.isPasswordLongEnough,
             )
             ConditionIndicator(
@@ -172,8 +177,8 @@ internal fun ChangePasswordScreen(
                     processAction(ChangePasswordUiAction.OnChangeClick)
                 },
                 enabled = !uiState.isChangingPassword &&
-                        uiState.isPasswordLongEnough &&
-                        uiState.isPasswordContainNumber,
+                    uiState.isPasswordLongEnough &&
+                    uiState.isPasswordContainNumber,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),

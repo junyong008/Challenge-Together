@@ -27,14 +27,14 @@ inline fun <T, E> handleNetworkResult(
 }
 
 inline fun <T> NetworkResult<T>.onSuccess(
-    action: (value: T) -> Unit
+    action: (value: T) -> Unit,
 ): NetworkResult<T> {
     if (this is NetworkResult.Success) action(data)
     return this
 }
 
 inline fun <T> NetworkResult<T>.onFailure(
-    action: (error: NetworkResult.Failure) -> Unit
+    action: (error: NetworkResult.Failure) -> Unit,
 ): NetworkResult<T> {
     if (this is NetworkResult.Failure) action(this)
     return this

@@ -275,7 +275,9 @@ class SignUpViewModelTest {
         val password = "Password123"
         val nickname = "testUser"
         val throwable = Throwable("Network error")
-        coEvery { authRepository.signUp(any(), any(), any(), any(), any(), any()) } returns NetworkResult.Failure.NetworkError(throwable)
+        coEvery {
+            authRepository.signUp(any(), any(), any(), any(), any(), any())
+        } returns NetworkResult.Failure.NetworkError(throwable)
 
         // When
         viewModel.processAction(
@@ -300,8 +302,9 @@ class SignUpViewModelTest {
         val email = "test@example.com"
         val password = "Password123"
         val nickname = "testUser"
-        coEvery { authRepository.signUp(any(), any(), any(), any(), any(), any()) } returns NetworkResult.Failure.HttpError(
-            HttpStatusCodes.CONFLICT, null, "")
+        coEvery {
+            authRepository.signUp(any(), any(), any(), any(), any(), any())
+        } returns NetworkResult.Failure.HttpError(HttpStatusCodes.CONFLICT, null, "")
 
         // When
         viewModel.processAction(
@@ -324,7 +327,9 @@ class SignUpViewModelTest {
     fun `checkEmailDuplicate should handle duplicated email`() = runTest {
         // Given
         val email = "duplicate@example.com"
-        coEvery { authRepository.checkEmailDuplicate(email) } returns NetworkResult.Failure.HttpError(HttpStatusCodes.CONFLICT, null, "")
+        coEvery {
+            authRepository.checkEmailDuplicate(email)
+        } returns NetworkResult.Failure.HttpError(HttpStatusCodes.CONFLICT, null, "")
 
         // When
         viewModel.processAction(SignUpUiAction.OnEmailPasswordContinueClick(email))
@@ -368,5 +373,4 @@ class SignUpViewModelTest {
             actual = updatedState.password,
         )
     }
-
 }

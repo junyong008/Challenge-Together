@@ -116,7 +116,7 @@ class AuthDataSourceTest {
         // When
         authDataSource.verifyCode(
             email = "test@example.com",
-            verifyCode = "111111"
+            verifyCode = "111111",
         )
 
         // Then

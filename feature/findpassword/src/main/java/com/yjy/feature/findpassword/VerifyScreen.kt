@@ -194,7 +194,7 @@ private fun VerifyCodeTextField(
             }
         },
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number
+            keyboardType = KeyboardType.Number,
         ),
     )
 }
