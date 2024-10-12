@@ -2,12 +2,12 @@ package com.yjy.feature.login
 
 import androidx.core.util.PatternsCompat.EMAIL_ADDRESS
 import androidx.lifecycle.viewModelScope
-import com.yjy.core.common.constants.AuthConst.MAX_EMAIL_LENGTH
-import com.yjy.core.common.constants.AuthConst.MAX_PASSWORD_LENGTH
-import com.yjy.core.common.network.HttpStatusCodes
-import com.yjy.core.common.network.handleNetworkResult
-import com.yjy.core.common.ui.BaseViewModel
-import com.yjy.core.data.repository.AuthRepository
+import com.yjy.common.core.constants.AuthConst.MAX_EMAIL_LENGTH
+import com.yjy.common.core.constants.AuthConst.MAX_PASSWORD_LENGTH
+import com.yjy.common.core.ui.BaseViewModel
+import com.yjy.common.network.HttpStatusCodes
+import com.yjy.common.network.handleNetworkResult
+import com.yjy.data.auth.api.AuthRepository
 import com.yjy.feature.login.model.LoginUiAction
 import com.yjy.feature.login.model.LoginUiEvent
 import com.yjy.feature.login.model.LoginUiState

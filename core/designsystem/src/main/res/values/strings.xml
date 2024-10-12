@@ -1,9 +1,0 @@
-<resources>
-    <string name="core_designsystem_app_bar_back">Back</string>
-    <string name="core_designsystem_app_bar_continue">Continue</string>
-    <string name="core_designsystem_clear_content_description">Clear Contents</string>
-    <string name="core_designsystem_input_password_show_content_description">Show Password</string>
-    <string name="core_designsystem_input_password_hide_content_description">Hide Password</string>
-    <string name="core_designsystem_dialog_confirm">Confirm</string>
-    <string name="core_designsystem_dialog_cancel">Cancel</string>
-</resources>

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Challenge Together</string>
     <string name="app_name_debug">Debug Challenge Together</string>
+    <string name="session_expired">Session has expired.</string>
 </resources>

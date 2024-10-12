@@ -1,11 +1,11 @@
 package com.yjy.feature.changepassword
 
 import androidx.lifecycle.viewModelScope
-import com.yjy.core.common.constants.AuthConst.MAX_PASSWORD_LENGTH
-import com.yjy.core.common.constants.AuthConst.MIN_PASSWORD_LENGTH
-import com.yjy.core.common.network.handleNetworkResult
-import com.yjy.core.common.ui.BaseViewModel
-import com.yjy.core.data.repository.AuthRepository
+import com.yjy.common.core.constants.AuthConst.MAX_PASSWORD_LENGTH
+import com.yjy.common.core.constants.AuthConst.MIN_PASSWORD_LENGTH
+import com.yjy.common.core.ui.BaseViewModel
+import com.yjy.common.network.handleNetworkResult
+import com.yjy.data.auth.api.AuthRepository
 import com.yjy.feature.changepassword.model.ChangePasswordUiAction
 import com.yjy.feature.changepassword.model.ChangePasswordUiEvent
 import com.yjy.feature.changepassword.model.ChangePasswordUiState

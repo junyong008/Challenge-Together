@@ -9,11 +9,12 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.yjy.challengetogether.ui.ChallengeTogetherApp
-import com.yjy.core.designsystem.theme.ChallengeTogetherTheme
+import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -27,10 +28,6 @@ class MainActivity : ComponentActivity() {
                         android.graphics.Color.TRANSPARENT,
                         android.graphics.Color.TRANSPARENT,
                     ) { isDarkTheme },
-                    navigationBarStyle = SystemBarStyle.auto(
-                        LIGHT_NAVIGATION_BAR_COLOR,
-                        DARK_NAVIGATION_BAR_COLOR,
-                    ) { isDarkTheme },
                 )
                 onDispose {}
             }
@@ -43,6 +40,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-private val LIGHT_NAVIGATION_BAR_COLOR = android.graphics.Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
-private val DARK_NAVIGATION_BAR_COLOR = android.graphics.Color.argb(0x80, 0x1b, 0x1b, 0x1b)

@@ -10,7 +10,8 @@ android {
 
 dependencies {
     implementations(
-        projects.core.common,
-        projects.core.data,
+        projects.common.network,
+
+        projects.data.authApi,
     )
 }

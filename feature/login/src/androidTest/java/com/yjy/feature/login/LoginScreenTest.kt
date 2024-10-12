@@ -7,7 +7,7 @@ import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.yjy.core.designsystem.component.SnackbarType
+import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.feature.login.model.LoginUiEvent
 import com.yjy.feature.login.model.LoginUiState
 import com.yjy.feature.login.navigation.LoginStrings
@@ -68,7 +68,7 @@ class LoginScreenTest {
     @Test
     fun error_event_should_trigger_error_snackbar() {
         // Given
-        val uiEvent = LoginUiEvent.LoginFailure.Error
+        val uiEvent = LoginUiEvent.LoginFailure.UnknownError
 
         // Given & When
         var isSnackbarTriggered = false
@@ -88,7 +88,7 @@ class LoginScreenTest {
         // Then
         assert(isSnackbarTriggered)
         assertEquals(SnackbarType.ERROR, snackbarType)
-        assert(snackbarMessage.contains(composeTestRule.activity.getString(LoginStrings.feature_login_error)))
+        assert(snackbarMessage.contains(composeTestRule.activity.getString(LoginStrings.feature_login_unknown_error)))
     }
 
     @Test

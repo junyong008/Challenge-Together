@@ -1,8 +1,8 @@
 package com.yjy.feature.findpassword
 
-import com.yjy.core.common.network.HttpStatusCodes
-import com.yjy.core.common.network.NetworkResult
-import com.yjy.core.data.repository.AuthRepository
+import com.yjy.common.network.HttpStatusCodes
+import com.yjy.common.network.NetworkResult
+import com.yjy.data.auth.api.AuthRepository
 import com.yjy.feature.findpassword.model.FindPasswordUiAction
 import com.yjy.feature.findpassword.model.FindPasswordUiEvent
 import io.mockk.coEvery

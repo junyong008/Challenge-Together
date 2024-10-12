@@ -4,10 +4,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.yjy.core.common.ui.NavigationAnimation.slideInToLeft
-import com.yjy.core.common.ui.NavigationAnimation.slideOutToRight
-import com.yjy.core.designsystem.component.SnackbarType
-import com.yjy.core.navigation.Route
+import com.yjy.common.core.ui.NavigationAnimation.slideInToLeft
+import com.yjy.common.core.ui.NavigationAnimation.slideOutToRight
+import com.yjy.common.designsystem.component.SnackbarType
+import com.yjy.common.navigation.Route
 import com.yjy.feature.changepassword.ChangePasswordRoute
 import com.yjy.feature.changepassword.R
 

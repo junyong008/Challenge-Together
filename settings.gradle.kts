@@ -23,18 +23,26 @@ rootProject.name = "ChallengeTogether"
 include(
     ":app",
 
-    ":core:common",
-    ":core:data",
-    ":core:database",
-    ":core:datastore",
-    ":core:designsystem",
-    ":core:domain",
-    ":core:model",
-    ":core:navigation",
-    ":core:network",
-    ":core:notifications",
-    ":core:ui",
+    ":common:core",
+    ":common:designsystem",
+    ":common:navigation",
+    ":common:network",
+    ":common:ui",
 
+    ":data:auth-api",
+    ":data:auth-impl",
+    ":data:database-api",
+    ":data:database-impl",
+    ":data:datastore-api",
+    ":data:datastore-impl",
+    ":data:network-api",
+    ":data:network-impl",
+
+    ":model",
+
+    ":navigation:auth",
+
+    ":feature:home",
     ":feature:login",
     ":feature:signup",
     ":feature:findpassword",

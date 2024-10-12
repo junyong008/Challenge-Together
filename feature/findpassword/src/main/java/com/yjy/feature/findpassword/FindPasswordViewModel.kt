@@ -2,11 +2,11 @@ package com.yjy.feature.findpassword
 
 import androidx.core.util.PatternsCompat.EMAIL_ADDRESS
 import androidx.lifecycle.viewModelScope
-import com.yjy.core.common.constants.AuthConst.MAX_EMAIL_LENGTH
-import com.yjy.core.common.network.HttpStatusCodes
-import com.yjy.core.common.network.handleNetworkResult
-import com.yjy.core.common.ui.BaseViewModel
-import com.yjy.core.data.repository.AuthRepository
+import com.yjy.common.core.constants.AuthConst.MAX_EMAIL_LENGTH
+import com.yjy.common.core.ui.BaseViewModel
+import com.yjy.common.network.HttpStatusCodes
+import com.yjy.common.network.handleNetworkResult
+import com.yjy.data.auth.api.AuthRepository
 import com.yjy.feature.findpassword.model.FindPasswordUiAction
 import com.yjy.feature.findpassword.model.FindPasswordUiEvent
 import com.yjy.feature.findpassword.model.FindPasswordUiState

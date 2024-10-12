@@ -1,7 +1,7 @@
 package com.yjy.feature.changepassword
 
-import com.yjy.core.common.network.NetworkResult
-import com.yjy.core.data.repository.AuthRepository
+import com.yjy.common.network.NetworkResult
+import com.yjy.data.auth.api.AuthRepository
 import com.yjy.feature.changepassword.model.ChangePasswordUiAction
 import com.yjy.feature.changepassword.model.ChangePasswordUiEvent
 import io.mockk.coEvery

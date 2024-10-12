@@ -1,10 +1,10 @@
 package com.yjy.feature.signup
 
-import com.yjy.core.common.constants.AuthConst.MAX_EMAIL_LENGTH
-import com.yjy.core.common.constants.AuthConst.MAX_PASSWORD_LENGTH
-import com.yjy.core.common.network.HttpStatusCodes
-import com.yjy.core.common.network.NetworkResult
-import com.yjy.core.data.repository.AuthRepository
+import com.yjy.common.core.constants.AuthConst.MAX_EMAIL_LENGTH
+import com.yjy.common.core.constants.AuthConst.MAX_PASSWORD_LENGTH
+import com.yjy.common.network.HttpStatusCodes
+import com.yjy.common.network.NetworkResult
+import com.yjy.data.auth.api.AuthRepository
 import com.yjy.feature.signup.model.SignUpUiAction
 import com.yjy.feature.signup.model.SignUpUiEvent
 import io.mockk.coEvery
