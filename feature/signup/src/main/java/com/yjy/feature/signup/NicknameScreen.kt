@@ -29,7 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.constants.AuthConst.MAX_NICKNAME_LENGTH
 import com.yjy.common.core.constants.AuthConst.MIN_NICKNAME_LENGTH
-import com.yjy.common.core.ui.ObserveAsEvents
+import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherBottomAppBar
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
@@ -52,6 +52,7 @@ import kotlinx.coroutines.flow.flowOf
 internal fun NicknameRoute(
     onBackClick: () -> Unit,
     onSignUpSuccess: () -> Unit,
+    onShowToast: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignUpViewModel = hiltViewModel(),
@@ -65,6 +66,7 @@ internal fun NicknameRoute(
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
         onSignUpSuccess = onSignUpSuccess,
+        onShowToast = onShowToast,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -77,6 +79,7 @@ internal fun NicknameScreen(
     processAction: (SignUpUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onSignUpSuccess: () -> Unit = {},
+    onShowToast: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val signUpCompleteMessage = stringResource(id = SignUpStrings.feature_signup_complete)
@@ -87,7 +90,7 @@ internal fun NicknameScreen(
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
             SignUpUiEvent.SignUpSuccess -> {
-                onShowSnackbar(SnackbarType.SUCCESS, signUpCompleteMessage)
+                onShowToast(signUpCompleteMessage)
                 onSignUpSuccess()
             }
 

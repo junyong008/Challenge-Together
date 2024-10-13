@@ -17,7 +17,7 @@ interface AuthRepository {
         naverId: String = "",
     ): NetworkResult<Unit>
 
-    suspend fun expiredSession()
+    suspend fun getIsLoggedIn(): Boolean
     suspend fun logout()
     suspend fun emailLogin(email: String, password: String): NetworkResult<Unit>
     suspend fun checkEmailDuplicate(email: String): NetworkResult<Unit>

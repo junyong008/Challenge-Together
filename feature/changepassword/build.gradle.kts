@@ -14,4 +14,5 @@ dependencies {
 
         projects.data.authApi,
     )
+    runtimeOnly(projects.data.authImpl)
 }

@@ -37,7 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.yjy.common.core.ui.ObserveAsEvents
+import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
 import com.yjy.common.designsystem.component.ClickableText
@@ -57,6 +57,7 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun LoginRoute(
+    onShowToast: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     onLoginSuccess: () -> Unit,
     onSignUpClick: () -> Unit,
@@ -74,6 +75,7 @@ internal fun LoginRoute(
         onLoginSuccess = onLoginSuccess,
         onSignUpClick = onSignUpClick,
         onFindPasswordClick = onFindPasswordClick,
+        onShowToast = onShowToast,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -87,6 +89,7 @@ internal fun LoginScreen(
     onLoginSuccess: () -> Unit = {},
     onSignUpClick: () -> Unit = {},
     onFindPasswordClick: () -> Unit = {},
+    onShowToast: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val loginSuccessMessage = stringResource(id = LoginStrings.feature_login_login_success)
@@ -97,7 +100,7 @@ internal fun LoginScreen(
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
             LoginUiEvent.LoginSuccess -> {
-                onShowSnackbar(SnackbarType.SUCCESS, loginSuccessMessage)
+                onShowToast(loginSuccessMessage)
                 onLoginSuccess()
             }
 

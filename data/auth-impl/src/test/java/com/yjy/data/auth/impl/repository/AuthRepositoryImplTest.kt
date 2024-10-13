@@ -22,8 +22,8 @@ class AuthRepositoryImplTest {
     @Before
     fun setup() {
         authDataSource = mockk()
-        sessionDataSource = mockk()
-        userPreferencesDataSource = mockk()
+        sessionDataSource = mockk(relaxed = true)
+        userPreferencesDataSource = mockk(relaxed = true)
 
         authRepository = AuthRepositoryImpl(
             authDataSource = authDataSource,

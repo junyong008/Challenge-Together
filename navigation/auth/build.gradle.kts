@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.custom.android.library)
     alias(libs.plugins.custom.android.library.compose)
     alias(libs.plugins.custom.android.hilt)
-    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -14,6 +13,7 @@ android {
 dependencies {
     implementations(
         projects.common.designsystem,
+        projects.common.navigation,
 
         projects.feature.login,
         projects.feature.signup,
@@ -21,6 +21,5 @@ dependencies {
         projects.feature.changepassword,
 
         libs.androidx.navigation.compose,
-        libs.kotlinx.serialization.json,
     )
 }

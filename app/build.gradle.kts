@@ -39,6 +39,7 @@ android {
 dependencies {
     implementations(
         projects.navigation.auth,
+        projects.navigation.service,
 
         projects.common.core,
         projects.common.designsystem,
@@ -46,18 +47,11 @@ dependencies {
 
         projects.data.authApi,
 
-        projects.feature.home,
-        projects.feature.login,
-        projects.feature.signup,
-        projects.feature.findpassword,
-        projects.feature.changepassword,
-
         libs.androidx.core.splashscreen,
+        libs.androidx.startup,
         libs.androidx.navigation.compose,
         libs.androidx.hilt.navigation.compose,
-        libs.kotlinx.collections.immutable,
         libs.timber,
     )
-
     runtimeOnly(projects.data.authImpl)
 }

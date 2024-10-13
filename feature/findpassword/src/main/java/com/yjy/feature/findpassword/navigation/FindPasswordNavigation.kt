@@ -6,12 +6,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.yjy.common.core.extensions.sharedViewModel
-import com.yjy.common.core.ui.NavigationAnimation.slideInToLeft
-import com.yjy.common.core.ui.NavigationAnimation.slideInToRight
-import com.yjy.common.core.ui.NavigationAnimation.slideOutToLeft
-import com.yjy.common.core.ui.NavigationAnimation.slideOutToRight
+import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
+import com.yjy.common.core.util.NavigationAnimation.slideInToRight
+import com.yjy.common.core.util.NavigationAnimation.slideOutToLeft
+import com.yjy.common.core.util.NavigationAnimation.slideOutToRight
 import com.yjy.common.designsystem.component.SnackbarType
-import com.yjy.common.navigation.Route
+import com.yjy.common.navigation.AuthRoute
 import com.yjy.feature.findpassword.FindPasswordViewModel
 import com.yjy.feature.findpassword.InputEmailRoute
 import com.yjy.feature.findpassword.R
@@ -20,11 +20,11 @@ import com.yjy.feature.findpassword.VerifyRoute
 typealias FindPasswordStrings = R.string
 
 fun NavController.navigateToFindPassword() {
-    navigate(Route.FindPassword)
+    navigate(AuthRoute.FindPassword)
 }
 
 private fun NavController.navigateToVerifyCode() {
-    navigate(Route.FindPassword.VerifyCode)
+    navigate(AuthRoute.FindPassword.VerifyCode)
 }
 
 fun NavGraphBuilder.findPasswordNavGraph(
@@ -32,10 +32,10 @@ fun NavGraphBuilder.findPasswordNavGraph(
     onVerifySuccess: () -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
-    navigation<Route.FindPassword>(
-        startDestination = Route.FindPassword.InputEmail::class,
+    navigation<AuthRoute.FindPassword>(
+        startDestination = AuthRoute.FindPassword.InputEmail::class,
     ) {
-        composable<Route.FindPassword.InputEmail>(
+        composable<AuthRoute.FindPassword.InputEmail>(
             enterTransition = { slideInToLeft() },
             exitTransition = { slideOutToLeft() },
             popEnterTransition = { slideInToRight() },
@@ -51,7 +51,7 @@ fun NavGraphBuilder.findPasswordNavGraph(
             )
         }
 
-        composable<Route.FindPassword.VerifyCode>(
+        composable<AuthRoute.FindPassword.VerifyCode>(
             enterTransition = { slideInToLeft() },
             exitTransition = { slideOutToLeft() },
             popExitTransition = { slideOutToRight() },

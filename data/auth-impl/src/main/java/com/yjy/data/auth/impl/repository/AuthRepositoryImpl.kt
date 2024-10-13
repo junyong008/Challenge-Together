@@ -39,9 +39,7 @@ internal class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun expiredSession() {
-        sessionDataSource.setToken(null)
-    }
+    override suspend fun getIsLoggedIn(): Boolean = userPreferencesDataSource.getLoggedIn()
 
     override suspend fun logout() {
         userPreferencesDataSource.setLoggedIn(false)

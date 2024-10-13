@@ -6,12 +6,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.yjy.common.core.extensions.sharedViewModel
-import com.yjy.common.core.ui.NavigationAnimation.slideInToLeft
-import com.yjy.common.core.ui.NavigationAnimation.slideInToRight
-import com.yjy.common.core.ui.NavigationAnimation.slideOutToLeft
-import com.yjy.common.core.ui.NavigationAnimation.slideOutToRight
+import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
+import com.yjy.common.core.util.NavigationAnimation.slideInToRight
+import com.yjy.common.core.util.NavigationAnimation.slideOutToLeft
+import com.yjy.common.core.util.NavigationAnimation.slideOutToRight
 import com.yjy.common.designsystem.component.SnackbarType
-import com.yjy.common.navigation.Route
+import com.yjy.common.navigation.AuthRoute
 import com.yjy.feature.signup.EmailPasswordRoute
 import com.yjy.feature.signup.NicknameRoute
 import com.yjy.feature.signup.R
@@ -20,7 +20,7 @@ import com.yjy.feature.signup.SignUpViewModel
 typealias SignUpStrings = R.string
 
 fun NavController.navigateToSignUp() {
-    navigate(Route.SignUp)
+    navigate(AuthRoute.SignUp)
 }
 
 fun NavController.navigateToSignUpNickname(
@@ -29,7 +29,7 @@ fun NavController.navigateToSignUpNickname(
     naverId: String = "",
 ) {
     navigate(
-        Route.SignUp.Nickname(
+        AuthRoute.SignUp.Nickname(
             kakaoId = kakaoId,
             googleId = googleId,
             naverId = naverId,
@@ -40,12 +40,13 @@ fun NavController.navigateToSignUpNickname(
 fun NavGraphBuilder.signUpNavGraph(
     navController: NavHostController,
     onSignUpSuccess: () -> Unit,
+    onShowToast: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
-    navigation<Route.SignUp>(
-        startDestination = Route.SignUp.EmailPassword::class,
+    navigation<AuthRoute.SignUp>(
+        startDestination = AuthRoute.SignUp.EmailPassword::class,
     ) {
-        composable<Route.SignUp.EmailPassword>(
+        composable<AuthRoute.SignUp.EmailPassword>(
             enterTransition = { slideInToLeft() },
             exitTransition = { slideOutToLeft() },
             popEnterTransition = { slideInToRight() },
@@ -61,7 +62,7 @@ fun NavGraphBuilder.signUpNavGraph(
             )
         }
 
-        composable<Route.SignUp.Nickname>(
+        composable<AuthRoute.SignUp.Nickname>(
             enterTransition = { slideInToLeft() },
             popExitTransition = { slideOutToRight() },
         ) { entry ->
@@ -70,6 +71,7 @@ fun NavGraphBuilder.signUpNavGraph(
             NicknameRoute(
                 onBackClick = navController::popBackStack,
                 onSignUpSuccess = onSignUpSuccess,
+                onShowToast = onShowToast,
                 onShowSnackbar = onShowSnackbar,
                 viewModel = viewModel,
             )

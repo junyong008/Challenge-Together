@@ -9,8 +9,8 @@ import com.yjy.common.core.constants.AuthConst.MAX_NICKNAME_LENGTH
 import com.yjy.common.core.constants.AuthConst.MAX_PASSWORD_LENGTH
 import com.yjy.common.core.constants.AuthConst.MIN_NICKNAME_LENGTH
 import com.yjy.common.core.constants.AuthConst.MIN_PASSWORD_LENGTH
-import com.yjy.common.core.ui.BaseViewModel
-import com.yjy.common.navigation.Route
+import com.yjy.common.core.base.BaseViewModel
+import com.yjy.common.navigation.AuthRoute
 import com.yjy.common.network.HttpStatusCodes
 import com.yjy.common.network.handleNetworkResult
 import com.yjy.data.auth.api.AuthRepository
@@ -27,7 +27,7 @@ class SignUpViewModel @Inject constructor(
     saveStateHandle: SavedStateHandle,
 ) : BaseViewModel<SignUpUiState, SignUpUiEvent>(initialState = SignUpUiState()) {
 
-    private val arguments = saveStateHandle.toRoute<Route.SignUp.Nickname>()
+    private val arguments = saveStateHandle.toRoute<AuthRoute.SignUp.Nickname>()
     private val kakaoId = arguments.kakaoId
     private val googleId = arguments.googleId
     private val naverId = arguments.naverId

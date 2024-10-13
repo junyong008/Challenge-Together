@@ -17,6 +17,9 @@ internal class UserPreferencesDataSourceImpl @Inject constructor(
             preferences[KEY_LOGIN_STATUS] ?: false
         }
 
+    override suspend fun getLoggedIn(): Boolean =
+        dataStore.readValue(KEY_LOGIN_STATUS, false)
+
     override suspend fun setLoggedIn(loggedIn: Boolean) {
         dataStore.storeValue(KEY_LOGIN_STATUS, loggedIn)
     }

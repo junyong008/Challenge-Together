@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.constants.AuthConst.MIN_PASSWORD_LENGTH
-import com.yjy.common.core.ui.ObserveAsEvents
+import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
 import com.yjy.common.designsystem.component.ChallengeTogetherDialog
@@ -48,6 +48,7 @@ import kotlinx.coroutines.flow.flowOf
 internal fun ChangePasswordRoute(
     onBackClick: () -> Unit,
     onPasswordChanged: () -> Unit,
+    onShowToast: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChangePasswordViewModel = hiltViewModel(),
@@ -61,6 +62,7 @@ internal fun ChangePasswordRoute(
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
         onPasswordChanged = onPasswordChanged,
+        onShowToast = onShowToast,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -73,6 +75,7 @@ internal fun ChangePasswordScreen(
     processAction: (ChangePasswordUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onPasswordChanged: () -> Unit = {},
+    onShowToast: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val changeSuccessMessage = stringResource(id = ChangePasswordStrings.feature_changepassword_success)
@@ -84,7 +87,7 @@ internal fun ChangePasswordScreen(
             ChangePasswordUiEvent.CancelChangePassword -> onBackClick()
 
             ChangePasswordUiEvent.ChangeSuccess -> {
-                onShowSnackbar(SnackbarType.SUCCESS, changeSuccessMessage)
+                onShowToast(changeSuccessMessage)
                 onPasswordChanged()
             }
 

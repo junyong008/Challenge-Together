@@ -1,18 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="NightAdjusted.Theme.ChallengeTogether" parent="android:Theme.Material.Light.NoActionBar" />
-
     <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>
 
-    <style name="Theme.ChallengeTogether" parent="NightAdjusted.Theme.ChallengeTogether" />
-
     <style name="Theme.ChallengeTogether.Splash" parent="NightAdjusted.Theme.Splash">
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
-        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@color/background</item>
         <item name="postSplashScreenTheme">@style/Theme.ChallengeTogether</item>
     </style>
 </resources>

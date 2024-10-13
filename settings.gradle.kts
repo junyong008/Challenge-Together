@@ -41,6 +41,7 @@ include(
     ":model",
 
     ":navigation:auth",
+    ":navigation:service",
 
     ":feature:home",
     ":feature:login",

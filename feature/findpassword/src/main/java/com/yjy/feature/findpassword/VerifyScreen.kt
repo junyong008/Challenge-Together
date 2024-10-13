@@ -27,7 +27,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.yjy.common.core.ui.ObserveAsEvents
+import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.common.designsystem.component.SnackbarType

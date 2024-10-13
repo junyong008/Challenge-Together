@@ -1,0 +1,3 @@
+<resources>
+    <style name="NightAdjusted.Theme.ChallengeTogether" parent="android:Theme.Material.NoActionBar" />
+</resources>

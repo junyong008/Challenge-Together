@@ -11,11 +11,23 @@
         android:label="${appName}"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ChallengeTogether.Splash"
+        android:theme="@style/Theme.ChallengeTogether"
         tools:targetApi="31" >
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+
+            <meta-data
+                android:name="com.yjy.challengetogether.initializer.TimberInitializer"
+                android:value="androidx.startup" />
+        </provider>
 
         <activity
             android:name=".MainActivity"
+            android:theme="@style/Theme.ChallengeTogether.Splash"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
