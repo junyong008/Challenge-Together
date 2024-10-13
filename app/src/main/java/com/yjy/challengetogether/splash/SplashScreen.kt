@@ -20,6 +20,8 @@ import com.yjy.challengetogether.R
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 
+private const val SPLASH_DURATION = 300
+
 @Composable
 internal fun SplashScreen(
     navigateToAuth: () -> Unit,
@@ -32,7 +34,7 @@ internal fun SplashScreen(
     LaunchedEffect(Unit) {
         alpha.animateTo(
             targetValue = 1f,
-            animationSpec = tween(300)
+            animationSpec = tween(SPLASH_DURATION),
         )
 
         if (viewModel.getIsLoggedIn()) {

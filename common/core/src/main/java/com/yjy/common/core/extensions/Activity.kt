@@ -9,7 +9,7 @@ inline fun <reified T : Activity> Activity.startActivityWithAnimation(
     intentBuilder: Intent.() -> Intent = { this },
 ) {
     startActivity(Intent(this, T::class.java).intentBuilder())
-    if (Build.VERSION.SDK_INT >= 34) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
         overrideActivityTransition(
             Activity.OVERRIDE_TRANSITION_OPEN,
             android.R.anim.fade_in,

@@ -1,4 +1,3 @@
 package com.yjy.feature.home.model
 
-sealed interface HomeUiAction {
-}
+sealed interface HomeUiAction

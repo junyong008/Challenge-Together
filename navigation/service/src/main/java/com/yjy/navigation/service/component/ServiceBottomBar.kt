@@ -108,7 +108,7 @@ private fun RowScope.ServiceBottomBarItem(
 
 @ComponentPreviews
 @Composable
-private fun ServiceBottomBarPreview() {
+fun ServiceBottomBarPreview() {
     ChallengeTogetherTheme {
         ServiceBottomBar(
             mainTabs = MainTab.entries.toImmutableList(),

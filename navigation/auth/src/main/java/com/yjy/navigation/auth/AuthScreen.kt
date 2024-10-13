@@ -44,7 +44,7 @@ internal fun AuthScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .windowInsetsPadding(WindowInsets.systemBars)
+                .windowInsetsPadding(WindowInsets.systemBars),
         ) {
             AuthNavHost(
                 navigateToService = navigateToService,
@@ -54,7 +54,7 @@ internal fun AuthScreen(
             )
             CustomSnackbarHost(
                 snackbarHostState = snackbarHostState,
-                modifier = Modifier.align(Alignment.BottomCenter)
+                modifier = Modifier.align(Alignment.BottomCenter),
             )
         }
     }

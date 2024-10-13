@@ -4,12 +4,12 @@ import androidx.core.util.PatternsCompat.EMAIL_ADDRESS
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.yjy.common.core.base.BaseViewModel
 import com.yjy.common.core.constants.AuthConst.MAX_EMAIL_LENGTH
 import com.yjy.common.core.constants.AuthConst.MAX_NICKNAME_LENGTH
 import com.yjy.common.core.constants.AuthConst.MAX_PASSWORD_LENGTH
 import com.yjy.common.core.constants.AuthConst.MIN_NICKNAME_LENGTH
 import com.yjy.common.core.constants.AuthConst.MIN_PASSWORD_LENGTH
-import com.yjy.common.core.base.BaseViewModel
 import com.yjy.common.navigation.AuthRoute
 import com.yjy.common.network.HttpStatusCodes
 import com.yjy.common.network.handleNetworkResult

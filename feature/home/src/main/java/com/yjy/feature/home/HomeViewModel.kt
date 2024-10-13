@@ -8,9 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-
-) : BaseViewModel<HomeUiState, HomeUiEvent>(initialState = HomeUiState()) {
+class HomeViewModel @Inject constructor() : BaseViewModel<HomeUiState, HomeUiEvent>(initialState = HomeUiState()) {
 
     fun processAction(action: HomeUiAction) {
         when (action) {

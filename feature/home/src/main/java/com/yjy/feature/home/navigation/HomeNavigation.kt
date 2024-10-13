@@ -14,11 +14,8 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     navigate(ServiceRoute.MainTab.Home, navOptions)
 }
 
-fun NavGraphBuilder.homeScreen(
-) {
+fun NavGraphBuilder.homeScreen() {
     composable<ServiceRoute.MainTab.Home> {
-        HomeRoute(
-
-        )
+        HomeRoute()
     }
 }

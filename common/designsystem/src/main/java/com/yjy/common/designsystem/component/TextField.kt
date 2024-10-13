@@ -299,14 +299,14 @@ fun ChallengeTogetherTextFieldPreview() {
                 Icon(
                     painter = painterResource(id = ChallengeTogetherIcons.Lock),
                     contentDescription = "Lock Icon",
-                    tint = CustomColorProvider.colorScheme.onSurface
+                    tint = CustomColorProvider.colorScheme.onSurface,
                 )
             },
             trailingIcon = {
                 Icon(
                     painter = painterResource(id = ChallengeTogetherIcons.Visibility),
                     contentDescription = "Visibility Icon",
-                    tint = CustomColorProvider.colorScheme.onSurface
+                    tint = CustomColorProvider.colorScheme.onSurface,
                 )
             },
             singleLine = true,
