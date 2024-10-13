@@ -2,7 +2,6 @@ package com.yjy.data.auth.impl.repository
 
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.datastore.api.SessionDataSource
-import com.yjy.data.datastore.api.UserPreferencesDataSource
 import com.yjy.data.network.datasource.AuthDataSource
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -16,19 +15,16 @@ class AuthRepositoryImplTest {
 
     private lateinit var authDataSource: AuthDataSource
     private lateinit var sessionDataSource: SessionDataSource
-    private lateinit var userPreferencesDataSource: UserPreferencesDataSource
     private lateinit var authRepository: AuthRepositoryImpl
 
     @Before
     fun setup() {
         authDataSource = mockk()
         sessionDataSource = mockk(relaxed = true)
-        userPreferencesDataSource = mockk(relaxed = true)
 
         authRepository = AuthRepositoryImpl(
             authDataSource = authDataSource,
             sessionDataSource = sessionDataSource,
-            userPreferencesDataSource = userPreferencesDataSource,
         )
     }
 
@@ -41,14 +37,14 @@ class AuthRepositoryImplTest {
         coEvery {
             authDataSource.emailLogin(email, hashedPassword)
         } returns NetworkResult.Success(Unit)
-        coEvery { userPreferencesDataSource.setLoggedIn(any()) } returns Unit
+        coEvery { sessionDataSource.setLoggedIn(any()) } returns Unit
 
         // When
         val result = authRepository.emailLogin(email, password)
 
         // Then
         coVerify { authDataSource.emailLogin(email, hashedPassword) }
-        coVerify { userPreferencesDataSource.setLoggedIn(true) }
+        coVerify { sessionDataSource.setLoggedIn(true) }
         assertEquals(NetworkResult.Success(Unit), result)
     }
 
@@ -79,14 +75,14 @@ class AuthRepositoryImplTest {
         coEvery {
             authDataSource.signUp(nickname, email, hashedPassword, kakaoId, googleId, naverId)
         } returns NetworkResult.Success(Unit)
-        coEvery { userPreferencesDataSource.setLoggedIn(any()) } returns Unit
+        coEvery { sessionDataSource.setLoggedIn(any()) } returns Unit
 
         // When
         val result = authRepository.signUp(nickname, email, password, kakaoId, googleId, naverId)
 
         // Then
         coVerify { authDataSource.signUp(nickname, email, hashedPassword, kakaoId, googleId, naverId) }
-        coVerify { userPreferencesDataSource.setLoggedIn(true) }
+        coVerify { sessionDataSource.setLoggedIn(true) }
         assertEquals(NetworkResult.Success(Unit), result)
     }
 
@@ -97,7 +93,7 @@ class AuthRepositoryImplTest {
         val hashedPassword = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"
         coEvery { authDataSource.changePassword(hashedPassword) } returns NetworkResult.Success(Unit)
         coEvery { sessionDataSource.setToken(any()) } returns Unit
-        coEvery { userPreferencesDataSource.setLoggedIn(any()) } returns Unit
+        coEvery { sessionDataSource.setLoggedIn(any()) } returns Unit
 
         // When
         val result = authRepository.changePassword(password)
@@ -105,7 +101,7 @@ class AuthRepositoryImplTest {
         // Then
         coVerify { authDataSource.changePassword(hashedPassword) }
         coVerify { sessionDataSource.setToken(null) }
-        coVerify { userPreferencesDataSource.setLoggedIn(false) }
+        coVerify { sessionDataSource.setLoggedIn(false) }
         assertEquals(NetworkResult.Success(Unit), result)
     }
 }

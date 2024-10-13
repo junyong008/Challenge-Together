@@ -4,7 +4,6 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.onSuccess
 import com.yjy.data.auth.api.AuthRepository
 import com.yjy.data.datastore.api.SessionDataSource
-import com.yjy.data.datastore.api.UserPreferencesDataSource
 import com.yjy.data.network.datasource.AuthDataSource
 import kotlinx.coroutines.flow.Flow
 import java.security.MessageDigest
@@ -13,10 +12,9 @@ import javax.inject.Inject
 internal class AuthRepositoryImpl @Inject constructor(
     private val authDataSource: AuthDataSource,
     private val sessionDataSource: SessionDataSource,
-    private val userPreferencesDataSource: UserPreferencesDataSource,
 ) : AuthRepository {
 
-    override val isLoggedIn: Flow<Boolean> = userPreferencesDataSource.isLoggedIn
+    override val isLoggedIn: Flow<Boolean> = sessionDataSource.isLoggedIn
     override val isSessionTokenAvailable: Flow<Boolean> = sessionDataSource.isSessionTokenAvailable
 
     override suspend fun signUp(
@@ -35,14 +33,14 @@ internal class AuthRepositoryImpl @Inject constructor(
             googleId = googleId,
             naverId = naverId,
         ).onSuccess {
-            userPreferencesDataSource.setLoggedIn(true)
+            sessionDataSource.setLoggedIn(true)
         }
     }
 
-    override suspend fun getIsLoggedIn(): Boolean = userPreferencesDataSource.getLoggedIn()
+    override suspend fun getIsLoggedIn(): Boolean = sessionDataSource.getLoggedIn()
 
     override suspend fun logout() {
-        userPreferencesDataSource.setLoggedIn(false)
+        sessionDataSource.setLoggedIn(false)
         sessionDataSource.setToken(null)
     }
 
@@ -51,7 +49,7 @@ internal class AuthRepositoryImpl @Inject constructor(
             email = email,
             password = hashPassword(password),
         ).onSuccess {
-            userPreferencesDataSource.setLoggedIn(true)
+            sessionDataSource.setLoggedIn(true)
         }
     }
 
@@ -71,7 +69,7 @@ internal class AuthRepositoryImpl @Inject constructor(
     override suspend fun changePassword(password: String): NetworkResult<Unit> {
         return authDataSource.changePassword(hashPassword(password))
             .onSuccess {
-                userPreferencesDataSource.setLoggedIn(false)
+                sessionDataSource.setLoggedIn(false)
                 sessionDataSource.setToken(null)
             }
     }
