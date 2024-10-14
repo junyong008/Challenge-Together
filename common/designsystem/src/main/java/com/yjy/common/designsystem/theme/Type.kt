@@ -26,10 +26,15 @@ internal val ChallengeTogetherTypography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 57.sp,
     ),
-    titleLarge = TextStyle(
+    displaySmall = TextStyle(
         fontFamily = PretendardFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 30.sp,
+    ),
+    titleLarge = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
     ),
     titleMedium = TextStyle(
         fontFamily = PretendardFontFamily,
