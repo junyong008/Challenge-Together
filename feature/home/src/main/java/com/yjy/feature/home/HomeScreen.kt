@@ -36,6 +36,7 @@ import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherChip
 import com.yjy.common.designsystem.component.ClickableText
+import com.yjy.common.designsystem.component.DebouncedIconButton
 import com.yjy.common.designsystem.component.RibbonMedal
 import com.yjy.common.designsystem.component.RoundedLinearProgressBar
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
@@ -192,7 +193,7 @@ private fun HighestRecordCard(
         Text(
             text = stringResource(id = HomeStrings.feature_home_current_highest_record),
             color = CustomColorProvider.colorScheme.onSurfaceMuted,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodySmall,
             modifier = Modifier
                 .align(Alignment.Start)
                 .padding(start = 16.dp, top = 16.dp),
@@ -283,7 +284,7 @@ private fun HomeTopBar(
                 .align(Alignment.CenterEnd)
                 .padding(end = 8.dp),
         ) {
-            IconButton(
+            DebouncedIconButton(
                 onClick = onShowCompleteChallengeClick,
                 modifier = Modifier.size(40.dp)
             ) {
@@ -295,7 +296,7 @@ private fun HomeTopBar(
                     tint = CustomColorProvider.colorScheme.onBackgroundMuted,
                 )
             }
-            IconButton(
+            DebouncedIconButton(
                 onClick = onShowNotificationClick,
                 modifier = Modifier.size(40.dp)
             ) {

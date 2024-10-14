@@ -7,10 +7,13 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import com.yjy.common.core.util.MultipleEventsCutter
+import com.yjy.common.core.util.get
 import com.yjy.common.designsystem.ThemePreviews
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
@@ -25,8 +28,9 @@ fun ChallengeTogetherButton(
     contentColor: Color = CustomColorProvider.colorScheme.onBrandDim,
     content: @Composable RowScope.() -> Unit,
 ) {
+    val multipleEventsCutter = remember { MultipleEventsCutter.get() }
     Button(
-        onClick = onClick,
+        onClick = { multipleEventsCutter.processEvent { onClick() } },
         modifier = modifier,
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(

@@ -2,7 +2,6 @@ package com.yjy.feature.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
@@ -340,7 +340,7 @@ private fun SNSLoginButtons(
                 .size(60.dp)
                 .clip(CircleShape)
                 .background(CustomColorProvider.colorScheme.kakaoBackground)
-                .clickable(
+                .clickableSingle(
                     enabled = enabled,
                     onClick = onKakaoLoginClick,
                 ),
@@ -357,7 +357,7 @@ private fun SNSLoginButtons(
                 .size(60.dp)
                 .clip(CircleShape)
                 .background(CustomColorProvider.colorScheme.googleBackground)
-                .clickable(
+                .clickableSingle(
                     enabled = enabled,
                     onClick = onGoogleLoginClick,
                 ),
@@ -374,7 +374,7 @@ private fun SNSLoginButtons(
                 .size(60.dp)
                 .clip(CircleShape)
                 .background(CustomColorProvider.colorScheme.naverBackground)
-                .clickable(
+                .clickableSingle(
                     enabled = enabled,
                     onClick = onNaverLoginClick,
                 ),

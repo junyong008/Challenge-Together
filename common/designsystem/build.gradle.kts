@@ -1,3 +1,5 @@
+@file:Suppress("INLINE_FROM_HIGHER_PLATFORM")
+
 plugins {
     alias(libs.plugins.custom.android.library)
     alias(libs.plugins.custom.android.library.compose)
@@ -8,6 +10,10 @@ android {
 }
 
 dependencies {
-    implementation(projects.model)
-    implementation(libs.lottie.compose)
+    implementations(
+        projects.common.core,
+        projects.model,
+
+        libs.lottie.compose,
+    )
 }
