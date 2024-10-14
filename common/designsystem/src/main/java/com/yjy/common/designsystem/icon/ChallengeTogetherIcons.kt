@@ -6,9 +6,12 @@ object ChallengeTogetherIcons {
     val Back = R.drawable.ic_back
     val Cancel = R.drawable.ic_cancel
     val Check = R.drawable.ic_check
+    val CompleteChallenge = R.drawable.ic_complete_challenge
     val Email = R.drawable.ic_email
     val Home = R.drawable.ic_home
+    val Sort = R.drawable.ic_sort
     val Lock = R.drawable.ic_lock
+    val Notification = R.drawable.ic_notification
     val UnCheck = R.drawable.ic_uncheck
     val Visibility = R.drawable.ic_visibility
     val VisibilityOff = R.drawable.ic_visibility_off

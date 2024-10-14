@@ -9,5 +9,5 @@ android {
 }
 
 dependencies {
-    implementations()
+    implementations(projects.model)
 }

@@ -6,4 +6,12 @@
     <string name="common_designsystem_input_password_hide_content_description">Hide Password</string>
     <string name="common_designsystem_dialog_confirm">Confirm</string>
     <string name="common_designsystem_dialog_cancel">Cancel</string>
+    <string name="common_designsystem_tier_iron_description">Iron Tier</string>
+    <string name="common_designsystem_tier_bronze_description">Bronze Tier</string>
+    <string name="common_designsystem_tier_silver_description">Silver Tier</string>
+    <string name="common_designsystem_tier_gold_description">Gold Tier</string>
+    <string name="common_designsystem_tier_platinum_description">Platinum Tier</string>
+    <string name="common_designsystem_tier_diamond_description">Diamond Tier</string>
+    <string name="common_designsystem_tier_master_description">Master Tier</string>
+    <string name="common_designsystem_tier_legend_description">Legend Tier</string>
 </resources>

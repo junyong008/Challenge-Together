@@ -1,6 +1,10 @@
 <resources>
     <string name="feature_home_navigation_title">Home</string>
-    <string name="feature_home_title">Challenge Together</string>
-    <string name="feature_home_medal_description">Current Grade</string>
-    <string name="feature_home_image_mind_full_description">A Image Of Yoga</string>
+    <string name="feature_home_title">CHALLENGE TOGETHER</string>
+    <string name="feature_home_medal_description">Current Tier</string>
+    <string name="feature_home_complete_challenge_description">Complete Challenges</string>
+    <string name="feature_home_notification_description">Notifications</string>
+    <string name="feature_home_remain_time_for_next_tier">Remaining time for next tier: %d Days</string>
+    <string name="feature_home_current_highest_record">Current Best Record</string>
+    <string name="feature_home_my_challenges">My Challenges</string>
 </resources>

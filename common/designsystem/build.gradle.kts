@@ -8,5 +8,6 @@ android {
 }
 
 dependencies {
+    implementation(projects.model)
     implementation(libs.lottie.compose)
 }

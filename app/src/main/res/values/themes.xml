@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
+    <style name="NightAdjusted.Theme.Splash" parent="Theme.ChallengeTogether">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>
