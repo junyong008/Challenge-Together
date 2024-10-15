@@ -24,6 +24,7 @@ private const val SPLASH_DURATION = 300
 
 @Composable
 internal fun SplashScreen(
+    isDarkTheme: Boolean,
     navigateToAuth: () -> Unit,
     navigateToService: () -> Unit,
     modifier: Modifier = Modifier,
@@ -46,7 +47,13 @@ internal fun SplashScreen(
 
     Box(modifier = modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.image_splash),
+            painter = painterResource(
+                id = if (isDarkTheme) {
+                    R.drawable.image_splash_dark
+                } else {
+                    R.drawable.image_splash_light
+                },
+            ),
             contentDescription = null,
             modifier = Modifier
                 .size(150.dp)
@@ -62,6 +69,7 @@ fun SplashScreenPreview() {
     ChallengeTogetherTheme {
         ChallengeTogetherBackground {
             SplashScreen(
+                isDarkTheme = false,
                 navigateToAuth = {},
                 navigateToService = {},
                 modifier = Modifier.fillMaxSize(),

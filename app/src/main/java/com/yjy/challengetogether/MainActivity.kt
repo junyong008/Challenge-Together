@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
             ChallengeTogetherTheme(isDarkTheme = isDarkTheme) {
                 ChallengeTogetherBackground {
                     SplashScreen(
+                        isDarkTheme = isDarkTheme,
                         navigateToAuth = { startActivityWithAnimation<AuthActivity>(withFinish = true) },
                         navigateToService = { startActivityWithAnimation<ServiceActivity>(withFinish = true) },
                     )
