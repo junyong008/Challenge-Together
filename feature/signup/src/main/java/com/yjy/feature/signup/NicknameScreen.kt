@@ -143,6 +143,7 @@ internal fun NicknameScreen(
                 onValueChange = { processAction(SignUpUiAction.OnNicknameUpdated(it)) },
                 textStyle = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
+                contentAlignment = Alignment.Center,
                 placeholderText = stringResource(id = SignUpStrings.feature_signup_nickname_place_holder),
                 enabled = !uiState.isSigningUp,
             )

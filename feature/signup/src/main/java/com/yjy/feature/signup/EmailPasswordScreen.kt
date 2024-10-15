@@ -22,7 +22,6 @@ import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherBottomAppBar
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.common.designsystem.component.ConditionIndicator
-import com.yjy.common.designsystem.component.PasswordTextField
 import com.yjy.common.designsystem.component.SingleLineTextField
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.component.TitleWithDescription
@@ -170,7 +169,7 @@ private fun SignUpPasswordTextField(
     onValueChange: (String) -> Unit,
     enabled: Boolean,
 ) {
-    PasswordTextField(
+    SingleLineTextField(
         value = value,
         onValueChange = onValueChange,
         enabled = enabled,
@@ -179,6 +178,7 @@ private fun SignUpPasswordTextField(
             imeAction = ImeAction.Done,
         ),
         placeholderText = stringResource(id = SignUpStrings.feature_signup_input_password_place_holder),
+        isPassword = true,
     )
 }
 

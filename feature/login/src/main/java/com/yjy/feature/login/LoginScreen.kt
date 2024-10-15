@@ -41,7 +41,6 @@ import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
 import com.yjy.common.designsystem.component.ClickableText
-import com.yjy.common.designsystem.component.PasswordTextField
 import com.yjy.common.designsystem.component.SingleLineTextField
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
@@ -244,7 +243,7 @@ private fun LoginPasswordTextField(
     onValueChange: (String) -> Unit,
     enabled: Boolean,
 ) {
-    PasswordTextField(
+    SingleLineTextField(
         value = value,
         onValueChange = onValueChange,
         leadingIcon = {
@@ -260,6 +259,7 @@ private fun LoginPasswordTextField(
         ),
         placeholderText = stringResource(id = LoginStrings.feature_login_input_password_place_holder),
         enabled = enabled,
+        isPassword = true,
     )
 }
 

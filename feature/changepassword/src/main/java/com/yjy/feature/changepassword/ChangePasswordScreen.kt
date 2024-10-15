@@ -30,7 +30,7 @@ import com.yjy.common.designsystem.component.ChallengeTogetherButton
 import com.yjy.common.designsystem.component.ChallengeTogetherDialog
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.common.designsystem.component.ConditionIndicator
-import com.yjy.common.designsystem.component.PasswordTextField
+import com.yjy.common.designsystem.component.SingleLineTextField
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.component.StableImage
 import com.yjy.common.designsystem.component.TitleWithDescription
@@ -151,7 +151,7 @@ internal fun ChangePasswordScreen(
                     .size(115.dp),
             )
             Spacer(modifier = Modifier.height(35.dp))
-            PasswordTextField(
+            SingleLineTextField(
                 value = uiState.password,
                 onValueChange = { processAction(ChangePasswordUiAction.OnPasswordUpdated(it)) },
                 enabled = !uiState.isChangingPassword,
@@ -162,6 +162,7 @@ internal fun ChangePasswordScreen(
                 placeholderText = stringResource(
                     id = ChangePasswordStrings.feature_changepassword_input_password_place_holder,
                 ),
+                isPassword = true,
             )
             ConditionIndicator(
                 text = stringResource(
