@@ -19,7 +19,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +38,7 @@ import com.yjy.common.designsystem.component.ClickableText
 import com.yjy.common.designsystem.component.DebouncedIconButton
 import com.yjy.common.designsystem.component.RibbonMedal
 import com.yjy.common.designsystem.component.RoundedLinearProgressBar
+import com.yjy.common.designsystem.extensions.getDisplayNameResId
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
@@ -134,7 +134,7 @@ private fun CategoryChipGroup(
     ) {
         items(categories) { category ->
             ChallengeTogetherChip(
-                textResId = category.displayNameResId,
+                textResId = category.getDisplayNameResId(),
                 isSelected = category == selectedCategory,
                 onSelectionChanged = { onCategorySelected(category) }
             )
@@ -169,7 +169,7 @@ private fun MyChallengeTitle(
                 modifier = Modifier.size(20.dp),
             )
             ClickableText(
-                text = stringResource(id = sortOrder.displayNameResId),
+                text = stringResource(id = sortOrder.getDisplayNameResId()),
                 onClick = {},
                 color = CustomColorProvider.colorScheme.onBackgroundMuted,
             )

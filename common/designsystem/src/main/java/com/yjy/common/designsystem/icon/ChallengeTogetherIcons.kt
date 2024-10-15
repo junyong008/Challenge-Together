@@ -3,6 +3,9 @@ package com.yjy.common.designsystem.icon
 import com.yjy.common.designsystem.R
 
 object ChallengeTogetherIcons {
+    val Add = R.drawable.ic_add
+    val ArrowLeft = R.drawable.ic_arrow_left
+    val ArrowRight = R.drawable.ic_arrow_right
     val Back = R.drawable.ic_back
     val Cancel = R.drawable.ic_cancel
     val Check = R.drawable.ic_check
@@ -15,6 +18,22 @@ object ChallengeTogetherIcons {
     val UnCheck = R.drawable.ic_uncheck
     val Visibility = R.drawable.ic_visibility
     val VisibilityOff = R.drawable.ic_visibility_off
+
+    val All = R.drawable.ic_category
+    val QuitSmoking = R.drawable.ic_quit_smoking
+    val QuitDrinking = R.drawable.ic_quit_drinking
+    val QuitPorn = R.drawable.ic_quit_porn
+    val QuitGaming = R.drawable.ic_quit_gaming
+    val QuitYoutube = R.drawable.ic_quit_youtube
+    val QuitSns = R.drawable.ic_quit_sns
+    val QuitGluten = R.drawable.ic_quit_gluten
+    val QuitGambling = R.drawable.ic_quit_gambling
+    val QuitDrugs = R.drawable.ic_quit_drugs
+    val QuitCaffeine = R.drawable.ic_quit_caffeine
+    val QuitEatingOut = R.drawable.ic_quit_eating_out
+    val QuitShopping = R.drawable.ic_quit_shopping
+    val QuitSwearing = R.drawable.ic_quit_swearing
+    val QuitSmartphone = R.drawable.ic_quit_smartphone
 
     val Google = R.drawable.ic_google
     val Kakao = R.drawable.ic_kakao

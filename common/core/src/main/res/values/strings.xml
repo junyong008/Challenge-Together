@@ -1,0 +1,6 @@
+<resources>
+    <string name="common_core_time_day">d</string>
+    <string name="common_core_time_hour">h</string>
+    <string name="common_core_time_minute">m</string>
+    <string name="common_core_time_second">s</string>
+</resources>
