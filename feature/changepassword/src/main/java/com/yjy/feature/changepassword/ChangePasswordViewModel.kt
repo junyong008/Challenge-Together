@@ -10,7 +10,6 @@ import com.yjy.feature.changepassword.model.ChangePasswordUiAction
 import com.yjy.feature.changepassword.model.ChangePasswordUiEvent
 import com.yjy.feature.changepassword.model.ChangePasswordUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,11 +39,8 @@ class ChangePasswordViewModel @Inject constructor(
     }
 
     private fun confirmExit() {
-        viewModelScope.launch {
-            dismissExitConfirmDialog()
-            delay(DIALOG_CLOSE_TIME)
-            sendEvent(ChangePasswordUiEvent.CancelChangePassword)
-        }
+        updateState { copy(shouldShowExitConfirmDialog = false) }
+        sendEvent(ChangePasswordUiEvent.CancelChangePassword)
     }
 
     private fun showChangeConfirmDialog() {
@@ -88,9 +84,5 @@ class ChangePasswordViewModel @Inject constructor(
                 isPasswordContainNumber = isPasswordContainNumber,
             )
         }
-    }
-
-    companion object {
-        private const val DIALOG_CLOSE_TIME = 10L
     }
 }
