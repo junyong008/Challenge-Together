@@ -128,11 +128,11 @@ internal fun ConfirmScreen(
                         targetDays = uiState.targetDays,
                     )
                 }
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(32.dp))
                 ChallengeTogetherButton(
                     onClick = {},
                     enabled = !uiState.isAddingChallenge,
-                    shape = MaterialTheme.shapes.extraLarge,
+                    shape = MaterialTheme.shapes.large,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(55.dp),
@@ -154,7 +154,7 @@ internal fun ConfirmScreen(
                     ChallengeTogetherOutlinedButton(
                         onClick = onSetTogetherClick,
                         enabled = !uiState.isAddingChallenge,
-                        shape = MaterialTheme.shapes.extraLarge,
+                        shape = MaterialTheme.shapes.large,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(55.dp),
@@ -260,21 +260,16 @@ private fun BaseCard(
         modifier = modifier
             .clip(MaterialTheme.shapes.large)
             .background(CustomColorProvider.colorScheme.surface)
+            .padding(16.dp)
             .fillMaxSize(),
     ) {
         Text(
             text = stringResource(id = titleResId),
             color = CustomColorProvider.colorScheme.onSurfaceMuted,
             style = MaterialTheme.typography.labelSmall,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(16.dp),
+            modifier = Modifier.align(Alignment.TopStart),
         )
-        Box(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp)
-        ) {
+        Box(modifier = Modifier.align(Alignment.BottomEnd)) {
             content()
         }
     }
@@ -360,6 +355,7 @@ fun ConfirmScreenPreview() {
         ChallengeTogetherBackground {
             ConfirmScreen(
                 modifier = Modifier.fillMaxSize(),
+                uiState = AddChallengeUiState(mode = Mode.FREE),
             )
         }
     }

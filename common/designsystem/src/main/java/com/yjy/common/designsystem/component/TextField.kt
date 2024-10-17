@@ -197,6 +197,7 @@ fun SingleLineTextField(
     borderColor: Color = Color.Transparent,
     backgroundColor: Color = CustomColorProvider.colorScheme.surface,
     contentAlignment: Alignment = Alignment.CenterStart,
+    passwordIconColor: Color = CustomColorProvider.colorScheme.onSurfaceMuted,
     isPassword: Boolean = false,
 ) {
     ChallengeTogetherTextField(
@@ -234,6 +235,7 @@ fun SingleLineTextField(
         borderColor = borderColor,
         backgroundColor = backgroundColor,
         contentAlignment = contentAlignment,
+        passwordIconColor = passwordIconColor,
         isPassword = isPassword,
     )
 }

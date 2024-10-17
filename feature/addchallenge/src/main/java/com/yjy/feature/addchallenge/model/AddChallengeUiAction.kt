@@ -18,4 +18,7 @@ sealed interface AddChallengeUiAction {
     ) : AddChallengeUiAction
 
     data class OnTargetDaysUpdated(val targetDays: TargetDays) : AddChallengeUiAction
+    data class OnMaxParticipantsUpdated(val maxParticipants: Int) : AddChallengeUiAction
+    data class OnEnableRoomPasswordUpdated(val enableRoomPassword: Boolean) : AddChallengeUiAction
+    data class OnRoomPasswordUpdated(val roomPassword: String) : AddChallengeUiAction
 }

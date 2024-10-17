@@ -4,6 +4,7 @@ import com.yjy.common.core.base.BaseViewModel
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_DESCRIPTION_LENGTH
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_TARGET_DAYS
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_TITLE_LENGTH
+import com.yjy.common.core.constants.ChallengeConst.MAX_ROOM_PASSWORD_LENGTH
 import com.yjy.common.core.constants.ChallengeConst.MIN_CHALLENGE_TARGET_DAYS
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
@@ -34,6 +35,9 @@ class AddChallengeViewModel @Inject constructor(
             )
 
             is AddChallengeUiAction.OnTargetDaysUpdated -> updateTargetDays(action.targetDays)
+            is AddChallengeUiAction.OnMaxParticipantsUpdated -> updateMaxParticipants(action.maxParticipants)
+            is AddChallengeUiAction.OnEnableRoomPasswordUpdated -> updateEnableRoomPassword(action.enableRoomPassword)
+            is AddChallengeUiAction.OnRoomPasswordUpdated -> updateRoomPassword(action.roomPassword)
         }
     }
 
@@ -87,5 +91,19 @@ class AddChallengeViewModel @Inject constructor(
         } else {
             updateState { copy(targetDays = targetDays) }
         }
+    }
+
+    private fun updateMaxParticipants(maxParticipants: Int) {
+        if (maxParticipants < MIN_CHALLENGE_TARGET_DAYS || maxParticipants > MAX_CHALLENGE_TARGET_DAYS) return
+        updateState { copy(maxParticipants = maxParticipants) }
+    }
+
+    private fun updateEnableRoomPassword(enableRoomPassword: Boolean) {
+        updateState { copy(enableRoomPassword = enableRoomPassword) }
+    }
+
+    private fun updateRoomPassword(roomPassword: String) {
+        if (roomPassword.length > MAX_ROOM_PASSWORD_LENGTH) return
+        updateState { copy(roomPassword = roomPassword) }
     }
 }

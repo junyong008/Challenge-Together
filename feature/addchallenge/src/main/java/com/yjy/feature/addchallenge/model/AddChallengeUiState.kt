@@ -1,5 +1,6 @@
 package com.yjy.feature.addchallenge.model
 
+import com.yjy.common.core.constants.ChallengeConst.INIT_CHALLENGE_MAX_PARTICIPANTS
 import com.yjy.common.core.constants.ChallengeConst.INIT_CHALLENGE_TARGET_DAYS
 import com.yjy.model.challenge.Category
 import com.yjy.model.challenge.Mode
@@ -14,4 +15,7 @@ data class AddChallengeUiState(
     val startDateTime: LocalDateTime = LocalDateTime.now(),
     val targetDays: TargetDays = TargetDays.Fixed(INIT_CHALLENGE_TARGET_DAYS),
     val isAddingChallenge: Boolean = false,
+    val maxParticipants: Int = INIT_CHALLENGE_MAX_PARTICIPANTS,
+    val enableRoomPassword: Boolean = false,
+    val roomPassword: String = "",
 )

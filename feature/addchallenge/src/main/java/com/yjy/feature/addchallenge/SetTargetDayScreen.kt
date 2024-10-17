@@ -104,7 +104,7 @@ internal fun SetTargetDayScreen(
                 titleRes = AddChallengeStrings.feature_addchallenge_title_set_target_day,
                 descriptionRes = AddChallengeStrings.feature_addchallenge_description_set_target_day,
             )
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(100.dp))
             TargetDaysSelector(
                 targetDays = uiState.targetDays,
                 minDays = MIN_CHALLENGE_TARGET_DAYS,
@@ -116,7 +116,7 @@ internal fun SetTargetDayScreen(
                 textStyle = MaterialTheme.typography.displaySmall,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             TargetDaySwitch(
                 leftText = stringResource(id = AddChallengeStrings.feature_addchallenge_target_day),
                 rightText = stringResource(id = AddChallengeStrings.feature_addchallenge_unlimited),
@@ -132,7 +132,7 @@ internal fun SetTargetDayScreen(
                         )
                     )
                 },
-                switchWidth = 230.dp,
+                switchWidth = 200.dp,
                 switchHeight = 50.dp,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             )
@@ -209,7 +209,7 @@ private fun TargetDaySwitch(
     selectedColor: Color = CustomColorProvider.colorScheme.brand,
     onSelectedColor: Color = CustomColorProvider.colorScheme.onBrand,
     unselectedColor: Color = CustomColorProvider.colorScheme.onSurface.copy(alpha = 0.3f),
-    textStyle: TextStyle = MaterialTheme.typography.labelMedium,
+    textStyle: TextStyle = MaterialTheme.typography.labelSmall,
     shape: Shape = MaterialTheme.shapes.large,
     switchWidth: Dp = 150.dp,
     switchHeight: Dp = 40.dp,

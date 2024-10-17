@@ -34,8 +34,10 @@
     <string name="feature_addchallenge_target_day">Target Day</string>
     <string name="feature_addchallenge_unlimited">Unlimited</string>
     <string name="feature_addchallenge_max_participants">Max Participants</string>
-    <string name="feature_addchallenge_room_password">Set Room Entry Password</string>
+    <string name="feature_addchallenge_room_password">Entry Password</string>
     <string name="feature_addchallenge_days">Days</string>
-    <string name="feature_addchallenge_people">Ppl</string>
+    <string name="feature_addchallenge_people">ppl</string>
+    <string name="feature_addchallenge_room_password_icon">Room Password Icon</string>
+    <string name="feature_addchallenge_room_password_placeholder">Room Password</string>
     <string name="feature_addchallenge_create_waiting_room">Create Waiting Room</string>
 </resources>
