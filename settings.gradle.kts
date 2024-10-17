@@ -44,6 +44,8 @@ include(
     ":navigation:service",
 
     ":feature:home",
+    ":feature:addchallenge",
+
     ":feature:login",
     ":feature:signup",
     ":feature:findpassword",

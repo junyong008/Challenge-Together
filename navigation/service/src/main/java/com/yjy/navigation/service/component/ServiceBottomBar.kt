@@ -1,5 +1,10 @@
 package com.yjy.navigation.service.component
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.yjy.common.designsystem.ComponentPreviews
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
@@ -32,29 +38,36 @@ import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun ServiceBottomBar(
+    visible: Boolean,
     mainTabs: ImmutableList<MainTab>,
     currentTab: MainTab?,
     onTabSelected: (MainTab) -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .navigationBarsPadding()
-            .fillMaxWidth()
-            .height(65.dp)
-            .background(CustomColorProvider.colorScheme.surface),
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn() + slideIn { IntOffset(0, it.height) },
+        exit = fadeOut() + slideOut { IntOffset(0, it.height) },
     ) {
-        HorizontalDivider(color = CustomColorProvider.colorScheme.divider, thickness = 0.5.dp)
-        Row(
+        Column(
             modifier = Modifier
-                .weight(1f),
-            verticalAlignment = Alignment.CenterVertically,
+                .navigationBarsPadding()
+                .fillMaxWidth()
+                .height(65.dp)
+                .background(CustomColorProvider.colorScheme.surface),
         ) {
-            mainTabs.forEach { tab ->
-                ServiceBottomBarItem(
-                    tab = tab,
-                    selected = tab == currentTab,
-                    onClick = { onTabSelected(tab) },
-                )
+            HorizontalDivider(color = CustomColorProvider.colorScheme.divider, thickness = 0.5.dp)
+            Row(
+                modifier = Modifier
+                    .weight(1f),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                mainTabs.forEach { tab ->
+                    ServiceBottomBarItem(
+                        tab = tab,
+                        selected = tab == currentTab,
+                        onClick = { onTabSelected(tab) },
+                    )
+                }
             }
         }
     }
@@ -111,6 +124,7 @@ private fun RowScope.ServiceBottomBarItem(
 fun ServiceBottomBarPreview() {
     ChallengeTogetherTheme {
         ServiceBottomBar(
+            visible = true,
             mainTabs = MainTab.entries.toImmutableList(),
             currentTab = MainTab.HOME,
             onTabSelected = {},

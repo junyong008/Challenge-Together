@@ -2,6 +2,7 @@ package com.yjy.common.designsystem.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,12 +28,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -228,6 +235,69 @@ fun SingleLineTextField(
         backgroundColor = backgroundColor,
         contentAlignment = contentAlignment,
         isPassword = isPassword,
+    )
+}
+
+@Composable
+fun CursorLessNumberTextField(
+    value: Int,
+    onValueChange: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+    minLimit: Int = 0,
+    maxLimit: Int = 99,
+    textBackground: Color = CustomColorProvider.colorScheme.surface,
+    textColor: Color = CustomColorProvider.colorScheme.onSurface,
+    textStyle: TextStyle = MaterialTheme.typography.titleMedium,
+    shape: Shape = MaterialTheme.shapes.medium,
+) {
+    val maxLength = maxLimit.toString().length
+
+    var internalValue by remember { mutableStateOf(value.toString()) }
+    val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    BasicTextField(
+        value = internalValue,
+        onValueChange = { newValue ->
+            val filteredValue = newValue.filter { it.isDigit() }.take(maxLength)
+            internalValue = filteredValue
+
+            filteredValue.toIntOrNull()?.let {
+                val newValueWithinLimit = it.coerceIn(minLimit, maxLimit)
+                internalValue = newValueWithinLimit.toString()
+                onValueChange(newValueWithinLimit)
+            }
+        },
+        decorationBox = {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .clip(shape)
+                    .background(textBackground)
+                    .clickable {
+                        internalValue = ""
+                        focusRequester.requestFocus()
+                        keyboardController?.show()
+                    }
+                    .fillMaxSize()
+            ) {
+                Text(
+                    text = value.toString(),
+                    style = textStyle,
+                    color = if (internalValue.isEmpty()) {
+                        textColor.copy(alpha = 0.3f)
+                    } else {
+                        textColor
+                    },
+                    textAlign = TextAlign.Center,
+                )
+            }
+        },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number,
+            imeAction = ImeAction.Done,
+        ),
+        modifier = modifier.focusRequester(focusRequester),
     )
 }
 

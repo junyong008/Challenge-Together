@@ -3,6 +3,8 @@ package com.yjy.common.core.util
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.yjy.common.core.R
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun formatTimeDuration(seconds: Long): String {
@@ -19,4 +21,16 @@ fun formatTimeDuration(seconds: Long): String {
     return listOf(dayPart, hourPart, minutePart, secondPart)
         .filter { it.isNotEmpty() }
         .joinToString(" ")
+}
+
+fun LocalDateTime.to12HourFormat(): Triple<Int, Int, Boolean> {
+    val hour = if (this.hour % 12 == 0) 12 else this.hour % 12
+    val minute = this.minute
+    val isAm = this.hour < 12
+    return Triple(hour, minute, isAm)
+}
+
+fun formatLocalDateTime(dateTime: LocalDateTime): String {
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+    return dateTime.format(formatter)
 }

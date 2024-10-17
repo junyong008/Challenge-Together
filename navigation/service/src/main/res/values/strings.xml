@@ -1,3 +1,4 @@
 <resources>
     <string name="navigation_service_session_expired">Your session has expired.\nPlease log in again.</string>
+    <string name="navigation_service_add_new_challenge">Add a new Challenge</string>
 </resources>

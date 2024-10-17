@@ -23,22 +23,22 @@ private val PretendardFontFamily = FontFamily(
 internal val ChallengeTogetherTypography = Typography(
     displayLarge = TextStyle(
         fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 57.sp,
     ),
     displaySmall = TextStyle(
         fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 30.sp,
     ),
     titleLarge = TextStyle(
         fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 24.sp,
     ),
     titleMedium = TextStyle(
         fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 20.sp,
     ),
     titleSmall = TextStyle(

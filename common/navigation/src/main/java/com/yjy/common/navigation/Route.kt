@@ -10,6 +10,30 @@ sealed interface ServiceRoute : Route {
         @Serializable
         data object Home : MainTab()
     }
+
+    @Serializable
+    data object AddChallenge {
+        @Serializable
+        data object SetMode : ServiceRoute
+
+        @Serializable
+        data object SetCategory : ServiceRoute
+
+        @Serializable
+        data object SetTitle : ServiceRoute
+
+        @Serializable
+        data object SetTargetDay : ServiceRoute
+
+        @Serializable
+        data object SetStartDate : ServiceRoute
+
+        @Serializable
+        data object SetTogether : ServiceRoute
+
+        @Serializable
+        data object Confirm : ServiceRoute
+    }
 }
 
 sealed interface AuthRoute : Route {

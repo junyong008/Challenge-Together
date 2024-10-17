@@ -9,7 +9,7 @@ import androidx.compose.animation.fadeOut
 
 object NavigationAnimation {
 
-    private const val DEFAULT_ANIMATION_DURATION = 650
+    private const val DEFAULT_ANIMATION_DURATION = 550
 
     fun <T> AnimatedContentTransitionScope<T>.slideInToLeft(): EnterTransition {
         return slideIntoContainer(

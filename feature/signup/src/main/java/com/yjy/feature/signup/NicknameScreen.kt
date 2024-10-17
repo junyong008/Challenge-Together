@@ -124,7 +124,7 @@ internal fun NicknameScreen(
                 .padding(padding)
                 .padding(horizontal = 32.dp),
         ) {
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(110.dp))
             TitleWithDescription(
                 titleRes = SignUpStrings.feature_signup_set_nickname_title,
                 descriptionRes = SignUpStrings.feature_signup_set_nickname_description,

@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.yjy.feature.addchallenge.navigation.navigateToAddChallenge
 import com.yjy.feature.home.navigation.navigateToHome
 
 @Composable
@@ -45,6 +46,10 @@ internal class ServiceNavController(
         when (tab) {
             MainTab.HOME -> navController.navigateToHome(navOptions)
         }
+    }
+
+    fun navigateToAddChallenge() {
+        navController.navigateToAddChallenge()
     }
 
     @Composable

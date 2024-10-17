@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.ServiceRoute
+import com.yjy.feature.addchallenge.navigation.addChallengeNavGraph
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
 import com.yjy.feature.home.navigation.homeScreen
 
@@ -24,6 +25,16 @@ internal fun ServiceNavHost(
         modifier = modifier,
     ) {
         homeScreen()
+        addChallengeNavGraph(
+            navController = navController,
+            onAddChallenge = {
+                navController.popBackStack(
+                    route = ServiceRoute.AddChallenge,
+                    inclusive = true,
+                )
+            },
+            onShowSnackbar = onShowSnackbar,
+        )
         changePasswordScreen(
             onBackClick = navController::popBackStack,
             onPasswordChanged = navigateToAuth,

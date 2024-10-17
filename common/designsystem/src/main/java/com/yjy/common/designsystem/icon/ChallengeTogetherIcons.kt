@@ -4,6 +4,8 @@ import com.yjy.common.designsystem.R
 
 object ChallengeTogetherIcons {
     val Add = R.drawable.ic_add
+    val ArrowUp = R.drawable.ic_arrow_up
+    val ArrowDown = R.drawable.ic_arrow_down
     val ArrowLeft = R.drawable.ic_arrow_left
     val ArrowRight = R.drawable.ic_arrow_right
     val Back = R.drawable.ic_back
@@ -12,6 +14,7 @@ object ChallengeTogetherIcons {
     val CompleteChallenge = R.drawable.ic_complete_challenge
     val Email = R.drawable.ic_email
     val Home = R.drawable.ic_home
+    val Infinite = R.drawable.ic_infinite
     val Sort = R.drawable.ic_sort
     val Lock = R.drawable.ic_lock
     val Notification = R.drawable.ic_notification
