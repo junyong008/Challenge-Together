@@ -119,51 +119,27 @@ internal fun ConfirmScreen(
                     title = uiState.title,
                     description = uiState.description,
                 )
+
                 Spacer(modifier = Modifier.height(8.dp))
                 CategorySection(category = uiState.category, targetDays = uiState.targetDays)
+
                 if (uiState.mode == Mode.FREE) {
                     Spacer(modifier = Modifier.height(8.dp))
-                    DataSection(
-                        startDateTime = uiState.startDateTime,
-                        targetDays = uiState.targetDays,
-                    )
+                    DataSection(startDateTime = uiState.startDateTime)
                 }
+
                 Spacer(modifier = Modifier.height(32.dp))
-                ChallengeTogetherButton(
+                StartButton(
                     onClick = {},
                     enabled = !uiState.isAddingChallenge,
-                    shape = MaterialTheme.shapes.large,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(55.dp),
-                ) {
-                    if (uiState.isAddingChallenge) {
-                        CircularProgressIndicator(
-                            color = CustomColorProvider.colorScheme.brand,
-                            modifier = Modifier.size(24.dp),
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(id = AddChallengeStrings.feature_addchallenge_start_immediately),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-                }
+                )
+
                 if (uiState.mode == Mode.CHALLENGE) {
                     Spacer(modifier = Modifier.height(8.dp))
-                    ChallengeTogetherOutlinedButton(
+                    TogetherButton(
                         onClick = onSetTogetherClick,
                         enabled = !uiState.isAddingChallenge,
-                        shape = MaterialTheme.shapes.large,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(55.dp),
-                    ) {
-                        Text(
-                            text = stringResource(id = AddChallengeStrings.feature_addchallenge_together),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
+                    )
                 }
             }
         }
@@ -171,15 +147,54 @@ internal fun ConfirmScreen(
 }
 
 @Composable
-private fun DataSection(
-    startDateTime: LocalDateTime,
-    targetDays: TargetDays,
+private fun TogetherButton(
+    onClick: () -> Unit,
+    enabled: Boolean,
 ) {
-    val earliestSuccessDateTime = when (targetDays) {
-        is TargetDays.Fixed -> LocalDateTime.now().plusDays(targetDays.days.toLong())
-        TargetDays.Infinite -> null
+    ChallengeTogetherOutlinedButton(
+        onClick = onClick,
+        enabled = enabled,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(55.dp),
+    ) {
+        Text(
+            text = stringResource(id = AddChallengeStrings.feature_addchallenge_together),
+            style = MaterialTheme.typography.bodyMedium,
+        )
     }
+}
 
+@Composable
+private fun StartButton(
+    onClick: () -> Unit,
+    enabled: Boolean,
+) {
+    ChallengeTogetherButton(
+        onClick = onClick,
+        enabled = enabled,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(55.dp),
+    ) {
+        if (!enabled) {
+            CircularProgressIndicator(
+                color = CustomColorProvider.colorScheme.brand,
+                modifier = Modifier.size(24.dp),
+            )
+        } else {
+            Text(
+                text = stringResource(id = AddChallengeStrings.feature_addchallenge_start_immediately),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
+    }
+}
+
+@Composable
+private fun DataSection(startDateTime: LocalDateTime) {
     BaseCard(
         modifier = Modifier.height(85.dp),
         titleResId = AddChallengeStrings.feature_addchallenge_start_date,
@@ -191,20 +206,6 @@ private fun DataSection(
             )
         },
     )
-    Spacer(modifier = Modifier.height(8.dp))
-    if (earliestSuccessDateTime != null) {
-        BaseCard(
-            modifier = Modifier.height(85.dp),
-            titleResId = AddChallengeStrings.feature_addchallenge_earliest_success_date,
-            content = {
-                Text(
-                    text = formatLocalDateTime(earliestSuccessDateTime),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = CustomColorProvider.colorScheme.onSurface,
-                )
-            },
-        )
-    }
 }
 
 @Composable
