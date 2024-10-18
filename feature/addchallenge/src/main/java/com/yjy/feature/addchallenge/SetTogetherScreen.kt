@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -100,42 +102,44 @@ internal fun SetTogetherScreen(
                 descriptionRes = AddChallengeStrings.feature_addchallenge_description_set_together,
             )
             Spacer(modifier = Modifier.height(50.dp))
-            MaxParticipantsCard(
-                maxParticipants = uiState.maxParticipants,
-                onMaxParticipantsUpdated = {
-                    processAction(AddChallengeUiAction.OnMaxParticipantsUpdated(it))
-                },
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            RoomPasswordCard(
-                enableRoomPassword = uiState.enableRoomPassword,
-                onEnableRoomPasswordUpdated = {
-                    processAction(AddChallengeUiAction.OnEnableRoomPasswordUpdated(it))
-                },
-                roomPassword = uiState.roomPassword,
-                onRoomPasswordUpdated = {
-                    processAction(AddChallengeUiAction.OnRoomPasswordUpdated(it))
-                },
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-            ChallengeTogetherButton(
-                onClick = {},
-                enabled = !uiState.isAddingChallenge,
-                shape = MaterialTheme.shapes.large,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(55.dp),
-            ) {
-                if (uiState.isAddingChallenge) {
-                    CircularProgressIndicator(
-                        color = CustomColorProvider.colorScheme.brand,
-                        modifier = Modifier.size(24.dp),
-                    )
-                } else {
-                    Text(
-                        text = stringResource(id = AddChallengeStrings.feature_addchallenge_create_waiting_room),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                MaxParticipantsCard(
+                    maxParticipants = uiState.maxParticipants,
+                    onMaxParticipantsUpdated = {
+                        processAction(AddChallengeUiAction.OnMaxParticipantsUpdated(it))
+                    },
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                RoomPasswordCard(
+                    enableRoomPassword = uiState.enableRoomPassword,
+                    onEnableRoomPasswordUpdated = {
+                        processAction(AddChallengeUiAction.OnEnableRoomPasswordUpdated(it))
+                    },
+                    roomPassword = uiState.roomPassword,
+                    onRoomPasswordUpdated = {
+                        processAction(AddChallengeUiAction.OnRoomPasswordUpdated(it))
+                    },
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+                ChallengeTogetherButton(
+                    onClick = {},
+                    enabled = !uiState.isAddingChallenge,
+                    shape = MaterialTheme.shapes.large,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(55.dp),
+                ) {
+                    if (uiState.isAddingChallenge) {
+                        CircularProgressIndicator(
+                            color = CustomColorProvider.colorScheme.brand,
+                            modifier = Modifier.size(24.dp),
+                        )
+                    } else {
+                        Text(
+                            text = stringResource(id = AddChallengeStrings.feature_addchallenge_create_waiting_room),
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
                 }
             }
         }
