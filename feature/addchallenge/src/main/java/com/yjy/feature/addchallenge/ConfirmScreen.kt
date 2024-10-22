@@ -5,11 +5,14 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -29,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -157,11 +161,12 @@ private fun TogetherButton(
         shape = MaterialTheme.shapes.large,
         modifier = Modifier
             .fillMaxWidth()
-            .height(55.dp),
+            .heightIn(min = 55.dp),
     ) {
         Text(
             text = stringResource(id = AddChallengeStrings.feature_addchallenge_together),
             style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -177,7 +182,7 @@ private fun StartButton(
         shape = MaterialTheme.shapes.large,
         modifier = Modifier
             .fillMaxWidth()
-            .height(55.dp),
+            .heightIn(min = 55.dp),
     ) {
         if (!enabled) {
             CircularProgressIndicator(
@@ -188,6 +193,7 @@ private fun StartButton(
             Text(
                 text = stringResource(id = AddChallengeStrings.feature_addchallenge_start_immediately),
                 style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
             )
         }
     }
@@ -196,15 +202,16 @@ private fun StartButton(
 @Composable
 private fun DataSection(startDateTime: LocalDateTime) {
     BaseCard(
-        modifier = Modifier.height(85.dp),
         titleResId = AddChallengeStrings.feature_addchallenge_start_date,
         content = {
             Text(
                 text = formatLocalDateTime(startDateTime),
                 style = MaterialTheme.typography.titleMedium,
                 color = CustomColorProvider.colorScheme.onSurface,
+                textAlign = TextAlign.End,
             )
         },
+        modifier = Modifier.fillMaxWidth(),
     )
 }
 
@@ -215,9 +222,15 @@ private fun CategorySection(category: Category, targetDays: TargetDays) {
         TargetDays.Infinite -> stringResource(id = AddChallengeStrings.feature_addchallenge_unlimited)
     }
 
-    Row(modifier = Modifier.height(120.dp)) {
+    Row(
+        modifier = Modifier
+            .heightIn(min = 120.dp)
+            .height(IntrinsicSize.Min),
+    ) {
         BaseCard(
-            modifier = Modifier.width(120.dp),
+            modifier = Modifier
+                .weight(0.4f)
+                .fillMaxHeight(),
             titleResId = AddChallengeStrings.feature_addchallenge_category_card_title,
             content = {
                 Box(
@@ -238,13 +251,14 @@ private fun CategorySection(category: Category, targetDays: TargetDays) {
         )
         Spacer(modifier = Modifier.width(8.dp))
         BaseCard(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(0.6f),
             titleResId = AddChallengeStrings.feature_addchallenge_target_day_card_title,
             content = {
                 Text(
                     text = targetDayText,
                     style = MaterialTheme.typography.titleMedium,
                     color = CustomColorProvider.colorScheme.onSurface,
+                    textAlign = TextAlign.End,
                 )
             }
         )
@@ -257,20 +271,24 @@ private fun BaseCard(
     content: @Composable () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    Column(
         modifier = modifier
             .clip(MaterialTheme.shapes.large)
             .background(CustomColorProvider.colorScheme.surface)
-            .padding(16.dp)
-            .fillMaxSize(),
+            .padding(16.dp),
     ) {
         Text(
             text = stringResource(id = titleResId),
             color = CustomColorProvider.colorScheme.onSurfaceMuted,
             style = MaterialTheme.typography.labelSmall,
-            modifier = Modifier.align(Alignment.TopStart),
+            modifier = Modifier.align(Alignment.Start),
         )
-        Box(modifier = Modifier.align(Alignment.BottomEnd)) {
+        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(8.dp))
+        Box(
+            modifier = Modifier.align(Alignment.End),
+            contentAlignment = Alignment.BottomEnd,
+        ) {
             content()
         }
     }
@@ -356,7 +374,11 @@ fun ConfirmScreenPreview() {
         ChallengeTogetherBackground {
             ConfirmScreen(
                 modifier = Modifier.fillMaxSize(),
-                uiState = AddChallengeUiState(mode = Mode.FREE),
+                uiState = AddChallengeUiState(
+                    mode = Mode.CHALLENGE,
+                    title = "Title",
+                    description = "Description",
+                ),
             )
         }
     }

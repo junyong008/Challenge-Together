@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -21,12 +22,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -48,12 +53,9 @@ import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
-import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
 import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
 import com.yjy.model.challenge.TargetDays
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun SetTargetDayRoute(
@@ -67,7 +69,6 @@ internal fun SetTargetDayRoute(
     SetTargetDayScreen(
         modifier = modifier,
         uiState = uiState,
-        uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
         onContinue = onContinue,
@@ -78,7 +79,6 @@ internal fun SetTargetDayRoute(
 internal fun SetTargetDayScreen(
     modifier: Modifier = Modifier,
     uiState: AddChallengeUiState = AddChallengeUiState(),
-    uiEvent: Flow<AddChallengeUiEvent> = flowOf(),
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onContinue: () -> Unit = {},
@@ -132,8 +132,6 @@ internal fun SetTargetDayScreen(
                         )
                     )
                 },
-                switchWidth = 200.dp,
-                switchHeight = 50.dp,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             )
         }
@@ -181,7 +179,9 @@ private fun TargetDaysSelector(
                     Icon(
                         painter = painterResource(id = ChallengeTogetherIcons.Infinite),
                         tint = CustomColorProvider.colorScheme.onBackground,
-                        contentDescription = null,
+                        contentDescription = stringResource(
+                            id = AddChallengeStrings.feature_addchallenge_unlimited
+                        ),
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(16.dp),
@@ -210,19 +210,27 @@ private fun TargetDaySwitch(
     onSelectedColor: Color = CustomColorProvider.colorScheme.onBrand,
     unselectedColor: Color = CustomColorProvider.colorScheme.onSurface.copy(alpha = 0.3f),
     textStyle: TextStyle = MaterialTheme.typography.labelSmall,
-    shape: Shape = MaterialTheme.shapes.large,
-    switchWidth: Dp = 150.dp,
-    switchHeight: Dp = 40.dp,
-    gap: Dp = 4.dp,
+    shape: Shape = MaterialTheme.shapes.extraLarge,
+    gap: Dp = 6.dp,
 ) {
+    val density = LocalDensity.current
+
+    var leftWidth by remember { mutableIntStateOf(0) }
+    var rightWidth by remember { mutableIntStateOf(0) }
+
     val offsetX by animateDpAsState(
-        targetValue = if (isLeftSelected) 0.dp else switchWidth / 2 - gap,
+        targetValue = if (isLeftSelected) 0.dp else leftWidth.dp,
         label = "SwitchOffset Animation",
+    )
+
+    val animatedWidth by animateDpAsState(
+        targetValue = if (isLeftSelected) leftWidth.dp else rightWidth.dp,
+        label = "SwitchWidth Animation"
     )
 
     Box(
         modifier = modifier
-            .size(switchWidth, switchHeight)
+            .height(IntrinsicSize.Min)
             .clip(shape)
             .background(switchBackgroundColor)
             .padding(gap)
@@ -230,42 +238,55 @@ private fun TargetDaySwitch(
         Box(
             modifier = Modifier
                 .offset { IntOffset(offsetX.roundToPx(), 0) }
+                .width(animatedWidth)
                 .fillMaxHeight()
-                .width(switchWidth / 2 - gap)
                 .clip(shape)
                 .background(selectedColor)
         )
 
         Row(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxHeight(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                text = leftText,
-                textAlign = TextAlign.Center,
-                color = if (isLeftSelected) onSelectedColor else unselectedColor,
-                style = textStyle,
+            Box(
                 modifier = Modifier
-                    .clip(shape)
-                    .weight(1f)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
-                    ) { onSwitchChange(true) },
-            )
-            Text(
-                text = rightText,
-                textAlign = TextAlign.Center,
-                color = if (isLeftSelected) unselectedColor else onSelectedColor,
-                style = textStyle,
+                    ) { onSwitchChange(true) }
+                    .onGloballyPositioned { coordinates ->
+                        leftWidth = with(density) { coordinates.size.width.toDp().value.toInt() }
+                    }
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = leftText,
+                    textAlign = TextAlign.Center,
+                    color = if (isLeftSelected) onSelectedColor else unselectedColor,
+                    style = textStyle,
+                )
+
+            }
+            Box(
                 modifier = Modifier
-                    .clip(shape)
-                    .weight(1f)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
-                    ) { onSwitchChange(false) },
-            )
+                    ) { onSwitchChange(false) }
+                    .onGloballyPositioned { coordinates ->
+                        rightWidth = with(density) { coordinates.size.width.toDp().value.toInt() }
+                    }
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = rightText,
+                    textAlign = TextAlign.Center,
+                    color = if (isLeftSelected) unselectedColor else onSelectedColor,
+                    style = textStyle,
+                )
+            }
         }
     }
 }

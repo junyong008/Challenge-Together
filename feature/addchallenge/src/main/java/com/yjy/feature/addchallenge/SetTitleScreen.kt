@@ -25,12 +25,9 @@ import com.yjy.common.designsystem.component.TitleWithDescription
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
-import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
 import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
 import com.yjy.model.challenge.Mode
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun SetTitleRoute(
@@ -45,7 +42,6 @@ internal fun SetTitleRoute(
     SetTitleScreen(
         modifier = modifier,
         uiState = uiState,
-        uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
         onContinueToSetStartDate = onContinueToSetStartDate,
@@ -57,7 +53,6 @@ internal fun SetTitleRoute(
 internal fun SetTitleScreen(
     modifier: Modifier = Modifier,
     uiState: AddChallengeUiState = AddChallengeUiState(),
-    uiEvent: Flow<AddChallengeUiEvent> = flowOf(),
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onContinueToSetStartDate: () -> Unit = {},
@@ -116,8 +111,8 @@ internal fun SetTitleScreen(
                 placeholderText = uiState.title.ifBlank {
                     stringResource(id = AddChallengeStrings.feature_addchallenge_description_placeholder)
                 },
-                modifier = Modifier.height(180.dp),
                 contentAlignment = Alignment.TopStart,
+                modifier = Modifier.height(180.dp)
             )
         }
     }

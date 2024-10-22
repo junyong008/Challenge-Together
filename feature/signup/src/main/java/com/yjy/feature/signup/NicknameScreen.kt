@@ -179,9 +179,7 @@ internal fun NicknameScreen(
                     )
                 },
                 enabled = uiState.canTryStart && !uiState.isSigningUp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 if (uiState.isSigningUp) {
                     CircularProgressIndicator(
@@ -193,6 +191,7 @@ internal fun NicknameScreen(
                     Text(
                         text = stringResource(id = SignUpStrings.feature_signup_start),
                         style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
                     )
                 }
             }

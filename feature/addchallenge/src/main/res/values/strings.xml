@@ -10,7 +10,7 @@
     <string name="feature_addchallenge_title_set_start_date">Select the start date of the challenge</string>
     <string name="feature_addchallenge_description_set_start_date">Select when the challenge started.\nThe start date cannot be in the future.</string>
     <string name="feature_addchallenge_title_confirm">Everything is ready!</string>
-    <string name="feature_addchallenge_description_confirm">If you\'d like to do this challenge with others,\nchoose the \"Together\" option to create a waiting room.</string>
+    <string name="feature_addchallenge_description_confirm">All preparations for the challenge are complete.\nClick the \"Start\" button to begin the challenge immediately.</string>
     <string name="feature_addchallenge_title_set_together">Together</string>
     <string name="feature_addchallenge_description_set_together">We\'ll create a waiting room so others can join your challenge.</string>
 

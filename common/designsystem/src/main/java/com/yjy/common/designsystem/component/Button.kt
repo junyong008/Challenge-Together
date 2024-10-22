@@ -2,6 +2,7 @@ package com.yjy.common.designsystem.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -33,7 +34,7 @@ fun ChallengeTogetherButton(
     val multipleEventsCutter = remember { MultipleEventsCutter.get() }
     Button(
         onClick = { multipleEventsCutter.processEvent { onClick() } },
-        modifier = modifier,
+        modifier = modifier.heightIn(min = 50.dp),
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
@@ -59,7 +60,7 @@ fun ChallengeTogetherOutlinedButton(
     val multipleEventsCutter = remember { MultipleEventsCutter.get() }
     OutlinedButton(
         onClick = { multipleEventsCutter.processEvent { onClick() } },
-        modifier = modifier,
+        modifier = modifier.heightIn(min = 50.dp),
         enabled = enabled,
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = contentColor,

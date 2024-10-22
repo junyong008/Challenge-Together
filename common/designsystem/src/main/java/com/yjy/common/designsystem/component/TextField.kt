@@ -1,13 +1,14 @@
 package com.yjy.common.designsystem.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -67,7 +68,6 @@ fun ChallengeTogetherTextField(
     textAlign: TextAlign = TextAlign.Start,
     textColor: Color = CustomColorProvider.colorScheme.onSurface,
     placeholderColor: Color = CustomColorProvider.colorScheme.onSurface.copy(alpha = 0.2f),
-    borderColor: Color? = null,
     backgroundColor: Color = CustomColorProvider.colorScheme.surface,
     enabled: Boolean = true,
     contentAlignment: Alignment = Alignment.CenterStart,
@@ -76,64 +76,53 @@ fun ChallengeTogetherTextField(
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
 
-    Row(
-        modifier = modifier
-            .height(50.dp)
-            .background(
-                color = if (enabled) {
-                    backgroundColor
-                } else {
-                    CustomColorProvider.colorScheme.disable
-                },
-                shape = shape,
-            )
-            .then(
-                if (borderColor != null) {
-                    Modifier.border(
-                        width = 1.dp,
-                        color = borderColor,
-                        shape = shape,
-                    )
-                } else {
-                    Modifier
-                }
-            ),
-        verticalAlignment = Alignment.CenterVertically,
+    CompositionLocalProvider(
+        LocalTextSelectionColors provides TextSelectionColors(
+            handleColor = CustomColorProvider.colorScheme.brandBright,
+            backgroundColor = CustomColorProvider.colorScheme.brandBright.copy(alpha = 0.5f),
+        ),
     ) {
-        Spacer(modifier = Modifier.width(16.dp))
-        if (leadingIcon != null) {
-            leadingIcon()
-            Spacer(modifier = Modifier.width(8.dp))
-        }
+        BasicTextField(
+            value = value,
+            onValueChange = onValueChange,
+            singleLine = singleLine,
+            maxLines = maxLines,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            textStyle = textStyle.copy(color = textColor, textAlign = textAlign),
+            cursorBrush = SolidColor(CustomColorProvider.colorScheme.brand),
+            enabled = enabled,
+            visualTransformation = if (isPassword && !passwordVisible) {
+                PasswordVisualTransformation()
+            } else {
+                VisualTransformation.None
+            },
+            modifier = modifier
+                .background(
+                    color = if (enabled) {
+                        backgroundColor
+                    } else {
+                        CustomColorProvider.colorScheme.disable
+                    },
+                    shape = shape,
+                )
+                .heightIn(min = 50.dp)
+                .height(IntrinsicSize.Min),
+        ) { innerTextField ->
 
-        CompositionLocalProvider(
-            LocalTextSelectionColors provides TextSelectionColors(
-                handleColor = CustomColorProvider.colorScheme.brandBright,
-                backgroundColor = CustomColorProvider.colorScheme.brandBright.copy(alpha = 0.5f),
-            ),
-        ) {
-            BasicTextField(
-                value = value,
-                onValueChange = onValueChange,
-                singleLine = singleLine,
-                maxLines = maxLines,
-                keyboardOptions = keyboardOptions,
-                keyboardActions = keyboardActions,
-                textStyle = textStyle.copy(color = textColor, textAlign = textAlign),
-                cursorBrush = SolidColor(CustomColorProvider.colorScheme.brand),
-                enabled = enabled,
-                visualTransformation = if (isPassword && !passwordVisible) {
-                    PasswordVisualTransformation()
-                } else {
-                    VisualTransformation.None
-                },
-                modifier = Modifier.weight(1f),
-            ) { innerTextField ->
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Spacer(modifier = Modifier.width(16.dp))
+                if (leadingIcon != null) {
+                    leadingIcon()
+                    Spacer(modifier = Modifier.width(8.dp))
+                }
+
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(vertical = 14.dp),
                     contentAlignment = contentAlignment,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .padding(vertical = 14.dp),
                 ) {
                     if (value.isEmpty()) {
                         Text(
@@ -143,37 +132,39 @@ fun ChallengeTogetherTextField(
                     }
                     innerTextField()
                 }
-            }
-        }
 
-        if (isPassword && value.isNotEmpty()) {
-            IconButton(
-                onClick = { passwordVisible = !passwordVisible },
-                modifier = Modifier.size(40.dp)
-            ) {
-                Icon(
-                    painter = painterResource(
-                        id = if (passwordVisible) {
-                            ChallengeTogetherIcons.Visibility
-                        } else {
-                            ChallengeTogetherIcons.VisibilityOff
-                        }
-                    ),
-                    contentDescription = if (passwordVisible) {
-                        stringResource(id = R.string.common_designsystem_input_password_hide_content_description)
-                    } else {
-                        stringResource(id = R.string.common_designsystem_input_password_show_content_description)
-                    },
-                    tint = passwordIconColor
-                )
-            }
-        }
+                // 비밀번호 입력 칸이면 기본적으로 보기 / 가리기 기능 제공.
+                if (isPassword && value.isNotEmpty()) {
+                    IconButton(
+                        onClick = { passwordVisible = !passwordVisible },
+                        modifier = Modifier.size(40.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(
+                                id = if (passwordVisible) {
+                                    ChallengeTogetherIcons.Visibility
+                                } else {
+                                    ChallengeTogetherIcons.VisibilityOff
+                                }
+                            ),
+                            contentDescription = if (passwordVisible) {
+                                stringResource(id = R.string.common_designsystem_input_password_hide_content_description)
+                            } else {
+                                stringResource(id = R.string.common_designsystem_input_password_show_content_description)
+                            },
+                            tint = passwordIconColor
+                        )
+                    }
+                }
 
-        if (trailingIcon != null) {
-            trailingIcon()
-            Spacer(modifier = Modifier.width(8.dp))
-        } else {
-            Spacer(modifier = Modifier.width(16.dp))
+                // trailingIcon은 주로 IconButton이 위치하므로 leadingIcon과 padding을 달리함.
+                if (trailingIcon != null) {
+                    trailingIcon()
+                    Spacer(modifier = Modifier.width(8.dp))
+                } else {
+                    Spacer(modifier = Modifier.width(16.dp))
+                }
+            }
         }
     }
 }
@@ -194,7 +185,6 @@ fun SingleLineTextField(
     textColor: Color = CustomColorProvider.colorScheme.onSurface,
     placeholderText: String = "",
     placeholderColor: Color = CustomColorProvider.colorScheme.onSurface.copy(alpha = 0.2f),
-    borderColor: Color = Color.Transparent,
     backgroundColor: Color = CustomColorProvider.colorScheme.surface,
     contentAlignment: Alignment = Alignment.CenterStart,
     passwordIconColor: Color = CustomColorProvider.colorScheme.onSurfaceMuted,
@@ -232,7 +222,6 @@ fun SingleLineTextField(
         textColor = textColor,
         placeholderText = placeholderText,
         placeholderColor = placeholderColor,
-        borderColor = borderColor,
         backgroundColor = backgroundColor,
         contentAlignment = contentAlignment,
         passwordIconColor = passwordIconColor,
@@ -281,7 +270,6 @@ fun CursorLessNumberTextField(
                         focusRequester.requestFocus()
                         keyboardController?.show()
                     }
-                    .fillMaxSize()
             ) {
                 Text(
                     text = value.toString(),

@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -118,29 +120,34 @@ internal fun EmailPasswordScreen(
                 descriptionRes = SignUpStrings.feature_signup_description,
             )
             Spacer(modifier = Modifier.height(50.dp))
-            SignUpEmailTextField(
-                value = uiState.email,
-                onValueChange = { processAction(SignUpUiAction.OnEmailUpdated(it)) },
-                enabled = !uiState.isValidatingEmail,
-            )
-            ConditionIndicator(
-                text = stringResource(id = SignUpStrings.feature_signup_email_format_indicator),
-                isMatched = uiState.isValidEmailFormat,
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            SignUpPasswordTextField(
-                value = uiState.password,
-                onValueChange = { processAction(SignUpUiAction.OnPasswordUpdated(it)) },
-                enabled = !uiState.isValidatingEmail,
-            )
-            ConditionIndicator(
-                text = stringResource(id = SignUpStrings.feature_signup_password_length_indicator, MIN_PASSWORD_LENGTH),
-                isMatched = uiState.isPasswordLongEnough,
-            )
-            ConditionIndicator(
-                text = stringResource(id = SignUpStrings.feature_signup_password_number_indicator),
-                isMatched = uiState.isPasswordContainNumber,
-            )
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                SignUpEmailTextField(
+                    value = uiState.email,
+                    onValueChange = { processAction(SignUpUiAction.OnEmailUpdated(it)) },
+                    enabled = !uiState.isValidatingEmail,
+                )
+                ConditionIndicator(
+                    text = stringResource(id = SignUpStrings.feature_signup_email_format_indicator),
+                    isMatched = uiState.isValidEmailFormat,
+                )
+                Spacer(modifier = Modifier.height(24.dp))
+                SignUpPasswordTextField(
+                    value = uiState.password,
+                    onValueChange = { processAction(SignUpUiAction.OnPasswordUpdated(it)) },
+                    enabled = !uiState.isValidatingEmail,
+                )
+                ConditionIndicator(
+                    text = stringResource(
+                        id = SignUpStrings.feature_signup_password_length_indicator,
+                        MIN_PASSWORD_LENGTH
+                    ),
+                    isMatched = uiState.isPasswordLongEnough,
+                )
+                ConditionIndicator(
+                    text = stringResource(id = SignUpStrings.feature_signup_password_number_indicator),
+                    isMatched = uiState.isPasswordContainNumber,
+                )
+            }
         }
     }
 }

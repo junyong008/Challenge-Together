@@ -41,12 +41,9 @@ import com.yjy.common.designsystem.extensions.getIconResId
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
-import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
 import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
 import com.yjy.model.challenge.Category
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun SetCategoryRoute(
@@ -60,7 +57,6 @@ internal fun SetCategoryRoute(
     SetCategoryScreen(
         modifier = modifier,
         uiState = uiState,
-        uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
         onContinue = onContinue,
@@ -71,7 +67,6 @@ internal fun SetCategoryRoute(
 internal fun SetCategoryScreen(
     modifier: Modifier = Modifier,
     uiState: AddChallengeUiState = AddChallengeUiState(),
-    uiEvent: Flow<AddChallengeUiEvent> = flowOf(),
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onContinue: () -> Unit = {},
@@ -98,34 +93,49 @@ internal fun SetCategoryScreen(
                 descriptionRes = AddChallengeStrings.feature_addchallenge_description_set_category,
             )
             Spacer(modifier = Modifier.height(50.dp))
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+            CategoryList(
+                selectedCategory = uiState.category,
+                onCategorySelected = { category, title ->
+                    processAction(
+                        AddChallengeUiAction.OnSelectCategory(
+                            category = category,
+                            title = title
+                        )
+                    )
+                },
                 modifier = Modifier.weight(1f),
-            ) {
-                items(Category.entries) { category ->
-                    val categoryTitle = stringResource(
-                        id = if (category == Category.ALL) {
-                            AddChallengeStrings.feature_addchallenge_my_challenge
-                        } else {
-                            category.getDisplayNameResId()
-                        }
-                    )
+            )
+        }
+    }
+}
 
-                    CategoryItem(
-                        category = category,
-                        categoryTitle = categoryTitle,
-                        isSelected = category == uiState.category,
-                        onClick = {
-                            processAction(
-                                AddChallengeUiAction.OnSelectCategory(
-                                    category = category,
-                                    title = categoryTitle,
-                                )
-                            )
-                        },
-                    )
+@Composable
+private fun CategoryList(
+    selectedCategory: Category,
+    onCategorySelected: (Category, String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier,
+    ) {
+        items(Category.entries) { category ->
+            val categoryTitle = stringResource(
+                id = if (category == Category.ALL) {
+                    AddChallengeStrings.feature_addchallenge_my_challenge
+                } else {
+                    category.getDisplayNameResId()
                 }
-            }
+            )
+
+            CategoryItem(
+                category = category,
+                categoryTitle = categoryTitle,
+                isSelected = category == selectedCategory,
+                onClick = {
+                    onCategorySelected(category, categoryTitle)
+                },
+            )
         }
     }
 }

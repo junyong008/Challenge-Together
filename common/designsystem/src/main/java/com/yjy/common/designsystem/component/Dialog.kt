@@ -165,7 +165,9 @@ private fun NumberInputField(
         textStyle = MaterialTheme.typography.displaySmall,
         minLimit = minLimit,
         maxLimit = maxLimit,
-        modifier = modifier.height(80.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(80.dp),
     )
 }
 

@@ -157,7 +157,6 @@ internal fun LoginScreen(
             enabled = uiState.canTryLogin && !uiState.isLoading,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
                 .testTag("loginButton"),
         ) {
             if (uiState.isLoading) {
@@ -169,6 +168,7 @@ internal fun LoginScreen(
                 Text(
                     text = stringResource(id = LoginStrings.feature_login_button_text),
                     style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
                 )
             }
         }
@@ -279,6 +279,7 @@ private fun FindPasswordAndSignUp(
             onClick = { onFindPasswordClick() },
             textAlign = TextAlign.End,
             enabled = enabled,
+            modifier = Modifier.weight(1f, fill = false),
         )
         Text(
             text = "|",
@@ -290,6 +291,7 @@ private fun FindPasswordAndSignUp(
             text = stringResource(id = LoginStrings.feature_login_sign_up),
             onClick = { onSignUpClick() },
             enabled = enabled,
+            modifier = Modifier.weight(1f, fill = false),
         )
     }
 }

@@ -12,16 +12,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.ThemePreviews
@@ -33,7 +33,6 @@ import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
-import com.yjy.feature.addchallenge.model.AddChallengeUiState
 import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
 import com.yjy.model.challenge.Mode
 import kotlinx.coroutines.flow.Flow
@@ -46,11 +45,8 @@ internal fun SetModeRoute(
     modifier: Modifier = Modifier,
     viewModel: AddChallengeViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
     SetModeScreen(
         modifier = modifier,
-        uiState = uiState,
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
@@ -61,7 +57,6 @@ internal fun SetModeRoute(
 @Composable
 internal fun SetModeScreen(
     modifier: Modifier = Modifier,
-    uiState: AddChallengeUiState = AddChallengeUiState(),
     uiEvent: Flow<AddChallengeUiEvent> = flowOf(),
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
@@ -95,20 +90,22 @@ internal fun SetModeScreen(
                 descriptionRes = AddChallengeStrings.feature_addchallenge_description_set_mode,
             )
             Spacer(modifier = Modifier.height(50.dp))
-            ModeButton(
-                drawableResId = R.drawable.image_trophy,
-                titleResId = AddChallengeStrings.feature_addchallenge_mode_challenge,
-                descriptionResId = AddChallengeStrings.feature_addchallenge_mode_challenge_description,
-                onClick = { processAction(AddChallengeUiAction.OnSelectMode(Mode.CHALLENGE)) },
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            ModeButton(
-                imagePadding = 5.dp,
-                drawableResId = R.drawable.image_calendar,
-                titleResId = AddChallengeStrings.feature_addchallenge_mode_free,
-                descriptionResId = AddChallengeStrings.feature_addchallenge_mode_free_description,
-                onClick = { processAction(AddChallengeUiAction.OnSelectMode(Mode.FREE)) },
-            )
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                ModeButton(
+                    drawableResId = R.drawable.image_trophy,
+                    titleResId = AddChallengeStrings.feature_addchallenge_mode_challenge,
+                    descriptionResId = AddChallengeStrings.feature_addchallenge_mode_challenge_description,
+                    onClick = { processAction(AddChallengeUiAction.OnSelectMode(Mode.CHALLENGE)) },
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                ModeButton(
+                    imagePadding = 5.dp,
+                    drawableResId = R.drawable.image_calendar,
+                    titleResId = AddChallengeStrings.feature_addchallenge_mode_free,
+                    descriptionResId = AddChallengeStrings.feature_addchallenge_mode_free_description,
+                    onClick = { processAction(AddChallengeUiAction.OnSelectMode(Mode.FREE)) },
+                )
+            }
         }
     }
 }

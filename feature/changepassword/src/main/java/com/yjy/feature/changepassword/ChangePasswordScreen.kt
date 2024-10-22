@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -183,9 +184,7 @@ internal fun ChangePasswordScreen(
                 enabled = !uiState.isChangingPassword &&
                     uiState.isPasswordLongEnough &&
                     uiState.isPasswordContainNumber,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 if (uiState.isChangingPassword) {
                     CircularProgressIndicator(
@@ -197,6 +196,7 @@ internal fun ChangePasswordScreen(
                     Text(
                         text = stringResource(id = ChangePasswordStrings.feature_changepassword_confirm),
                         style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
                     )
                 }
             }

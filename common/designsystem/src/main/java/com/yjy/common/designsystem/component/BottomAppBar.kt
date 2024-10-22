@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.designsystem.R
@@ -80,8 +81,7 @@ fun ChallengeTogetherBottomAppBar(
                 shape = MaterialTheme.shapes.extraLarge,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .widthIn(min = 120.dp)
-                    .height(50.dp),
+                    .widthIn(min = 120.dp),
             ) {
                 if (isLoading) {
                     CircularProgressIndicator(
@@ -93,6 +93,7 @@ fun ChallengeTogetherBottomAppBar(
                     Text(
                         text = stringResource(id = R.string.common_designsystem_app_bar_continue),
                         style = MaterialTheme.typography.labelMedium,
+                        textAlign = TextAlign.Center,
                     )
                 }
             }

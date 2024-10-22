@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -29,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -127,7 +129,7 @@ internal fun SetTogetherScreen(
                     shape = MaterialTheme.shapes.large,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(55.dp),
+                        .heightIn(min = 55.dp),
                 ) {
                     if (uiState.isAddingChallenge) {
                         CircularProgressIndicator(
@@ -138,6 +140,7 @@ internal fun SetTogetherScreen(
                         Text(
                             text = stringResource(id = AddChallengeStrings.feature_addchallenge_create_waiting_room),
                             style = MaterialTheme.typography.bodyMedium,
+                            textAlign = TextAlign.Center,
                         )
                     }
                 }
@@ -172,6 +175,7 @@ private fun RoomPasswordCard(
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier.weight(1f),
             )
+            Spacer(modifier = Modifier.width(8.dp))
             ChallengeTogetherSwitch(
                 checked = enableRoomPassword,
                 onCheckedChange = onEnableRoomPasswordUpdated,
@@ -226,6 +230,7 @@ private fun MaxParticipantsCard(
                 .align(Alignment.Top)
                 .weight(1f),
         )
+        Spacer(modifier = Modifier.width(8.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -233,7 +238,6 @@ private fun MaxParticipantsCard(
                 selectedNumber = maxParticipants,
                 onNumberChange = onMaxParticipantsUpdated,
                 range = IntRange(MIN_CHALLENGE_MAX_PARTICIPANTS, MAX_CHALLENGE_MAX_PARTICIPANTS),
-                modifier = Modifier.width(45.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(

@@ -4,10 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -27,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -73,6 +75,9 @@ fun NumberPicker(
 
     // 이전에 선택된 인덱스를 저장하기 위한 변수. 인덱스가 변경됐을때만 onNumberChange 호출
     var lastSelectedIndex by remember { mutableIntStateOf(-1) }
+
+    // Divider 그리기 위한 너비 계산
+    var parentWidth by remember { mutableIntStateOf(0) }
 
     // 스크롤이 멈췄을 때 가장 가까운 아이템으로 스크롤
     LaunchedEffect(state) {
@@ -129,11 +134,17 @@ fun NumberPicker(
         }
     }
 
-    Box(modifier = modifier) {
+    Box(
+        modifier = modifier
+            .widthIn(min = 45.dp)
+            .onGloballyPositioned { coordinates ->
+                parentWidth = with(density) { coordinates.size.width.toDp().value.toInt() }
+            },
+        contentAlignment = Alignment.Center,
+    ) {
         LazyColumn(
             state = state,
             modifier = Modifier
-                .fillMaxWidth()
                 .height(lazyColumnHeight),
             contentPadding = PaddingValues(vertical = itemHeight * (visibleItems / 2)),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -162,19 +173,19 @@ fun NumberPicker(
 
         HorizontalDivider(
             modifier = Modifier
+                .width(parentWidth.dp)
                 .align(Alignment.Center)
-                .offset(y = (-itemHeight / 2))
-                .fillMaxWidth()
-                .height(1.dp),
+                .offset(y = (-itemHeight / 2)),
             color = contentColor,
+            thickness = 1.dp,
         )
         HorizontalDivider(
             modifier = Modifier
+                .width(parentWidth.dp)
                 .align(Alignment.Center)
-                .offset(y = (itemHeight / 2))
-                .fillMaxWidth()
-                .height(1.dp),
+                .offset(y = (itemHeight / 2)),
             color = contentColor,
+            thickness = 1.dp,
         )
     }
 }

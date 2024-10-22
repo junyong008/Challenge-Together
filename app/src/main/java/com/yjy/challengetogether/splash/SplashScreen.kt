@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -54,7 +55,7 @@ internal fun SplashScreen(
                     R.drawable.image_splash_light
                 },
             ),
-            contentDescription = null,
+            contentDescription = stringResource(id = R.string.splash_content_description),
             modifier = Modifier
                 .size(150.dp)
                 .align(Alignment.Center)

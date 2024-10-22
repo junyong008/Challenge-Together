@@ -9,13 +9,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -51,14 +52,15 @@ internal fun ServiceBottomBar(
         Column(
             modifier = Modifier
                 .navigationBarsPadding()
-                .fillMaxWidth()
-                .height(65.dp)
+                .heightIn(min = 65.dp)
+                .height(IntrinsicSize.Min)
                 .background(CustomColorProvider.colorScheme.surface),
         ) {
             HorizontalDivider(color = CustomColorProvider.colorScheme.divider, thickness = 0.5.dp)
             Row(
                 modifier = Modifier
-                    .weight(1f),
+                    .weight(1f)
+                    .padding(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 mainTabs.forEach { tab ->
@@ -82,7 +84,6 @@ private fun RowScope.ServiceBottomBarItem(
     Column(
         modifier = Modifier
             .weight(1f)
-            .fillMaxHeight()
             .selectable(
                 selected = selected,
                 indication = null,
