@@ -5,6 +5,7 @@ import com.yjy.common.network.map
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.challenge.impl.mapper.toRequestString
 import com.yjy.data.network.datasource.ChallengeDataSource
+import com.yjy.data.network.request.AddChallengeRequest
 import com.yjy.model.challenge.Category
 import com.yjy.model.challenge.TargetDays
 import java.time.LocalDateTime
@@ -24,13 +25,15 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         roomPassword: String
     ): NetworkResult<String> {
         return challengeDataSource.addChallenge(
-            category = category.toRequestString(),
-            title = title,
-            description = description,
-            targetDays = targetDays.toRequestString(),
-            startDateTime = startDateTime?.toRequestString() ?: "",
-            maxParticipants = maxParticipants.toString(),
-            password = roomPassword,
+            AddChallengeRequest(
+                category = category.toRequestString(),
+                title = title,
+                description = description,
+                targetDays = targetDays.toRequestString(),
+                startDateTime = startDateTime?.toRequestString() ?: "",
+                maxParticipants = maxParticipants.toString(),
+                password = roomPassword,
+            )
         ).map { it.challengeId }
     }
 }

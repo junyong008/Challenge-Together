@@ -10,25 +10,6 @@ internal class ChallengeDataSourceImpl @Inject constructor(
     private val challengeTogetherService: ChallengeTogetherService,
 ) : ChallengeDataSource {
 
-    override suspend fun addChallenge(
-        category: String,
-        title: String,
-        description: String,
-        startDateTime: String,
-        targetDays: String,
-        maxParticipants: String,
-        password: String
-    ): NetworkResult<AddChallengeResponse> {
-        return challengeTogetherService.addChallenge(
-            AddChallengeRequest(
-                category = category,
-                title = title,
-                description = description,
-                startDateTime = startDateTime,
-                targetDays = targetDays,
-                maxParticipants = maxParticipants,
-                password = password
-            ),
-        )
-    }
+    override suspend fun addChallenge(request: AddChallengeRequest): NetworkResult<AddChallengeResponse> =
+        challengeTogetherService.addChallenge(request)
 }
