@@ -39,7 +39,7 @@ class ChangePasswordViewModel @Inject constructor(
     }
 
     private fun confirmExit() {
-        updateState { copy(shouldShowExitConfirmDialog = false) }
+        dismissExitConfirmDialog()
         sendEvent(ChangePasswordUiEvent.CancelChangePassword)
     }
 

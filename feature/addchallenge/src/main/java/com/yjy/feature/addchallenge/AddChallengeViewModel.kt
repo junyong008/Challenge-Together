@@ -36,6 +36,10 @@ class AddChallengeViewModel @Inject constructor(
             is AddChallengeUiAction.OnMaxParticipantsUpdated -> updateMaxParticipants(action.maxParticipants)
             is AddChallengeUiAction.OnEnableRoomPasswordUpdated -> updateEnableRoomPassword(action.enableRoomPassword)
             is AddChallengeUiAction.OnRoomPasswordUpdated -> updateRoomPassword(action.roomPassword)
+            is AddChallengeUiAction.OnStartChallengeClick -> showAddConfirmDialog()
+            is AddChallengeUiAction.OnCancelStartChallenge -> dismissAddConfirmDialog()
+            is AddChallengeUiAction.OnCreateWaitingRoomClick -> showAddConfirmDialog()
+            is AddChallengeUiAction.OnCancelCreateWaitingRoom -> dismissAddConfirmDialog()
 
             is AddChallengeUiAction.OnStartDateTimeUpdated -> updateStartDateTime(
                 selectedDate = action.selectedDate,
@@ -44,7 +48,7 @@ class AddChallengeViewModel @Inject constructor(
                 isAm = action.isAm,
             )
 
-            is AddChallengeUiAction.OnStartChallenge -> startChallenge(
+            is AddChallengeUiAction.OnConfirmStartChallenge -> startChallenge(
                 mode = action.mode,
                 category = action.category,
                 title = action.title,
@@ -53,7 +57,7 @@ class AddChallengeViewModel @Inject constructor(
                 targetDays = action.targetDays,
             )
 
-            is AddChallengeUiAction.OnCreateWaitingRoom -> createWaitingRoom(
+            is AddChallengeUiAction.OnConfirmCreateWaitingRoom -> createWaitingRoom(
                 category = action.category,
                 title = action.title,
                 description = action.description,
@@ -131,6 +135,14 @@ class AddChallengeViewModel @Inject constructor(
         updateState { copy(roomPassword = roomPassword) }
     }
 
+    private fun showAddConfirmDialog() {
+        updateState { copy(shouldShowAddConfirmDialog = true) }
+    }
+
+    private fun dismissAddConfirmDialog() {
+        updateState { copy(shouldShowAddConfirmDialog = false) }
+    }
+
     private fun startChallenge(
         mode: Mode,
         category: Category,
@@ -140,6 +152,7 @@ class AddChallengeViewModel @Inject constructor(
         targetDays: TargetDays,
     ) {
         viewModelScope.launch {
+            dismissAddConfirmDialog()
             updateState { copy(isAddingChallenge = true) }
 
             val event = handleNetworkResult(
@@ -170,6 +183,7 @@ class AddChallengeViewModel @Inject constructor(
         roomPassword: String,
     ) {
         viewModelScope.launch {
+            dismissAddConfirmDialog()
             updateState { copy(isAddingChallenge = true) }
 
             val event = handleNetworkResult(

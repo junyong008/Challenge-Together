@@ -43,6 +43,7 @@ import com.yjy.common.designsystem.ThemePreviews
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherBottomAppBar
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
+import com.yjy.common.designsystem.component.ChallengeTogetherDialog
 import com.yjy.common.designsystem.component.ChallengeTogetherOutlinedButton
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.component.StableImage
@@ -131,6 +132,28 @@ internal fun ConfirmScreen(
         containerColor = CustomColorProvider.colorScheme.background,
         modifier = modifier,
     ) { padding ->
+
+        if (uiState.shouldShowAddConfirmDialog) {
+            ChallengeTogetherDialog(
+                title = stringResource(id = AddChallengeStrings.feature_addchallenge_dialog_start_title),
+                description = stringResource(id = AddChallengeStrings.feature_addchallenge_dialog_start_description),
+                positiveTextRes = AddChallengeStrings.feature_addchallenge_dialog_start,
+                onClickPositive = {
+                    processAction(
+                        AddChallengeUiAction.OnConfirmStartChallenge(
+                            mode = uiState.mode!!,
+                            category = uiState.category,
+                            title = uiState.title,
+                            description = uiState.description,
+                            startDateTime = uiState.startDateTime,
+                            targetDays = uiState.targetDays,
+                        )
+                    )
+                },
+                onClickNegative = { processAction(AddChallengeUiAction.OnCancelStartChallenge) },
+            )
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -160,18 +183,7 @@ internal fun ConfirmScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
                 StartButton(
-                    onClick = {
-                        processAction(
-                            AddChallengeUiAction.OnStartChallenge(
-                                mode = uiState.mode,
-                                category = uiState.category,
-                                title = uiState.title,
-                                description = uiState.description,
-                                startDateTime = uiState.startDateTime,
-                                targetDays = uiState.targetDays,
-                            )
-                        )
-                    },
+                    onClick = { processAction(AddChallengeUiAction.OnStartChallengeClick) },
                     enabled = !uiState.isAddingChallenge,
                 )
 

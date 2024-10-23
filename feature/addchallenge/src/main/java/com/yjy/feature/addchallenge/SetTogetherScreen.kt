@@ -41,6 +41,7 @@ import com.yjy.common.designsystem.ThemePreviews
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherBottomAppBar
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
+import com.yjy.common.designsystem.component.ChallengeTogetherDialog
 import com.yjy.common.designsystem.component.ChallengeTogetherSwitch
 import com.yjy.common.designsystem.component.NumberPicker
 import com.yjy.common.designsystem.component.SingleLineTextField
@@ -118,6 +119,29 @@ internal fun SetTogetherScreen(
         containerColor = CustomColorProvider.colorScheme.background,
         modifier = modifier,
     ) { padding ->
+
+        if (uiState.shouldShowAddConfirmDialog) {
+            ChallengeTogetherDialog(
+                title = stringResource(id = AddChallengeStrings.feature_addchallenge_dialog_create_room_title),
+                description = stringResource(id = AddChallengeStrings.feature_addchallenge_dialog_create_room_description),
+                positiveTextRes = AddChallengeStrings.feature_addchallenge_dialog_create,
+                onClickPositive = {
+                    processAction(
+                        AddChallengeUiAction.OnConfirmCreateWaitingRoom(
+                            category = uiState.category,
+                            title = uiState.title,
+                            description = uiState.description,
+                            targetDays = uiState.targetDays,
+                            maxParticipants = uiState.maxParticipants,
+                            enableRoomPassword = uiState.enableRoomPassword,
+                            roomPassword = uiState.roomPassword,
+                        )
+                    )
+                },
+                onClickNegative = { processAction(AddChallengeUiAction.OnCancelCreateWaitingRoom) },
+            )
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -150,19 +174,7 @@ internal fun SetTogetherScreen(
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 ChallengeTogetherButton(
-                    onClick = {
-                        processAction(
-                            AddChallengeUiAction.OnCreateWaitingRoom(
-                                category = uiState.category,
-                                title = uiState.title,
-                                description = uiState.description,
-                                targetDays = uiState.targetDays,
-                                maxParticipants = uiState.maxParticipants,
-                                enableRoomPassword = uiState.enableRoomPassword,
-                                roomPassword = uiState.roomPassword,
-                            )
-                        )
-                    },
+                    onClick = { processAction(AddChallengeUiAction.OnCreateWaitingRoomClick) },
                     enabled = !uiState.isAddingChallenge,
                     shape = MaterialTheme.shapes.large,
                     modifier = Modifier
