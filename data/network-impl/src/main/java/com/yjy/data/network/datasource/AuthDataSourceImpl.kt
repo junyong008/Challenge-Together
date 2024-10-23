@@ -13,50 +13,21 @@ internal class AuthDataSourceImpl @Inject constructor(
     private val challengeTogetherService: ChallengeTogetherService,
 ) : AuthDataSource {
 
-    override suspend fun signUp(
-        nickname: String,
-        email: String,
-        password: String,
-        kakaoId: String,
-        googleId: String,
-        naverId: String,
-    ): NetworkResult<Unit> {
-        return challengeTogetherService.signUp(
-            SignUpRequest(
-                nickname = nickname,
-                email = email,
-                password = password,
-                kakaoId = kakaoId,
-                googleId = googleId,
-                naverId = naverId,
-            ),
-        )
-    }
+    override suspend fun signUp(signUpRequest: SignUpRequest): NetworkResult<Unit> =
+        challengeTogetherService.signUp(signUpRequest)
 
-    override suspend fun emailLogin(email: String, password: String): NetworkResult<Unit> {
-        return challengeTogetherService.emailLogin(
-            EmailLoginRequest(
-                email = email,
-                password = password,
-            ),
-        )
-    }
+    override suspend fun emailLogin(emailLoginRequest: EmailLoginRequest): NetworkResult<Unit> =
+        challengeTogetherService.emailLogin(emailLoginRequest)
 
     override suspend fun checkEmailDuplicate(email: String): NetworkResult<Unit> =
         challengeTogetherService.checkEmailDuplicate(email)
 
-    override suspend fun requestVerifyCode(email: String): NetworkResult<Unit> =
-        challengeTogetherService.requestVerifyCode(EmailRequest(email = email))
+    override suspend fun requestVerifyCode(emailRequest: EmailRequest): NetworkResult<Unit> =
+        challengeTogetherService.requestVerifyCode(emailRequest)
 
-    override suspend fun verifyCode(email: String, verifyCode: String): NetworkResult<Unit> {
-        return challengeTogetherService.verifyCode(
-            VerifyRequest(
-                email = email,
-                verifyCode = verifyCode,
-            ),
-        )
-    }
+    override suspend fun verifyCode(verifyRequest: VerifyRequest): NetworkResult<Unit> =
+        challengeTogetherService.verifyCode(verifyRequest)
 
-    override suspend fun changePassword(password: String): NetworkResult<Unit> =
-        challengeTogetherService.changePassword(ChangePasswordRequest(password = password))
+    override suspend fun changePassword(changePasswordRequest: ChangePasswordRequest): NetworkResult<Unit> =
+        challengeTogetherService.changePassword(changePasswordRequest)
 }
