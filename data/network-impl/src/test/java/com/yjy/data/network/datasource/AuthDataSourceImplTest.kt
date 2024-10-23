@@ -6,6 +6,9 @@ import com.yjy.common.network.HttpStatusCodes.OK
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.network.adapter.NetworkResultCallAdapterFactory
 import com.yjy.data.network.interceptor.SessionInterceptor
+import com.yjy.data.network.request.EmailLoginRequest
+import com.yjy.data.network.request.SignUpRequest
+import com.yjy.data.network.request.VerifyRequest
 import com.yjy.data.network.service.ChallengeTogetherService
 import com.yjy.data.network.util.SessionManager
 import io.mockk.coVerify
@@ -73,8 +76,10 @@ class AuthDataSourceTest {
 
         // When
         authDataSource.emailLogin(
-            email = "test@example.com",
-            password = "password123",
+            EmailLoginRequest(
+                email = "test@example.com",
+                password = "password123",
+            )
         )
 
         // Then
@@ -92,12 +97,14 @@ class AuthDataSourceTest {
 
         // When
         authDataSource.signUp(
-            nickname = "testUser",
-            email = "test@example.com",
-            password = "password123",
-            kakaoId = "",
-            googleId = "",
-            naverId = "",
+            SignUpRequest(
+                nickname = "testUser",
+                email = "test@example.com",
+                password = "password123",
+                kakaoId = "",
+                googleId = "",
+                naverId = "",
+            )
         )
 
         // Then
@@ -115,8 +122,10 @@ class AuthDataSourceTest {
 
         // When
         authDataSource.verifyCode(
-            email = "test@example.com",
-            verifyCode = "111111",
+            VerifyRequest(
+                email = "test@example.com",
+                verifyCode = "111111",
+            )
         )
 
         // Then
