@@ -40,4 +40,9 @@
     <string name="feature_addchallenge_room_password_icon">Room Password Icon</string>
     <string name="feature_addchallenge_room_password_placeholder">Room Password</string>
     <string name="feature_addchallenge_create_waiting_room">Create Waiting Room</string>
+
+    <string name="feature_addchallenge_unknown_error">An error occurred. Please try again later.</string>
+    <string name="feature_addchallenge_check_network_connection">Please check your network connection.</string>
+    <string name="feature_addchallenge_challenge_added">Challenge has been added.</string>
+    <string name="feature_addchallenge_waiting_room_created">Waiting room has been created.</string>
 </resources>

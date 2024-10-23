@@ -27,11 +27,12 @@ internal fun ServiceNavHost(
         homeScreen()
         addChallengeNavGraph(
             navController = navController,
-            onAddChallenge = {
+            onAddChallenge = { challengeId ->
                 navController.popBackStack(
                     route = ServiceRoute.AddChallenge,
                     inclusive = true,
                 )
+                // TODO: challengeId를 이용하여 즉시 해당 챌린지 상세 페이지로 이동.
             },
             onShowSnackbar = onShowSnackbar,
         )

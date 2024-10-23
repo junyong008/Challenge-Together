@@ -1,11 +1,14 @@
 package com.yjy.feature.addchallenge
 
+import androidx.lifecycle.viewModelScope
 import com.yjy.common.core.base.BaseViewModel
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_DESCRIPTION_LENGTH
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_TARGET_DAYS
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_TITLE_LENGTH
 import com.yjy.common.core.constants.ChallengeConst.MAX_ROOM_PASSWORD_LENGTH
 import com.yjy.common.core.constants.ChallengeConst.MIN_CHALLENGE_TARGET_DAYS
+import com.yjy.common.network.handleNetworkResult
+import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
@@ -13,12 +16,14 @@ import com.yjy.model.challenge.Category
 import com.yjy.model.challenge.Mode
 import com.yjy.model.challenge.TargetDays
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class AddChallengeViewModel @Inject constructor(
+    private val challengeRepository: ChallengeRepository,
 ) : BaseViewModel<AddChallengeUiState, AddChallengeUiEvent>(initialState = AddChallengeUiState()) {
 
     fun processAction(action: AddChallengeUiAction) {
@@ -27,6 +32,11 @@ class AddChallengeViewModel @Inject constructor(
             is AddChallengeUiAction.OnSelectCategory -> updateCategory(action.category, action.title)
             is AddChallengeUiAction.OnTitleUpdated -> updateTitle(action.title)
             is AddChallengeUiAction.OnDescriptionUpdated -> updateDescription(action.description)
+            is AddChallengeUiAction.OnTargetDaysUpdated -> updateTargetDays(action.targetDays)
+            is AddChallengeUiAction.OnMaxParticipantsUpdated -> updateMaxParticipants(action.maxParticipants)
+            is AddChallengeUiAction.OnEnableRoomPasswordUpdated -> updateEnableRoomPassword(action.enableRoomPassword)
+            is AddChallengeUiAction.OnRoomPasswordUpdated -> updateRoomPassword(action.roomPassword)
+
             is AddChallengeUiAction.OnStartDateTimeUpdated -> updateStartDateTime(
                 selectedDate = action.selectedDate,
                 selectedHour = action.hour,
@@ -34,10 +44,24 @@ class AddChallengeViewModel @Inject constructor(
                 isAm = action.isAm,
             )
 
-            is AddChallengeUiAction.OnTargetDaysUpdated -> updateTargetDays(action.targetDays)
-            is AddChallengeUiAction.OnMaxParticipantsUpdated -> updateMaxParticipants(action.maxParticipants)
-            is AddChallengeUiAction.OnEnableRoomPasswordUpdated -> updateEnableRoomPassword(action.enableRoomPassword)
-            is AddChallengeUiAction.OnRoomPasswordUpdated -> updateRoomPassword(action.roomPassword)
+            is AddChallengeUiAction.OnStartChallenge -> startChallenge(
+                mode = action.mode,
+                category = action.category,
+                title = action.title,
+                description = action.description,
+                startDateTime = action.startDateTime,
+                targetDays = action.targetDays,
+            )
+
+            is AddChallengeUiAction.OnCreateWaitingRoom -> createWaitingRoom(
+                category = action.category,
+                title = action.title,
+                description = action.description,
+                targetDays = action.targetDays,
+                maxParticipants = action.maxParticipants,
+                enableRoomPassword = action.enableRoomPassword,
+                roomPassword = action.roomPassword,
+            )
         }
     }
 
@@ -105,5 +129,65 @@ class AddChallengeViewModel @Inject constructor(
     private fun updateRoomPassword(roomPassword: String) {
         if (roomPassword.length > MAX_ROOM_PASSWORD_LENGTH) return
         updateState { copy(roomPassword = roomPassword) }
+    }
+
+    private fun startChallenge(
+        mode: Mode,
+        category: Category,
+        title: String,
+        description: String,
+        startDateTime: LocalDateTime,
+        targetDays: TargetDays,
+    ) {
+        viewModelScope.launch {
+            updateState { copy(isAddingChallenge = true) }
+
+            val event = handleNetworkResult(
+                result = challengeRepository.addChallenge(
+                    category = category,
+                    title = title,
+                    description = description.ifBlank { title },
+                    targetDays = targetDays,
+                    startDateTime = if (mode == Mode.FREE) startDateTime else null,
+                ),
+                onSuccess = { AddChallengeUiEvent.ChallengeAdded(it) },
+                onNetworkError = { AddChallengeUiEvent.AddFailure.NetworkError },
+                onHttpError = { AddChallengeUiEvent.AddFailure.UnknownError },
+                onUnknownError = { AddChallengeUiEvent.AddFailure.UnknownError },
+            )
+            sendEvent(event)
+            updateState { copy(isAddingChallenge = false) }
+        }
+    }
+
+    private fun createWaitingRoom(
+        category: Category,
+        title: String,
+        description: String,
+        targetDays: TargetDays,
+        maxParticipants: Int,
+        enableRoomPassword: Boolean,
+        roomPassword: String,
+    ) {
+        viewModelScope.launch {
+            updateState { copy(isAddingChallenge = true) }
+
+            val event = handleNetworkResult(
+                result = challengeRepository.addChallenge(
+                    category = category,
+                    title = title,
+                    description = description.ifBlank { title },
+                    targetDays = targetDays,
+                    maxParticipants = maxParticipants,
+                    roomPassword = if (enableRoomPassword) roomPassword else "",
+                ),
+                onSuccess = { AddChallengeUiEvent.ChallengeAdded(it) },
+                onNetworkError = { AddChallengeUiEvent.AddFailure.NetworkError },
+                onHttpError = { AddChallengeUiEvent.AddFailure.UnknownError },
+                onUnknownError = { AddChallengeUiEvent.AddFailure.UnknownError },
+            )
+            sendEvent(event)
+            updateState { copy(isAddingChallenge = false) }
+        }
     }
 }

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.custom.android.library)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -8,4 +9,5 @@ android {
 
 dependencies {
     implementation(projects.common.network)
+    implementation(libs.kotlinx.serialization.json)
 }

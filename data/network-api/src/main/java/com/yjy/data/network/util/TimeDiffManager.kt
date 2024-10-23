@@ -1,7 +1,6 @@
-package com.yjy.data.datastore.api
+package com.yjy.data.network.util
 
-interface UserPreferencesDataSource {
-
+interface TimeDiffManager {
     suspend fun getTimeDiff(): Long
     suspend fun setTimeDiff(diff: Long)
 }

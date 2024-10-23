@@ -5,6 +5,7 @@ import com.yjy.data.network.ChallengeTogetherApi
 import com.yjy.data.network.ChallengeTogetherCallFactory
 import com.yjy.data.network.adapter.NetworkResultCallAdapterFactory
 import com.yjy.data.network.interceptor.SessionInterceptor
+import com.yjy.data.network.interceptor.TimeInterceptor
 import com.yjy.data.network_impl.BuildConfig
 import com.yjy.data.network_impl.BuildConfig.BASE_URL
 import dagger.Module
@@ -55,6 +56,7 @@ internal object NetworkModule {
     fun provideOkHttpCallFactory(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         sessionInterceptor: SessionInterceptor,
+        timeInterceptor: TimeInterceptor,
     ): Call.Factory {
         return OkHttpClient.Builder()
             .connectTimeout(MAX_TIME_OUT, TimeUnit.MILLISECONDS)
@@ -62,6 +64,7 @@ internal object NetworkModule {
             .writeTimeout(MAX_TIME_OUT, TimeUnit.MILLISECONDS)
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(sessionInterceptor)
+            .addInterceptor(timeInterceptor)
             .build()
     }
 

@@ -36,6 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_MAX_PARTICIPANTS
 import com.yjy.common.core.constants.ChallengeConst.MIN_CHALLENGE_MAX_PARTICIPANTS
+import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.ThemePreviews
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherBottomAppBar
@@ -43,6 +44,7 @@ import com.yjy.common.designsystem.component.ChallengeTogetherButton
 import com.yjy.common.designsystem.component.ChallengeTogetherSwitch
 import com.yjy.common.designsystem.component.NumberPicker
 import com.yjy.common.designsystem.component.SingleLineTextField
+import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.component.TitleWithDescription
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
@@ -57,7 +59,8 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun SetTogetherRoute(
     onBackClick: () -> Unit,
-    onAddChallenge: () -> Unit,
+    onAddChallenge: (String) -> Unit,
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddChallengeViewModel = hiltViewModel(),
 ) {
@@ -70,6 +73,7 @@ internal fun SetTogetherRoute(
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
         onAddChallenge = onAddChallenge,
+        onShowSnackbar = onShowSnackbar,
     )
 }
 
@@ -80,8 +84,30 @@ internal fun SetTogetherScreen(
     uiEvent: Flow<AddChallengeUiEvent> = flowOf(),
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
-    onAddChallenge: () -> Unit = {},
+    onAddChallenge: (String) -> Unit = {},
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val waitingRoomCreatedMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_waiting_room_created)
+    val unknownErrorMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_unknown_error)
+    val checkNetworkMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_check_network_connection)
+
+    ObserveAsEvents(flow = uiEvent) {
+        when (it) {
+            is AddChallengeUiEvent.ChallengeAdded -> {
+                onShowSnackbar(SnackbarType.SUCCESS, waitingRoomCreatedMessage)
+                onAddChallenge(it.challengeId)
+            }
+
+            AddChallengeUiEvent.AddFailure.NetworkError ->
+                onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
+
+            AddChallengeUiEvent.AddFailure.UnknownError ->
+                onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
+
+            else -> Unit
+        }
+    }
+
     Scaffold(
         bottomBar = {
             ChallengeTogetherBottomAppBar(
@@ -124,7 +150,19 @@ internal fun SetTogetherScreen(
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 ChallengeTogetherButton(
-                    onClick = {},
+                    onClick = {
+                        processAction(
+                            AddChallengeUiAction.OnCreateWaitingRoom(
+                                category = uiState.category,
+                                title = uiState.title,
+                                description = uiState.description,
+                                targetDays = uiState.targetDays,
+                                maxParticipants = uiState.maxParticipants,
+                                enableRoomPassword = uiState.enableRoomPassword,
+                                roomPassword = uiState.roomPassword,
+                            )
+                        )
+                    },
                     enabled = !uiState.isAddingChallenge,
                     shape = MaterialTheme.shapes.large,
                     modifier = Modifier

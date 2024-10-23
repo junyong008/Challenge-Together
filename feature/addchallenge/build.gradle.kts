@@ -10,6 +10,10 @@ android {
 
 dependencies {
     implementations(
+        projects.common.network,
         projects.model,
+
+        projects.data.challengeApi,
     )
+    runtimeOnly(projects.data.challengeImpl)
 }

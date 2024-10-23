@@ -37,12 +37,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.core.util.formatLocalDateTime
 import com.yjy.common.designsystem.ThemePreviews
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherBottomAppBar
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
 import com.yjy.common.designsystem.component.ChallengeTogetherOutlinedButton
+import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.component.StableImage
 import com.yjy.common.designsystem.component.TitleWithDescription
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
@@ -64,7 +66,8 @@ import java.time.LocalDateTime
 internal fun ConfirmRoute(
     onBackClick: () -> Unit,
     onSetTogetherClick: () -> Unit,
-    onAddChallenge: () -> Unit,
+    onAddChallenge: (String) -> Unit,
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddChallengeViewModel = hiltViewModel(),
 ) {
@@ -78,6 +81,7 @@ internal fun ConfirmRoute(
         onBackClick = onBackClick,
         onSetTogetherClick = onSetTogetherClick,
         onAddChallenge = onAddChallenge,
+        onShowSnackbar = onShowSnackbar,
     )
 }
 
@@ -89,8 +93,30 @@ internal fun ConfirmScreen(
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onSetTogetherClick: () -> Unit = {},
-    onAddChallenge: () -> Unit = {},
+    onAddChallenge: (String) -> Unit = {},
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val challengeAddedMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_challenge_added)
+    val unknownErrorMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_unknown_error)
+    val checkNetworkMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_check_network_connection)
+
+    ObserveAsEvents(flow = uiEvent) {
+        when (it) {
+            is AddChallengeUiEvent.ChallengeAdded -> {
+                onShowSnackbar(SnackbarType.SUCCESS, challengeAddedMessage)
+                onAddChallenge(it.challengeId)
+            }
+
+            AddChallengeUiEvent.AddFailure.NetworkError ->
+                onShowSnackbar(SnackbarType.ERROR, checkNetworkMessage)
+
+            AddChallengeUiEvent.AddFailure.UnknownError ->
+                onShowSnackbar(SnackbarType.ERROR, unknownErrorMessage)
+
+            else -> Unit
+        }
+    }
+
     LaunchedEffect(Unit) {
         if (uiState.mode == null) onBackClick()
     }
@@ -134,7 +160,18 @@ internal fun ConfirmScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
                 StartButton(
-                    onClick = {},
+                    onClick = {
+                        processAction(
+                            AddChallengeUiAction.OnStartChallenge(
+                                mode = uiState.mode,
+                                category = uiState.category,
+                                title = uiState.title,
+                                description = uiState.description,
+                                startDateTime = uiState.startDateTime,
+                                targetDays = uiState.targetDays,
+                            )
+                        )
+                    },
                     enabled = !uiState.isAddingChallenge,
                 )
 

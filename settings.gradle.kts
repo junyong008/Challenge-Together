@@ -31,6 +31,8 @@ include(
 
     ":data:auth-api",
     ":data:auth-impl",
+    ":data:challenge-api",
+    ":data:challenge-impl",
     ":data:database-api",
     ":data:database-impl",
     ":data:datastore-api",

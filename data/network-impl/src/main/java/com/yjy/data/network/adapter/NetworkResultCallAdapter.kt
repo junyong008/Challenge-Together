@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 import java.io.IOException
 import java.lang.reflect.Type
 
@@ -29,6 +30,7 @@ private class NetworkResultCall<T>(
 
             private fun Response<T>.toNetworkResult(): NetworkResult<T> {
                 if (!isSuccessful) {
+                    Timber.d("Response Code: ${code()} / body: ${body()}")
                     return NetworkResult.Failure.HttpError(
                         code = code(),
                         message = message(),
@@ -42,6 +44,7 @@ private class NetworkResultCall<T>(
                 }
 
                 if (body() == null) {
+                    Timber.d("Response Code: ${code()} / body: Null")
                     return NetworkResult.Failure.UnknownApiError(
                         IllegalStateException("Response Code: ${code()} / body: Null"),
                     )
@@ -63,6 +66,7 @@ private class NetworkResultCall<T>(
                 } else {
                     NetworkResult.Failure.UnknownApiError(t)
                 }
+                Timber.d("onFailure: $error")
                 callback.onResponse(this@NetworkResultCall, Response.success(error))
             }
         })

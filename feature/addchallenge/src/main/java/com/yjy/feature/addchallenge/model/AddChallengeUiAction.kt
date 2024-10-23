@@ -4,12 +4,18 @@ import com.yjy.model.challenge.Category
 import com.yjy.model.challenge.Mode
 import com.yjy.model.challenge.TargetDays
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 sealed interface AddChallengeUiAction {
     data class OnSelectMode(val mode: Mode) : AddChallengeUiAction
     data class OnSelectCategory(val category: Category, val title: String) : AddChallengeUiAction
     data class OnTitleUpdated(val title: String) : AddChallengeUiAction
     data class OnDescriptionUpdated(val description: String) : AddChallengeUiAction
+    data class OnTargetDaysUpdated(val targetDays: TargetDays) : AddChallengeUiAction
+    data class OnMaxParticipantsUpdated(val maxParticipants: Int) : AddChallengeUiAction
+    data class OnEnableRoomPasswordUpdated(val enableRoomPassword: Boolean) : AddChallengeUiAction
+    data class OnRoomPasswordUpdated(val roomPassword: String) : AddChallengeUiAction
+
     data class OnStartDateTimeUpdated(
         val selectedDate: LocalDate,
         val hour: Int,
@@ -17,8 +23,22 @@ sealed interface AddChallengeUiAction {
         val isAm: Boolean
     ) : AddChallengeUiAction
 
-    data class OnTargetDaysUpdated(val targetDays: TargetDays) : AddChallengeUiAction
-    data class OnMaxParticipantsUpdated(val maxParticipants: Int) : AddChallengeUiAction
-    data class OnEnableRoomPasswordUpdated(val enableRoomPassword: Boolean) : AddChallengeUiAction
-    data class OnRoomPasswordUpdated(val roomPassword: String) : AddChallengeUiAction
+    data class OnStartChallenge(
+        val mode: Mode,
+        val category: Category,
+        val title: String,
+        val description: String,
+        val startDateTime: LocalDateTime,
+        val targetDays: TargetDays,
+    ) : AddChallengeUiAction
+
+    data class OnCreateWaitingRoom(
+        val category: Category,
+        val title: String,
+        val description: String,
+        val targetDays: TargetDays,
+        val maxParticipants: Int,
+        val enableRoomPassword: Boolean,
+        val roomPassword: String,
+    ) : AddChallengeUiAction
 }
