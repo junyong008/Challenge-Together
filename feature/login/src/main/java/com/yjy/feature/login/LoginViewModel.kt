@@ -69,7 +69,7 @@ class LoginViewModel @Inject constructor(
         if (password.length > MAX_PASSWORD_LENGTH) return
         updateState {
             copy(
-                password = password,
+                password = password.filter { !it.isWhitespace() },
                 canTryLogin = canLogin(password = password),
             )
         }

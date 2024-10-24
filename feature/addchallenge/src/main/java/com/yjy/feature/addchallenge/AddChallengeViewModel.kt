@@ -132,7 +132,7 @@ class AddChallengeViewModel @Inject constructor(
 
     private fun updateRoomPassword(roomPassword: String) {
         if (roomPassword.length > MAX_ROOM_PASSWORD_LENGTH) return
-        updateState { copy(roomPassword = roomPassword) }
+        updateState { copy(roomPassword = roomPassword.filter { !it.isWhitespace() }) }
     }
 
     private fun showAddConfirmDialog() {

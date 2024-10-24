@@ -108,7 +108,7 @@ class SignUpViewModel @Inject constructor(
             val isPasswordContainNumber = password.any { it.isDigit() }
 
             copy(
-                password = password,
+                password = password.filter { !it.isWhitespace() },
                 isPasswordLongEnough = isPasswordLongEnough,
                 isPasswordContainNumber = isPasswordContainNumber,
                 canTryContinueToNickname = canContinue(
