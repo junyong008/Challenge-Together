@@ -18,6 +18,8 @@ dependencies {
 
         projects.data.authApi,
 
+        projects.platform.network,
+
         projects.feature.home,
         projects.feature.addchallenge,
         projects.feature.changepassword,

@@ -40,6 +40,8 @@ include(
     ":data:network-api",
     ":data:network-impl",
 
+    ":platform:network",
+
     ":model",
 
     ":navigation:auth",
