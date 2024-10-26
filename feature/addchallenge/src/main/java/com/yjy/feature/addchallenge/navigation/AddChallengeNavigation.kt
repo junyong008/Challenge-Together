@@ -100,7 +100,7 @@ fun NavGraphBuilder.addChallengeNavGraph(
 
             SetStartDateRoute(
                 onBackClick = navController::popBackStack,
-                onContinue = navController::navigateToSetTargetDay,
+                onContinue = navController::navigateToConfirm,
                 onShowSnackbar = onShowSnackbar,
                 viewModel = viewModel,
             )

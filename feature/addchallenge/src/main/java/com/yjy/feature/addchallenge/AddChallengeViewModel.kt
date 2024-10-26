@@ -160,7 +160,7 @@ class AddChallengeViewModel @Inject constructor(
                     category = category,
                     title = title,
                     description = description.ifBlank { title },
-                    targetDays = targetDays,
+                    targetDays = if (mode == Mode.FREE) TargetDays.Infinite else targetDays,
                     startDateTime = if (mode == Mode.FREE) startDateTime else null,
                 ),
                 onSuccess = { AddChallengeUiEvent.ChallengeAdded(it) },

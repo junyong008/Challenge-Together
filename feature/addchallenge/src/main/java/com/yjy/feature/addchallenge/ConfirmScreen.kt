@@ -174,7 +174,14 @@ internal fun ConfirmScreen(
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
-                CategorySection(category = uiState.category, targetDays = uiState.targetDays)
+                CategorySection(
+                    category = uiState.category,
+                    targetDays = if (uiState.mode == Mode.FREE) {
+                        TargetDays.Infinite
+                    } else {
+                        uiState.targetDays
+                    },
+                )
 
                 if (uiState.mode == Mode.FREE) {
                     Spacer(modifier = Modifier.height(8.dp))

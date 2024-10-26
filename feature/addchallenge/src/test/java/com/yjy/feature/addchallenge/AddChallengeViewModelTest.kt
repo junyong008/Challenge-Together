@@ -60,7 +60,7 @@ class AddChallengeViewModelTest {
     }
 
     @Test
-    fun `startChallenge should call addChallenge in repository and send ChallengeAdded event`() = runTest {
+    fun `startChallenge with free mode should fix target day to infinite`() = runTest {
         // Given
         val mode = Mode.FREE
         val category = Category.QUIT_SMOKING
@@ -75,7 +75,7 @@ class AddChallengeViewModelTest {
                 category = category,
                 title = title,
                 description = description,
-                targetDays = targetDays,
+                targetDays = TargetDays.Infinite,
                 startDateTime = startDateTime
             )
         } returns NetworkResult.Success(challengeId)
@@ -88,7 +88,55 @@ class AddChallengeViewModelTest {
                 title = title,
                 description = description,
                 startDateTime = startDateTime,
-                targetDays = targetDays
+                targetDays = targetDays,
+            )
+        )
+        advanceUntilIdle()
+
+        // Then
+        coVerify {
+            challengeRepository.addChallenge(
+                category = category,
+                title = title,
+                description = description,
+                targetDays = TargetDays.Infinite,
+                startDateTime = startDateTime
+            )
+        }
+        val event = viewModel.uiEvent.first()
+        assertEquals(expected = AddChallengeUiEvent.ChallengeAdded(challengeId), actual = event)
+    }
+
+    @Test
+    fun `startChallenge should call addChallenge in repository and send ChallengeAdded event`() = runTest {
+        // Given
+        val mode = Mode.CHALLENGE
+        val category = Category.QUIT_SMOKING
+        val title = "Quit Smoking"
+        val description = "A challenge to quit smoking"
+        val targetDays = TargetDays.Fixed(30)
+        val startDateTime = LocalDateTime.now()
+        val challengeId = "777"
+
+        coEvery {
+            challengeRepository.addChallenge(
+                category = category,
+                title = title,
+                description = description,
+                targetDays = targetDays,
+                startDateTime = null
+            )
+        } returns NetworkResult.Success(challengeId)
+
+        // When
+        viewModel.processAction(
+            AddChallengeUiAction.OnConfirmStartChallenge(
+                mode = mode,
+                category = category,
+                title = title,
+                description = description,
+                startDateTime = startDateTime,
+                targetDays = targetDays,
             )
         )
         advanceUntilIdle()
@@ -100,7 +148,7 @@ class AddChallengeViewModelTest {
                 title = title,
                 description = description,
                 targetDays = targetDays,
-                startDateTime = startDateTime
+                startDateTime = null
             )
         }
         val event = viewModel.uiEvent.first()
