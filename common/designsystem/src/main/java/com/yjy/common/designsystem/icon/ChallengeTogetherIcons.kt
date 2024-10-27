@@ -18,6 +18,7 @@ object ChallengeTogetherIcons {
     val Sort = R.drawable.ic_sort
     val Lock = R.drawable.ic_lock
     val Notification = R.drawable.ic_notification
+    val Refresh = R.drawable.ic_refresh
     val UnCheck = R.drawable.ic_uncheck
     val Visibility = R.drawable.ic_visibility
     val VisibilityOff = R.drawable.ic_visibility_off

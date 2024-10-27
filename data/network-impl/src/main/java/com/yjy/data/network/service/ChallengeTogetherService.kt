@@ -8,6 +8,9 @@ import com.yjy.data.network.request.EmailRequest
 import com.yjy.data.network.request.SignUpRequest
 import com.yjy.data.network.request.VerifyRequest
 import com.yjy.data.network.response.AddChallengeResponse
+import com.yjy.data.network.response.GetCompleteChallengesTitleResponse
+import com.yjy.data.network.response.GetMyChallengesResponse
+import com.yjy.data.network.response.GetProfileResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -49,4 +52,16 @@ internal interface ChallengeTogetherService {
     suspend fun addChallenge(
         @Body request: AddChallengeRequest,
     ): NetworkResult<AddChallengeResponse>
+
+    @POST("service/get-my-challenges")
+    suspend fun getMyChallenges(): NetworkResult<List<GetMyChallengesResponse>>
+
+    @POST("service/get-complete-challenges-title")
+    suspend fun getCompleteChallengesTitle(): NetworkResult<List<GetCompleteChallengesTitleResponse>>
+
+    @POST("service/get-profile")
+    suspend fun getProfile(): NetworkResult<GetProfileResponse>
+
+    @POST("service/sync-time")
+    suspend fun syncTime(): NetworkResult<Unit>
 }

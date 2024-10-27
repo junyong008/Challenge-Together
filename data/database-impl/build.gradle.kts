@@ -7,3 +7,7 @@ plugins {
 android {
     namespace = "com.yjy.data.database_impl"
 }
+
+dependencies {
+    implementation(projects.data.databaseApi)
+}

@@ -4,9 +4,19 @@ data class WaitingChallenge(
     override val id: String,
     override val title: String,
     override val description: String,
-    override val targetDays: TargetDays,
-    override val participants: List<Participant>,
     override val category: Category,
-    val host: Participant,
+    override val targetDays: TargetDays,
+    override val currentParticipantCount: Int?,
+    override val maxParticipantCount: Int?,
     val isPrivate: Boolean,
-) : Challenge(id, title, description, targetDays, participants, category)
+    val password: String? = null,
+    val host: Participant? = null,
+) : Challenge(
+    id = id,
+    title = title,
+    description = description,
+    category = category,
+    targetDays = targetDays,
+    currentParticipantCount = currentParticipantCount,
+    maxParticipantCount = maxParticipantCount,
+)

@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.yjy.data.database_api"
 }
+
+dependencies {
+    implementation(libs.room.ktx)
+}

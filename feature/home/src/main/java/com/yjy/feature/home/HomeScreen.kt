@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,19 +31,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherChip
+import com.yjy.common.designsystem.component.ChallengeTogetherDialog
 import com.yjy.common.designsystem.component.ClickableText
 import com.yjy.common.designsystem.component.DebouncedIconButton
+import com.yjy.common.designsystem.component.LoadingWheel
 import com.yjy.common.designsystem.component.RibbonMedal
 import com.yjy.common.designsystem.component.RoundedLinearProgressBar
+import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.DevicePreviews
+import com.yjy.common.ui.ErrorBody
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
@@ -55,6 +63,7 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun HomeRoute(
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -65,6 +74,7 @@ internal fun HomeRoute(
         uiState = uiState,
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
+        onShowSnackbar = onShowSnackbar,
     )
 }
 
@@ -74,39 +84,68 @@ internal fun HomeScreen(
     uiState: HomeUiState = HomeUiState(),
     uiEvent: Flow<HomeUiEvent> = flowOf(),
     processAction: (HomeUiAction) -> Unit = {},
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(lifecycleOwner.lifecycle) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            processAction(HomeUiAction.OnScreenLoad)
+        }
+    }
+
+    if (uiState.recentCompletedChallengeTitles.isNotEmpty()) {
+        ChallengeTogetherDialog(
+            title = "",
+            description = uiState.recentCompletedChallengeTitles.joinToString(", "),
+            onClickPositive = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
+            onClickNegative = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
+        )
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+            .then(
+                if (!uiState.hasError && !uiState.isLoading) {
+                    Modifier.verticalScroll(rememberScrollState())
+                } else {
+                    Modifier
+                }
+            ),
     ) {
         HomeTopBar(
             onShowCompleteChallengeClick = {},
             onShowNotificationClick = {},
             hasNewNotification = false,
         )
-        ProfileCard(
-            nickname = "가나다라마바사아자차",
-            remainDayForNextTier = 7,
-            tierProgress = 0.7f,
-            tier = Tier.IRON,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        HighestRecordCard(
-            highestRecordInSeconds = 500351515L,
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-        MyChallengeContents(
-            sortOrder = SortOrder.LATEST,
-            categories = Category.entries,
-            selectedCategory = Category.ALL,
-            onCategorySelected = {},
-        )
+
+        when {
+            uiState.isLoading -> LoadingWheel()
+            uiState.hasError -> ErrorBody(onClickRetry = { processAction(HomeUiAction.OnRetryClick) })
+            else -> {
+                ProfileCard(
+                    userName = uiState.userName,
+                    remainDayForNextTier = 7,
+                    tierProgress = 0.7f,
+                    tier = Tier.IRON,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                HighestRecordCard(highestRecordInSeconds = uiState.currentBestRecordInSeconds)
+                Spacer(modifier = Modifier.height(24.dp))
+                MyChallengeSection(
+                    sortOrder = SortOrder.LATEST,
+                    categories = Category.entries,
+                    selectedCategory = Category.ALL,
+                    onCategorySelected = {},
+                )
+            }
+        }
     }
 }
 
 @Composable
-private fun MyChallengeContents(
+private fun MyChallengeSection(
     sortOrder: SortOrder,
     categories: List<Category>,
     selectedCategory: Category,
@@ -180,10 +219,9 @@ private fun MyChallengeTitle(
 }
 
 @Composable
-private fun HighestRecordCard(
-    highestRecordInSeconds: Long,
-) {
+private fun HighestRecordCard(highestRecordInSeconds: Long) {
     val formattedRecord: String = formatTimeDuration(highestRecordInSeconds)
+
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -211,7 +249,7 @@ private fun HighestRecordCard(
 
 @Composable
 private fun ProfileCard(
-    nickname: String,
+    userName: String,
     remainDayForNextTier: Int,
     tierProgress: Float,
     tier: Tier,
@@ -232,13 +270,17 @@ private fun ProfileCard(
                 .align(Alignment.Bottom),
         ) {
             Text(
-                text = nickname,
+                text = userName,
                 color = CustomColorProvider.colorScheme.onSurface,
                 style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = stringResource(id = HomeStrings.feature_home_remain_time_for_next_tier, remainDayForNextTier),
+                text = stringResource(
+                    id = HomeStrings.feature_home_remain_time_for_next_tier,
+                    remainDayForNextTier
+                ),
                 color = CustomColorProvider.colorScheme.onSurfaceMuted,
                 style = MaterialTheme.typography.labelSmall,
             )

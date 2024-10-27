@@ -1,0 +1,5 @@
+<resources>
+    <string name="common_ui_error_body_title">Failed to load the screen</string>
+    <string name="common_ui_error_body_description">An error occurred.\nPlease try again later.</string>
+    <string name="common_ui_error_body_retry">Retry</string>
+</resources>

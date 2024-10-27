@@ -39,7 +39,7 @@ fun TimePicker(
     hour: Int,
     minute: Int,
     isAm: Boolean,
-    onTimeChanged: (Int, Int, Boolean) -> Unit = { _, _, _ -> },
+    onTimeChanged: (Int, Int, Boolean) -> Unit,
     modifier: Modifier = Modifier,
     containerColor: Color = CustomColorProvider.colorScheme.surface,
     contentColor: Color = CustomColorProvider.colorScheme.onSurface,
@@ -170,7 +170,7 @@ private fun TimePickerButton(
             textBackground = textBackground,
             textColor = textColor,
             maxLimit = maxLimit,
-            modifier = modifier.size(width = 65.dp, height = 55.dp),
+            modifier = Modifier.size(width = 65.dp, height = 55.dp),
         )
         IconButton(onClick = { onDecrease() }) {
             Icon(

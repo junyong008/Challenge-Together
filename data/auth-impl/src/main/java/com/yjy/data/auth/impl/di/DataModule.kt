@@ -3,9 +3,7 @@ package com.yjy.data.auth.impl.di
 import com.yjy.data.auth.api.AuthRepository
 import com.yjy.data.auth.impl.repository.AuthRepositoryImpl
 import com.yjy.data.auth.impl.util.SessionManagerImpl
-import com.yjy.data.auth.impl.util.TimeDiffManagerImpl
 import com.yjy.data.network.util.SessionManager
-import com.yjy.data.network.util.TimeDiffManager
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -24,9 +22,4 @@ internal abstract class DataModule {
     abstract fun bindSessionManager(
         impl: SessionManagerImpl,
     ): SessionManager
-
-    @Binds
-    abstract fun bindTimeDiffManager(
-        impl: TimeDiffManagerImpl,
-    ): TimeDiffManager
 }

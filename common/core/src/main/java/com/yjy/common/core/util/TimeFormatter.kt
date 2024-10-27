@@ -8,19 +8,37 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun formatTimeDuration(seconds: Long): String {
+    if (seconds <= 0L) return "0${stringResource(id = R.string.common_core_time_second)}"
+
     val days = seconds / (24 * 3600)
     val hours = (seconds % (24 * 3600)) / 3600
     val minutes = (seconds % 3600) / 60
     val secs = seconds % 60
 
-    val dayPart = if (days > 0) "$days${stringResource(id = R.string.common_core_time_day)}" else ""
-    val hourPart = if (hours > 0) "$hours${stringResource(id = R.string.common_core_time_hour)}" else ""
-    val minutePart = if (minutes > 0) "$minutes${stringResource(id = R.string.common_core_time_minute)}" else ""
-    val secondPart = if (secs > 0) "$secs${stringResource(id = R.string.common_core_time_second)}" else ""
+    var hasLargerUnit = false
 
-    return listOf(dayPart, hourPart, minutePart, secondPart)
-        .filter { it.isNotEmpty() }
-        .joinToString(" ")
+    val parts = mutableListOf<String>()
+
+    if (days > 0) {
+        parts.add("$days${stringResource(id = R.string.common_core_time_day)}")
+        hasLargerUnit = true
+    }
+
+    if (hasLargerUnit || hours > 0) {
+        parts.add("$hours${stringResource(id = R.string.common_core_time_hour)}")
+        hasLargerUnit = true
+    }
+
+    if (hasLargerUnit || minutes > 0) {
+        parts.add("$minutes${stringResource(id = R.string.common_core_time_minute)}")
+        hasLargerUnit = true
+    }
+
+    if (hasLargerUnit || secs > 0) {
+        parts.add("$secs${stringResource(id = R.string.common_core_time_second)}")
+    }
+
+    return parts.joinToString(" ")
 }
 
 fun LocalDateTime.to12HourFormat(): Triple<Int, Int, Boolean> {

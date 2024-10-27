@@ -9,5 +9,14 @@ android {
 }
 
 dependencies {
-    implementations(projects.model)
+    implementations(
+        projects.common.core,
+        projects.common.network,
+
+        projects.model,
+
+        projects.data.challengeApi,
+    )
+
+    runtimeOnly(projects.data.challengeImpl)
 }
