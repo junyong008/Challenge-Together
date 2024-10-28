@@ -16,4 +16,6 @@
     <string name="feature_home_promoted_confirm">Confirm</string>
     <string name="feature_home_no_active_challenge_mode">No active challenge mode</string>
     <string name="feature_home_highest_tier">Highest Tier</string>
+    <string name="feature_home_no_active_challenge">No Challenges</string>
+    <string name="feature_home_start_new_challenge_prompt">Tap the add button at the bottom right to start a new challenge.</string>
 </resources>

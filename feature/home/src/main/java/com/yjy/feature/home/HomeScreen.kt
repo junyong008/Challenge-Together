@@ -157,15 +157,46 @@ internal fun HomeScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 HighestRecordCard(highestRecordInSeconds = uiState.currentBestRecordInSeconds)
                 Spacer(modifier = Modifier.height(24.dp))
-                MyChallengeSection(
-                    sortOrder = uiState.sortOrder,
-                    categories = Category.entries,
-                    selectedCategory = Category.ALL,
-                    onCategorySelected = {},
-                    onSortOrderChanged = {},
-                )
+
+                when {
+                    uiState.startedChallenges.isNotEmpty() -> {
+                        MyChallengeSection(
+                            sortOrder = uiState.sortOrder,
+                            categories = Category.entries,
+                            selectedCategory = Category.ALL,
+                            onCategorySelected = {},
+                            onSortOrderChanged = {},
+                        )
+                    }
+                    else -> EmptyChallengesBody()
+                }
             }
         }
+    }
+}
+
+@Composable
+private fun EmptyChallengesBody() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(modifier = Modifier.height(80.dp))
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_no_active_challenge),
+            color = CustomColorProvider.colorScheme.onBackground,
+            style = MaterialTheme.typography.titleSmall,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_start_new_challenge_prompt),
+            color = CustomColorProvider.colorScheme.onBackgroundMuted,
+            style = MaterialTheme.typography.labelMedium,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(80.dp))
     }
 }
 
