@@ -11,4 +11,7 @@
     <string name="feature_home_congratulations">Congratulations!</string>
     <string name="feature_home_challenge_success">%1$s\nYou have successfully completed the challenge.</string>
     <string name="feature_home_congratulations_image_description">Image of Congratulations</string>
+    <string name="feature_home_promoted">PROMOTED</string>
+    <string name="feature_home_promoted_description">You have been promoted to the %1$s.</string>
+    <string name="feature_home_promoted_confirm">Confirm</string>
 </resources>

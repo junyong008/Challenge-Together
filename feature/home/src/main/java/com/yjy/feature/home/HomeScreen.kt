@@ -1,5 +1,9 @@
 package com.yjy.feature.home
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -24,13 +29,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -40,6 +54,7 @@ import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.component.BaseBottomSheet
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherChip
+import com.yjy.common.designsystem.component.ChallengeTogetherOutlinedButton
 import com.yjy.common.designsystem.component.ClickableText
 import com.yjy.common.designsystem.component.DebouncedIconButton
 import com.yjy.common.designsystem.component.LoadingWheel
@@ -97,7 +112,15 @@ internal fun HomeScreen(
         }
     }
 
-    if (uiState.recentCompletedChallengeTitles.isNotEmpty()) {
+    if (uiState.tierUpAnimation != null) {
+        TierUpAnimationDialog(
+            from = uiState.tierUpAnimation.from,
+            to = uiState.tierUpAnimation.to,
+            onDismiss = { processAction(HomeUiAction.OnDismissTierUpAnimation) },
+        )
+    }
+
+    if (uiState.recentCompletedChallengeTitles.isNotEmpty() && uiState.tierUpAnimation == null) {
         ChallengeCompletedBottomSheet(
             completedChallenges = uiState.recentCompletedChallengeTitles,
             onDismiss = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
@@ -108,10 +131,10 @@ internal fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .then(
-                if (!uiState.hasError && !uiState.isLoading) {
-                    Modifier.verticalScroll(rememberScrollState())
-                } else {
+                if (uiState.hasError || uiState.isLoading) {
                     Modifier
+                } else {
+                    Modifier.verticalScroll(rememberScrollState())
                 }
             ),
     ) {
@@ -129,16 +152,17 @@ internal fun HomeScreen(
                     userName = uiState.userName,
                     remainDayForNextTier = 7,
                     tierProgress = 0.7f,
-                    tier = Tier.IRON,
+                    tier = uiState.currentTier,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 HighestRecordCard(highestRecordInSeconds = uiState.currentBestRecordInSeconds)
                 Spacer(modifier = Modifier.height(24.dp))
                 MyChallengeSection(
-                    sortOrder = SortOrder.LATEST,
+                    sortOrder = uiState.sortOrder,
                     categories = Category.entries,
                     selectedCategory = Category.ALL,
                     onCategorySelected = {},
+                    onSortOrderChanged = {},
                 )
             }
         }
@@ -187,10 +211,14 @@ private fun MyChallengeSection(
     sortOrder: SortOrder,
     categories: List<Category>,
     selectedCategory: Category,
+    onSortOrderChanged: (SortOrder) -> Unit,
     onCategorySelected: (Category) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        MyChallengeTitle(sortOrder)
+        MyChallengeTitle(
+            sortOrder = sortOrder,
+            onSortOrderChanged = onSortOrderChanged,
+        )
         CategoryChipGroup(
             categories = categories,
             selectedCategory = selectedCategory,
@@ -222,6 +250,7 @@ private fun CategoryChipGroup(
 @Composable
 private fun MyChallengeTitle(
     sortOrder: SortOrder,
+    onSortOrderChanged: (SortOrder) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -393,6 +422,151 @@ private fun HomeTopBar(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun TierUpAnimationDialog(
+    from: Tier,
+    to: Tier,
+    onDismiss: () -> Unit,
+) {
+    Dialog(
+        onDismissRequest = {},
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false,
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false,
+        )
+    ) {
+        val promotedTierText = stringResource(id = to.getDisplayNameResId())
+        val animation = when (from) {
+            Tier.IRON -> R.raw.anim_iron_to_bronze
+            Tier.BRONZE -> R.raw.anim_bronze_to_silver
+            Tier.SILVER -> R.raw.anim_silver_to_gold
+            Tier.GOLD -> R.raw.anim_gold_to_platinum
+            Tier.PLATINUM -> R.raw.anim_platinum_to_diamond
+            Tier.DIAMOND -> R.raw.anim_diamond_to_master
+            Tier.MASTER -> R.raw.anim_master_to_legend
+            else -> return@Dialog
+        }
+
+        var isAnimationEnd by remember { mutableStateOf(false) }
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            TierUpAnimatedText(
+                visible = isAnimationEnd,
+                text = stringResource(id = HomeStrings.feature_home_promoted),
+                color = Color.White,
+                style = MaterialTheme.typography.displaySmall
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            TierUpAnimatedText(
+                visible = isAnimationEnd,
+                text = stringResource(
+                    id = HomeStrings.feature_home_promoted_description, promotedTierText
+                ),
+                color = Color.LightGray,
+                style = MaterialTheme.typography.labelLarge
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            LottieImage(
+                animationResId = animation,
+                repeatCount = 1,
+                modifier = Modifier.size(250.dp),
+                onAnimationEnd = {
+                    isAnimationEnd = true
+                },
+            )
+            Spacer(modifier = Modifier.height(50.dp))
+            TierUpAnimatedButton(
+                visible = isAnimationEnd,
+                onClick = onDismiss,
+            )
+            Spacer(modifier = Modifier.height(50.dp))
+        }
+    }
+}
+
+@Composable
+private fun TierUpAnimatedText(
+    visible: Boolean,
+    text: String,
+    color: Color,
+    style: TextStyle,
+    offsetY: Dp = (-40).dp,
+) {
+    val alpha by animateFloatAsState(
+        targetValue = if (visible) 1f else 0f,
+        animationSpec = tween(
+            durationMillis = 500,
+            easing = FastOutSlowInEasing
+        ),
+        label = "AnimatedText Alpha Animation"
+    )
+
+    val offset by animateDpAsState(
+        targetValue = if (visible) 0.dp else offsetY,
+        animationSpec = tween(
+            durationMillis = 500,
+            easing = FastOutSlowInEasing
+        ),
+        label = "AnimatedText Offset Animation"
+    )
+
+    Text(
+        text = text,
+        color = color.copy(alpha = alpha),
+        style = style,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.offset(y = offset)
+    )
+}
+
+@Composable
+private fun TierUpAnimatedButton(
+    visible: Boolean,
+    onClick: () -> Unit,
+) {
+    val alpha by animateFloatAsState(
+        targetValue = if (visible) 1f else 0f,
+        animationSpec = tween(
+            durationMillis = 500,
+            easing = FastOutSlowInEasing
+        ),
+        label = "AnimatedButton Alpha Animation"
+    )
+
+    val offset by animateDpAsState(
+        targetValue = if (visible) 0.dp else 40.dp,
+        animationSpec = tween(
+            durationMillis = 500,
+            easing = FastOutSlowInEasing
+        ),
+        label = "AnimatedButton Offset Animation"
+    )
+
+    Box(
+        modifier = Modifier
+            .offset(y = offset)
+            .alpha(alpha)
+    ) {
+        ChallengeTogetherOutlinedButton(
+            onClick = onClick,
+            shape = MaterialTheme.shapes.extraLarge,
+            borderColor = Color.LightGray,
+            contentColor = Color.LightGray,
+        ) {
+            Text(
+                text = stringResource(id = HomeStrings.feature_home_promoted_confirm),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+            )
         }
     }
 }

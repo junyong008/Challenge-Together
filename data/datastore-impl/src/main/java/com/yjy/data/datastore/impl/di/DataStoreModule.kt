@@ -6,10 +6,10 @@ import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.yjy.data.datastore.api.ChallengePreferences
 import com.yjy.data.datastore.impl.ChallengePreferencesDataStore
 import com.yjy.data.datastore.impl.ChallengePreferencesSerializer
 import com.yjy.data.datastore.impl.SessionDataStore
-import com.yjy.data.datastore.proto.ChallengePreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

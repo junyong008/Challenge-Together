@@ -4,6 +4,8 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.map
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.challenge.impl.mapper.toEntity
+import com.yjy.data.challenge.impl.mapper.toModel
+import com.yjy.data.challenge.impl.mapper.toProto
 import com.yjy.data.challenge.impl.mapper.toRequestString
 import com.yjy.data.challenge.impl.mapper.toStartedChallengeModel
 import com.yjy.data.challenge.impl.mapper.toWaitingChallengeModel
@@ -12,7 +14,9 @@ import com.yjy.data.database.model.ChallengeEntity
 import com.yjy.data.datastore.api.ChallengePreferencesDataSource
 import com.yjy.data.network.datasource.ChallengeDataSource
 import com.yjy.data.network.request.AddChallengeRequest
+import com.yjy.model.Tier
 import com.yjy.model.challenge.Category
+import com.yjy.model.challenge.SortOrder
 import com.yjy.model.challenge.StartedChallenge
 import com.yjy.model.challenge.TargetDays
 import com.yjy.model.challenge.WaitingChallenge
@@ -30,6 +34,12 @@ internal class ChallengeRepositoryImpl @Inject constructor(
 
     private val timeDiff: Flow<Long> = challengePreferencesDataSource.timeDiff
     private val challenges: Flow<List<ChallengeEntity>> = challengeDao.getAll()
+
+    override val currentTier: Flow<Tier> =
+        challengePreferencesDataSource.currentTier.map { it.toModel() }
+
+    override val sortOrder: Flow<SortOrder> =
+        challengePreferencesDataSource.sortOrder.map { it.toModel() }
 
     override val recentCompletedChallengeTitles: Flow<List<String>> =
         challengePreferencesDataSource.completedChallengeTitles
@@ -70,6 +80,12 @@ internal class ChallengeRepositoryImpl @Inject constructor(
             )
         ).map { it.challengeId }
     }
+
+    override suspend fun setCurrentTier(tier: Tier) =
+        challengePreferencesDataSource.setCurrentTier(tier.toProto())
+
+    override suspend fun setSortOrder(order: SortOrder) =
+        challengePreferencesDataSource.setSortOrder(order.toProto())
 
     override suspend fun clearRecentCompletedChallenges() =
         challengePreferencesDataSource.setCompletedChallengeTitles(emptyList())

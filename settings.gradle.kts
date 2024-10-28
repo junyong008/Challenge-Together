@@ -39,7 +39,6 @@ include(
     ":data:database-impl",
     ":data:datastore-api",
     ":data:datastore-impl",
-    ":data:datastore-proto",
     ":data:network-api",
     ":data:network-impl",
 

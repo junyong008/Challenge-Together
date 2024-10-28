@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package com.yjy.data.datastore.api;
+
+option java_package = "com.yjy.data.datastore.api";
+option java_multiple_files = true;
+
+message ChallengePreferences {
+    int64 time_diff = 1;
+    repeated string completed_challenge_titles = 2;
+    Tier tier = 3;
+    SortOrder sort_order = 4;
+
+    enum Tier {
+        TIER_UNSPECIFIED = 0;
+        TIER_IRON = 1;
+        TIER_BRONZE = 2;
+        TIER_SILVER = 3;
+        TIER_GOLD = 4;
+        TIER_PLATINUM = 5;
+        TIER_DIAMOND = 6;
+        TIER_MASTER = 7;
+        TIER_LEGEND = 8;
+    }
+
+    enum SortOrder {
+        SORT_ORDER_UNSPECIFIED = 0;
+        SORT_ORDER_LATEST = 1;
+        SORT_ORDER_OLDEST = 2;
+        SORT_ORDER_TITLE = 3;
+        SORT_ORDER_HIGHEST_RECORD = 4;
+        SORT_ORDER_LOWEST_RECORD = 5;
+    }
+}

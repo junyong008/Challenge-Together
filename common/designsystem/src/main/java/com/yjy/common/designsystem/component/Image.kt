@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -32,12 +33,20 @@ fun LottieImage(
     modifier: Modifier = Modifier,
     animationResId: Int,
     repeatCount: Int = LottieConstants.IterateForever,
+    onAnimationEnd: (() -> Unit)? = null,
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(animationResId))
     val progress by animateLottieCompositionAsState(
         composition = composition,
         iterations = repeatCount,
     )
+
+    LaunchedEffect(progress) {
+        if (progress == 1f) {
+            onAnimationEnd?.invoke()
+        }
+    }
+
     LottieAnimation(
         composition = composition,
         progress = { progress },

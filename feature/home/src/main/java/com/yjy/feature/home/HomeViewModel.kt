@@ -12,6 +12,7 @@ import com.yjy.data.user.api.UserRepository
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
+import com.yjy.feature.home.model.TierUpAnimationState
 import com.yjy.model.Tier
 import com.yjy.model.challenge.Mode
 import com.yjy.model.challenge.StartedChallenge
@@ -48,6 +49,8 @@ class HomeViewModel @Inject constructor(
         launch { observeStartedChallenges() }
         launch { observeWaitingChallenges() }
         launch { observeRecentCompletedChallenges() }
+        launch { observeCurrentTier() }
+        launch { observeSortOrder() }
 
         timeManager.setOnTimeChanged { handleTimeChange() }
         timeManager.startTicking(this)
@@ -118,27 +121,13 @@ class HomeViewModel @Inject constructor(
         challenges: List<StartedChallenge>,
         currentTime: LocalDateTime,
     ) {
-        challenges.ifEmpty {
-            handleEmptyStartedChallenges()
-            return
-        }
-
         val recordCalculatedChallenges = calculateRecordOfChallenges(challenges, currentTime)
         val unCompletedChallenges = recordCalculatedChallenges.filterNot { it.isCompleted }
 
-        checkNewlyCompletedChallenges(unCompletedChallenges)
         updateTier(recordCalculatedChallenges)
+        checkNewlyCompletedChallenges(unCompletedChallenges)
         updateCurrentBestRecord(unCompletedChallenges)
         updateStartedChallenges(unCompletedChallenges)
-    }
-
-    private fun handleEmptyStartedChallenges() {
-        updateState {
-            copy(
-                startedChallenges = emptyList(),
-                currentBestRecordInSeconds = 0,
-            )
-        }
     }
 
     private fun calculateRecordOfChallenges(
@@ -170,13 +159,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun updateTier(challenges: List<StartedChallenge>) {
+    private suspend fun updateTier(challenges: List<StartedChallenge>) {
+        if (uiState.value.tierUpAnimation != null) return
         val currentTierBestRecord = challenges
             .filter { it.mode == Mode.CHALLENGE }
             .getBestRecord()
 
-        val currentTier = Tier.getCurrentTier(currentTierBestRecord)
-        updateState { copy(currentTier = currentTier) }
+        val calculatedTier = Tier.getCurrentTier(currentTierBestRecord)
+        val savedTier = uiState.value.currentTier
+
+        if (savedTier == Tier.UNSPECIFIED || calculatedTier < savedTier) {
+            challengeRepository.setCurrentTier(calculatedTier)
+        } else if (calculatedTier > savedTier) {
+            val animation = TierUpAnimationState(from = savedTier, to = Tier.getNextTier(savedTier))
+            updateState { copy(tierUpAnimation = animation) }
+        }
     }
 
     private fun updateCurrentBestRecord(challenges: List<StartedChallenge>) {
@@ -208,11 +205,28 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
+    private fun observeCurrentTier() {
+        challengeRepository.currentTier
+            .onEach { tier ->
+                updateState { copy(currentTier = tier) }
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun observeSortOrder() {
+        challengeRepository.sortOrder
+            .onEach { order ->
+                updateState { copy(sortOrder = order) }
+            }
+            .launchIn(viewModelScope)
+    }
+
     fun processAction(action: HomeUiAction) {
         when (action) {
             HomeUiAction.OnScreenLoad -> refreshData()
             HomeUiAction.OnRetryClick -> initData()
             HomeUiAction.OnCloseCompletedChallengeNotification -> clearRecentCompletedChallenges()
+            HomeUiAction.OnDismissTierUpAnimation -> dismissTierUpAnimation()
         }
     }
 
@@ -223,6 +237,13 @@ class HomeViewModel @Inject constructor(
 
     private fun clearRecentCompletedChallenges() = viewModelScope.launch {
         challengeRepository.clearRecentCompletedChallenges()
+    }
+
+    private fun dismissTierUpAnimation() = viewModelScope.launch {
+        val animation = uiState.value.tierUpAnimation ?: return@launch
+
+        challengeRepository.setCurrentTier(animation.to)
+        updateState { copy(tierUpAnimation = null) }
     }
 
     companion object {

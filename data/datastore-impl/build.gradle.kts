@@ -13,7 +13,6 @@ android {
 dependencies {
     implementations(
         projects.data.datastoreApi,
-        projects.data.datastoreProto,
 
         libs.androidx.datastore.preferences,
         libs.kotlinx.serialization.json,

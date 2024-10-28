@@ -22,14 +22,15 @@
     <string name="common_designsystem_time_picker_am">AM</string>
     <string name="common_designsystem_time_picker_pm">PM</string>
 
-    <string name="common_designsystem_tier_iron_description">Iron Tier</string>
-    <string name="common_designsystem_tier_bronze_description">Bronze Tier</string>
-    <string name="common_designsystem_tier_silver_description">Silver Tier</string>
-    <string name="common_designsystem_tier_gold_description">Gold Tier</string>
-    <string name="common_designsystem_tier_platinum_description">Platinum Tier</string>
-    <string name="common_designsystem_tier_diamond_description">Diamond Tier</string>
-    <string name="common_designsystem_tier_master_description">Master Tier</string>
-    <string name="common_designsystem_tier_legend_description">Legend Tier</string>
+    <string name="common_designsystem_tier_unspecified">unspecified tier</string>
+    <string name="common_designsystem_tier_iron_description">iron tier</string>
+    <string name="common_designsystem_tier_bronze_description">bronze tier</string>
+    <string name="common_designsystem_tier_silver_description">silver tier</string>
+    <string name="common_designsystem_tier_gold_description">gold tier</string>
+    <string name="common_designsystem_tier_platinum_description">platinum tier</string>
+    <string name="common_designsystem_tier_diamond_description">diamond tier</string>
+    <string name="common_designsystem_tier_master_description">master tier</string>
+    <string name="common_designsystem_tier_legend_description">legend tier</string>
 
     <string name="common_designsystem_category_all">All</string>
     <string name="common_designsystem_category_quit_smoking">Quit Smoking</string>

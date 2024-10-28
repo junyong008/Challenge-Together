@@ -80,6 +80,7 @@ fun ErrorBody(
                 enabled = !isRetrying,
                 shape = MaterialTheme.shapes.extraLarge,
                 borderColor = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.5f),
+                contentColor = CustomColorProvider.colorScheme.onBackground,
                 content = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -88,12 +89,10 @@ fun ErrorBody(
                         Icon(
                             painter = painterResource(id = ChallengeTogetherIcons.Refresh),
                             contentDescription = stringResource(id = R.string.common_ui_error_body_retry),
-                            tint = CustomColorProvider.colorScheme.onBackground,
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = stringResource(id = R.string.common_ui_error_body_retry),
-                            color = CustomColorProvider.colorScheme.onBackground,
                             style = MaterialTheme.typography.labelMedium,
                             textAlign = TextAlign.Center,
                         )

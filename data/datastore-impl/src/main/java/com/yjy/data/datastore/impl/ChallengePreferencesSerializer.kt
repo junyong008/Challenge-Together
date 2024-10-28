@@ -3,7 +3,7 @@ package com.yjy.data.datastore.impl
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import com.google.protobuf.InvalidProtocolBufferException
-import com.yjy.data.datastore.proto.ChallengePreferences
+import com.yjy.data.datastore.api.ChallengePreferences
 import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject
