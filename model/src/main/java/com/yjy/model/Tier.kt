@@ -1,6 +1,7 @@
 package com.yjy.model
 
 import java.time.Duration
+import kotlin.math.ceil
 
 enum class Tier(val requireSeconds: Long) {
     UNSPECIFIED(-1),
@@ -14,6 +15,8 @@ enum class Tier(val requireSeconds: Long) {
     LEGEND(Duration.ofDays(180).seconds);
 
     companion object {
+        val highestTier: Tier = entries.last { it != UNSPECIFIED }
+
         fun getNextTier(current: Tier): Tier {
             return when (current) {
                 IRON -> BRONZE
@@ -33,5 +36,24 @@ enum class Tier(val requireSeconds: Long) {
                 recordInSeconds >= tier.requireSeconds
             }
         }
+
+        fun getTierProgress(currentTier: Tier, recordInSeconds: Long): TierProgress {
+            if (currentTier == LEGEND) { return TierProgress(remainingDays = 0, progress = 1f) }
+
+            val nextTier = getNextTier(currentTier)
+            val remainingSeconds = nextTier.requireSeconds - recordInSeconds
+            val remainingDays = ceil(remainingSeconds.toDouble() / (24 * 60 * 60)).toInt()
+            val progress = recordInSeconds.toFloat() / nextTier.requireSeconds
+
+            return TierProgress(
+                remainingDays = remainingDays.coerceAtLeast(0),
+                progress = progress.coerceIn(0f, 1f),
+            )
+        }
     }
 }
+
+data class TierProgress(
+    val remainingDays: Int,
+    val progress: Float,
+)

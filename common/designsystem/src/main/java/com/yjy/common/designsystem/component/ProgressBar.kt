@@ -1,9 +1,13 @@
 package com.yjy.common.designsystem.component
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -21,9 +25,19 @@ fun RoundedLinearProgressBar(
     modifier: Modifier = Modifier,
     backgroundColor: Color = CustomColorProvider.colorScheme.divider,
     progressColor: Color = CustomColorProvider.colorScheme.brand,
+    disableProgressColor: Color = CustomColorProvider.colorScheme.disable,
+    enabled: Boolean = true,
     gap: Dp = 4.dp,
 ) {
-    val coercedProgress = progress().coerceIn(0f, 1f)
+    val targetProgress = progress().coerceIn(0f, 1f)
+    val animatedProgress by animateFloatAsState(
+        targetValue = targetProgress,
+        animationSpec = tween(
+            durationMillis = 300,
+            easing = FastOutSlowInEasing,
+        ),
+        label = "Progress Animation"
+    )
 
     Canvas(modifier = modifier) {
         val strokeWidth = size.height
@@ -35,12 +49,16 @@ fun RoundedLinearProgressBar(
             size = Size(size.width, strokeWidth),
             cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2)
         )
-        drawRoundRect(
-            color = progressColor,
-            size = Size(size.width * coercedProgress - gapPx, strokeWidth - gapPx),
-            topLeft = Offset(gapOffset, gapOffset),
-            cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2)
-        )
+
+        if (animatedProgress > 0f) {
+            val progressWidth = (size.width * animatedProgress - gapPx).coerceAtLeast(0f)
+            drawRoundRect(
+                color = if (enabled) progressColor else disableProgressColor,
+                size = Size(progressWidth, strokeWidth - gapPx),
+                topLeft = Offset(gapOffset, gapOffset),
+                cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2)
+            )
+        }
     }
 }
 
@@ -49,7 +67,7 @@ fun RoundedLinearProgressBar(
 fun RoundedLinearProgressBarPreview() {
     ChallengeTogetherTheme {
         RoundedLinearProgressBar(
-            progress = { 1.0f },
+            progress = { 0.5f },
             modifier = Modifier
                 .height(20.dp)
                 .fillMaxWidth(),

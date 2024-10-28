@@ -125,6 +125,7 @@ class HomeViewModel @Inject constructor(
         val unCompletedChallenges = recordCalculatedChallenges.filterNot { it.isCompleted }
 
         updateTier(recordCalculatedChallenges)
+        updateTierProgress(unCompletedChallenges)
         checkNewlyCompletedChallenges(unCompletedChallenges)
         updateCurrentBestRecord(unCompletedChallenges)
         updateStartedChallenges(unCompletedChallenges)
@@ -173,6 +174,24 @@ class HomeViewModel @Inject constructor(
         } else if (calculatedTier > savedTier) {
             val animation = TierUpAnimationState(from = savedTier, to = Tier.getNextTier(savedTier))
             updateState { copy(tierUpAnimation = animation) }
+        }
+    }
+
+    private fun updateTierProgress(challenges: List<StartedChallenge>) {
+        val currentTierBestRecord = challenges
+            .filter { it.mode == Mode.CHALLENGE }
+            .getBestRecord()
+
+        val tierProgress = Tier.getTierProgress(
+            currentTier = uiState.value.currentTier,
+            recordInSeconds = currentTierBestRecord,
+        )
+
+        updateState {
+            copy(
+                tierProgress = tierProgress.progress,
+                remainDayForNextTier = tierProgress.remainingDays,
+            )
         }
     }
 

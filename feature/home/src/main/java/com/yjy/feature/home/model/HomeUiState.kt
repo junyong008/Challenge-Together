@@ -14,6 +14,8 @@ data class HomeUiState(
     val hasError: Boolean = false,
     val isLoading: Boolean = true,
     val userName: String = "",
+    val remainDayForNextTier: Int = 0,
+    val tierProgress: Float = 0f,
     val currentTier: Tier = Tier.UNSPECIFIED,
     val tierUpAnimation: TierUpAnimationState? = null,
     val sortOrder: SortOrder = SortOrder.LATEST,

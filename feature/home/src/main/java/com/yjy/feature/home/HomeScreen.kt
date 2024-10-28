@@ -141,7 +141,7 @@ internal fun HomeScreen(
         HomeTopBar(
             onShowCompleteChallengeClick = {},
             onShowNotificationClick = {},
-            hasNewNotification = false,
+            hasNewNotification = uiState.unViewedNotificationCount > 0,
         )
 
         when {
@@ -150,8 +150,8 @@ internal fun HomeScreen(
             else -> {
                 ProfileCard(
                     userName = uiState.userName,
-                    remainDayForNextTier = 7,
-                    tierProgress = 0.7f,
+                    remainDayForNextTier = uiState.remainDayForNextTier,
+                    tierProgress = uiState.tierProgress,
                     tier = uiState.currentTier,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -321,6 +321,12 @@ private fun ProfileCard(
     tierProgress: Float,
     tier: Tier,
 ) {
+    val progressDescription = when {
+        tier == Tier.highestTier -> stringResource(id = HomeStrings.feature_home_highest_tier)
+        tierProgress == 0f -> stringResource(id = HomeStrings.feature_home_no_active_challenge_mode)
+        else -> stringResource(id = HomeStrings.feature_home_remain_time_for_next_tier, remainDayForNextTier)
+    }
+
     Row(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -344,16 +350,14 @@ private fun ProfileCard(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = stringResource(
-                    id = HomeStrings.feature_home_remain_time_for_next_tier,
-                    remainDayForNextTier
-                ),
+                text = progressDescription,
                 color = CustomColorProvider.colorScheme.onSurfaceMuted,
                 style = MaterialTheme.typography.labelSmall,
             )
             Spacer(modifier = Modifier.height(4.dp))
             RoundedLinearProgressBar(
                 progress = { tierProgress },
+                enabled = tier != Tier.highestTier,
                 modifier = Modifier
                     .height(15.dp)
                     .fillMaxWidth(),

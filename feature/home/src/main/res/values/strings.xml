@@ -14,4 +14,6 @@
     <string name="feature_home_promoted">PROMOTED</string>
     <string name="feature_home_promoted_description">You have been promoted to the %1$s.</string>
     <string name="feature_home_promoted_confirm">Confirm</string>
+    <string name="feature_home_no_active_challenge_mode">No active challenge mode</string>
+    <string name="feature_home_highest_tier">Highest Tier</string>
 </resources>
