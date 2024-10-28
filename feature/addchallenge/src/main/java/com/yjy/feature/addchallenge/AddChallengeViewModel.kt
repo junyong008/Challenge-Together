@@ -155,13 +155,21 @@ class AddChallengeViewModel @Inject constructor(
             dismissAddConfirmDialog()
             updateState { copy(isAddingChallenge = true) }
 
+            val adjustedStartDateTime = when {
+                mode == Mode.FREE -> {
+                    val now = LocalDateTime.now()
+                    if (startDateTime.isAfter(now)) now else startDateTime
+                }
+                else -> null
+            }
+
             val event = handleNetworkResult(
                 result = challengeRepository.addChallenge(
                     category = category,
                     title = title,
                     description = description.ifBlank { title },
                     targetDays = if (mode == Mode.FREE) TargetDays.Infinite else targetDays,
-                    startDateTime = if (mode == Mode.FREE) startDateTime else null,
+                    startDateTime = adjustedStartDateTime,
                 ),
                 onSuccess = { AddChallengeUiEvent.ChallengeAdded(it) },
                 onNetworkError = { AddChallengeUiEvent.AddFailure.NetworkError },
