@@ -8,4 +8,7 @@
     <string name="feature_home_current_highest_record">Current Best Record</string>
     <string name="feature_home_my_challenges">My Challenges</string>
     <string name="feature_home_sort_challenge_content_description">Sort Challenge</string>
+    <string name="feature_home_congratulations">Congratulations!</string>
+    <string name="feature_home_challenge_success">%1$s\nYou have successfully completed the challenge.</string>
+    <string name="feature_home_congratulations_image_description">Image of Congratulations</string>
 </resources>

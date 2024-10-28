@@ -10,6 +10,7 @@
     <string name="common_designsystem_dialog_year_month_picker_description">Please enter the year and month you wish to navigate to</string>
     <string name="common_designsystem_dialog_enter_year">Year</string>
     <string name="common_designsystem_dialog_enter_month">M</string>
+    <string name="common_designsystem_bottom_sheet_close">Close</string>
     <string name="common_designsystem_calendar_next_month">Next Month</string>
     <string name="common_designsystem_calendar_previous_month">Previous Month</string>
     <string name="common_designsystem_calendar_expand_week_mode">Expand Week Mode</string>

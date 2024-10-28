@@ -2,6 +2,7 @@ package com.yjy.feature.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,15 +37,17 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.yjy.common.core.util.formatTimeDuration
+import com.yjy.common.designsystem.component.BaseBottomSheet
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherChip
-import com.yjy.common.designsystem.component.ChallengeTogetherDialog
 import com.yjy.common.designsystem.component.ClickableText
 import com.yjy.common.designsystem.component.DebouncedIconButton
 import com.yjy.common.designsystem.component.LoadingWheel
+import com.yjy.common.designsystem.component.LottieImage
 import com.yjy.common.designsystem.component.RibbonMedal
 import com.yjy.common.designsystem.component.RoundedLinearProgressBar
 import com.yjy.common.designsystem.component.SnackbarType
+import com.yjy.common.designsystem.component.StableImage
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
@@ -95,11 +98,9 @@ internal fun HomeScreen(
     }
 
     if (uiState.recentCompletedChallengeTitles.isNotEmpty()) {
-        ChallengeTogetherDialog(
-            title = "",
-            description = uiState.recentCompletedChallengeTitles.joinToString(", "),
-            onClickPositive = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
-            onClickNegative = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
+        ChallengeCompletedBottomSheet(
+            completedChallenges = uiState.recentCompletedChallengeTitles,
+            onDismiss = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
         )
     }
 
@@ -140,6 +141,43 @@ internal fun HomeScreen(
                     onCategorySelected = {},
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun ChallengeCompletedBottomSheet(
+    completedChallenges: List<String>,
+    onDismiss: () -> Unit,
+) {
+    val completedTitles = completedChallenges.joinToString(", ") { "\"$it\"" }
+
+    BaseBottomSheet(onDismiss = onDismiss) {
+        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_congratulations),
+            color = CustomColorProvider.colorScheme.onSurface,
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_challenge_success, completedTitles),
+            color = CustomColorProvider.colorScheme.onSurfaceMuted,
+            style = MaterialTheme.typography.labelMedium,
+            textAlign = TextAlign.Center,
+        )
+        Box(contentAlignment = Alignment.Center) {
+            StableImage(
+                drawableResId = R.drawable.image_congrats,
+                descriptionResId = HomeStrings.feature_home_congratulations_image_description,
+                modifier = Modifier.size(150.dp)
+            )
+            LottieImage(
+                animationResId = R.raw.anim_congrats,
+                repeatCount = 1,
+                modifier = Modifier.size(250.dp)
+            )
         }
     }
 }
