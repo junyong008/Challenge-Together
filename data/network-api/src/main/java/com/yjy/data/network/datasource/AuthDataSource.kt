@@ -8,7 +8,6 @@ import com.yjy.data.network.request.SignUpRequest
 import com.yjy.data.network.request.VerifyRequest
 
 interface AuthDataSource {
-
     suspend fun signUp(signUpRequest: SignUpRequest): NetworkResult<Unit>
     suspend fun emailLogin(emailLoginRequest: EmailLoginRequest): NetworkResult<Unit>
     suspend fun checkEmailDuplicate(email: String): NetworkResult<Unit>

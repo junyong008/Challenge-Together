@@ -4,6 +4,8 @@ import com.yjy.data.network.datasource.AuthDataSource
 import com.yjy.data.network.datasource.AuthDataSourceImpl
 import com.yjy.data.network.datasource.ChallengeDataSource
 import com.yjy.data.network.datasource.ChallengeDataSourceImpl
+import com.yjy.data.network.datasource.UserDataSource
+import com.yjy.data.network.datasource.UserDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,4 +20,7 @@ internal abstract class DataSourceModule {
 
     @Binds
     abstract fun bindChallengeDataSource(impl: ChallengeDataSourceImpl): ChallengeDataSource
+
+    @Binds
+    abstract fun bindUserDataSource(impl: UserDataSourceImpl): UserDataSource
 }

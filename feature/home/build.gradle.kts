@@ -16,7 +16,9 @@ dependencies {
         projects.model,
 
         projects.data.challengeApi,
+        projects.data.userApi,
     )
 
     runtimeOnly(projects.data.challengeImpl)
+    runtimeOnly(projects.data.userImpl)
 }

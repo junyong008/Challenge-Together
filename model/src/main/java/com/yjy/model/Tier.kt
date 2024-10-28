@@ -1,8 +1,6 @@
 package com.yjy.model
 
 import java.time.Duration
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 
 enum class Tier(val requireSeconds: Long) {
     IRON(0),
@@ -15,16 +13,9 @@ enum class Tier(val requireSeconds: Long) {
     LEGEND(Duration.ofDays(180).seconds);
 
     companion object {
-        fun getCurrentTier(lastResetDate: LocalDateTime): Tier {
-            val secondsSinceReset = ChronoUnit.SECONDS.between(lastResetDate, LocalDateTime.now())
+        fun getCurrentTier(recordInSeconds: Long): Tier {
             return entries.last { tier ->
-                secondsSinceReset >= tier.requireSeconds
-            }
-        }
-
-        fun getHighestTier(highestRecord: Long): Tier {
-            return entries.last { tier ->
-                highestRecord >= tier.requireSeconds
+                recordInSeconds >= tier.requireSeconds
             }
         }
     }

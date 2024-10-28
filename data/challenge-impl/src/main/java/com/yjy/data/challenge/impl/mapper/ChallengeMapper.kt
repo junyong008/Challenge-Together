@@ -1,12 +1,12 @@
 package com.yjy.data.challenge.impl.mapper
 
 import com.yjy.data.database.model.ChallengeEntity
-import com.yjy.data.network.response.GetMyChallengesResponse
+import com.yjy.data.network.response.ChallengeResponse
 import com.yjy.model.challenge.Mode
 import com.yjy.model.challenge.StartedChallenge
 import com.yjy.model.challenge.WaitingChallenge
 
-internal fun GetMyChallengesResponse.toEntity() = ChallengeEntity(
+internal fun ChallengeResponse.toEntity() = ChallengeEntity(
     id = challengeId,
     title = title,
     description = description,
@@ -29,6 +29,7 @@ internal fun ChallengeEntity.toStartedChallengeModel(timeDiff: Long) = StartedCh
     targetDays = targetDays.toTargetDays(),
     recentResetDateTime = recentResetDateTime?.addSeconds(timeDiff)!!,
     mode = Mode.valueOf(mode),
+    isCompleted = isCompleted,
 )
 
 internal fun ChallengeEntity.toWaitingChallengeModel() = WaitingChallenge(

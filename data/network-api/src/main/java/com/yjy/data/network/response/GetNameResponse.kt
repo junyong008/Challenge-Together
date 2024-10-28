@@ -4,9 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetProfileResponse(
+data class GetNameResponse(
     @SerialName("NAME")
     val userName: String,
-    @SerialName("UNVIEWEDNOTICOUNT")
-    val unViewedNotificationCount: Int,
 )

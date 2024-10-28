@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetCompleteChallengesTitleResponse(
-    @SerialName("TITLE")
-    val title: String,
+data class GetUnViewedNotificationCountResponse(
+    @SerialName("UNVIEWEDNOTICOUNT")
+    val unViewedNotificationCount: Int,
 )

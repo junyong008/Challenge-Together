@@ -2,10 +2,14 @@ package com.yjy.data.datastore.impl.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.yjy.data.datastore.impl.ChallengePreferencesDataStore
+import com.yjy.data.datastore.impl.ChallengePreferencesSerializer
 import com.yjy.data.datastore.impl.SessionDataStore
-import com.yjy.data.datastore.impl.UserPreferencesDataStore
+import com.yjy.data.datastore.proto.ChallengePreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,11 +20,6 @@ import javax.inject.Singleton
 private const val SESSION_DATASTORE = "session_datastore"
 private val Context.sessionDataStore: DataStore<Preferences> by preferencesDataStore(
     name = SESSION_DATASTORE,
-)
-
-private const val USER_PREFERENCES_DATASTORE = "user_preferences_datastore"
-private val Context.userPreferencesDataStore: DataStore<Preferences> by preferencesDataStore(
-    name = USER_PREFERENCES_DATASTORE,
 )
 
 @Module
@@ -35,7 +34,14 @@ internal object DataStoreModule {
 
     @Provides
     @Singleton
-    @UserPreferencesDataStore
-    fun provideUserPreferencesDataStore(@ApplicationContext context: Context) =
-        context.userPreferencesDataStore
+    @ChallengePreferencesDataStore
+    fun provideChallengePreferencesDataStore(
+        @ApplicationContext context: Context,
+        challengePreferencesSerializer: ChallengePreferencesSerializer,
+    ): DataStore<ChallengePreferences> {
+        return DataStoreFactory.create(
+            serializer = challengePreferencesSerializer,
+            produceFile = { context.dataStoreFile("challenge_preferences.pb") }
+        )
+    }
 }

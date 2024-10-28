@@ -31,12 +31,15 @@ include(
 
     ":data:auth-api",
     ":data:auth-impl",
+    ":data:user-api",
+    ":data:user-impl",
     ":data:challenge-api",
     ":data:challenge-impl",
     ":data:database-api",
     ":data:database-impl",
     ":data:datastore-api",
     ":data:datastore-impl",
+    ":data:datastore-proto",
     ":data:network-api",
     ":data:network-impl",
 

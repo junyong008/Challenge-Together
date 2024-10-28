@@ -4,8 +4,9 @@ import android.os.SystemClock
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import javax.inject.Inject
@@ -39,22 +40,27 @@ class TimeManager @Inject constructor(
     private var latestDiffWithBootTime: Long? = null
     private var onTimeChanged: (() -> Unit)? = null
 
-    val tickerFlow: Flow<LocalDateTime> = flow {
-        while (true) {
-            val currentTime = timeProvider.getCurrentTime()
-            val diffWithBootTime = calculateDiffWithBootTime(currentTime)
-            detectTimeChange(diffWithBootTime)
-            emit(currentTime)
-            delay(updateInterval)
+    private val _timeFlow = MutableSharedFlow<LocalDateTime>()
+    val tickerFlow: Flow<LocalDateTime> = _timeFlow.asSharedFlow()
+
+    fun startTicking(scope: CoroutineScope) {
+        scope.launch {
+            while (true) {
+                emitCurrentTime()
+                delay(updateInterval)
+            }
         }
+    }
+
+    suspend fun emitCurrentTime() {
+        val currentTime = timeProvider.getCurrentTime()
+        val diffWithBootTime = calculateDiffWithBootTime(currentTime)
+        detectTimeChange(diffWithBootTime)
+        _timeFlow.emit(currentTime)
     }
 
     fun setOnTimeChanged(callback: () -> Unit) {
         onTimeChanged = callback
-    }
-
-    fun startTicking(scope: CoroutineScope) {
-        tickerFlow.launchIn(scope)
     }
 
     private fun calculateDiffWithBootTime(currentDateTime: LocalDateTime): Long {

@@ -8,4 +8,4 @@ annotation class SessionDataStore
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class UserPreferencesDataStore
+annotation class ChallengePreferencesDataStore

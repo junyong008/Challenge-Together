@@ -3,12 +3,17 @@ package com.yjy.feature.home
 import androidx.lifecycle.viewModelScope
 import com.yjy.common.core.base.BaseViewModel
 import com.yjy.common.core.util.TimeManager
-import com.yjy.common.network.isSuccess
+import com.yjy.common.network.NetworkResult
+import com.yjy.common.network.isFailure
 import com.yjy.common.network.onFailure
+import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.user.api.UserRepository
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
+import com.yjy.model.Tier
+import com.yjy.model.challenge.Mode
 import com.yjy.model.challenge.StartedChallenge
 import com.yjy.model.challenge.TargetDays
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val timeManager: TimeManager,
+    private val userRepository: UserRepository,
     private val challengeRepository: ChallengeRepository,
 ) : BaseViewModel<HomeUiState, HomeUiEvent>(initialState = HomeUiState()) {
 
@@ -34,18 +40,60 @@ class HomeViewModel @Inject constructor(
     private val isSyncingTime: Boolean get() = syncTimeJob?.isActive == true
 
     init {
-        initializeFlows()
+        initFlows()
         initData()
     }
 
-    private fun initializeFlows() = with(viewModelScope) {
-        launch { observeProfile() }
+    private fun initFlows() = with(viewModelScope) {
         launch { observeStartedChallenges() }
         launch { observeWaitingChallenges() }
         launch { observeRecentCompletedChallenges() }
 
         timeManager.setOnTimeChanged { handleTimeChange() }
         timeManager.startTicking(this)
+    }
+
+    private fun initData() = viewModelScope.launch {
+        updateState { copy(isLoading = true) }
+        loadData()
+        updateState { copy(isLoading = false) }
+        timeManager.emitCurrentTime()
+    }
+
+    private suspend fun loadData() = supervisorScope {
+        awaitAll(
+            async { syncChallenges() },
+            async { loadUserInfo() },
+        )
+    }
+
+    private suspend fun syncChallenges() {
+        challengeRepository.syncChallenges().onFailure {
+            updateState { copy(hasError = true) }
+        }
+    }
+
+    private suspend fun loadUserInfo() = supervisorScope {
+        val (nameResult, notificationResult) = awaitAll(
+            async { loadUserName() },
+            async { loadNotificationCount() },
+        )
+
+        updateState {
+            copy(hasError = nameResult.isFailure || notificationResult.isFailure)
+        }
+    }
+
+    private suspend fun loadUserName(): NetworkResult<String> {
+        return userRepository.getUserName().onSuccess { name ->
+            updateState { copy(userName = name) }
+        }
+    }
+
+    private suspend fun loadNotificationCount(): NetworkResult<Int> {
+        return userRepository.getUnViewedNotificationCount().onSuccess { count ->
+            updateState { copy(unViewedNotificationCount = count) }
+        }
     }
 
     private fun handleTimeChange() {
@@ -55,19 +103,6 @@ class HomeViewModel @Inject constructor(
                 updateState { copy(hasError = true) }
             }
         }
-    }
-
-    private fun observeProfile() {
-        challengeRepository.profile
-            .onEach { profile ->
-                updateState {
-                    copy(
-                        userName = profile.name,
-                        unViewedNotificationCount = profile.unViewedNotificationCount,
-                    )
-                }
-            }
-            .launchIn(viewModelScope)
     }
 
     private fun observeStartedChallenges() {
@@ -83,16 +118,18 @@ class HomeViewModel @Inject constructor(
         challenges: List<StartedChallenge>,
         currentTime: LocalDateTime,
     ) {
-        if (challenges.isEmpty()) {
+        challenges.ifEmpty {
             handleEmptyStartedChallenges()
             return
         }
 
         val recordCalculatedChallenges = calculateRecordOfChallenges(challenges, currentTime)
+        val unCompletedChallenges = recordCalculatedChallenges.filterNot { it.isCompleted }
 
-        checkNewlyCompletedChallenges(recordCalculatedChallenges)
-        updateBestRecord(recordCalculatedChallenges)
-        updateStartedChallenges(recordCalculatedChallenges)
+        checkNewlyCompletedChallenges(unCompletedChallenges)
+        updateTier(recordCalculatedChallenges)
+        updateCurrentBestRecord(unCompletedChallenges)
+        updateStartedChallenges(unCompletedChallenges)
     }
 
     private fun handleEmptyStartedChallenges() {
@@ -108,14 +145,21 @@ class HomeViewModel @Inject constructor(
         challenges: List<StartedChallenge>,
         currentTime: LocalDateTime
     ): List<StartedChallenge> = challenges.map { challenge ->
-
         val currentRecord = Duration.between(challenge.recentResetDateTime, currentTime).seconds
-        challenge.copy(currentRecordInSeconds = currentRecord)
+
+        challenge.copy(
+            currentRecordInSeconds = when (val targetDays = challenge.targetDays) {
+                is TargetDays.Fixed -> currentRecord.coerceAtMost(
+                    (targetDays.days * SECONDS_PER_DAY).toLong()
+                )
+                else -> currentRecord
+            }
+        )
     }
 
     private suspend fun checkNewlyCompletedChallenges(challenges: List<StartedChallenge>) {
         if (challenges.any { it.isCompleted() }) {
-            syncData()
+            syncChallenges()
         }
     }
 
@@ -126,9 +170,22 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun updateBestRecord(challenges: List<StartedChallenge>) {
-        val bestRecord = challenges.maxOf { it.currentRecordInSeconds ?: 0 }
-        updateState { copy(currentBestRecordInSeconds = bestRecord) }
+    private fun updateTier(challenges: List<StartedChallenge>) {
+        val currentTierBestRecord = challenges
+            .filter { it.mode == Mode.CHALLENGE }
+            .getBestRecord()
+
+        val currentTier = Tier.getCurrentTier(currentTierBestRecord)
+        updateState { copy(currentTier = currentTier) }
+    }
+
+    private fun updateCurrentBestRecord(challenges: List<StartedChallenge>) {
+        val currentBestRecord = challenges.getBestRecord()
+        updateState { copy(currentBestRecordInSeconds = currentBestRecord) }
+    }
+
+    private fun List<StartedChallenge>.getBestRecord(): Long {
+        return this.maxOfOrNull { it.currentRecordInSeconds ?: 0 } ?: 0
     }
 
     private fun updateStartedChallenges(challenges: List<StartedChallenge>) {
@@ -159,28 +216,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun initData() = viewModelScope.launch {
-        updateState { copy(isLoading = true) }
-        syncData()
-        updateState { copy(isLoading = false) }
-    }
-
     private fun refreshData() = viewModelScope.launch {
         if (uiState.value.isLoading) return@launch
-        syncData()
-    }
-
-    private suspend fun syncData() = supervisorScope {
-        val (challengesResult, profileResult) = awaitAll(
-            async { challengeRepository.syncChallenges() },
-            async { challengeRepository.syncProfile() },
-        )
-
-        if (challengesResult.isSuccess && profileResult.isSuccess) {
-            updateState { copy(hasError = false) }
-        } else {
-            updateState { copy(hasError = true) }
-        }
+        loadData()
     }
 
     private fun clearRecentCompletedChallenges() = viewModelScope.launch {

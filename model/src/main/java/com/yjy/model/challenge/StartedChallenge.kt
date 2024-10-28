@@ -12,6 +12,7 @@ data class StartedChallenge(
     override val maxParticipantCount: Int? = null,
     val mode: Mode,
     val recentResetDateTime: LocalDateTime,
+    val isCompleted: Boolean,
     val currentRecordInSeconds: Long? = null,
     val startDateTime: LocalDateTime? = null,
 ) : Challenge(
