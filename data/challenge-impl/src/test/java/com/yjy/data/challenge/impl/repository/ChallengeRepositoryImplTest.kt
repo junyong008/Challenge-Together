@@ -1,12 +1,16 @@
 package com.yjy.data.challenge.impl.repository
 
 import com.yjy.common.network.NetworkResult
-import com.yjy.data.challenge.impl.mapper.toRequestString
+import com.yjy.data.challenge.impl.mapper.toProto
+import com.yjy.data.database.dao.ChallengeDao
+import com.yjy.data.datastore.api.ChallengePreferencesDataSource
 import com.yjy.data.network.datasource.ChallengeDataSource
 import com.yjy.data.network.request.AddChallengeRequest
 import com.yjy.data.network.response.AddChallengeResponse
-import com.yjy.model.challenge.Category
-import com.yjy.model.challenge.TargetDays
+import com.yjy.model.challenge.core.Category
+import com.yjy.model.challenge.core.SortOrder
+import com.yjy.model.challenge.core.TargetDays
+import com.yjy.model.common.Tier
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -19,12 +23,21 @@ import kotlin.test.assertEquals
 class ChallengeRepositoryImplTest {
 
     private lateinit var challengeDataSource: ChallengeDataSource
+    private lateinit var challengePreferencesDataSource: ChallengePreferencesDataSource
+    private lateinit var challengeDao: ChallengeDao
     private lateinit var challengeRepository: ChallengeRepositoryImpl
 
     @Before
     fun setup() {
         challengeDataSource = mockk()
-        challengeRepository = ChallengeRepositoryImpl(challengeDataSource)
+        challengePreferencesDataSource = mockk(relaxed = true)
+        challengeDao = mockk(relaxed = true)
+
+        challengeRepository = ChallengeRepositoryImpl(
+            challengePreferencesDataSource = challengePreferencesDataSource,
+            challengeDataSource = challengeDataSource,
+            challengeDao = challengeDao,
+        )
     }
 
     @Test
@@ -83,22 +96,55 @@ class ChallengeRepositoryImplTest {
     }
 
     @Test
-    fun `toRequestString should return correct values for Category`() {
-        assertEquals("ic_smoke", Category.QUIT_SMOKING.toRequestString())
-        assertEquals("ic_drink", Category.QUIT_DRINKING.toRequestString())
-        assertEquals("ic_game", Category.QUIT_GAMING.toRequestString())
+    fun `setCurrentTier should call ChallengePreferencesDataSource with correct tier`() = runTest {
+        // Given
+        val tier = Tier.BRONZE
+
+        // When
+        challengeRepository.setCurrentTier(tier)
+
+        // Then
+        coVerify { challengePreferencesDataSource.setCurrentTier(tier.toProto()) }
     }
 
     @Test
-    fun `toRequestString should return correct values for TargetDays`() {
-        assertEquals("30", TargetDays.Fixed(30).toRequestString())
-        assertEquals("36500", TargetDays.Infinite.toRequestString())
+    fun `setSortOrder should call ChallengePreferencesDataSource with correct order`() = runTest {
+        // Given
+        val order = SortOrder.LATEST
+
+        // When
+        challengeRepository.setSortOrder(order)
+
+        // Then
+        coVerify { challengePreferencesDataSource.setSortOrder(order.toProto()) }
     }
 
     @Test
-    fun `toRequestString should return correct formatted date for LocalDateTime`() {
-        val dateTime = LocalDateTime.of(2023, 10, 13, 10, 0)
-        val expectedFormat = "2023-10-13 10:00:00"
-        assertEquals(expectedFormat, dateTime.toRequestString())
+    fun `clearRecentCompletedChallenges should clear recent challenges in preferences`() = runTest {
+        // When
+        challengeRepository.clearRecentCompletedChallenges()
+
+        // Then
+        coVerify { challengePreferencesDataSource.setCompletedChallengeTitles(emptyList()) }
+    }
+
+    @Test
+    fun `syncChallenges should sync challenges and return newly completed titles`() = runTest {
+        // Given
+        val expectedNewTitles = listOf("Challenge 1", "Challenge 2")
+        coEvery { challengeDataSource.getMyChallenges() } returns NetworkResult.Success(
+            mockk {
+                coEvery { challenges } returns listOf()
+                coEvery { newlyCompletedTitles } returns expectedNewTitles
+            }
+        )
+
+        // When
+        val result = challengeRepository.syncChallenges()
+
+        // Then
+        coVerify { challengeDataSource.getMyChallenges() }
+        coVerify { challengePreferencesDataSource.addCompletedChallengeTitles(expectedNewTitles) }
+        assertEquals(NetworkResult.Success(expectedNewTitles), result)
     }
 }
