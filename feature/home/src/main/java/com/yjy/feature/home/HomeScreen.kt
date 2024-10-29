@@ -172,8 +172,10 @@ private fun HomeContent(
         ChallengesSection(
             startedChallenges = uiState.startedChallenges,
             waitingChallenges = uiState.waitingChallenges,
+            selectedCategory = uiState.selectedCategory,
+            categories = uiState.categories,
             sortOrder = uiState.sortOrder,
-            onCategorySelected = {},
+            onCategorySelected = { processAction(HomeUiAction.OnCategorySelect(it)) },
             onSortOrderChanged = {},
             onStartedChallengeClick = {},
             onWaitingChallengeClick = {},
@@ -351,6 +353,8 @@ private fun ProfileCard(
 private fun ChallengesSection(
     startedChallenges: List<StartedChallenge>,
     waitingChallenges: List<WaitingChallenge>,
+    selectedCategory: Category,
+    categories: List<Category>,
     sortOrder: SortOrder,
     onCategorySelected: (Category) -> Unit,
     onSortOrderChanged: (SortOrder) -> Unit,
@@ -366,8 +370,8 @@ private fun ChallengesSection(
         if (startedChallenges.isNotEmpty()) {
             StartedChallengesSection(
                 sortOrder = sortOrder,
-                categories = Category.entries,
-                selectedCategory = Category.ALL,
+                categories = categories,
+                selectedCategory = selectedCategory,
                 onCategorySelected = onCategorySelected,
                 onSortOrderChanged = onSortOrderChanged,
                 startedChallenges = startedChallenges,
@@ -406,7 +410,9 @@ private fun StartedChallengesSection(
         )
         Spacer(modifier = Modifier.height(8.dp))
         StartedChallengesList(
-            startedChallenges = startedChallenges,
+            startedChallenges = startedChallenges.filter {
+                selectedCategory == Category.ALL || it.category == selectedCategory
+            },
             onChallengeClick = onChallengeClick,
         )
         Spacer(modifier = Modifier.height(24.dp))

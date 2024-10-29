@@ -14,6 +14,7 @@ import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
 import com.yjy.feature.home.model.TierUpAnimationState
 import com.yjy.model.challenge.StartedChallenge
+import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.TargetDays
 import com.yjy.model.common.Tier
@@ -128,6 +129,7 @@ class HomeViewModel @Inject constructor(
         updateTierProgress(unCompletedChallenges)
         checkNewlyCompletedChallenges(unCompletedChallenges)
         updateCurrentBestRecord(unCompletedChallenges)
+        updateCategories(unCompletedChallenges)
         updateStartedChallenges(unCompletedChallenges)
     }
 
@@ -204,6 +206,15 @@ class HomeViewModel @Inject constructor(
         return this.maxOfOrNull { it.currentRecordInSeconds ?: 0 } ?: 0
     }
 
+    private fun updateCategories(challenges: List<StartedChallenge>) {
+        val categories = buildList {
+            add(Category.ALL)
+            addAll(challenges.map { it.category }.distinct())
+        }
+
+        updateState { copy(categories = categories) }
+    }
+
     private fun updateStartedChallenges(challenges: List<StartedChallenge>) {
         updateState { copy(startedChallenges = challenges) }
     }
@@ -246,6 +257,7 @@ class HomeViewModel @Inject constructor(
             HomeUiAction.OnRetryClick -> initData()
             HomeUiAction.OnCloseCompletedChallengeNotification -> clearRecentCompletedChallenges()
             HomeUiAction.OnDismissTierUpAnimation -> dismissTierUpAnimation()
+            is HomeUiAction.OnCategorySelect -> updateSelectedCategory(action.category)
         }
     }
 
@@ -263,6 +275,10 @@ class HomeViewModel @Inject constructor(
 
         challengeRepository.setCurrentTier(animation.to)
         updateState { copy(tierUpAnimation = null) }
+    }
+
+    private fun updateSelectedCategory(category: Category) {
+        updateState { copy(selectedCategory = category) }
     }
 
     companion object {

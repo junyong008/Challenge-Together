@@ -129,6 +129,7 @@ private fun ChallengeProgress(
     ) {
         RoundedLinearProgressBar(
             progress = { progress },
+            animated = false,
             modifier = Modifier
                 .height(12.dp)
                 .weight(1f),

@@ -27,17 +27,23 @@ fun RoundedLinearProgressBar(
     progressColor: Color = CustomColorProvider.colorScheme.brand,
     disableProgressColor: Color = CustomColorProvider.colorScheme.disable,
     enabled: Boolean = true,
+    animated: Boolean = true,
     gap: Dp = 4.dp,
 ) {
     val targetProgress = progress().coerceIn(0f, 1f)
-    val animatedProgress by animateFloatAsState(
-        targetValue = targetProgress,
-        animationSpec = tween(
-            durationMillis = 300,
-            easing = FastOutSlowInEasing,
-        ),
-        label = "Progress Animation"
-    )
+    val progressValue = if (animated) {
+        val animatedProgress by animateFloatAsState(
+            targetValue = targetProgress,
+            animationSpec = tween(
+                durationMillis = 300,
+                easing = FastOutSlowInEasing,
+            ),
+            label = "Progress Animation"
+        )
+        animatedProgress
+    } else {
+        targetProgress
+    }
 
     Canvas(modifier = modifier) {
         val strokeWidth = size.height
@@ -50,8 +56,8 @@ fun RoundedLinearProgressBar(
             cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2)
         )
 
-        if (animatedProgress > 0f) {
-            val progressWidth = (size.width * animatedProgress - gapPx).coerceAtLeast(0f)
+        if (progressValue > 0f) {
+            val progressWidth = (size.width * progressValue - gapPx).coerceAtLeast(0f)
             drawRoundRect(
                 color = if (enabled) progressColor else disableProgressColor,
                 size = Size(progressWidth, strokeWidth - gapPx),
