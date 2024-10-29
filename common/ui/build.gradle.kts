@@ -11,6 +11,8 @@ android {
 
 dependencies {
     implementations(
+        projects.common.core,
         projects.common.designsystem,
+        projects.model,
     )
 }

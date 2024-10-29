@@ -42,6 +42,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -69,13 +70,18 @@ import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.DevicePreviews
 import com.yjy.common.ui.ErrorBody
+import com.yjy.common.ui.StartedChallengeCard
+import com.yjy.common.ui.WaitingChallengeCard
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
+import com.yjy.feature.home.model.TierUpAnimationState
 import com.yjy.feature.home.navigation.HomeStrings
-import com.yjy.model.common.Tier
+import com.yjy.model.challenge.StartedChallenge
+import com.yjy.model.challenge.WaitingChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.SortOrder
+import com.yjy.model.common.Tier
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -105,37 +111,25 @@ internal fun HomeScreen(
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
-
     LaunchedEffect(lifecycleOwner.lifecycle) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             processAction(HomeUiAction.OnScreenLoad)
         }
     }
 
-    if (uiState.tierUpAnimation != null) {
-        TierUpAnimationDialog(
-            from = uiState.tierUpAnimation.from,
-            to = uiState.tierUpAnimation.to,
-            onDismiss = { processAction(HomeUiAction.OnDismissTierUpAnimation) },
-        )
-    }
-
-    if (uiState.recentCompletedChallengeTitles.isNotEmpty() && uiState.tierUpAnimation == null) {
-        ChallengeCompletedBottomSheet(
-            completedChallenges = uiState.recentCompletedChallengeTitles,
-            onDismiss = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
-        )
-    }
+    HandleHomeDialogs(
+        tierUpAnimation = uiState.tierUpAnimation,
+        completedChallengeTitles = uiState.recentCompletedChallengeTitles,
+        onDismissTierUp = { processAction(HomeUiAction.OnDismissTierUpAnimation) },
+        onDismissCompleted = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) }
+    )
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .then(
-                if (uiState.hasError || uiState.isLoading) {
-                    Modifier
-                } else {
-                    Modifier.verticalScroll(rememberScrollState())
-                }
+                if (uiState.hasError || uiState.isLoading) Modifier
+                else Modifier.verticalScroll(rememberScrollState())
             ),
     ) {
         HomeTopBar(
@@ -143,32 +137,101 @@ internal fun HomeScreen(
             onShowNotificationClick = {},
             hasNewNotification = uiState.unViewedNotificationCount > 0,
         )
+        HomeBody(
+            uiState = uiState,
+            processAction = processAction,
+        )
+    }
+}
 
-        when {
-            uiState.isLoading -> LoadingWheel()
-            uiState.hasError -> ErrorBody(onClickRetry = { processAction(HomeUiAction.OnRetryClick) })
-            else -> {
-                ProfileCard(
-                    userName = uiState.userName,
-                    remainDayForNextTier = uiState.remainDayForNextTier,
-                    tierProgress = uiState.tierProgress,
-                    tier = uiState.currentTier,
+@Composable
+private fun HomeBody(
+    uiState: HomeUiState,
+    processAction: (HomeUiAction) -> Unit,
+) {
+    when {
+        uiState.isLoading -> LoadingWheel()
+        uiState.hasError -> ErrorBody(onClickRetry = { processAction(HomeUiAction.OnRetryClick) })
+        else -> HomeContent(uiState = uiState, processAction = processAction)
+    }
+}
+
+@Composable
+private fun HomeContent(
+    uiState: HomeUiState,
+    processAction: (HomeUiAction) -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        ProfileSection(
+            userName = uiState.userName,
+            remainDayForNextTier = uiState.remainDayForNextTier,
+            tierProgress = uiState.tierProgress,
+            tier = uiState.currentTier,
+            highestRecordInSeconds = uiState.currentBestRecordInSeconds,
+        )
+        ChallengesSection(
+            startedChallenges = uiState.startedChallenges,
+            waitingChallenges = uiState.waitingChallenges,
+            sortOrder = uiState.sortOrder,
+            onCategorySelected = {},
+            onSortOrderChanged = {},
+            onStartedChallengeClick = {},
+            onWaitingChallengeClick = {},
+        )
+    }
+}
+
+@Composable
+private fun HomeTopBar(
+    onShowCompleteChallengeClick: () -> Unit,
+    onShowNotificationClick: () -> Unit,
+    hasNewNotification: Boolean,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_title),
+            color = CustomColorProvider.colorScheme.onBackgroundMuted,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier
+                .padding(start = 16.dp)
+                .weight(1f),
+        )
+        Row(modifier = Modifier.padding(end = 8.dp)) {
+            DebouncedIconButton(
+                onClick = onShowCompleteChallengeClick,
+                modifier = Modifier.size(40.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = ChallengeTogetherIcons.CompleteChallenge),
+                    contentDescription = stringResource(
+                        id = HomeStrings.feature_home_complete_challenge_description,
+                    ),
+                    tint = CustomColorProvider.colorScheme.onBackgroundMuted,
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                HighestRecordCard(highestRecordInSeconds = uiState.currentBestRecordInSeconds)
-                Spacer(modifier = Modifier.height(24.dp))
-
-                when {
-                    uiState.startedChallenges.isNotEmpty() -> {
-                        MyChallengeSection(
-                            sortOrder = uiState.sortOrder,
-                            categories = Category.entries,
-                            selectedCategory = Category.ALL,
-                            onCategorySelected = {},
-                            onSortOrderChanged = {},
-                        )
-                    }
-                    else -> EmptyChallengesBody()
+            }
+            DebouncedIconButton(
+                onClick = onShowNotificationClick,
+                modifier = Modifier.size(40.dp)
+            ) {
+                BadgedBox(
+                    badge = {
+                        if (hasNewNotification) {
+                            Badge(containerColor = CustomColorProvider.colorScheme.brand)
+                        }
+                    },
+                ) {
+                    Icon(
+                        painter = painterResource(id = ChallengeTogetherIcons.Notification),
+                        contentDescription = stringResource(
+                            id = HomeStrings.feature_home_notification_description,
+                        ),
+                        tint = CustomColorProvider.colorScheme.onBackgroundMuted,
+                    )
                 }
             }
         }
@@ -176,143 +239,23 @@ internal fun HomeScreen(
 }
 
 @Composable
-private fun EmptyChallengesBody() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Spacer(modifier = Modifier.height(80.dp))
-        Text(
-            text = stringResource(id = HomeStrings.feature_home_no_active_challenge),
-            color = CustomColorProvider.colorScheme.onBackground,
-            style = MaterialTheme.typography.titleSmall,
-            textAlign = TextAlign.Center,
+private fun ProfileSection(
+    userName: String,
+    remainDayForNextTier: Int,
+    tierProgress: Float,
+    tier: Tier,
+    highestRecordInSeconds: Long,
+) {
+    Column {
+        ProfileCard(
+            userName = userName,
+            remainDayForNextTier = remainDayForNextTier,
+            tierProgress = tierProgress,
+            tier = tier,
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = stringResource(id = HomeStrings.feature_home_start_new_challenge_prompt),
-            color = CustomColorProvider.colorScheme.onBackgroundMuted,
-            style = MaterialTheme.typography.labelMedium,
-            textAlign = TextAlign.Center,
-        )
-        Spacer(modifier = Modifier.height(80.dp))
-    }
-}
-
-@Composable
-private fun ChallengeCompletedBottomSheet(
-    completedChallenges: List<String>,
-    onDismiss: () -> Unit,
-) {
-    val completedTitles = completedChallenges.joinToString(", ") { "\"$it\"" }
-
-    BaseBottomSheet(onDismiss = onDismiss) {
-        Spacer(modifier = Modifier.height(32.dp))
-        Text(
-            text = stringResource(id = HomeStrings.feature_home_congratulations),
-            color = CustomColorProvider.colorScheme.onSurface,
-            style = MaterialTheme.typography.titleMedium,
-            textAlign = TextAlign.Center,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = stringResource(id = HomeStrings.feature_home_challenge_success, completedTitles),
-            color = CustomColorProvider.colorScheme.onSurfaceMuted,
-            style = MaterialTheme.typography.labelMedium,
-            textAlign = TextAlign.Center,
-        )
-        Box(contentAlignment = Alignment.Center) {
-            StableImage(
-                drawableResId = R.drawable.image_congrats,
-                descriptionResId = HomeStrings.feature_home_congratulations_image_description,
-                modifier = Modifier.size(150.dp)
-            )
-            LottieImage(
-                animationResId = R.raw.anim_congrats,
-                repeatCount = 1,
-                modifier = Modifier.size(250.dp)
-            )
-        }
-    }
-}
-
-@Composable
-private fun MyChallengeSection(
-    sortOrder: SortOrder,
-    categories: List<Category>,
-    selectedCategory: Category,
-    onSortOrderChanged: (SortOrder) -> Unit,
-    onCategorySelected: (Category) -> Unit,
-) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        MyChallengeTitle(
-            sortOrder = sortOrder,
-            onSortOrderChanged = onSortOrderChanged,
-        )
-        CategoryChipGroup(
-            categories = categories,
-            selectedCategory = selectedCategory,
-            onCategorySelected = onCategorySelected,
-        )
-    }
-}
-
-@Composable
-private fun CategoryChipGroup(
-    categories: List<Category>,
-    selectedCategory: Category,
-    onCategorySelected: (Category) -> Unit,
-) {
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-    ) {
-        items(categories) { category ->
-            ChallengeTogetherChip(
-                textResId = category.getDisplayNameResId(),
-                isSelected = category == selectedCategory,
-                onSelectionChanged = { onCategorySelected(category) }
-            )
-        }
-    }
-}
-
-@Composable
-private fun MyChallengeTitle(
-    sortOrder: SortOrder,
-    onSortOrderChanged: (SortOrder) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .padding(start = 16.dp, end = 8.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = stringResource(id = HomeStrings.feature_home_my_challenges),
-            color = CustomColorProvider.colorScheme.onBackground,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.weight(1f),
-        )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.Sort),
-                contentDescription = stringResource(
-                    id = HomeStrings.feature_home_sort_challenge_content_description
-                ),
-                tint = CustomColorProvider.colorScheme.onBackgroundMuted,
-                modifier = Modifier.size(20.dp),
-            )
-            ClickableText(
-                text = stringResource(id = sortOrder.getDisplayNameResId()),
-                textAlign = TextAlign.End,
-                onClick = {},
-                color = CustomColorProvider.colorScheme.onBackgroundMuted,
-            )
-        }
+        HighestRecordCard(highestRecordInSeconds = highestRecordInSeconds)
+        Spacer(modifier = Modifier.height(24.dp))
     }
 }
 
@@ -405,58 +348,269 @@ private fun ProfileCard(
 }
 
 @Composable
-private fun HomeTopBar(
-    onShowCompleteChallengeClick: () -> Unit,
-    onShowNotificationClick: () -> Unit,
-    hasNewNotification: Boolean,
+private fun ChallengesSection(
+    startedChallenges: List<StartedChallenge>,
+    waitingChallenges: List<WaitingChallenge>,
+    sortOrder: SortOrder,
+    onCategorySelected: (Category) -> Unit,
+    onSortOrderChanged: (SortOrder) -> Unit,
+    onStartedChallengeClick: (StartedChallenge) -> Unit,
+    onWaitingChallengeClick: (WaitingChallenge) -> Unit,
+) {
+    if (startedChallenges.isEmpty() && waitingChallenges.isEmpty()) {
+        EmptyChallengesBody()
+        return
+    }
+
+    Column {
+        if (startedChallenges.isNotEmpty()) {
+            StartedChallengesSection(
+                sortOrder = sortOrder,
+                categories = Category.entries,
+                selectedCategory = Category.ALL,
+                onCategorySelected = onCategorySelected,
+                onSortOrderChanged = onSortOrderChanged,
+                startedChallenges = startedChallenges,
+                onChallengeClick = onStartedChallengeClick,
+            )
+        }
+
+        if (waitingChallenges.isNotEmpty()) {
+            WaitingChallengesSection(
+                waitingChallenges = waitingChallenges,
+                onChallengeClick = onWaitingChallengeClick,
+            )
+        }
+    }
+}
+
+@Composable
+private fun StartedChallengesSection(
+    sortOrder: SortOrder,
+    categories: List<Category>,
+    selectedCategory: Category,
+    startedChallenges: List<StartedChallenge>,
+    onSortOrderChanged: (SortOrder) -> Unit,
+    onCategorySelected: (Category) -> Unit,
+    onChallengeClick: (StartedChallenge) -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        MyChallengeTitle(
+            sortOrder = sortOrder,
+            onSortOrderChanged = onSortOrderChanged,
+        )
+        CategoryChipGroup(
+            categories = categories,
+            selectedCategory = selectedCategory,
+            onCategorySelected = onCategorySelected,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        StartedChallengesList(
+            startedChallenges = startedChallenges,
+            onChallengeClick = onChallengeClick,
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+    }
+}
+
+@Composable
+private fun WaitingChallengesSection(
+    waitingChallenges: List<WaitingChallenge>,
+    onChallengeClick: (WaitingChallenge) -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+    ) {
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_joined_challenges),
+            color = CustomColorProvider.colorScheme.onBackground,
+            style = MaterialTheme.typography.bodyLarge,
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        WaitingChallengesList(
+            waitingChallenges = waitingChallenges,
+            onChallengeClick = onChallengeClick,
+        )
+        Spacer(modifier = Modifier.height(50.dp))
+    }
+}
+
+@Composable
+private fun EmptyChallengesBody() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(modifier = Modifier.height(80.dp))
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_no_active_challenge),
+            color = CustomColorProvider.colorScheme.onBackground,
+            style = MaterialTheme.typography.titleSmall,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_start_new_challenge_prompt),
+            color = CustomColorProvider.colorScheme.onBackgroundMuted,
+            style = MaterialTheme.typography.labelMedium,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(80.dp))
+    }
+}
+
+@Composable
+private fun StartedChallengesList(
+    startedChallenges: List<StartedChallenge>,
+    onChallengeClick: (StartedChallenge) -> Unit,
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.padding(horizontal = 16.dp),
+    ) {
+        startedChallenges.forEach { challenge ->
+            StartedChallengeCard(
+                challenge = challenge,
+                onClick = onChallengeClick,
+            )
+        }
+    }
+}
+
+@Composable
+private fun WaitingChallengesList(
+    waitingChallenges: List<WaitingChallenge>,
+    onChallengeClick: (WaitingChallenge) -> Unit,
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        waitingChallenges.forEach { challenge ->
+            WaitingChallengeCard(
+                challenge = challenge,
+                onClick = onChallengeClick,
+            )
+        }
+    }
+}
+
+@Composable
+private fun MyChallengeTitle(
+    sortOrder: SortOrder,
+    onSortOrderChanged: (SortOrder) -> Unit,
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(start = 16.dp, end = 8.dp)
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = stringResource(id = HomeStrings.feature_home_title),
-            color = CustomColorProvider.colorScheme.onBackgroundMuted,
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier
-                .padding(start = 16.dp)
-                .weight(1f),
+            text = stringResource(id = HomeStrings.feature_home_my_challenges),
+            color = CustomColorProvider.colorScheme.onBackground,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.weight(1f),
         )
-        Row(modifier = Modifier.padding(end = 8.dp)) {
-            DebouncedIconButton(
-                onClick = onShowCompleteChallengeClick,
-                modifier = Modifier.size(40.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = ChallengeTogetherIcons.CompleteChallenge),
-                    contentDescription = stringResource(
-                        id = HomeStrings.feature_home_complete_challenge_description,
-                    ),
-                    tint = CustomColorProvider.colorScheme.onBackgroundMuted,
-                )
-            }
-            DebouncedIconButton(
-                onClick = onShowNotificationClick,
-                modifier = Modifier.size(40.dp)
-            ) {
-                BadgedBox(
-                    badge = {
-                        if (hasNewNotification) {
-                            Badge(containerColor = CustomColorProvider.colorScheme.brand)
-                        }
-                    },
-                ) {
-                    Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.Notification),
-                        contentDescription = stringResource(
-                            id = HomeStrings.feature_home_notification_description,
-                        ),
-                        tint = CustomColorProvider.colorScheme.onBackgroundMuted,
-                    )
-                }
-            }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                painter = painterResource(id = ChallengeTogetherIcons.Sort),
+                contentDescription = stringResource(
+                    id = HomeStrings.feature_home_sort_challenge_content_description
+                ),
+                tint = CustomColorProvider.colorScheme.onBackgroundMuted,
+                modifier = Modifier.size(20.dp),
+            )
+            ClickableText(
+                text = stringResource(id = sortOrder.getDisplayNameResId()),
+                textAlign = TextAlign.End,
+                onClick = {},
+                color = CustomColorProvider.colorScheme.onBackgroundMuted,
+            )
+        }
+    }
+}
+
+@Composable
+private fun CategoryChipGroup(
+    categories: List<Category>,
+    selectedCategory: Category,
+    onCategorySelected: (Category) -> Unit,
+) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        items(categories) { category ->
+            ChallengeTogetherChip(
+                textResId = category.getDisplayNameResId(),
+                isSelected = category == selectedCategory,
+                onSelectionChanged = { onCategorySelected(category) }
+            )
+        }
+    }
+}
+
+@Composable
+private fun HandleHomeDialogs(
+    tierUpAnimation: TierUpAnimationState?,
+    completedChallengeTitles: List<String>,
+    onDismissTierUp: () -> Unit,
+    onDismissCompleted: () -> Unit,
+) {
+    if (tierUpAnimation != null) {
+        TierUpAnimationDialog(
+            from = tierUpAnimation.from,
+            to = tierUpAnimation.to,
+            onDismiss = onDismissTierUp,
+        )
+    }
+
+    if (completedChallengeTitles.isNotEmpty() && tierUpAnimation == null) {
+        ChallengeCompletedBottomSheet(
+            completedChallenges = completedChallengeTitles,
+            onDismiss = onDismissCompleted,
+        )
+    }
+}
+
+@Composable
+private fun ChallengeCompletedBottomSheet(
+    completedChallenges: List<String>,
+    onDismiss: () -> Unit,
+) {
+    val completedTitles = completedChallenges.joinToString(", ") { "\"$it\"" }
+
+    BaseBottomSheet(onDismiss = onDismiss) {
+        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_congratulations),
+            color = CustomColorProvider.colorScheme.onSurface,
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_challenge_success, completedTitles),
+            color = CustomColorProvider.colorScheme.onSurfaceMuted,
+            style = MaterialTheme.typography.labelMedium,
+            textAlign = TextAlign.Center,
+        )
+        Box(contentAlignment = Alignment.Center) {
+            StableImage(
+                drawableResId = R.drawable.image_congrats,
+                descriptionResId = HomeStrings.feature_home_congratulations_image_description,
+                modifier = Modifier.size(150.dp)
+            )
+            LottieImage(
+                animationResId = R.raw.anim_congrats,
+                repeatCount = 1,
+                modifier = Modifier.size(250.dp)
+            )
         }
     }
 }
@@ -559,7 +713,7 @@ private fun TierUpAnimatedText(
         color = color.copy(alpha = alpha),
         style = style,
         textAlign = TextAlign.Center,
-        modifier = Modifier.offset(y = offset)
+        modifier = Modifier.offset { IntOffset(0, offset.roundToPx()) }
     )
 }
 
@@ -588,7 +742,7 @@ private fun TierUpAnimatedButton(
 
     Box(
         modifier = Modifier
-            .offset(y = offset)
+            .offset { IntOffset(0, offset.roundToPx()) }
             .alpha(alpha)
     ) {
         ChallengeTogetherOutlinedButton(

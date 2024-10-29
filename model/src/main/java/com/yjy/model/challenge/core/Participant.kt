@@ -5,5 +5,5 @@ import java.time.LocalDateTime
 
 data class Participant(
     val user: User,
-    val lastResetDate: LocalDateTime,
+    val recentResetDateTime: LocalDateTime,
 )
