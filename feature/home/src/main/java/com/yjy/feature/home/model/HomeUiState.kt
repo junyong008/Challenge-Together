@@ -1,9 +1,9 @@
 package com.yjy.feature.home.model
 
-import com.yjy.model.Tier
-import com.yjy.model.challenge.SortOrder
 import com.yjy.model.challenge.StartedChallenge
 import com.yjy.model.challenge.WaitingChallenge
+import com.yjy.model.challenge.core.SortOrder
+import com.yjy.model.common.Tier
 
 data class TierUpAnimationState(
     val from: Tier,

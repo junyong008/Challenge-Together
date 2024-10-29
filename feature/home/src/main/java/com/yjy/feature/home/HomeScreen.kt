@@ -73,9 +73,9 @@ import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
 import com.yjy.feature.home.navigation.HomeStrings
-import com.yjy.model.Tier
-import com.yjy.model.challenge.Category
-import com.yjy.model.challenge.SortOrder
+import com.yjy.model.common.Tier
+import com.yjy.model.challenge.core.Category
+import com.yjy.model.challenge.core.SortOrder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

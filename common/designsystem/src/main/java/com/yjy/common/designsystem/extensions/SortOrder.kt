@@ -1,7 +1,7 @@
 package com.yjy.common.designsystem.extensions
 
 import com.yjy.common.designsystem.R
-import com.yjy.model.challenge.SortOrder
+import com.yjy.model.challenge.core.SortOrder
 
 fun SortOrder.getDisplayNameResId(): Int {
     return when (this) {

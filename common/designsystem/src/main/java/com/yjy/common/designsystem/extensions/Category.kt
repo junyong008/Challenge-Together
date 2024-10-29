@@ -2,7 +2,7 @@ package com.yjy.common.designsystem.extensions
 
 import com.yjy.common.designsystem.R
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
-import com.yjy.model.challenge.Category
+import com.yjy.model.challenge.core.Category
 
 fun Category.getDisplayNameResId(): Int {
     return when (this) {

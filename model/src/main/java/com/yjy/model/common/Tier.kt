@@ -1,4 +1,4 @@
-package com.yjy.model
+package com.yjy.model.common
 
 import java.time.Duration
 import kotlin.math.ceil

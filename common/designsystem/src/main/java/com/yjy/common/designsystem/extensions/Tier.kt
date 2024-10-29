@@ -1,7 +1,7 @@
 package com.yjy.common.designsystem.extensions
 
 import com.yjy.common.designsystem.R
-import com.yjy.model.Tier
+import com.yjy.model.common.Tier
 
 fun Tier.getDisplayNameResId(): Int {
     return when (this) {

@@ -1,4 +1,4 @@
-package com.yjy.model.challenge
+package com.yjy.model.challenge.core
 
 enum class SortOrder {
     LATEST,

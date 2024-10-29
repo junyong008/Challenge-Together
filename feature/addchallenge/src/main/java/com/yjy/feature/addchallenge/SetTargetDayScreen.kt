@@ -55,7 +55,7 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
 import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
-import com.yjy.model.challenge.TargetDays
+import com.yjy.model.challenge.core.TargetDays
 
 @Composable
 internal fun SetTargetDayRoute(

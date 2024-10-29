@@ -1,11 +1,11 @@
 package com.yjy.data.challenge.api
 
 import com.yjy.common.network.NetworkResult
-import com.yjy.model.Tier
-import com.yjy.model.challenge.Category
-import com.yjy.model.challenge.SortOrder
+import com.yjy.model.common.Tier
+import com.yjy.model.challenge.core.Category
+import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.challenge.StartedChallenge
-import com.yjy.model.challenge.TargetDays
+import com.yjy.model.challenge.core.TargetDays
 import com.yjy.model.challenge.WaitingChallenge
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime

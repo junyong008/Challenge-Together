@@ -1,7 +1,7 @@
 package com.yjy.data.challenge.impl.mapper
 
 import com.yjy.data.datastore.api.ChallengePreferences
-import com.yjy.model.Tier
+import com.yjy.model.common.Tier
 
 fun Tier.toProto(): ChallengePreferences.Tier = when (this) {
     Tier.UNSPECIFIED -> ChallengePreferences.Tier.TIER_UNSPECIFIED

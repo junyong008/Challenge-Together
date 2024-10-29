@@ -1,7 +1,7 @@
 package com.yjy.data.challenge.impl.mapper
 
 import com.yjy.data.datastore.api.ChallengePreferences
-import com.yjy.model.challenge.SortOrder
+import com.yjy.model.challenge.core.SortOrder
 
 fun SortOrder.toProto(): ChallengePreferences.SortOrder = when (this) {
     SortOrder.LATEST -> ChallengePreferences.SortOrder.SORT_ORDER_LATEST

@@ -1,6 +1,6 @@
 package com.yjy.data.challenge.impl.mapper
 
-import com.yjy.model.challenge.TargetDays
+import com.yjy.model.challenge.core.TargetDays
 
 // 이전 버전과의 호환을 위해 36500을 무제한으로 설정.
 private const val INFINITE_TARGET_DAYS = 36500

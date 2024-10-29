@@ -43,7 +43,7 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
 import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
-import com.yjy.model.challenge.Category
+import com.yjy.model.challenge.core.Category
 
 @Composable
 internal fun SetCategoryRoute(

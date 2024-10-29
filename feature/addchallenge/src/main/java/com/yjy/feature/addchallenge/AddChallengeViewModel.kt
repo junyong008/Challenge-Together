@@ -12,9 +12,9 @@ import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
-import com.yjy.model.challenge.Category
-import com.yjy.model.challenge.Mode
-import com.yjy.model.challenge.TargetDays
+import com.yjy.model.challenge.core.Category
+import com.yjy.model.challenge.core.Mode
+import com.yjy.model.challenge.core.TargetDays
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate

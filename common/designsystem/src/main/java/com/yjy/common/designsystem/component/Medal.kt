@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.yjy.common.designsystem.R
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
-import com.yjy.model.Tier
+import com.yjy.model.common.Tier
 
 @Composable
 fun RibbonMedal(

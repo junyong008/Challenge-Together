@@ -1,6 +1,6 @@
 package com.yjy.data.challenge.impl.mapper
 
-import com.yjy.model.challenge.Category
+import com.yjy.model.challenge.core.Category
 
 // 이전 버전과의 호환을 위해 과거와 동일한 String으로 변환하여 전송.
 private const val ALL_CATEGORY = "ic_trop"

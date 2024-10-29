@@ -13,10 +13,10 @@ import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
 import com.yjy.feature.home.model.TierUpAnimationState
-import com.yjy.model.Tier
-import com.yjy.model.challenge.Mode
 import com.yjy.model.challenge.StartedChallenge
-import com.yjy.model.challenge.TargetDays
+import com.yjy.model.challenge.core.Mode
+import com.yjy.model.challenge.core.TargetDays
+import com.yjy.model.common.Tier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async

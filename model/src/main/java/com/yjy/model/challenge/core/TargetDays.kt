@@ -1,4 +1,4 @@
-package com.yjy.model.challenge
+package com.yjy.model.challenge.core
 
 sealed class TargetDays {
     data object Infinite : TargetDays()

@@ -14,12 +14,12 @@ import com.yjy.data.database.model.ChallengeEntity
 import com.yjy.data.datastore.api.ChallengePreferencesDataSource
 import com.yjy.data.network.datasource.ChallengeDataSource
 import com.yjy.data.network.request.AddChallengeRequest
-import com.yjy.model.Tier
-import com.yjy.model.challenge.Category
-import com.yjy.model.challenge.SortOrder
 import com.yjy.model.challenge.StartedChallenge
-import com.yjy.model.challenge.TargetDays
 import com.yjy.model.challenge.WaitingChallenge
+import com.yjy.model.challenge.core.Category
+import com.yjy.model.challenge.core.SortOrder
+import com.yjy.model.challenge.core.TargetDays
+import com.yjy.model.common.Tier
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map

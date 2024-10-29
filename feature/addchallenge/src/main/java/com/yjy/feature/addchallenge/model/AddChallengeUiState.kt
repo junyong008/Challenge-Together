@@ -2,9 +2,9 @@ package com.yjy.feature.addchallenge.model
 
 import com.yjy.common.core.constants.ChallengeConst.INIT_CHALLENGE_MAX_PARTICIPANTS
 import com.yjy.common.core.constants.ChallengeConst.INIT_CHALLENGE_TARGET_DAYS
-import com.yjy.model.challenge.Category
-import com.yjy.model.challenge.Mode
-import com.yjy.model.challenge.TargetDays
+import com.yjy.model.challenge.core.Category
+import com.yjy.model.challenge.core.Mode
+import com.yjy.model.challenge.core.TargetDays
 import java.time.LocalDateTime
 
 data class AddChallengeUiState(
