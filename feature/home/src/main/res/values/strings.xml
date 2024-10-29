@@ -19,4 +19,5 @@
     <string name="feature_home_highest_tier">Highest Tier</string>
     <string name="feature_home_no_active_challenge">No Challenges</string>
     <string name="feature_home_start_new_challenge_prompt">Tap the add button at the bottom right to start a new challenge.</string>
+    <string name="feature_home_sort">Sort By</string>
 </resources>

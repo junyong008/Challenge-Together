@@ -5,6 +5,8 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +27,8 @@ import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +43,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -120,8 +125,12 @@ internal fun HomeScreen(
     HandleHomeDialogs(
         tierUpAnimation = uiState.tierUpAnimation,
         completedChallengeTitles = uiState.recentCompletedChallengeTitles,
+        selectedSortOrder = uiState.sortOrder,
+        shouldShowSortOrderBottomSheet = uiState.shouldShowSortOrderBottomSheet,
+        onSortOrderSelected = { processAction(HomeUiAction.OnSortOrderSelect(it)) },
         onDismissTierUp = { processAction(HomeUiAction.OnDismissTierUpAnimation) },
-        onDismissCompleted = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) }
+        onDismissCompleted = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
+        onDismissSortOrder = { processAction(HomeUiAction.OnDismissSortOrder) },
     )
 
     Column(
@@ -176,7 +185,7 @@ private fun HomeContent(
             categories = uiState.categories,
             sortOrder = uiState.sortOrder,
             onCategorySelected = { processAction(HomeUiAction.OnCategorySelect(it)) },
-            onSortOrderChanged = {},
+            onSortOrderClick = { processAction(HomeUiAction.OnSortOrderClick) },
             onStartedChallengeClick = {},
             onWaitingChallengeClick = {},
         )
@@ -357,7 +366,7 @@ private fun ChallengesSection(
     categories: List<Category>,
     sortOrder: SortOrder,
     onCategorySelected: (Category) -> Unit,
-    onSortOrderChanged: (SortOrder) -> Unit,
+    onSortOrderClick: () -> Unit,
     onStartedChallengeClick: (StartedChallenge) -> Unit,
     onWaitingChallengeClick: (WaitingChallenge) -> Unit,
 ) {
@@ -373,7 +382,7 @@ private fun ChallengesSection(
                 categories = categories,
                 selectedCategory = selectedCategory,
                 onCategorySelected = onCategorySelected,
-                onSortOrderChanged = onSortOrderChanged,
+                onSortOrderClick = onSortOrderClick,
                 startedChallenges = startedChallenges,
                 onChallengeClick = onStartedChallengeClick,
             )
@@ -394,14 +403,14 @@ private fun StartedChallengesSection(
     categories: List<Category>,
     selectedCategory: Category,
     startedChallenges: List<StartedChallenge>,
-    onSortOrderChanged: (SortOrder) -> Unit,
+    onSortOrderClick: () -> Unit,
     onCategorySelected: (Category) -> Unit,
     onChallengeClick: (StartedChallenge) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         MyChallengeTitle(
             sortOrder = sortOrder,
-            onSortOrderChanged = onSortOrderChanged,
+            onSortOrderClick = onSortOrderClick,
         )
         CategoryChipGroup(
             categories = categories,
@@ -506,7 +515,7 @@ private fun WaitingChallengesList(
 @Composable
 private fun MyChallengeTitle(
     sortOrder: SortOrder,
-    onSortOrderChanged: (SortOrder) -> Unit,
+    onSortOrderClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -534,7 +543,7 @@ private fun MyChallengeTitle(
             ClickableText(
                 text = stringResource(id = sortOrder.getDisplayNameResId()),
                 textAlign = TextAlign.End,
-                onClick = {},
+                onClick = onSortOrderClick,
                 color = CustomColorProvider.colorScheme.onBackgroundMuted,
             )
         }
@@ -565,8 +574,12 @@ private fun CategoryChipGroup(
 private fun HandleHomeDialogs(
     tierUpAnimation: TierUpAnimationState?,
     completedChallengeTitles: List<String>,
+    selectedSortOrder: SortOrder,
+    shouldShowSortOrderBottomSheet: Boolean,
+    onSortOrderSelected: (SortOrder) -> Unit,
     onDismissTierUp: () -> Unit,
     onDismissCompleted: () -> Unit,
+    onDismissSortOrder: () -> Unit,
 ) {
     if (tierUpAnimation != null) {
         TierUpAnimationDialog(
@@ -580,6 +593,90 @@ private fun HandleHomeDialogs(
         ChallengeCompletedBottomSheet(
             completedChallenges = completedChallengeTitles,
             onDismiss = onDismissCompleted,
+        )
+    }
+
+    if (shouldShowSortOrderBottomSheet) {
+        SortOrderBottomSheet(
+            selectedSortOrder = selectedSortOrder,
+            onSelected = onSortOrderSelected,
+            onDismiss = onDismissSortOrder,
+        )
+    }
+}
+
+@Composable
+private fun SortOrderBottomSheet(
+    selectedSortOrder: SortOrder,
+    onSelected: (SortOrder) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    BaseBottomSheet(onDismiss = onDismiss) {
+        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = stringResource(id = HomeStrings.feature_home_sort),
+            color = CustomColorProvider.colorScheme.onSurface,
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(modifier = Modifier.height(32.dp))
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            SortOrder.entries.forEach { sortOrder ->
+                SortItem(
+                    title = stringResource(id = sortOrder.getDisplayNameResId()),
+                    isSelected = sortOrder == selectedSortOrder,
+                    onClick = { onSelected(sortOrder) },
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun SortItem(
+    title: String,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val shape = MaterialTheme.shapes.medium
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(shape)
+            .background(CustomColorProvider.colorScheme.background)
+            .then(
+                if (isSelected) {
+                    Modifier.border(
+                        width = 2.dp,
+                        color = CustomColorProvider.colorScheme.brand,
+                        shape = shape,
+                    )
+                } else {
+                    Modifier
+                }
+            )
+            .clickable(
+                role = Role.RadioButton,
+                onClick = onClick,
+            )
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = title,
+            color = CustomColorProvider.colorScheme.onBackground,
+            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier.weight(1f),
+        )
+        RadioButton(
+            selected = isSelected,
+            onClick = null,
+            colors = RadioButtonDefaults.colors(
+                selectedColor = CustomColorProvider.colorScheme.brand,
+                unselectedColor = CustomColorProvider.colorScheme.onSurfaceMuted,
+            )
         )
     }
 }

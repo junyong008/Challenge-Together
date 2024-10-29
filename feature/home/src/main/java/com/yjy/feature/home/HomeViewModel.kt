@@ -16,6 +16,7 @@ import com.yjy.feature.home.model.TierUpAnimationState
 import com.yjy.model.challenge.StartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
+import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.challenge.core.TargetDays
 import com.yjy.model.common.Tier
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -51,7 +52,6 @@ class HomeViewModel @Inject constructor(
         launch { observeWaitingChallenges() }
         launch { observeRecentCompletedChallenges() }
         launch { observeCurrentTier() }
-        launch { observeSortOrder() }
 
         timeManager.setOnTimeChanged { handleTimeChange() }
         timeManager.startTicking(this)
@@ -115,6 +115,10 @@ class HomeViewModel @Inject constructor(
                 if (isSyncingTime || uiState.value.isLoading || uiState.value.hasError) return@combine
                 handleStartedChallenges(challenges, currentTime)
             }
+            .combine(challengeRepository.sortOrder) { _, sortOrder ->
+                updateState { copy(sortOrder = sortOrder) }
+                updateStartedChallenges(uiState.value.startedChallenges.sortBy(sortOrder))
+            }
             .launchIn(viewModelScope)
     }
 
@@ -130,7 +134,17 @@ class HomeViewModel @Inject constructor(
         checkNewlyCompletedChallenges(unCompletedChallenges)
         updateCurrentBestRecord(unCompletedChallenges)
         updateCategories(unCompletedChallenges)
-        updateStartedChallenges(unCompletedChallenges)
+        updateStartedChallenges(unCompletedChallenges.sortBy(uiState.value.sortOrder))
+    }
+
+    private fun List<StartedChallenge>.sortBy(sortOrder: SortOrder): List<StartedChallenge> {
+        return when (sortOrder) {
+            SortOrder.LATEST -> this.sortedByDescending { it.id.toInt() }
+            SortOrder.OLDEST -> this.sortedBy { it.id.toInt() }
+            SortOrder.TITLE -> this.sortedBy { it.title }
+            SortOrder.HIGHEST_RECORD -> this.sortedByDescending { it.currentRecordInSeconds ?: 0 }
+            SortOrder.LOWEST_RECORD -> this.sortedBy { it.currentRecordInSeconds ?: 0 }
+        }
     }
 
     private fun calculateRecordOfChallenges(
@@ -209,7 +223,11 @@ class HomeViewModel @Inject constructor(
     private fun updateCategories(challenges: List<StartedChallenge>) {
         val categories = buildList {
             add(Category.ALL)
-            addAll(challenges.map { it.category }.distinct())
+            addAll(challenges
+                .map { it.category }
+                .distinct()
+                .filterNot { it == Category.ALL }
+            )
         }
 
         updateState { copy(categories = categories) }
@@ -243,21 +261,16 @@ class HomeViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    private fun observeSortOrder() {
-        challengeRepository.sortOrder
-            .onEach { order ->
-                updateState { copy(sortOrder = order) }
-            }
-            .launchIn(viewModelScope)
-    }
-
     fun processAction(action: HomeUiAction) {
         when (action) {
             HomeUiAction.OnScreenLoad -> refreshData()
             HomeUiAction.OnRetryClick -> initData()
             HomeUiAction.OnCloseCompletedChallengeNotification -> clearRecentCompletedChallenges()
             HomeUiAction.OnDismissTierUpAnimation -> dismissTierUpAnimation()
+            HomeUiAction.OnSortOrderClick -> showSortOrderBottomSheet()
+            HomeUiAction.OnDismissSortOrder -> dismissSortOrderBottomSheet()
             is HomeUiAction.OnCategorySelect -> updateSelectedCategory(action.category)
+            is HomeUiAction.OnSortOrderSelect -> updateSortOrder(action.sortOrder)
         }
     }
 
@@ -277,8 +290,20 @@ class HomeViewModel @Inject constructor(
         updateState { copy(tierUpAnimation = null) }
     }
 
+    private fun showSortOrderBottomSheet() {
+        updateState { copy(shouldShowSortOrderBottomSheet = true) }
+    }
+
+    private fun dismissSortOrderBottomSheet() {
+        updateState { copy(shouldShowSortOrderBottomSheet = false) }
+    }
+
     private fun updateSelectedCategory(category: Category) {
         updateState { copy(selectedCategory = category) }
+    }
+
+    private fun updateSortOrder(sortOrder: SortOrder) = viewModelScope.launch {
+        challengeRepository.setSortOrder(sortOrder)
     }
 
     companion object {

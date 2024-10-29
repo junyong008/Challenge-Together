@@ -50,7 +50,7 @@ fun StartedChallengeCard(
             .clip(MaterialTheme.shapes.large)
             .background(CustomColorProvider.colorScheme.surface)
             .clickableSingle { onClick(challenge) }
-            .padding(20.dp),
+            .padding(16.dp),
     ) {
         ChallengeBody(challenge)
         Spacer(modifier = Modifier.height(16.dp))

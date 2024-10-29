@@ -54,8 +54,9 @@ fun WaitingChallengeCard(
             .clip(MaterialTheme.shapes.large)
             .background(CustomColorProvider.colorScheme.surface)
             .clickableSingle { onClick(challenge) }
-            .padding(20.dp),
+            .padding(16.dp),
     ) {
+        Spacer(modifier = Modifier.height(4.dp))
         ChallengeHeader(challengeId = challenge.id, isPrivate = challenge.isPrivate)
         ChallengeBody(challenge)
         ChallengeFooter(challenge)

@@ -20,6 +20,7 @@ data class HomeUiState(
     val currentTier: Tier = Tier.UNSPECIFIED,
     val tierUpAnimation: TierUpAnimationState? = null,
     val sortOrder: SortOrder = SortOrder.LATEST,
+    val shouldShowSortOrderBottomSheet: Boolean = false,
     val categories: List<Category> = emptyList(),
     val selectedCategory: Category = Category.ALL,
     val unViewedNotificationCount: Int = 0,
