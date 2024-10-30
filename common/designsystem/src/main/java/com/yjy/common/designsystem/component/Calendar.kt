@@ -115,6 +115,23 @@ fun Calendar(
         isInitialLoad = false
     }
 
+    // 주간 모드가 활성화 된 경우 선택된 날짜가 있는 달로 페이지를 이동.
+    LaunchedEffect(weekMode) {
+        if (weekMode && selectedDate != null) {
+            val selectedYearMonth = YearMonth.from(selectedDate)
+            val currentYearMonth = initialYearMonth.plusMonths(
+                (pagerState.currentPage - (Int.MAX_VALUE / 2 + monthsBetween(YearMonth.now(), initialYearMonth))).toLong()
+            )
+
+            if (selectedYearMonth != currentYearMonth) {
+                val targetPage = pagerState.currentPage + monthsBetween(currentYearMonth, selectedYearMonth)
+                coroutineScope.launch {
+                    pagerState.animateScrollToPage(targetPage)
+                }
+            }
+        }
+    }
+
     // 첫 번째 요일을 기준으로 요일 리스트를 생성.
     val daysOfWeek = remember {
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
