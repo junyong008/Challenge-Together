@@ -58,7 +58,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun initData() = viewModelScope.launch {
-        updateState { copy(isLoading = true) }
+        updateState { copy(isLoading = true, hasError = false) }
         loadData()
         updateState { copy(isLoading = false) }
         timeManager.emitCurrentTime()
@@ -83,8 +83,8 @@ class HomeViewModel @Inject constructor(
             async { loadNotificationCount() },
         )
 
-        updateState {
-            copy(hasError = nameResult.isFailure || notificationResult.isFailure)
+        if (nameResult.isFailure || notificationResult.isFailure) {
+            updateState { copy(hasError = true) }
         }
     }
 
@@ -307,6 +307,6 @@ class HomeViewModel @Inject constructor(
     }
 
     companion object {
-        private const val SECONDS_PER_DAY = 24 * 60 * 60
+        const val SECONDS_PER_DAY = 24 * 60 * 60
     }
 }
