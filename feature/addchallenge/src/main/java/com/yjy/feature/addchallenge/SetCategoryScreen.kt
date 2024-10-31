@@ -148,7 +148,7 @@ private fun CategoryItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val shape = MaterialTheme.shapes.small
+    val shape = MaterialTheme.shapes.medium
     Row(
         modifier = modifier
             .fillMaxWidth()
