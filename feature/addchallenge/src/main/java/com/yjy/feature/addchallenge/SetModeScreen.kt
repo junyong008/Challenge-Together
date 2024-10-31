@@ -37,6 +37,7 @@ import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
 import com.yjy.model.challenge.core.Mode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import com.yjy.common.designsystem.R as designSystemR
 
 @Composable
 internal fun SetModeRoute(
@@ -92,7 +93,7 @@ internal fun SetModeScreen(
             Spacer(modifier = Modifier.height(50.dp))
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 ModeButton(
-                    drawableResId = R.drawable.image_trophy,
+                    drawableResId = designSystemR.drawable.image_trophy,
                     titleResId = AddChallengeStrings.feature_addchallenge_mode_challenge,
                     descriptionResId = AddChallengeStrings.feature_addchallenge_mode_challenge_description,
                     onClick = { processAction(AddChallengeUiAction.OnSelectMode(Mode.CHALLENGE)) },
@@ -100,7 +101,7 @@ internal fun SetModeScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 ModeButton(
                     imagePadding = 5.dp,
-                    drawableResId = R.drawable.image_calendar,
+                    drawableResId = designSystemR.drawable.image_calendar,
                     titleResId = AddChallengeStrings.feature_addchallenge_mode_free,
                     descriptionResId = AddChallengeStrings.feature_addchallenge_mode_free_description,
                     onClick = { processAction(AddChallengeUiAction.OnSelectMode(Mode.FREE)) },

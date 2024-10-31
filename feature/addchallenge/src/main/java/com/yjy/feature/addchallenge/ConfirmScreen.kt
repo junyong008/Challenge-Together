@@ -62,6 +62,7 @@ import com.yjy.model.challenge.core.TargetDays
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import java.time.LocalDateTime
+import com.yjy.common.designsystem.R as designSystemR
 
 @Composable
 internal fun ConfirmRoute(
@@ -359,7 +360,7 @@ private fun TitleSection(
     when (mode) {
         Mode.CHALLENGE -> {
             TitleCard(
-                drawableResId = R.drawable.image_trophy,
+                drawableResId = designSystemR.drawable.image_trophy,
                 drawableDescriptionResId = AddChallengeStrings.feature_addchallenge_mode_challenge,
                 title = title,
                 description = description,
@@ -368,7 +369,7 @@ private fun TitleSection(
         Mode.FREE -> {
             TitleCard(
                 imagePadding = 5.dp,
-                drawableResId = R.drawable.image_calendar,
+                drawableResId = designSystemR.drawable.image_calendar,
                 drawableDescriptionResId = AddChallengeStrings.feature_addchallenge_mode_free,
                 title = title,
                 description = description,
