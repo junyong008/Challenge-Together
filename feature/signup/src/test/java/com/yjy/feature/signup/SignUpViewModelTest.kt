@@ -10,7 +10,6 @@ import com.yjy.feature.signup.model.SignUpUiEvent
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -21,7 +20,6 @@ import org.junit.Before
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class SignUpViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()

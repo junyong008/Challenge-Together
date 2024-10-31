@@ -7,7 +7,6 @@ import com.yjy.feature.changepassword.model.ChangePasswordUiEvent
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -18,7 +17,6 @@ import org.junit.Before
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class ChangePasswordViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
