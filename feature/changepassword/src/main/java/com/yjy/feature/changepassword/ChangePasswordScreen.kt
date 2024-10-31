@@ -83,7 +83,7 @@ internal fun ChangePasswordScreen(
     val checkNetworkMessage = stringResource(id = ChangePasswordStrings.feature_changepassword_check_network_connection)
     val unknownErrorMessage = stringResource(id = ChangePasswordStrings.feature_changepassword_error)
 
-    ObserveAsEvents(flow = uiEvent) {
+    ObserveAsEvents(flow = uiEvent, useMainImmediate = false) {
         when (it) {
             ChangePasswordUiEvent.CancelChangePassword -> onBackClick()
 
