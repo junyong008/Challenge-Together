@@ -5,24 +5,29 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.feature.home.HomeViewModel.Companion.SECONDS_PER_DAY
+import com.yjy.feature.home.model.ChallengeSyncUiState
+import com.yjy.feature.home.model.HomeUiAction
+import com.yjy.feature.home.model.HomeUiState
+import com.yjy.feature.home.model.UnViewedNotificationUiState
+import com.yjy.feature.home.model.UserNameUiState
 import com.yjy.model.challenge.ChallengeFactory
+import com.yjy.model.challenge.StartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.challenge.core.TargetDays
 import com.yjy.model.common.Tier
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
-import io.mockk.slot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -31,21 +36,29 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import java.time.Duration
 import java.time.LocalDateTime
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class HomeViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
-
     private lateinit var challengeRepository: ChallengeRepository
     private lateinit var userRepository: UserRepository
     private lateinit var timeManager: TimeManager
-
     private lateinit var viewModel: HomeViewModel
+
+    private val timeChangedFlow = MutableSharedFlow<Unit>(replay = 1)
+    private val tickerFlow = MutableStateFlow(LocalDateTime.now())
+    private val startedChallengesFlow = MutableStateFlow(emptyList<StartedChallenge>())
+    private val sortOrderFlow = MutableStateFlow(SortOrder.LATEST)
+    private val currentTierFlow = MutableStateFlow(Tier.IRON)
+
+    companion object {
+        private const val SYNC_DELAY = 100L
+        private const val SYNC_HALF_TIME = 50L
+    }
 
     @Before
     fun setup() {
@@ -55,15 +68,23 @@ class HomeViewModelTest {
         userRepository = mockk(relaxed = true)
         timeManager = mockk(relaxed = true)
 
-        // 기본적으로 초기 동기화 작업을 성공으로 모의하여 실패 케이스가 필요할 때만 각 테스트에서 다시 모의하도록 설정.
-        coEvery { timeManager.setOnTimeChanged(any()) } returns Unit
-        coEvery { timeManager.startTicking(any()) } returns Unit
-        coEvery { timeManager.emitCurrentTime() } returns Unit
         coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Success(emptyList())
+        coEvery { challengeRepository.startedChallenges } returns startedChallengesFlow
+        coEvery { challengeRepository.sortOrder } returns sortOrderFlow
+        coEvery { challengeRepository.currentTier } returns currentTierFlow
+        coEvery { challengeRepository.setCurrentTier(any()) } just runs
+
         coEvery { userRepository.getUserName() } returns NetworkResult.Success("test")
         coEvery { userRepository.getUnViewedNotificationCount() } returns NetworkResult.Success(0)
-        coEvery { challengeRepository.currentTier } returns flowOf(Tier.IRON)
-        coEvery { challengeRepository.sortOrder } returns flowOf(SortOrder.OLDEST)
+
+        coEvery { timeManager.tickerFlow } returns tickerFlow
+        coEvery { timeManager.timeChangedFlow } returns timeChangedFlow
+
+        viewModel = HomeViewModel(
+            timeManager = timeManager,
+            userRepository = userRepository,
+            challengeRepository = challengeRepository,
+        )
     }
 
     @After
@@ -71,352 +92,313 @@ class HomeViewModelTest {
         Dispatchers.resetMain()
     }
 
-    @Test
-    fun `viewModel init syncs data and sets no error state when all repository calls succeed`() = runTest {
-        // Given
-        coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Success(emptyList())
-        coEvery { userRepository.getUserName() } returns NetworkResult.Success("test")
-        coEvery { userRepository.getUnViewedNotificationCount() } returns NetworkResult.Success(0)
+    private fun createTestChallenge(
+        id: String = "1",
+        title: String = "Test Challenge",
+        now: LocalDateTime,
+        daysAgo: Long = 1,
+        recordInDays: Long = 1,
+    ) = ChallengeFactory.createStartedChallenge(
+        id = id,
+        title = title,
+        description = "Description",
+        category = Category.QUIT_DRUGS,
+        targetDays = TargetDays.Fixed(days = 30),
+        mode = Mode.CHALLENGE,
+        recentResetDateTime = now.minusDays(daysAgo),
+        currentRecordInSeconds = recordInDays * SECONDS_PER_DAY,
+        isCompleted = false
+    )
 
-        // When
-        viewModel = HomeViewModel(
-            timeManager = timeManager,
-            userRepository = userRepository,
-            challengeRepository = challengeRepository,
-        )
+    private suspend fun TestScope.emitUpdatedState(
+        sortOrder: SortOrder = SortOrder.LATEST,
+        tier: Tier = Tier.IRON,
+        challenges: List<StartedChallenge>,
+        time: LocalDateTime
+    ) {
+        sortOrderFlow.emit(sortOrder)
+        currentTierFlow.emit(tier)
+        startedChallengesFlow.emit(challenges)
+        tickerFlow.emit(time)
         advanceUntilIdle()
-
-        // Then
-        coVerify { challengeRepository.syncChallenges() }
-        coVerify { userRepository.getUserName() }
-        coVerify { userRepository.getUnViewedNotificationCount() }
-        assertFalse(viewModel.uiState.value.hasError)
     }
 
     @Test
-    fun `viewModel init sets error state when syncChallenges call fails`() = runTest {
+    fun `initial repository calls should set correct states`() = runTest {
         // Given
-        coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Failure.UnknownApiError(Throwable())
-        coEvery { userRepository.getUserName() } returns NetworkResult.Success("test")
-        coEvery { userRepository.getUnViewedNotificationCount() } returns NetworkResult.Success(0)
+        var userName: UserNameUiState? = null
+        var notification: UnViewedNotificationUiState? = null
+        var syncState: ChallengeSyncUiState? = null
+        var challenges: List<StartedChallenge>? = null
+        var currentTier: Tier? = null
 
-        // When
-        viewModel = HomeViewModel(
-            timeManager = timeManager,
-            userRepository = userRepository,
-            challengeRepository = challengeRepository,
-        )
+        // When: 초기 상태 수집
+        val job = launch {
+            launch { viewModel.userName.collect { userName = it } }
+            launch { viewModel.unViewedNotificationState.collect { notification = it } }
+            launch { viewModel.challengeSyncState.collect { syncState = it } }
+            launch { viewModel.startedChallenges.collect { challenges = it } }
+            launch { viewModel.currentTier.collect { currentTier = it } }
+        }
         advanceUntilIdle()
 
         // Then
-        assertTrue(viewModel.uiState.value.hasError)
+        assertEquals(UserNameUiState.Success("test"), userName)
+        assertEquals(UnViewedNotificationUiState.Success(0), notification)
+        assertEquals(ChallengeSyncUiState.Success, syncState)
+        assertTrue(challenges?.isEmpty() == true)
+        assertEquals(Tier.IRON, currentTier)
+
+        job.cancel()
     }
 
     @Test
-    fun `viewModel init sets error state when getUserName call fails`() = runTest {
+    fun `failed challenge sync should set error state`() = runTest {
         // Given
-        coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Success(emptyList())
-        coEvery { userRepository.getUserName() } returns NetworkResult.Failure.UnknownApiError(Throwable())
-        coEvery { userRepository.getUnViewedNotificationCount() } returns NetworkResult.Success(0)
+        var syncState: ChallengeSyncUiState? = null
+        coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Failure.UnknownApiError(Throwable("Error"))
 
-        // When
-        viewModel = HomeViewModel(
-            timeManager = timeManager,
-            userRepository = userRepository,
-            challengeRepository = challengeRepository,
-        )
+        // When: 동기화 실패 상태 수집
+        val job = launch {
+            launch { viewModel.challengeSyncState.collect { syncState = it } }
+        }
         advanceUntilIdle()
 
         // Then
-        assertTrue(viewModel.uiState.value.hasError)
+        assertEquals(ChallengeSyncUiState.Error, syncState)
+
+        job.cancel()
     }
 
     @Test
-    fun `handleTimeChange calls syncTime and pauses startedChallenges updates`() = runTest {
+    fun `time change should update started challenges`() = runTest {
         // Given
+        var challenges: List<StartedChallenge>? = null
+        var syncState: ChallengeSyncUiState? = null
+
         val now = LocalDateTime.now()
-        val testChallenge = ChallengeFactory.createStartedChallenge(
+        val testChallenge = createTestChallenge(now = now)
+
+        val job = launch {
+            launch { viewModel.startedChallenges.collect { challenges = it } }
+            launch { viewModel.challengeSyncState.collect { syncState = it } }
+            launch { viewModel.currentTier.collect {} }
+        }
+
+        // When: 초기 동기화 완료
+        advanceUntilIdle()
+        assertEquals(ChallengeSyncUiState.Success, syncState)
+
+        // When: 챌린지 상태 업데이트
+        emitUpdatedState(challenges = listOf(testChallenge), time = now)
+
+        // Then
+        assertEquals(listOf(testChallenge), challenges)
+
+        job.cancel()
+    }
+
+    @Test
+    fun `started challenges should not update during time sync but update after sync complete`() = runTest {
+        // Given
+        var challenges: List<StartedChallenge>? = null
+        var syncState: ChallengeSyncUiState? = null
+        val now = LocalDateTime.now()
+        val initialChallenge = createTestChallenge(id = "1", title = "Initial Challenge", now = now)
+        val newChallenge = initialChallenge.copy(id = "2", title = "New Challenge")
+
+        coEvery { challengeRepository.syncChallenges() } coAnswers {
+            delay(SYNC_DELAY)
+            NetworkResult.Success(emptyList())
+        }
+
+        val job = launch {
+            launch { viewModel.startedChallenges.collect { challenges = it } }
+            launch { viewModel.challengeSyncState.collect { syncState = it } }
+            launch { viewModel.currentTier.collect {} }
+        }
+
+        // 초기 설정
+        advanceUntilIdle()
+        assertEquals(ChallengeSyncUiState.Success, syncState)
+
+        emitUpdatedState(challenges = listOf(initialChallenge), time = now)
+        assertEquals(listOf(initialChallenge), challenges)
+
+        // When: 시간 변경으로 동기화 시작
+        timeChangedFlow.emit(Unit)
+        advanceTimeBy(SYNC_HALF_TIME)
+        startedChallengesFlow.emit(listOf(newChallenge))
+        tickerFlow.emit(now)
+
+        // Then: 동기화 중에는 초기 상태 유지
+        assertEquals(ChallengeSyncUiState.Loading.TimeSync, syncState)
+        assertEquals(listOf(initialChallenge), challenges)
+
+        // When: 동기화 완료
+        advanceTimeBy(SYNC_HALF_TIME)
+        advanceUntilIdle()
+
+        // Then: 동기화 완료 후 새로운 상태로 업데이트
+        assertEquals(ChallengeSyncUiState.Success, syncState)
+        assertEquals(listOf(newChallenge), challenges)
+
+        job.cancel()
+    }
+
+    @Test
+    fun `challenges should be sorted by latest, oldest and title order`() = runTest {
+        // Given
+        var challenges: List<StartedChallenge>? = null
+        var syncState: ChallengeSyncUiState? = null
+
+        val now = LocalDateTime.now()
+        val challenge1 = createTestChallenge(
             id = "1",
-            title = "Test Challenge 1",
-            description = "Description 1",
-            category = Category.QUIT_DRUGS,
-            targetDays = TargetDays.Fixed(days = 30),
-            mode = Mode.CHALLENGE,
-            recentResetDateTime = now.minusDays(1),
+            title = "B Challenge",
+            now = now,
+            daysAgo = 5,
+            recordInDays = 5
+        )
+        val challenge2 = createTestChallenge(
+            id = "2",
+            title = "A Challenge",
+            now = now,
+            daysAgo = 10,
+            recordInDays = 10
         )
 
-        val syncTimeDelay = 500L
-        val timeFlow = MutableSharedFlow<LocalDateTime>()
-        val timeChangedCallback = slot<() -> Unit>()
+        val job = launch {
+            launch { viewModel.startedChallenges.collect { challenges = it } }
+            launch { viewModel.challengeSyncState.collect { syncState = it } }
+            launch { viewModel.currentTier.collect {} }
+        }
 
-        with(challengeRepository) {
-            coEvery { startedChallenges } returns flowOf(listOf(testChallenge))
-            coEvery { syncTime() } coAnswers {
-                delay(syncTimeDelay)
-                NetworkResult.Success(Unit)
+        // When: 초기 동기화 완료
+        advanceUntilIdle()
+        assertEquals(ChallengeSyncUiState.Success, syncState)
+
+        // When: 최신순으로 정렬
+        emitUpdatedState(
+            sortOrder = SortOrder.LATEST,
+            challenges = listOf(challenge1, challenge2),
+            time = now
+        )
+
+        // Then: ID 내림차순 정렬
+        assertEquals(listOf(challenge2, challenge1), challenges)
+
+        // When: 오래된순으로 정렬
+        sortOrderFlow.emit(SortOrder.OLDEST)
+        advanceUntilIdle()
+
+        // Then: ID 오름차순 정렬
+        assertEquals(listOf(challenge1, challenge2), challenges)
+
+        // When: 제목순으로 정렬
+        sortOrderFlow.emit(SortOrder.TITLE)
+        advanceUntilIdle()
+
+        // Then: 알파벳 순 정렬
+        assertEquals(listOf(challenge2, challenge1), challenges)
+
+        job.cancel()
+    }
+
+    @Test
+    fun `completed challenge should trigger tier upgrade animation`() = runTest {
+        // Given
+        var uiState: HomeUiState? = null
+        var syncState: ChallengeSyncUiState? = null
+        var currentTier: Tier? = null
+
+        val now = LocalDateTime.now()
+        val challenge = createTestChallenge(
+            now = now,
+            daysAgo = 15,
+            recordInDays = 15
+        )
+
+        val job = launch {
+            launch { viewModel.uiState.collect { uiState = it } }
+            launch { viewModel.challengeSyncState.collect { syncState = it } }
+            launch { viewModel.currentTier.collect { currentTier = it } }
+            launch { viewModel.startedChallenges.collect { } }
+        }
+
+        // When: 초기 동기화 완료
+        advanceUntilIdle()
+        assertEquals(ChallengeSyncUiState.Success, syncState)
+        assertEquals(Tier.IRON, currentTier)
+
+        // When: 챌린지 완료로 티어 업그레이드 발생
+        emitUpdatedState(challenges = listOf(challenge), time = now)
+
+        // Then: 티어 업그레이드 애니메이션 상태 확인
+        val animation = uiState?.tierUpAnimation
+        assertNotNull(animation)
+        assertEquals(Tier.IRON, animation.from)
+        assertEquals(Tier.BRONZE, animation.to)
+
+        job.cancel()
+    }
+
+    @Test
+    fun `changing sort order should update repository and sort state`() = runTest {
+        // Given
+        var sortOrder: SortOrder? = null
+        val newSortOrder = SortOrder.HIGHEST_RECORD
+
+        val job = launch {
+            viewModel.sortOrder.collect { sortOrder = it }
+        }
+
+        // When: 초기 상태 확인
+        advanceUntilIdle()
+        assertEquals(SortOrder.LATEST, sortOrder)
+
+        // When: 정렬 순서 변경
+        viewModel.processAction(HomeUiAction.OnSortOrderSelect(newSortOrder))
+        sortOrderFlow.emit(newSortOrder)
+        advanceUntilIdle()
+
+        // Then
+        assertEquals(newSortOrder, sortOrder)
+
+        job.cancel()
+    }
+
+    @Test
+    fun `retry action should restart challenge sync when in error state`() = runTest {
+        // Given
+        var syncState: ChallengeSyncUiState? = null
+        var syncCallCount = 0
+
+        coEvery { challengeRepository.syncChallenges() } answers {
+            syncCallCount++
+            if (syncCallCount == 1) {
+                NetworkResult.Failure.UnknownApiError(Throwable("Error"))
+            } else {
+                NetworkResult.Success(emptyList())
             }
-            coEvery { sortOrder } returns flowOf(SortOrder.LATEST)
         }
 
-        with(timeManager) {
-            coEvery { setOnTimeChanged(capture(timeChangedCallback)) } just runs
-            coEvery { tickerFlow } returns timeFlow
-            coEvery { emitCurrentTime() } coAnswers { timeFlow.emit(now) }
-            coEvery { startTicking(any()) } just runs
+        val job = launch {
+            viewModel.challengeSyncState.collect { syncState = it }
         }
 
-        // When
-        viewModel = HomeViewModel(
-            timeManager = timeManager,
-            userRepository = userRepository,
-            challengeRepository = challengeRepository,
-        )
-
-        // 시간 동기화 중일 때는 챌린지 업데이트가 일시 중지됨
-        timeChangedCallback.captured()
-        advanceTimeBy(syncTimeDelay - 1)
-        timeManager.emitCurrentTime()
+        // When: 최초 동기화 실패
         advanceUntilIdle()
-        val startedChallengesWhenSyncing = viewModel.uiState.value.startedChallenges
+        assertEquals(ChallengeSyncUiState.Error, syncState)
 
-        // 시간 동기화가 완료된 후에는 챌린지가 정상적으로 업데이트됨
-        timeChangedCallback.captured()
-        advanceTimeBy(syncTimeDelay + 1)
-        timeManager.emitCurrentTime()
-        advanceUntilIdle()
-        val startedChallengesAfterSync = viewModel.uiState.value.startedChallenges
-
-        // Then
-        coVerify(exactly = 2) { challengeRepository.syncTime() }
-        assertTrue(startedChallengesWhenSyncing.isEmpty())
-        assertTrue(startedChallengesAfterSync.isNotEmpty())
-    }
-
-    @Test
-    fun `startedChallenges updates are paused during loading and error states`() = runTest {
-        // Given
-        val testChallenge = ChallengeFactory.createStartedChallenge(
-            id = "1",
-            title = "Test Challenge 1",
-            description = "Description 1",
-            category = Category.QUIT_DRUGS,
-            targetDays = TargetDays.Fixed(days = 30),
-            mode = Mode.CHALLENGE,
-            recentResetDateTime = LocalDateTime.now(),
-        )
-
-        with(challengeRepository) {
-            coEvery { startedChallenges } returns flowOf(listOf(testChallenge))
-            coEvery { syncChallenges() } returns NetworkResult.Failure.UnknownApiError(Throwable())
-        }
-
-        // When
-        viewModel = HomeViewModel(
-            timeManager = timeManager,
-            userRepository = userRepository,
-            challengeRepository = challengeRepository,
-        )
+        // When: 재시도 액션 실행
+        viewModel.processAction(HomeUiAction.OnRetryClick)
         advanceUntilIdle()
 
-        // Then
-        coVerify(exactly = 1) { challengeRepository.syncChallenges() }
-        with(viewModel.uiState.value) {
-            assertTrue(hasError)
-            assertTrue(startedChallenges.isEmpty())
-        }
-    }
+        // Then: 재시도 후 동기화 성공
+        assertEquals(ChallengeSyncUiState.Success, syncState)
+        assertEquals(2, syncCallCount)
 
-    @Test
-    fun `emitCurrentTime triggers time calculation and tier update animation`() = runTest {
-        // Given
-        val now = LocalDateTime.now()
-        val tier = Tier.IRON
-        val testChallenge = ChallengeFactory.createStartedChallenge(
-            id = "1",
-            title = "Test Challenge 1",
-            description = "Description 1",
-            category = Category.QUIT_DRUGS,
-            targetDays = TargetDays.Infinite,
-            mode = Mode.CHALLENGE,
-            recentResetDateTime = now.minusDays(30),  // 30일간 진행된 챌린지
-        )
-
-        val timeFlow = MutableSharedFlow<LocalDateTime>()
-
-        with(challengeRepository) {
-            coEvery { startedChallenges } returns flowOf(listOf(testChallenge))
-            coEvery { currentTier } returns flowOf(tier)
-            coEvery { setCurrentTier(any()) } returns Unit
-        }
-
-        with(timeManager) {
-            coEvery { tickerFlow } returns timeFlow
-            coEvery { startTicking(any()) } just runs
-            coEvery { emitCurrentTime() } coAnswers { timeFlow.emit(now) }
-        }
-
-        // When
-        viewModel = HomeViewModel(
-            timeManager = timeManager,
-            userRepository = userRepository,
-            challengeRepository = challengeRepository,
-        )
-
-        timeManager.emitCurrentTime()
-        advanceUntilIdle()
-
-        // Then
-        val expectedRecordInSeconds = Duration.between(
-            testChallenge.recentResetDateTime,
-            now
-        ).seconds.coerceAtMost((30 * SECONDS_PER_DAY).toLong())
-
-        with(viewModel.uiState.value) {
-            assertEquals(expectedRecordInSeconds, currentBestRecordInSeconds)
-            assertEquals(listOf(Category.ALL, Category.QUIT_DRUGS), categories)
-            assertEquals(1, startedChallenges.size)
-            assertEquals(expectedRecordInSeconds, startedChallenges[0].currentRecordInSeconds)
-            assertEquals(tier, tierUpAnimation?.from)
-            assertEquals(Tier.getNextTier(tier), tierUpAnimation?.to)
-        }
-    }
-
-    @Test
-    fun `tier calculation includes completed challenges and triggers syncChallenges if necessary`() = runTest {
-        // Given
-        val now = LocalDateTime.now()
-        val targetDays = 30
-        val testChallenge = ChallengeFactory.createStartedChallenge(
-            id = "1",
-            title = "Test Challenge 1",
-            description = "Description 1",
-            category = Category.QUIT_DRUGS,
-            targetDays = TargetDays.Fixed(days = targetDays),
-            mode = Mode.CHALLENGE,
-            recentResetDateTime = now.minusDays(targetDays.toLong() + 1), // targetDays보다 1일 더 지난 상태
-            isCompleted = false  // 완료되지 않은 상태로 설정했지만 시간상으로는 이미 완료된 상태
-        )
-
-        val timeFlow = MutableSharedFlow<LocalDateTime>()
-
-        with(challengeRepository) {
-            coEvery { startedChallenges } returns flowOf(listOf(testChallenge))
-            coEvery { currentTier } returns flowOf(Tier.IRON)
-            coEvery { setCurrentTier(any()) } returns Unit
-            coEvery { syncChallenges() } returns NetworkResult.Success(emptyList())
-        }
-
-        with(timeManager) {
-            coEvery { tickerFlow } returns timeFlow
-            coEvery { startTicking(any()) } just runs
-            coEvery { emitCurrentTime() } coAnswers { timeFlow.emit(now) }
-        }
-
-        // When
-        viewModel = HomeViewModel(
-            timeManager = timeManager,
-            userRepository = userRepository,
-            challengeRepository = challengeRepository,
-        )
-
-        timeManager.emitCurrentTime()
-        advanceUntilIdle()
-
-        // Then
-        // 처음 ViewModel이 init 되고 한번, 시간이 emit 되고 나서 완료된 챌린지를 감지해 총 두번 이뤄져야 함
-        coVerify(exactly = 2) { challengeRepository.syncChallenges() }
-    }
-
-    @Test
-    fun `startedChallenges are sorted correctly based on sortOrder`() = runTest {
-        // Given
-        val now = LocalDateTime.now()
-        val testChallenges = listOf(
-            ChallengeFactory.createStartedChallenge(
-                id = "1",
-                title = "B Challenge",
-                description = "Description 1",
-                category = Category.QUIT_DRUGS,
-                targetDays = TargetDays.Fixed(days = 30),
-                mode = Mode.CHALLENGE,
-                recentResetDateTime = now.minusDays(5),
-            ),
-            ChallengeFactory.createStartedChallenge(
-                id = "2",
-                title = "A Challenge",
-                description = "Description 2",
-                category = Category.QUIT_DRINKING,
-                targetDays = TargetDays.Fixed(days = 30),
-                mode = Mode.CHALLENGE,
-                recentResetDateTime = now.minusDays(10),
-            )
-        )
-
-        val sortOrderFlow = MutableStateFlow(SortOrder.LATEST)
-        val timeFlow = MutableSharedFlow<LocalDateTime>()
-
-        with(challengeRepository) {
-            coEvery { startedChallenges } returns flowOf(testChallenges)
-            coEvery { sortOrder } returns sortOrderFlow
-        }
-
-        with(timeManager) {
-            coEvery { tickerFlow } returns timeFlow
-            coEvery { startTicking(any()) } just runs
-            coEvery { emitCurrentTime() } coAnswers { timeFlow.emit(now) }
-        }
-
-        // When
-        viewModel = HomeViewModel(
-            timeManager = timeManager,
-            userRepository = userRepository,
-            challengeRepository = challengeRepository,
-        )
-
-        timeManager.emitCurrentTime()
-        advanceUntilIdle()
-
-        // Then
-        // 최신순 정렬 (id 기준 내림차순)
-        assertEquals(
-            listOf("2", "1"),
-            viewModel.uiState.value.startedChallenges.map { it.id }
-        )
-
-        // 오래된순 정렬 (id 기준 오름차순)
-        sortOrderFlow.value = SortOrder.OLDEST
-        advanceUntilIdle()
-        assertEquals(
-            listOf("1", "2"),
-            viewModel.uiState.value.startedChallenges.map { it.id }
-        )
-
-        // 제목순 정렬
-        sortOrderFlow.value = SortOrder.TITLE
-        advanceUntilIdle()
-        assertEquals(
-            listOf("A Challenge", "B Challenge"),
-            viewModel.uiState.value.startedChallenges.map { it.title }
-        )
-
-        // 최고 기록순 정렬
-        sortOrderFlow.value = SortOrder.HIGHEST_RECORD
-        advanceUntilIdle()
-        assertEquals(
-            listOf(10L, 5L),
-            viewModel.uiState.value.startedChallenges.map {
-                it.currentRecordInSeconds!! / SECONDS_PER_DAY
-            }
-        )
-
-        // 최저 기록순 정렬
-        sortOrderFlow.value = SortOrder.LOWEST_RECORD
-        advanceUntilIdle()
-        assertEquals(
-            listOf(5L, 10L),
-            viewModel.uiState.value.startedChallenges.map {
-                it.currentRecordInSeconds!! / SECONDS_PER_DAY
-            }
-        )
+        job.cancel()
     }
 }
