@@ -92,7 +92,7 @@ internal fun SetTogetherScreen(
     val unknownErrorMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_unknown_error)
     val checkNetworkMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_check_network_connection)
 
-    ObserveAsEvents(flow = uiEvent) {
+    ObserveAsEvents(flow = uiEvent, useMainImmediate = false) {
         when (it) {
             is AddChallengeUiEvent.ChallengeAdded -> {
                 onShowSnackbar(SnackbarType.SUCCESS, waitingRoomCreatedMessage)
