@@ -58,9 +58,6 @@ internal interface ChallengeTogetherService {
     @GET("service/challenge/get-my-challenges")
     suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse>
 
-    @GET("service/challenge/sync-time")
-    suspend fun syncTime(): NetworkResult<Unit>
-
 
     @POST("service/user/get-name")
     suspend fun getUserName(): NetworkResult<GetNameResponse>

@@ -5,4 +5,8 @@ import kotlin.annotation.AnnotationRetention.RUNTIME
 
 @Qualifier
 @Retention(RUNTIME)
-annotation class IODispatcher
+annotation class IoDispatcher
+
+@Qualifier
+@Retention(RUNTIME)
+annotation class DefaultDispatcher

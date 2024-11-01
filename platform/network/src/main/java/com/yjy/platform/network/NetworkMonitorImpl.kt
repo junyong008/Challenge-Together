@@ -7,7 +7,7 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest.Builder
 import androidx.core.content.getSystemService
-import com.yjy.common.core.coroutines.IODispatcher
+import com.yjy.common.core.coroutines.IoDispatcher
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.awaitClose
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 internal class NetworkMonitorImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    @IODispatcher private val ioDispatcher: CoroutineDispatcher,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : NetworkMonitor {
     override val isOnline: Flow<Boolean> = callbackFlow {
         val connectivityManager = context.getSystemService<ConnectivityManager>() ?: run {

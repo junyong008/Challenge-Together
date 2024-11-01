@@ -2,17 +2,21 @@ package com.yjy.feature.home
 
 import androidx.lifecycle.viewModelScope
 import com.yjy.common.core.base.BaseViewModel
+import com.yjy.common.core.extensions.restartableStateIn
 import com.yjy.common.core.util.TimeManager
-import com.yjy.common.network.NetworkResult
-import com.yjy.common.network.isFailure
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.user.api.UserRepository
+import com.yjy.feature.home.model.ChallengeSyncUiState
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
 import com.yjy.feature.home.model.TierUpAnimationState
+import com.yjy.feature.home.model.UnViewedNotificationUiState
+import com.yjy.feature.home.model.UserNameUiState
+import com.yjy.feature.home.model.isError
+import com.yjy.feature.home.model.isSuccess
 import com.yjy.model.challenge.StartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
@@ -20,122 +24,118 @@ import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.challenge.core.TargetDays
 import com.yjy.model.common.Tier
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
+import timber.log.Timber
 import java.time.Duration
 import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val timeManager: TimeManager,
+    timeManager: TimeManager,
     private val userRepository: UserRepository,
     private val challengeRepository: ChallengeRepository,
 ) : BaseViewModel<HomeUiState, HomeUiEvent>(initialState = HomeUiState()) {
 
-    private var syncTimeJob: Job? = null
-    private val isSyncingTime: Boolean get() = syncTimeJob?.isActive == true
+    // 로딩 처리 없이 데이터를 최신화 하기 위한 트리거
+    private val syncTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    private val userNameTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    private val notificationTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
-    init {
-        initFlows()
-        initData()
-    }
+    // 동기화 간 자연스러운 전환을 위한 리스트 캐시
+    private var lastProcessedChallenges: List<StartedChallenge> = emptyList()
 
-    private fun initFlows() = with(viewModelScope) {
-        launch { observeStartedChallenges() }
-        launch { observeWaitingChallenges() }
-        launch { observeRecentCompletedChallenges() }
-        launch { observeCurrentTier() }
+    val challengeSyncState = merge(
+        syncTrigger.map { SyncTrigger.Manual },
+        timeManager.timeChangedFlow.map { SyncTrigger.TimeChanged },
+    ).onStart {
+        emit(SyncTrigger.Initial)
+    }.onEach {
+        Timber.d("syncChallenges triggered by: $it")
+    }.flatMapLatest { trigger ->
+        flow {
+            when (trigger) {
+                SyncTrigger.Initial -> ChallengeSyncUiState.Loading.Initial
+                SyncTrigger.Manual -> ChallengeSyncUiState.Loading.Manual
+                SyncTrigger.TimeChanged -> ChallengeSyncUiState.Loading.TimeSync
+            }.let { emit(it) }
 
-        timeManager.setOnTimeChanged { handleTimeChange() }
-        timeManager.startTicking(this)
-    }
+            challengeRepository.syncChallenges()
+                .onSuccess { emit(ChallengeSyncUiState.Success) }
+                .onFailure { emit(ChallengeSyncUiState.Error) }
+        }
+    }.restartableStateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = ChallengeSyncUiState.Loading.Initial,
+    )
 
-    private fun initData() = viewModelScope.launch {
-        updateState { copy(isLoading = true, hasError = false) }
-        loadData()
-        updateState { copy(isLoading = false) }
-        timeManager.emitCurrentTime()
-    }
-
-    private suspend fun loadData() = supervisorScope {
-        awaitAll(
-            async { syncChallenges() },
-            async { loadUserInfo() },
+    val userName = userNameTrigger
+        .onStart { emit(Unit) }
+        .flatMapLatest {
+            flow {
+                userRepository.getUserName()
+                    .onSuccess { emit(UserNameUiState.Success(it)) }
+                    .onFailure { emit(UserNameUiState.Error) }
+            }
+        }
+        .restartableStateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = UserNameUiState.Loading,
         )
-    }
 
-    private suspend fun syncChallenges() {
-        challengeRepository.syncChallenges().onFailure {
-            updateState { copy(hasError = true) }
+    val unViewedNotificationState = notificationTrigger
+        .onStart { emit(Unit) }
+        .flatMapLatest {
+            flow {
+                userRepository.getUnViewedNotificationCount()
+                    .onSuccess { emit(UnViewedNotificationUiState.Success(it)) }
+                    .onFailure { emit(UnViewedNotificationUiState.Error) }
+            }
         }
-    }
-
-    private suspend fun loadUserInfo() = supervisorScope {
-        val (nameResult, notificationResult) = awaitAll(
-            async { loadUserName() },
-            async { loadNotificationCount() },
+        .restartableStateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = UnViewedNotificationUiState.Loading,
         )
 
-        if (nameResult.isFailure || notificationResult.isFailure) {
-            updateState { copy(hasError = true) }
+    val sortOrder = challengeRepository.sortOrder
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = SortOrder.LATEST,
+        )
+
+    val startedChallenges = combine(
+        challengeRepository.startedChallenges,
+        timeManager.tickerFlow,
+    ) { challenges, currentTime ->
+        challenges to currentTime
+    }.combine(challengeSyncState) { (challenges, currentTime), syncState ->
+        when (syncState) {
+            ChallengeSyncUiState.Success -> handleStartedChallenges(challenges, currentTime)
+            else -> lastProcessedChallenges
         }
-    }
-
-    private suspend fun loadUserName(): NetworkResult<String> {
-        return userRepository.getUserName().onSuccess { name ->
-            updateState { copy(userName = name) }
-        }
-    }
-
-    private suspend fun loadNotificationCount(): NetworkResult<Int> {
-        return userRepository.getUnViewedNotificationCount().onSuccess { count ->
-            updateState { copy(unViewedNotificationCount = count) }
-        }
-    }
-
-    private fun handleTimeChange() {
-        syncTimeJob?.cancel()
-        syncTimeJob = viewModelScope.launch {
-            challengeRepository.syncTime().onFailure {
-                updateState { copy(hasError = true) }
-            }
-        }
-    }
-
-    private fun observeStartedChallenges() {
-        challengeRepository.startedChallenges
-            .combine(timeManager.tickerFlow) { challenges, currentTime ->
-                if (isSyncingTime || uiState.value.isLoading || uiState.value.hasError) return@combine
-                handleStartedChallenges(challenges, currentTime)
-            }
-            .combine(challengeRepository.sortOrder) { _, sortOrder ->
-                updateState { copy(sortOrder = sortOrder) }
-                updateStartedChallenges(uiState.value.startedChallenges.sortBy(sortOrder))
-            }
-            .launchIn(viewModelScope)
-    }
-
-    private suspend fun handleStartedChallenges(
-        challenges: List<StartedChallenge>,
-        currentTime: LocalDateTime,
-    ) {
-        val recordCalculatedChallenges = calculateRecordOfChallenges(challenges, currentTime)
-        val unCompletedChallenges = recordCalculatedChallenges.filterNot { it.isCompleted }
-
-        updateTier(recordCalculatedChallenges)
-        updateTierProgress(unCompletedChallenges)
-        checkNewlyCompletedChallenges(unCompletedChallenges)
-        updateCurrentBestRecord(unCompletedChallenges)
-        updateCategories(unCompletedChallenges)
-        updateStartedChallenges(unCompletedChallenges.sortBy(uiState.value.sortOrder))
-    }
+    }.combine(sortOrder) { challenges, sortOrder ->
+        challenges.sortBy(sortOrder)
+    }.onEach { challenges ->
+        lastProcessedChallenges = challenges
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList(),
+    )
 
     private fun List<StartedChallenge>.sortBy(sortOrder: SortOrder): List<StartedChallenge> {
         return when (sortOrder) {
@@ -145,6 +145,43 @@ class HomeViewModel @Inject constructor(
             SortOrder.HIGHEST_RECORD -> this.sortedByDescending { it.currentRecordInSeconds ?: 0 }
             SortOrder.LOWEST_RECORD -> this.sortedBy { it.currentRecordInSeconds ?: 0 }
         }
+    }
+
+    val waitingChallenges = challengeRepository.waitingChallenges
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList(),
+        )
+
+    val recentCompletedChallenges = challengeRepository.recentCompletedChallengeTitles
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList(),
+        )
+
+    val currentTier = challengeRepository.currentTier
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = Tier.UNSPECIFIED,
+        )
+
+    private suspend fun handleStartedChallenges(
+        challenges: List<StartedChallenge>,
+        currentTime: LocalDateTime,
+    ): List<StartedChallenge> {
+        val recordCalculatedChallenges = calculateRecordOfChallenges(challenges, currentTime)
+        val unCompletedChallenges = recordCalculatedChallenges.filterNot { it.isCompleted }
+
+        updateTier(recordCalculatedChallenges)
+        updateTierProgress(unCompletedChallenges)
+        checkNewlyCompletedChallenges(unCompletedChallenges)
+        updateCurrentBestRecord(unCompletedChallenges)
+        updateCategories(unCompletedChallenges)
+
+        return unCompletedChallenges
     }
 
     private fun calculateRecordOfChallenges(
@@ -163,9 +200,9 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private suspend fun checkNewlyCompletedChallenges(challenges: List<StartedChallenge>) {
+    private fun checkNewlyCompletedChallenges(challenges: List<StartedChallenge>) {
         if (challenges.any { it.isCompleted() }) {
-            syncChallenges()
+            syncTrigger.tryEmit(Unit)
         }
     }
 
@@ -183,7 +220,7 @@ class HomeViewModel @Inject constructor(
             .getBestRecord()
 
         val calculatedTier = Tier.getCurrentTier(currentTierBestRecord)
-        val savedTier = uiState.value.currentTier
+        val savedTier = currentTier.value
 
         if (savedTier == Tier.UNSPECIFIED || calculatedTier < savedTier) {
             challengeRepository.setCurrentTier(calculatedTier)
@@ -199,7 +236,7 @@ class HomeViewModel @Inject constructor(
             .getBestRecord()
 
         val tierProgress = Tier.getTierProgress(
-            currentTier = uiState.value.currentTier,
+            currentTier = currentTier.value,
             recordInSeconds = currentTierBestRecord,
         )
 
@@ -233,38 +270,10 @@ class HomeViewModel @Inject constructor(
         updateState { copy(categories = categories) }
     }
 
-    private fun updateStartedChallenges(challenges: List<StartedChallenge>) {
-        updateState { copy(startedChallenges = challenges) }
-    }
-
-    private fun observeWaitingChallenges() {
-        challengeRepository.waitingChallenges
-            .onEach { challenges ->
-                updateState { copy(waitingChallenges = challenges) }
-            }
-            .launchIn(viewModelScope)
-    }
-
-    private fun observeRecentCompletedChallenges() {
-        challengeRepository.recentCompletedChallengeTitles
-            .onEach { recentCompletedTitles ->
-                updateState { copy(recentCompletedChallengeTitles = recentCompletedTitles) }
-            }
-            .launchIn(viewModelScope)
-    }
-
-    private fun observeCurrentTier() {
-        challengeRepository.currentTier
-            .onEach { tier ->
-                updateState { copy(currentTier = tier) }
-            }
-            .launchIn(viewModelScope)
-    }
-
     fun processAction(action: HomeUiAction) {
         when (action) {
-            HomeUiAction.OnScreenLoad -> refreshData()
-            HomeUiAction.OnRetryClick -> initData()
+            HomeUiAction.OnScreenLoad -> updateData()
+            HomeUiAction.OnRetryClick -> retryOnError()
             HomeUiAction.OnCloseCompletedChallengeNotification -> clearRecentCompletedChallenges()
             HomeUiAction.OnDismissTierUpAnimation -> dismissTierUpAnimation()
             HomeUiAction.OnSortOrderClick -> showSortOrderBottomSheet()
@@ -274,9 +283,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun refreshData() = viewModelScope.launch {
-        if (uiState.value.isLoading) return@launch
-        loadData()
+    private fun updateData() {
+        if (challengeSyncState.value.isSuccess()) syncTrigger.tryEmit(Unit)
+        if (unViewedNotificationState.value.isSuccess()) notificationTrigger.tryEmit(Unit)
+        if (userName.value.isSuccess()) userNameTrigger.tryEmit(Unit)
+    }
+
+    private fun retryOnError() {
+        if (challengeSyncState.value.isError()) challengeSyncState.restart()
+        if (unViewedNotificationState.value.isError()) unViewedNotificationState.restart()
+        if (userName.value.isError()) userName.restart()
     }
 
     private fun clearRecentCompletedChallenges() = viewModelScope.launch {
@@ -309,4 +325,10 @@ class HomeViewModel @Inject constructor(
     companion object {
         const val SECONDS_PER_DAY = 24 * 60 * 60
     }
+}
+
+private sealed interface SyncTrigger {
+    data object Initial : SyncTrigger
+    data object Manual : SyncTrigger
+    data object TimeChanged : SyncTrigger
 }

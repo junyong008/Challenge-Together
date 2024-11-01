@@ -8,5 +8,4 @@ import com.yjy.data.network.response.GetMyChallengesResponse
 interface ChallengeDataSource {
     suspend fun addChallenge(request: AddChallengeRequest): NetworkResult<AddChallengeResponse>
     suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse>
-    suspend fun syncTime(): NetworkResult<Unit>
 }

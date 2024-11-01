@@ -77,10 +77,19 @@ import com.yjy.common.ui.DevicePreviews
 import com.yjy.common.ui.ErrorBody
 import com.yjy.common.ui.StartedChallengeCard
 import com.yjy.common.ui.WaitingChallengeCard
+import com.yjy.feature.home.model.ChallengeSyncUiState
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
 import com.yjy.feature.home.model.TierUpAnimationState
+import com.yjy.feature.home.model.UnViewedNotificationUiState
+import com.yjy.feature.home.model.UserNameUiState
+import com.yjy.feature.home.model.getNameOrDefault
+import com.yjy.feature.home.model.hasNewNotification
+import com.yjy.feature.home.model.isError
+import com.yjy.feature.home.model.isInitialLoading
+import com.yjy.feature.home.model.isLoading
+import com.yjy.feature.home.model.isTimeSyncLoading
 import com.yjy.feature.home.navigation.HomeStrings
 import com.yjy.model.challenge.StartedChallenge
 import com.yjy.model.challenge.WaitingChallenge
@@ -97,9 +106,25 @@ internal fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val currentTier by viewModel.currentTier.collectAsStateWithLifecycle()
+    val sortOrder by viewModel.sortOrder.collectAsStateWithLifecycle()
+    val userNameUiState by viewModel.userName.collectAsStateWithLifecycle()
+    val unViewedNotificationUiState by viewModel.unViewedNotificationState.collectAsStateWithLifecycle()
+    val challengeSyncUiState by viewModel.challengeSyncState.collectAsStateWithLifecycle()
+    val startedChallenges by viewModel.startedChallenges.collectAsStateWithLifecycle()
+    val waitingChallenges by viewModel.waitingChallenges.collectAsStateWithLifecycle()
+    val recentCompletedChallenges by viewModel.recentCompletedChallenges.collectAsStateWithLifecycle()
 
     HomeScreen(
         modifier = modifier,
+        currentTier = currentTier,
+        sortOrder = sortOrder,
+        userNameUiState = userNameUiState,
+        unViewedNotificationUiState = unViewedNotificationUiState,
+        challengeSyncUiState = challengeSyncUiState,
+        startedChallenges = startedChallenges,
+        waitingChallenges = waitingChallenges,
+        recentCompletedChallenges = recentCompletedChallenges,
         uiState = uiState,
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
@@ -110,11 +135,38 @@ internal fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
+    currentTier: Tier = Tier.IRON,
+    sortOrder: SortOrder = SortOrder.LATEST,
+    userNameUiState: UserNameUiState = UserNameUiState.Success(""),
+    unViewedNotificationUiState: UnViewedNotificationUiState = UnViewedNotificationUiState.Success(0),
+    challengeSyncUiState: ChallengeSyncUiState = ChallengeSyncUiState.Success,
+    startedChallenges: List<StartedChallenge> = emptyList(),
+    waitingChallenges: List<WaitingChallenge> = emptyList(),
+    recentCompletedChallenges: List<String> = emptyList(),
     uiState: HomeUiState = HomeUiState(),
     uiEvent: Flow<HomeUiEvent> = flowOf(),
     processAction: (HomeUiAction) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val hasError = userNameUiState.isError() ||
+            unViewedNotificationUiState.isError() ||
+            challengeSyncUiState.isError()
+
+    val isLoading = userNameUiState.isLoading() ||
+            unViewedNotificationUiState.isLoading() ||
+            challengeSyncUiState.isInitialLoading() ||
+            challengeSyncUiState.isTimeSyncLoading()
+
+    val homeContents = HomeContents(
+        userName = userNameUiState.getNameOrDefault(),
+        currentTier = currentTier,
+        startedChallenges = startedChallenges,
+        waitingChallenges = waitingChallenges,
+        selectedCategory = uiState.selectedCategory,
+        categories = uiState.categories,
+        sortOrder = sortOrder,
+    )
+
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(lifecycleOwner.lifecycle) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -124,8 +176,8 @@ internal fun HomeScreen(
 
     HandleHomeDialogs(
         tierUpAnimation = uiState.tierUpAnimation,
-        completedChallengeTitles = uiState.recentCompletedChallengeTitles,
-        selectedSortOrder = uiState.sortOrder,
+        completedChallengeTitles = recentCompletedChallenges,
+        selectedSortOrder = sortOrder,
         shouldShowSortOrderBottomSheet = uiState.shouldShowSortOrderBottomSheet,
         onSortOrderSelected = { processAction(HomeUiAction.OnSortOrderSelect(it)) },
         onDismissTierUp = { processAction(HomeUiAction.OnDismissTierUpAnimation) },
@@ -137,18 +189,21 @@ internal fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .then(
-                if (uiState.hasError || uiState.isLoading) Modifier
+                if (hasError || isLoading) Modifier
                 else Modifier.verticalScroll(rememberScrollState())
             ),
     ) {
         HomeTopBar(
             onShowCompleteChallengeClick = {},
             onShowNotificationClick = {},
-            hasNewNotification = uiState.unViewedNotificationCount > 0,
+            hasNewNotification = unViewedNotificationUiState.hasNewNotification(),
         )
         HomeBody(
             uiState = uiState,
             processAction = processAction,
+            isLoading = isLoading,
+            hasError = hasError,
+            homeContents = homeContents,
         )
     }
 }
@@ -157,11 +212,14 @@ internal fun HomeScreen(
 private fun HomeBody(
     uiState: HomeUiState,
     processAction: (HomeUiAction) -> Unit,
+    isLoading: Boolean,
+    hasError: Boolean,
+    homeContents: HomeContents,
 ) {
     when {
-        uiState.isLoading -> LoadingWheel()
-        uiState.hasError -> ErrorBody(onClickRetry = { processAction(HomeUiAction.OnRetryClick) })
-        else -> HomeContent(uiState = uiState, processAction = processAction)
+        isLoading -> LoadingWheel()
+        hasError -> ErrorBody(onClickRetry = { processAction(HomeUiAction.OnRetryClick) })
+        else -> HomeContent(uiState = uiState, processAction = processAction, content = homeContents)
     }
 }
 
@@ -169,21 +227,22 @@ private fun HomeBody(
 private fun HomeContent(
     uiState: HomeUiState,
     processAction: (HomeUiAction) -> Unit,
+    content: HomeContents
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         ProfileSection(
-            userName = uiState.userName,
+            userName = content.userName,
             remainDayForNextTier = uiState.remainDayForNextTier,
             tierProgress = uiState.tierProgress,
-            tier = uiState.currentTier,
+            tier = content.currentTier,
             highestRecordInSeconds = uiState.currentBestRecordInSeconds,
         )
         ChallengesSection(
-            startedChallenges = uiState.startedChallenges,
-            waitingChallenges = uiState.waitingChallenges,
-            selectedCategory = uiState.selectedCategory,
-            categories = uiState.categories,
-            sortOrder = uiState.sortOrder,
+            startedChallenges = content.startedChallenges,
+            waitingChallenges = content.waitingChallenges,
+            selectedCategory = content.selectedCategory,
+            categories = content.categories,
+            sortOrder = content.sortOrder,
             onCategorySelected = { processAction(HomeUiAction.OnCategorySelect(it)) },
             onSortOrderClick = { processAction(HomeUiAction.OnSortOrderClick) },
             onStartedChallengeClick = {},
@@ -191,6 +250,16 @@ private fun HomeContent(
         )
     }
 }
+
+data class HomeContents(
+    val userName: String,
+    val currentTier: Tier,
+    val startedChallenges: List<StartedChallenge>,
+    val waitingChallenges: List<WaitingChallenge>,
+    val selectedCategory: Category,
+    val categories: List<Category>,
+    val sortOrder: SortOrder,
+)
 
 @Composable
 private fun HomeTopBar(
@@ -455,7 +524,9 @@ private fun WaitingChallengesSection(
 @Composable
 private fun EmptyChallengesBody() {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {

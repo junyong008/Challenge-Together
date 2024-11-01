@@ -16,7 +16,4 @@ internal class ChallengeDataSourceImpl @Inject constructor(
 
     override suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse> =
         challengeTogetherService.getMyChallenges()
-
-    override suspend fun syncTime(): NetworkResult<Unit> =
-        challengeTogetherService.syncTime()
 }
