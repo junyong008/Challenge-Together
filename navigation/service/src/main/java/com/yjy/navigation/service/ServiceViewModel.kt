@@ -9,8 +9,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,37 +20,27 @@ class ServiceViewModel @Inject constructor(
     networkMonitor: NetworkMonitor,
 ) : ViewModel() {
 
+    private val isLoggedIn: Flow<Boolean> = authRepository.isLoggedIn
+    private val isSessionTokenAvailable: Flow<Boolean> = authRepository.isSessionTokenAvailable
+
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
+            started = SharingStarted.Eagerly,
             initialValue = false,
         )
 
-    private val isLoggedIn: Flow<Boolean> = authRepository.isLoggedIn
-    private val isSessionTokenAvailable: Flow<Boolean> = authRepository.isSessionTokenAvailable
-
-    val sessionExpireEvent: Flow<Boolean> = combine(
+    val sessionExpireEvent = combine(
         isLoggedIn,
         isSessionTokenAvailable,
     ) { loggedIn, tokenAvailable ->
-        SessionStatus(loggedIn, tokenAvailable)
-    }.transform { status ->
-        emit(isSessionExpired(status))
-    }
-
-    private suspend fun isSessionExpired(status: SessionStatus): Boolean {
-        return if (status.isLoggedIn && !status.isTokenValid) {
-            authRepository.logout()
-            true
-        } else {
-            false
-        }
-    }
-
-    private data class SessionStatus(
-        val isLoggedIn: Boolean,
-        val isTokenValid: Boolean,
+        loggedIn && !tokenAvailable
+    }.onEach { isExpired ->
+        if (isExpired) authRepository.logout()
+    }.shareIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        replay = 1,
     )
 }
