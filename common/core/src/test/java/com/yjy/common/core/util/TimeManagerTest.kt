@@ -1,12 +1,15 @@
 package com.yjy.common.core.util
 
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.cancelAndJoin
+// TimeManagerTest.kt
+
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
-import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import java.time.LocalDateTime
 import kotlin.test.Test
@@ -16,105 +19,115 @@ import kotlin.test.assertTrue
 
 class TimeManagerTest {
 
+    private val testDispatcher = StandardTestDispatcher()
+
     private lateinit var timeManager: TimeManager
     private lateinit var timeProvider: FakeTimeProvider
 
+    companion object {
+        private const val DEFAULT_UPDATE_INTERVAL = 1000L
+        private const val DEFAULT_TIME_DIFF_THRESHOLD = 5000L
+        private val INITIAL_TIME = LocalDateTime.of(2024, 1, 1, 12, 0)
+    }
+
     @Before
     fun setup() {
+        Dispatchers.setMain(testDispatcher)
+
         timeProvider = FakeTimeProvider()
-        timeManager = TimeManager(
+        timeManager = DefaultTimeManager(
             timeProvider = timeProvider,
-            updateInterval = 1000L,
-            timeDiffThreshold = 5000L
+            updateInterval = DEFAULT_UPDATE_INTERVAL,
+            timeDiffThreshold = DEFAULT_TIME_DIFF_THRESHOLD,
+            dispatcher = testDispatcher,
         )
     }
 
-    @Test
-    fun `detectTimeChange calls callback when time difference exceeds threshold`() = runTest {
-        // Given
-        var callbackCalled = false
-        timeManager.setOnTimeChanged { callbackCalled = true }
-
-        // 초기 시간 설정
-        val initialTime = LocalDateTime.of(2024, 1, 1, 12, 0)
-        timeProvider.setCurrentTime(initialTime)
-        timeProvider.setBootTime(0L)
-
-        // 첫 번째 시간 체크 (기준점 설정)
-        timeManager.emitCurrentTime()
-        assertFalse(callbackCalled)
-
-        // When: 시간이 변경됨 (부팅 시간과 현재 시간의 차이가 이전과 달리 벌어짐)
-        timeProvider.setCurrentTime(initialTime.plusMinutes(1)) // 현재 시간이 1분 추가됨
-        timeProvider.setBootTime(1000L)  // 부팅 시간은 1초만 증가
-
-        // Then
-        timeManager.emitCurrentTime()
-        assertTrue(callbackCalled)
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
-    fun `detectTimeChange does not call callback when time difference is within threshold`() = runTest {
+    fun `timeChangedFlow should emit event when time changed`() = runTest {
         // Given
-        var callbackCalled = false
-        timeManager.setOnTimeChanged { callbackCalled = true }
+        val tickerJob = launch { timeManager.tickerFlow.collect { } }
 
-        // 초기 시간 설정
-        val initialTime = LocalDateTime.of(2024, 1, 1, 12, 0)
-        timeProvider.setCurrentTime(initialTime)
+        var timeChangedEventEmitted = false
+        val timeChangedJob = launch {
+            timeManager.timeChangedFlow.collect {
+                timeChangedEventEmitted = true
+            }
+        }
+
+        // When: 부팅 시간의 흐름과 달리 현재 시간은 1분이 증가한 상황을 테스트
+        timeProvider.setCurrentTime(INITIAL_TIME)
         timeProvider.setBootTime(0L)
+        advanceTimeBy(DEFAULT_UPDATE_INTERVAL)
 
-        // 첫 번째 시간 체크 (기준점 설정)
-        timeManager.emitCurrentTime()
-        assertFalse(callbackCalled)
+        timeProvider.setCurrentTime(INITIAL_TIME.plusMinutes(1))
+        timeProvider.setBootTime(1000L)
+        advanceTimeBy(DEFAULT_UPDATE_INTERVAL)
 
-        // When: 시간이 변경 되지 않음 (부팅 시간과 현재 시간의 차이가 동일함)
-        timeProvider.setCurrentTime(initialTime.plusSeconds(3))
-        timeProvider.setBootTime(3000L)
+        // Then: 시간 변경 이벤트가 발생해야 함
+        assertTrue(timeChangedEventEmitted)
 
-        // Then
-        timeManager.emitCurrentTime()
-        assertFalse(callbackCalled)
+        timeChangedJob.cancel()
+        tickerJob.cancel()
     }
 
     @Test
-    fun `startTicking emits current time at regular intervals`() = runTest {
+    fun `timeChangedFlow should not emit event when time difference is within threshold`() = runTest {
         // Given
-        val scope = TestScope(testScheduler)
-        val updateInterval = 500L
-        timeManager = TimeManager(
-            timeProvider = timeProvider,
-            updateInterval = updateInterval,
-            timeDiffThreshold = 5000L,
-        )
+        val tickerJob = launch { timeManager.tickerFlow.collect { } }
 
-        // 초기 시간 설정
-        val initialTime = LocalDateTime.of(2024, 1, 1, 12, 0)
-        timeProvider.setCurrentTime(initialTime)
+        var timeChangedEventEmitted = false
+        val timeChangedJob = launch {
+            timeManager.timeChangedFlow.collect {
+                timeChangedEventEmitted = true
+            }
+        }
 
-        // 방출 되는 시간을 모아 추후 계산
+        // When: 시간이 임계값 이내로 변경
+        timeProvider.setCurrentTime(INITIAL_TIME)
+        timeProvider.setBootTime(0L)
+        advanceTimeBy(DEFAULT_UPDATE_INTERVAL)
+
+        timeProvider.setCurrentTime(INITIAL_TIME.plusSeconds(1))
+        timeProvider.setBootTime(1000L)
+        advanceTimeBy(DEFAULT_UPDATE_INTERVAL)
+
+        // Then: 시간 변경 이벤트가 발생하지 않아야 함
+        assertFalse(timeChangedEventEmitted)
+
+        timeChangedJob.cancel()
+        tickerJob.cancel()
+    }
+
+    @Test
+    fun `tickerFlow emits current time at regular intervals`() = runTest {
+        // Given
         val emittedTimes = mutableListOf<LocalDateTime>()
-        val collectJob = launch {
-            timeManager.tickerFlow.collect { emittedTimes.add(it) }
+        timeProvider.setCurrentTime(INITIAL_TIME)
+
+        val tickerJob = launch {
+            timeManager.tickerFlow.collect {
+                emittedTimes.add(it)
+            }
         }
 
-        // When
-        timeManager.startTicking(scope)
-        runCurrent()
-        emittedTimes.clear() // 생성 시 방출 되는 부분을 지워 계산 혼동 방지
+        // When & Then: interval 간격으로 emit되어야 함
+        advanceTimeBy(DEFAULT_UPDATE_INTERVAL)
+        assertEquals(1, emittedTimes.size)
+        assertEquals(INITIAL_TIME, emittedTimes[0])
 
-        // 3초 동안 실제 시간의 흐름을 모의 하여 시간 변경
-        repeat(3) { second ->
-            timeProvider.setCurrentTime(initialTime.plusSeconds(second + 1L))
-            advanceTimeBy(1000L)
-            runCurrent()
-        }
+        advanceTimeBy(DEFAULT_UPDATE_INTERVAL)
+        assertEquals(2, emittedTimes.size)
 
-        // Then: 시간 방출 주기가 500ms 이므로, 3초간 6번의 방출이 이뤄 져야 함
-        assertEquals(6, emittedTimes.size)
+        advanceTimeBy(DEFAULT_UPDATE_INTERVAL)
+        assertEquals(3, emittedTimes.size)
 
-        collectJob.cancelAndJoin()
-        scope.cancel()
+        tickerJob.cancel()
     }
 
     private class FakeTimeProvider : TimeProvider {
