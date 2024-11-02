@@ -17,9 +17,9 @@ dependencies {
         projects.data.userApi,
         projects.data.datastoreApi,
         projects.data.networkApi,
-
-        libs.kotlinx.coroutines.test,
     )
+
+    testImplementation(libs.kotlinx.coroutines.test)
 
     runtimeOnly(projects.data.datastoreImpl)
     runtimeOnly(projects.data.networkImpl)

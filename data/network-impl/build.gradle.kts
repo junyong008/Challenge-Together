@@ -24,7 +24,8 @@ dependencies {
         projects.common.network,
         projects.data.networkApi,
 
-        libs.kotlinx.coroutines.test,
         libs.mockwebserver,
     )
+
+    testImplementation(libs.kotlinx.coroutines.test)
 }

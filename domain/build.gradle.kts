@@ -19,6 +19,8 @@ dependencies {
         libs.kotlinx.coroutines.core,
     )
 
+    testImplementation(libs.kotlinx.coroutines.test)
+
     runtimeOnly(projects.data.challengeImpl)
     runtimeOnly(projects.data.userImpl)
 }
