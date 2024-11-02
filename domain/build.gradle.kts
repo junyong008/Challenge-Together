@@ -1,24 +1,22 @@
 @file:Suppress("INLINE_FROM_HIGHER_PLATFORM")
 
 plugins {
-    alias(libs.plugins.custom.android.feature)
+    alias(libs.plugins.custom.android.library)
 }
 
 android {
-    namespace = "com.yjy.feature.home"
+    namespace = "com.yjy.domain"
 }
 
 dependencies {
     implementations(
-        projects.common.core,
-        projects.common.network,
-
         projects.model,
-
-        projects.domain,
 
         projects.data.challengeApi,
         projects.data.userApi,
+
+        libs.javax.inject,
+        libs.kotlinx.coroutines.core,
     )
 
     runtimeOnly(projects.data.challengeImpl)

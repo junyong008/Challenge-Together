@@ -44,6 +44,8 @@ include(
 
     ":platform:network",
 
+    ":domain",
+
     ":model",
 
     ":navigation:auth",
@@ -51,6 +53,7 @@ include(
 
     ":feature:home",
     ":feature:addchallenge",
+    ":feature:startedchallenge",
 
     ":feature:login",
     ":feature:signup",

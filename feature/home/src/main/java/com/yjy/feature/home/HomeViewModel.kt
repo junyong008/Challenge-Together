@@ -8,6 +8,7 @@ import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.user.api.UserRepository
+import com.yjy.domain.GetStartedChallengesUseCase
 import com.yjy.feature.home.model.ChallengeSyncUiState
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiEvent
@@ -43,6 +44,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     timeManager: TimeManager,
+    getStartedChallengesUseCase: GetStartedChallengesUseCase,
     private val userRepository: UserRepository,
     private val challengeRepository: ChallengeRepository,
 ) : BaseViewModel<HomeUiState, HomeUiEvent>(initialState = HomeUiState()) {
@@ -118,7 +120,7 @@ class HomeViewModel @Inject constructor(
         )
 
     val startedChallenges = combine(
-        challengeRepository.startedChallenges,
+        getStartedChallengesUseCase(),
         timeManager.tickerFlow,
     ) { challenges, currentTime ->
         challenges to currentTime

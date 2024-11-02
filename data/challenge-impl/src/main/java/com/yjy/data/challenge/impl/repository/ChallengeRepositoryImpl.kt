@@ -22,7 +22,6 @@ import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.challenge.core.TargetDays
 import com.yjy.model.common.Tier
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -33,7 +32,6 @@ internal class ChallengeRepositoryImpl @Inject constructor(
     private val challengeDao: ChallengeDao,
 ) : ChallengeRepository {
 
-    private val timeDiff: Flow<Long> = challengePreferencesDataSource.timeDiff
     private val challenges: Flow<List<ChallengeEntity>> = challengeDao.getAll()
 
     override val currentTier: Flow<Tier> =
@@ -45,13 +43,10 @@ internal class ChallengeRepositoryImpl @Inject constructor(
     override val recentCompletedChallengeTitles: Flow<List<String>> =
         challengePreferencesDataSource.completedChallengeTitles
 
-    override val startedChallenges: Flow<List<StartedChallenge>> = combine(
-        challenges,
-        timeDiff,
-    ) { challenges, timeDiff ->
+    override val startedChallenges: Flow<List<StartedChallenge>> = challenges.map { challenges ->
         challenges
             .filter { it.isStarted && it.recentResetDateTime != null }
-            .map { it.toStartedChallengeModel(timeDiff) }
+            .map { it.toStartedChallengeModel() }
     }
 
     override val waitingChallenges: Flow<List<WaitingChallenge>> = challenges.map { challenges ->

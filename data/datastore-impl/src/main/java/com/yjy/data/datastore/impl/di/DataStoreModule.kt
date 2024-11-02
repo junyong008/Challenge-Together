@@ -10,6 +10,7 @@ import com.yjy.data.datastore.api.ChallengePreferences
 import com.yjy.data.datastore.impl.ChallengePreferencesDataStore
 import com.yjy.data.datastore.impl.ChallengePreferencesSerializer
 import com.yjy.data.datastore.impl.SessionDataStore
+import com.yjy.data.datastore.impl.UserPreferencesDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +23,11 @@ private val Context.sessionDataStore: DataStore<Preferences> by preferencesDataS
     name = SESSION_DATASTORE,
 )
 
+private const val USER_PREFERENCES_DATASTORE = "user_datastore"
+private val Context.userPreferencesDataStore: DataStore<Preferences> by preferencesDataStore(
+    name = USER_PREFERENCES_DATASTORE,
+)
+
 @Module
 @InstallIn(SingletonComponent::class)
 internal object DataStoreModule {
@@ -31,6 +37,12 @@ internal object DataStoreModule {
     @SessionDataStore
     fun provideSessionDataStore(@ApplicationContext context: Context) =
         context.sessionDataStore
+
+    @Provides
+    @Singleton
+    @UserPreferencesDataStore
+    fun provideUserPreferencesDataStore(@ApplicationContext context: Context) =
+        context.userPreferencesDataStore
 
     @Provides
     @Singleton

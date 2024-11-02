@@ -11,11 +11,6 @@ internal class ChallengePreferencesDataSourceImpl @Inject constructor(
     @ChallengePreferencesDataStore private val dataStore: DataStore<ChallengePreferences>,
 ) : ChallengePreferencesDataSource {
 
-    override val timeDiff: Flow<Long> = dataStore.data
-        .map { preferences ->
-            preferences.timeDiff
-        }
-
     override val completedChallengeTitles: Flow<List<String>> = dataStore.data
         .map { preferences ->
             preferences.completedChallengeTitlesList
@@ -30,14 +25,6 @@ internal class ChallengePreferencesDataSourceImpl @Inject constructor(
         .map { preferences ->
             preferences.sortOrder
         }
-
-    override suspend fun setTimeDiff(diff: Long) {
-        dataStore.updateData { preferences ->
-            preferences.toBuilder()
-                .setTimeDiff(diff)
-                .build()
-        }
-    }
 
     override suspend fun setCompletedChallengeTitles(titles: List<String>) {
         dataStore.updateData { preferences ->

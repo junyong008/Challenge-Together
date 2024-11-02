@@ -19,6 +19,7 @@ desugar = "2.1.2"
 detekt = "1.23.6"
 gradleDependencyHandlerExtensions = "1.1.0"
 hilt = "2.52"
+javaxInject = "1"
 kotlin = "2.0.20"
 kotlinxSerialization = "1.7.2"
 ktlintGradle = "11.6.1"
@@ -44,6 +45,7 @@ androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscree
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDatastore" }
 androidx-startup = { group = "androidx.startup", name = "startup-runtime", version.ref = "androidxStartup" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
+javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }

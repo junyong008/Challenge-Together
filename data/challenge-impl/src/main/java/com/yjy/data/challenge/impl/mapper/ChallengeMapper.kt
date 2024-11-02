@@ -21,8 +21,8 @@ internal fun ChallengeResponse.toEntity() = ChallengeEntity(
     mode = if (isFreeMode) Mode.FREE.name else Mode.CHALLENGE.name,
 )
 
-internal fun ChallengeEntity.toStartedChallengeModel(timeDiff: Long): StartedChallenge {
-    val resetDateTime = recentResetDateTime?.addSeconds(timeDiff)
+internal fun ChallengeEntity.toStartedChallengeModel(): StartedChallenge {
+    val resetDateTime = recentResetDateTime
         ?: throw IllegalStateException("Started challenge must have reset time")
 
     return ChallengeFactory.createStartedChallenge(
