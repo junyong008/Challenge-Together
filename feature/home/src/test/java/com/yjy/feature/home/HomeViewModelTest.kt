@@ -4,6 +4,7 @@ import com.yjy.common.core.util.TimeManager
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.user.api.UserRepository
+import com.yjy.domain.GetStartedChallengesUseCase
 import com.yjy.feature.home.HomeViewModel.Companion.SECONDS_PER_DAY
 import com.yjy.feature.home.model.ChallengeSyncUiState
 import com.yjy.feature.home.model.HomeUiAction
@@ -44,6 +45,7 @@ import kotlin.test.assertTrue
 class HomeViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
+    private lateinit var getStartedChallengesUseCase: GetStartedChallengesUseCase
     private lateinit var challengeRepository: ChallengeRepository
     private lateinit var userRepository: UserRepository
     private lateinit var timeManager: TimeManager
@@ -67,6 +69,7 @@ class HomeViewModelTest {
         challengeRepository = mockk(relaxed = true)
         userRepository = mockk(relaxed = true)
         timeManager = mockk(relaxed = true)
+        getStartedChallengesUseCase = mockk(relaxed = true)
 
         coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Success(emptyList())
         coEvery { challengeRepository.startedChallenges } returns startedChallengesFlow
@@ -79,11 +82,13 @@ class HomeViewModelTest {
 
         coEvery { timeManager.tickerFlow } returns tickerFlow
         coEvery { timeManager.timeChangedFlow } returns timeChangedFlow
+        coEvery { getStartedChallengesUseCase() } returns startedChallengesFlow
 
         viewModel = HomeViewModel(
             timeManager = timeManager,
             userRepository = userRepository,
             challengeRepository = challengeRepository,
+            getStartedChallengesUseCase = getStartedChallengesUseCase,
         )
     }
 
