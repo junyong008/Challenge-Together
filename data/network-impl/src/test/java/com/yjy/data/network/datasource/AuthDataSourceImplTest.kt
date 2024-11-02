@@ -79,7 +79,7 @@ class AuthDataSourceTest {
             EmailLoginRequest(
                 email = "test@example.com",
                 password = "password123",
-            )
+            ),
         )
 
         // Then
@@ -104,7 +104,7 @@ class AuthDataSourceTest {
                 kakaoId = "",
                 googleId = "",
                 naverId = "",
-            )
+            ),
         )
 
         // Then
@@ -125,7 +125,7 @@ class AuthDataSourceTest {
             VerifyRequest(
                 email = "test@example.com",
                 verifyCode = "111111",
-            )
+            ),
         )
 
         // Then

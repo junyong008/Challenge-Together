@@ -74,7 +74,7 @@ class AddChallengeViewModelTest {
                 title = title,
                 description = description,
                 targetDays = TargetDays.Infinite,
-                startDateTime = startDateTime
+                startDateTime = startDateTime,
             )
         } returns NetworkResult.Success(challengeId)
 
@@ -87,7 +87,7 @@ class AddChallengeViewModelTest {
                 description = description,
                 startDateTime = startDateTime,
                 targetDays = targetDays,
-            )
+            ),
         )
         advanceUntilIdle()
 
@@ -98,7 +98,7 @@ class AddChallengeViewModelTest {
                 title = title,
                 description = description,
                 targetDays = TargetDays.Infinite,
-                startDateTime = startDateTime
+                startDateTime = startDateTime,
             )
         }
         val event = viewModel.uiEvent.first()
@@ -122,7 +122,7 @@ class AddChallengeViewModelTest {
                 title = title,
                 description = description,
                 targetDays = targetDays,
-                startDateTime = null
+                startDateTime = null,
             )
         } returns NetworkResult.Success(challengeId)
 
@@ -135,7 +135,7 @@ class AddChallengeViewModelTest {
                 description = description,
                 startDateTime = startDateTime,
                 targetDays = targetDays,
-            )
+            ),
         )
         advanceUntilIdle()
 
@@ -146,7 +146,7 @@ class AddChallengeViewModelTest {
                 title = title,
                 description = description,
                 targetDays = targetDays,
-                startDateTime = null
+                startDateTime = null,
             )
         }
         val event = viewModel.uiEvent.first()
@@ -171,7 +171,7 @@ class AddChallengeViewModelTest {
                 description = description,
                 targetDays = targetDays,
                 maxParticipants = maxParticipants,
-                roomPassword = roomPassword
+                roomPassword = roomPassword,
             )
         } returns NetworkResult.Success(challengeId)
 
@@ -184,8 +184,8 @@ class AddChallengeViewModelTest {
                 targetDays = targetDays,
                 maxParticipants = maxParticipants,
                 enableRoomPassword = true,
-                roomPassword = roomPassword
-            )
+                roomPassword = roomPassword,
+            ),
         )
         advanceUntilIdle()
 
@@ -197,7 +197,7 @@ class AddChallengeViewModelTest {
                 description = description,
                 targetDays = targetDays,
                 maxParticipants = maxParticipants,
-                roomPassword = roomPassword
+                roomPassword = roomPassword,
             )
         }
         val event = viewModel.uiEvent.first()
@@ -219,8 +219,8 @@ class AddChallengeViewModelTest {
                 selectedDate = selectedDate,
                 hour = selectedHour,
                 minute = selectedMinute,
-                isAm = isAm
-            )
+                isAm = isAm,
+            ),
         )
 
         // Then
@@ -242,8 +242,8 @@ class AddChallengeViewModelTest {
                 selectedDate = selectedDate,
                 hour = selectedHour,
                 minute = selectedMinute,
-                isAm = isAm
-            )
+                isAm = isAm,
+            ),
         )
 
         // Then

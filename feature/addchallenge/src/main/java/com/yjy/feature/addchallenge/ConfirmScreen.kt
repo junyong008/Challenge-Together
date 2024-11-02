@@ -148,7 +148,7 @@ internal fun ConfirmScreen(
                             description = uiState.description,
                             startDateTime = uiState.startDateTime,
                             targetDays = uiState.targetDays,
-                        )
+                        ),
                     )
                 },
                 onClickNegative = { processAction(AddChallengeUiAction.OnCancelStartChallenge) },
@@ -272,6 +272,9 @@ private fun DataSection(startDateTime: LocalDateTime) {
     )
 }
 
+private const val CATEGORY_CARD_WEIGHT = 0.4f
+private const val TARGET_DAY_CARD_WEIGHT = 0.6f
+
 @Composable
 private fun CategorySection(category: Category, targetDays: TargetDays) {
     val targetDayText = when (targetDays) {
@@ -286,7 +289,7 @@ private fun CategorySection(category: Category, targetDays: TargetDays) {
     ) {
         BaseCard(
             modifier = Modifier
-                .weight(0.4f)
+                .weight(CATEGORY_CARD_WEIGHT)
                 .fillMaxHeight(),
             titleResId = AddChallengeStrings.feature_addchallenge_category_card_title,
             content = {
@@ -304,11 +307,11 @@ private fun CategorySection(category: Category, targetDays: TargetDays) {
                             .padding(8.dp),
                     )
                 }
-            }
+            },
         )
         Spacer(modifier = Modifier.width(8.dp))
         BaseCard(
-            modifier = Modifier.weight(0.6f),
+            modifier = Modifier.weight(TARGET_DAY_CARD_WEIGHT),
             titleResId = AddChallengeStrings.feature_addchallenge_target_day_card_title,
             content = {
                 Text(
@@ -317,7 +320,7 @@ private fun CategorySection(category: Category, targetDays: TargetDays) {
                     color = CustomColorProvider.colorScheme.onSurface,
                     textAlign = TextAlign.End,
                 )
-            }
+            },
         )
     }
 }
@@ -407,7 +410,7 @@ private fun TitleCard(
             modifier = modifier
                 .weight(1f)
                 .wrapContentHeight()
-                .padding(start = 24.dp)
+                .padding(start = 24.dp),
         ) {
             Text(
                 text = title,

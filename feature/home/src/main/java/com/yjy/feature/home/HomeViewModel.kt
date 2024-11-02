@@ -2,6 +2,7 @@ package com.yjy.feature.home
 
 import androidx.lifecycle.viewModelScope
 import com.yjy.common.core.base.BaseViewModel
+import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.core.extensions.restartableStateIn
 import com.yjy.common.core.util.TimeManager
 import com.yjy.common.network.onFailure
@@ -188,17 +189,17 @@ class HomeViewModel @Inject constructor(
 
     private fun calculateRecordOfChallenges(
         challenges: List<StartedChallenge>,
-        currentTime: LocalDateTime
+        currentTime: LocalDateTime,
     ): List<StartedChallenge> = challenges.map { challenge ->
         val currentRecord = Duration.between(challenge.recentResetDateTime, currentTime).seconds
 
         challenge.copy(
             currentRecordInSeconds = when (val targetDays = challenge.targetDays) {
                 is TargetDays.Fixed -> currentRecord.coerceAtMost(
-                    (targetDays.days * SECONDS_PER_DAY).toLong()
+                    (targetDays.days * SECONDS_PER_DAY),
                 )
                 else -> currentRecord
-            }
+            },
         )
     }
 
@@ -262,10 +263,11 @@ class HomeViewModel @Inject constructor(
     private fun updateCategories(challenges: List<StartedChallenge>) {
         val categories = buildList {
             add(Category.ALL)
-            addAll(challenges
-                .map { it.category }
-                .distinct()
-                .filterNot { it == Category.ALL }
+            addAll(
+                challenges
+                    .map { it.category }
+                    .distinct()
+                    .filterNot { it == Category.ALL },
             )
         }
 
@@ -322,10 +324,6 @@ class HomeViewModel @Inject constructor(
 
     private fun updateSortOrder(sortOrder: SortOrder) = viewModelScope.launch {
         challengeRepository.setSortOrder(sortOrder)
-    }
-
-    companion object {
-        const val SECONDS_PER_DAY = 24 * 60 * 60
     }
 }
 

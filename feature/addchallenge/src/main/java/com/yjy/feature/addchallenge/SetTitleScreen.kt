@@ -112,7 +112,7 @@ internal fun SetTitleScreen(
                     stringResource(id = AddChallengeStrings.feature_addchallenge_description_placeholder)
                 },
                 contentAlignment = Alignment.TopStart,
-                modifier = Modifier.height(180.dp)
+                modifier = Modifier.height(180.dp),
             )
         }
     }

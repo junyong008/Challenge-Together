@@ -97,7 +97,7 @@ fun ErrorBody(
                             textAlign = TextAlign.Center,
                         )
                     }
-                }
+                },
             )
         }
     }

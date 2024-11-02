@@ -28,18 +28,18 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 @Composable
 fun BaseBottomSheet(
     onDismiss: () -> Unit,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(
-            skipPartiallyExpanded = true
+            skipPartiallyExpanded = true,
         ),
         containerColor = CustomColorProvider.colorScheme.surface,
         dragHandle = null,
         shape = MaterialTheme.shapes.large.copy(
             bottomStart = CornerSize(0.dp),
-            bottomEnd = CornerSize(0.dp)
+            bottomEnd = CornerSize(0.dp),
         ),
         scrimColor = Color.Black.copy(alpha = 0.32f),
         modifier = Modifier

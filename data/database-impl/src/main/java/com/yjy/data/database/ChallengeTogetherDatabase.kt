@@ -11,7 +11,7 @@ import com.yjy.data.database.util.Converters
     entities = [
         ChallengeEntity::class,
     ],
-    version = 1
+    version = 1,
 )
 @TypeConverters(Converters::class)
 internal abstract class ChallengeTogetherDatabase : RoomDatabase() {

@@ -34,6 +34,13 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import java.time.LocalDate
 import java.time.YearMonth
 
+private const val DEFAULT_MIN_YEAR = 1900
+private const val DEFAULT_MIN_MONTH = 1
+private const val DEFAULT_MIN_DAY = 1
+private const val DEFAULT_MAX_YEAR = 2100
+private const val DEFAULT_MAX_MONTH = 12
+private const val DEFAULT_MAX_DAY = 31
+
 @Composable
 fun ChallengeTogetherDialog(
     title: String,
@@ -48,7 +55,7 @@ fun ChallengeTogetherDialog(
     BaseDialog(
         onDismissRequest = onClickNegative,
         title = title,
-        description = description
+        description = description,
     ) {
         DialogButtonRow(
             onClickNegative = onClickNegative,
@@ -67,8 +74,8 @@ fun YearMonthPickerDialog(
     initialMonth: Int,
     onDismissRequest: () -> Unit,
     onConfirm: (Int, Int) -> Unit,
-    minDate: LocalDate = LocalDate.of(1900, 1, 1),
-    maxDate: LocalDate = LocalDate.of(2100, 12, 31),
+    minDate: LocalDate = LocalDate.of(DEFAULT_MIN_YEAR, DEFAULT_MIN_MONTH, DEFAULT_MIN_DAY),
+    maxDate: LocalDate = LocalDate.of(DEFAULT_MAX_YEAR, DEFAULT_MAX_MONTH, DEFAULT_MAX_DAY),
 ) {
     var year by remember { mutableIntStateOf(initialYear) }
     var month by remember { mutableIntStateOf(initialMonth) }
@@ -92,7 +99,7 @@ fun YearMonthPickerDialog(
                 onValueChange = { year = it },
                 minLimit = 0,
                 maxLimit = maxDate.year,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
             Spacer(modifier = Modifier.width(8.dp))
             NumberInputField(
@@ -116,24 +123,24 @@ private fun BaseDialog(
     onDismissRequest: () -> Unit,
     title: String,
     description: String = "",
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
-        properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+        properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true),
     ) {
         Column(
             modifier = Modifier
                 .clip(MaterialTheme.shapes.large)
                 .background(CustomColorProvider.colorScheme.background)
                 .padding(horizontal = 24.dp, vertical = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = title,
                 color = CustomColorProvider.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             if (description.isNotBlank()) {
                 Spacer(modifier = Modifier.size(8.dp))
@@ -141,7 +148,7 @@ private fun BaseDialog(
                     text = description,
                     color = CustomColorProvider.colorScheme.onBackgroundMuted,
                     style = MaterialTheme.typography.labelMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
                 Spacer(modifier = Modifier.size(8.dp))
             }
@@ -157,7 +164,7 @@ private fun NumberInputField(
     onValueChange: (Int) -> Unit,
     minLimit: Int,
     maxLimit: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     CursorLessNumberTextField(
         value = value,
@@ -182,7 +189,7 @@ private fun DialogButtonRow(
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         ClickableText(
             text = stringResource(id = negativeTextRes),
@@ -191,7 +198,7 @@ private fun DialogButtonRow(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
             textAlign = TextAlign.Center,
-            textDecoration = TextDecoration.None
+            textDecoration = TextDecoration.None,
         )
         ClickableText(
             text = stringResource(id = positiveTextRes),
@@ -200,7 +207,7 @@ private fun DialogButtonRow(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
             textAlign = TextAlign.Center,
-            textDecoration = TextDecoration.None
+            textDecoration = TextDecoration.None,
         )
     }
 }

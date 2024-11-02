@@ -29,7 +29,7 @@ class GetStartedChallengesUseCaseTest {
         userRepository = mockk()
         getStartedChallengesUseCase = GetStartedChallengesUseCase(
             challengeRepository = challengeRepository,
-            userRepository = userRepository
+            userRepository = userRepository,
         )
     }
 
@@ -48,7 +48,7 @@ class GetStartedChallengesUseCaseTest {
                 targetDays = TargetDays.Fixed(30),
                 mode = Mode.CHALLENGE,
                 recentResetDateTime = initialTime,
-                isCompleted = false
+                isCompleted = false,
             ),
             ChallengeFactory.createStartedChallenge(
                 id = "2",
@@ -58,8 +58,8 @@ class GetStartedChallengesUseCaseTest {
                 targetDays = TargetDays.Fixed(60),
                 mode = Mode.CHALLENGE,
                 recentResetDateTime = initialTime.plusDays(1),
-                isCompleted = false
-            )
+                isCompleted = false,
+            ),
         )
 
         every { challengeRepository.startedChallenges } returns flowOf(startedChallenges)

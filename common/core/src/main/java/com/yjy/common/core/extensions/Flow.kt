@@ -36,7 +36,7 @@ private data class SharingRestartableImpl(
 fun <T> Flow<T>.restartableStateIn(
     scope: CoroutineScope,
     started: SharingStarted,
-    initialValue: T
+    initialValue: T,
 ): RestartableStateFlow<T> {
     val sharingRestartable = SharingRestartableImpl(started)
     val stateFlow = stateIn(scope, sharingRestartable, initialValue)

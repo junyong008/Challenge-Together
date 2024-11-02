@@ -7,6 +7,9 @@ import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_TARGET_DAYS
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_TITLE_LENGTH
 import com.yjy.common.core.constants.ChallengeConst.MAX_ROOM_PASSWORD_LENGTH
 import com.yjy.common.core.constants.ChallengeConst.MIN_CHALLENGE_TARGET_DAYS
+import com.yjy.common.core.constants.TimeConst.HOURS_PER_HALF_DAY
+import com.yjy.common.core.constants.TimeConst.MIDNIGHT_HOUR
+import com.yjy.common.core.constants.TimeConst.NOON_HOUR
 import com.yjy.common.network.handleNetworkResult
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
@@ -106,10 +109,10 @@ class AddChallengeViewModel @Inject constructor(
     }
 
     private fun convertTo24HourFormat(hour: Int, isAm: Boolean): Int = when {
-        hour == 12 && isAm -> 0
-        hour == 12 && !isAm -> 12
+        hour == HOURS_PER_HALF_DAY && isAm -> MIDNIGHT_HOUR
+        hour == HOURS_PER_HALF_DAY && !isAm -> NOON_HOUR
         isAm -> hour
-        else -> hour + 12
+        else -> hour + HOURS_PER_HALF_DAY
     }
 
     private fun updateTargetDays(targetDays: TargetDays) {

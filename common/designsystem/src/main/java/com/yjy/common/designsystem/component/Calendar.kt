@@ -38,6 +38,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.yjy.common.core.constants.TimeConst.DAYS_PER_WEEK
+import com.yjy.common.core.constants.TimeConst.MONTHS_PER_YEAR
 import com.yjy.common.designsystem.ComponentPreviews
 import com.yjy.common.designsystem.R
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
@@ -52,6 +54,13 @@ import java.time.temporal.ChronoUnit
 import java.time.temporal.TemporalAdjusters
 import java.time.temporal.WeekFields
 import java.util.Locale
+
+private const val DEFAULT_MIN_YEAR = 1900
+private const val DEFAULT_MIN_MONTH = 1
+private const val DEFAULT_MIN_DAY = 1
+private const val DEFAULT_MAX_YEAR = 2100
+private const val DEFAULT_MAX_MONTH = 12
+private const val DEFAULT_MAX_DAY = 31
 
 /**
  * [Calendar]
@@ -73,8 +82,8 @@ fun Calendar(
     onDateSelected: (LocalDate) -> Unit = {},
     showAdjacentMonthsDays: Boolean = false,
     enableWeekModeOnDataSelected: Boolean = false,
-    minDate: LocalDate = LocalDate.of(1900, 1, 1),
-    maxDate: LocalDate = LocalDate.of(2100, 12, 31),
+    minDate: LocalDate = LocalDate.of(DEFAULT_MIN_YEAR, DEFAULT_MIN_MONTH, DEFAULT_MIN_DAY),
+    maxDate: LocalDate = LocalDate.of(DEFAULT_MAX_YEAR, DEFAULT_MAX_MONTH, DEFAULT_MAX_DAY),
     calendarColors: CalendarColors = CalendarColors(
         containerColor = CustomColorProvider.colorScheme.surface,
         contentColor = CustomColorProvider.colorScheme.onSurface,
@@ -118,10 +127,12 @@ fun Calendar(
     // 주간 모드가 활성화 된 경우 선택된 날짜가 있는 달로 페이지를 이동.
     LaunchedEffect(weekMode) {
         if (weekMode && selectedDate != null) {
+            val monthsSinceInitial = monthsBetween(YearMonth.now(), initialYearMonth)
+            val midPoint = Int.MAX_VALUE / 2
+            val monthsToAdd = pagerState.currentPage - (midPoint + monthsSinceInitial)
+
             val selectedYearMonth = YearMonth.from(selectedDate)
-            val currentYearMonth = initialYearMonth.plusMonths(
-                (pagerState.currentPage - (Int.MAX_VALUE / 2 + monthsBetween(YearMonth.now(), initialYearMonth))).toLong()
-            )
+            val currentYearMonth = initialYearMonth.plusMonths(monthsToAdd.toLong())
 
             if (selectedYearMonth != currentYearMonth) {
                 val targetPage = pagerState.currentPage + monthsBetween(currentYearMonth, selectedYearMonth)
@@ -145,7 +156,7 @@ fun Calendar(
     val calendarHeight by animateDpAsState(
         targetValue = if (weekMode) 50.dp else 195.dp,
         animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow),
-        label = "WeekMode Animation"
+        label = "WeekMode Animation",
     )
 
     Column(
@@ -157,7 +168,11 @@ fun Calendar(
     ) {
         // 보여지는 페이지에 따른 년도와 월 계산.
         val displayedYearMonth = remember(pagerState.currentPage) {
-            initialYearMonth.plusMonths((pagerState.currentPage - (Int.MAX_VALUE / 2 + monthsBetween(YearMonth.now(), initialYearMonth))).toLong())
+            val monthsSinceInitial = monthsBetween(YearMonth.now(), initialYearMonth)
+            val midPoint = Int.MAX_VALUE / 2
+            val monthsToAdd = pagerState.currentPage - (midPoint + monthsSinceInitial)
+
+            initialYearMonth.plusMonths(monthsToAdd.toLong())
         }
 
         // 선택 가능한 최대 날짜, 최소 날짜에 따라 헤더의 좌우 버튼 비 활성화 유무 결정
@@ -210,7 +225,7 @@ fun Calendar(
         Box(
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-                .height(calendarHeight)
+                .height(calendarHeight),
         ) {
             HorizontalPager(
                 state = pagerState,
@@ -218,7 +233,7 @@ fun Calendar(
             ) { page ->
                 val currentDisplayedYearMonth =
                     initialYearMonth.plusMonths(
-                        (page - (Int.MAX_VALUE / 2 + monthsBetween(YearMonth.now(), initialYearMonth))).toLong()
+                        (page - (Int.MAX_VALUE / 2 + monthsBetween(YearMonth.now(), initialYearMonth))).toLong(),
                     )
 
                 CalendarDays(
@@ -264,13 +279,13 @@ fun CalendarHeader(
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
             text = stringResource(
                 id = R.string.common_designsystem_calendar_year_month,
                 currentYearMonth.year,
-                currentYearMonth.month.getDisplayName(TextStyle.FULL, Locale.getDefault())
+                currentYearMonth.month.getDisplayName(TextStyle.FULL, Locale.getDefault()),
             ),
             color = contentColor,
             style = MaterialTheme.typography.titleMedium,
@@ -299,7 +314,9 @@ fun CalendarHeader(
                 IconButton(onClick = onDisableWeekMode) {
                     Icon(
                         painter = painterResource(id = ChallengeTogetherIcons.ArrowDown),
-                        contentDescription = stringResource(id = R.string.common_designsystem_calendar_expand_week_mode),
+                        contentDescription = stringResource(
+                            id = R.string.common_designsystem_calendar_expand_week_mode,
+                        ),
                         tint = contentColor,
                     )
                 }
@@ -392,15 +409,15 @@ fun CalendarDays(
     val dayDataList = dates.map { date ->
         CalendarDayData(
             date = date,
-            isCurrentMonth = date.month == currentYearMonth.month
+            isCurrentMonth = date.month == currentYearMonth.month,
         )
     }
 
     // 주간 모드인 경우 선택된 날짜가 포함된 주만 표기하도록 filter.
     val weeks = if (isWeekMode == true && selectedDate != null) {
-        dayDataList.chunked(7).filter { week -> week.any { it.date == selectedDate } }
+        dayDataList.chunked(DAYS_PER_WEEK).filter { week -> week.any { it.date == selectedDate } }
     } else {
-        dayDataList.chunked(7)
+        dayDataList.chunked(DAYS_PER_WEEK)
     }
 
     Column(modifier = modifier) {
@@ -411,7 +428,7 @@ fun CalendarDays(
 
                     val isAdjacentMonth = !dayData.isCurrentMonth
                     val isEnabled = dayData.date.isAfter(minDate.minusDays(1)) &&
-                            dayData.date.isBefore(maxDate.plusDays(1))
+                        dayData.date.isBefore(maxDate.plusDays(1))
 
                     if (showAdjacentMonthsDays || dayData.isCurrentMonth) {
                         CalendarDay(
@@ -469,13 +486,13 @@ fun CalendarDay(
         selectionMode is SelectionMode.DateRange && date == selectionMode.startDate ->
             RoundedCornerShape(
                 topStart = 50.dp,
-                bottomStart = 50.dp
+                bottomStart = 50.dp,
             )
 
         selectionMode is SelectionMode.DateRange && date == selectionMode.endDate ->
             RoundedCornerShape(
                 topEnd = 50.dp,
-                bottomEnd = 50.dp
+                bottomEnd = 50.dp,
             )
 
         isInRange -> RectangleShape
@@ -513,7 +530,7 @@ fun CalendarDay(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(MaterialTheme.shapes.extraLarge)
-                    .background(color = calendarColors.selectedBackgroundColor)
+                    .background(color = calendarColors.selectedBackgroundColor),
             )
         }
         Text(
@@ -549,7 +566,7 @@ data class CalendarDayData(
 private fun monthsBetween(from: YearMonth, to: YearMonth): Int {
     val yearDifference = to.year - from.year
     val monthDifference = to.monthValue - from.monthValue
-    return yearDifference * 12 + monthDifference
+    return yearDifference * MONTHS_PER_YEAR + monthDifference
 }
 
 @ComponentPreviews

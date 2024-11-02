@@ -1,5 +1,7 @@
 package com.yjy.common.core.util
 
+private const val MIN_EVENT_DELAY_MS = 500L
+
 interface MultipleEventsCutter {
     fun processEvent(event: () -> Unit)
 
@@ -16,7 +18,7 @@ private class MultipleEventsCutterImpl : MultipleEventsCutter {
     private var lastEventTimeMs: Long = 0
 
     override fun processEvent(event: () -> Unit) {
-        if (now - lastEventTimeMs >= 500L) {
+        if (now - lastEventTimeMs >= MIN_EVENT_DELAY_MS) {
             event.invoke()
         }
         lastEventTimeMs = now

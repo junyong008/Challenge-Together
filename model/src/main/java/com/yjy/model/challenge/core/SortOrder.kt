@@ -5,5 +5,5 @@ enum class SortOrder {
     OLDEST,
     TITLE,
     HIGHEST_RECORD,
-    LOWEST_RECORD;
+    LOWEST_RECORD,
 }

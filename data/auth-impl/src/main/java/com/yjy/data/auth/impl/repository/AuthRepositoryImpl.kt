@@ -45,7 +45,7 @@ internal class AuthRepositoryImpl @Inject constructor(
                 kakaoId = kakaoId,
                 googleId = googleId,
                 naverId = naverId,
-            )
+            ),
         ).onSuccess {
             sessionDataSource.setLoggedIn(true)
         }
@@ -56,7 +56,7 @@ internal class AuthRepositoryImpl @Inject constructor(
             EmailLoginRequest(
                 email = email,
                 password = hashPassword(password),
-            )
+            ),
         ).onSuccess {
             sessionDataSource.setLoggedIn(true)
         }
@@ -67,7 +67,7 @@ internal class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun requestVerifyCode(email: String): NetworkResult<Unit> {
         return authDataSource.requestVerifyCode(
-            EmailRequest(email = email)
+            EmailRequest(email = email),
         )
     }
 
@@ -76,13 +76,13 @@ internal class AuthRepositoryImpl @Inject constructor(
             VerifyRequest(
                 email = email,
                 verifyCode = verifyCode,
-            )
+            ),
         )
     }
 
     override suspend fun changePassword(password: String): NetworkResult<Unit> {
         return authDataSource.changePassword(
-            ChangePasswordRequest(password = hashPassword(password))
+            ChangePasswordRequest(password = hashPassword(password)),
         ).onSuccess {
             sessionDataSource.setLoggedIn(false)
             sessionDataSource.setToken(null)

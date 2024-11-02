@@ -1,11 +1,11 @@
 package com.yjy.feature.home
 
+import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.core.util.TimeManager
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.GetStartedChallengesUseCase
-import com.yjy.feature.home.HomeViewModel.Companion.SECONDS_PER_DAY
 import com.yjy.feature.home.model.ChallengeSyncUiState
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiState
@@ -112,14 +112,14 @@ class HomeViewModelTest {
         mode = Mode.CHALLENGE,
         recentResetDateTime = now.minusDays(daysAgo),
         currentRecordInSeconds = recordInDays * SECONDS_PER_DAY,
-        isCompleted = false
+        isCompleted = false,
     )
 
     private suspend fun TestScope.emitUpdatedState(
         sortOrder: SortOrder = SortOrder.LATEST,
         tier: Tier = Tier.IRON,
         challenges: List<StartedChallenge>,
-        time: LocalDateTime
+        time: LocalDateTime,
     ) {
         sortOrderFlow.emit(sortOrder)
         currentTierFlow.emit(tier)
@@ -161,7 +161,9 @@ class HomeViewModelTest {
     fun `failed challenge sync should set error state`() = runTest {
         // Given
         var syncState: ChallengeSyncUiState? = null
-        coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Failure.UnknownApiError(Throwable("Error"))
+        coEvery {
+            challengeRepository.syncChallenges()
+        } returns NetworkResult.Failure.UnknownApiError(Throwable("Error"))
 
         // When: 동기화 실패 상태 수집
         val job = launch {
@@ -263,14 +265,14 @@ class HomeViewModelTest {
             title = "B Challenge",
             now = now,
             daysAgo = 5,
-            recordInDays = 5
+            recordInDays = 5,
         )
         val challenge2 = createTestChallenge(
             id = "2",
             title = "A Challenge",
             now = now,
             daysAgo = 10,
-            recordInDays = 10
+            recordInDays = 10,
         )
 
         val job = launch {
@@ -287,7 +289,7 @@ class HomeViewModelTest {
         emitUpdatedState(
             sortOrder = SortOrder.LATEST,
             challenges = listOf(challenge1, challenge2),
-            time = now
+            time = now,
         )
 
         // Then: ID 내림차순 정렬
@@ -321,7 +323,7 @@ class HomeViewModelTest {
         val challenge = createTestChallenge(
             now = now,
             daysAgo = 15,
-            recordInDays = 15
+            recordInDays = 15,
         )
 
         val job = launch {

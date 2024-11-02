@@ -22,6 +22,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.yjy.common.core.constants.TimeConst.HOURS_PER_HALF_DAY
+import com.yjy.common.core.constants.TimeConst.MINUTES_PER_HOUR
 import com.yjy.common.designsystem.ComponentPreviews
 import com.yjy.common.designsystem.R
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
@@ -47,12 +49,12 @@ fun TimePicker(
     textColor: Color = CustomColorProvider.colorScheme.onBackground,
 ) {
     fun adjustHour(increment: Int) {
-        val newHour = (hour + increment + 12) % 12
+        val newHour = (hour + increment + HOURS_PER_HALF_DAY) % HOURS_PER_HALF_DAY
         onTimeChanged(newHour, minute, isAm)
     }
 
     fun adjustMinute(increment: Int) {
-        val newMinute = (minute + increment + 60) % 60
+        val newMinute = (minute + increment + MINUTES_PER_HOUR) % MINUTES_PER_HOUR
         onTimeChanged(hour, newMinute, isAm)
     }
 
@@ -118,13 +120,13 @@ private fun TimeAdjustmentSection(
                 textColor = textColor,
                 maxLimit = 12,
                 descriptionIncrease = stringResource(id = R.string.common_designsystem_time_picker_increase_hour),
-                descriptionDecrease = stringResource(id = R.string.common_designsystem_time_picker_decrease_hour)
+                descriptionDecrease = stringResource(id = R.string.common_designsystem_time_picker_decrease_hour),
             )
             Text(
                 text = ":",
                 color = contentColor,
                 style = timeTextStyle,
-                modifier = Modifier.padding(bottom = 5.dp, start = 16.dp, end = 16.dp)
+                modifier = Modifier.padding(bottom = 5.dp, start = 16.dp, end = 16.dp),
             )
             TimePickerButton(
                 value = minute,
@@ -136,7 +138,7 @@ private fun TimeAdjustmentSection(
                 textColor = textColor,
                 maxLimit = 59,
                 descriptionIncrease = stringResource(id = R.string.common_designsystem_time_picker_increase_minute),
-                descriptionDecrease = stringResource(id = R.string.common_designsystem_time_picker_decrease_minute)
+                descriptionDecrease = stringResource(id = R.string.common_designsystem_time_picker_decrease_minute),
             )
         }
     }
@@ -187,13 +189,13 @@ private fun AmPmToggle(
     isAm: Boolean,
     toggleAmPm: () -> Unit,
     contentColor: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val amPmTextStyle = MaterialTheme.typography.labelLarge
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(end = 16.dp)
+        modifier = modifier.padding(end = 16.dp),
     ) {
         Text(
             text = stringResource(id = R.string.common_designsystem_time_picker_am),

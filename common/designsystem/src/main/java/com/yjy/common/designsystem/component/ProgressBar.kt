@@ -38,7 +38,7 @@ fun RoundedLinearProgressBar(
                 durationMillis = 300,
                 easing = FastOutSlowInEasing,
             ),
-            label = "Progress Animation"
+            label = "Progress Animation",
         )
         animatedProgress
     } else {
@@ -53,7 +53,7 @@ fun RoundedLinearProgressBar(
         drawRoundRect(
             color = backgroundColor,
             size = Size(size.width, strokeWidth),
-            cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2)
+            cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2),
         )
 
         if (progressValue > 0f) {
@@ -62,7 +62,7 @@ fun RoundedLinearProgressBar(
                 color = if (enabled) progressColor else disableProgressColor,
                 size = Size(progressWidth, strokeWidth - gapPx),
                 topLeft = Offset(gapOffset, gapOffset),
-                cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2)
+                cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2),
             )
         }
     }

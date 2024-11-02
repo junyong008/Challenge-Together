@@ -43,12 +43,10 @@ internal interface ChallengeTogetherService {
         @Body request: VerifyRequest,
     ): NetworkResult<Unit>
 
-
     @POST("service/change-password")
     suspend fun changePassword(
         @Body request: ChangePasswordRequest,
     ): NetworkResult<Unit>
-
 
     @POST("service/challenge/add-challenge")
     suspend fun addChallenge(
@@ -57,7 +55,6 @@ internal interface ChallengeTogetherService {
 
     @GET("service/challenge/get-my-challenges")
     suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse>
-
 
     @POST("service/user/get-name")
     suspend fun getUserName(): NetworkResult<GetNameResponse>

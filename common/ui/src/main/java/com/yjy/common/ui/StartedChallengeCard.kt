@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.ComponentPreviews
@@ -37,6 +38,8 @@ import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.TargetDays
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+private const val PERCENT_MULTIPLIER = 100
 
 @Composable
 fun StartedChallengeCard(
@@ -81,7 +84,7 @@ private fun ChallengeBody(
                 color = CustomColorProvider.colorScheme.onSurface,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -89,7 +92,7 @@ private fun ChallengeBody(
                 color = CustomColorProvider.colorScheme.onSurfaceMuted,
                 style = MaterialTheme.typography.labelSmall,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.height(16.dp))
             challenge.targetDays.let { targetDays ->
@@ -98,7 +101,7 @@ private fun ChallengeBody(
                     ChallengeProgress(
                         currentSeconds = challenge.currentRecordInSeconds!!,
                         targetDays = targetDays.days,
-                        isCompleted = challenge.isCompleted
+                        isCompleted = challenge.isCompleted,
                     )
                 }
             }
@@ -113,19 +116,19 @@ private fun ChallengeProgress(
     currentSeconds: Long,
     targetDays: Int,
     isCompleted: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val progress = if (isCompleted) {
         1f
     } else {
-        val targetSeconds = targetDays * 24 * 60 * 60L
+        val targetSeconds = targetDays * SECONDS_PER_DAY
         (currentSeconds.toFloat() / targetSeconds).coerceIn(0f, 1f)
     }
-    val progressPercent = (progress * 100).toInt()
+    val progressPercent = (progress * PERCENT_MULTIPLIER).toInt()
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier = modifier,
     ) {
         RoundedLinearProgressBar(
             progress = { progress },
@@ -146,7 +149,7 @@ private fun ChallengeProgress(
 @Composable
 private fun CategoryIcon(
     category: Category,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
@@ -167,7 +170,7 @@ private fun CategoryIcon(
 @Composable
 private fun ChallengeTimer(
     seconds: Long,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -180,7 +183,7 @@ private fun ChallengeTimer(
         Icon(
             painter = painterResource(id = ChallengeTogetherIcons.Timer),
             contentDescription = stringResource(
-                id = R.string.common_ui_started_challenge_card_timer_description
+                id = R.string.common_ui_started_challenge_card_timer_description,
             ),
             tint = CustomColorProvider.colorScheme.onBackground,
             modifier = Modifier.size(20.dp),
@@ -197,7 +200,7 @@ private fun ChallengeTimer(
 @Composable
 private fun CompletedChallengeTimer(
     completedDateTime: LocalDateTime,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -210,7 +213,7 @@ private fun CompletedChallengeTimer(
         Icon(
             painter = painterResource(id = ChallengeTogetherIcons.Check),
             contentDescription = stringResource(
-                id = R.string.common_ui_started_challenge_card_check_description
+                id = R.string.common_ui_started_challenge_card_check_description,
             ),
             tint = CustomColorProvider.colorScheme.onSurface,
             modifier = Modifier.size(24.dp),
@@ -234,7 +237,7 @@ fun StartedChallengeCardPreview() {
                 title = "The Title Of Challenge",
                 description = "challenge description",
                 category = Category.ALL,
-                targetDays = TargetDays.Fixed(100),
+                targetDays = TargetDays.Infinite,
                 currentRecordInSeconds = (24 * 60 * 60) * 30,
                 mode = Mode.CHALLENGE,
                 recentResetDateTime = LocalDateTime.now(),

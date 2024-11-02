@@ -44,7 +44,7 @@ fun ChallengeTogetherSwitch(
             disabledUncheckedBorderColor = Color.Transparent,
             disabledCheckedIconColor = onDisableColor,
             disabledUncheckedIconColor = disableColor,
-        )
+        ),
     )
 }
 

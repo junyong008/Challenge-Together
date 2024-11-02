@@ -61,8 +61,8 @@ class ChallengeRepositoryImplTest {
                     targetDays = "30",
                     startDateTime = "2023-10-13 10:00:00",
                     maxParticipants = "10",
-                    password = roomPassword
-                )
+                    password = roomPassword,
+                ),
             )
         } returns NetworkResult.Success(AddChallengeResponse(expectedChallengeId))
 
@@ -74,7 +74,7 @@ class ChallengeRepositoryImplTest {
             targetDays = targetDays,
             startDateTime = startDateTime,
             maxParticipants = maxParticipants,
-            roomPassword = roomPassword
+            roomPassword = roomPassword,
         )
 
         // Then
@@ -87,8 +87,8 @@ class ChallengeRepositoryImplTest {
                     targetDays = "30",
                     startDateTime = "2023-10-13 10:00:00",
                     maxParticipants = "10",
-                    password = roomPassword
-                )
+                    password = roomPassword,
+                ),
             )
         }
 
@@ -136,7 +136,7 @@ class ChallengeRepositoryImplTest {
             mockk {
                 coEvery { challenges } returns listOf()
                 coEvery { newlyCompletedTitles } returns expectedNewTitles
-            }
+            },
         )
 
         // When

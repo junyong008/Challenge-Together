@@ -39,13 +39,23 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
 import kotlin.math.abs
 
+private const val DEFAULT_RANGE_START = 0
+private const val DEFAULT_RANGE_END = 100
+private const val DEFAULT_VISIBLE_ITEMS = 5
+
+private const val MIN_SCALE = 0.8f
+private const val SCALE_RANGE = 0.2f // 1.0f - MIN_SCALE
+private const val MIN_ALPHA = 0.3f
+private const val ALPHA_RANGE = 0.7f // 1.0f - MIN_ALPHA
+private const val MAX_SCALE = 1.0f
+
 @Composable
 fun NumberPicker(
     selectedNumber: Int,
     onNumberChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    range: IntRange = 0..100,
-    visibleItems: Int = 5,
+    range: IntRange = DEFAULT_RANGE_START..DEFAULT_RANGE_END,
+    visibleItems: Int = DEFAULT_VISIBLE_ITEMS,
     textStyle: TextStyle = MaterialTheme.typography.titleLarge,
     contentColor: Color = CustomColorProvider.colorScheme.onSurface,
     backgroundColor: Color = CustomColorProvider.colorScheme.surface,
@@ -69,7 +79,7 @@ fun NumberPicker(
                 backgroundColor.copy(alpha = 0.8f),
             ),
             startY = 0f,
-            endY = with(density) { lazyColumnHeight.toPx() }
+            endY = with(density) { lazyColumnHeight.toPx() },
         )
     }
 
@@ -123,10 +133,9 @@ fun NumberPicker(
                     val itemCenter = item.offset + item.size / 2f
                     val distanceFromCenter = abs(itemCenter - viewportCenter)
 
-                    // 최대 스케일을 1.0으로 조정
-                    val fraction = (1f - (distanceFromCenter / maxDistance)).coerceIn(0f, 1f)
-                    val scale = 0.8f + 0.2f * fraction
-                    val alpha = 0.3f + 0.7f * fraction
+                    val fraction = (MAX_SCALE - (distanceFromCenter / maxDistance)).coerceIn(0f, MAX_SCALE)
+                    val scale = MIN_SCALE + SCALE_RANGE * fraction
+                    val alpha = MIN_ALPHA + ALPHA_RANGE * fraction
                     map[item.index] = Pair(scale, alpha)
                 }
             }
@@ -150,11 +159,11 @@ fun NumberPicker(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             itemsIndexed(range.toList()) { index, number ->
-                val (scale, alpha) = scaleAndAlphaMap[index] ?: Pair(0.8f, 0.3f)
+                val (scale, alpha) = scaleAndAlphaMap[index] ?: Pair(MIN_SCALE, MIN_ALPHA)
                 Text(
                     text = number.toString(),
                     style = textStyle.copy(
-                        fontSize = textStyle.fontSize * scale
+                        fontSize = textStyle.fontSize * scale,
                     ),
                     modifier = Modifier
                         .padding(vertical = 8.dp)
@@ -168,7 +177,7 @@ fun NumberPicker(
         Box(
             modifier = Modifier
                 .matchParentSize()
-                .background(gradientBrush)
+                .background(gradientBrush),
         )
 
         HorizontalDivider(
@@ -195,12 +204,11 @@ fun NumberPicker(
 fun NumberPickerPreview() {
     ChallengeTogetherTheme {
         Box(
-            modifier = Modifier.background(CustomColorProvider.colorScheme.surface)
+            modifier = Modifier.background(CustomColorProvider.colorScheme.surface),
         ) {
             NumberPicker(
                 selectedNumber = 10,
                 onNumberChange = {},
-                range = IntRange(0, 100),
                 visibleItems = 11,
             )
         }

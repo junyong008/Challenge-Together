@@ -24,9 +24,7 @@ internal fun ServiceNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        homeScreen(
-            onShowSnackbar = onShowSnackbar,
-        )
+        homeScreen()
         addChallengeNavGraph(
             navController = navController,
             onAddChallenge = { challengeId ->

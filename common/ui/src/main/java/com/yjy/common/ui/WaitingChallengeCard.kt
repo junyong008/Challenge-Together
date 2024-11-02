@@ -97,7 +97,7 @@ private fun ChallengeBody(
                 color = CustomColorProvider.colorScheme.onSurface,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -105,7 +105,7 @@ private fun ChallengeBody(
                 color = CustomColorProvider.colorScheme.onSurfaceMuted,
                 style = MaterialTheme.typography.labelSmall,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.height(32.dp))
         }
@@ -117,7 +117,7 @@ private fun ChallengeBody(
 @Composable
 private fun CategoryIcon(
     category: Category,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
@@ -150,7 +150,7 @@ private fun ChallengeFooter(
         ParticipantsSection(
             currentCount = currentCount,
             maxCount = maxCount,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
         Spacer(modifier = Modifier.width(12.dp))
         TargetDaysText(targetDays = challenge.targetDays)
@@ -161,7 +161,7 @@ private fun ChallengeFooter(
 private fun ParticipantsSection(
     currentCount: Int,
     maxCount: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val density = LocalDensity.current
     val textMeasurer = rememberTextMeasurer()
@@ -171,7 +171,7 @@ private fun ParticipantsSection(
     val countTextWidth = remember(currentCount, maxCount) {
         textMeasurer.measure(
             text = "$currentCount / $maxCount",
-            style = participantTextStyle
+            style = participantTextStyle,
         ).size.width
     }
 
@@ -197,7 +197,7 @@ private fun ParticipantsSection(
                 currentCount = currentCount,
                 maxDisplayCount = maxDisplayCount,
                 iconSize = participantIconSize,
-                iconOverlap = iconOverlap
+                iconOverlap = iconOverlap,
             )
             Spacer(modifier = Modifier.width(spacingWidth))
             Text(
@@ -217,16 +217,16 @@ private fun ParticipantIcons(
     iconOverlap: Dp,
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy((-iconOverlap))
+            horizontalArrangement = Arrangement.spacedBy((-iconOverlap)),
         ) {
             val displayCount = minOf(currentCount, maxDisplayCount)
             repeat(displayCount) { index ->
                 ParticipantIcon(
                     zIndex = displayCount - index.toFloat(),
-                    modifier = Modifier.size(iconSize)
+                    modifier = Modifier.size(iconSize),
                 )
             }
         }
@@ -237,7 +237,7 @@ private fun ParticipantIcons(
                 tint = CustomColorProvider.colorScheme.onSurfaceMuted,
                 modifier = Modifier
                     .size(20.dp)
-                    .align(Alignment.Bottom)
+                    .align(Alignment.Bottom),
             )
         }
     }
@@ -249,7 +249,7 @@ private fun TargetDaysText(targetDays: TargetDays) {
         text = (targetDays as? TargetDays.Fixed)?.let { fixed ->
             stringResource(
                 id = R.string.common_ui_waiting_challenge_goal_days,
-                fixed.days.toString()
+                fixed.days.toString(),
             )
         } ?: stringResource(
             id = R.string.common_ui_waiting_challenge_unlimited,
@@ -257,7 +257,7 @@ private fun TargetDaysText(targetDays: TargetDays) {
         color = CustomColorProvider.colorScheme.onBackground,
         style = MaterialTheme.typography.titleSmall,
         textAlign = TextAlign.End,
-        modifier = Modifier.padding(4.dp)
+        modifier = Modifier.padding(4.dp),
     )
 }
 
@@ -275,7 +275,7 @@ private fun ParticipantIcon(
                 color = CustomColorProvider.colorScheme.surface,
                 shape = CircleShape,
             )
-            .zIndex(zIndex)
+            .zIndex(zIndex),
     ) {
         Icon(
             painter = painterResource(id = ChallengeTogetherIcons.Person),
@@ -296,7 +296,7 @@ fun WaitingChallengeCardPreview() {
                 title = "The Title Of Challenge",
                 description = "challenge description",
                 category = Category.ALL,
-                targetDays = TargetDays.Fixed(30),
+                targetDays = TargetDays.Infinite,
                 currentCount = 9,
                 maxCount = 10,
                 isPrivate = true,

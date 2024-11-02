@@ -94,7 +94,9 @@ class AuthRepositoryImplTest {
         // Given
         val password = "password123"
         val hashedPassword = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"
-        coEvery { authDataSource.changePassword(ChangePasswordRequest(hashedPassword)) } returns NetworkResult.Success(Unit)
+        coEvery {
+            authDataSource.changePassword(ChangePasswordRequest(hashedPassword))
+        } returns NetworkResult.Success(Unit)
         coEvery { sessionDataSource.setToken(any()) } returns Unit
         coEvery { sessionDataSource.setLoggedIn(any()) } returns Unit
 

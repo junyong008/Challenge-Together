@@ -8,5 +8,5 @@ data class GetMyChallengesResponse(
     @SerialName("challenges")
     val challenges: List<ChallengeResponse>,
     @SerialName("newlyCompleted")
-    val newlyCompletedTitles: List<String>
+    val newlyCompletedTitles: List<String>,
 )

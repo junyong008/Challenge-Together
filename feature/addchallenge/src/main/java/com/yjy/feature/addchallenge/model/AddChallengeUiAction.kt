@@ -24,7 +24,7 @@ sealed interface AddChallengeUiAction {
         val selectedDate: LocalDate,
         val hour: Int,
         val minute: Int,
-        val isAm: Boolean
+        val isAm: Boolean,
     ) : AddChallengeUiAction
 
     data class OnConfirmStartChallenge(

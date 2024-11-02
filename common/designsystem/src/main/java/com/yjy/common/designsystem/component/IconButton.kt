@@ -17,7 +17,7 @@ fun DebouncedIconButton(
     enabled: Boolean = true,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val multipleEventsCutter = remember { MultipleEventsCutter.get() }
 

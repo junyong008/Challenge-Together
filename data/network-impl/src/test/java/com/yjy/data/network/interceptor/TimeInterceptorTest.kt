@@ -58,7 +58,7 @@ class TimeInterceptorTest {
         val clientTimeHeader = recordedRequest.getHeader("X-Client-Time")
         val localDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
-        assertEquals(localDateTime.substring(0, 16), clientTimeHeader?.substring(0, 16))  // 앞부분 일치 확인 (초는 차이 가능성)
+        assertEquals(localDateTime.substring(0, 16), clientTimeHeader?.substring(0, 16)) // 앞부분 일치 확인 (초는 차이 가능성)
     }
 
     @Test

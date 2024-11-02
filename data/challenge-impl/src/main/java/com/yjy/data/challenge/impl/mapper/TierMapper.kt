@@ -24,6 +24,5 @@ fun ChallengePreferences.Tier.toModel(): Tier = when (this) {
     ChallengePreferences.Tier.TIER_DIAMOND -> Tier.DIAMOND
     ChallengePreferences.Tier.TIER_MASTER -> Tier.MASTER
     ChallengePreferences.Tier.TIER_LEGEND -> Tier.LEGEND
-    ChallengePreferences.Tier.TIER_UNSPECIFIED,
-    ChallengePreferences.Tier.UNRECOGNIZED -> Tier.UNSPECIFIED
+    else -> Tier.UNSPECIFIED
 }

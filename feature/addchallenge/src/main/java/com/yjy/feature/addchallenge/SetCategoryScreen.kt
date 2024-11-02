@@ -99,8 +99,8 @@ internal fun SetCategoryScreen(
                     processAction(
                         AddChallengeUiAction.OnSelectCategory(
                             category = category,
-                            title = title
-                        )
+                            title = title,
+                        ),
                     )
                 },
                 modifier = Modifier.weight(1f),
@@ -125,7 +125,7 @@ private fun CategoryList(
                     AddChallengeStrings.feature_addchallenge_my_challenge
                 } else {
                     category.getDisplayNameResId()
-                }
+                },
             )
 
             CategoryItem(
@@ -164,13 +164,13 @@ private fun CategoryItem(
                     )
                 } else {
                     Modifier
-                }
+                },
             )
             .clickable(
                 role = Role.RadioButton,
                 onClick = onClick,
             ),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier
@@ -200,7 +200,7 @@ private fun CategoryItem(
             colors = RadioButtonDefaults.colors(
                 selectedColor = CustomColorProvider.colorScheme.brand,
                 unselectedColor = CustomColorProvider.colorScheme.onSurfaceMuted,
-            )
+            ),
         )
     }
 }

@@ -12,9 +12,12 @@ enum class Tier(val requireSeconds: Long) {
     PLATINUM(Duration.ofDays(30).seconds),
     DIAMOND(Duration.ofDays(60).seconds),
     MASTER(Duration.ofDays(100).seconds),
-    LEGEND(Duration.ofDays(180).seconds);
+    LEGEND(Duration.ofDays(180).seconds),
+    ;
 
     companion object {
+        private const val SECONDS_PER_DAY = 24 * 60 * 60L
+
         val highestTier: Tier = entries.last { it != UNSPECIFIED }
 
         fun getNextTier(current: Tier): Tier {
@@ -42,7 +45,7 @@ enum class Tier(val requireSeconds: Long) {
 
             val nextTier = getNextTier(currentTier)
             val remainingSeconds = nextTier.requireSeconds - recordInSeconds
-            val remainingDays = ceil(remainingSeconds.toDouble() / (24 * 60 * 60)).toInt()
+            val remainingDays = ceil(remainingSeconds.toDouble() / (SECONDS_PER_DAY)).toInt()
             val progress = recordInSeconds.toFloat() / nextTier.requireSeconds
 
             return TierProgress(

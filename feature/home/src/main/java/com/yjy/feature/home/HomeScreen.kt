@@ -67,7 +67,6 @@ import com.yjy.common.designsystem.component.LoadingWheel
 import com.yjy.common.designsystem.component.LottieImage
 import com.yjy.common.designsystem.component.RibbonMedal
 import com.yjy.common.designsystem.component.RoundedLinearProgressBar
-import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.component.StableImage
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
@@ -79,7 +78,6 @@ import com.yjy.common.ui.StartedChallengeCard
 import com.yjy.common.ui.WaitingChallengeCard
 import com.yjy.feature.home.model.ChallengeSyncUiState
 import com.yjy.feature.home.model.HomeUiAction
-import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
 import com.yjy.feature.home.model.TierUpAnimationState
 import com.yjy.feature.home.model.UnViewedNotificationUiState
@@ -96,12 +94,9 @@ import com.yjy.model.challenge.WaitingChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.common.Tier
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun HomeRoute(
-    onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -126,9 +121,7 @@ internal fun HomeRoute(
         waitingChallenges = waitingChallenges,
         recentCompletedChallenges = recentCompletedChallenges,
         uiState = uiState,
-        uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
-        onShowSnackbar = onShowSnackbar,
     )
 }
 
@@ -144,18 +137,16 @@ internal fun HomeScreen(
     waitingChallenges: List<WaitingChallenge> = emptyList(),
     recentCompletedChallenges: List<String> = emptyList(),
     uiState: HomeUiState = HomeUiState(),
-    uiEvent: Flow<HomeUiEvent> = flowOf(),
     processAction: (HomeUiAction) -> Unit = {},
-    onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val hasError = userNameUiState.isError() ||
-            unViewedNotificationUiState.isError() ||
-            challengeSyncUiState.isError()
+        unViewedNotificationUiState.isError() ||
+        challengeSyncUiState.isError()
 
     val isLoading = userNameUiState.isLoading() ||
-            unViewedNotificationUiState.isLoading() ||
-            challengeSyncUiState.isInitialLoading() ||
-            challengeSyncUiState.isTimeSyncLoading()
+        unViewedNotificationUiState.isLoading() ||
+        challengeSyncUiState.isInitialLoading() ||
+        challengeSyncUiState.isTimeSyncLoading()
 
     val homeContents = HomeContents(
         userName = userNameUiState.getNameOrDefault(),
@@ -189,8 +180,11 @@ internal fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .then(
-                if (hasError || isLoading) Modifier
-                else Modifier.verticalScroll(rememberScrollState())
+                if (hasError || isLoading) {
+                    Modifier
+                } else {
+                    Modifier.verticalScroll(rememberScrollState())
+                },
             ),
     ) {
         HomeTopBar(
@@ -227,7 +221,7 @@ private fun HomeBody(
 private fun HomeContent(
     uiState: HomeUiState,
     processAction: (HomeUiAction) -> Unit,
-    content: HomeContents
+    content: HomeContents,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         ProfileSection(
@@ -284,7 +278,7 @@ private fun HomeTopBar(
         Row(modifier = Modifier.padding(end = 8.dp)) {
             DebouncedIconButton(
                 onClick = onShowCompleteChallengeClick,
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(40.dp),
             ) {
                 Icon(
                     painter = painterResource(id = ChallengeTogetherIcons.CompleteChallenge),
@@ -296,7 +290,7 @@ private fun HomeTopBar(
             }
             DebouncedIconButton(
                 onClick = onShowNotificationClick,
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(40.dp),
             ) {
                 BadgedBox(
                     badge = {
@@ -400,7 +394,7 @@ private fun ProfileCard(
                 text = userName,
                 color = CustomColorProvider.colorScheme.onSurface,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier
+                modifier = Modifier,
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -572,7 +566,7 @@ private fun WaitingChallengesList(
     onChallengeClick: (WaitingChallenge) -> Unit,
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         waitingChallenges.forEach { challenge ->
             WaitingChallengeCard(
@@ -606,7 +600,7 @@ private fun MyChallengeTitle(
             Icon(
                 painter = painterResource(id = ChallengeTogetherIcons.Sort),
                 contentDescription = stringResource(
-                    id = HomeStrings.feature_home_sort_challenge_content_description
+                    id = HomeStrings.feature_home_sort_challenge_content_description,
                 ),
                 tint = CustomColorProvider.colorScheme.onBackgroundMuted,
                 modifier = Modifier.size(20.dp),
@@ -629,13 +623,13 @@ private fun CategoryChipGroup(
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
         items(categories) { category ->
             ChallengeTogetherChip(
                 textResId = category.getDisplayNameResId(),
                 isSelected = category == selectedCategory,
-                onSelectionChanged = { onCategorySelected(category) }
+                onSelectionChanged = { onCategorySelected(category) },
             )
         }
     }
@@ -726,14 +720,14 @@ private fun SortItem(
                     )
                 } else {
                     Modifier
-                }
+                },
             )
             .clickable(
                 role = Role.RadioButton,
                 onClick = onClick,
             )
             .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = title,
@@ -747,7 +741,7 @@ private fun SortItem(
             colors = RadioButtonDefaults.colors(
                 selectedColor = CustomColorProvider.colorScheme.brand,
                 unselectedColor = CustomColorProvider.colorScheme.onSurfaceMuted,
-            )
+            ),
         )
     }
 }
@@ -778,12 +772,12 @@ private fun ChallengeCompletedBottomSheet(
             StableImage(
                 drawableResId = R.drawable.image_congrats,
                 descriptionResId = HomeStrings.feature_home_congratulations_image_description,
-                modifier = Modifier.size(150.dp)
+                modifier = Modifier.size(150.dp),
             )
             LottieImage(
                 animationResId = R.raw.anim_congrats,
                 repeatCount = 1,
-                modifier = Modifier.size(250.dp)
+                modifier = Modifier.size(250.dp),
             )
         }
     }
@@ -801,7 +795,7 @@ private fun TierUpAnimationDialog(
             usePlatformDefaultWidth = false,
             dismissOnBackPress = false,
             dismissOnClickOutside = false,
-        )
+        ),
     ) {
         val promotedTierText = stringResource(id = to.getDisplayNameResId())
         val animation = when (from) {
@@ -826,16 +820,17 @@ private fun TierUpAnimationDialog(
                 visible = isAnimationEnd,
                 text = stringResource(id = HomeStrings.feature_home_promoted),
                 color = Color.White,
-                style = MaterialTheme.typography.displaySmall
+                style = MaterialTheme.typography.displaySmall,
             )
             Spacer(modifier = Modifier.height(8.dp))
             TierUpAnimatedText(
                 visible = isAnimationEnd,
                 text = stringResource(
-                    id = HomeStrings.feature_home_promoted_description, promotedTierText
+                    id = HomeStrings.feature_home_promoted_description,
+                    promotedTierText,
                 ),
                 color = Color.LightGray,
-                style = MaterialTheme.typography.labelLarge
+                style = MaterialTheme.typography.labelLarge,
             )
             Spacer(modifier = Modifier.height(32.dp))
             LottieImage(
@@ -856,30 +851,33 @@ private fun TierUpAnimationDialog(
     }
 }
 
+private val INITIAL_OFFSET_Y = (-40).dp
+private const val TIER_ANIMATION_DURATION = 500
+
 @Composable
 private fun TierUpAnimatedText(
     visible: Boolean,
     text: String,
     color: Color,
     style: TextStyle,
-    offsetY: Dp = (-40).dp,
+    offsetY: Dp = INITIAL_OFFSET_Y,
 ) {
     val alpha by animateFloatAsState(
         targetValue = if (visible) 1f else 0f,
         animationSpec = tween(
-            durationMillis = 500,
-            easing = FastOutSlowInEasing
+            durationMillis = TIER_ANIMATION_DURATION,
+            easing = FastOutSlowInEasing,
         ),
-        label = "AnimatedText Alpha Animation"
+        label = "AnimatedText Alpha Animation",
     )
 
     val offset by animateDpAsState(
         targetValue = if (visible) 0.dp else offsetY,
         animationSpec = tween(
             durationMillis = 500,
-            easing = FastOutSlowInEasing
+            easing = FastOutSlowInEasing,
         ),
-        label = "AnimatedText Offset Animation"
+        label = "AnimatedText Offset Animation",
     )
 
     Text(
@@ -887,7 +885,7 @@ private fun TierUpAnimatedText(
         color = color.copy(alpha = alpha),
         style = style,
         textAlign = TextAlign.Center,
-        modifier = Modifier.offset { IntOffset(0, offset.roundToPx()) }
+        modifier = Modifier.offset { IntOffset(0, offset.roundToPx()) },
     )
 }
 
@@ -899,25 +897,25 @@ private fun TierUpAnimatedButton(
     val alpha by animateFloatAsState(
         targetValue = if (visible) 1f else 0f,
         animationSpec = tween(
-            durationMillis = 500,
-            easing = FastOutSlowInEasing
+            durationMillis = TIER_ANIMATION_DURATION,
+            easing = FastOutSlowInEasing,
         ),
-        label = "AnimatedButton Alpha Animation"
+        label = "AnimatedButton Alpha Animation",
     )
 
     val offset by animateDpAsState(
         targetValue = if (visible) 0.dp else 40.dp,
         animationSpec = tween(
-            durationMillis = 500,
-            easing = FastOutSlowInEasing
+            durationMillis = TIER_ANIMATION_DURATION,
+            easing = FastOutSlowInEasing,
         ),
-        label = "AnimatedButton Offset Animation"
+        label = "AnimatedButton Offset Animation",
     )
 
     Box(
         modifier = Modifier
             .offset { IntOffset(0, offset.roundToPx()) }
-            .alpha(alpha)
+            .alpha(alpha),
     ) {
         ChallengeTogetherOutlinedButton(
             onClick = onClick,

@@ -106,15 +106,22 @@ internal fun SetStartDateScreen(
                     onDateSelected = { selectedDate ->
                         val (hour, minute, isAm) = uiState.startDateTime.to12HourFormat()
                         processAction(AddChallengeUiAction.OnStartDateTimeUpdated(selectedDate, hour, minute, isAm))
-                    }
+                    },
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 TimeSelector(
                     startDateTime = uiState.startDateTime,
                     onTimeSelected = { selectedHour, selectedMinute, selectedAmPm ->
                         val selectedDate = uiState.startDateTime.toLocalDate()
-                        processAction(AddChallengeUiAction.OnStartDateTimeUpdated(selectedDate, selectedHour, selectedMinute, selectedAmPm))
-                    }
+                        processAction(
+                            AddChallengeUiAction.OnStartDateTimeUpdated(
+                                selectedDate = selectedDate,
+                                hour = selectedHour,
+                                minute = selectedMinute,
+                                isAm = selectedAmPm,
+                            ),
+                        )
+                    },
                 )
             }
         }
@@ -124,7 +131,7 @@ internal fun SetStartDateScreen(
 @Composable
 private fun DateSelector(
     selectedDate: LocalDate,
-    onDateSelected: (LocalDate) -> Unit
+    onDateSelected: (LocalDate) -> Unit,
 ) {
     Calendar(
         selectionMode = SelectionMode.SingleDate(selectedDate),
@@ -138,7 +145,7 @@ private fun DateSelector(
 @Composable
 private fun TimeSelector(
     startDateTime: LocalDateTime,
-    onTimeSelected: (Int, Int, Boolean) -> Unit
+    onTimeSelected: (Int, Int, Boolean) -> Unit,
 ) {
     val (hour, minute, isAm) = startDateTime.to12HourFormat()
     TimePicker(

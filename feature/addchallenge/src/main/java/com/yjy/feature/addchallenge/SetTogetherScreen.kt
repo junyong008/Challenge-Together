@@ -123,7 +123,9 @@ internal fun SetTogetherScreen(
         if (uiState.shouldShowAddConfirmDialog) {
             ChallengeTogetherDialog(
                 title = stringResource(id = AddChallengeStrings.feature_addchallenge_dialog_create_room_title),
-                description = stringResource(id = AddChallengeStrings.feature_addchallenge_dialog_create_room_description),
+                description = stringResource(
+                    id = AddChallengeStrings.feature_addchallenge_dialog_create_room_description,
+                ),
                 positiveTextRes = AddChallengeStrings.feature_addchallenge_dialog_create,
                 onClickPositive = {
                     processAction(
@@ -135,7 +137,7 @@ internal fun SetTogetherScreen(
                             maxParticipants = uiState.maxParticipants,
                             enableRoomPassword = uiState.enableRoomPassword,
                             roomPassword = uiState.roomPassword,
-                        )
+                        ),
                     )
                 },
                 onClickNegative = { processAction(AddChallengeUiAction.OnCancelCreateWaitingRoom) },
@@ -242,7 +244,9 @@ private fun RoomPasswordCard(
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = ChallengeTogetherIcons.Lock),
-                        contentDescription = stringResource(id = AddChallengeStrings.feature_addchallenge_room_password_icon),
+                        contentDescription = stringResource(
+                            id = AddChallengeStrings.feature_addchallenge_room_password_icon,
+                        ),
                         tint = CustomColorProvider.colorScheme.onBackground,
                     )
                 },
@@ -250,7 +254,9 @@ private fun RoomPasswordCard(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done,
                 ),
-                placeholderText = stringResource(id = AddChallengeStrings.feature_addchallenge_room_password_placeholder),
+                placeholderText = stringResource(
+                    id = AddChallengeStrings.feature_addchallenge_room_password_placeholder,
+                ),
                 isPassword = true,
             )
         }
@@ -282,7 +288,7 @@ private fun MaxParticipantsCard(
         )
         Spacer(modifier = Modifier.width(8.dp))
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             NumberPicker(
                 selectedNumber = maxParticipants,

@@ -53,7 +53,7 @@ internal object DataStoreModule {
     ): DataStore<ChallengePreferences> {
         return DataStoreFactory.create(
             serializer = challengePreferencesSerializer,
-            produceFile = { context.dataStoreFile("challenge_preferences.pb") }
+            produceFile = { context.dataStoreFile("challenge_preferences.pb") },
         )
     }
 }

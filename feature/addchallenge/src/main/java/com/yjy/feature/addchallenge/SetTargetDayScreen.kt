@@ -114,7 +114,7 @@ internal fun SetTargetDayScreen(
                 contentColor = CustomColorProvider.colorScheme.onSurface,
                 shape = MaterialTheme.shapes.large,
                 textStyle = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally),
             )
             Spacer(modifier = Modifier.height(20.dp))
             TargetDaySwitch(
@@ -128,8 +128,8 @@ internal fun SetTargetDayScreen(
                                 TargetDays.Fixed(INIT_CHALLENGE_TARGET_DAYS)
                             } else {
                                 TargetDays.Infinite
-                            }
-                        )
+                            },
+                        ),
                     )
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -180,7 +180,7 @@ private fun TargetDaysSelector(
                         painter = painterResource(id = ChallengeTogetherIcons.Infinite),
                         tint = CustomColorProvider.colorScheme.onBackground,
                         contentDescription = stringResource(
-                            id = AddChallengeStrings.feature_addchallenge_unlimited
+                            id = AddChallengeStrings.feature_addchallenge_unlimited,
                         ),
                         modifier = Modifier
                             .fillMaxSize()
@@ -225,7 +225,7 @@ private fun TargetDaySwitch(
 
     val animatedWidth by animateDpAsState(
         targetValue = if (isLeftSelected) leftWidth.dp else rightWidth.dp,
-        label = "SwitchWidth Animation"
+        label = "SwitchWidth Animation",
     )
 
     Box(
@@ -233,7 +233,7 @@ private fun TargetDaySwitch(
             .height(IntrinsicSize.Min)
             .clip(shape)
             .background(switchBackgroundColor)
-            .padding(gap)
+            .padding(gap),
     ) {
         Box(
             modifier = Modifier
@@ -241,7 +241,7 @@ private fun TargetDaySwitch(
                 .width(animatedWidth)
                 .fillMaxHeight()
                 .clip(shape)
-                .background(selectedColor)
+                .background(selectedColor),
         )
 
         Row(
@@ -266,7 +266,6 @@ private fun TargetDaySwitch(
                     color = if (isLeftSelected) onSelectedColor else unselectedColor,
                     style = textStyle,
                 )
-
             }
             Box(
                 modifier = Modifier

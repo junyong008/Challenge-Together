@@ -22,9 +22,7 @@ internal fun ChallengeResponse.toEntity() = ChallengeEntity(
 )
 
 internal fun ChallengeEntity.toStartedChallengeModel(): StartedChallenge {
-    val resetDateTime = recentResetDateTime
-        ?: throw IllegalStateException("Started challenge must have reset time")
-
+    requireNotNull(recentResetDateTime)
     return ChallengeFactory.createStartedChallenge(
         id = id,
         title = title,
@@ -32,7 +30,7 @@ internal fun ChallengeEntity.toStartedChallengeModel(): StartedChallenge {
         category = category.toCategory(),
         targetDays = targetDays.toTargetDays(),
         mode = Mode.valueOf(mode),
-        recentResetDateTime = resetDateTime,
+        recentResetDateTime = recentResetDateTime!!,
         isCompleted = isCompleted,
     )
 }

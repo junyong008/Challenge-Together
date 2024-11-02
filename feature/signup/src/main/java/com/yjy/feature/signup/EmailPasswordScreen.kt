@@ -139,7 +139,7 @@ internal fun EmailPasswordScreen(
                 ConditionIndicator(
                     text = stringResource(
                         id = SignUpStrings.feature_signup_password_length_indicator,
-                        MIN_PASSWORD_LENGTH
+                        MIN_PASSWORD_LENGTH,
                     ),
                     isMatched = uiState.isPasswordLongEnough,
                 )

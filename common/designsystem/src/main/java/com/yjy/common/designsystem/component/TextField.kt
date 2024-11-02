@@ -137,7 +137,7 @@ fun ChallengeTogetherTextField(
                 if (isPassword && value.isNotEmpty()) {
                     IconButton(
                         onClick = { passwordVisible = !passwordVisible },
-                        modifier = Modifier.size(40.dp)
+                        modifier = Modifier.size(40.dp),
                     ) {
                         Icon(
                             painter = painterResource(
@@ -145,14 +145,18 @@ fun ChallengeTogetherTextField(
                                     ChallengeTogetherIcons.Visibility
                                 } else {
                                     ChallengeTogetherIcons.VisibilityOff
-                                }
+                                },
                             ),
                             contentDescription = if (passwordVisible) {
-                                stringResource(id = R.string.common_designsystem_input_password_hide_content_description)
+                                stringResource(
+                                    id = R.string.common_designsystem_input_password_hide_content_description,
+                                )
                             } else {
-                                stringResource(id = R.string.common_designsystem_input_password_show_content_description)
+                                stringResource(
+                                    id = R.string.common_designsystem_input_password_show_content_description,
+                                )
                             },
-                            tint = passwordIconColor
+                            tint = passwordIconColor,
                         )
                     }
                 }
@@ -200,14 +204,14 @@ fun SingleLineTextField(
             if (value.isNotEmpty()) {
                 IconButton(
                     onClick = { if (enabled) onValueChange("") },
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier.size(40.dp),
                 ) {
                     Icon(
                         painter = painterResource(id = ChallengeTogetherIcons.Cancel),
                         contentDescription = stringResource(
                             id = R.string.common_designsystem_clear_content_description,
                         ),
-                        tint = trailingIconColor
+                        tint = trailingIconColor,
                     )
                 }
             }
@@ -269,7 +273,7 @@ fun CursorLessNumberTextField(
                         internalValue = ""
                         focusRequester.requestFocus()
                         keyboardController?.show()
-                    }
+                    },
             ) {
                 Text(
                     text = value.toString(),

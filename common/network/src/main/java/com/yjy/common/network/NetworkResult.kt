@@ -26,12 +26,6 @@ inline fun <T, E> handleNetworkResult(
     }
 }
 
-val <T> NetworkResult<T>.isSuccess: Boolean
-    get() = this is NetworkResult.Success
-
-val <T> NetworkResult<T>.isFailure: Boolean
-    get() = this is NetworkResult.Failure
-
 inline fun <T> NetworkResult<T>.onSuccess(
     action: (value: T) -> Unit,
 ): NetworkResult<T> {
@@ -47,18 +41,8 @@ inline fun <T> NetworkResult<T>.onFailure(
 }
 
 inline fun <T, R> NetworkResult<T>.map(
-    transform: (T) -> R
+    transform: (T) -> R,
 ): NetworkResult<R> = when (this) {
     is NetworkResult.Success -> NetworkResult.Success(transform(data))
-    is NetworkResult.Failure -> this
-}
-
-inline fun <T> NetworkResult<T>.mapToUnit(
-    action: (T) -> Unit
-): NetworkResult<Unit> = when (this) {
-    is NetworkResult.Success -> {
-        action(data)
-        NetworkResult.Success(Unit)
-    }
     is NetworkResult.Failure -> this
 }

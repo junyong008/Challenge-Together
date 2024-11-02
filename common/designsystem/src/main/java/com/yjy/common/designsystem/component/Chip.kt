@@ -33,7 +33,7 @@ fun ChallengeTogetherChip(
                     CustomColorProvider.colorScheme.brandBright
                 } else {
                     CustomColorProvider.colorScheme.chipBackground
-                }
+                },
             )
             .clickable { onSelectionChanged(!isSelected) }
             .padding(horizontal = 16.dp, vertical = 8.dp),

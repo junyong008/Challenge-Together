@@ -15,5 +15,5 @@ enum class Category {
     QUIT_EATING_OUT,
     QUIT_SHOPPING,
     QUIT_SWEARING,
-    QUIT_SMARTPHONE;
+    QUIT_SMARTPHONE,
 }
