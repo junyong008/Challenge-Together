@@ -1,7 +1,6 @@
 package com.yjy.feature.home
 
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
-import com.yjy.common.core.util.TimeManager
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.user.api.UserRepository
@@ -24,7 +23,6 @@ import io.mockk.mockk
 import io.mockk.runs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -48,11 +46,8 @@ class HomeViewModelTest {
     private lateinit var getStartedChallengesUseCase: GetStartedChallengesUseCase
     private lateinit var challengeRepository: ChallengeRepository
     private lateinit var userRepository: UserRepository
-    private lateinit var timeManager: TimeManager
     private lateinit var viewModel: HomeViewModel
 
-    private val timeChangedFlow = MutableSharedFlow<Unit>(replay = 1)
-    private val tickerFlow = MutableStateFlow(LocalDateTime.now())
     private val startedChallengesFlow = MutableStateFlow(emptyList<StartedChallenge>())
     private val sortOrderFlow = MutableStateFlow(SortOrder.LATEST)
     private val currentTierFlow = MutableStateFlow(Tier.IRON)
@@ -68,7 +63,6 @@ class HomeViewModelTest {
 
         challengeRepository = mockk(relaxed = true)
         userRepository = mockk(relaxed = true)
-        timeManager = mockk(relaxed = true)
         getStartedChallengesUseCase = mockk(relaxed = true)
 
         coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Success(emptyList())
@@ -80,12 +74,9 @@ class HomeViewModelTest {
         coEvery { userRepository.getUserName() } returns NetworkResult.Success("test")
         coEvery { userRepository.getUnViewedNotificationCount() } returns NetworkResult.Success(0)
 
-        coEvery { timeManager.tickerFlow } returns tickerFlow
-        coEvery { timeManager.timeChangedFlow } returns timeChangedFlow
         coEvery { getStartedChallengesUseCase() } returns startedChallengesFlow
 
         viewModel = HomeViewModel(
-            timeManager = timeManager,
             userRepository = userRepository,
             challengeRepository = challengeRepository,
             getStartedChallengesUseCase = getStartedChallengesUseCase,
@@ -100,9 +91,8 @@ class HomeViewModelTest {
     private fun createTestChallenge(
         id: String = "1",
         title: String = "Test Challenge",
-        now: LocalDateTime,
-        daysAgo: Long = 1,
         recordInDays: Long = 1,
+        isCompleted: Boolean = false,
     ) = ChallengeFactory.createStartedChallenge(
         id = id,
         title = title,
@@ -110,21 +100,19 @@ class HomeViewModelTest {
         category = Category.QUIT_DRUGS,
         targetDays = TargetDays.Fixed(days = 30),
         mode = Mode.CHALLENGE,
-        recentResetDateTime = now.minusDays(daysAgo),
+        recentResetDateTime = LocalDateTime.now(),
         currentRecordInSeconds = recordInDays * SECONDS_PER_DAY,
-        isCompleted = false,
+        isCompleted = isCompleted,
     )
 
     private suspend fun TestScope.emitUpdatedState(
         sortOrder: SortOrder = SortOrder.LATEST,
         tier: Tier = Tier.IRON,
         challenges: List<StartedChallenge>,
-        time: LocalDateTime,
     ) {
         sortOrderFlow.emit(sortOrder)
         currentTierFlow.emit(tier)
         startedChallengesFlow.emit(challenges)
-        tickerFlow.emit(time)
         advanceUntilIdle()
     }
 
@@ -178,40 +166,11 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `time change should update started challenges`() = runTest {
+    fun `started challenges should not update during sync but update after sync complete`() = runTest {
         // Given
         var challenges: List<StartedChallenge>? = null
         var syncState: ChallengeSyncUiState? = null
-
-        val now = LocalDateTime.now()
-        val testChallenge = createTestChallenge(now = now)
-
-        val job = launch {
-            launch { viewModel.startedChallenges.collect { challenges = it } }
-            launch { viewModel.challengeSyncState.collect { syncState = it } }
-            launch { viewModel.currentTier.collect {} }
-        }
-
-        // When: 초기 동기화 완료
-        advanceUntilIdle()
-        assertEquals(ChallengeSyncUiState.Success, syncState)
-
-        // When: 챌린지 상태 업데이트
-        emitUpdatedState(challenges = listOf(testChallenge), time = now)
-
-        // Then
-        assertEquals(listOf(testChallenge), challenges)
-
-        job.cancel()
-    }
-
-    @Test
-    fun `started challenges should not update during time sync but update after sync complete`() = runTest {
-        // Given
-        var challenges: List<StartedChallenge>? = null
-        var syncState: ChallengeSyncUiState? = null
-        val now = LocalDateTime.now()
-        val initialChallenge = createTestChallenge(id = "1", title = "Initial Challenge", now = now)
+        val initialChallenge = createTestChallenge(id = "1", title = "Initial Challenge")
         val newChallenge = initialChallenge.copy(id = "2", title = "New Challenge")
 
         coEvery { challengeRepository.syncChallenges() } coAnswers {
@@ -229,17 +188,16 @@ class HomeViewModelTest {
         advanceUntilIdle()
         assertEquals(ChallengeSyncUiState.Success, syncState)
 
-        emitUpdatedState(challenges = listOf(initialChallenge), time = now)
+        emitUpdatedState(challenges = listOf(initialChallenge))
         assertEquals(listOf(initialChallenge), challenges)
 
-        // When: 시간 변경으로 동기화 시작
-        timeChangedFlow.emit(Unit)
+        // When: 동기화 시작
+        viewModel.processAction(HomeUiAction.OnScreenLoad)
         advanceTimeBy(SYNC_HALF_TIME)
         startedChallengesFlow.emit(listOf(newChallenge))
-        tickerFlow.emit(now)
 
         // Then: 동기화 중에는 초기 상태 유지
-        assertEquals(ChallengeSyncUiState.Loading.TimeSync, syncState)
+        assertEquals(ChallengeSyncUiState.Loading.Manual, syncState)
         assertEquals(listOf(initialChallenge), challenges)
 
         // When: 동기화 완료
@@ -254,76 +212,15 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `challenges should be sorted by latest, oldest and title order`() = runTest {
-        // Given
-        var challenges: List<StartedChallenge>? = null
-        var syncState: ChallengeSyncUiState? = null
-
-        val now = LocalDateTime.now()
-        val challenge1 = createTestChallenge(
-            id = "1",
-            title = "B Challenge",
-            now = now,
-            daysAgo = 5,
-            recordInDays = 5,
-        )
-        val challenge2 = createTestChallenge(
-            id = "2",
-            title = "A Challenge",
-            now = now,
-            daysAgo = 10,
-            recordInDays = 10,
-        )
-
-        val job = launch {
-            launch { viewModel.startedChallenges.collect { challenges = it } }
-            launch { viewModel.challengeSyncState.collect { syncState = it } }
-            launch { viewModel.currentTier.collect {} }
-        }
-
-        // When: 초기 동기화 완료
-        advanceUntilIdle()
-        assertEquals(ChallengeSyncUiState.Success, syncState)
-
-        // When: 최신순으로 정렬
-        emitUpdatedState(
-            sortOrder = SortOrder.LATEST,
-            challenges = listOf(challenge1, challenge2),
-            time = now,
-        )
-
-        // Then: ID 내림차순 정렬
-        assertEquals(listOf(challenge2, challenge1), challenges)
-
-        // When: 오래된순으로 정렬
-        sortOrderFlow.emit(SortOrder.OLDEST)
-        advanceUntilIdle()
-
-        // Then: ID 오름차순 정렬
-        assertEquals(listOf(challenge1, challenge2), challenges)
-
-        // When: 제목순으로 정렬
-        sortOrderFlow.emit(SortOrder.TITLE)
-        advanceUntilIdle()
-
-        // Then: 알파벳 순 정렬
-        assertEquals(listOf(challenge2, challenge1), challenges)
-
-        job.cancel()
-    }
-
-    @Test
     fun `completed challenge should trigger tier upgrade animation`() = runTest {
         // Given
         var uiState: HomeUiState? = null
         var syncState: ChallengeSyncUiState? = null
         var currentTier: Tier? = null
 
-        val now = LocalDateTime.now()
         val challenge = createTestChallenge(
-            now = now,
-            daysAgo = 15,
             recordInDays = 15,
+            isCompleted = true,
         )
 
         val job = launch {
@@ -339,7 +236,7 @@ class HomeViewModelTest {
         assertEquals(Tier.IRON, currentTier)
 
         // When: 챌린지 완료로 티어 업그레이드 발생
-        emitUpdatedState(challenges = listOf(challenge), time = now)
+        emitUpdatedState(challenges = listOf(challenge))
 
         // Then: 티어 업그레이드 애니메이션 상태 확인
         val animation = uiState?.tierUpAnimation
