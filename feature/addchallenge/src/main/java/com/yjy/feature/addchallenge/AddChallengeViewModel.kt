@@ -1,7 +1,7 @@
 package com.yjy.feature.addchallenge
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yjy.common.core.base.BaseViewModel
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_DESCRIPTION_LENGTH
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_TARGET_DAYS
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_TITLE_LENGTH
@@ -19,6 +19,13 @@ import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.TargetDays
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -27,7 +34,19 @@ import javax.inject.Inject
 @HiltViewModel
 class AddChallengeViewModel @Inject constructor(
     private val challengeRepository: ChallengeRepository,
-) : BaseViewModel<AddChallengeUiState, AddChallengeUiEvent>(initialState = AddChallengeUiState()) {
+) : ViewModel() {
+
+    private val _uiState: MutableStateFlow<AddChallengeUiState> = MutableStateFlow(AddChallengeUiState())
+    val uiState: StateFlow<AddChallengeUiState> = _uiState.asStateFlow()
+
+    private val _uiEvent = Channel<AddChallengeUiEvent>()
+    val uiEvent: Flow<AddChallengeUiEvent> = _uiEvent.receiveAsFlow()
+
+    private fun sendEvent(event: AddChallengeUiEvent) {
+        viewModelScope.launch {
+            _uiEvent.send(event)
+        }
+    }
 
     fun processAction(action: AddChallengeUiAction) {
         when (action) {
@@ -73,22 +92,22 @@ class AddChallengeViewModel @Inject constructor(
     }
 
     private fun updateMode(mode: Mode) {
-        updateState { copy(mode = mode) }
+        _uiState.update { it.copy(mode = mode) }
         sendEvent(AddChallengeUiEvent.ModeSelected)
     }
 
     private fun updateCategory(category: Category, title: String) {
-        updateState { copy(category = category, title = title) }
+        _uiState.update { it.copy(category = category, title = title) }
     }
 
     private fun updateTitle(title: String) {
         if (title.length > MAX_CHALLENGE_TITLE_LENGTH) return
-        updateState { copy(title = title) }
+        _uiState.update { it.copy(title = title) }
     }
 
     private fun updateDescription(description: String) {
         if (description.length > MAX_CHALLENGE_DESCRIPTION_LENGTH) return
-        updateState { copy(description = description) }
+        _uiState.update { it.copy(description = description) }
     }
 
     private fun updateStartDateTime(
@@ -101,10 +120,10 @@ class AddChallengeViewModel @Inject constructor(
         val newDateTime = selectedDate.atTime(hour24Format, selectedMinute)
 
         if (newDateTime > LocalDateTime.now()) {
-            updateState { copy(startDateTime = LocalDateTime.now()) }
+            _uiState.update { it.copy(startDateTime = LocalDateTime.now()) }
             sendEvent(AddChallengeUiEvent.StartDateTimeOutOfRange)
         } else {
-            updateState { copy(startDateTime = newDateTime) }
+            _uiState.update { it.copy(startDateTime = newDateTime) }
         }
     }
 
@@ -118,32 +137,32 @@ class AddChallengeViewModel @Inject constructor(
     private fun updateTargetDays(targetDays: TargetDays) {
         if (targetDays is TargetDays.Fixed) {
             val adjustedDays = targetDays.days.coerceIn(MIN_CHALLENGE_TARGET_DAYS, MAX_CHALLENGE_TARGET_DAYS)
-            updateState { copy(targetDays = TargetDays.Fixed(adjustedDays)) }
+            _uiState.update { it.copy(targetDays = TargetDays.Fixed(adjustedDays)) }
         } else {
-            updateState { copy(targetDays = targetDays) }
+            _uiState.update { it.copy(targetDays = targetDays) }
         }
     }
 
     private fun updateMaxParticipants(maxParticipants: Int) {
         if (maxParticipants < MIN_CHALLENGE_TARGET_DAYS || maxParticipants > MAX_CHALLENGE_TARGET_DAYS) return
-        updateState { copy(maxParticipants = maxParticipants) }
+        _uiState.update { it.copy(maxParticipants = maxParticipants) }
     }
 
     private fun updateEnableRoomPassword(enableRoomPassword: Boolean) {
-        updateState { copy(enableRoomPassword = enableRoomPassword) }
+        _uiState.update { it.copy(enableRoomPassword = enableRoomPassword) }
     }
 
     private fun updateRoomPassword(roomPassword: String) {
         if (roomPassword.length > MAX_ROOM_PASSWORD_LENGTH) return
-        updateState { copy(roomPassword = roomPassword.filter { !it.isWhitespace() }) }
+        _uiState.update { it.copy(roomPassword = roomPassword.filter { !it.isWhitespace() }) }
     }
 
     private fun showAddConfirmDialog() {
-        updateState { copy(shouldShowAddConfirmDialog = true) }
+        _uiState.update { it.copy(shouldShowAddConfirmDialog = true) }
     }
 
     private fun dismissAddConfirmDialog() {
-        updateState { copy(shouldShowAddConfirmDialog = false) }
+        _uiState.update { it.copy(shouldShowAddConfirmDialog = false) }
     }
 
     private fun startChallenge(
@@ -156,7 +175,7 @@ class AddChallengeViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             dismissAddConfirmDialog()
-            updateState { copy(isAddingChallenge = true) }
+            _uiState.update { it.copy(isAddingChallenge = true) }
 
             val adjustedStartDateTime = when {
                 mode == Mode.FREE -> {
@@ -180,7 +199,7 @@ class AddChallengeViewModel @Inject constructor(
                 onUnknownError = { AddChallengeUiEvent.AddFailure.UnknownError },
             )
             sendEvent(event)
-            updateState { copy(isAddingChallenge = false) }
+            _uiState.update { it.copy(isAddingChallenge = false) }
         }
     }
 
@@ -195,7 +214,7 @@ class AddChallengeViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             dismissAddConfirmDialog()
-            updateState { copy(isAddingChallenge = true) }
+            _uiState.update { it.copy(isAddingChallenge = true) }
 
             val event = handleNetworkResult(
                 result = challengeRepository.addChallenge(
@@ -212,7 +231,7 @@ class AddChallengeViewModel @Inject constructor(
                 onUnknownError = { AddChallengeUiEvent.AddFailure.UnknownError },
             )
             sendEvent(event)
-            updateState { copy(isAddingChallenge = false) }
+            _uiState.update { it.copy(isAddingChallenge = false) }
         }
     }
 }

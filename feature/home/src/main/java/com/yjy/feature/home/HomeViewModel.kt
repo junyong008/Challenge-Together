@@ -1,7 +1,7 @@
 package com.yjy.feature.home
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yjy.common.core.base.BaseViewModel
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.core.extensions.restartableStateIn
 import com.yjy.common.network.onFailure
@@ -11,7 +11,6 @@ import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.GetStartedChallengesUseCase
 import com.yjy.feature.home.model.ChallengeSyncUiState
 import com.yjy.feature.home.model.HomeUiAction
-import com.yjy.feature.home.model.HomeUiEvent
 import com.yjy.feature.home.model.HomeUiState
 import com.yjy.feature.home.model.TierUpAnimationState
 import com.yjy.feature.home.model.UnViewedNotificationUiState
@@ -26,7 +25,10 @@ import com.yjy.model.challenge.core.TargetDays
 import com.yjy.model.common.Tier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -35,6 +37,7 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -44,7 +47,7 @@ class HomeViewModel @Inject constructor(
     getStartedChallengesUseCase: GetStartedChallengesUseCase,
     private val userRepository: UserRepository,
     private val challengeRepository: ChallengeRepository,
-) : BaseViewModel<HomeUiState, HomeUiEvent>(initialState = HomeUiState()) {
+) : ViewModel() {
 
     // 로딩 처리 없이 데이터를 최신화 하기 위한 트리거
     private val syncTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
@@ -53,6 +56,9 @@ class HomeViewModel @Inject constructor(
 
     // 동기화 간 자연스러운 전환을 위한 리스트 캐시
     private var lastProcessedChallenges: List<SimpleStartedChallenge> = emptyList()
+
+    private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
+    val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     val challengeSyncState = merge(
         syncTrigger.map { SyncTrigger.Manual },
@@ -191,7 +197,7 @@ class HomeViewModel @Inject constructor(
             challengeRepository.setCurrentTier(calculatedTier)
         } else if (calculatedTier > savedTier) {
             val animation = TierUpAnimationState(from = savedTier, to = Tier.getNextTier(savedTier))
-            updateState { copy(tierUpAnimation = animation) }
+            _uiState.update { it.copy(tierUpAnimation = animation) }
         }
     }
 
@@ -205,8 +211,8 @@ class HomeViewModel @Inject constructor(
             recordInSeconds = currentTierBestRecord,
         )
 
-        updateState {
-            copy(
+        _uiState.update {
+            it.copy(
                 tierProgress = tierProgress.progress,
                 remainDayForNextTier = tierProgress.remainingDays,
             )
@@ -215,7 +221,7 @@ class HomeViewModel @Inject constructor(
 
     private fun updateCurrentBestRecord(challenges: List<SimpleStartedChallenge>) {
         val currentBestRecord = challenges.getBestRecord()
-        updateState { copy(currentBestRecordInSeconds = currentBestRecord) }
+        _uiState.update { it.copy(currentBestRecordInSeconds = currentBestRecord) }
     }
 
     private fun List<SimpleStartedChallenge>.getBestRecord(): Long {
@@ -233,7 +239,7 @@ class HomeViewModel @Inject constructor(
             )
         }
 
-        updateState { copy(categories = categories) }
+        _uiState.update { it.copy(categories = categories) }
     }
 
     fun processAction(action: HomeUiAction) {
@@ -269,19 +275,19 @@ class HomeViewModel @Inject constructor(
         val animation = uiState.value.tierUpAnimation ?: return@launch
 
         challengeRepository.setCurrentTier(animation.to)
-        updateState { copy(tierUpAnimation = null) }
+        _uiState.update { it.copy(tierUpAnimation = null) }
     }
 
     private fun showSortOrderBottomSheet() {
-        updateState { copy(shouldShowSortOrderBottomSheet = true) }
+        _uiState.update { it.copy(shouldShowSortOrderBottomSheet = true) }
     }
 
     private fun dismissSortOrderBottomSheet() {
-        updateState { copy(shouldShowSortOrderBottomSheet = false) }
+        _uiState.update { it.copy(shouldShowSortOrderBottomSheet = false) }
     }
 
     private fun updateSelectedCategory(category: Category) {
-        updateState { copy(selectedCategory = category) }
+        _uiState.update { it.copy(selectedCategory = category) }
     }
 
     private fun updateSortOrder(sortOrder: SortOrder) = viewModelScope.launch {

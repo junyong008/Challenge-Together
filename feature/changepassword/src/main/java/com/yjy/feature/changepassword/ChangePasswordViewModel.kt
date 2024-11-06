@@ -1,7 +1,7 @@
 package com.yjy.feature.changepassword
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yjy.common.core.base.BaseViewModel
 import com.yjy.common.core.constants.AuthConst.MAX_PASSWORD_LENGTH
 import com.yjy.common.core.constants.AuthConst.MIN_PASSWORD_LENGTH
 import com.yjy.common.network.handleNetworkResult
@@ -10,13 +10,32 @@ import com.yjy.feature.changepassword.model.ChangePasswordUiAction
 import com.yjy.feature.changepassword.model.ChangePasswordUiEvent
 import com.yjy.feature.changepassword.model.ChangePasswordUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ChangePasswordViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-) : BaseViewModel<ChangePasswordUiState, ChangePasswordUiEvent>(initialState = ChangePasswordUiState()) {
+) : ViewModel() {
+
+    private val _uiState: MutableStateFlow<ChangePasswordUiState> = MutableStateFlow(ChangePasswordUiState())
+    val uiState: StateFlow<ChangePasswordUiState> = _uiState.asStateFlow()
+
+    private val _uiEvent = Channel<ChangePasswordUiEvent>()
+    val uiEvent: Flow<ChangePasswordUiEvent> = _uiEvent.receiveAsFlow()
+
+    private fun sendEvent(event: ChangePasswordUiEvent) {
+        viewModelScope.launch {
+            _uiEvent.send(event)
+        }
+    }
 
     fun processAction(action: ChangePasswordUiAction) {
         when (action) {
@@ -31,11 +50,11 @@ class ChangePasswordViewModel @Inject constructor(
     }
 
     private fun showExitConfirmDialog() {
-        updateState { copy(shouldShowExitConfirmDialog = true) }
+        _uiState.update { it.copy(shouldShowExitConfirmDialog = true) }
     }
 
     private fun dismissExitConfirmDialog() {
-        updateState { copy(shouldShowExitConfirmDialog = false) }
+        _uiState.update { it.copy(shouldShowExitConfirmDialog = false) }
     }
 
     private fun confirmExit() {
@@ -44,17 +63,17 @@ class ChangePasswordViewModel @Inject constructor(
     }
 
     private fun showChangeConfirmDialog() {
-        updateState { copy(shouldShowChangeConfirmDialog = true) }
+        _uiState.update { it.copy(shouldShowChangeConfirmDialog = true) }
     }
 
     private fun dismissChangeConfirmDialog() {
-        updateState { copy(shouldShowChangeConfirmDialog = false) }
+        _uiState.update { it.copy(shouldShowChangeConfirmDialog = false) }
     }
 
     private fun changePassword(password: String) {
         viewModelScope.launch {
-            updateState {
-                copy(
+            _uiState.update {
+                it.copy(
                     isChangingPassword = true,
                     shouldShowChangeConfirmDialog = false,
                 )
@@ -68,17 +87,17 @@ class ChangePasswordViewModel @Inject constructor(
                 onUnknownError = { ChangePasswordUiEvent.Failure.UnknownError },
             )
             sendEvent(event)
-            updateState { copy(isChangingPassword = false) }
+            _uiState.update { it.copy(isChangingPassword = false) }
         }
     }
 
     private fun updatePassword(password: String) {
         if (password.length > MAX_PASSWORD_LENGTH) return
-        updateState {
+        _uiState.update {
             val isPasswordLongEnough = password.length >= MIN_PASSWORD_LENGTH
             val isPasswordContainNumber = password.any { it.isDigit() }
 
-            copy(
+            it.copy(
                 password = password,
                 isPasswordLongEnough = isPasswordLongEnough,
                 isPasswordContainNumber = isPasswordContainNumber,
