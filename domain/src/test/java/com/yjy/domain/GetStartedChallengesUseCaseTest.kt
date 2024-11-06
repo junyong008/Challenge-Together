@@ -2,8 +2,7 @@ package com.yjy.domain
 
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.user.api.UserRepository
-import com.yjy.model.challenge.ChallengeFactory
-import com.yjy.model.challenge.StartedChallenge
+import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.TargetDays
@@ -37,10 +36,11 @@ class GetStartedChallengesUseCaseTest {
     fun `invoke should return started challenges with time diff applied`() = runTest {
         // Given
         val initialTime = LocalDateTime.of(2023, 10, 13, 10, 0)
+        val currentRecordInSeconds = 7000L
         val timeDiff = 3600L
 
         val startedChallenges = listOf(
-            ChallengeFactory.createStartedChallenge(
+            SimpleStartedChallenge(
                 id = "1",
                 title = "Challenge 1",
                 description = "A test challenge",
@@ -48,9 +48,10 @@ class GetStartedChallengesUseCaseTest {
                 targetDays = TargetDays.Fixed(30),
                 mode = Mode.CHALLENGE,
                 recentResetDateTime = initialTime,
+                currentRecordInSeconds = currentRecordInSeconds,
                 isCompleted = false,
             ),
-            ChallengeFactory.createStartedChallenge(
+            SimpleStartedChallenge(
                 id = "2",
                 title = "Challenge 2",
                 description = "Another test challenge",
@@ -58,6 +59,7 @@ class GetStartedChallengesUseCaseTest {
                 targetDays = TargetDays.Fixed(60),
                 mode = Mode.CHALLENGE,
                 recentResetDateTime = initialTime.plusDays(1),
+                currentRecordInSeconds = currentRecordInSeconds,
                 isCompleted = false,
             ),
         )
@@ -66,11 +68,14 @@ class GetStartedChallengesUseCaseTest {
         every { userRepository.timeDiff } returns flowOf(timeDiff)
 
         // When
-        val result: List<StartedChallenge> = getStartedChallengesUseCase().first()
+        val result: List<SimpleStartedChallenge> = getStartedChallengesUseCase().first()
 
         // Then
         val expectedChallenges = startedChallenges.map { challenge ->
-            challenge.copy(recentResetDateTime = challenge.recentResetDateTime.plusSeconds(timeDiff))
+            challenge.copy(
+                recentResetDateTime = challenge.recentResetDateTime.plusSeconds(timeDiff),
+                currentRecordInSeconds = challenge.currentRecordInSeconds.minus(timeDiff),
+            )
         }
         assertEquals(expectedChallenges, result)
     }

@@ -14,7 +14,7 @@ data class ChallengeEntity(
     val targetDays: Int,
     val currentParticipantCount: Int,
     val maxParticipantCount: Int,
-    val recentResetDateTime: LocalDateTime?,
+    val recentResetDateTime: LocalDateTime,
     val isStarted: Boolean,
     val isPrivate: Boolean,
     val isCompleted: Boolean,

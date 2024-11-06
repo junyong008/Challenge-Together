@@ -10,8 +10,7 @@ import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiState
 import com.yjy.feature.home.model.UnViewedNotificationUiState
 import com.yjy.feature.home.model.UserNameUiState
-import com.yjy.model.challenge.ChallengeFactory
-import com.yjy.model.challenge.StartedChallenge
+import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.SortOrder
@@ -48,7 +47,7 @@ class HomeViewModelTest {
     private lateinit var userRepository: UserRepository
     private lateinit var viewModel: HomeViewModel
 
-    private val startedChallengesFlow = MutableStateFlow(emptyList<StartedChallenge>())
+    private val startedChallengesFlow = MutableStateFlow(emptyList<SimpleStartedChallenge>())
     private val sortOrderFlow = MutableStateFlow(SortOrder.LATEST)
     private val currentTierFlow = MutableStateFlow(Tier.IRON)
 
@@ -93,7 +92,7 @@ class HomeViewModelTest {
         title: String = "Test Challenge",
         recordInDays: Long = 1,
         isCompleted: Boolean = false,
-    ) = ChallengeFactory.createStartedChallenge(
+    ) = SimpleStartedChallenge(
         id = id,
         title = title,
         description = "Description",
@@ -108,7 +107,7 @@ class HomeViewModelTest {
     private suspend fun TestScope.emitUpdatedState(
         sortOrder: SortOrder = SortOrder.LATEST,
         tier: Tier = Tier.IRON,
-        challenges: List<StartedChallenge>,
+        challenges: List<SimpleStartedChallenge>,
     ) {
         sortOrderFlow.emit(sortOrder)
         currentTierFlow.emit(tier)
@@ -122,7 +121,7 @@ class HomeViewModelTest {
         var userName: UserNameUiState? = null
         var notification: UnViewedNotificationUiState? = null
         var syncState: ChallengeSyncUiState? = null
-        var challenges: List<StartedChallenge>? = null
+        var challenges: List<SimpleStartedChallenge>? = null
         var currentTier: Tier? = null
 
         // When: 초기 상태 수집
@@ -168,7 +167,7 @@ class HomeViewModelTest {
     @Test
     fun `started challenges should not update during sync but update after sync complete`() = runTest {
         // Given
-        var challenges: List<StartedChallenge>? = null
+        var challenges: List<SimpleStartedChallenge>? = null
         var syncState: ChallengeSyncUiState? = null
         val initialChallenge = createTestChallenge(id = "1", title = "Initial Challenge")
         val newChallenge = initialChallenge.copy(id = "2", title = "New Challenge")

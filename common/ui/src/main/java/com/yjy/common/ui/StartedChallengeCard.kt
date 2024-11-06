@@ -31,8 +31,7 @@ import com.yjy.common.designsystem.extensions.getIconResId
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
-import com.yjy.model.challenge.ChallengeFactory
-import com.yjy.model.challenge.StartedChallenge
+import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.TargetDays
@@ -43,11 +42,10 @@ private const val PERCENT_MULTIPLIER = 100
 
 @Composable
 fun StartedChallengeCard(
-    challenge: StartedChallenge,
-    onClick: (StartedChallenge) -> Unit,
+    challenge: SimpleStartedChallenge,
+    onClick: (SimpleStartedChallenge) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (challenge.currentRecordInSeconds == null) return
     Column(
         modifier = modifier
             .clip(MaterialTheme.shapes.large)
@@ -65,7 +63,7 @@ fun StartedChallengeCard(
     }
 }
 
-private fun getCompletedDateTime(challenge: StartedChallenge): LocalDateTime {
+private fun getCompletedDateTime(challenge: SimpleStartedChallenge): LocalDateTime {
     return when (val targetDays = challenge.targetDays) {
         is TargetDays.Fixed -> challenge.recentResetDateTime.plusDays(targetDays.days.toLong())
         TargetDays.Infinite -> error("Infinite targetDays is not supported in completed")
@@ -74,7 +72,7 @@ private fun getCompletedDateTime(challenge: StartedChallenge): LocalDateTime {
 
 @Composable
 private fun ChallengeBody(
-    challenge: StartedChallenge,
+    challenge: SimpleStartedChallenge,
 ) {
     Row {
         Column(modifier = Modifier.weight(1f)) {
@@ -232,7 +230,7 @@ private fun CompletedChallengeTimer(
 fun StartedChallengeCardPreview() {
     ChallengeTogetherTheme {
         StartedChallengeCard(
-            challenge = ChallengeFactory.createStartedChallenge(
+            challenge = SimpleStartedChallenge(
                 id = "id",
                 title = "The Title Of Challenge",
                 description = "challenge description",

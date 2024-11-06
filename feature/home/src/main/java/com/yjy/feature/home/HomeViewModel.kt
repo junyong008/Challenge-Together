@@ -18,7 +18,7 @@ import com.yjy.feature.home.model.UnViewedNotificationUiState
 import com.yjy.feature.home.model.UserNameUiState
 import com.yjy.feature.home.model.isError
 import com.yjy.feature.home.model.isSuccess
-import com.yjy.model.challenge.StartedChallenge
+import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.SortOrder
@@ -52,7 +52,7 @@ class HomeViewModel @Inject constructor(
     private val notificationTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     // 동기화 간 자연스러운 전환을 위한 리스트 캐시
-    private var lastProcessedChallenges: List<StartedChallenge> = emptyList()
+    private var lastProcessedChallenges: List<SimpleStartedChallenge> = emptyList()
 
     val challengeSyncState = merge(
         syncTrigger.map { SyncTrigger.Manual },
@@ -154,7 +154,7 @@ class HomeViewModel @Inject constructor(
             initialValue = UnViewedNotificationUiState.Loading,
         )
 
-    private suspend fun handleStartedChallenges(challenges: List<StartedChallenge>) {
+    private suspend fun handleStartedChallenges(challenges: List<SimpleStartedChallenge>) {
         if (challenges.isEmpty()) return
         val unCompletedChallenges = challenges.filterNot { it.isCompleted }
 
@@ -165,20 +165,20 @@ class HomeViewModel @Inject constructor(
         updateCategoryList(unCompletedChallenges)
     }
 
-    private fun checkNewlyCompletedChallenges(challenges: List<StartedChallenge>) {
+    private fun checkNewlyCompletedChallenges(challenges: List<SimpleStartedChallenge>) {
         if (challenges.any { it.isCompleted() }) {
             syncTrigger.tryEmit(Unit)
         }
     }
 
-    private fun StartedChallenge.isCompleted(): Boolean {
+    private fun SimpleStartedChallenge.isCompleted(): Boolean {
         return when (val targetDays = targetDays) {
-            is TargetDays.Fixed -> (currentRecordInSeconds ?: 0) / SECONDS_PER_DAY >= targetDays.days
+            is TargetDays.Fixed -> currentRecordInSeconds / SECONDS_PER_DAY >= targetDays.days
             is TargetDays.Infinite -> false
         }
     }
 
-    private suspend fun updateTier(challenges: List<StartedChallenge>) {
+    private suspend fun updateTier(challenges: List<SimpleStartedChallenge>) {
         if (uiState.value.tierUpAnimation != null) return
         val currentTierBestRecord = challenges
             .filter { it.mode == Mode.CHALLENGE }
@@ -195,7 +195,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun updateTierProgress(challenges: List<StartedChallenge>) {
+    private fun updateTierProgress(challenges: List<SimpleStartedChallenge>) {
         val currentTierBestRecord = challenges
             .filter { it.mode == Mode.CHALLENGE }
             .getBestRecord()
@@ -213,16 +213,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun updateCurrentBestRecord(challenges: List<StartedChallenge>) {
+    private fun updateCurrentBestRecord(challenges: List<SimpleStartedChallenge>) {
         val currentBestRecord = challenges.getBestRecord()
         updateState { copy(currentBestRecordInSeconds = currentBestRecord) }
     }
 
-    private fun List<StartedChallenge>.getBestRecord(): Long {
+    private fun List<SimpleStartedChallenge>.getBestRecord(): Long {
         return this.maxOfOrNull { it.currentRecordInSeconds } ?: 0
     }
 
-    private fun updateCategoryList(challenges: List<StartedChallenge>) {
+    private fun updateCategoryList(challenges: List<SimpleStartedChallenge>) {
         val categories = buildList {
             add(Category.ALL)
             addAll(

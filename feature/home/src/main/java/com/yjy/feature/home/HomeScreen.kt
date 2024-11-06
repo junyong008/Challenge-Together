@@ -89,8 +89,8 @@ import com.yjy.feature.home.model.isInitialLoading
 import com.yjy.feature.home.model.isLoading
 import com.yjy.feature.home.model.isTimeSyncLoading
 import com.yjy.feature.home.navigation.HomeStrings
-import com.yjy.model.challenge.StartedChallenge
-import com.yjy.model.challenge.WaitingChallenge
+import com.yjy.model.challenge.SimpleStartedChallenge
+import com.yjy.model.challenge.SimpleWaitingChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.common.Tier
@@ -133,8 +133,8 @@ internal fun HomeScreen(
     userNameUiState: UserNameUiState = UserNameUiState.Success(""),
     unViewedNotificationUiState: UnViewedNotificationUiState = UnViewedNotificationUiState.Success(0),
     challengeSyncUiState: ChallengeSyncUiState = ChallengeSyncUiState.Success,
-    startedChallenges: List<StartedChallenge> = emptyList(),
-    waitingChallenges: List<WaitingChallenge> = emptyList(),
+    startedChallenges: List<SimpleStartedChallenge> = emptyList(),
+    waitingChallenges: List<SimpleWaitingChallenge> = emptyList(),
     recentCompletedChallenges: List<String> = emptyList(),
     uiState: HomeUiState = HomeUiState(),
     processAction: (HomeUiAction) -> Unit = {},
@@ -248,8 +248,8 @@ private fun HomeContent(
 data class HomeContents(
     val userName: String,
     val currentTier: Tier,
-    val startedChallenges: List<StartedChallenge>,
-    val waitingChallenges: List<WaitingChallenge>,
+    val startedChallenges: List<SimpleStartedChallenge>,
+    val waitingChallenges: List<SimpleWaitingChallenge>,
     val selectedCategory: Category,
     val categories: List<Category>,
     val sortOrder: SortOrder,
@@ -423,15 +423,15 @@ private fun ProfileCard(
 
 @Composable
 private fun ChallengesSection(
-    startedChallenges: List<StartedChallenge>,
-    waitingChallenges: List<WaitingChallenge>,
+    startedChallenges: List<SimpleStartedChallenge>,
+    waitingChallenges: List<SimpleWaitingChallenge>,
     selectedCategory: Category,
     categories: List<Category>,
     sortOrder: SortOrder,
     onCategorySelected: (Category) -> Unit,
     onSortOrderClick: () -> Unit,
-    onStartedChallengeClick: (StartedChallenge) -> Unit,
-    onWaitingChallengeClick: (WaitingChallenge) -> Unit,
+    onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
+    onWaitingChallengeClick: (SimpleWaitingChallenge) -> Unit,
 ) {
     if (startedChallenges.isEmpty() && waitingChallenges.isEmpty()) {
         EmptyChallengesBody()
@@ -465,10 +465,10 @@ private fun StartedChallengesSection(
     sortOrder: SortOrder,
     categories: List<Category>,
     selectedCategory: Category,
-    startedChallenges: List<StartedChallenge>,
+    startedChallenges: List<SimpleStartedChallenge>,
     onSortOrderClick: () -> Unit,
     onCategorySelected: (Category) -> Unit,
-    onChallengeClick: (StartedChallenge) -> Unit,
+    onChallengeClick: (SimpleStartedChallenge) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         MyChallengeTitle(
@@ -493,8 +493,8 @@ private fun StartedChallengesSection(
 
 @Composable
 private fun WaitingChallengesSection(
-    waitingChallenges: List<WaitingChallenge>,
-    onChallengeClick: (WaitingChallenge) -> Unit,
+    waitingChallenges: List<SimpleWaitingChallenge>,
+    onChallengeClick: (SimpleWaitingChallenge) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -544,8 +544,8 @@ private fun EmptyChallengesBody() {
 
 @Composable
 private fun StartedChallengesList(
-    startedChallenges: List<StartedChallenge>,
-    onChallengeClick: (StartedChallenge) -> Unit,
+    startedChallenges: List<SimpleStartedChallenge>,
+    onChallengeClick: (SimpleStartedChallenge) -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -562,8 +562,8 @@ private fun StartedChallengesList(
 
 @Composable
 private fun WaitingChallengesList(
-    waitingChallenges: List<WaitingChallenge>,
-    onChallengeClick: (WaitingChallenge) -> Unit,
+    waitingChallenges: List<SimpleWaitingChallenge>,
+    onChallengeClick: (SimpleWaitingChallenge) -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),

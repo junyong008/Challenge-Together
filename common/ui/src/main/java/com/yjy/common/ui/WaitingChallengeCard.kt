@@ -38,15 +38,14 @@ import com.yjy.common.designsystem.extensions.getIconResId
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
-import com.yjy.model.challenge.ChallengeFactory
-import com.yjy.model.challenge.WaitingChallenge
+import com.yjy.model.challenge.SimpleWaitingChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.TargetDays
 
 @Composable
 fun WaitingChallengeCard(
-    challenge: WaitingChallenge,
-    onClick: (WaitingChallenge) -> Unit,
+    challenge: SimpleWaitingChallenge,
+    onClick: (SimpleWaitingChallenge) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -87,7 +86,7 @@ private fun ChallengeHeader(
 
 @Composable
 private fun ChallengeBody(
-    challenge: WaitingChallenge,
+    challenge: SimpleWaitingChallenge,
 ) {
     Row {
         Column(modifier = Modifier.weight(1f)) {
@@ -137,19 +136,15 @@ private fun CategoryIcon(
 
 @Composable
 private fun ChallengeFooter(
-    challenge: WaitingChallenge,
+    challenge: SimpleWaitingChallenge,
 ) {
-    val currentParticipantInfo = challenge.participantInfo
-    val currentCount = currentParticipantInfo?.currentCount ?: 0
-    val maxCount = currentParticipantInfo?.maxCount ?: 0
-
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Bottom,
     ) {
         ParticipantsSection(
-            currentCount = currentCount,
-            maxCount = maxCount,
+            currentCount = challenge.currentParticipantCounts,
+            maxCount = challenge.maxParticipantCounts,
             modifier = Modifier.weight(1f),
         )
         Spacer(modifier = Modifier.width(12.dp))
@@ -291,14 +286,14 @@ private fun ParticipantIcon(
 fun WaitingChallengeCardPreview() {
     ChallengeTogetherTheme {
         WaitingChallengeCard(
-            challenge = ChallengeFactory.createWaitingChallenge(
+            challenge = SimpleWaitingChallenge(
                 id = "2024",
                 title = "The Title Of Challenge",
                 description = "challenge description",
                 category = Category.ALL,
                 targetDays = TargetDays.Infinite,
-                currentCount = 9,
-                maxCount = 10,
+                currentParticipantCounts = 9,
+                maxParticipantCounts = 10,
                 isPrivate = true,
             ),
             modifier = Modifier.width(390.dp),

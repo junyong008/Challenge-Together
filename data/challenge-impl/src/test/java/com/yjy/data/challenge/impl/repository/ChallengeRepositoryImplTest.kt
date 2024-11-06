@@ -9,7 +9,7 @@ import com.yjy.data.datastore.api.ChallengePreferencesDataSource
 import com.yjy.data.network.datasource.ChallengeDataSource
 import com.yjy.data.network.request.AddChallengeRequest
 import com.yjy.data.network.response.AddChallengeResponse
-import com.yjy.model.challenge.StartedChallenge
+import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.challenge.core.TargetDays
@@ -98,7 +98,7 @@ class ChallengeRepositoryImplTest {
         val challengeEntity = createChallengeEntity(id = "1", resetDateTime = now.minusDays(5))
         challengesFlow.emit(listOf(challengeEntity))
 
-        var startedChallenges: List<StartedChallenge>? = null
+        var startedChallenges: List<SimpleStartedChallenge>? = null
 
         // When
         val job = launch {
@@ -130,7 +130,7 @@ class ChallengeRepositoryImplTest {
 
         challengesFlow.emit(listOf(challenge1, challenge2))
 
-        var startedChallenges: List<StartedChallenge>? = null
+        var startedChallenges: List<SimpleStartedChallenge>? = null
 
         // When
         val job = launch {
