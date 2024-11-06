@@ -12,4 +12,5 @@
     <string name="common_ui_waiting_challenge_unlimited">Unlimited</string>
     <string name="common_ui_waiting_challenge_icon_of_person">Icon of person</string>
     <string name="common_ui_manual_time_warning">System time is set manually</string>
+    <string name="common_ui_manual_time_warning_icon">Icon of clock</string>
 </resources>
