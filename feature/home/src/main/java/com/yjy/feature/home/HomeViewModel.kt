@@ -219,7 +219,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun List<StartedChallenge>.getBestRecord(): Long {
-        return this.maxOfOrNull { it.currentRecordInSeconds ?: 0 } ?: 0
+        return this.maxOfOrNull { it.currentRecordInSeconds } ?: 0
     }
 
     private fun updateCategoryList(challenges: List<StartedChallenge>) {
