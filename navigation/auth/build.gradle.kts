@@ -13,7 +13,10 @@ android {
 dependencies {
     implementations(
         projects.common.designsystem,
+        projects.common.ui,
         projects.common.navigation,
+
+        projects.platform.time,
 
         projects.feature.login,
         projects.feature.signup,
@@ -21,5 +24,6 @@ dependencies {
         projects.feature.changepassword,
 
         libs.androidx.navigation.compose,
+        libs.androidx.hilt.navigation.compose,
     )
 }

@@ -43,6 +43,7 @@ include(
     ":data:network-impl",
 
     ":platform:network",
+    ":platform:time",
 
     ":domain",
 

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yjy.data.auth.api.AuthRepository
 import com.yjy.platform.network.NetworkMonitor
+import com.yjy.platform.time.TimeMonitor
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -18,10 +18,8 @@ import javax.inject.Inject
 class ServiceViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     networkMonitor: NetworkMonitor,
+    timeMonitor: TimeMonitor,
 ) : ViewModel() {
-
-    private val isLoggedIn: Flow<Boolean> = authRepository.isLoggedIn
-    private val isSessionTokenAvailable: Flow<Boolean> = authRepository.isSessionTokenAvailable
 
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
@@ -31,9 +29,17 @@ class ServiceViewModel @Inject constructor(
             initialValue = false,
         )
 
+    val isManualTime = timeMonitor.isAutoTime
+        .map(Boolean::not)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = false,
+        )
+
     val sessionExpireEvent = combine(
-        isLoggedIn,
-        isSessionTokenAvailable,
+        authRepository.isLoggedIn,
+        authRepository.isSessionTokenAvailable,
     ) { loggedIn, tokenAvailable ->
         loggedIn && !tokenAvailable
     }.onEach { isExpired ->

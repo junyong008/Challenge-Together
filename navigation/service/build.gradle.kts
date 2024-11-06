@@ -14,11 +14,13 @@ dependencies {
     implementations(
         projects.common.core,
         projects.common.designsystem,
+        projects.common.ui,
         projects.common.navigation,
 
         projects.data.authApi,
 
         projects.platform.network,
+        projects.platform.time,
 
         projects.feature.home,
         projects.feature.addchallenge,

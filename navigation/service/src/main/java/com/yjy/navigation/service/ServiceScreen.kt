@@ -21,10 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.util.ObserveAsEvents
@@ -33,6 +35,7 @@ import com.yjy.common.designsystem.component.CustomSnackbarHost
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.CustomColorProvider
+import com.yjy.common.ui.ManualTimeWarning
 import com.yjy.navigation.service.component.NetworkTopBar
 import com.yjy.navigation.service.component.ServiceBottomBar
 import com.yjy.navigation.service.navigation.MainTab
@@ -52,6 +55,7 @@ internal fun ServiceScreen(
     snackbarScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     val isOffline by viewModel.isOffline.collectAsStateWithLifecycle()
+    val isManualTime by viewModel.isManualTime.collectAsStateWithLifecycle()
 
     val snackbarHostState = remember { SnackbarHostState() }
     val showSnackbar: (SnackbarType, String) -> Unit = { type, message ->
@@ -130,6 +134,17 @@ internal fun ServiceScreen(
                     onShowToast = onShowToast,
                     onShowSnackbar = showSnackbar,
                 )
+
+                AnimatedVisibility(
+                    visible = isManualTime,
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 16.dp),
+                ) {
+                    ManualTimeWarning()
+                }
             }
         }
     }
