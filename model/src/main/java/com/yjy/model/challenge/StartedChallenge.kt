@@ -15,7 +15,7 @@ data class StartedChallenge(
     override val category: Category,
     override val targetDays: TargetDays,
     override val participantInfo: ParticipantInfo?,
-    override val currentRecordInSeconds: Long?,
+    override val currentRecordInSeconds: Long,
     override val recentResetDateTime: LocalDateTime,
     val mode: Mode,
     val isCompleted: Boolean,

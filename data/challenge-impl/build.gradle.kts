@@ -11,7 +11,9 @@ android {
 
 dependencies {
     implementations(
+        projects.common.core,
         projects.common.network,
+
         projects.model,
 
         projects.data.challengeApi,

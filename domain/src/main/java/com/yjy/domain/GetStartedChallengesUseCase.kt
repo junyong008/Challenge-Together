@@ -21,6 +21,7 @@ class GetStartedChallengesUseCase @Inject constructor(
     private fun StartedChallenge.applyTimeDiff(timeDiff: Long): StartedChallenge {
         return copy(
             recentResetDateTime = recentResetDateTime.plusSeconds(timeDiff),
+            currentRecordInSeconds = currentRecordInSeconds.minus(timeDiff),
         )
     }
 }

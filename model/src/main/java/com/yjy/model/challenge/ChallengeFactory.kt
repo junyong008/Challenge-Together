@@ -16,10 +16,10 @@ object ChallengeFactory {
         targetDays: TargetDays,
         mode: Mode,
         recentResetDateTime: LocalDateTime,
+        currentRecordInSeconds: Long,
         isCompleted: Boolean = false,
         maxCount: Int? = null,
         participants: List<Participant>? = null,
-        currentRecordInSeconds: Long? = null,
         startDateTime: LocalDateTime? = null,
     ) = StartedChallenge(
         id = id,

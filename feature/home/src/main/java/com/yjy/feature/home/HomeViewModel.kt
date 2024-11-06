@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.yjy.common.core.base.BaseViewModel
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.core.extensions.restartableStateIn
-import com.yjy.common.core.util.TimeManager
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengeRepository
@@ -38,13 +37,10 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.time.Duration
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    timeManager: TimeManager,
     getStartedChallengesUseCase: GetStartedChallengesUseCase,
     private val userRepository: UserRepository,
     private val challengeRepository: ChallengeRepository,
@@ -60,7 +56,7 @@ class HomeViewModel @Inject constructor(
 
     val challengeSyncState = merge(
         syncTrigger.map { SyncTrigger.Manual },
-        timeManager.timeChangedFlow.map { SyncTrigger.TimeChanged },
+        challengeRepository.timeChangedFlow.map { SyncTrigger.TimeChanged },
     ).onStart {
         emit(SyncTrigger.Initial)
     }.onEach {
@@ -82,6 +78,51 @@ class HomeViewModel @Inject constructor(
         started = SharingStarted.Lazily,
         initialValue = ChallengeSyncUiState.Loading.Initial,
     )
+
+    val startedChallenges = combine(
+        getStartedChallengesUseCase(),
+        challengeSyncState,
+    ) { challenges, syncState ->
+        when (syncState) {
+            ChallengeSyncUiState.Success -> challenges
+            else -> lastProcessedChallenges
+        }
+    }.onEach { challenges ->
+        handleStartedChallenges(challenges)
+        lastProcessedChallenges = challenges
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList(),
+    )
+
+    val waitingChallenges = challengeRepository.waitingChallenges
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList(),
+        )
+
+    val recentCompletedChallenges = challengeRepository.recentCompletedChallengeTitles
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList(),
+        )
+
+    val currentTier = challengeRepository.currentTier
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = Tier.UNSPECIFIED,
+        )
+
+    val sortOrder = challengeRepository.sortOrder
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = SortOrder.LATEST,
+        )
 
     val userName = userNameTrigger
         .onStart { emit(Unit) }
@@ -113,94 +154,15 @@ class HomeViewModel @Inject constructor(
             initialValue = UnViewedNotificationUiState.Loading,
         )
 
-    val sortOrder = challengeRepository.sortOrder
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = SortOrder.LATEST,
-        )
+    private suspend fun handleStartedChallenges(challenges: List<StartedChallenge>) {
+        if (challenges.isEmpty()) return
+        val unCompletedChallenges = challenges.filterNot { it.isCompleted }
 
-    val startedChallenges = combine(
-        getStartedChallengesUseCase(),
-        timeManager.tickerFlow,
-    ) { challenges, currentTime ->
-        challenges to currentTime
-    }.combine(challengeSyncState) { (challenges, currentTime), syncState ->
-        when (syncState) {
-            ChallengeSyncUiState.Success -> handleStartedChallenges(challenges, currentTime)
-            else -> lastProcessedChallenges
-        }
-    }.combine(sortOrder) { challenges, sortOrder ->
-        challenges.sortBy(sortOrder)
-    }.onEach { challenges ->
-        lastProcessedChallenges = challenges
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList(),
-    )
-
-    private fun List<StartedChallenge>.sortBy(sortOrder: SortOrder): List<StartedChallenge> {
-        return when (sortOrder) {
-            SortOrder.LATEST -> this.sortedByDescending { it.id.toInt() }
-            SortOrder.OLDEST -> this.sortedBy { it.id.toInt() }
-            SortOrder.TITLE -> this.sortedBy { it.title }
-            SortOrder.HIGHEST_RECORD -> this.sortedByDescending { it.currentRecordInSeconds ?: 0 }
-            SortOrder.LOWEST_RECORD -> this.sortedBy { it.currentRecordInSeconds ?: 0 }
-        }
-    }
-
-    val waitingChallenges = challengeRepository.waitingChallenges
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList(),
-        )
-
-    val recentCompletedChallenges = challengeRepository.recentCompletedChallengeTitles
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList(),
-        )
-
-    val currentTier = challengeRepository.currentTier
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = Tier.UNSPECIFIED,
-        )
-
-    private suspend fun handleStartedChallenges(
-        challenges: List<StartedChallenge>,
-        currentTime: LocalDateTime,
-    ): List<StartedChallenge> {
-        val recordCalculatedChallenges = calculateRecordOfChallenges(challenges, currentTime)
-        val unCompletedChallenges = recordCalculatedChallenges.filterNot { it.isCompleted }
-
-        updateTier(recordCalculatedChallenges)
+        updateTier(challenges)
         updateTierProgress(unCompletedChallenges)
         checkNewlyCompletedChallenges(unCompletedChallenges)
         updateCurrentBestRecord(unCompletedChallenges)
-        updateCategories(unCompletedChallenges)
-
-        return unCompletedChallenges
-    }
-
-    private fun calculateRecordOfChallenges(
-        challenges: List<StartedChallenge>,
-        currentTime: LocalDateTime,
-    ): List<StartedChallenge> = challenges.map { challenge ->
-        val currentRecord = Duration.between(challenge.recentResetDateTime, currentTime).seconds
-
-        challenge.copy(
-            currentRecordInSeconds = when (val targetDays = challenge.targetDays) {
-                is TargetDays.Fixed -> currentRecord.coerceAtMost(
-                    (targetDays.days * SECONDS_PER_DAY),
-                )
-                else -> currentRecord
-            },
-        )
+        updateCategoryList(unCompletedChallenges)
     }
 
     private fun checkNewlyCompletedChallenges(challenges: List<StartedChallenge>) {
@@ -260,7 +222,7 @@ class HomeViewModel @Inject constructor(
         return this.maxOfOrNull { it.currentRecordInSeconds ?: 0 } ?: 0
     }
 
-    private fun updateCategories(challenges: List<StartedChallenge>) {
+    private fun updateCategoryList(challenges: List<StartedChallenge>) {
         val categories = buildList {
             add(Category.ALL)
             addAll(

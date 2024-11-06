@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 
 interface ChallengeRepository {
+    val timeChangedFlow: Flow<Unit>
     val currentTier: Flow<Tier>
     val sortOrder: Flow<SortOrder>
     val recentCompletedChallengeTitles: Flow<List<String>>

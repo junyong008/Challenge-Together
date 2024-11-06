@@ -1,11 +1,9 @@
-package com.yjy.common.core.util
+package com.yjy.data.challenge.impl.util
 
 import android.os.SystemClock
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -13,16 +11,6 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import javax.inject.Inject
 import kotlin.math.abs
-
-interface TimeProvider {
-    fun getCurrentTime(): LocalDateTime
-    fun getBootTime(): Long
-}
-
-interface TimeManager {
-    val timeChangedFlow: SharedFlow<Unit>
-    val tickerFlow: Flow<LocalDateTime>
-}
 
 internal class DefaultTimeProvider @Inject constructor() : TimeProvider {
     override fun getCurrentTime(): LocalDateTime = LocalDateTime.now()

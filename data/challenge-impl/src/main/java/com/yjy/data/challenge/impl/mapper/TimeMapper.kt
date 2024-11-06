@@ -16,7 +16,3 @@ internal fun String.toLocalDateTime(): LocalDateTime? {
         LocalDateTime.parse(this, formatter)
     }
 }
-
-internal fun LocalDateTime.addSeconds(timeDiff: Long): LocalDateTime {
-    return this.plusSeconds(timeDiff)
-}
