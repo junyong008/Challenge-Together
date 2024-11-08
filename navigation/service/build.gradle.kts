@@ -19,11 +19,15 @@ dependencies {
 
         projects.data.authApi,
 
+        projects.model,
+
         projects.platform.network,
         projects.platform.time,
 
         projects.feature.home,
         projects.feature.addchallenge,
+        projects.feature.startedchallenge,
+        projects.feature.editchallenge,
         projects.feature.changepassword,
 
         libs.androidx.navigation.compose,

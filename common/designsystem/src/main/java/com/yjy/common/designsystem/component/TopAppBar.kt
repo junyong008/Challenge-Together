@@ -35,7 +35,7 @@ fun ChallengeTogetherTopAppBar(
         modifier = modifier
             .fillMaxWidth()
             .background(backgroundColor)
-            .padding(top = 32.dp, bottom = 32.dp, start = 4.dp, end = 16.dp),
+            .padding(top = 32.dp, bottom = 32.dp, start = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {

@@ -29,10 +29,17 @@ interface ChallengeRepository {
         roomPassword: String = "",
     ): NetworkResult<String>
 
-    suspend fun getStartedChallengeDetail(
+    suspend fun editChallengeTitleDescription(
         challengeId: String,
-    ): Flow<NetworkResult<DetailedStartedChallenge>>
+        title: String,
+        description: String,
+    ): NetworkResult<Unit>
+    suspend fun editChallengeCategory(challengeId: String, category: Category): NetworkResult<Unit>
+    suspend fun editChallengeTargetDays(challengeId: String, targetDays: TargetDays): NetworkResult<Unit>
 
+    suspend fun resetStartedChallenge(challengeId: String, memo: String): NetworkResult<Unit>
+    suspend fun deleteStartedChallenge(challengeId: String,): NetworkResult<Unit>
+    suspend fun getStartedChallengeDetail(challengeId: String): Flow<NetworkResult<DetailedStartedChallenge>>
     suspend fun setCurrentTier(tier: Tier)
     suspend fun setSortOrder(order: SortOrder)
     suspend fun clearRecentCompletedChallenges()

@@ -1,6 +1,5 @@
 package com.yjy.data.challenge.impl.repository
 
-import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.map
 import com.yjy.common.network.onSuccess
@@ -18,6 +17,8 @@ import com.yjy.data.database.model.ChallengeEntity
 import com.yjy.data.datastore.api.ChallengePreferencesDataSource
 import com.yjy.data.network.datasource.ChallengeDataSource
 import com.yjy.data.network.request.AddChallengeRequest
+import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
+import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.SimpleWaitingChallenge
@@ -68,24 +69,8 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         }
 
     private fun SimpleStartedChallenge.updateCurrentRecord(currentTime: LocalDateTime) = copy(
-        currentRecordInSeconds = calculateCurrentRecord(
-            recentResetDateTime = recentResetDateTime,
-            currentTime = currentTime,
-            targetDays = targetDays,
-        )
+        currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime)
     )
-
-    private fun calculateCurrentRecord(
-        recentResetDateTime: LocalDateTime,
-        currentTime: LocalDateTime,
-        targetDays: TargetDays,
-    ): Long {
-        val currentRecord = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime)
-        return when (targetDays) {
-            is TargetDays.Fixed -> currentRecord.coerceAtMost(targetDays.days * SECONDS_PER_DAY)
-            TargetDays.Infinite -> currentRecord
-        }
-    }
 
     private fun List<SimpleStartedChallenge>.sortBy(sortOrder: SortOrder): List<SimpleStartedChallenge> {
         return when (sortOrder) {
@@ -125,26 +110,74 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         ).map { it.challengeId }
     }
 
+    override suspend fun editChallengeTitleDescription(
+        challengeId: String,
+        title: String,
+        description: String,
+    ): NetworkResult<Unit> {
+        return challengeDataSource.editChallengeTitleDescription(
+            EditChallengeTitleDescriptionRequest(
+                challengeId = challengeId,
+                title = title,
+                description = description,
+            )
+        )
+    }
+
+    override suspend fun editChallengeCategory(
+        challengeId: String,
+        category: Category,
+    ): NetworkResult<Unit> {
+        return challengeDataSource.editChallengeCategory(
+            challengeId = challengeId,
+            category = category.toRequestString(),
+        )
+    }
+
+    override suspend fun editChallengeTargetDays(
+        challengeId: String,
+        targetDays: TargetDays,
+    ): NetworkResult<Unit> {
+        return challengeDataSource.editChallengeTargetDays(
+            challengeId = challengeId,
+            targetDays = targetDays.toRequestString(),
+        )
+    }
+
+    override suspend fun resetStartedChallenge(challengeId: String, memo: String): NetworkResult<Unit> {
+        return challengeDataSource.resetStartedChallenge(
+            ResetChallengeRequest(
+                challengeId = challengeId,
+                resetMemo = memo,
+            )
+        )
+    }
+
+    override suspend fun deleteStartedChallenge(challengeId: String): NetworkResult<Unit> =
+        challengeDataSource.deleteStartedChallenge(challengeId)
+
     override suspend fun getStartedChallengeDetail(
         challengeId: String,
     ): Flow<NetworkResult<DetailedStartedChallenge>> = when (
-        val result = challengeDataSource.getStartedChallengeDetail(challengeId)
+        val response = challengeDataSource.getStartedChallengeDetail(challengeId)
     ) {
         is NetworkResult.Success -> {
-            val challenge = result.data.toDetailedStartedChallengeModel()
+            val result = response.data
+            val challenge = result.toDetailedStartedChallengeModel()
+
+            // 리셋 등 이벤트에 대응하여 즉각적으로 데이터를 최신화 하기 위한 동기화
+            challengeDao.insert(result.toEntity())
+
+            // tickerFlow 구독을 통한 현재 기록 업데이트
             tickerFlow.map { currentTime ->
                 NetworkResult.Success(challenge.updateCurrentRecord(currentTime))
             }
         }
-        is NetworkResult.Failure -> flowOf(result)
+        is NetworkResult.Failure -> flowOf(response)
     }
 
     private fun DetailedStartedChallenge.updateCurrentRecord(currentTime: LocalDateTime) = copy(
-        currentRecordInSeconds = calculateCurrentRecord(
-            recentResetDateTime = recentResetDateTime,
-            currentTime = currentTime,
-            targetDays = targetDays,
-        )
+        currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime)
     )
 
     override suspend fun setCurrentTier(tier: Tier) =

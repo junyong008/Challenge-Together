@@ -14,8 +14,12 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     navigate(ServiceRoute.MainTab.Home, navOptions)
 }
 
-fun NavGraphBuilder.homeScreen() {
+fun NavGraphBuilder.homeScreen(
+    onStartedChallengeClick: (challengeId: String) -> Unit,
+) {
     composable<ServiceRoute.MainTab.Home> {
-        HomeRoute()
+        HomeRoute(
+            onStartedChallengeClick = { onStartedChallengeClick(it.id) },
+        )
     }
 }

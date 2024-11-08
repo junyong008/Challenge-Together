@@ -15,6 +15,9 @@ interface ChallengeDao {
     fun getAll(): Flow<List<ChallengeEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(challenge: ChallengeEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(challenges: List<ChallengeEntity>)
 
     @Query("DELETE FROM challenges WHERE id NOT IN (:ids)")

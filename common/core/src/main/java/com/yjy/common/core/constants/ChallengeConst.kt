@@ -13,4 +13,6 @@ object ChallengeConst {
     const val MAX_CHALLENGE_MAX_PARTICIPANTS = 20
 
     const val MAX_ROOM_PASSWORD_LENGTH = 10
+
+    const val MAX_RESET_RECORD_LENGTH = 1000
 }

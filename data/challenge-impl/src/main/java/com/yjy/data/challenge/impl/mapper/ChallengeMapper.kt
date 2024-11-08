@@ -64,3 +64,18 @@ internal fun GetStartedChallengeDetailResponse.toDetailedStartedChallengeModel()
         currentParticipantCounts = currentParticipantCount,
     )
 }
+
+internal fun GetStartedChallengeDetailResponse.toEntity() = ChallengeEntity(
+    id = challengeId,
+    title = title,
+    description = description,
+    category = category,
+    targetDays = targetDays,
+    currentParticipantCount = currentParticipantCount,
+    maxParticipantCount = maxParticipantCount,
+    recentResetDateTime = recentResetDateTime.toLocalDateTime(),
+    isStarted = true,
+    isPrivate = password.isNotEmpty(),
+    isCompleted = isCompleted,
+    mode = if (isFreeMode) Mode.FREE.name else Mode.CHALLENGE.name,
+)

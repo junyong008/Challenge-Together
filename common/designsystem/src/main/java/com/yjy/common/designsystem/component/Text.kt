@@ -1,5 +1,6 @@
 package com.yjy.common.designsystem.component
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,6 +28,7 @@ fun ClickableText(
     textAlign: TextAlign = TextAlign.Start,
     textDecoration: TextDecoration? = TextDecoration.Underline,
     enabled: Boolean = true,
+    contentPadding: PaddingValues = PaddingValues(8.dp)
 ) {
     val annotatedString = when (text) {
         is String -> AnnotatedString(text)
@@ -47,7 +49,7 @@ fun ClickableText(
                 enabled = enabled,
                 onClick = onClick,
             )
-            .padding(8.dp),
+            .padding(contentPadding),
     )
 }
 

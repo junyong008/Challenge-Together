@@ -28,12 +28,14 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 @Composable
 fun BaseBottomSheet(
     onDismiss: () -> Unit,
+    disableDragToDismiss: Boolean = false,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(
             skipPartiallyExpanded = true,
+            confirmValueChange = { !disableDragToDismiss }
         ),
         containerColor = CustomColorProvider.colorScheme.surface,
         dragHandle = null,

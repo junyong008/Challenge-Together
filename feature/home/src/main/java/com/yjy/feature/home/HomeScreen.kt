@@ -88,7 +88,6 @@ import com.yjy.feature.home.model.isError
 import com.yjy.feature.home.model.isInitialLoading
 import com.yjy.feature.home.model.isLoading
 import com.yjy.feature.home.model.isTimeSyncLoading
-import com.yjy.feature.home.navigation.HomeStrings
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.SimpleWaitingChallenge
 import com.yjy.model.challenge.core.Category
@@ -97,6 +96,7 @@ import com.yjy.model.common.Tier
 
 @Composable
 internal fun HomeRoute(
+    onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -122,6 +122,7 @@ internal fun HomeRoute(
         recentCompletedChallenges = recentCompletedChallenges,
         uiState = uiState,
         processAction = viewModel::processAction,
+        onStartedChallengeClick = onStartedChallengeClick,
     )
 }
 
@@ -138,6 +139,7 @@ internal fun HomeScreen(
     recentCompletedChallenges: List<String> = emptyList(),
     uiState: HomeUiState = HomeUiState(),
     processAction: (HomeUiAction) -> Unit = {},
+    onStartedChallengeClick: (SimpleStartedChallenge) -> Unit = {},
 ) {
     val hasError = userNameUiState.isError() ||
         unViewedNotificationUiState.isError() ||
@@ -179,6 +181,7 @@ internal fun HomeScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .background(CustomColorProvider.colorScheme.background)
             .then(
                 if (hasError || isLoading) {
                     Modifier
@@ -195,6 +198,7 @@ internal fun HomeScreen(
         HomeBody(
             uiState = uiState,
             processAction = processAction,
+            onStartedChallengeClick = onStartedChallengeClick,
             isLoading = isLoading,
             hasError = hasError,
             homeContents = homeContents,
@@ -206,6 +210,7 @@ internal fun HomeScreen(
 private fun HomeBody(
     uiState: HomeUiState,
     processAction: (HomeUiAction) -> Unit,
+    onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
     isLoading: Boolean,
     hasError: Boolean,
     homeContents: HomeContents,
@@ -213,7 +218,12 @@ private fun HomeBody(
     when {
         isLoading -> LoadingWheel()
         hasError -> ErrorBody(onClickRetry = { processAction(HomeUiAction.OnRetryClick) })
-        else -> HomeContent(uiState = uiState, processAction = processAction, content = homeContents)
+        else -> HomeContent(
+            uiState = uiState,
+            processAction = processAction,
+            onStartedChallengeClick = onStartedChallengeClick,
+            content = homeContents,
+        )
     }
 }
 
@@ -221,6 +231,7 @@ private fun HomeBody(
 private fun HomeContent(
     uiState: HomeUiState,
     processAction: (HomeUiAction) -> Unit,
+    onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
     content: HomeContents,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -239,7 +250,7 @@ private fun HomeContent(
             sortOrder = content.sortOrder,
             onCategorySelected = { processAction(HomeUiAction.OnCategorySelect(it)) },
             onSortOrderClick = { processAction(HomeUiAction.OnSortOrderClick) },
-            onStartedChallengeClick = {},
+            onStartedChallengeClick = onStartedChallengeClick,
             onWaitingChallengeClick = {},
         )
     }
@@ -268,7 +279,7 @@ private fun HomeTopBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = stringResource(id = HomeStrings.feature_home_title),
+            text = stringResource(id = R.string.feature_home_title),
             color = CustomColorProvider.colorScheme.onBackgroundMuted,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
@@ -283,7 +294,7 @@ private fun HomeTopBar(
                 Icon(
                     painter = painterResource(id = ChallengeTogetherIcons.CompleteChallenge),
                     contentDescription = stringResource(
-                        id = HomeStrings.feature_home_complete_challenge_description,
+                        id = R.string.feature_home_complete_challenge_description,
                     ),
                     tint = CustomColorProvider.colorScheme.onBackgroundMuted,
                 )
@@ -302,7 +313,7 @@ private fun HomeTopBar(
                     Icon(
                         painter = painterResource(id = ChallengeTogetherIcons.Notification),
                         contentDescription = stringResource(
-                            id = HomeStrings.feature_home_notification_description,
+                            id = R.string.feature_home_notification_description,
                         ),
                         tint = CustomColorProvider.colorScheme.onBackgroundMuted,
                     )
@@ -346,7 +357,7 @@ private fun HighestRecordCard(highestRecordInSeconds: Long) {
             .padding(16.dp),
     ) {
         Text(
-            text = stringResource(id = HomeStrings.feature_home_current_highest_record),
+            text = stringResource(id = R.string.feature_home_current_highest_record),
             color = CustomColorProvider.colorScheme.onSurfaceMuted,
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.align(Alignment.Start),
@@ -370,9 +381,9 @@ private fun ProfileCard(
     tier: Tier,
 ) {
     val progressDescription = when {
-        tier == Tier.highestTier -> stringResource(id = HomeStrings.feature_home_highest_tier)
-        tierProgress == 0f -> stringResource(id = HomeStrings.feature_home_no_active_challenge_mode)
-        else -> stringResource(id = HomeStrings.feature_home_remain_time_for_next_tier, remainDayForNextTier)
+        tier == Tier.highestTier -> stringResource(id = R.string.feature_home_highest_tier)
+        tierProgress == 0f -> stringResource(id = R.string.feature_home_no_active_challenge_mode)
+        else -> stringResource(id = R.string.feature_home_remain_time_for_next_tier, remainDayForNextTier)
     }
 
     Row(
@@ -502,7 +513,7 @@ private fun WaitingChallengesSection(
             .padding(horizontal = 16.dp),
     ) {
         Text(
-            text = stringResource(id = HomeStrings.feature_home_joined_challenges),
+            text = stringResource(id = R.string.feature_home_joined_challenges),
             color = CustomColorProvider.colorScheme.onBackground,
             style = MaterialTheme.typography.bodyLarge,
         )
@@ -526,14 +537,14 @@ private fun EmptyChallengesBody() {
     ) {
         Spacer(modifier = Modifier.height(80.dp))
         Text(
-            text = stringResource(id = HomeStrings.feature_home_no_active_challenge),
+            text = stringResource(id = R.string.feature_home_no_active_challenge),
             color = CustomColorProvider.colorScheme.onBackground,
             style = MaterialTheme.typography.titleSmall,
             textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = HomeStrings.feature_home_start_new_challenge_prompt),
+            text = stringResource(id = R.string.feature_home_start_new_challenge_prompt),
             color = CustomColorProvider.colorScheme.onBackgroundMuted,
             style = MaterialTheme.typography.labelMedium,
             textAlign = TextAlign.Center,
@@ -589,7 +600,7 @@ private fun MyChallengeTitle(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = stringResource(id = HomeStrings.feature_home_my_challenges),
+            text = stringResource(id = R.string.feature_home_my_challenges),
             color = CustomColorProvider.colorScheme.onBackground,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
@@ -600,7 +611,7 @@ private fun MyChallengeTitle(
             Icon(
                 painter = painterResource(id = ChallengeTogetherIcons.Sort),
                 contentDescription = stringResource(
-                    id = HomeStrings.feature_home_sort_challenge_content_description,
+                    id = R.string.feature_home_sort_challenge_content_description,
                 ),
                 tint = CustomColorProvider.colorScheme.onBackgroundMuted,
                 modifier = Modifier.size(20.dp),
@@ -679,7 +690,7 @@ private fun SortOrderBottomSheet(
     BaseBottomSheet(onDismiss = onDismiss) {
         Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = stringResource(id = HomeStrings.feature_home_sort),
+            text = stringResource(id = R.string.feature_home_sort),
             color = CustomColorProvider.colorScheme.onSurface,
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
@@ -756,14 +767,14 @@ private fun ChallengeCompletedBottomSheet(
     BaseBottomSheet(onDismiss = onDismiss) {
         Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = stringResource(id = HomeStrings.feature_home_congratulations),
+            text = stringResource(id = R.string.feature_home_congratulations),
             color = CustomColorProvider.colorScheme.onSurface,
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = HomeStrings.feature_home_challenge_success, completedTitles),
+            text = stringResource(id = R.string.feature_home_challenge_success, completedTitles),
             color = CustomColorProvider.colorScheme.onSurfaceMuted,
             style = MaterialTheme.typography.labelMedium,
             textAlign = TextAlign.Center,
@@ -771,7 +782,7 @@ private fun ChallengeCompletedBottomSheet(
         Box(contentAlignment = Alignment.Center) {
             StableImage(
                 drawableResId = R.drawable.image_congrats,
-                descriptionResId = HomeStrings.feature_home_congratulations_image_description,
+                descriptionResId = R.string.feature_home_congratulations_image_description,
                 modifier = Modifier.size(150.dp),
             )
             LottieImage(
@@ -818,7 +829,7 @@ private fun TierUpAnimationDialog(
         ) {
             TierUpAnimatedText(
                 visible = isAnimationEnd,
-                text = stringResource(id = HomeStrings.feature_home_promoted),
+                text = stringResource(id = R.string.feature_home_promoted),
                 color = Color.White,
                 style = MaterialTheme.typography.displaySmall,
             )
@@ -826,7 +837,7 @@ private fun TierUpAnimationDialog(
             TierUpAnimatedText(
                 visible = isAnimationEnd,
                 text = stringResource(
-                    id = HomeStrings.feature_home_promoted_description,
+                    id = R.string.feature_home_promoted_description,
                     promotedTierText,
                 ),
                 color = Color.LightGray,
@@ -924,7 +935,7 @@ private fun TierUpAnimatedButton(
             contentColor = Color.LightGray,
         ) {
             Text(
-                text = stringResource(id = HomeStrings.feature_home_promoted_confirm),
+                text = stringResource(id = R.string.feature_home_promoted_confirm),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
             )

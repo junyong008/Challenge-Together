@@ -16,7 +16,12 @@ object ChallengeTogetherIcons {
     val Home = R.drawable.ic_home
     val Infinite = R.drawable.ic_infinite
     val MoreHorizontal = R.drawable.ic_more_horiz
+    val MoreVertical = R.drawable.ic_more_vert
+    val QuoteLeft = R.drawable.ic_quote_left
+    val QuoteRight = R.drawable.ic_quote_right
     val Sort = R.drawable.ic_sort
+    val Trophy = R.drawable.ic_trophy
+    val TrophyOff = R.drawable.ic_trophy_off
     val Lock = R.drawable.ic_lock
     val Notification = R.drawable.ic_notification
     val Person = R.drawable.ic_person
