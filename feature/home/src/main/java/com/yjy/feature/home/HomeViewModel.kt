@@ -94,8 +94,12 @@ class HomeViewModel @Inject constructor(
             else -> lastProcessedChallenges
         }
     }.onEach { challenges ->
-        handleStartedChallenges(challenges)
-        lastProcessedChallenges = challenges
+        updateTier(challenges)
+    }.map { challenges ->
+        challenges.filterNot { it.isCompleted }
+    }.onEach { unCompletedChallenges ->
+        handleStartedChallenges(unCompletedChallenges)
+        lastProcessedChallenges = unCompletedChallenges
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -160,15 +164,11 @@ class HomeViewModel @Inject constructor(
             initialValue = UnViewedNotificationUiState.Loading,
         )
 
-    private suspend fun handleStartedChallenges(challenges: List<SimpleStartedChallenge>) {
-        if (challenges.isEmpty()) return
-        val unCompletedChallenges = challenges.filterNot { it.isCompleted }
-
-        updateTier(challenges)
-        updateTierProgress(unCompletedChallenges)
-        checkNewlyCompletedChallenges(unCompletedChallenges)
-        updateCurrentBestRecord(unCompletedChallenges)
-        updateCategoryList(unCompletedChallenges)
+    private fun handleStartedChallenges(challenges: List<SimpleStartedChallenge>) {
+        updateTierProgress(challenges)
+        checkNewlyCompletedChallenges(challenges)
+        updateCurrentBestRecord(challenges)
+        updateCategoryList(challenges)
     }
 
     private fun checkNewlyCompletedChallenges(challenges: List<SimpleStartedChallenge>) {
