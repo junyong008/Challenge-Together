@@ -31,10 +31,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    saveStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val arguments = saveStateHandle.toRoute<AuthRoute.SignUp.Nickname>()
+    private val arguments = savedStateHandle.toRoute<AuthRoute.SignUp.Nickname>()
     private val kakaoId = arguments.kakaoId
     private val googleId = arguments.googleId
     private val naverId = arguments.naverId
