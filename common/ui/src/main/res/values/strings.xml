@@ -13,4 +13,8 @@
     <string name="common_ui_waiting_challenge_icon_of_person">Icon of person</string>
     <string name="common_ui_manual_time_warning">System time is set manually</string>
     <string name="common_ui_manual_time_warning_icon">Icon of clock</string>
+    <string name="common_ui_category_list_all">My Challenge</string>
+    <string name="common_ui_target_day">Target Day</string>
+    <string name="common_ui_target_day_unlimited">Unlimited</string>
+    <string name="common_ui_target_day_days">Days</string>
 </resources>

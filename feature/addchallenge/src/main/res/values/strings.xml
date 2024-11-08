@@ -18,7 +18,6 @@
     <string name="feature_addchallenge_mode_free">Free Mode</string>
     <string name="feature_addchallenge_mode_challenge_description">You can\'t set a past start date, but it will count toward your record and ranking.</string>
     <string name="feature_addchallenge_mode_free_description">You can set a past start date, but it won\'t count toward your record or ranking.</string>
-    <string name="feature_addchallenge_my_challenge">My Challenge</string>
     <string name="feature_addchallenge_title">Title</string>
     <string name="feature_addchallenge_title_placeholder">Challenge title</string>
     <string name="feature_addchallenge_description_optional">Description (Optional)</string>
@@ -27,15 +26,13 @@
     <string name="feature_addchallenge_category_card_title">Category</string>
     <string name="feature_addchallenge_target_day_card_title">Target Day</string>
     <string name="feature_addchallenge_target_day_string">%1$d Days</string>
+    <string name="feature_addchallenge_unlimited">Unlimited</string>
     <string name="feature_addchallenge_start_date">Start Date</string>
     <string name="feature_addchallenge_earliest_success_date">Earliest Success Date</string>
     <string name="feature_addchallenge_together">Together</string>
     <string name="feature_addchallenge_start_immediately">Start Now</string>
-    <string name="feature_addchallenge_target_day">Target Day</string>
-    <string name="feature_addchallenge_unlimited">Unlimited</string>
     <string name="feature_addchallenge_max_participants">Max Participants</string>
     <string name="feature_addchallenge_room_password">Entry Password</string>
-    <string name="feature_addchallenge_days">Days</string>
     <string name="feature_addchallenge_people">ppl</string>
     <string name="feature_addchallenge_room_password_icon">Room Password Icon</string>
     <string name="feature_addchallenge_room_password_placeholder">Room Password</string>
