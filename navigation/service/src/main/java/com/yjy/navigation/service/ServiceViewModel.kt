@@ -25,7 +25,7 @@ class ServiceViewModel @Inject constructor(
         .map(Boolean::not)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.Eagerly,
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = false,
         )
 
@@ -33,7 +33,7 @@ class ServiceViewModel @Inject constructor(
         .map(Boolean::not)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.Eagerly,
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = false,
         )
 
@@ -46,7 +46,7 @@ class ServiceViewModel @Inject constructor(
         if (isExpired) authRepository.logout()
     }.shareIn(
         scope = viewModelScope,
-        started = SharingStarted.Eagerly,
+        started = SharingStarted.WhileSubscribed(5000),
         replay = 1,
     )
 }
