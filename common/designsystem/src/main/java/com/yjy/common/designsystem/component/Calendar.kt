@@ -469,7 +469,7 @@ fun CalendarDay(
         is SelectionMode.DateRange -> {
             val start = selectionMode.startDate
             val end = selectionMode.endDate
-            if (start != null && end != null) {
+            if (start != null && end != null && start != end) {
                 (date.isAfter(start) && date.isBefore(end)) || date == start || date == end
             } else {
                 false
