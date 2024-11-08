@@ -25,6 +25,7 @@ import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.ComponentPreviews
+import com.yjy.common.designsystem.component.PERCENT_MULTIPLIER
 import com.yjy.common.designsystem.component.RoundedLinearProgressBar
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
 import com.yjy.common.designsystem.extensions.getIconResId
@@ -37,8 +38,6 @@ import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.TargetDays
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
-private const val PERCENT_MULTIPLIER = 100
 
 @Composable
 fun StartedChallengeCard(
@@ -58,7 +57,7 @@ fun StartedChallengeCard(
         if (challenge.isCompleted) {
             CompletedChallengeTimer(completedDateTime = getCompletedDateTime(challenge))
         } else {
-            ChallengeTimer(seconds = challenge.currentRecordInSeconds!!)
+            ChallengeTimer(seconds = challenge.currentRecordInSeconds)
         }
     }
 }
@@ -97,7 +96,7 @@ private fun ChallengeBody(
                 if (targetDays is TargetDays.Fixed) {
                     Spacer(modifier = Modifier.height(16.dp))
                     ChallengeProgress(
-                        currentSeconds = challenge.currentRecordInSeconds!!,
+                        currentSeconds = challenge.currentRecordInSeconds,
                         targetDays = targetDays.days,
                         isCompleted = challenge.isCompleted,
                     )
@@ -122,6 +121,7 @@ private fun ChallengeProgress(
         val targetSeconds = targetDays * SECONDS_PER_DAY
         (currentSeconds.toFloat() / targetSeconds).coerceIn(0f, 1f)
     }
+
     val progressPercent = (progress * PERCENT_MULTIPLIER).toInt()
 
     Row(
