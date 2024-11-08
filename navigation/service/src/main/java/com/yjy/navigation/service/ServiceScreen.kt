@@ -94,8 +94,8 @@ internal fun ServiceScreen(
                 Box(modifier = Modifier.navigationBarsPadding()) {
                     AnimatedVisibility(
                         visible = navigator.isOnMainTab(),
-                        enter = fadeIn(),
-                        exit = fadeOut(),
+                        enter = fadeIn() + expandVertically(),
+                        exit = fadeOut() + shrinkVertically(),
                     ) {
                         ServiceBottomBar(
                             mainTabs = MainTab.entries.toImmutableList(),
