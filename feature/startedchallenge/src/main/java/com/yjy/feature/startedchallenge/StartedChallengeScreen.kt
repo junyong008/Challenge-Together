@@ -37,6 +37,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -134,7 +135,7 @@ internal fun StartedChallengeScreen(
     onEditTargetDaysClick: (String, TargetDays) -> Unit = { _, _ -> },
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    var shouldShowResetBottomSheet by remember { mutableStateOf(false) }
+    var shouldShowResetBottomSheet by rememberSaveable { mutableStateOf(false) }
     var shouldShowMenuBottomSheet by remember { mutableStateOf(false) }
     var shouldShowDeleteConfirmDialog by remember { mutableStateOf(false) }
 
@@ -194,8 +195,8 @@ internal fun StartedChallengeScreen(
         if (shouldShowResetBottomSheet) {
             ResetBottomSheet(
                 onResetClick = { memo ->
-                    processAction(StartedChallengeUiAction.OnResetClick(challenge.id, memo))
                     shouldShowResetBottomSheet = false
+                    processAction(StartedChallengeUiAction.OnResetClick(challenge.id, memo))
                 },
                 onDismiss = { shouldShowResetBottomSheet = false },
             )
@@ -205,8 +206,8 @@ internal fun StartedChallengeScreen(
             MenuBottomSheet(
                 enableEdit = challenge.currentParticipantCounts == 1,
                 onEditCategoryClick = {
-                    onEditCategoryClick(challenge.id, challenge.category)
                     shouldShowMenuBottomSheet = false
+                    onEditCategoryClick(challenge.id, challenge.category)
                 },
                 onEditTitleClick = {  },
                 onEditTargetDaysClick = {  },
@@ -358,7 +359,7 @@ private fun ResetBottomSheet(
     onResetClick: (String) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    var recordText by remember { mutableStateOf("") }
+    var recordText by rememberSaveable { mutableStateOf("") }
 
     BaseBottomSheet(
         onDismiss = onDismiss,

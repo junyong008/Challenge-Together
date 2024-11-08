@@ -39,45 +39,14 @@ class ChangePasswordViewModel @Inject constructor(
 
     fun processAction(action: ChangePasswordUiAction) {
         when (action) {
-            is ChangePasswordUiAction.OnBackClick -> showExitConfirmDialog()
-            is ChangePasswordUiAction.OnCancelExit -> dismissExitConfirmDialog()
-            is ChangePasswordUiAction.OnConfirmExit -> confirmExit()
-            is ChangePasswordUiAction.OnChangeClick -> showChangeConfirmDialog()
-            is ChangePasswordUiAction.OnCancelChange -> dismissChangeConfirmDialog()
             is ChangePasswordUiAction.OnConfirmChange -> changePassword(action.password)
             is ChangePasswordUiAction.OnPasswordUpdated -> updatePassword(action.password)
         }
     }
 
-    private fun showExitConfirmDialog() {
-        _uiState.update { it.copy(shouldShowExitConfirmDialog = true) }
-    }
-
-    private fun dismissExitConfirmDialog() {
-        _uiState.update { it.copy(shouldShowExitConfirmDialog = false) }
-    }
-
-    private fun confirmExit() {
-        dismissExitConfirmDialog()
-        sendEvent(ChangePasswordUiEvent.CancelChangePassword)
-    }
-
-    private fun showChangeConfirmDialog() {
-        _uiState.update { it.copy(shouldShowChangeConfirmDialog = true) }
-    }
-
-    private fun dismissChangeConfirmDialog() {
-        _uiState.update { it.copy(shouldShowChangeConfirmDialog = false) }
-    }
-
     private fun changePassword(password: String) {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    isChangingPassword = true,
-                    shouldShowChangeConfirmDialog = false,
-                )
-            }
+            _uiState.update { it.copy(isChangingPassword = true) }
 
             val event = handleNetworkResult(
                 result = authRepository.changePassword(password),

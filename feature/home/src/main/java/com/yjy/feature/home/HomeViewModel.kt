@@ -248,8 +248,6 @@ class HomeViewModel @Inject constructor(
             HomeUiAction.OnRetryClick -> retryOnError()
             HomeUiAction.OnCloseCompletedChallengeNotification -> clearRecentCompletedChallenges()
             HomeUiAction.OnDismissTierUpAnimation -> dismissTierUpAnimation()
-            HomeUiAction.OnSortOrderClick -> showSortOrderBottomSheet()
-            HomeUiAction.OnDismissSortOrder -> dismissSortOrderBottomSheet()
             is HomeUiAction.OnCategorySelect -> updateSelectedCategory(action.category)
             is HomeUiAction.OnSortOrderSelect -> updateSortOrder(action.sortOrder)
         }
@@ -276,14 +274,6 @@ class HomeViewModel @Inject constructor(
 
         challengeRepository.setCurrentTier(animation.to)
         _uiState.update { it.copy(tierUpAnimation = null) }
-    }
-
-    private fun showSortOrderBottomSheet() {
-        _uiState.update { it.copy(shouldShowSortOrderBottomSheet = true) }
-    }
-
-    private fun dismissSortOrderBottomSheet() {
-        _uiState.update { it.copy(shouldShowSortOrderBottomSheet = false) }
     }
 
     private fun updateSelectedCategory(category: Category) {

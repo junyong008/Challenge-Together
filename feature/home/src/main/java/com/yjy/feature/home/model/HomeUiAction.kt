@@ -8,8 +8,6 @@ sealed interface HomeUiAction {
     data object OnRetryClick : HomeUiAction
     data object OnCloseCompletedChallengeNotification : HomeUiAction
     data object OnDismissTierUpAnimation : HomeUiAction
-    data object OnSortOrderClick : HomeUiAction
-    data object OnDismissSortOrder : HomeUiAction
     data class OnCategorySelect(val category: Category) : HomeUiAction
     data class OnSortOrderSelect(val sortOrder: SortOrder) : HomeUiAction
 }

@@ -23,6 +23,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,7 +62,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun SetTogetherRoute(
     onBackClick: () -> Unit,
-    onAddChallenge: (String) -> Unit,
+    onWaitingChallengeCreated: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddChallengeViewModel = hiltViewModel(),
@@ -72,7 +75,7 @@ internal fun SetTogetherRoute(
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
-        onAddChallenge = onAddChallenge,
+        onWaitingChallengeCreated = onWaitingChallengeCreated,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -84,18 +87,20 @@ internal fun SetTogetherScreen(
     uiEvent: Flow<AddChallengeUiEvent> = flowOf(),
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
-    onAddChallenge: (String) -> Unit = {},
+    onWaitingChallengeCreated: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    var shouldShowAddConfirmDialog by remember { mutableStateOf(false) }
+
     val waitingRoomCreatedMessage = stringResource(id = R.string.feature_addchallenge_waiting_room_created)
     val unknownErrorMessage = stringResource(id = R.string.feature_addchallenge_unknown_error)
     val checkNetworkMessage = stringResource(id = R.string.feature_addchallenge_check_network_connection)
 
     ObserveAsEvents(flow = uiEvent, useMainImmediate = false) {
         when (it) {
-            is AddChallengeUiEvent.ChallengeAdded -> {
+            is AddChallengeUiEvent.WaitingChallengeCreated -> {
                 onShowSnackbar(SnackbarType.SUCCESS, waitingRoomCreatedMessage)
-                onAddChallenge(it.challengeId)
+                onWaitingChallengeCreated(it.challengeId)
             }
 
             AddChallengeUiEvent.AddFailure.NetworkError ->
@@ -119,7 +124,7 @@ internal fun SetTogetherScreen(
         modifier = modifier,
     ) { padding ->
 
-        if (uiState.shouldShowAddConfirmDialog) {
+        if (shouldShowAddConfirmDialog) {
             ChallengeTogetherDialog(
                 title = stringResource(id = R.string.feature_addchallenge_dialog_create_room_title),
                 description = stringResource(
@@ -127,8 +132,9 @@ internal fun SetTogetherScreen(
                 ),
                 positiveTextRes = R.string.feature_addchallenge_dialog_create,
                 onClickPositive = {
+                    shouldShowAddConfirmDialog = false
                     processAction(
-                        AddChallengeUiAction.OnConfirmCreateWaitingRoom(
+                        AddChallengeUiAction.OnCreateWaitingRoom(
                             category = uiState.category,
                             title = uiState.title,
                             description = uiState.description,
@@ -139,7 +145,7 @@ internal fun SetTogetherScreen(
                         ),
                     )
                 },
-                onClickNegative = { processAction(AddChallengeUiAction.OnCancelCreateWaitingRoom) },
+                onClickNegative = { shouldShowAddConfirmDialog = false },
             )
         }
 
@@ -175,7 +181,7 @@ internal fun SetTogetherScreen(
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 ChallengeTogetherButton(
-                    onClick = { processAction(AddChallengeUiAction.OnCreateWaitingRoomClick) },
+                    onClick = { shouldShowAddConfirmDialog = true },
                     enabled = !uiState.isAddingChallenge,
                     shape = MaterialTheme.shapes.large,
                     modifier = Modifier

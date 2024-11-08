@@ -58,10 +58,6 @@ class AddChallengeViewModel @Inject constructor(
             is AddChallengeUiAction.OnMaxParticipantsUpdated -> updateMaxParticipants(action.maxParticipants)
             is AddChallengeUiAction.OnEnableRoomPasswordUpdated -> updateEnableRoomPassword(action.enableRoomPassword)
             is AddChallengeUiAction.OnRoomPasswordUpdated -> updateRoomPassword(action.roomPassword)
-            is AddChallengeUiAction.OnStartChallengeClick -> showAddConfirmDialog()
-            is AddChallengeUiAction.OnCancelStartChallenge -> dismissAddConfirmDialog()
-            is AddChallengeUiAction.OnCreateWaitingRoomClick -> showAddConfirmDialog()
-            is AddChallengeUiAction.OnCancelCreateWaitingRoom -> dismissAddConfirmDialog()
 
             is AddChallengeUiAction.OnStartDateTimeUpdated -> updateStartDateTime(
                 selectedDate = action.selectedDate,
@@ -70,7 +66,7 @@ class AddChallengeViewModel @Inject constructor(
                 isAm = action.isAm,
             )
 
-            is AddChallengeUiAction.OnConfirmStartChallenge -> startChallenge(
+            is AddChallengeUiAction.OnStartChallenge -> startChallenge(
                 mode = action.mode,
                 category = action.category,
                 title = action.title,
@@ -79,7 +75,7 @@ class AddChallengeViewModel @Inject constructor(
                 targetDays = action.targetDays,
             )
 
-            is AddChallengeUiAction.OnConfirmCreateWaitingRoom -> createWaitingRoom(
+            is AddChallengeUiAction.OnCreateWaitingRoom -> createWaitingRoom(
                 category = action.category,
                 title = action.title,
                 description = action.description,
@@ -157,14 +153,6 @@ class AddChallengeViewModel @Inject constructor(
         _uiState.update { it.copy(roomPassword = roomPassword.filter { !it.isWhitespace() }) }
     }
 
-    private fun showAddConfirmDialog() {
-        _uiState.update { it.copy(shouldShowAddConfirmDialog = true) }
-    }
-
-    private fun dismissAddConfirmDialog() {
-        _uiState.update { it.copy(shouldShowAddConfirmDialog = false) }
-    }
-
     private fun startChallenge(
         mode: Mode,
         category: Category,
@@ -174,7 +162,6 @@ class AddChallengeViewModel @Inject constructor(
         targetDays: TargetDays,
     ) {
         viewModelScope.launch {
-            dismissAddConfirmDialog()
             _uiState.update { it.copy(isAddingChallenge = true) }
 
             val adjustedStartDateTime = when {
@@ -193,7 +180,7 @@ class AddChallengeViewModel @Inject constructor(
                     targetDays = if (mode == Mode.FREE) TargetDays.Infinite else targetDays,
                     startDateTime = adjustedStartDateTime,
                 ),
-                onSuccess = { AddChallengeUiEvent.ChallengeAdded(it) },
+                onSuccess = { AddChallengeUiEvent.ChallengeStarted(it) },
                 onNetworkError = { AddChallengeUiEvent.AddFailure.NetworkError },
                 onHttpError = { AddChallengeUiEvent.AddFailure.UnknownError },
                 onUnknownError = { AddChallengeUiEvent.AddFailure.UnknownError },
@@ -213,7 +200,6 @@ class AddChallengeViewModel @Inject constructor(
         roomPassword: String,
     ) {
         viewModelScope.launch {
-            dismissAddConfirmDialog()
             _uiState.update { it.copy(isAddingChallenge = true) }
 
             val event = handleNetworkResult(
@@ -225,7 +211,7 @@ class AddChallengeViewModel @Inject constructor(
                     maxParticipants = maxParticipants,
                     roomPassword = if (enableRoomPassword) roomPassword else "",
                 ),
-                onSuccess = { AddChallengeUiEvent.ChallengeAdded(it) },
+                onSuccess = { AddChallengeUiEvent.WaitingChallengeCreated(it) },
                 onNetworkError = { AddChallengeUiEvent.AddFailure.NetworkError },
                 onHttpError = { AddChallengeUiEvent.AddFailure.UnknownError },
                 onUnknownError = { AddChallengeUiEvent.AddFailure.UnknownError },

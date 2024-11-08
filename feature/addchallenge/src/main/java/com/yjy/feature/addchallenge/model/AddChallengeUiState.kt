@@ -18,5 +18,4 @@ data class AddChallengeUiState(
     val maxParticipants: Int = INIT_CHALLENGE_MAX_PARTICIPANTS,
     val enableRoomPassword: Boolean = false,
     val roomPassword: String = "",
-    val shouldShowAddConfirmDialog: Boolean = false,
 )

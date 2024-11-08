@@ -33,12 +33,15 @@ internal fun ServiceNavHost(
         )
         addChallengeNavGraph(
             navController = navController,
-            onAddChallenge = { challengeId ->
+            onChallengeStarted = { challengeId ->
                 val navOptions = navOptions {
                     popUpTo(ServiceRoute.AddChallenge) { inclusive = true }
                     launchSingleTop = true
                 }
                 navController.navigateToStartedChallenge(challengeId, navOptions)
+            },
+            onWaitingChallengeCreated = { challengeId ->
+                navController.popBackStack(route = ServiceRoute.AddChallenge, inclusive = true)
             },
             onShowSnackbar = onShowSnackbar,
         )

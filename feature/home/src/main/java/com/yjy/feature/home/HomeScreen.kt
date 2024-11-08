@@ -141,6 +141,8 @@ internal fun HomeScreen(
     processAction: (HomeUiAction) -> Unit = {},
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit = {},
 ) {
+    var shouldShowSortOrderBottomSheet by remember { mutableStateOf(false) }
+
     val hasError = userNameUiState.isError() ||
         unViewedNotificationUiState.isError() ||
         challengeSyncUiState.isError()
@@ -171,11 +173,11 @@ internal fun HomeScreen(
         tierUpAnimation = uiState.tierUpAnimation,
         completedChallengeTitles = recentCompletedChallenges,
         selectedSortOrder = sortOrder,
-        shouldShowSortOrderBottomSheet = uiState.shouldShowSortOrderBottomSheet,
+        shouldShowSortOrderBottomSheet = shouldShowSortOrderBottomSheet,
         onSortOrderSelected = { processAction(HomeUiAction.OnSortOrderSelect(it)) },
         onDismissTierUp = { processAction(HomeUiAction.OnDismissTierUpAnimation) },
         onDismissCompleted = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
-        onDismissSortOrder = { processAction(HomeUiAction.OnDismissSortOrder) },
+        onDismissSortOrder = { shouldShowSortOrderBottomSheet = false },
     )
 
     Column(
@@ -198,6 +200,7 @@ internal fun HomeScreen(
         HomeBody(
             uiState = uiState,
             processAction = processAction,
+            onSortOrderClick = { shouldShowSortOrderBottomSheet = true },
             onStartedChallengeClick = onStartedChallengeClick,
             isLoading = isLoading,
             hasError = hasError,
@@ -210,6 +213,7 @@ internal fun HomeScreen(
 private fun HomeBody(
     uiState: HomeUiState,
     processAction: (HomeUiAction) -> Unit,
+    onSortOrderClick: () -> Unit,
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
     isLoading: Boolean,
     hasError: Boolean,
@@ -221,6 +225,7 @@ private fun HomeBody(
         else -> HomeContent(
             uiState = uiState,
             processAction = processAction,
+            onSortOrderClick = onSortOrderClick,
             onStartedChallengeClick = onStartedChallengeClick,
             content = homeContents,
         )
@@ -231,6 +236,7 @@ private fun HomeBody(
 private fun HomeContent(
     uiState: HomeUiState,
     processAction: (HomeUiAction) -> Unit,
+    onSortOrderClick: () -> Unit,
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
     content: HomeContents,
 ) {
@@ -249,7 +255,7 @@ private fun HomeContent(
             categories = content.categories,
             sortOrder = content.sortOrder,
             onCategorySelected = { processAction(HomeUiAction.OnCategorySelect(it)) },
-            onSortOrderClick = { processAction(HomeUiAction.OnSortOrderClick) },
+            onSortOrderClick = onSortOrderClick,
             onStartedChallengeClick = onStartedChallengeClick,
             onWaitingChallengeClick = {},
         )

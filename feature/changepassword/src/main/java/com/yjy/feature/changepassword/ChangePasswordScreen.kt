@@ -15,6 +15,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -78,14 +81,15 @@ internal fun ChangePasswordScreen(
     onShowToast: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    var shouldShowExitConfirmDialog by remember { mutableStateOf(false) }
+    var shouldShowChangeConfirmDialog by remember { mutableStateOf(false) }
+
     val changeSuccessMessage = stringResource(id = R.string.feature_changepassword_success)
     val checkNetworkMessage = stringResource(id = R.string.feature_changepassword_check_network_connection)
     val unknownErrorMessage = stringResource(id = R.string.feature_changepassword_error)
 
     ObserveAsEvents(flow = uiEvent, useMainImmediate = false) {
         when (it) {
-            ChangePasswordUiEvent.CancelChangePassword -> onBackClick()
-
             ChangePasswordUiEvent.ChangeSuccess -> {
                 onShowToast(changeSuccessMessage)
                 onPasswordChanged()
@@ -99,36 +103,46 @@ internal fun ChangePasswordScreen(
         }
     }
 
-    BackHandler { processAction(ChangePasswordUiAction.OnBackClick) }
+    BackHandler {
+        shouldShowExitConfirmDialog = true
+    }
 
     Scaffold(
         topBar = {
             ChallengeTogetherTopAppBar(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                onNavigationClick = { processAction(ChangePasswordUiAction.OnBackClick) },
+                onNavigationClick = { shouldShowExitConfirmDialog = true },
             )
         },
         containerColor = CustomColorProvider.colorScheme.background,
         modifier = modifier,
     ) { padding ->
 
-        if (uiState.shouldShowExitConfirmDialog) {
+        if (shouldShowExitConfirmDialog) {
             ChallengeTogetherDialog(
                 title = stringResource(id = R.string.feature_changepassword_back),
                 description = stringResource(id = R.string.feature_changepassword_cancel_prompt),
                 positiveTextRes = R.string.feature_changepassword_back,
-                onClickPositive = { processAction(ChangePasswordUiAction.OnConfirmExit) },
-                onClickNegative = { processAction(ChangePasswordUiAction.OnCancelExit) },
+                onClickPositive = {
+                    shouldShowExitConfirmDialog = false
+                    onBackClick()
+                },
+                onClickNegative = {
+                    shouldShowExitConfirmDialog = false
+                },
             )
         }
 
-        if (uiState.shouldShowChangeConfirmDialog) {
+        if (shouldShowChangeConfirmDialog) {
             ChallengeTogetherDialog(
                 title = stringResource(id = R.string.feature_changepassword_title),
                 description = stringResource(id = R.string.feature_changepassword_confirm_info),
                 positiveTextRes = R.string.feature_changepassword_change,
-                onClickPositive = { processAction(ChangePasswordUiAction.OnConfirmChange(uiState.password)) },
-                onClickNegative = { processAction(ChangePasswordUiAction.OnCancelChange) },
+                onClickPositive = {
+                    shouldShowChangeConfirmDialog = false
+                    processAction(ChangePasswordUiAction.OnConfirmChange(uiState.password))
+                },
+                onClickNegative = { shouldShowChangeConfirmDialog = false },
             )
         }
 
@@ -177,9 +191,7 @@ internal fun ChangePasswordScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             ChallengeTogetherButton(
-                onClick = {
-                    processAction(ChangePasswordUiAction.OnChangeClick)
-                },
+                onClick = { shouldShowChangeConfirmDialog = true },
                 enabled = !uiState.isChangingPassword &&
                     uiState.isPasswordLongEnough &&
                     uiState.isPasswordContainNumber,

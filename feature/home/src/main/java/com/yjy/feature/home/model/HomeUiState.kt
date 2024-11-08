@@ -7,7 +7,6 @@ data class HomeUiState(
     val remainDayForNextTier: Int = 0,
     val tierProgress: Float = 0f,
     val tierUpAnimation: TierUpAnimationState? = null,
-    val shouldShowSortOrderBottomSheet: Boolean = false,
     val categories: List<Category> = emptyList(),
     val selectedCategory: Category = Category.ALL,
     val currentBestRecordInSeconds: Long = 0,

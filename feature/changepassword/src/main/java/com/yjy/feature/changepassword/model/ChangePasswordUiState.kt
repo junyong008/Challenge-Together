@@ -5,6 +5,4 @@ data class ChangePasswordUiState(
     val isPasswordLongEnough: Boolean = false,
     val isPasswordContainNumber: Boolean = false,
     val isChangingPassword: Boolean = false,
-    val shouldShowExitConfirmDialog: Boolean = false,
-    val shouldShowChangeConfirmDialog: Boolean = false,
 )

@@ -27,6 +27,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -67,7 +70,7 @@ import com.yjy.common.designsystem.R as designSystemR
 internal fun ConfirmRoute(
     onBackClick: () -> Unit,
     onSetTogetherClick: () -> Unit,
-    onAddChallenge: (String) -> Unit,
+    onChallengeStarted: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddChallengeViewModel = hiltViewModel(),
@@ -81,7 +84,7 @@ internal fun ConfirmRoute(
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
         onSetTogetherClick = onSetTogetherClick,
-        onAddChallenge = onAddChallenge,
+        onChallengeStarted = onChallengeStarted,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -94,18 +97,20 @@ internal fun ConfirmScreen(
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onSetTogetherClick: () -> Unit = {},
-    onAddChallenge: (String) -> Unit = {},
+    onChallengeStarted: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    var shouldShowAddConfirmDialog by remember { mutableStateOf(false) }
+
     val challengeAddedMessage = stringResource(id = R.string.feature_addchallenge_challenge_added)
     val unknownErrorMessage = stringResource(id = R.string.feature_addchallenge_unknown_error)
     val checkNetworkMessage = stringResource(id = R.string.feature_addchallenge_check_network_connection)
 
     ObserveAsEvents(flow = uiEvent, useMainImmediate = false) {
         when (it) {
-            is AddChallengeUiEvent.ChallengeAdded -> {
+            is AddChallengeUiEvent.ChallengeStarted -> {
                 onShowSnackbar(SnackbarType.SUCCESS, challengeAddedMessage)
-                onAddChallenge(it.challengeId)
+                onChallengeStarted(it.challengeId)
             }
 
             AddChallengeUiEvent.AddFailure.NetworkError ->
@@ -133,14 +138,15 @@ internal fun ConfirmScreen(
         modifier = modifier,
     ) { padding ->
 
-        if (uiState.shouldShowAddConfirmDialog) {
+        if (shouldShowAddConfirmDialog) {
             ChallengeTogetherDialog(
                 title = stringResource(id = R.string.feature_addchallenge_dialog_start_title),
                 description = stringResource(id = R.string.feature_addchallenge_dialog_start_description),
                 positiveTextRes = R.string.feature_addchallenge_dialog_start,
                 onClickPositive = {
+                    shouldShowAddConfirmDialog = false
                     processAction(
-                        AddChallengeUiAction.OnConfirmStartChallenge(
+                        AddChallengeUiAction.OnStartChallenge(
                             mode = uiState.mode!!,
                             category = uiState.category,
                             title = uiState.title,
@@ -150,7 +156,7 @@ internal fun ConfirmScreen(
                         ),
                     )
                 },
-                onClickNegative = { processAction(AddChallengeUiAction.OnCancelStartChallenge) },
+                onClickNegative = { shouldShowAddConfirmDialog = false },
             )
         }
 
@@ -190,7 +196,7 @@ internal fun ConfirmScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
                 StartButton(
-                    onClick = { processAction(AddChallengeUiAction.OnStartChallengeClick) },
+                    onClick = { shouldShowAddConfirmDialog = true },
                     enabled = !uiState.isAddingChallenge,
                 )
 

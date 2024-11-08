@@ -15,10 +15,6 @@ sealed interface AddChallengeUiAction {
     data class OnMaxParticipantsUpdated(val maxParticipants: Int) : AddChallengeUiAction
     data class OnEnableRoomPasswordUpdated(val enableRoomPassword: Boolean) : AddChallengeUiAction
     data class OnRoomPasswordUpdated(val roomPassword: String) : AddChallengeUiAction
-    data object OnStartChallengeClick : AddChallengeUiAction
-    data object OnCreateWaitingRoomClick : AddChallengeUiAction
-    data object OnCancelStartChallenge : AddChallengeUiAction
-    data object OnCancelCreateWaitingRoom : AddChallengeUiAction
 
     data class OnStartDateTimeUpdated(
         val selectedDate: LocalDate,
@@ -27,7 +23,7 @@ sealed interface AddChallengeUiAction {
         val isAm: Boolean,
     ) : AddChallengeUiAction
 
-    data class OnConfirmStartChallenge(
+    data class OnStartChallenge(
         val mode: Mode,
         val category: Category,
         val title: String,
@@ -36,7 +32,7 @@ sealed interface AddChallengeUiAction {
         val targetDays: TargetDays,
     ) : AddChallengeUiAction
 
-    data class OnConfirmCreateWaitingRoom(
+    data class OnCreateWaitingRoom(
         val category: Category,
         val title: String,
         val description: String,
