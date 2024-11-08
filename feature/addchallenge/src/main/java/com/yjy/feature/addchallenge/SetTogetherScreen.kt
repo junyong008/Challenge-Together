@@ -53,7 +53,6 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
-import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -88,9 +87,9 @@ internal fun SetTogetherScreen(
     onAddChallenge: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    val waitingRoomCreatedMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_waiting_room_created)
-    val unknownErrorMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_unknown_error)
-    val checkNetworkMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_check_network_connection)
+    val waitingRoomCreatedMessage = stringResource(id = R.string.feature_addchallenge_waiting_room_created)
+    val unknownErrorMessage = stringResource(id = R.string.feature_addchallenge_unknown_error)
+    val checkNetworkMessage = stringResource(id = R.string.feature_addchallenge_check_network_connection)
 
     ObserveAsEvents(flow = uiEvent, useMainImmediate = false) {
         when (it) {
@@ -122,11 +121,11 @@ internal fun SetTogetherScreen(
 
         if (uiState.shouldShowAddConfirmDialog) {
             ChallengeTogetherDialog(
-                title = stringResource(id = AddChallengeStrings.feature_addchallenge_dialog_create_room_title),
+                title = stringResource(id = R.string.feature_addchallenge_dialog_create_room_title),
                 description = stringResource(
-                    id = AddChallengeStrings.feature_addchallenge_dialog_create_room_description,
+                    id = R.string.feature_addchallenge_dialog_create_room_description,
                 ),
-                positiveTextRes = AddChallengeStrings.feature_addchallenge_dialog_create,
+                positiveTextRes = R.string.feature_addchallenge_dialog_create,
                 onClickPositive = {
                     processAction(
                         AddChallengeUiAction.OnConfirmCreateWaitingRoom(
@@ -152,8 +151,8 @@ internal fun SetTogetherScreen(
         ) {
             Spacer(modifier = Modifier.height(80.dp))
             TitleWithDescription(
-                titleRes = AddChallengeStrings.feature_addchallenge_title_set_together,
-                descriptionRes = AddChallengeStrings.feature_addchallenge_description_set_together,
+                titleRes = R.string.feature_addchallenge_title_set_together,
+                descriptionRes = R.string.feature_addchallenge_description_set_together,
             )
             Spacer(modifier = Modifier.height(50.dp))
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -190,7 +189,7 @@ internal fun SetTogetherScreen(
                         )
                     } else {
                         Text(
-                            text = stringResource(id = AddChallengeStrings.feature_addchallenge_create_waiting_room),
+                            text = stringResource(id = R.string.feature_addchallenge_create_waiting_room),
                             style = MaterialTheme.typography.bodyMedium,
                             textAlign = TextAlign.Center,
                         )
@@ -222,7 +221,7 @@ private fun RoomPasswordCard(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = stringResource(id = AddChallengeStrings.feature_addchallenge_room_password),
+                text = stringResource(id = R.string.feature_addchallenge_room_password),
                 color = CustomColorProvider.colorScheme.onSurface,
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier.weight(1f),
@@ -245,7 +244,7 @@ private fun RoomPasswordCard(
                     Icon(
                         painter = painterResource(id = ChallengeTogetherIcons.Lock),
                         contentDescription = stringResource(
-                            id = AddChallengeStrings.feature_addchallenge_room_password_icon,
+                            id = R.string.feature_addchallenge_room_password_icon,
                         ),
                         tint = CustomColorProvider.colorScheme.onBackground,
                     )
@@ -255,7 +254,7 @@ private fun RoomPasswordCard(
                     imeAction = ImeAction.Done,
                 ),
                 placeholderText = stringResource(
-                    id = AddChallengeStrings.feature_addchallenge_room_password_placeholder,
+                    id = R.string.feature_addchallenge_room_password_placeholder,
                 ),
                 isPassword = true,
             )
@@ -279,7 +278,7 @@ private fun MaxParticipantsCard(
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
-            text = stringResource(id = AddChallengeStrings.feature_addchallenge_max_participants),
+            text = stringResource(id = R.string.feature_addchallenge_max_participants),
             color = CustomColorProvider.colorScheme.onSurface,
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier
@@ -297,7 +296,7 @@ private fun MaxParticipantsCard(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = stringResource(id = AddChallengeStrings.feature_addchallenge_people),
+                text = stringResource(id = R.string.feature_addchallenge_people),
                 color = CustomColorProvider.colorScheme.onSurface,
                 style = MaterialTheme.typography.titleLarge,
             )

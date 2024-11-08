@@ -17,8 +17,6 @@ import com.yjy.feature.signup.NicknameRoute
 import com.yjy.feature.signup.R
 import com.yjy.feature.signup.SignUpViewModel
 
-typealias SignUpStrings = R.string
-
 fun NavController.navigateToSignUp() {
     navigate(AuthRoute.SignUp)
 }

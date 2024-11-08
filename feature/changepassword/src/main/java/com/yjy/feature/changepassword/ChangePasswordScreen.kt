@@ -41,7 +41,6 @@ import com.yjy.common.ui.DevicePreviews
 import com.yjy.feature.changepassword.model.ChangePasswordUiAction
 import com.yjy.feature.changepassword.model.ChangePasswordUiEvent
 import com.yjy.feature.changepassword.model.ChangePasswordUiState
-import com.yjy.feature.changepassword.navigation.ChangePasswordStrings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -79,9 +78,9 @@ internal fun ChangePasswordScreen(
     onShowToast: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    val changeSuccessMessage = stringResource(id = ChangePasswordStrings.feature_changepassword_success)
-    val checkNetworkMessage = stringResource(id = ChangePasswordStrings.feature_changepassword_check_network_connection)
-    val unknownErrorMessage = stringResource(id = ChangePasswordStrings.feature_changepassword_error)
+    val changeSuccessMessage = stringResource(id = R.string.feature_changepassword_success)
+    val checkNetworkMessage = stringResource(id = R.string.feature_changepassword_check_network_connection)
+    val unknownErrorMessage = stringResource(id = R.string.feature_changepassword_error)
 
     ObserveAsEvents(flow = uiEvent, useMainImmediate = false) {
         when (it) {
@@ -115,9 +114,9 @@ internal fun ChangePasswordScreen(
 
         if (uiState.shouldShowExitConfirmDialog) {
             ChallengeTogetherDialog(
-                title = stringResource(id = ChangePasswordStrings.feature_changepassword_back),
-                description = stringResource(id = ChangePasswordStrings.feature_changepassword_cancel_prompt),
-                positiveTextRes = ChangePasswordStrings.feature_changepassword_back,
+                title = stringResource(id = R.string.feature_changepassword_back),
+                description = stringResource(id = R.string.feature_changepassword_cancel_prompt),
+                positiveTextRes = R.string.feature_changepassword_back,
                 onClickPositive = { processAction(ChangePasswordUiAction.OnConfirmExit) },
                 onClickNegative = { processAction(ChangePasswordUiAction.OnCancelExit) },
             )
@@ -125,9 +124,9 @@ internal fun ChangePasswordScreen(
 
         if (uiState.shouldShowChangeConfirmDialog) {
             ChallengeTogetherDialog(
-                title = stringResource(id = ChangePasswordStrings.feature_changepassword_title),
-                description = stringResource(id = ChangePasswordStrings.feature_changepassword_confirm_info),
-                positiveTextRes = ChangePasswordStrings.feature_changepassword_change,
+                title = stringResource(id = R.string.feature_changepassword_title),
+                description = stringResource(id = R.string.feature_changepassword_confirm_info),
+                positiveTextRes = R.string.feature_changepassword_change,
                 onClickPositive = { processAction(ChangePasswordUiAction.OnConfirmChange(uiState.password)) },
                 onClickNegative = { processAction(ChangePasswordUiAction.OnCancelChange) },
             )
@@ -140,13 +139,13 @@ internal fun ChangePasswordScreen(
                 .padding(horizontal = 32.dp),
         ) {
             TitleWithDescription(
-                titleRes = ChangePasswordStrings.feature_changepassword_title,
-                descriptionRes = ChangePasswordStrings.feature_changepassword_description,
+                titleRes = R.string.feature_changepassword_title,
+                descriptionRes = R.string.feature_changepassword_description,
             )
             Spacer(modifier = Modifier.height(35.dp))
             StableImage(
                 drawableResId = R.drawable.image_lock,
-                descriptionResId = ChangePasswordStrings.feature_changepassword_lock_image_description,
+                descriptionResId = R.string.feature_changepassword_lock_image_description,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .size(115.dp),
@@ -161,19 +160,19 @@ internal fun ChangePasswordScreen(
                     imeAction = ImeAction.Done,
                 ),
                 placeholderText = stringResource(
-                    id = ChangePasswordStrings.feature_changepassword_input_password_place_holder,
+                    id = R.string.feature_changepassword_input_password_place_holder,
                 ),
                 isPassword = true,
             )
             ConditionIndicator(
                 text = stringResource(
-                    id = ChangePasswordStrings.feature_changepassword_password_length_indicator,
+                    id = R.string.feature_changepassword_password_length_indicator,
                     MIN_PASSWORD_LENGTH,
                 ),
                 isMatched = uiState.isPasswordLongEnough,
             )
             ConditionIndicator(
-                text = stringResource(id = ChangePasswordStrings.feature_changepassword_password_number_indicator),
+                text = stringResource(id = R.string.feature_changepassword_password_number_indicator),
                 isMatched = uiState.isPasswordContainNumber,
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -194,7 +193,7 @@ internal fun ChangePasswordScreen(
                     )
                 } else {
                     Text(
-                        text = stringResource(id = ChangePasswordStrings.feature_changepassword_confirm),
+                        text = stringResource(id = R.string.feature_changepassword_confirm),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                     )

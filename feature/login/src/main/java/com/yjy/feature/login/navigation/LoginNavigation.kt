@@ -9,9 +9,6 @@ import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.AuthRoute
 import com.yjy.feature.login.LoginRoute
-import com.yjy.feature.login.R
-
-typealias LoginStrings = R.string
 
 fun NavController.navigateToLogin() {
     navigate(AuthRoute.Login) {

@@ -30,7 +30,6 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
-import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import java.time.LocalDate
@@ -67,7 +66,7 @@ internal fun SetStartDateScreen(
     onContinue: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    val startDateOutOfRangeMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_invalid_start_date)
+    val startDateOutOfRangeMessage = stringResource(id = R.string.feature_addchallenge_invalid_start_date)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
@@ -96,8 +95,8 @@ internal fun SetStartDateScreen(
         ) {
             Spacer(modifier = Modifier.height(80.dp))
             TitleWithDescription(
-                titleRes = AddChallengeStrings.feature_addchallenge_title_set_start_date,
-                descriptionRes = AddChallengeStrings.feature_addchallenge_description_set_start_date,
+                titleRes = R.string.feature_addchallenge_title_set_start_date,
+                descriptionRes = R.string.feature_addchallenge_description_set_start_date,
             )
             Spacer(modifier = Modifier.height(50.dp))
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {

@@ -55,7 +55,6 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
-import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.TargetDays
@@ -98,9 +97,9 @@ internal fun ConfirmScreen(
     onAddChallenge: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    val challengeAddedMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_challenge_added)
-    val unknownErrorMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_unknown_error)
-    val checkNetworkMessage = stringResource(id = AddChallengeStrings.feature_addchallenge_check_network_connection)
+    val challengeAddedMessage = stringResource(id = R.string.feature_addchallenge_challenge_added)
+    val unknownErrorMessage = stringResource(id = R.string.feature_addchallenge_unknown_error)
+    val checkNetworkMessage = stringResource(id = R.string.feature_addchallenge_check_network_connection)
 
     ObserveAsEvents(flow = uiEvent, useMainImmediate = false) {
         when (it) {
@@ -136,9 +135,9 @@ internal fun ConfirmScreen(
 
         if (uiState.shouldShowAddConfirmDialog) {
             ChallengeTogetherDialog(
-                title = stringResource(id = AddChallengeStrings.feature_addchallenge_dialog_start_title),
-                description = stringResource(id = AddChallengeStrings.feature_addchallenge_dialog_start_description),
-                positiveTextRes = AddChallengeStrings.feature_addchallenge_dialog_start,
+                title = stringResource(id = R.string.feature_addchallenge_dialog_start_title),
+                description = stringResource(id = R.string.feature_addchallenge_dialog_start_description),
+                positiveTextRes = R.string.feature_addchallenge_dialog_start,
                 onClickPositive = {
                     processAction(
                         AddChallengeUiAction.OnConfirmStartChallenge(
@@ -163,8 +162,8 @@ internal fun ConfirmScreen(
         ) {
             Spacer(modifier = Modifier.height(80.dp))
             TitleWithDescription(
-                titleRes = AddChallengeStrings.feature_addchallenge_title_confirm,
-                descriptionRes = AddChallengeStrings.feature_addchallenge_description_confirm,
+                titleRes = R.string.feature_addchallenge_title_confirm,
+                descriptionRes = R.string.feature_addchallenge_description_confirm,
             )
             Spacer(modifier = Modifier.height(50.dp))
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -221,7 +220,7 @@ private fun TogetherButton(
             .heightIn(min = 55.dp),
     ) {
         Text(
-            text = stringResource(id = AddChallengeStrings.feature_addchallenge_together),
+            text = stringResource(id = R.string.feature_addchallenge_together),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
         )
@@ -248,7 +247,7 @@ private fun StartButton(
             )
         } else {
             Text(
-                text = stringResource(id = AddChallengeStrings.feature_addchallenge_start_immediately),
+                text = stringResource(id = R.string.feature_addchallenge_start_immediately),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
             )
@@ -259,7 +258,7 @@ private fun StartButton(
 @Composable
 private fun DataSection(startDateTime: LocalDateTime) {
     BaseCard(
-        titleResId = AddChallengeStrings.feature_addchallenge_start_date,
+        titleResId = R.string.feature_addchallenge_start_date,
         content = {
             Text(
                 text = formatLocalDateTime(startDateTime),
@@ -279,7 +278,7 @@ private const val TARGET_DAY_CARD_WEIGHT = 0.6f
 private fun CategorySection(category: Category, targetDays: TargetDays) {
     val targetDayText = when (targetDays) {
         is TargetDays.Fixed -> stringResource(id = R.string.feature_addchallenge_target_day_string, targetDays.days)
-        TargetDays.Infinite -> stringResource(id = AddChallengeStrings.feature_addchallenge_unlimited)
+        TargetDays.Infinite -> stringResource(id = R.string.feature_addchallenge_unlimited)
     }
 
     Row(
@@ -291,7 +290,7 @@ private fun CategorySection(category: Category, targetDays: TargetDays) {
             modifier = Modifier
                 .weight(CATEGORY_CARD_WEIGHT)
                 .fillMaxHeight(),
-            titleResId = AddChallengeStrings.feature_addchallenge_category_card_title,
+            titleResId = R.string.feature_addchallenge_category_card_title,
             content = {
                 Box(
                     modifier = Modifier
@@ -312,7 +311,7 @@ private fun CategorySection(category: Category, targetDays: TargetDays) {
         Spacer(modifier = Modifier.width(8.dp))
         BaseCard(
             modifier = Modifier.weight(TARGET_DAY_CARD_WEIGHT),
-            titleResId = AddChallengeStrings.feature_addchallenge_target_day_card_title,
+            titleResId = R.string.feature_addchallenge_target_day_card_title,
             content = {
                 Text(
                     text = targetDayText,
@@ -364,7 +363,7 @@ private fun TitleSection(
         Mode.CHALLENGE -> {
             TitleCard(
                 drawableResId = designSystemR.drawable.image_trophy,
-                drawableDescriptionResId = AddChallengeStrings.feature_addchallenge_mode_challenge,
+                drawableDescriptionResId = R.string.feature_addchallenge_mode_challenge,
                 title = title,
                 description = description,
             )
@@ -373,7 +372,7 @@ private fun TitleSection(
             TitleCard(
                 imagePadding = 5.dp,
                 drawableResId = designSystemR.drawable.image_calendar,
-                drawableDescriptionResId = AddChallengeStrings.feature_addchallenge_mode_free,
+                drawableDescriptionResId = R.string.feature_addchallenge_mode_free,
                 title = title,
                 description = description,
             )

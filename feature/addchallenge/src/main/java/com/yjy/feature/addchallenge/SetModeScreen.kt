@@ -33,7 +33,6 @@ import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
-import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
 import com.yjy.model.challenge.core.Mode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -87,23 +86,23 @@ internal fun SetModeScreen(
                 .padding(horizontal = 32.dp),
         ) {
             TitleWithDescription(
-                titleRes = AddChallengeStrings.feature_addchallenge_title_set_mode,
-                descriptionRes = AddChallengeStrings.feature_addchallenge_description_set_mode,
+                titleRes = R.string.feature_addchallenge_title_set_mode,
+                descriptionRes = R.string.feature_addchallenge_description_set_mode,
             )
             Spacer(modifier = Modifier.height(50.dp))
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 ModeButton(
                     drawableResId = designSystemR.drawable.image_trophy,
-                    titleResId = AddChallengeStrings.feature_addchallenge_mode_challenge,
-                    descriptionResId = AddChallengeStrings.feature_addchallenge_mode_challenge_description,
+                    titleResId = R.string.feature_addchallenge_mode_challenge,
+                    descriptionResId = R.string.feature_addchallenge_mode_challenge_description,
                     onClick = { processAction(AddChallengeUiAction.OnSelectMode(Mode.CHALLENGE)) },
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 ModeButton(
                     imagePadding = 5.dp,
                     drawableResId = designSystemR.drawable.image_calendar,
-                    titleResId = AddChallengeStrings.feature_addchallenge_mode_free,
-                    descriptionResId = AddChallengeStrings.feature_addchallenge_mode_free_description,
+                    titleResId = R.string.feature_addchallenge_mode_free,
+                    descriptionResId = R.string.feature_addchallenge_mode_free_description,
                     onClick = { processAction(AddChallengeUiAction.OnSelectMode(Mode.FREE)) },
                 )
             }

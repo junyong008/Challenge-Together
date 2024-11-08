@@ -50,7 +50,6 @@ import com.yjy.common.ui.DevicePreviews
 import com.yjy.feature.login.model.LoginUiAction
 import com.yjy.feature.login.model.LoginUiEvent
 import com.yjy.feature.login.model.LoginUiState
-import com.yjy.feature.login.navigation.LoginStrings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -91,10 +90,10 @@ internal fun LoginScreen(
     onShowToast: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    val loginSuccessMessage = stringResource(id = LoginStrings.feature_login_login_success)
-    val userNotFoundMessage = stringResource(id = LoginStrings.feature_login_user_not_found)
-    val checkNetworkMessage = stringResource(id = LoginStrings.feature_login_check_network_connection)
-    val unknownErrorMessage = stringResource(id = LoginStrings.feature_login_unknown_error)
+    val loginSuccessMessage = stringResource(id = R.string.feature_login_login_success)
+    val userNotFoundMessage = stringResource(id = R.string.feature_login_user_not_found)
+    val checkNetworkMessage = stringResource(id = R.string.feature_login_check_network_connection)
+    val unknownErrorMessage = stringResource(id = R.string.feature_login_unknown_error)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
@@ -124,8 +123,8 @@ internal fun LoginScreen(
     ) {
         Spacer(modifier = Modifier.height(32.dp))
         Title(
-            title = stringResource(id = LoginStrings.feature_login_title),
-            titleDescription = stringResource(id = LoginStrings.feature_login_title_description),
+            title = stringResource(id = R.string.feature_login_title),
+            titleDescription = stringResource(id = R.string.feature_login_title_description),
             modifier = Modifier.align(Alignment.Start),
         )
         Spacer(modifier = Modifier.height(32.dp))
@@ -137,7 +136,7 @@ internal fun LoginScreen(
         if (!uiState.isValidEmailFormat) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = stringResource(id = LoginStrings.feature_login_invalid_email_format),
+                text = stringResource(id = R.string.feature_login_invalid_email_format),
                 color = CustomColorProvider.colorScheme.red,
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier.align(Alignment.Start),
@@ -166,7 +165,7 @@ internal fun LoginScreen(
                 )
             } else {
                 Text(
-                    text = stringResource(id = LoginStrings.feature_login_button_text),
+                    text = stringResource(id = R.string.feature_login_button_text),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                 )
@@ -224,7 +223,7 @@ private fun LoginEmailTextField(
         leadingIcon = {
             Icon(
                 painter = painterResource(id = ChallengeTogetherIcons.Email),
-                contentDescription = stringResource(id = LoginStrings.feature_login_input_email_content_description),
+                contentDescription = stringResource(id = R.string.feature_login_input_email_content_description),
                 tint = CustomColorProvider.colorScheme.onSurface,
             )
         },
@@ -232,7 +231,7 @@ private fun LoginEmailTextField(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
         ),
-        placeholderText = stringResource(id = LoginStrings.feature_login_input_email_place_holder),
+        placeholderText = stringResource(id = R.string.feature_login_input_email_place_holder),
         enabled = enabled,
     )
 }
@@ -249,7 +248,7 @@ private fun LoginPasswordTextField(
         leadingIcon = {
             Icon(
                 painter = painterResource(id = ChallengeTogetherIcons.Lock),
-                contentDescription = stringResource(id = LoginStrings.feature_login_input_password_content_description),
+                contentDescription = stringResource(id = R.string.feature_login_input_password_content_description),
                 tint = CustomColorProvider.colorScheme.onSurface,
             )
         },
@@ -257,7 +256,7 @@ private fun LoginPasswordTextField(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done,
         ),
-        placeholderText = stringResource(id = LoginStrings.feature_login_input_password_place_holder),
+        placeholderText = stringResource(id = R.string.feature_login_input_password_place_holder),
         enabled = enabled,
         isPassword = true,
     )
@@ -275,7 +274,7 @@ private fun FindPasswordAndSignUp(
         horizontalArrangement = Arrangement.Center,
     ) {
         ClickableText(
-            text = stringResource(id = LoginStrings.feature_login_find_password),
+            text = stringResource(id = R.string.feature_login_find_password),
             onClick = { onFindPasswordClick() },
             textAlign = TextAlign.End,
             enabled = enabled,
@@ -288,7 +287,7 @@ private fun FindPasswordAndSignUp(
             modifier = Modifier.padding(horizontal = 8.dp),
         )
         ClickableText(
-            text = stringResource(id = LoginStrings.feature_login_sign_up),
+            text = stringResource(id = R.string.feature_login_sign_up),
             onClick = { onSignUpClick() },
             enabled = enabled,
             modifier = Modifier.weight(1f, fill = false),
@@ -308,7 +307,7 @@ private fun SNSLoginDivider() {
             thickness = 0.5.dp,
         )
         Text(
-            text = stringResource(id = LoginStrings.feature_login_social_login_text),
+            text = stringResource(id = R.string.feature_login_social_login_text),
             color = CustomColorProvider.colorScheme.onBackground,
             style = MaterialTheme.typography.labelSmall,
             textAlign = TextAlign.Center,
@@ -350,7 +349,7 @@ private fun SNSLoginButtons(
         ) {
             Image(
                 painter = painterResource(id = ChallengeTogetherIcons.Kakao),
-                contentDescription = stringResource(id = LoginStrings.feature_login_kakao_content_description),
+                contentDescription = stringResource(id = R.string.feature_login_kakao_content_description),
             )
         }
         Spacer(modifier = Modifier.width(16.dp))
@@ -367,7 +366,7 @@ private fun SNSLoginButtons(
         ) {
             Image(
                 painter = painterResource(id = ChallengeTogetherIcons.Google),
-                contentDescription = stringResource(id = LoginStrings.feature_login_google_content_description),
+                contentDescription = stringResource(id = R.string.feature_login_google_content_description),
             )
         }
         Spacer(modifier = Modifier.width(16.dp))
@@ -384,7 +383,7 @@ private fun SNSLoginButtons(
         ) {
             Image(
                 painter = painterResource(id = ChallengeTogetherIcons.Naver),
-                contentDescription = stringResource(id = LoginStrings.feature_login_naver_content_description),
+                contentDescription = stringResource(id = R.string.feature_login_naver_content_description),
             )
         }
     }

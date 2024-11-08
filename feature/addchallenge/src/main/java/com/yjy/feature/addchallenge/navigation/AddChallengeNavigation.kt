@@ -14,15 +14,12 @@ import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.addchallenge.AddChallengeViewModel
 import com.yjy.feature.addchallenge.ConfirmRoute
-import com.yjy.feature.addchallenge.R
 import com.yjy.feature.addchallenge.SetCategoryRoute
 import com.yjy.feature.addchallenge.SetModeRoute
 import com.yjy.feature.addchallenge.SetStartDateRoute
 import com.yjy.feature.addchallenge.SetTargetDayRoute
 import com.yjy.feature.addchallenge.SetTitleRoute
 import com.yjy.feature.addchallenge.SetTogetherRoute
-
-typealias AddChallengeStrings = R.string
 
 fun NavController.navigateToAddChallenge() {
     navigate(ServiceRoute.AddChallenge)

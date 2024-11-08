@@ -26,7 +26,6 @@ import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
-import com.yjy.feature.addchallenge.navigation.AddChallengeStrings
 import com.yjy.model.challenge.core.Mode
 
 @Composable
@@ -83,12 +82,12 @@ internal fun SetTitleScreen(
         ) {
             Spacer(modifier = Modifier.height(80.dp))
             TitleWithDescription(
-                titleRes = AddChallengeStrings.feature_addchallenge_title_set_title,
-                descriptionRes = AddChallengeStrings.feature_addchallenge_description_set_title,
+                titleRes = R.string.feature_addchallenge_title_set_title,
+                descriptionRes = R.string.feature_addchallenge_description_set_title,
             )
             Spacer(modifier = Modifier.height(50.dp))
             Text(
-                text = stringResource(id = AddChallengeStrings.feature_addchallenge_title),
+                text = stringResource(id = R.string.feature_addchallenge_title),
                 color = CustomColorProvider.colorScheme.onBackground,
                 style = MaterialTheme.typography.labelMedium,
             )
@@ -96,11 +95,11 @@ internal fun SetTitleScreen(
             SingleLineTextField(
                 value = uiState.title,
                 onValueChange = { processAction(AddChallengeUiAction.OnTitleUpdated(it)) },
-                placeholderText = stringResource(id = AddChallengeStrings.feature_addchallenge_title_placeholder),
+                placeholderText = stringResource(id = R.string.feature_addchallenge_title_placeholder),
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = stringResource(id = AddChallengeStrings.feature_addchallenge_description_optional),
+                text = stringResource(id = R.string.feature_addchallenge_description_optional),
                 color = CustomColorProvider.colorScheme.onBackground,
                 style = MaterialTheme.typography.labelMedium,
             )
@@ -109,7 +108,7 @@ internal fun SetTitleScreen(
                 value = uiState.description,
                 onValueChange = { processAction(AddChallengeUiAction.OnDescriptionUpdated(it)) },
                 placeholderText = uiState.title.ifBlank {
-                    stringResource(id = AddChallengeStrings.feature_addchallenge_description_placeholder)
+                    stringResource(id = R.string.feature_addchallenge_description_placeholder)
                 },
                 contentAlignment = Alignment.TopStart,
                 modifier = Modifier.height(180.dp),

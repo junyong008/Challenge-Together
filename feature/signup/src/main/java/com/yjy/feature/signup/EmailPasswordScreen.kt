@@ -33,7 +33,6 @@ import com.yjy.common.ui.DevicePreviews
 import com.yjy.feature.signup.model.SignUpUiAction
 import com.yjy.feature.signup.model.SignUpUiEvent
 import com.yjy.feature.signup.model.SignUpUiState
-import com.yjy.feature.signup.navigation.SignUpStrings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -68,9 +67,9 @@ internal fun EmailPasswordScreen(
     onContinue: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    val duplicatedEmailMessage = stringResource(id = SignUpStrings.feature_signup_email_already_registered)
-    val checkNetworkMessage = stringResource(id = SignUpStrings.feature_signup_check_network_connection)
-    val unknownErrorMessage = stringResource(id = SignUpStrings.feature_signup_error)
+    val duplicatedEmailMessage = stringResource(id = R.string.feature_signup_email_already_registered)
+    val checkNetworkMessage = stringResource(id = R.string.feature_signup_check_network_connection)
+    val unknownErrorMessage = stringResource(id = R.string.feature_signup_error)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
@@ -116,8 +115,8 @@ internal fun EmailPasswordScreen(
                 .padding(horizontal = 32.dp),
         ) {
             TitleWithDescription(
-                titleRes = SignUpStrings.feature_signup_title,
-                descriptionRes = SignUpStrings.feature_signup_description,
+                titleRes = R.string.feature_signup_title,
+                descriptionRes = R.string.feature_signup_description,
             )
             Spacer(modifier = Modifier.height(50.dp))
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
@@ -127,7 +126,7 @@ internal fun EmailPasswordScreen(
                     enabled = !uiState.isValidatingEmail,
                 )
                 ConditionIndicator(
-                    text = stringResource(id = SignUpStrings.feature_signup_email_format_indicator),
+                    text = stringResource(id = R.string.feature_signup_email_format_indicator),
                     isMatched = uiState.isValidEmailFormat,
                 )
                 Spacer(modifier = Modifier.height(24.dp))
@@ -138,13 +137,13 @@ internal fun EmailPasswordScreen(
                 )
                 ConditionIndicator(
                     text = stringResource(
-                        id = SignUpStrings.feature_signup_password_length_indicator,
+                        id = R.string.feature_signup_password_length_indicator,
                         MIN_PASSWORD_LENGTH,
                     ),
                     isMatched = uiState.isPasswordLongEnough,
                 )
                 ConditionIndicator(
-                    text = stringResource(id = SignUpStrings.feature_signup_password_number_indicator),
+                    text = stringResource(id = R.string.feature_signup_password_number_indicator),
                     isMatched = uiState.isPasswordContainNumber,
                 )
             }
@@ -166,7 +165,7 @@ private fun SignUpEmailTextField(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
         ),
-        placeholderText = stringResource(id = SignUpStrings.feature_signup_input_email_place_holder),
+        placeholderText = stringResource(id = R.string.feature_signup_input_email_place_holder),
     )
 }
 
@@ -184,7 +183,7 @@ private fun SignUpPasswordTextField(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done,
         ),
-        placeholderText = stringResource(id = SignUpStrings.feature_signup_input_password_place_holder),
+        placeholderText = stringResource(id = R.string.feature_signup_input_password_place_holder),
         isPassword = true,
     )
 }

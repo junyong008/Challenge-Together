@@ -10,7 +10,6 @@ import androidx.compose.ui.test.onNodeWithText
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.feature.login.model.LoginUiEvent
 import com.yjy.feature.login.model.LoginUiState
-import com.yjy.feature.login.navigation.LoginStrings
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -35,7 +34,7 @@ class LoginScreenTest {
 
         // Then
         composeTestRule
-            .onNodeWithText(composeTestRule.activity.getString(LoginStrings.feature_login_invalid_email_format))
+            .onNodeWithText(composeTestRule.activity.getString(R.string.feature_login_invalid_email_format))
             .assertIsDisplayed()
     }
 
@@ -62,7 +61,7 @@ class LoginScreenTest {
         // Then
         assert(isSnackbarTriggered)
         assertEquals(SnackbarType.ERROR, snackbarType)
-        assert(snackbarMessage.contains(composeTestRule.activity.getString(LoginStrings.feature_login_user_not_found)))
+        assert(snackbarMessage.contains(composeTestRule.activity.getString(R.string.feature_login_user_not_found)))
     }
 
     @Test
@@ -88,7 +87,7 @@ class LoginScreenTest {
         // Then
         assert(isSnackbarTriggered)
         assertEquals(SnackbarType.ERROR, snackbarType)
-        assert(snackbarMessage.contains(composeTestRule.activity.getString(LoginStrings.feature_login_unknown_error)))
+        assert(snackbarMessage.contains(composeTestRule.activity.getString(R.string.feature_login_unknown_error)))
     }
 
     @Test

@@ -9,9 +9,6 @@ import com.yjy.common.core.util.NavigationAnimation.slideOutToRight
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.CommonRoute
 import com.yjy.feature.changepassword.ChangePasswordRoute
-import com.yjy.feature.changepassword.R
-
-typealias ChangePasswordStrings = R.string
 
 fun NavController.navigateToChangePassword(navOptions: NavOptions? = null) {
     navigate(CommonRoute.ChangePassword, navOptions)

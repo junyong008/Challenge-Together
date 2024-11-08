@@ -36,7 +36,6 @@ import com.yjy.common.ui.DevicePreviews
 import com.yjy.feature.findpassword.model.FindPasswordUiAction
 import com.yjy.feature.findpassword.model.FindPasswordUiEvent
 import com.yjy.feature.findpassword.model.FindPasswordUiState
-import com.yjy.feature.findpassword.navigation.FindPasswordStrings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -71,11 +70,11 @@ internal fun InputEmailScreen(
     onVerifyCodeSent: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    val verifyCodeSentMessage = stringResource(id = FindPasswordStrings.feature_findpassword_code_sent)
-    val invalidEmailMessage = stringResource(id = FindPasswordStrings.feature_findpassword_invalid_email)
-    val unRegisteredEmailMessage = stringResource(id = FindPasswordStrings.feature_findpassword_email_not_registered)
-    val checkNetworkMessage = stringResource(id = FindPasswordStrings.feature_findpassword_check_network_connection)
-    val unknownErrorMessage = stringResource(id = FindPasswordStrings.feature_findpassword_unknown_error)
+    val verifyCodeSentMessage = stringResource(id = R.string.feature_findpassword_code_sent)
+    val invalidEmailMessage = stringResource(id = R.string.feature_findpassword_invalid_email)
+    val unRegisteredEmailMessage = stringResource(id = R.string.feature_findpassword_email_not_registered)
+    val checkNetworkMessage = stringResource(id = R.string.feature_findpassword_check_network_connection)
+    val unknownErrorMessage = stringResource(id = R.string.feature_findpassword_unknown_error)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
@@ -117,8 +116,8 @@ internal fun InputEmailScreen(
                 .padding(horizontal = 32.dp),
         ) {
             TitleWithDescription(
-                titleRes = FindPasswordStrings.feature_findpassword_title,
-                descriptionRes = FindPasswordStrings.feature_findpassword_description,
+                titleRes = R.string.feature_findpassword_title,
+                descriptionRes = R.string.feature_findpassword_description,
             )
             Spacer(modifier = Modifier.height(50.dp))
             SingleLineTextField(
@@ -130,13 +129,13 @@ internal fun InputEmailScreen(
                     imeAction = ImeAction.Next,
                 ),
                 placeholderText = stringResource(
-                    id = FindPasswordStrings.feature_findpassword_input_email_place_holder,
+                    id = R.string.feature_findpassword_input_email_place_holder,
                 ),
             )
             if (!uiState.isValidEmailFormat) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = stringResource(id = FindPasswordStrings.feature_findpassword_invalid_email_format),
+                    text = stringResource(id = R.string.feature_findpassword_invalid_email_format),
                     color = CustomColorProvider.colorScheme.red,
                     style = MaterialTheme.typography.labelSmall,
                     modifier = Modifier.align(Alignment.Start),
@@ -160,7 +159,7 @@ internal fun InputEmailScreen(
                     )
                 } else {
                     Text(
-                        text = stringResource(id = FindPasswordStrings.feature_findpassword_send_verify_code),
+                        text = stringResource(id = R.string.feature_findpassword_send_verify_code),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                     )

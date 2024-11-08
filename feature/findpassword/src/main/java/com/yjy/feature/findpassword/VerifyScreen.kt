@@ -39,7 +39,6 @@ import com.yjy.feature.findpassword.FindPasswordViewModel.Companion.VERIFY_CODE_
 import com.yjy.feature.findpassword.model.FindPasswordUiAction
 import com.yjy.feature.findpassword.model.FindPasswordUiEvent
 import com.yjy.feature.findpassword.model.FindPasswordUiState
-import com.yjy.feature.findpassword.navigation.FindPasswordStrings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -74,11 +73,11 @@ internal fun VerifyScreen(
     onVerifySuccess: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    val verifySuccessMessage = stringResource(id = FindPasswordStrings.feature_findpassword_verification_success)
-    val unMatchCodeMessage = stringResource(id = FindPasswordStrings.feature_findpassword_code_mismatch)
-    val timeOutMessage = stringResource(id = FindPasswordStrings.feature_findpassword_timeout)
-    val checkNetworkMessage = stringResource(id = FindPasswordStrings.feature_findpassword_check_network_connection)
-    val unknownErrorMessage = stringResource(id = FindPasswordStrings.feature_findpassword_unknown_error)
+    val verifySuccessMessage = stringResource(id = R.string.feature_findpassword_verification_success)
+    val unMatchCodeMessage = stringResource(id = R.string.feature_findpassword_code_mismatch)
+    val timeOutMessage = stringResource(id = R.string.feature_findpassword_timeout)
+    val checkNetworkMessage = stringResource(id = R.string.feature_findpassword_check_network_connection)
+    val unknownErrorMessage = stringResource(id = R.string.feature_findpassword_unknown_error)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
@@ -123,7 +122,7 @@ internal fun VerifyScreen(
         ) {
             Spacer(modifier = Modifier.height(100.dp))
             Text(
-                text = stringResource(id = FindPasswordStrings.feature_findpassword_enter_code),
+                text = stringResource(id = R.string.feature_findpassword_enter_code),
                 style = MaterialTheme.typography.titleMedium,
                 color = CustomColorProvider.colorScheme.onBackground,
                 textAlign = TextAlign.Center,
@@ -151,7 +150,7 @@ internal fun VerifyScreen(
                 } else {
                     Text(
                         text = stringResource(
-                            id = FindPasswordStrings.feature_findpassword_minutes_seconds,
+                            id = R.string.feature_findpassword_minutes_seconds,
                             uiState.minutes,
                             uiState.seconds,
                         ),

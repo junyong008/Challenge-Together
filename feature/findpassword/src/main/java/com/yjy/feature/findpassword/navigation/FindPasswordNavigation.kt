@@ -14,10 +14,7 @@ import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.AuthRoute
 import com.yjy.feature.findpassword.FindPasswordViewModel
 import com.yjy.feature.findpassword.InputEmailRoute
-import com.yjy.feature.findpassword.R
 import com.yjy.feature.findpassword.VerifyRoute
-
-typealias FindPasswordStrings = R.string
 
 fun NavController.navigateToFindPassword() {
     navigate(AuthRoute.FindPassword)

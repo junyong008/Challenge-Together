@@ -44,7 +44,6 @@ import com.yjy.common.ui.DevicePreviews
 import com.yjy.feature.signup.model.SignUpUiAction
 import com.yjy.feature.signup.model.SignUpUiEvent
 import com.yjy.feature.signup.model.SignUpUiState
-import com.yjy.feature.signup.navigation.SignUpStrings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -82,10 +81,10 @@ internal fun NicknameScreen(
     onShowToast: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    val signUpCompleteMessage = stringResource(id = SignUpStrings.feature_signup_complete)
-    val duplicatedNicknameMessage = stringResource(id = SignUpStrings.feature_signup_nickname_already_taken)
-    val checkNetworkMessage = stringResource(id = SignUpStrings.feature_signup_check_network_connection)
-    val unknownErrorMessage = stringResource(id = SignUpStrings.feature_signup_error)
+    val signUpCompleteMessage = stringResource(id = R.string.feature_signup_complete)
+    val duplicatedNicknameMessage = stringResource(id = R.string.feature_signup_nickname_already_taken)
+    val checkNetworkMessage = stringResource(id = R.string.feature_signup_check_network_connection)
+    val unknownErrorMessage = stringResource(id = R.string.feature_signup_error)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
@@ -126,13 +125,13 @@ internal fun NicknameScreen(
         ) {
             Spacer(modifier = Modifier.height(110.dp))
             TitleWithDescription(
-                titleRes = SignUpStrings.feature_signup_set_nickname_title,
-                descriptionRes = SignUpStrings.feature_signup_set_nickname_description,
+                titleRes = R.string.feature_signup_set_nickname_title,
+                descriptionRes = R.string.feature_signup_set_nickname_description,
             )
             Spacer(modifier = Modifier.height(40.dp))
             StableImage(
                 drawableResId = R.drawable.image_smile,
-                descriptionResId = SignUpStrings.feature_signup_smile_image_description,
+                descriptionResId = R.string.feature_signup_smile_image_description,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .size(115.dp),
@@ -144,17 +143,17 @@ internal fun NicknameScreen(
                 textStyle = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 contentAlignment = Alignment.Center,
-                placeholderText = stringResource(id = SignUpStrings.feature_signup_nickname_place_holder),
+                placeholderText = stringResource(id = R.string.feature_signup_nickname_place_holder),
                 enabled = !uiState.isSigningUp,
             )
             val errorMessage = when {
                 !uiState.isNicknameLengthValid -> stringResource(
-                    id = SignUpStrings.feature_signup_nickname_length_indicator,
+                    id = R.string.feature_signup_nickname_length_indicator,
                     MIN_NICKNAME_LENGTH,
                     MAX_NICKNAME_LENGTH,
                 )
                 uiState.isNicknameHasOnlyConsonantOrVowel -> stringResource(
-                    id = SignUpStrings.feature_signup_nickname_korean_constraint,
+                    id = R.string.feature_signup_nickname_korean_constraint,
                 )
                 else -> null
             }
@@ -189,7 +188,7 @@ internal fun NicknameScreen(
                     )
                 } else {
                     Text(
-                        text = stringResource(id = SignUpStrings.feature_signup_start),
+                        text = stringResource(id = R.string.feature_signup_start),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                     )
