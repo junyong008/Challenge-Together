@@ -240,6 +240,7 @@ fun CursorLessNumberTextField(
     modifier: Modifier = Modifier,
     minLimit: Int = 0,
     maxLimit: Int = 99,
+    enabled: Boolean = true,
     textBackground: Color = CustomColorProvider.colorScheme.surface,
     textColor: Color = CustomColorProvider.colorScheme.onSurface,
     textStyle: TextStyle = MaterialTheme.typography.titleMedium,
@@ -253,6 +254,7 @@ fun CursorLessNumberTextField(
 
     BasicTextField(
         value = internalValue,
+        enabled = enabled,
         onValueChange = { newValue ->
             val filteredValue = newValue.filter { it.isDigit() }.take(maxLength)
             internalValue = filteredValue
@@ -268,8 +270,16 @@ fun CursorLessNumberTextField(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .clip(shape)
-                    .background(textBackground)
-                    .clickable {
+                    .background(
+                        if (enabled) {
+                            textBackground
+                        } else {
+                            CustomColorProvider.colorScheme.disable
+                        }
+                    )
+                    .clickable(
+                        enabled = enabled,
+                    ) {
                         internalValue = ""
                         focusRequester.requestFocus()
                         keyboardController?.show()

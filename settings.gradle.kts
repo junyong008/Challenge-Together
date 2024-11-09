@@ -54,6 +54,7 @@ include(
 
     ":feature:home",
     ":feature:addchallenge",
+    ":feature:editchallenge",
     ":feature:startedchallenge",
 
     ":feature:login",

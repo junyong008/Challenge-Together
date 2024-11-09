@@ -1,0 +1,18 @@
+<resources>
+    <string name="feature_editchallenge_edit">Edit</string>
+    <string name="feature_editchallenge_edit_failed">Edit failed. Please try again later.</string>
+    <string name="feature_editchallenge_edit_successful">Edit successful.</string>
+    <string name="feature_editchallenge_edit_category_title">Edit Category</string>
+    <string name="feature_editchallenge_edit_category_description">Please select the category you want to change to.</string>
+    <string name="feature_editchallenge_title">Title</string>
+    <string name="feature_editchallenge_title_placeholder">Challenge title</string>
+    <string name="feature_editchallenge_description_optional">Description (Optional)</string>
+    <string name="feature_editchallenge_description_placeholder">Challenge description</string>
+    <string name="feature_editchallenge_edit_title">Edit a description of the challenge</string>
+    <string name="feature_editchallenge_edit_description">Enter the details of the challenge.\nWriting down your goals and resolutions will help you.</string>
+    <string name="feature_editchallenge_edit_target_day_title">Edit the target day for the challenge</string>
+    <string name="feature_editchallenge_edit_target_day_description">Set how many days the challenge will last.\nIf you don\'t reset during the target period, you succeed.</string>
+    <string name="feature_editchallenge_record_exceeded_notice">Record Exceeded</string>
+    <string name="feature_editchallenge_record_exceeded_description">Your current record has exceeded %1$s days.\nthe challenge will be immediately completed.</string>
+    <string name="feature_editchallenge_complete">Complete</string>
+</resources>

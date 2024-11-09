@@ -100,7 +100,7 @@ internal fun StartedChallengeRoute(
     onBackClick: () -> Unit,
     onEditCategoryClick: (String, Category) -> Unit,
     onEditTitleClick: (String, String, String) -> Unit,
-    onEditTargetDaysClick: (String, TargetDays) -> Unit,
+    onEditTargetDaysClick: (String, String, Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StartedChallengeViewModel = hiltViewModel(),
@@ -132,7 +132,7 @@ internal fun StartedChallengeScreen(
     onBackClick: () -> Unit = {},
     onEditCategoryClick: (String, Category) -> Unit = { _, _ -> },
     onEditTitleClick: (String, String, String) -> Unit = { _, _, _ -> },
-    onEditTargetDaysClick: (String, TargetDays) -> Unit = { _, _ -> },
+    onEditTargetDaysClick: (String, String, Int) -> Unit = { _, _, _ -> },
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     var shouldShowResetBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -204,13 +204,23 @@ internal fun StartedChallengeScreen(
 
         if (shouldShowMenuBottomSheet) {
             MenuBottomSheet(
-                enableEdit = challenge.currentParticipantCounts == 1,
+                enableEdit = challenge.currentParticipantCounts == 1 && !challenge.isCompleted,
                 onEditCategoryClick = {
                     shouldShowMenuBottomSheet = false
                     onEditCategoryClick(challenge.id, challenge.category)
                 },
-                onEditTitleClick = {  },
-                onEditTargetDaysClick = {  },
+                onEditTitleClick = {
+                    shouldShowMenuBottomSheet = false
+                    onEditTitleClick(challenge.id, challenge.title, challenge.description)
+                },
+                onEditTargetDaysClick = {
+                    shouldShowMenuBottomSheet = false
+                    onEditTargetDaysClick(
+                        challenge.id,
+                        challenge.targetDays.toRouteString(),
+                        (challenge.currentRecordInSeconds / SECONDS_PER_DAY).toInt(),
+                    )
+                },
                 onDeleteChallengeClick = { shouldShowDeleteConfirmDialog = true },
                 onDismiss = { shouldShowMenuBottomSheet = false },
             )

@@ -51,7 +51,7 @@ class StartedChallengeViewModel @Inject constructor(
 
     val challengeDetail = merge(
         flowOf(challengeId),
-        challengeRepository.timeChangedFlow.map { challengeId }
+        challengeRepository.timeChangedFlow.map { challengeId },
     ).flatMapLatest { id ->
         getStartedChallengeDetail(id)
     }.map { result ->
@@ -78,7 +78,7 @@ class StartedChallengeViewModel @Inject constructor(
         )
     }.restartableStateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
+        started = SharingStarted.WhileSubscribed(),
         initialValue = ChallengeDetailUiState.Loading,
     )
 
@@ -99,12 +99,8 @@ class StartedChallengeViewModel @Inject constructor(
         _uiState.update { it.copy(isDeleting = true) }
 
         challengeRepository.deleteStartedChallenge(challengeId)
-            .onSuccess {
-                sendEvent(StartedChallengeUiEvent.DeleteSuccess)
-            }
-            .onFailure {
-                sendEvent(StartedChallengeUiEvent.DeleteFailure)
-            }
+            .onSuccess { sendEvent(StartedChallengeUiEvent.DeleteSuccess) }
+            .onFailure { sendEvent(StartedChallengeUiEvent.DeleteFailure) }
         _uiState.update { it.copy(isDeleting = false) }
     }
 

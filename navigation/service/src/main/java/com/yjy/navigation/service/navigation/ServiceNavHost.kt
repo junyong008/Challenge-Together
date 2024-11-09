@@ -9,7 +9,10 @@ import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.addchallenge.navigation.addChallengeNavGraph
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
+import com.yjy.feature.editchallenge.navigation.editChallengeScreen
 import com.yjy.feature.editchallenge.navigation.navigateToEditCategory
+import com.yjy.feature.editchallenge.navigation.navigateToEditTargetDays
+import com.yjy.feature.editchallenge.navigation.navigateToEditTitleDescription
 import com.yjy.feature.home.navigation.homeScreen
 import com.yjy.feature.startedchallenge.navigation.navigateToStartedChallenge
 import com.yjy.feature.startedchallenge.navigation.startedChallengeScreen
@@ -45,11 +48,15 @@ internal fun ServiceNavHost(
             },
             onShowSnackbar = onShowSnackbar,
         )
+        editChallengeScreen(
+            onBackClick = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
+        )
         startedChallengeScreen(
             onBackClick = navController::popBackStack,
             onEditCategoryClick = navController::navigateToEditCategory,
-            onEditTitleClick = { _, _, _ -> },
-            onEditTargetDaysClick = { _, _ -> },
+            onEditTitleClick = navController::navigateToEditTitleDescription,
+            onEditTargetDaysClick = navController::navigateToEditTargetDays,
             onShowSnackbar = onShowSnackbar,
         )
         changePasswordScreen(

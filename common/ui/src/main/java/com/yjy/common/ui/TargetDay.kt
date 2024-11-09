@@ -53,6 +53,7 @@ fun TargetDay(
     targetDays: TargetDays,
     onTargetDaysUpdated: (TargetDays) -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     Column(
         modifier = modifier,
@@ -67,7 +68,7 @@ fun TargetDay(
             contentColor = CustomColorProvider.colorScheme.onSurface,
             shape = MaterialTheme.shapes.large,
             textStyle = MaterialTheme.typography.displaySmall,
-            modifier = Modifier
+            enabled = enabled,
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -85,7 +86,7 @@ fun TargetDay(
                     },
                 )
             },
-            modifier = Modifier
+            enabled = enabled,
         )
     }
 }
@@ -101,6 +102,7 @@ private fun TargetDaysSelector(
     shape: Shape,
     textStyle: TextStyle,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     width: Dp = 140.dp,
     height: Dp = 80.dp,
 ) {
@@ -116,6 +118,7 @@ private fun TargetDaysSelector(
                     minLimit = minDays,
                     maxLimit = maxDays,
                     shape = shape,
+                    enabled = enabled,
                     textBackground = containerColor,
                     textColor = contentColor,
                     textStyle = textStyle,
@@ -157,6 +160,7 @@ private fun TargetDaySwitch(
     isLeftSelected: Boolean,
     onSwitchChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     switchBackgroundColor: Color = CustomColorProvider.colorScheme.surface,
     selectedColor: Color = CustomColorProvider.colorScheme.brand,
     onSelectedColor: Color = CustomColorProvider.colorScheme.onBrand,
@@ -184,7 +188,7 @@ private fun TargetDaySwitch(
         modifier = modifier
             .height(IntrinsicSize.Min)
             .clip(shape)
-            .background(switchBackgroundColor)
+            .background(if (enabled) switchBackgroundColor else CustomColorProvider.colorScheme.disable)
             .padding(gap),
     ) {
         Box(
@@ -203,6 +207,7 @@ private fun TargetDaySwitch(
             Box(
                 modifier = Modifier
                     .clickable(
+                        enabled = enabled,
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
                     ) { onSwitchChange(true) }
@@ -215,13 +220,18 @@ private fun TargetDaySwitch(
                 Text(
                     text = leftText,
                     textAlign = TextAlign.Center,
-                    color = if (isLeftSelected) onSelectedColor else unselectedColor,
+                    color = when {
+                        !enabled -> CustomColorProvider.colorScheme.onSurface.copy(alpha = 0.38f)
+                        isLeftSelected -> onSelectedColor
+                        else -> unselectedColor
+                    },
                     style = textStyle,
                 )
             }
             Box(
                 modifier = Modifier
                     .clickable(
+                        enabled = enabled,
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
                     ) { onSwitchChange(false) }
@@ -234,7 +244,11 @@ private fun TargetDaySwitch(
                 Text(
                     text = rightText,
                     textAlign = TextAlign.Center,
-                    color = if (isLeftSelected) unselectedColor else onSelectedColor,
+                    color = when {
+                        !enabled -> CustomColorProvider.colorScheme.onSurface.copy(alpha = 0.38f)
+                        isLeftSelected -> unselectedColor
+                        else -> onSelectedColor
+                    },
                     style = textStyle,
                 )
             }

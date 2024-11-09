@@ -29,8 +29,8 @@ enum class Tier(val requireSeconds: Long) {
                 PLATINUM -> DIAMOND
                 DIAMOND -> MASTER
                 MASTER -> LEGEND
-                LEGEND -> error("LEGEND tier cannot be next")
-                UNSPECIFIED -> error("UNSPECIFIED tier cannot be next")
+                LEGEND -> LEGEND
+                UNSPECIFIED -> UNSPECIFIED
             }
         }
 

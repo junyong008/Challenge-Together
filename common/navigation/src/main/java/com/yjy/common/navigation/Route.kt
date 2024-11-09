@@ -1,5 +1,6 @@
 package com.yjy.common.navigation
 
+import com.yjy.model.challenge.core.Category
 import kotlinx.serialization.Serializable
 
 sealed interface Route
@@ -13,6 +14,26 @@ sealed interface ServiceRoute : Route {
 
     @Serializable
     data class StartedChallenge(val challengeId: String) : ServiceRoute
+
+    @Serializable
+    data class EditCategory(
+        val challengeId: String,
+        val category: Category,
+    ) : ServiceRoute
+
+    @Serializable
+    data class EditTitleDescription(
+        val challengeId: String,
+        val title: String,
+        val description: String,
+    ) : ServiceRoute
+
+    @Serializable
+    data class EditTargetDays(
+        val challengeId: String,
+        val targetDays: String,
+        val currentDays: Int,
+    ) : ServiceRoute
 
     @Serializable
     data object AddChallenge {
