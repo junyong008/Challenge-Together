@@ -16,6 +16,7 @@ import com.yjy.feature.home.model.TierUpAnimationState
 import com.yjy.feature.home.model.UnViewedNotificationUiState
 import com.yjy.feature.home.model.UserNameUiState
 import com.yjy.feature.home.model.isError
+import com.yjy.feature.home.model.isLoading
 import com.yjy.feature.home.model.isSuccess
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.Category
@@ -49,7 +50,7 @@ class HomeViewModel @Inject constructor(
     private val challengeRepository: ChallengeRepository,
 ) : ViewModel() {
 
-    // 로딩 처리 없이 데이터를 최신화 하기 위한 트리거
+    // 일괄적으로 로딩 없이 데이터를 최신화 하기 위한 트리거
     private val syncTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
     private val userNameTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
     private val notificationTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
@@ -95,11 +96,11 @@ class HomeViewModel @Inject constructor(
         }
     }.onEach { challenges ->
         updateTier(challenges)
+        lastProcessedChallenges = challenges
     }.map { challenges ->
         challenges.filterNot { it.isCompleted }
     }.onEach { unCompletedChallenges ->
         handleStartedChallenges(unCompletedChallenges)
-        lastProcessedChallenges = unCompletedChallenges
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -185,7 +186,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun updateTier(challenges: List<SimpleStartedChallenge>) {
-        if (uiState.value.tierUpAnimation != null) return
+        if (uiState.value.tierUpAnimation != null || challengeSyncState.value.isLoading()) return
         val currentTierBestRecord = challenges
             .filter { it.mode == Mode.CHALLENGE }
             .getBestRecord()
