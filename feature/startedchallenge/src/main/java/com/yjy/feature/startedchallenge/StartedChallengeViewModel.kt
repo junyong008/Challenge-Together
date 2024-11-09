@@ -3,9 +3,7 @@ package com.yjy.feature.startedchallenge
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import com.yjy.common.core.extensions.restartableStateIn
-import com.yjy.common.navigation.ServiceRoute
 import com.yjy.common.network.HttpStatusCodes.CONFLICT
 import com.yjy.common.network.HttpStatusCodes.FORBIDDEN
 import com.yjy.common.network.HttpStatusCodes.NOT_FOUND
@@ -25,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -41,7 +40,7 @@ class StartedChallengeViewModel @Inject constructor(
     private val challengeRepository: ChallengeRepository,
 ) : ViewModel() {
 
-    private val challengeId = savedStateHandle.toRoute<ServiceRoute.StartedChallenge>().challengeId
+    private val challengeId = savedStateHandle.get<String>("challengeId")
 
     private val _uiState = MutableStateFlow(StartedChallengeUiState())
     val uiState: StateFlow<StartedChallengeUiState> = _uiState.asStateFlow()
@@ -52,7 +51,7 @@ class StartedChallengeViewModel @Inject constructor(
     val challengeDetail = merge(
         flowOf(challengeId),
         challengeRepository.timeChangedFlow.map { challengeId },
-    ).flatMapLatest { id ->
+    ).filterNotNull().flatMapLatest { id ->
         getStartedChallengeDetail(id)
     }.map { result ->
         handleNetworkResult(
