@@ -23,7 +23,7 @@ internal fun ConfirmButton(
     ChallengeTogetherButton(
         onClick = onClick,
         enabled = enabled,
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.extraLarge,
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 55.dp),
