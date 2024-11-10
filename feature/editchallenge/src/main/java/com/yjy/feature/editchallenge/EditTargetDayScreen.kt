@@ -107,7 +107,7 @@ internal fun EditTargetDayScreen(
                     EditChallengeUiAction.OnEditTargetDays(
                         challengeId = challengeId,
                         targetDays = currentTargetDays,
-                    )
+                    ),
                 )
             },
             onClickNegative = { shouldShowConfirmDialog = false },
@@ -138,7 +138,7 @@ internal fun EditTargetDayScreen(
                             EditChallengeUiAction.OnEditTargetDays(
                                 challengeId = challengeId,
                                 targetDays = currentTargetDays,
-                            )
+                            ),
                         )
                     },
                     enabled = !uiState.isEditing,

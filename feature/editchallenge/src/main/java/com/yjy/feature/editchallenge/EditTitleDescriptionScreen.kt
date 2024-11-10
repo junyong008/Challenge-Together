@@ -114,7 +114,7 @@ internal fun EditTitleDescriptionScreen(
                                 challengeId = challengeId,
                                 title = currentTitle,
                                 description = currentDescription.ifBlank { currentTitle },
-                            )
+                            ),
                         )
                     },
                     enabled = !uiState.isEditing,

@@ -26,7 +26,7 @@ internal abstract class DataModule {
 
     @Binds
     abstract fun bindTimeProvider(
-        impl: DefaultTimeProvider
+        impl: DefaultTimeProvider,
     ): TimeProvider
 
     companion object {

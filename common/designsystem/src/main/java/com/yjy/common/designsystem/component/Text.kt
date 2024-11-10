@@ -28,7 +28,7 @@ fun ClickableText(
     textAlign: TextAlign = TextAlign.Start,
     textDecoration: TextDecoration? = TextDecoration.Underline,
     enabled: Boolean = true,
-    contentPadding: PaddingValues = PaddingValues(8.dp)
+    contentPadding: PaddingValues = PaddingValues(8.dp),
 ) {
     val annotatedString = when (text) {
         is String -> AnnotatedString(text)

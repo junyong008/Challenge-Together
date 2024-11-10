@@ -38,7 +38,7 @@ interface ChallengeRepository {
     suspend fun editChallengeTargetDays(challengeId: String, targetDays: TargetDays): NetworkResult<Unit>
 
     suspend fun resetStartedChallenge(challengeId: String, memo: String): NetworkResult<Unit>
-    suspend fun deleteStartedChallenge(challengeId: String,): NetworkResult<Unit>
+    suspend fun deleteStartedChallenge(challengeId: String): NetworkResult<Unit>
     suspend fun getStartedChallengeDetail(challengeId: String): Flow<NetworkResult<DetailedStartedChallenge>>
     suspend fun setCurrentTier(tier: Tier)
     suspend fun setSortOrder(order: SortOrder)

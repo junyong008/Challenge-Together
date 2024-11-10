@@ -69,7 +69,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         }
 
     private fun SimpleStartedChallenge.updateCurrentRecord(currentTime: LocalDateTime) = copy(
-        currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime)
+        currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),
     )
 
     private fun List<SimpleStartedChallenge>.sortBy(sortOrder: SortOrder): List<SimpleStartedChallenge> {
@@ -120,7 +120,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
                 challengeId = challengeId,
                 title = title,
                 description = description,
-            )
+            ),
         )
     }
 
@@ -149,7 +149,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
             ResetChallengeRequest(
                 challengeId = challengeId,
                 resetMemo = memo,
-            )
+            ),
         )
     }
 
@@ -177,7 +177,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
     }
 
     private fun DetailedStartedChallenge.updateCurrentRecord(currentTime: LocalDateTime) = copy(
-        currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime)
+        currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),
     )
 
     override suspend fun setCurrentTier(tier: Tier) =

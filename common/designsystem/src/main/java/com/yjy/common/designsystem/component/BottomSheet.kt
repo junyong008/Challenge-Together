@@ -35,7 +35,7 @@ fun BaseBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(
             skipPartiallyExpanded = true,
-            confirmValueChange = { !disableDragToDismiss }
+            confirmValueChange = { !disableDragToDismiss },
         ),
         containerColor = CustomColorProvider.colorScheme.surface,
         dragHandle = null,

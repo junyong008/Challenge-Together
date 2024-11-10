@@ -32,7 +32,7 @@ internal fun ServiceNavHost(
         modifier = modifier,
     ) {
         homeScreen(
-            onStartedChallengeClick = navController::navigateToStartedChallenge
+            onStartedChallengeClick = navController::navigateToStartedChallenge,
         )
         addChallengeNavGraph(
             navController = navController,

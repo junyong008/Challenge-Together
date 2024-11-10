@@ -104,7 +104,7 @@ internal fun EditCategoryScreen(
                             EditChallengeUiAction.OnEditCategory(
                                 challengeId = challengeId,
                                 category = currentCategory,
-                            )
+                            ),
                         )
                     },
                     enabled = !uiState.isEditing,

@@ -57,7 +57,7 @@ fun TargetDay(
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TargetDaysSelector(
             targetDays = targetDays,
@@ -261,7 +261,7 @@ private fun TargetDaySwitch(
 fun TargetDayPreview() {
     ChallengeTogetherTheme {
         TargetDay(
-            targetDays = TargetDays.Fixed(10),
+            targetDays = TargetDays.Infinite,
             onTargetDaysUpdated = {},
         )
     }

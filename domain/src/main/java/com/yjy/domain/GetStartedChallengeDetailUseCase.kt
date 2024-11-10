@@ -38,7 +38,7 @@ class GetStartedChallengeDetailUseCase @Inject constructor(
     private fun DetailedStartedChallenge.applyTargetDaysLimit(): DetailedStartedChallenge {
         val limitedRecord = when (val targetDays = targetDays) {
             is TargetDays.Fixed -> currentRecordInSeconds.coerceAtMost(
-                targetDays.days * SECONDS_PER_DAY
+                targetDays.days * SECONDS_PER_DAY,
             )
             TargetDays.Infinite -> currentRecordInSeconds
         }

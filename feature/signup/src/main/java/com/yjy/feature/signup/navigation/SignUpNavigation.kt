@@ -14,7 +14,6 @@ import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.AuthRoute
 import com.yjy.feature.signup.EmailPasswordRoute
 import com.yjy.feature.signup.NicknameRoute
-import com.yjy.feature.signup.R
 import com.yjy.feature.signup.SignUpViewModel
 
 fun NavController.navigateToSignUp() {

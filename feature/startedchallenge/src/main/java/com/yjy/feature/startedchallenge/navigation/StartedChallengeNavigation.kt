@@ -38,7 +38,7 @@ fun NavGraphBuilder.startedChallengeScreen(
         popEnterTransition = { fadeIn() },
         popExitTransition = { slideOutToRight() },
         deepLinks = listOf(
-            navDeepLink { uriPattern = DEEP_LINK_URI_PATTERN }
+            navDeepLink { uriPattern = DEEP_LINK_URI_PATTERN },
         ),
     ) {
         StartedChallengeRoute(

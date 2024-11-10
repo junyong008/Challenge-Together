@@ -113,7 +113,7 @@ class StartedChallengeViewModelTest {
         assertTrue(viewModel.challengeDetail.value is ChallengeDetailUiState.Success)
         assertEquals(
             initialDetail,
-            (viewModel.challengeDetail.value as ChallengeDetailUiState.Success).challenge
+            (viewModel.challengeDetail.value as ChallengeDetailUiState.Success).challenge,
         )
 
         // When: 구독이 끊기고 다시 시작 된다면
@@ -125,7 +125,7 @@ class StartedChallengeViewModelTest {
         assertTrue(viewModel.challengeDetail.value is ChallengeDetailUiState.Success)
         assertEquals(
             updatedDetail,
-            (viewModel.challengeDetail.value as ChallengeDetailUiState.Success).challenge
+            (viewModel.challengeDetail.value as ChallengeDetailUiState.Success).challenge,
         )
         job.cancel()
     }
@@ -135,7 +135,7 @@ class StartedChallengeViewModelTest {
         // Given
         val challengeDetail = createTestChallengeDetail()
         coEvery { getStartedChallengeDetail(testChallengeId) } returns flowOf(
-            NetworkResult.Success(challengeDetail)
+            NetworkResult.Success(challengeDetail),
         )
 
         // When
@@ -146,7 +146,7 @@ class StartedChallengeViewModelTest {
         assertTrue(viewModel.challengeDetail.value is ChallengeDetailUiState.Success)
         assertEquals(
             challengeDetail,
-            (viewModel.challengeDetail.value as ChallengeDetailUiState.Success).challenge
+            (viewModel.challengeDetail.value as ChallengeDetailUiState.Success).challenge,
         )
         job.cancel()
     }
@@ -155,7 +155,7 @@ class StartedChallengeViewModelTest {
     fun `network error should emit network failure event and maintain loading state`() = runTest {
         // Given
         coEvery { getStartedChallengeDetail(testChallengeId) } returns flowOf(
-            NetworkResult.Failure.NetworkError(Throwable())
+            NetworkResult.Failure.NetworkError(Throwable()),
         )
 
         // When
@@ -174,7 +174,7 @@ class StartedChallengeViewModelTest {
         val testCases = listOf(
             NOT_FOUND to StartedChallengeUiEvent.LoadFailure.NotFound,
             CONFLICT to StartedChallengeUiEvent.LoadFailure.NotStarted,
-            FORBIDDEN to StartedChallengeUiEvent.LoadFailure.NotParticipant
+            FORBIDDEN to StartedChallengeUiEvent.LoadFailure.NotParticipant,
         )
 
         testCases.forEach { (statusCode, expectedEvent) ->
@@ -186,7 +186,7 @@ class StartedChallengeViewModelTest {
             )
 
             coEvery { getStartedChallengeDetail(testChallengeId) } returns flowOf(
-                NetworkResult.Failure.HttpError(code = statusCode, body = "", message = null)
+                NetworkResult.Failure.HttpError(code = statusCode, body = "", message = null),
             )
 
             val job = launch { viewModel.challengeDetail.collect {} }
@@ -279,7 +279,7 @@ class StartedChallengeViewModelTest {
         val challengeDetail = createTestChallengeDetail()
 
         coEvery { getStartedChallengeDetail(testChallengeId) } returns flowOf(
-            NetworkResult.Success(challengeDetail)
+            NetworkResult.Success(challengeDetail),
         )
 
         coEvery {
@@ -315,7 +315,7 @@ class StartedChallengeViewModelTest {
         // Then
         assertEquals(
             initialDetail,
-            (viewModel.challengeDetail.value as ChallengeDetailUiState.Success).challenge
+            (viewModel.challengeDetail.value as ChallengeDetailUiState.Success).challenge,
         )
 
         // When: 시간 변경 모의
@@ -325,7 +325,7 @@ class StartedChallengeViewModelTest {
         // Then
         assertEquals(
             updatedDetail,
-            (viewModel.challengeDetail.value as ChallengeDetailUiState.Success).challenge
+            (viewModel.challengeDetail.value as ChallengeDetailUiState.Success).challenge,
         )
         job.cancel()
     }

@@ -21,6 +21,7 @@ import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 
 const val PERCENT_MULTIPLIER = 100
+const val MIN_PERCENT_FOR_SMOOTH = 0.02f
 
 @Composable
 fun RoundedLinearProgressBar(
@@ -110,7 +111,7 @@ fun RoundedGradientProgressBar(
             cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2),
         )
 
-        if (progressValue > 0.02f) {
+        if (progressValue > MIN_PERCENT_FOR_SMOOTH) {
             val progressWidth = (size.width * progressValue - gapPx).coerceAtLeast(0f)
 
             drawRoundRect(

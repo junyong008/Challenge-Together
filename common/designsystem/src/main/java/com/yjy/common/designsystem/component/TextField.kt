@@ -275,7 +275,7 @@ fun CursorLessNumberTextField(
                             textBackground
                         } else {
                             CustomColorProvider.colorScheme.disable
-                        }
+                        },
                     )
                     .clickable(
                         enabled = enabled,

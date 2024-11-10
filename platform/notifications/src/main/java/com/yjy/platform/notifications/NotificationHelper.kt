@@ -102,7 +102,7 @@ object NotificationHelper {
             setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(
-                    startedChallengePendingIntent(linkIdx)
+                    startedChallengePendingIntent(linkIdx),
                 )
                 .setSmallIcon(R.drawable.ic_notification)
                 .setGroup(CHALLENGE_NOTIFICATION_GROUP)
@@ -129,7 +129,7 @@ object NotificationHelper {
             setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(
-                    startedChallengePendingIntent(linkIdx)
+                    startedChallengePendingIntent(linkIdx),
                 )
                 .setSmallIcon(R.drawable.ic_notification)
                 .setGroup(CHALLENGE_NOTIFICATION_GROUP)

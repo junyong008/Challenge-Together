@@ -166,7 +166,7 @@ internal fun StartedChallengeScreen(
             is StartedChallengeUiEvent.LoadFailure -> {
                 onShowSnackbar(
                     SnackbarType.ERROR,
-                    errorMessages[event] ?: errorMessages[StartedChallengeUiEvent.LoadFailure.Unknown]!!
+                    errorMessages[event] ?: errorMessages[StartedChallengeUiEvent.LoadFailure.Unknown]!!,
                 )
                 onBackClick()
             }
@@ -256,7 +256,7 @@ internal fun StartedChallengeScreen(
                         CategoryIcon(category = challenge.category)
                         MenuButton(onClick = { shouldShowMenuBottomSheet = true })
                     }
-                }
+                },
             )
             TitleWithDescription(
                 title = challenge.title,
@@ -396,7 +396,7 @@ private fun ResetBottomSheet(
                 if (it.length <= ChallengeConst.MAX_RESET_RECORD_LENGTH) recordText = it
             },
             placeholderText = stringResource(
-                id = R.string.feature_startedchallenge_record_input_placeholder
+                id = R.string.feature_startedchallenge_record_input_placeholder,
             ),
             contentAlignment = Alignment.TopStart,
             backgroundColor = CustomColorProvider.colorScheme.background,
@@ -468,7 +468,7 @@ private fun ChallengeInfo(
         ) {
             Text(
                 text = stringResource(
-                    id = R.string.feature_startedchallenge_start_time
+                    id = R.string.feature_startedchallenge_start_time,
                 ),
                 style = MaterialTheme.typography.labelSmall,
                 color = CustomColorProvider.colorScheme.onSurface,
@@ -488,7 +488,7 @@ private fun ChallengeInfo(
         ) {
             Text(
                 text = stringResource(
-                    id = R.string.feature_startedchallenge_last_reset_time
+                    id = R.string.feature_startedchallenge_last_reset_time,
                 ),
                 style = MaterialTheme.typography.labelSmall,
                 color = CustomColorProvider.colorScheme.onSurface,
@@ -509,8 +509,8 @@ private fun Quote() {
     val quotes = (1..totalQuotes).map { index ->
         stringResource(
             id = R.string::class.java.getDeclaredField(
-                "feature_startedchallenge_quote_$index"
-            ).getInt(null)
+                "feature_startedchallenge_quote_$index",
+            ).getInt(null),
         )
     }
 
@@ -546,7 +546,7 @@ private fun Quote() {
                 painter = painterResource(id = ChallengeTogetherIcons.QuoteLeft),
                 contentDescription = stringResource(id = R.string.feature_startedchallenge_quote),
                 tint = CustomColorProvider.colorScheme.onSurfaceMuted,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start),
             )
             Text(
                 text = quotes[currentQuoteIndex],
@@ -561,7 +561,7 @@ private fun Quote() {
                 painter = painterResource(id = ChallengeTogetherIcons.QuoteRight),
                 contentDescription = stringResource(id = R.string.feature_startedchallenge_quote),
                 tint = CustomColorProvider.colorScheme.onSurfaceMuted,
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier.align(Alignment.End),
             )
         }
         IconButton(
@@ -576,7 +576,7 @@ private fun Quote() {
             Icon(
                 painter = painterResource(id = ChallengeTogetherIcons.Refresh),
                 contentDescription = stringResource(
-                    id = R.string.feature_startedchallenge_refresh_quote
+                    id = R.string.feature_startedchallenge_refresh_quote,
                 ),
                 tint = CustomColorProvider.colorScheme.onBackgroundMuted,
             )
@@ -601,7 +601,7 @@ private fun ModeInfo(mode: Mode) {
                 id = when (mode) {
                     Mode.CHALLENGE -> R.string.feature_startedchallenge_challenge_mode
                     Mode.FREE -> R.string.feature_startedchallenge_free_mode
-                }
+                },
             ),
             style = MaterialTheme.typography.labelSmall,
             color = CustomColorProvider.colorScheme.onBackgroundMuted,
@@ -612,13 +612,13 @@ private fun ModeInfo(mode: Mode) {
                 id = when (mode) {
                     Mode.CHALLENGE -> ChallengeTogetherIcons.Trophy
                     Mode.FREE -> ChallengeTogetherIcons.TrophyOff
-                }
+                },
             ),
             contentDescription = stringResource(
                 id = when (mode) {
                     Mode.CHALLENGE -> R.string.feature_startedchallenge_challenge_mode
                     Mode.FREE -> R.string.feature_startedchallenge_free_mode
-                }
+                },
             ),
             tint = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
@@ -636,7 +636,7 @@ private fun FoldableItem(
     Column(modifier = modifier) {
         HorizontalDivider(
             thickness = 1.dp,
-            color = CustomColorProvider.colorScheme.divider
+            color = CustomColorProvider.colorScheme.divider,
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -656,7 +656,7 @@ private fun FoldableItem(
                             ChallengeTogetherIcons.ArrowUp
                         } else {
                             ChallengeTogetherIcons.ArrowDown
-                        }
+                        },
                     ),
                     contentDescription = stringResource(id = titleResId),
                     tint = CustomColorProvider.colorScheme.onBackground,
@@ -779,17 +779,17 @@ private fun ResetButton(
         contentColor = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
         content = {
             Box(
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.alpha(if (enabled) 1f else 0f)
+                    modifier = Modifier.alpha(if (enabled) 1f else 0f),
                 ) {
                     Icon(
                         painter = painterResource(id = ChallengeTogetherIcons.Refresh),
                         contentDescription = stringResource(
-                            id = R.string.feature_startedchallenge_reset
+                            id = R.string.feature_startedchallenge_reset,
                         ),
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -858,7 +858,7 @@ private fun TargetProgress(
         val remainingDays = targetDays - currentDays
         stringResource(
             id = R.string.feature_startedchallenge_days_left,
-            remainingDays
+            remainingDays,
         )
     }
 
@@ -873,7 +873,7 @@ private fun TargetProgress(
                 ),
                 color = CustomColorProvider.colorScheme.onBackgroundMuted,
                 style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier.padding(bottom = 4.dp)
+                modifier = Modifier.padding(bottom = 4.dp),
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
@@ -881,7 +881,7 @@ private fun TargetProgress(
                 textAlign = TextAlign.End,
                 color = CustomColorProvider.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 2.dp)
+                modifier = Modifier.padding(bottom = 2.dp),
             )
             Spacer(modifier = Modifier.width(2.dp))
             Text(
@@ -889,7 +889,7 @@ private fun TargetProgress(
                 textAlign = TextAlign.End,
                 color = CustomColorProvider.colorScheme.onBackgroundMuted,
                 style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier.padding(bottom = 4.dp)
+                modifier = Modifier.padding(bottom = 4.dp),
             )
         }
         RoundedGradientProgressBar(
@@ -956,7 +956,7 @@ private fun TitleWithDescription(
                         R.string.feature_startedchallenge_collapse
                     } else {
                         R.string.feature_startedchallenge_expand
-                    }
+                    },
                 ),
                 onClick = { isExpanded = !isExpanded },
                 color = CustomColorProvider.colorScheme.onBackgroundMuted,
@@ -1001,7 +1001,7 @@ private fun MenuButton(onClick: () -> Unit) {
         Icon(
             painter = painterResource(id = ChallengeTogetherIcons.MoreVertical),
             contentDescription = stringResource(
-                id = R.string.feature_startedchallenge_menu_button
+                id = R.string.feature_startedchallenge_menu_button,
             ),
             tint = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
@@ -1029,8 +1029,8 @@ fun StartedChallengeScreenPreview() {
                         rank = 1,
                         startDateTime = LocalDateTime.now(),
                         currentRecordInSeconds = 1000L,
-                    )
-                )
+                    ),
+                ),
             )
         }
     }

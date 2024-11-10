@@ -62,7 +62,7 @@ class ChallengeRepositoryImplTest {
             challengePreferencesDataSource = challengePreferencesDataSource,
             challengeDataSource = challengeDataSource,
             challengeDao = challengeDao,
-            timeManager = timeManager
+            timeManager = timeManager,
         )
     }
 
@@ -75,7 +75,7 @@ class ChallengeRepositoryImplTest {
         id: String = "1",
         title: String = "Test Challenge",
         isStarted: Boolean = true,
-        resetDateTime: LocalDateTime = LocalDateTime.now().minusDays(3)
+        resetDateTime: LocalDateTime = LocalDateTime.now().minusDays(3),
     ) = ChallengeEntity(
         id = id,
         title = title,
@@ -161,7 +161,7 @@ class ChallengeRepositoryImplTest {
             mockk {
                 coEvery { challenges } returns listOf()
                 coEvery { newlyCompletedTitles } returns expectedNewTitles
-            }
+            },
         )
 
         // When

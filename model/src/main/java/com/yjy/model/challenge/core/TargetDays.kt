@@ -16,7 +16,10 @@ sealed class TargetDays {
 
     companion object {
         fun fromRouteString(value: String): TargetDays =
-            if (value == "Infinite") Infinite
-            else Fixed(value.toInt())
+            if (value == "Infinite") {
+                Infinite
+            } else {
+                Fixed(value.toInt())
+            }
     }
 }

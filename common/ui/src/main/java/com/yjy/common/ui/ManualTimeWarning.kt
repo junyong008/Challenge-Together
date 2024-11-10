@@ -25,7 +25,7 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 
 @Composable
 fun ManualTimeWarning(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
@@ -48,7 +48,6 @@ fun ManualTimeWarning(
                 color = Color.Black,
             )
         }
-
     }
 }
 
