@@ -23,15 +23,39 @@
             <meta-data
                 android:name="com.yjy.challengetogether.initializer.TimberInitializer"
                 android:value="androidx.startup" />
+
+            <meta-data
+                android:name="com.yjy.challengetogether.initializer.NotificationInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="com.yjy.challengetogether.initializer.FirebaseCrashlyticsInitializer"
+                android:value="androidx.startup" />
         </provider>
+
+        <service
+            android:name=".fcm.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.ChallengeTogether.Splash"
             android:exported="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="www.challenge-together.apps.com" />
             </intent-filter>
         </activity>
     </application>

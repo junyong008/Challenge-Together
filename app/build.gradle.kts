@@ -3,6 +3,7 @@
 plugins {
     alias(libs.plugins.custom.android.application)
     alias(libs.plugins.custom.android.application.compose)
+    alias(libs.plugins.custom.android.firebase)
     alias(libs.plugins.custom.android.hilt)
 }
 
@@ -46,6 +47,9 @@ dependencies {
         projects.common.navigation,
 
         projects.data.authApi,
+        projects.data.userApi,
+
+        projects.platform.notifications,
 
         libs.androidx.core.splashscreen,
         libs.androidx.startup,
@@ -54,4 +58,5 @@ dependencies {
         libs.timber,
     )
     runtimeOnly(projects.data.authImpl)
+    runtimeOnly(projects.data.userImpl)
 }

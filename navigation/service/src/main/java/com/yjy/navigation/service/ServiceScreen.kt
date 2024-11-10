@@ -1,5 +1,7 @@
 package com.yjy.navigation.service
 
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.expandVertically
@@ -18,17 +20,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.rememberPermissionState
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.CustomSnackbarHost
@@ -78,6 +85,7 @@ internal fun ServiceScreen(
     }
 
     ChallengeTogetherBackground {
+        NotificationPermissionEffect()
         Scaffold(
             topBar = {
                 Box(modifier = Modifier.statusBarsPadding()) {
@@ -146,6 +154,24 @@ internal fun ServiceScreen(
                     ManualTimeWarning()
                 }
             }
+        }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalPermissionsApi::class)
+private fun NotificationPermissionEffect() {
+    if (LocalInspectionMode.current) return
+    if (VERSION.SDK_INT < VERSION_CODES.TIRAMISU) return
+
+    val notificationsPermissionState = rememberPermissionState(
+        android.Manifest.permission.POST_NOTIFICATIONS,
+    )
+
+    LaunchedEffect(notificationsPermissionState) {
+        val status = notificationsPermissionState.status
+        if (status is PermissionStatus.Denied && !status.shouldShowRationale) {
+            notificationsPermissionState.launchPermissionRequest()
         }
     }
 }

@@ -3,6 +3,7 @@ package com.yjy.data.datastore.impl
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.yjy.data.datastore.api.UserPreferencesDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -21,7 +22,14 @@ internal class UserPreferencesDataSourceImpl @Inject constructor(
         dataStore.storeValue(KEY_TIME_DIFF, diff)
     }
 
+    override suspend fun getFcmToken(): String? = dataStore.readValue(KEY_FCM_TOKEN)
+
+    override suspend fun setFcmToken(token: String?) {
+        dataStore.storeValue(KEY_FCM_TOKEN, token)
+    }
+
     companion object {
         private val KEY_TIME_DIFF = longPreferencesKey("time_diff")
+        private val KEY_FCM_TOKEN = stringPreferencesKey("fcm_token")
     }
 }

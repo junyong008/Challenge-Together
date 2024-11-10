@@ -18,6 +18,7 @@ dependencies {
         projects.common.navigation,
 
         projects.data.authApi,
+        projects.data.userApi,
 
         projects.model,
 
@@ -30,9 +31,11 @@ dependencies {
         projects.feature.editchallenge,
         projects.feature.changepassword,
 
+        libs.accompanist.permissions,
         libs.androidx.navigation.compose,
         libs.androidx.hilt.navigation.compose,
         libs.kotlinx.collections.immutable,
     )
     runtimeOnly(projects.data.authImpl)
+    runtimeOnly(projects.data.userImpl)
 }

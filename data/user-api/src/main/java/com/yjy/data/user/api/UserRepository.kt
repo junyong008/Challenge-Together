@@ -7,4 +7,5 @@ interface UserRepository {
     val timeDiff: Flow<Long>
     suspend fun getUserName(): NetworkResult<String>
     suspend fun getUnViewedNotificationCount(): NetworkResult<Int>
+    suspend fun registerFcmToken()
 }

@@ -6,6 +6,7 @@ import com.yjy.data.network.request.ChangePasswordRequest
 import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.EmailLoginRequest
 import com.yjy.data.network.request.EmailRequest
+import com.yjy.data.network.request.RegisterFirebaseTokenRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.data.network.request.SignUpRequest
 import com.yjy.data.network.request.VerifyRequest
@@ -98,4 +99,9 @@ internal interface ChallengeTogetherService {
 
     @GET("service/user/get/notifications/un-viewed-count")
     suspend fun getUnViewedNotificationCount(): NetworkResult<GetUnViewedNotificationCountResponse>
+
+    @POST("service/user/fcm/register")
+    suspend fun registerFirebaseToken(
+        @Body request: RegisterFirebaseTokenRequest,
+    ): NetworkResult<Unit>
 }

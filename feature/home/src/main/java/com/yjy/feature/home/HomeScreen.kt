@@ -317,7 +317,7 @@ private fun HomeTopBar(
                     },
                 ) {
                     Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.Notification),
+                        painter = painterResource(id = ChallengeTogetherIcons.Bell),
                         contentDescription = stringResource(
                             id = R.string.feature_home_notification_description,
                         ),

@@ -9,6 +9,7 @@ object ChallengeTogetherIcons {
     val ArrowLeft = R.drawable.ic_arrow_left
     val ArrowRight = R.drawable.ic_arrow_right
     val Back = R.drawable.ic_back
+    val Bell = R.drawable.ic_bell
     val Cancel = R.drawable.ic_cancel
     val Check = R.drawable.ic_check
     val CompleteChallenge = R.drawable.ic_complete_challenge
@@ -23,7 +24,6 @@ object ChallengeTogetherIcons {
     val Trophy = R.drawable.ic_trophy
     val TrophyOff = R.drawable.ic_trophy_off
     val Lock = R.drawable.ic_lock
-    val Notification = R.drawable.ic_notification
     val Person = R.drawable.ic_person
     val Refresh = R.drawable.ic_refresh
     val Timer = R.drawable.ic_timer

@@ -16,6 +16,7 @@ import com.yjy.feature.startedchallenge.model.ChallengeDetailUiState
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiAction
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiEvent
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiState
+import com.yjy.feature.startedchallenge.navigation.STARTED_CHALLENGE_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -40,7 +41,7 @@ class StartedChallengeViewModel @Inject constructor(
     private val challengeRepository: ChallengeRepository,
 ) : ViewModel() {
 
-    private val challengeId = savedStateHandle.get<String>("challengeId")
+    private val challengeId = savedStateHandle.get<String>(STARTED_CHALLENGE_ID)
 
     private val _uiState = MutableStateFlow(StartedChallengeUiState())
     val uiState: StateFlow<StartedChallengeUiState> = _uiState.asStateFlow()

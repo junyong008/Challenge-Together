@@ -3,6 +3,7 @@ package com.yjy.navigation.service
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yjy.data.auth.api.AuthRepository
+import com.yjy.data.user.api.UserRepository
 import com.yjy.platform.network.NetworkMonitor
 import com.yjy.platform.time.TimeMonitor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,11 +18,15 @@ import javax.inject.Inject
 @HiltViewModel
 class ServiceViewModel @Inject constructor(
     private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
     networkMonitor: NetworkMonitor,
     timeMonitor: TimeMonitor,
 ) : ViewModel() {
 
     val isOffline = networkMonitor.isOnline
+        .onEach { isOnline ->
+            if (isOnline) userRepository.registerFcmToken()
+        }
         .map(Boolean::not)
         .stateIn(
             scope = viewModelScope,
