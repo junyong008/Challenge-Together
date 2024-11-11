@@ -41,7 +41,7 @@ fun ChallengeTogetherTopAppBar(
         Box(
             modifier = Modifier
                 .align(Alignment.CenterStart)
-                .padding(start = 4.dp)
+                .padding(start = 4.dp),
         ) {
             DebouncedIconButton(
                 onClick = { onNavigationClick() },

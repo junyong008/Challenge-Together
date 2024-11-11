@@ -56,7 +56,7 @@ class StartedChallengeViewModelTest {
 
         savedStateHandle = mockk<SavedStateHandle>()
         every { savedStateHandle.getStateFlow<String?>(STARTED_CHALLENGE_ID, null) } returns
-                MutableStateFlow(testChallengeId)
+            MutableStateFlow(testChallengeId)
 
         challengeRepository = mockk(relaxed = true)
         getStartedChallengeDetail = mockk()
@@ -221,7 +221,9 @@ class StartedChallengeViewModelTest {
     @Test
     fun `delete challenge failure should emit failure event`() = runTest {
         // Given
-        coEvery { challengeRepository.deleteStartedChallenge(testChallengeId) } returns NetworkResult.Failure.NetworkError(Throwable())
+        coEvery {
+            challengeRepository.deleteStartedChallenge(testChallengeId)
+        } returns NetworkResult.Failure.NetworkError(Throwable())
 
         // When
         viewModel.processAction(StartedChallengeUiAction.OnDeleteChallengeClick(testChallengeId))
@@ -247,7 +249,9 @@ class StartedChallengeViewModelTest {
                 else -> flowOf(NetworkResult.Success(changedChallenge))
             }
         }
-        coEvery { challengeRepository.resetStartedChallenge(testChallengeId, testMemo) } returns NetworkResult.Success(Unit)
+        coEvery {
+            challengeRepository.resetStartedChallenge(testChallengeId, testMemo)
+        } returns NetworkResult.Success(Unit)
 
         // When: 초기 로드
         val job = launch { viewModel.challengeDetail.collect {} }

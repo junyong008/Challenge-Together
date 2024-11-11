@@ -507,9 +507,12 @@ private fun ChallengeInfo(
     }
 }
 
+private const val QUOTE_COUNT = 53
+private const val QUOTE_ANIMATION_DURATION = 300
+
 @Composable
 private fun Quote() {
-    val totalQuotes = 53
+    val totalQuotes = QUOTE_COUNT
     val quotes = (1..totalQuotes).map { index ->
         stringResource(
             id = R.string::class.java.getDeclaredField(
@@ -526,7 +529,7 @@ private fun Quote() {
 
     val alphaAnimation by animateFloatAsState(
         targetValue = alpha,
-        animationSpec = tween(300),
+        animationSpec = tween(QUOTE_ANIMATION_DURATION),
         label = "Quote Alpha Animation",
         finishedListener = {
             if (it == 0f) {
