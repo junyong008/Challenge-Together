@@ -33,8 +33,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -304,7 +305,7 @@ private fun CategorySection(category: Category, targetDays: TargetDays) {
                         .background(CustomColorProvider.colorScheme.background),
                 ) {
                     Icon(
-                        painter = painterResource(id = category.getIconResId()),
+                        ImageVector.vectorResource(id = category.getIconResId()),
                         contentDescription = stringResource(id = category.getDisplayNameResId()),
                         tint = CustomColorProvider.colorScheme.onBackgroundMuted,
                         modifier = Modifier

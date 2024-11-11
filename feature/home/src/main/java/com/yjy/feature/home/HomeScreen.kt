@@ -41,8 +41,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -298,7 +299,7 @@ private fun HomeTopBar(
                 modifier = Modifier.size(40.dp),
             ) {
                 Icon(
-                    painter = painterResource(id = ChallengeTogetherIcons.CompleteChallenge),
+                    ImageVector.vectorResource(id = ChallengeTogetherIcons.CompleteChallenge),
                     contentDescription = stringResource(
                         id = R.string.feature_home_complete_challenge_description,
                     ),
@@ -317,7 +318,7 @@ private fun HomeTopBar(
                     },
                 ) {
                     Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.Bell),
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Bell),
                         contentDescription = stringResource(
                             id = R.string.feature_home_notification_description,
                         ),
@@ -615,7 +616,7 @@ private fun MyChallengeTitle(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.Sort),
+                ImageVector.vectorResource(id = ChallengeTogetherIcons.Sort),
                 contentDescription = stringResource(
                     id = R.string.feature_home_sort_challenge_content_description,
                 ),

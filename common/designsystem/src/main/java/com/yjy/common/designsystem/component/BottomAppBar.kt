@@ -20,8 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yjy.common.core.extensions.clickableSingle
@@ -60,7 +61,7 @@ fun ChallengeTogetherBottomAppBar(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    painter = painterResource(id = ChallengeTogetherIcons.Back),
+                    ImageVector.vectorResource(id = ChallengeTogetherIcons.Back),
                     contentDescription = stringResource(
                         id = R.string.common_designsystem_app_bar_back,
                     ),

@@ -34,8 +34,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yjy.common.core.constants.TimeConst.DAYS_PER_WEEK
@@ -313,7 +314,7 @@ fun CalendarHeader(
             if (isWeekMode) {
                 IconButton(onClick = onDisableWeekMode) {
                     Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.ArrowDown),
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.ArrowDown),
                         contentDescription = stringResource(
                             id = R.string.common_designsystem_calendar_expand_week_mode,
                         ),
@@ -326,7 +327,7 @@ fun CalendarHeader(
                     enabled = canMoveToPreviousMonth,
                 ) {
                     Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.ArrowLeft),
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.ArrowLeft),
                         contentDescription = stringResource(id = R.string.common_designsystem_calendar_previous_month),
                         tint = if (canMoveToPreviousMonth) {
                             contentColor
@@ -340,7 +341,7 @@ fun CalendarHeader(
                     enabled = canMoveToNextMonth,
                 ) {
                     Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.ArrowRight),
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.ArrowRight),
                         contentDescription = stringResource(id = R.string.common_designsystem_calendar_next_month),
                         tint = if (canMoveToNextMonth) {
                             contentColor

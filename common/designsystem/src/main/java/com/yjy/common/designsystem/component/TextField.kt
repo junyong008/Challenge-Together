@@ -35,9 +35,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -140,7 +141,7 @@ fun ChallengeTogetherTextField(
                         modifier = Modifier.size(40.dp),
                     ) {
                         Icon(
-                            painter = painterResource(
+                            ImageVector.vectorResource(
                                 id = if (passwordVisible) {
                                     ChallengeTogetherIcons.Visibility
                                 } else {
@@ -207,7 +208,7 @@ fun SingleLineTextField(
                     modifier = Modifier.size(40.dp),
                 ) {
                     Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.Cancel),
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Cancel),
                         contentDescription = stringResource(
                             id = R.string.common_designsystem_clear_content_description,
                         ),
@@ -315,7 +316,7 @@ fun ChallengeTogetherTextFieldPreview() {
             placeholderText = "Enter text...",
             leadingIcon = {
                 Icon(
-                    painter = painterResource(id = ChallengeTogetherIcons.Lock),
+                    ImageVector.vectorResource(id = ChallengeTogetherIcons.Lock),
                     contentDescription = "Lock Icon",
                     tint = CustomColorProvider.colorScheme.onSurface,
                 )
@@ -326,7 +327,7 @@ fun ChallengeTogetherTextFieldPreview() {
                     modifier = Modifier.size(40.dp),
                 ) {
                     Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.Visibility),
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Visibility),
                         contentDescription = "Visibility Icon",
                         tint = CustomColorProvider.colorScheme.onSurface,
                     )

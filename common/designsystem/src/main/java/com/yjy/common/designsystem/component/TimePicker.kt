@@ -18,8 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yjy.common.core.constants.TimeConst.HOURS_PER_HALF_DAY
@@ -161,7 +162,7 @@ private fun TimePickerButton(
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
         IconButton(onClick = { onIncrease() }) {
             Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.ArrowUp),
+                ImageVector.vectorResource(id = ChallengeTogetherIcons.ArrowUp),
                 contentDescription = descriptionIncrease,
                 tint = contentColor,
             )
@@ -176,7 +177,7 @@ private fun TimePickerButton(
         )
         IconButton(onClick = { onDecrease() }) {
             Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.ArrowDown),
+                ImageVector.vectorResource(id = ChallengeTogetherIcons.ArrowDown),
                 contentDescription = descriptionDecrease,
                 tint = contentColor,
             )

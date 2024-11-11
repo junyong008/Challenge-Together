@@ -45,8 +45,9 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -101,6 +102,7 @@ internal fun StartedChallengeRoute(
     onEditCategoryClick: (String, Category) -> Unit,
     onEditTitleClick: (String, String, String) -> Unit,
     onEditTargetDaysClick: (String, String, Int) -> Unit,
+    onResetRecordClick: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StartedChallengeViewModel = hiltViewModel(),
@@ -118,6 +120,7 @@ internal fun StartedChallengeRoute(
         onEditCategoryClick = onEditCategoryClick,
         onEditTitleClick = onEditTitleClick,
         onEditTargetDaysClick = onEditTargetDaysClick,
+        onResetRecordClick = onResetRecordClick,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -133,6 +136,7 @@ internal fun StartedChallengeScreen(
     onEditCategoryClick: (String, Category) -> Unit = { _, _ -> },
     onEditTitleClick: (String, String, String) -> Unit = { _, _, _ -> },
     onEditTargetDaysClick: (String, String, Int) -> Unit = { _, _, _ -> },
+    onResetRecordClick: (String) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     var shouldShowResetBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -291,7 +295,7 @@ internal fun StartedChallengeScreen(
             ChallengeButtons(
                 rank = challenge.rank,
                 currentParticipantCounts = challenge.currentParticipantCounts,
-                onResetRecordClick = {},
+                onResetRecordClick = { onResetRecordClick(challenge.id) },
                 onBoardClick = {},
                 onRankingClick = {},
                 modifier = Modifier.padding(horizontal = 16.dp),
@@ -543,7 +547,7 @@ private fun Quote() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.QuoteLeft),
+                ImageVector.vectorResource(id = ChallengeTogetherIcons.QuoteLeft),
                 contentDescription = stringResource(id = R.string.feature_startedchallenge_quote),
                 tint = CustomColorProvider.colorScheme.onSurfaceMuted,
                 modifier = Modifier.align(Alignment.Start),
@@ -558,7 +562,7 @@ private fun Quote() {
                 textAlign = TextAlign.Center,
             )
             Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.QuoteRight),
+                ImageVector.vectorResource(id = ChallengeTogetherIcons.QuoteRight),
                 contentDescription = stringResource(id = R.string.feature_startedchallenge_quote),
                 tint = CustomColorProvider.colorScheme.onSurfaceMuted,
                 modifier = Modifier.align(Alignment.End),
@@ -574,7 +578,7 @@ private fun Quote() {
                 .padding(end = 4.dp),
         ) {
             Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.Refresh),
+                ImageVector.vectorResource(id = ChallengeTogetherIcons.Refresh),
                 contentDescription = stringResource(
                     id = R.string.feature_startedchallenge_refresh_quote,
                 ),
@@ -608,7 +612,7 @@ private fun ModeInfo(mode: Mode) {
         )
         Spacer(modifier = Modifier.width(4.dp))
         Icon(
-            painter = painterResource(
+            ImageVector.vectorResource(
                 id = when (mode) {
                     Mode.CHALLENGE -> ChallengeTogetherIcons.Trophy
                     Mode.FREE -> ChallengeTogetherIcons.TrophyOff
@@ -651,7 +655,7 @@ private fun FoldableItem(
             )
             IconButton(onClick = { isExpanded = !isExpanded }) {
                 Icon(
-                    painter = painterResource(
+                    ImageVector.vectorResource(
                         id = if (isExpanded) {
                             ChallengeTogetherIcons.ArrowUp
                         } else {
@@ -757,7 +761,7 @@ private fun BaseButton(
         }
         Spacer(modifier = Modifier.width(16.dp))
         Icon(
-            painter = painterResource(id = ChallengeTogetherIcons.ArrowRight),
+            imageVector = ImageVector.vectorResource(id = ChallengeTogetherIcons.ArrowRight),
             contentDescription = description,
             tint = CustomColorProvider.colorScheme.onSurface,
         )
@@ -787,7 +791,7 @@ private fun ResetButton(
                     modifier = Modifier.alpha(if (enabled) 1f else 0f),
                 ) {
                     Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.Refresh),
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Refresh),
                         contentDescription = stringResource(
                             id = R.string.feature_startedchallenge_reset,
                         ),
@@ -987,7 +991,7 @@ private fun CategoryIcon(category: Category) {
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            painter = painterResource(id = category.getIconResId()),
+            ImageVector.vectorResource(id = category.getIconResId()),
             contentDescription = stringResource(id = category.getDisplayNameResId()),
             tint = CustomColorProvider.colorScheme.onSurfaceMuted,
             modifier = Modifier.size(20.dp),
@@ -999,7 +1003,7 @@ private fun CategoryIcon(category: Category) {
 private fun MenuButton(onClick: () -> Unit) {
     IconButton(onClick = onClick) {
         Icon(
-            painter = painterResource(id = ChallengeTogetherIcons.MoreVertical),
+            ImageVector.vectorResource(id = ChallengeTogetherIcons.MoreVertical),
             contentDescription = stringResource(
                 id = R.string.feature_startedchallenge_menu_button,
             ),

@@ -17,8 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
@@ -158,7 +159,7 @@ private fun CategoryIcon(
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            painter = painterResource(id = category.getIconResId()),
+            ImageVector.vectorResource(id = category.getIconResId()),
             contentDescription = stringResource(id = category.getDisplayNameResId()),
             tint = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
@@ -179,7 +180,7 @@ private fun ChallengeTimer(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            painter = painterResource(id = ChallengeTogetherIcons.Timer),
+            ImageVector.vectorResource(id = ChallengeTogetherIcons.Timer),
             contentDescription = stringResource(
                 id = R.string.common_ui_started_challenge_card_timer_description,
             ),
@@ -209,7 +210,7 @@ private fun CompletedChallengeTimer(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            painter = painterResource(id = ChallengeTogetherIcons.Check),
+            ImageVector.vectorResource(id = ChallengeTogetherIcons.Check),
             contentDescription = stringResource(
                 id = R.string.common_ui_started_challenge_card_check_description,
             ),

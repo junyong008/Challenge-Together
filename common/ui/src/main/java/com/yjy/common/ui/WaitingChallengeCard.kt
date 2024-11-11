@@ -22,9 +22,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -127,7 +128,7 @@ private fun CategoryIcon(
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            painter = painterResource(id = category.getIconResId()),
+            ImageVector.vectorResource(id = category.getIconResId()),
             contentDescription = stringResource(id = category.getDisplayNameResId()),
             tint = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
@@ -227,7 +228,7 @@ private fun ParticipantIcons(
         }
         if (currentCount > maxDisplayCount) {
             Icon(
-                painter = painterResource(id = ChallengeTogetherIcons.MoreHorizontal),
+                ImageVector.vectorResource(id = ChallengeTogetherIcons.MoreHorizontal),
                 contentDescription = null,
                 tint = CustomColorProvider.colorScheme.onSurfaceMuted,
                 modifier = Modifier
@@ -273,7 +274,7 @@ private fun ParticipantIcon(
             .zIndex(zIndex),
     ) {
         Icon(
-            painter = painterResource(id = ChallengeTogetherIcons.Person),
+            ImageVector.vectorResource(id = ChallengeTogetherIcons.Person),
             contentDescription = stringResource(id = R.string.common_ui_waiting_challenge_icon_of_person),
             tint = CustomColorProvider.colorScheme.onBackgroundMuted,
             modifier = Modifier.align(Alignment.Center),

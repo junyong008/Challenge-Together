@@ -29,10 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -132,7 +133,7 @@ private fun TargetDaysSelector(
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        painter = painterResource(id = ChallengeTogetherIcons.Infinite),
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Infinite),
                         tint = CustomColorProvider.colorScheme.onBackground,
                         contentDescription = stringResource(
                             id = R.string.common_ui_target_day_unlimited,
