@@ -16,7 +16,6 @@ import com.yjy.feature.startedchallenge.model.ChallengeDetailUiState
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiAction
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiEvent
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiState
-import com.yjy.feature.startedchallenge.navigation.STARTED_CHALLENGE_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +25,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -41,7 +39,7 @@ class StartedChallengeViewModel @Inject constructor(
     private val challengeRepository: ChallengeRepository,
 ) : ViewModel() {
 
-    private val challengeId = savedStateHandle.get<String>(STARTED_CHALLENGE_ID)
+    private val challengeId = savedStateHandle.getStateFlow<String?>("challengeId", null)
 
     private val _uiState = MutableStateFlow(StartedChallengeUiState())
     val uiState: StateFlow<StartedChallengeUiState> = _uiState.asStateFlow()
@@ -50,8 +48,8 @@ class StartedChallengeViewModel @Inject constructor(
     val uiEvent: Flow<StartedChallengeUiEvent> = _uiEvent.receiveAsFlow()
 
     val challengeDetail = merge(
-        flowOf(challengeId),
-        challengeRepository.timeChangedFlow.map { challengeId },
+        challengeId,
+        challengeRepository.timeChangedFlow.map { challengeId.value },
     ).filterNotNull().flatMapLatest { id ->
         getStartedChallengeDetail(id)
     }.map { result ->

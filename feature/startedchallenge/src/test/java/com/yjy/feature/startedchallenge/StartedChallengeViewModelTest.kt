@@ -10,6 +10,7 @@ import com.yjy.domain.GetStartedChallengeDetailUseCase
 import com.yjy.feature.startedchallenge.model.ChallengeDetailUiState
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiAction
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiEvent
+import com.yjy.feature.startedchallenge.navigation.STARTED_CHALLENGE_ID
 import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
@@ -20,6 +21,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -53,7 +55,8 @@ class StartedChallengeViewModelTest {
         Dispatchers.setMain(testDispatcher)
 
         savedStateHandle = mockk<SavedStateHandle>()
-        every { savedStateHandle.get<String>("challengeId") } returns testChallengeId
+        every { savedStateHandle.getStateFlow<String?>(STARTED_CHALLENGE_ID, null) } returns
+                MutableStateFlow(testChallengeId)
 
         challengeRepository = mockk(relaxed = true)
         getStartedChallengeDetail = mockk()
