@@ -14,6 +14,8 @@ import com.yjy.feature.editchallenge.navigation.navigateToEditCategory
 import com.yjy.feature.editchallenge.navigation.navigateToEditTargetDays
 import com.yjy.feature.editchallenge.navigation.navigateToEditTitleDescription
 import com.yjy.feature.home.navigation.homeScreen
+import com.yjy.feature.resetrecord.navigation.navigateToResetRecord
+import com.yjy.feature.resetrecord.navigation.resetRecordScreen
 import com.yjy.feature.startedchallenge.navigation.navigateToStartedChallenge
 import com.yjy.feature.startedchallenge.navigation.startedChallengeScreen
 
@@ -57,7 +59,11 @@ internal fun ServiceNavHost(
             onEditCategoryClick = navController::navigateToEditCategory,
             onEditTitleClick = navController::navigateToEditTitleDescription,
             onEditTargetDaysClick = navController::navigateToEditTargetDays,
+            onResetRecordClick = navController::navigateToResetRecord,
             onShowSnackbar = onShowSnackbar,
+        )
+        resetRecordScreen(
+            onBackClick = navController::popBackStack,
         )
         changePasswordScreen(
             onBackClick = navController::popBackStack,

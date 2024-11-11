@@ -6,6 +6,7 @@ import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.data.network.response.AddChallengeResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
+import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
 
 interface ChallengeDataSource {
@@ -19,4 +20,7 @@ interface ChallengeDataSource {
     suspend fun getStartedChallengeDetail(
         challengeId: String,
     ): NetworkResult<GetStartedChallengeDetailResponse>
+    suspend fun getResetRecords(
+        challengeId: String,
+    ): NetworkResult<List<GetResetRecordResponse>>
 }

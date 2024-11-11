@@ -16,6 +16,9 @@ sealed interface ServiceRoute : Route {
     data class StartedChallenge(val challengeId: String) : ServiceRoute
 
     @Serializable
+    data class ResetRecord(val challengeId: String) : ServiceRoute
+
+    @Serializable
     data class EditCategory(
         val challengeId: String,
         val category: Category,

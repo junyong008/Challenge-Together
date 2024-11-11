@@ -13,6 +13,7 @@ import com.yjy.data.network.request.VerifyRequest
 import com.yjy.data.network.response.AddChallengeResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetNameResponse
+import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
 import com.yjy.data.network.response.GetUnViewedNotificationCountResponse
 import retrofit2.http.Body
@@ -93,6 +94,11 @@ internal interface ChallengeTogetherService {
     suspend fun getStartedChallengeDetail(
         @Query("challengeId") challengeId: String,
     ): NetworkResult<GetStartedChallengeDetailResponse>
+
+    @GET("service/challenge/get/reset-records")
+    suspend fun getResetRecords(
+        @Query("challengeId") challengeId: String,
+    ): NetworkResult<List<GetResetRecordResponse>>
 
     @GET("service/user/get/name")
     suspend fun getUserName(): NetworkResult<GetNameResponse>

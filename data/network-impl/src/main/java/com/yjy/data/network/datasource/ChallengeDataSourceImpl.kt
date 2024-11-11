@@ -6,6 +6,7 @@ import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.data.network.response.AddChallengeResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
+import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
 import com.yjy.data.network.service.ChallengeTogetherService
 import javax.inject.Inject
@@ -41,4 +42,8 @@ internal class ChallengeDataSourceImpl @Inject constructor(
         challengeId: String,
     ): NetworkResult<GetStartedChallengeDetailResponse> =
         challengeTogetherService.getStartedChallengeDetail(challengeId)
+
+    override suspend fun getResetRecords(
+        challengeId: String,
+    ): NetworkResult<List<GetResetRecordResponse>> = challengeTogetherService.getResetRecords(challengeId)
 }

@@ -20,6 +20,7 @@ import com.yjy.data.network.request.AddChallengeRequest
 import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.model.challenge.DetailedStartedChallenge
+import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.SimpleWaitingChallenge
 import com.yjy.model.challenge.core.Category
@@ -175,6 +176,11 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         }
         is NetworkResult.Failure -> flowOf(response)
     }
+
+    override suspend fun getResetRecords(challengeId: String): NetworkResult<List<ResetRecord>> =
+        challengeDataSource.getResetRecords(challengeId).map { response ->
+            response.map { it.toModel() }
+        }
 
     private fun DetailedStartedChallenge.updateCurrentRecord(currentTime: LocalDateTime) = copy(
         currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),

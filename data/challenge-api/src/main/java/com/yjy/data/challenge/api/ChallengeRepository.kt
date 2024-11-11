@@ -2,6 +2,7 @@ package com.yjy.data.challenge.api
 
 import com.yjy.common.network.NetworkResult
 import com.yjy.model.challenge.DetailedStartedChallenge
+import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.SimpleWaitingChallenge
 import com.yjy.model.challenge.core.Category
@@ -40,6 +41,7 @@ interface ChallengeRepository {
     suspend fun resetStartedChallenge(challengeId: String, memo: String): NetworkResult<Unit>
     suspend fun deleteStartedChallenge(challengeId: String): NetworkResult<Unit>
     suspend fun getStartedChallengeDetail(challengeId: String): Flow<NetworkResult<DetailedStartedChallenge>>
+    suspend fun getResetRecords(challengeId: String): NetworkResult<List<ResetRecord>>
     suspend fun setCurrentTier(tier: Tier)
     suspend fun setSortOrder(order: SortOrder)
     suspend fun clearRecentCompletedChallenges()

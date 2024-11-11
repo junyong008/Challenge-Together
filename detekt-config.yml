@@ -21,6 +21,7 @@ style:
     ignorePropertyDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
     ignoreEnums: true
+    ignoreAnnotated: ['Preview', 'DevicePreviews']
   UnusedPrivateMember:
     ignoreAnnotated: [ 'preview' ]
   ReturnCount:

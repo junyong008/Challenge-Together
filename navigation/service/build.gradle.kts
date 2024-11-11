@@ -29,6 +29,7 @@ dependencies {
         projects.feature.addchallenge,
         projects.feature.startedchallenge,
         projects.feature.editchallenge,
+        projects.feature.resetrecord,
         projects.feature.changepassword,
 
         libs.accompanist.permissions,
