@@ -77,16 +77,6 @@ object NotificationHelper {
             .build()
     }
 
-    private fun Context.createCommunityNotification(
-        block: NotificationCompat.Builder.() -> Unit,
-    ): Notification {
-        ensureNotificationChannelsExists()
-        return NotificationCompat.Builder(this, CHANNEL_COMMUNITY_ID)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .apply(block)
-            .build()
-    }
-
     fun postChallengeResetNotification(
         context: Context,
         header: String,
