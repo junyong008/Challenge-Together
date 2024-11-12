@@ -21,6 +21,8 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override val timeDiff: Flow<Long> = userPreferencesDataSource.timeDiff
 
+    override suspend fun syncTime(): NetworkResult<Unit> = userDataSource.syncTime()
+
     override suspend fun getUserName(): NetworkResult<String> =
         userDataSource.getUserName().map { it.userName }
 

@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 
 interface ChallengeRepository {
     val timeChangedFlow: Flow<Unit>
-    val currentTier: Flow<Tier>
+    val localTier: Flow<Tier>
     val sortOrder: Flow<SortOrder>
     val recentCompletedChallengeTitles: Flow<List<String>>
     val startedChallenges: Flow<List<SimpleStartedChallenge>>
@@ -42,7 +42,8 @@ interface ChallengeRepository {
     suspend fun deleteStartedChallenge(challengeId: String): NetworkResult<Unit>
     suspend fun getStartedChallengeDetail(challengeId: String): Flow<NetworkResult<DetailedStartedChallenge>>
     suspend fun getResetRecords(challengeId: String): NetworkResult<List<ResetRecord>>
-    suspend fun setCurrentTier(tier: Tier)
+    suspend fun getRemoteTier(): NetworkResult<Tier>
+    suspend fun setLocalTier(tier: Tier)
     suspend fun setSortOrder(order: SortOrder)
     suspend fun clearRecentCompletedChallenges()
     suspend fun syncChallenges(): NetworkResult<List<String>>

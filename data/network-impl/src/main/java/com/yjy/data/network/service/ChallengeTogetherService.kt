@@ -13,6 +13,7 @@ import com.yjy.data.network.request.VerifyRequest
 import com.yjy.data.network.response.AddChallengeResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetNameResponse
+import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
 import com.yjy.data.network.response.GetUnViewedNotificationCountResponse
@@ -24,6 +25,9 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 internal interface ChallengeTogetherService {
+
+    @GET("time")
+    suspend fun getTime(): NetworkResult<Unit>
 
     @POST("auth/login/email")
     suspend fun emailLogin(
@@ -86,6 +90,9 @@ internal interface ChallengeTogetherService {
         @Query("challengeId") challengeId: String,
         @Query("targetDays") targetDays: String,
     ): NetworkResult<Unit>
+
+    @GET("service/challenge/get/records")
+    suspend fun getRecords(): NetworkResult<GetRecordsResponse>
 
     @GET("service/challenge/get/all")
     suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse>

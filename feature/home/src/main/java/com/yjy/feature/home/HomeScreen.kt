@@ -31,7 +31,6 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,10 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.component.BaseBottomSheet
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
@@ -80,15 +76,16 @@ import com.yjy.common.ui.WaitingChallengeCard
 import com.yjy.feature.home.model.ChallengeSyncUiState
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiState
+import com.yjy.feature.home.model.TierUiState
 import com.yjy.feature.home.model.TierUpAnimationState
+import com.yjy.feature.home.model.TimeSyncUiState
 import com.yjy.feature.home.model.UnViewedNotificationUiState
 import com.yjy.feature.home.model.UserNameUiState
 import com.yjy.feature.home.model.getNameOrDefault
+import com.yjy.feature.home.model.getTierOrDefault
 import com.yjy.feature.home.model.hasNewNotification
 import com.yjy.feature.home.model.isError
-import com.yjy.feature.home.model.isInitialLoading
 import com.yjy.feature.home.model.isLoading
-import com.yjy.feature.home.model.isTimeSyncLoading
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.SimpleWaitingChallenge
 import com.yjy.model.challenge.core.Category
@@ -102,10 +99,11 @@ internal fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val currentTier by viewModel.currentTier.collectAsStateWithLifecycle()
     val sortOrder by viewModel.sortOrder.collectAsStateWithLifecycle()
+    val tierUiState by viewModel.tierState.collectAsStateWithLifecycle()
     val userNameUiState by viewModel.userName.collectAsStateWithLifecycle()
     val unViewedNotificationUiState by viewModel.unViewedNotificationState.collectAsStateWithLifecycle()
+    val timeSyncUiState by viewModel.timeSyncState.collectAsStateWithLifecycle()
     val challengeSyncUiState by viewModel.challengeSyncState.collectAsStateWithLifecycle()
     val startedChallenges by viewModel.startedChallenges.collectAsStateWithLifecycle()
     val waitingChallenges by viewModel.waitingChallenges.collectAsStateWithLifecycle()
@@ -113,10 +111,11 @@ internal fun HomeRoute(
 
     HomeScreen(
         modifier = modifier,
-        currentTier = currentTier,
+        tierUiState = tierUiState,
         sortOrder = sortOrder,
         userNameUiState = userNameUiState,
         unViewedNotificationUiState = unViewedNotificationUiState,
+        timeSyncUiState = timeSyncUiState,
         challengeSyncUiState = challengeSyncUiState,
         startedChallenges = startedChallenges,
         waitingChallenges = waitingChallenges,
@@ -130,10 +129,11 @@ internal fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
-    currentTier: Tier = Tier.IRON,
     sortOrder: SortOrder = SortOrder.LATEST,
+    tierUiState: TierUiState = TierUiState.Success(Tier.IRON),
     userNameUiState: UserNameUiState = UserNameUiState.Success(""),
     unViewedNotificationUiState: UnViewedNotificationUiState = UnViewedNotificationUiState.Success(0),
+    timeSyncUiState: TimeSyncUiState = TimeSyncUiState.Success,
     challengeSyncUiState: ChallengeSyncUiState = ChallengeSyncUiState.Success,
     startedChallenges: List<SimpleStartedChallenge> = emptyList(),
     waitingChallenges: List<SimpleWaitingChallenge> = emptyList(),
@@ -144,31 +144,27 @@ internal fun HomeScreen(
 ) {
     var shouldShowSortOrderBottomSheet by remember { mutableStateOf(false) }
 
-    val hasError = userNameUiState.isError() ||
+    val hasError = tierUiState.isError() ||
+        userNameUiState.isError() ||
         unViewedNotificationUiState.isError() ||
+        timeSyncUiState.isError() ||
         challengeSyncUiState.isError()
 
-    val isLoading = userNameUiState.isLoading() ||
+    val isLoading = tierUiState.isLoading() ||
+        userNameUiState.isLoading() ||
         unViewedNotificationUiState.isLoading() ||
-        challengeSyncUiState.isInitialLoading() ||
-        challengeSyncUiState.isTimeSyncLoading()
+        timeSyncUiState.isLoading() ||
+        challengeSyncUiState.isLoading()
 
     val homeContents = HomeContents(
         userName = userNameUiState.getNameOrDefault(),
-        currentTier = currentTier,
+        currentTier = tierUiState.getTierOrDefault(),
         startedChallenges = startedChallenges,
         waitingChallenges = waitingChallenges,
         selectedCategory = uiState.selectedCategory,
         categories = uiState.categories,
         sortOrder = sortOrder,
     )
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(lifecycleOwner.lifecycle) {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            processAction(HomeUiAction.OnScreenLoad)
-        }
-    }
 
     HandleHomeDialogs(
         tierUpAnimation = uiState.tierUpAnimation,

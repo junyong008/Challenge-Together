@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     val timeDiff: Flow<Long>
+    suspend fun syncTime(): NetworkResult<Unit>
     suspend fun getUserName(): NetworkResult<String>
     suspend fun getUnViewedNotificationCount(): NetworkResult<Int>
     suspend fun registerFcmToken()

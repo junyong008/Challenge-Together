@@ -6,6 +6,7 @@ import com.yjy.data.network.response.GetNameResponse
 import com.yjy.data.network.response.GetUnViewedNotificationCountResponse
 
 interface UserDataSource {
+    suspend fun syncTime(): NetworkResult<Unit>
     suspend fun getUserName(): NetworkResult<GetNameResponse>
     suspend fun getUnViewedNotificationCount(): NetworkResult<GetUnViewedNotificationCountResponse>
     suspend fun registerFirebaseToken(request: RegisterFirebaseTokenRequest): NetworkResult<Unit>

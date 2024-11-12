@@ -47,7 +47,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
 
     override val timeChangedFlow: Flow<Unit> = timeManager.timeChangedFlow
 
-    override val currentTier: Flow<Tier> =
+    override val localTier: Flow<Tier> =
         challengePreferencesDataSource.currentTier.map { it.toModel() }
 
     override val sortOrder: Flow<SortOrder> =
@@ -59,7 +59,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
     override val startedChallenges: Flow<List<SimpleStartedChallenge>> = challenges
         .map { entities ->
             entities
-                .filter { it.isStarted }
+                .filter { it.isStarted && !it.isCompleted }
                 .map { it.toSimpleStartedChallengeModel() }
         }
         .combine(tickerFlow) { challenges, currentTime ->
@@ -186,7 +186,12 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),
     )
 
-    override suspend fun setCurrentTier(tier: Tier) =
+    override suspend fun getRemoteTier(): NetworkResult<Tier> =
+        challengeDataSource.getRecords().map {
+            Tier.getCurrentTier(it.recordInSeconds)
+        }
+
+    override suspend fun setLocalTier(tier: Tier) =
         challengePreferencesDataSource.setCurrentTier(tier.toProto())
 
     override suspend fun setSortOrder(order: SortOrder) =

@@ -6,6 +6,7 @@ import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.data.network.response.AddChallengeResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
+import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
 import com.yjy.data.network.service.ChallengeTogetherService
@@ -34,6 +35,9 @@ internal class ChallengeDataSourceImpl @Inject constructor(
 
     override suspend fun editChallengeTargetDays(challengeId: String, targetDays: String): NetworkResult<Unit> =
         challengeTogetherService.editChallengeGoal(challengeId, targetDays)
+
+    override suspend fun getRecords(): NetworkResult<GetRecordsResponse> =
+        challengeTogetherService.getRecords()
 
     override suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse> =
         challengeTogetherService.getMyChallenges()

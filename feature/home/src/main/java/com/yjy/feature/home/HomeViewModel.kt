@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.core.extensions.restartableStateIn
+import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengeRepository
@@ -12,11 +13,13 @@ import com.yjy.domain.GetStartedChallengesUseCase
 import com.yjy.feature.home.model.ChallengeSyncUiState
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiState
+import com.yjy.feature.home.model.TierUiState
 import com.yjy.feature.home.model.TierUpAnimationState
+import com.yjy.feature.home.model.TimeSyncUiState
 import com.yjy.feature.home.model.UnViewedNotificationUiState
 import com.yjy.feature.home.model.UserNameUiState
+import com.yjy.feature.home.model.getTierOrDefault
 import com.yjy.feature.home.model.isError
-import com.yjy.feature.home.model.isLoading
 import com.yjy.feature.home.model.isSuccess
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.Category
@@ -25,6 +28,7 @@ import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.challenge.core.TargetDays
 import com.yjy.model.common.Tier
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,14 +37,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,60 +52,63 @@ class HomeViewModel @Inject constructor(
     private val challengeRepository: ChallengeRepository,
 ) : ViewModel() {
 
-    // 일괄적으로 로딩 없이 데이터를 최신화 하기 위한 트리거
-    private val syncTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
-    private val userNameTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
-    private val notificationTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    private val tierTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    private val timeSyncTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    private val challengeSyncTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
-    // 동기화 간 자연스러운 전환을 위한 리스트 캐시
+    private var remoteTier: Tier = Tier.UNSPECIFIED
     private var lastProcessedChallenges: List<SimpleStartedChallenge> = emptyList()
 
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
-    val challengeSyncState = merge(
-        syncTrigger.map { SyncTrigger.Manual },
-        challengeRepository.timeChangedFlow.map { SyncTrigger.TimeChanged },
-    ).onStart {
-        emit(SyncTrigger.Initial)
-    }.onEach {
-        Timber.d("syncChallenges triggered by: $it")
-    }.flatMapLatest { trigger ->
+    val timeSyncState = merge(
+        challengeRepository.timeChangedFlow,
+        timeSyncTrigger,
+    ).flatMapLatest {
         flow {
-            when (trigger) {
-                SyncTrigger.Initial -> ChallengeSyncUiState.Loading.Initial
-                SyncTrigger.Manual -> ChallengeSyncUiState.Loading.Manual
-                SyncTrigger.TimeChanged -> ChallengeSyncUiState.Loading.TimeSync
-            }.let { emit(it) }
-
-            challengeRepository.syncChallenges()
-                .onSuccess { emit(ChallengeSyncUiState.Success) }
-                .onFailure { emit(ChallengeSyncUiState.Error) }
+            emit(TimeSyncUiState.Loading)
+            userRepository.syncTime()
+                .onSuccess { emit(TimeSyncUiState.Success) }
+                .onFailure { emit(TimeSyncUiState.Error) }
         }
-    }.restartableStateIn(
+    }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.Lazily,
-        initialValue = ChallengeSyncUiState.Loading.Initial,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = TimeSyncUiState.Success,
     )
+
+    val challengeSyncState = challengeSyncTrigger
+        .onStart { emit(Unit) }
+        .flatMapLatest {
+            flow {
+                challengeRepository.syncChallenges()
+                    .onSuccess { emit(ChallengeSyncUiState.Success) }
+                    .onFailure { emit(ChallengeSyncUiState.Error) }
+            }
+        }
+        .restartableStateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = ChallengeSyncUiState.Loading,
+        )
 
     val startedChallenges = combine(
         getStartedChallengesUseCase(),
         challengeSyncState,
-    ) { challenges, syncState ->
-        when (syncState) {
-            ChallengeSyncUiState.Success -> challenges
-            else -> lastProcessedChallenges
+        timeSyncState,
+    ) { challenges, challengeSyncState, timeSyncState ->
+        if (challengeSyncState.isSuccess() && timeSyncState.isSuccess()) {
+            challenges
+        } else {
+            lastProcessedChallenges
         }
     }.onEach { challenges ->
-        updateTier(challenges)
+        handleStartedChallenges(challenges)
         lastProcessedChallenges = challenges
-    }.map { challenges ->
-        challenges.filterNot { it.isCompleted }
-    }.onEach { unCompletedChallenges ->
-        handleStartedChallenges(unCompletedChallenges)
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
+        started = SharingStarted.WhileSubscribed(),
         initialValue = emptyList(),
     )
 
@@ -121,13 +126,6 @@ class HomeViewModel @Inject constructor(
             initialValue = emptyList(),
         )
 
-    val currentTier = challengeRepository.currentTier
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = Tier.UNSPECIFIED,
-        )
-
     val sortOrder = challengeRepository.sortOrder
         .stateIn(
             scope = viewModelScope,
@@ -135,46 +133,84 @@ class HomeViewModel @Inject constructor(
             initialValue = SortOrder.LATEST,
         )
 
-    val userName = userNameTrigger
+    val userName = flow {
+        userRepository.getUserName()
+            .onSuccess { emit(UserNameUiState.Success(it)) }
+            .onFailure { emit(UserNameUiState.Error) }
+    }.restartableStateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = UserNameUiState.Loading,
+    )
+
+    val unViewedNotificationState = flow {
+        userRepository.getUnViewedNotificationCount()
+            .onSuccess { emit(UnViewedNotificationUiState.Success(it)) }
+            .onFailure { emit(UnViewedNotificationUiState.Error) }
+    }.restartableStateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = UnViewedNotificationUiState.Loading,
+    )
+
+    val tierState = tierTrigger
         .onStart { emit(Unit) }
         .flatMapLatest {
-            flow {
-                userRepository.getUserName()
-                    .onSuccess { emit(UserNameUiState.Success(it)) }
-                    .onFailure { emit(UserNameUiState.Error) }
+            combine(
+                flow { emit(challengeRepository.getRemoteTier()) },
+                challengeRepository.localTier,
+            ) { remoteResult, localTier ->
+                when (remoteResult) {
+                    is NetworkResult.Success -> {
+                        remoteTier = remoteResult.data
+                        handleTier(new = remoteResult.data, old = localTier)
+                        TierUiState.Success(localTier)
+                    }
+
+                    is NetworkResult.Failure -> TierUiState.Error
+                }
             }
         }
         .restartableStateIn(
             scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = UserNameUiState.Loading,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = TierUiState.Loading,
         )
 
-    val unViewedNotificationState = notificationTrigger
-        .onStart { emit(Unit) }
-        .flatMapLatest {
-            flow {
-                userRepository.getUnViewedNotificationCount()
-                    .onSuccess { emit(UnViewedNotificationUiState.Success(it)) }
-                    .onFailure { emit(UnViewedNotificationUiState.Error) }
-            }
+    private suspend fun handleTier(old: Tier, new: Tier) {
+        if (old == Tier.UNSPECIFIED || old > new) {
+            challengeRepository.setLocalTier(new)
+        } else if (new > old) {
+            val animation = TierUpAnimationState(from = old, to = Tier.getNextTier(old))
+            _uiState.update { it.copy(tierUpAnimation = animation) }
         }
-        .restartableStateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = UnViewedNotificationUiState.Loading,
-        )
+    }
 
     private fun handleStartedChallenges(challenges: List<SimpleStartedChallenge>) {
-        updateTierProgress(challenges)
+        checkTierPromotion(challenges)
         checkNewlyCompletedChallenges(challenges)
+        updateTierProgress(challenges)
         updateCurrentBestRecord(challenges)
         updateCategoryList(challenges)
     }
 
+    private fun checkTierPromotion(challenges: List<SimpleStartedChallenge>) {
+        if (uiState.value.tierUpAnimation != null || !tierState.value.isSuccess()) return
+        val currentTierBestRecord = challenges
+            .filter { it.mode == Mode.CHALLENGE }
+            .getBestRecord()
+
+        val calculatedTier = Tier.getCurrentTier(currentTierBestRecord)
+
+        // 서버에서 받아온 현재 티어보다 높으면 서버로부터 티어 정보를 다시 받아온다
+        if (remoteTier != Tier.UNSPECIFIED && calculatedTier > remoteTier) {
+            tierTrigger.tryEmit(Unit)
+        }
+    }
+
     private fun checkNewlyCompletedChallenges(challenges: List<SimpleStartedChallenge>) {
         if (challenges.any { it.isCompleted() }) {
-            syncTrigger.tryEmit(Unit)
+            challengeSyncTrigger.tryEmit(Unit)
         }
     }
 
@@ -185,30 +221,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun updateTier(challenges: List<SimpleStartedChallenge>) {
-        if (uiState.value.tierUpAnimation != null || challengeSyncState.value.isLoading()) return
-        val currentTierBestRecord = challenges
-            .filter { it.mode == Mode.CHALLENGE }
-            .getBestRecord()
-
-        val calculatedTier = Tier.getCurrentTier(currentTierBestRecord)
-        val savedTier = currentTier.value
-
-        if (savedTier == Tier.UNSPECIFIED || calculatedTier < savedTier) {
-            challengeRepository.setCurrentTier(calculatedTier)
-        } else if (calculatedTier > savedTier) {
-            val animation = TierUpAnimationState(from = savedTier, to = Tier.getNextTier(savedTier))
-            _uiState.update { it.copy(tierUpAnimation = animation) }
-        }
-    }
-
     private fun updateTierProgress(challenges: List<SimpleStartedChallenge>) {
         val currentTierBestRecord = challenges
             .filter { it.mode == Mode.CHALLENGE }
             .getBestRecord()
 
         val tierProgress = Tier.getTierProgress(
-            currentTier = currentTier.value,
+            currentTier = tierState.value.getTierOrDefault(),
             recordInSeconds = currentTierBestRecord,
         )
 
@@ -245,7 +264,6 @@ class HomeViewModel @Inject constructor(
 
     fun processAction(action: HomeUiAction) {
         when (action) {
-            HomeUiAction.OnScreenLoad -> updateData()
             HomeUiAction.OnRetryClick -> retryOnError()
             HomeUiAction.OnCloseCompletedChallengeNotification -> clearRecentCompletedChallenges()
             HomeUiAction.OnDismissTierUpAnimation -> dismissTierUpAnimation()
@@ -254,16 +272,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun updateData() {
-        if (challengeSyncState.value.isSuccess()) syncTrigger.tryEmit(Unit)
-        if (unViewedNotificationState.value.isSuccess()) notificationTrigger.tryEmit(Unit)
-        if (userName.value.isSuccess()) userNameTrigger.tryEmit(Unit)
-    }
-
     private fun retryOnError() {
+        if (timeSyncState.value.isError()) timeSyncTrigger.tryEmit(Unit)
         if (challengeSyncState.value.isError()) challengeSyncState.restart()
-        if (unViewedNotificationState.value.isError()) unViewedNotificationState.restart()
+        if (tierState.value.isError()) tierState.restart()
         if (userName.value.isError()) userName.restart()
+        if (unViewedNotificationState.value.isError()) unViewedNotificationState.restart()
     }
 
     private fun clearRecentCompletedChallenges() = viewModelScope.launch {
@@ -273,8 +287,9 @@ class HomeViewModel @Inject constructor(
     private fun dismissTierUpAnimation() = viewModelScope.launch {
         val animation = uiState.value.tierUpAnimation ?: return@launch
 
-        challengeRepository.setCurrentTier(animation.to)
         _uiState.update { it.copy(tierUpAnimation = null) }
+        delay(TIER_UP_ANIMATION_CLOSE_DELAY) // 연속적인 승급시 중간 상태값(null)이 간혈적으로 씹히는 이슈
+        challengeRepository.setLocalTier(animation.to)
     }
 
     private fun updateSelectedCategory(category: Category) {
@@ -284,10 +299,8 @@ class HomeViewModel @Inject constructor(
     private fun updateSortOrder(sortOrder: SortOrder) = viewModelScope.launch {
         challengeRepository.setSortOrder(sortOrder)
     }
-}
 
-private sealed interface SyncTrigger {
-    data object Initial : SyncTrigger
-    data object Manual : SyncTrigger
-    data object TimeChanged : SyncTrigger
+    companion object {
+        private const val TIER_UP_ANIMATION_CLOSE_DELAY = 100L
+    }
 }

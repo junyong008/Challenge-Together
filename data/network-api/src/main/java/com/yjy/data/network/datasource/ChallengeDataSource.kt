@@ -6,6 +6,7 @@ import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.data.network.response.AddChallengeResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
+import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
 
@@ -16,6 +17,7 @@ interface ChallengeDataSource {
     suspend fun editChallengeCategory(challengeId: String, category: String): NetworkResult<Unit>
     suspend fun editChallengeTitleDescription(request: EditChallengeTitleDescriptionRequest): NetworkResult<Unit>
     suspend fun editChallengeTargetDays(challengeId: String, targetDays: String): NetworkResult<Unit>
+    suspend fun getRecords(): NetworkResult<GetRecordsResponse>
     suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse>
     suspend fun getStartedChallengeDetail(
         challengeId: String,

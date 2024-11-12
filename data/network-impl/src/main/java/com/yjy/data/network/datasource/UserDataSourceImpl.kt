@@ -11,6 +11,8 @@ internal class UserDataSourceImpl @Inject constructor(
     private val challengeTogetherService: ChallengeTogetherService,
 ) : UserDataSource {
 
+    override suspend fun syncTime(): NetworkResult<Unit> = challengeTogetherService.getTime()
+
     override suspend fun getUserName(): NetworkResult<GetNameResponse> =
         challengeTogetherService.getUserName()
 
