@@ -48,14 +48,14 @@ class StartedChallengeViewModelTest {
     private lateinit var savedStateHandle: SavedStateHandle
 
     private val timeChangedFlow = MutableSharedFlow<Unit>()
-    private val testChallengeId = "test-challenge-id"
+    private val testChallengeId = 123
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
 
         savedStateHandle = mockk<SavedStateHandle>()
-        every { savedStateHandle.getStateFlow<String?>(STARTED_CHALLENGE_ID, null) } returns
+        every { savedStateHandle.getStateFlow<Int?>(STARTED_CHALLENGE_ID, null) } returns
             MutableStateFlow(testChallengeId)
 
         challengeRepository = mockk(relaxed = true)

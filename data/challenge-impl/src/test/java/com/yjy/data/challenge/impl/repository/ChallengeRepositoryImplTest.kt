@@ -13,7 +13,6 @@ import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.challenge.core.TargetDays
-import com.yjy.model.common.Tier
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -72,7 +71,7 @@ class ChallengeRepositoryImplTest {
     }
 
     private fun createChallengeEntity(
-        id: String = "1",
+        id: Int = 1,
         title: String = "Test Challenge",
         isStarted: Boolean = true,
         resetDateTime: LocalDateTime = LocalDateTime.now().minusDays(3),
@@ -95,7 +94,7 @@ class ChallengeRepositoryImplTest {
     fun `startedChallenges should filter and map challenges correctly`() = runTest {
         // Given
         val now = LocalDateTime.of(2024, 1, 1, 12, 0)
-        val challengeEntity = createChallengeEntity(id = "1", resetDateTime = now.minusDays(5))
+        val challengeEntity = createChallengeEntity(id = 1, resetDateTime = now.minusDays(5))
         challengesFlow.emit(listOf(challengeEntity))
 
         var startedChallenges: List<SimpleStartedChallenge>? = null
@@ -109,7 +108,7 @@ class ChallengeRepositoryImplTest {
         advanceUntilIdle()
         assertNotNull(startedChallenges)
         assertEquals(1, startedChallenges?.size)
-        assertEquals("1", startedChallenges?.first()?.id)
+        assertEquals(1, startedChallenges?.first()?.id)
 
         job.cancel()
     }
@@ -118,12 +117,12 @@ class ChallengeRepositoryImplTest {
     fun `sortOrder should apply correct sorting order`() = runTest {
         // Given
         val challenge1 = createChallengeEntity(
-            id = "1",
+            id = 1,
             title = "Z Challenge",
             resetDateTime = LocalDateTime.now().minusDays(3),
         )
         val challenge2 = createChallengeEntity(
-            id = "2",
+            id = 2,
             title = "X Challenge",
             resetDateTime = LocalDateTime.now().minusDays(10),
         )
@@ -138,17 +137,17 @@ class ChallengeRepositoryImplTest {
         }
 
         advanceUntilIdle()
-        assertEquals(listOf("2", "1"), startedChallenges?.map { it.id })
+        assertEquals(listOf(2, 1), startedChallenges?.map { it.id })
 
         // Then: 과거 순으로 정렬
         sortOrderFlow.emit(SortOrder.OLDEST.toProto())
         advanceUntilIdle()
-        assertEquals(listOf("1", "2"), startedChallenges?.map { it.id })
+        assertEquals(listOf(1, 2), startedChallenges?.map { it.id })
 
         // Then: 제목 순으로 정렬
         sortOrderFlow.emit(SortOrder.TITLE.toProto())
         advanceUntilIdle()
-        assertEquals(listOf("2", "1"), startedChallenges?.map { it.id })
+        assertEquals(listOf(2, 1), startedChallenges?.map { it.id })
 
         job.cancel()
     }
@@ -183,7 +182,7 @@ class ChallengeRepositoryImplTest {
         val startDateTime = LocalDateTime.of(2023, 10, 13, 10, 0)
         val maxParticipants = 10
         val roomPassword = "password123"
-        val expectedChallengeId = "777"
+        val expectedChallengeId = 777
 
         coEvery {
             challengeDataSource.addChallenge(
@@ -226,18 +225,6 @@ class ChallengeRepositoryImplTest {
         }
 
         assertEquals(NetworkResult.Success(expectedChallengeId), result)
-    }
-
-    @Test
-    fun `setCurrentTier should call ChallengePreferencesDataSource with correct tier`() = runTest {
-        // Given
-        val tier = Tier.BRONZE
-
-        // When
-        challengeRepository.setCurrentTier(tier)
-
-        // Then
-        coVerify { challengePreferencesDataSource.setCurrentTier(tier.toProto()) }
     }
 
     @Test

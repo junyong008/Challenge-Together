@@ -35,7 +35,7 @@ class SignUpViewModelTest {
 
         viewModel = SignUpViewModel(
             authRepository = authRepository,
-            saveStateHandle = mockk(relaxed = true),
+            mockk(relaxed = true),
         )
     }
 

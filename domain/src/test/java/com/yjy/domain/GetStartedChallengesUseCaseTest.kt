@@ -41,7 +41,7 @@ class GetStartedChallengesUseCaseTest {
 
         val startedChallenges = listOf(
             SimpleStartedChallenge(
-                id = "1",
+                id = 1,
                 title = "Challenge 1",
                 description = "A test challenge",
                 category = Category.QUIT_SMOKING,
@@ -52,7 +52,7 @@ class GetStartedChallengesUseCaseTest {
                 isCompleted = false,
             ),
             SimpleStartedChallenge(
-                id = "2",
+                id = 2,
                 title = "Challenge 2",
                 description = "Another test challenge",
                 category = Category.QUIT_DRINKING,

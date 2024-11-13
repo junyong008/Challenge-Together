@@ -101,7 +101,7 @@ class HomeViewModelTest {
     }
 
     private fun createTestChallenge(
-        id: String = "1",
+        id: Int = 1,
         title: String = "Test Challenge",
         recordInDays: Long = 1,
         isCompleted: Boolean = false,
@@ -185,8 +185,8 @@ class HomeViewModelTest {
         // Given
         var challenges: List<SimpleStartedChallenge>? = null
         var syncState: ChallengeSyncUiState? = null
-        val initialChallenge = createTestChallenge(id = "1", title = "Initial Challenge")
-        val newChallenge = initialChallenge.copy(id = "2", title = "New Challenge")
+        val initialChallenge = createTestChallenge(id = 1, title = "Initial Challenge")
+        val newChallenge = initialChallenge.copy(id = 2, title = "New Challenge")
 
         coEvery { challengeRepository.syncChallenges() } coAnswers {
             delay(SYNC_DELAY)
@@ -295,7 +295,7 @@ class HomeViewModelTest {
         }
 
         val initialChallenge = createTestChallenge(
-            id = "1",
+            id = 1,
             recordInDays = 29, // 목표 일수 바로 아래
             isCompleted = false,
         )
@@ -346,7 +346,7 @@ class HomeViewModelTest {
 
         // When: 현재 챌린지들로 계산된 티어가 리모트 티어보다 높을 때
         val highTierChallenge = createTestChallenge(
-            id = "1",
+            id = 1,
             recordInDays = Tier.SILVER.requireSeconds / SECONDS_PER_DAY, // SILVER 티어에 해당하는 일수
             isCompleted = false,
         )

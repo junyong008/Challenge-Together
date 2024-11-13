@@ -39,67 +39,6 @@ class ChangePasswordViewModelTest {
     }
 
     @Test
-    fun `showExitConfirmDialog should update state to show exit confirm dialog`() = runTest {
-        // When
-        viewModel.processAction(ChangePasswordUiAction.OnBackClick)
-
-        // Then
-        val state = viewModel.uiState.first()
-        assertEquals(expected = true, actual = state.shouldShowExitConfirmDialog)
-    }
-
-    @Test
-    fun `dismissExitConfirmDialog should update state to hide exit confirm dialog`() = runTest {
-        // Given
-        viewModel.processAction(ChangePasswordUiAction.OnBackClick)
-
-        // When
-        viewModel.processAction(ChangePasswordUiAction.OnCancelExit)
-
-        // Then
-        val state = viewModel.uiState.first()
-        assertEquals(expected = false, actual = state.shouldShowExitConfirmDialog)
-    }
-
-    @Test
-    fun `confirmExit should send CancelChangePassword event and dismiss exit confirm dialog`() = runTest {
-        // Given
-        viewModel.processAction(ChangePasswordUiAction.OnBackClick)
-
-        // When
-        viewModel.processAction(ChangePasswordUiAction.OnConfirmExit)
-
-        // Then
-        val event = viewModel.uiEvent.first()
-        assertEquals(expected = ChangePasswordUiEvent.CancelChangePassword, actual = event)
-        val state = viewModel.uiState.first()
-        assertEquals(expected = false, actual = state.shouldShowExitConfirmDialog)
-    }
-
-    @Test
-    fun `showChangeConfirmDialog should update state to show change confirm dialog`() = runTest {
-        // When
-        viewModel.processAction(ChangePasswordUiAction.OnChangeClick)
-
-        // Then
-        val state = viewModel.uiState.first()
-        assertEquals(expected = true, actual = state.shouldShowChangeConfirmDialog)
-    }
-
-    @Test
-    fun `dismissChangeConfirmDialog should update state to hide change confirm dialog`() = runTest {
-        // Given
-        viewModel.processAction(ChangePasswordUiAction.OnChangeClick)
-
-        // When
-        viewModel.processAction(ChangePasswordUiAction.OnCancelChange)
-
-        // Then
-        val state = viewModel.uiState.first()
-        assertEquals(expected = false, actual = state.shouldShowChangeConfirmDialog)
-    }
-
-    @Test
     fun `changePassword should send ChangeSuccess event on success`() = runTest {
         // Given
         val password = "Password123"

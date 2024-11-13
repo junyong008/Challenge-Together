@@ -66,7 +66,7 @@ class AddChallengeViewModelTest {
         val description = "A challenge to quit smoking"
         val targetDays = TargetDays.Fixed(30)
         val startDateTime = LocalDateTime.now()
-        val challengeId = "777"
+        val challengeId = 777
 
         coEvery {
             challengeRepository.addChallenge(
@@ -80,7 +80,7 @@ class AddChallengeViewModelTest {
 
         // When
         viewModel.processAction(
-            AddChallengeUiAction.OnConfirmStartChallenge(
+            AddChallengeUiAction.OnStartChallenge(
                 mode = mode,
                 category = category,
                 title = title,
@@ -102,11 +102,11 @@ class AddChallengeViewModelTest {
             )
         }
         val event = viewModel.uiEvent.first()
-        assertEquals(expected = AddChallengeUiEvent.ChallengeAdded(challengeId), actual = event)
+        assertEquals(expected = AddChallengeUiEvent.ChallengeStarted(challengeId), actual = event)
     }
 
     @Test
-    fun `startChallenge should call addChallenge in repository and send ChallengeAdded event`() = runTest {
+    fun `startChallenge should call addChallenge in repository and send ChallengeStarted event`() = runTest {
         // Given
         val mode = Mode.CHALLENGE
         val category = Category.QUIT_SMOKING
@@ -114,7 +114,7 @@ class AddChallengeViewModelTest {
         val description = "A challenge to quit smoking"
         val targetDays = TargetDays.Fixed(30)
         val startDateTime = LocalDateTime.now()
-        val challengeId = "777"
+        val challengeId = 777
 
         coEvery {
             challengeRepository.addChallenge(
@@ -128,7 +128,7 @@ class AddChallengeViewModelTest {
 
         // When
         viewModel.processAction(
-            AddChallengeUiAction.OnConfirmStartChallenge(
+            AddChallengeUiAction.OnStartChallenge(
                 mode = mode,
                 category = category,
                 title = title,
@@ -150,11 +150,11 @@ class AddChallengeViewModelTest {
             )
         }
         val event = viewModel.uiEvent.first()
-        assertEquals(expected = AddChallengeUiEvent.ChallengeAdded(challengeId), actual = event)
+        assertEquals(expected = AddChallengeUiEvent.ChallengeStarted(challengeId), actual = event)
     }
 
     @Test
-    fun `createWaitingRoom should call addChallenge in repository and send ChallengeAdded event`() = runTest {
+    fun `createWaitingRoom should call addChallenge in repository and send WaitingChallengeCreated event`() = runTest {
         // Given
         val category = Category.QUIT_SMOKING
         val title = "Quit Smoking"
@@ -162,7 +162,7 @@ class AddChallengeViewModelTest {
         val targetDays = TargetDays.Fixed(30)
         val maxParticipants = 5
         val roomPassword = "password123"
-        val challengeId = "challenge_123"
+        val challengeId = 123
 
         coEvery {
             challengeRepository.addChallenge(
@@ -177,7 +177,7 @@ class AddChallengeViewModelTest {
 
         // When
         viewModel.processAction(
-            AddChallengeUiAction.OnConfirmCreateWaitingRoom(
+            AddChallengeUiAction.OnCreateWaitingRoom(
                 category = category,
                 title = title,
                 description = description,
@@ -201,7 +201,7 @@ class AddChallengeViewModelTest {
             )
         }
         val event = viewModel.uiEvent.first()
-        assertEquals(expected = AddChallengeUiEvent.ChallengeAdded(challengeId), actual = event)
+        assertEquals(expected = AddChallengeUiEvent.WaitingChallengeCreated(challengeId), actual = event)
     }
 
     @Test
@@ -249,7 +249,7 @@ class AddChallengeViewModelTest {
         // Then
         val state = viewModel.uiState.first()
         val event = viewModel.uiEvent.first()
-        assertEquals(LocalDateTime.now().withNano(0), state.startDateTime?.withNano(0))
+        assertEquals(LocalDateTime.now().withNano(0), state.startDateTime.withNano(0))
         assertEquals(AddChallengeUiEvent.StartDateTimeOutOfRange, event)
     }
 }
