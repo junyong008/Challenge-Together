@@ -97,7 +97,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         startDateTime: LocalDateTime?,
         maxParticipants: Int,
         roomPassword: String,
-    ): NetworkResult<String> {
+    ): NetworkResult<Int> {
         return challengeDataSource.addChallenge(
             AddChallengeRequest(
                 category = category.toRequestString(),
@@ -112,7 +112,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun editChallengeTitleDescription(
-        challengeId: String,
+        challengeId: Int,
         title: String,
         description: String,
     ): NetworkResult<Unit> {
@@ -126,7 +126,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun editChallengeCategory(
-        challengeId: String,
+        challengeId: Int,
         category: Category,
     ): NetworkResult<Unit> {
         return challengeDataSource.editChallengeCategory(
@@ -136,7 +136,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun editChallengeTargetDays(
-        challengeId: String,
+        challengeId: Int,
         targetDays: TargetDays,
     ): NetworkResult<Unit> {
         return challengeDataSource.editChallengeTargetDays(
@@ -145,7 +145,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun resetStartedChallenge(challengeId: String, memo: String): NetworkResult<Unit> {
+    override suspend fun resetStartedChallenge(challengeId: Int, memo: String): NetworkResult<Unit> {
         return challengeDataSource.resetStartedChallenge(
             ResetChallengeRequest(
                 challengeId = challengeId,
@@ -154,11 +154,11 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun deleteStartedChallenge(challengeId: String): NetworkResult<Unit> =
+    override suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit> =
         challengeDataSource.deleteStartedChallenge(challengeId)
 
     override suspend fun getStartedChallengeDetail(
-        challengeId: String,
+        challengeId: Int,
     ): Flow<NetworkResult<DetailedStartedChallenge>> = when (
         val response = challengeDataSource.getStartedChallengeDetail(challengeId)
     ) {
@@ -177,7 +177,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         is NetworkResult.Failure -> flowOf(response)
     }
 
-    override suspend fun getResetRecords(challengeId: String): NetworkResult<List<ResetRecord>> =
+    override suspend fun getResetRecords(challengeId: Int): NetworkResult<List<ResetRecord>> =
         challengeDataSource.getResetRecords(challengeId).map { response ->
             response.map { it.toModel() }
         }

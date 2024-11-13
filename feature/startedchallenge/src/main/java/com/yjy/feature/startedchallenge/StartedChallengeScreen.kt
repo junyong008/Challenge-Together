@@ -99,10 +99,10 @@ import com.yjy.common.designsystem.R as designSystemR
 @Composable
 internal fun StartedChallengeRoute(
     onBackClick: () -> Unit,
-    onEditCategoryClick: (String, Category) -> Unit,
-    onEditTitleClick: (String, String, String) -> Unit,
-    onEditTargetDaysClick: (String, String, Int) -> Unit,
-    onResetRecordClick: (String) -> Unit,
+    onEditCategoryClick: (Int, Category) -> Unit,
+    onEditTitleClick: (Int, String, String) -> Unit,
+    onEditTargetDaysClick: (Int, String, Int) -> Unit,
+    onResetRecordClick: (Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StartedChallengeViewModel = hiltViewModel(),
@@ -133,10 +133,10 @@ internal fun StartedChallengeScreen(
     uiEvent: Flow<StartedChallengeUiEvent> = flowOf(),
     processAction: (StartedChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
-    onEditCategoryClick: (String, Category) -> Unit = { _, _ -> },
-    onEditTitleClick: (String, String, String) -> Unit = { _, _, _ -> },
-    onEditTargetDaysClick: (String, String, Int) -> Unit = { _, _, _ -> },
-    onResetRecordClick: (String) -> Unit = {},
+    onEditCategoryClick: (Int, Category) -> Unit = { _, _ -> },
+    onEditTitleClick: (Int, String, String) -> Unit = { _, _, _ -> },
+    onEditTargetDaysClick: (Int, String, Int) -> Unit = { _, _, _ -> },
+    onResetRecordClick: (Int) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     var shouldShowResetBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -1024,7 +1024,7 @@ fun StartedChallengeScreenPreview() {
                 modifier = Modifier.fillMaxSize(),
                 challengeDetail = ChallengeDetailUiState.Success(
                     DetailedStartedChallenge(
-                        id = "1",
+                        id = 1,
                         title = "Challenge Title",
                         description = "Description",
                         category = Category.QUIT_DRUGS,

@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AddChallengeResponse(
     @SerialName("roomIndex")
-    val challengeId: String,
+    val challengeId: Int,
 )

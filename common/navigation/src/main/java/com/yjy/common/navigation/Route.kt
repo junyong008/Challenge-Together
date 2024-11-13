@@ -13,27 +13,27 @@ sealed interface ServiceRoute : Route {
     }
 
     @Serializable
-    data class StartedChallenge(val challengeId: String) : ServiceRoute
+    data class StartedChallenge(val challengeId: Int) : ServiceRoute
 
     @Serializable
-    data class ResetRecord(val challengeId: String) : ServiceRoute
+    data class ResetRecord(val challengeId: Int) : ServiceRoute
 
     @Serializable
     data class EditCategory(
-        val challengeId: String,
+        val challengeId: Int,
         val category: Category,
     ) : ServiceRoute
 
     @Serializable
     data class EditTitleDescription(
-        val challengeId: String,
+        val challengeId: Int,
         val title: String,
         val description: String,
     ) : ServiceRoute
 
     @Serializable
     data class EditTargetDays(
-        val challengeId: String,
+        val challengeId: Int,
         val targetDays: String,
         val currentDays: Int,
     ) : ServiceRoute

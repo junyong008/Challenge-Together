@@ -5,17 +5,17 @@ import com.yjy.model.challenge.core.TargetDays
 
 sealed interface EditChallengeUiAction {
     data class OnEditCategory(
-        val challengeId: String,
+        val challengeId: Int,
         val category: Category,
     ) : EditChallengeUiAction
 
     data class OnEditTargetDays(
-        val challengeId: String,
+        val challengeId: Int,
         val targetDays: TargetDays,
     ) : EditChallengeUiAction
 
     data class OnEditTitle(
-        val challengeId: String,
+        val challengeId: Int,
         val title: String,
         val description: String,
     ) : EditChallengeUiAction

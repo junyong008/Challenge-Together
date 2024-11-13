@@ -8,7 +8,7 @@ import com.yjy.common.core.util.NavigationAnimation.slideOutToRight
 import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.resetrecord.ResetRecordRoute
 
-fun NavController.navigateToResetRecord(challengeId: String) {
+fun NavController.navigateToResetRecord(challengeId: Int) {
     navigate(ServiceRoute.ResetRecord(challengeId))
 }
 

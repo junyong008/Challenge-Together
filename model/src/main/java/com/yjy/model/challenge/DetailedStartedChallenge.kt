@@ -7,7 +7,7 @@ import com.yjy.model.challenge.core.TargetDays
 import java.time.LocalDateTime
 
 data class DetailedStartedChallenge(
-    override val id: String,
+    override val id: Int,
     override val title: String,
     override val description: String,
     override val category: Category,

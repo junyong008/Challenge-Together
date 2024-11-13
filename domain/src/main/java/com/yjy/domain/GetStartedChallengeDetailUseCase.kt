@@ -15,7 +15,7 @@ class GetStartedChallengeDetailUseCase @Inject constructor(
     private val challengeRepository: ChallengeRepository,
     private val userRepository: UserRepository,
 ) {
-    suspend operator fun invoke(challengeId: String): Flow<NetworkResult<DetailedStartedChallenge>> =
+    suspend operator fun invoke(challengeId: Int): Flow<NetworkResult<DetailedStartedChallenge>> =
         combine(
             challengeRepository.getStartedChallengeDetail(challengeId),
             userRepository.timeDiff,

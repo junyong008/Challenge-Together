@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun EditCategoryRoute(
-    challengeId: String,
+    challengeId: Int,
     selectedCategory: Category,
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
@@ -61,7 +61,7 @@ internal fun EditCategoryRoute(
 @Composable
 internal fun EditCategoryScreen(
     modifier: Modifier = Modifier,
-    challengeId: String = "",
+    challengeId: Int = 0,
     selectedCategory: Category = Category.ALL,
     uiState: EditChallengeUiState = EditChallengeUiState(),
     uiEvent: Flow<EditChallengeUiEvent> = flowOf(),

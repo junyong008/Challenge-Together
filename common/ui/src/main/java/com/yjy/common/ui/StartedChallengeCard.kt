@@ -232,7 +232,7 @@ fun StartedChallengeCardPreview() {
     ChallengeTogetherTheme {
         StartedChallengeCard(
             challenge = SimpleStartedChallenge(
-                id = "id",
+                id = 1,
                 title = "The Title Of Challenge",
                 description = "challenge description",
                 category = Category.ALL,

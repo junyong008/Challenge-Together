@@ -20,7 +20,7 @@ class ResetRecordViewModel @Inject constructor(
     getResetRecordsUseCase: GetResetRecordsUseCase,
 ) : ViewModel() {
 
-    private val challengeId = savedStateHandle.getStateFlow<String?>("challengeId", null)
+    private val challengeId = savedStateHandle.getStateFlow<Int?>("challengeId", null)
 
     val resetRecords = challengeId
         .filterNotNull()

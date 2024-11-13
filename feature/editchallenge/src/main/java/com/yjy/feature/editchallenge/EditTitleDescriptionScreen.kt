@@ -42,7 +42,7 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun EditTitleDescriptionRoute(
-    challengeId: String,
+    challengeId: Int,
     title: String,
     description: String,
     onBackClick: () -> Unit,
@@ -68,7 +68,7 @@ internal fun EditTitleDescriptionRoute(
 @Composable
 internal fun EditTitleDescriptionScreen(
     modifier: Modifier = Modifier,
-    challengeId: String = "",
+    challengeId: Int = 0,
     title: String = "",
     description: String = "",
     uiState: EditChallengeUiState = EditChallengeUiState(),

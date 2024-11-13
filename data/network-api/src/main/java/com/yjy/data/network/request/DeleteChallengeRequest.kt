@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DeleteChallengeRequest(
     @SerialName("challengeId")
-    val challengeId: String,
+    val challengeId: Int,
 )

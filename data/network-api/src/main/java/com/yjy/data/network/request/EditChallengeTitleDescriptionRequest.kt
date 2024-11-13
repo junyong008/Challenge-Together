@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EditChallengeTitleDescriptionRequest(
     @SerialName("challengeId")
-    val challengeId: String,
+    val challengeId: Int,
     @SerialName("title")
     val title: String,
     @SerialName("description")

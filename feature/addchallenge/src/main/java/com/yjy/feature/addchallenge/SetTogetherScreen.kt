@@ -63,7 +63,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun SetTogetherRoute(
     onBackClick: () -> Unit,
-    onWaitingChallengeCreated: (String) -> Unit,
+    onWaitingChallengeCreated: (Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddChallengeViewModel = hiltViewModel(),
@@ -88,7 +88,7 @@ internal fun SetTogetherScreen(
     uiEvent: Flow<AddChallengeUiEvent> = flowOf(),
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
-    onWaitingChallengeCreated: (String) -> Unit = {},
+    onWaitingChallengeCreated: (Int) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     var shouldShowAddConfirmDialog by remember { mutableStateOf(false) }

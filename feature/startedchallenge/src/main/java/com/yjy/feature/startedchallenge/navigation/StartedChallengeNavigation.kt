@@ -19,7 +19,7 @@ private const val DEEP_LINK_URI_PATTERN =
     "https://www.challenge-together.apps.com/challenge/started/{$STARTED_CHALLENGE_ID}"
 
 fun NavController.navigateToStartedChallenge(
-    challengeId: String,
+    challengeId: Int,
     navOptions: NavOptions? = null,
 ) {
     navigate(ServiceRoute.StartedChallenge(challengeId), navOptions)
@@ -27,10 +27,10 @@ fun NavController.navigateToStartedChallenge(
 
 fun NavGraphBuilder.startedChallengeScreen(
     onBackClick: () -> Unit,
-    onEditCategoryClick: (String, Category) -> Unit,
-    onEditTitleClick: (String, String, String) -> Unit,
-    onEditTargetDaysClick: (String, String, Int) -> Unit,
-    onResetRecordClick: (String) -> Unit,
+    onEditCategoryClick: (Int, Category) -> Unit,
+    onEditTitleClick: (Int, String, String) -> Unit,
+    onEditTargetDaysClick: (Int, String, Int) -> Unit,
+    onResetRecordClick: (Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     composable<ServiceRoute.StartedChallenge>(

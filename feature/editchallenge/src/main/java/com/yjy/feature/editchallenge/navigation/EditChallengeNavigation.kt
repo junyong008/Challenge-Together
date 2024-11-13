@@ -15,14 +15,14 @@ import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.TargetDays
 
 fun NavController.navigateToEditCategory(
-    challengeId: String,
+    challengeId: Int,
     category: Category,
 ) {
     navigate(ServiceRoute.EditCategory(challengeId, category))
 }
 
 fun NavController.navigateToEditTitleDescription(
-    challengeId: String,
+    challengeId: Int,
     title: String,
     description: String,
 ) {
@@ -30,7 +30,7 @@ fun NavController.navigateToEditTitleDescription(
 }
 
 fun NavController.navigateToEditTargetDays(
-    challengeId: String,
+    challengeId: Int,
     targetDays: String,
     currentDays: Int,
 ) {

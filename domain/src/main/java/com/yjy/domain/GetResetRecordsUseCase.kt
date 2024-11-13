@@ -14,7 +14,7 @@ class GetResetRecordsUseCase @Inject constructor(
     private val challengeRepository: ChallengeRepository,
     private val userRepository: UserRepository,
 ) {
-    suspend operator fun invoke(challengeId: String): Flow<NetworkResult<List<ResetRecord>>> = combine(
+    suspend operator fun invoke(challengeId: Int): Flow<NetworkResult<List<ResetRecord>>> = combine(
         flowOf(challengeRepository.getResetRecords(challengeId)),
         userRepository.timeDiff,
     ) { result, timeDiff ->

@@ -71,7 +71,7 @@ import com.yjy.common.designsystem.R as designSystemR
 internal fun ConfirmRoute(
     onBackClick: () -> Unit,
     onSetTogetherClick: () -> Unit,
-    onChallengeStarted: (String) -> Unit,
+    onChallengeStarted: (Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AddChallengeViewModel = hiltViewModel(),
@@ -98,7 +98,7 @@ internal fun ConfirmScreen(
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onSetTogetherClick: () -> Unit = {},
-    onChallengeStarted: (String) -> Unit = {},
+    onChallengeStarted: (Int) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     var shouldShowAddConfirmDialog by remember { mutableStateOf(false) }

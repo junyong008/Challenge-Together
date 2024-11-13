@@ -39,7 +39,7 @@ class StartedChallengeViewModel @Inject constructor(
     private val challengeRepository: ChallengeRepository,
 ) : ViewModel() {
 
-    private val challengeId = savedStateHandle.getStateFlow<String?>("challengeId", null)
+    private val challengeId = savedStateHandle.getStateFlow<Int?>("challengeId", null)
 
     private val _uiState = MutableStateFlow(StartedChallengeUiState())
     val uiState: StateFlow<StartedChallengeUiState> = _uiState.asStateFlow()
@@ -93,7 +93,7 @@ class StartedChallengeViewModel @Inject constructor(
         }
     }
 
-    private fun deleteChallenge(challengeId: String) = viewModelScope.launch {
+    private fun deleteChallenge(challengeId: Int) = viewModelScope.launch {
         _uiState.update { it.copy(isDeleting = true) }
 
         challengeRepository.deleteStartedChallenge(challengeId)
@@ -102,7 +102,7 @@ class StartedChallengeViewModel @Inject constructor(
         _uiState.update { it.copy(isDeleting = false) }
     }
 
-    private fun resetRecord(challengeId: String, memo: String) = viewModelScope.launch {
+    private fun resetRecord(challengeId: Int, memo: String) = viewModelScope.launch {
         _uiState.update { it.copy(isResetting = true) }
 
         challengeRepository.resetStartedChallenge(challengeId, memo)

@@ -51,8 +51,8 @@ private fun NavController.navigateToSetTogether() {
 
 fun NavGraphBuilder.addChallengeNavGraph(
     navController: NavHostController,
-    onChallengeStarted: (String) -> Unit,
-    onWaitingChallengeCreated: (String) -> Unit,
+    onChallengeStarted: (Int) -> Unit,
+    onWaitingChallengeCreated: (Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     navigation<ServiceRoute.AddChallenge>(

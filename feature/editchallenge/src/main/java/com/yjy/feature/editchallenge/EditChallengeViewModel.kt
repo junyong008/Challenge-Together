@@ -48,7 +48,7 @@ class EditChallengeViewModel @Inject constructor(
         }
     }
 
-    private fun editCategory(challengeId: String, category: Category) = viewModelScope.launch {
+    private fun editCategory(challengeId: Int, category: Category) = viewModelScope.launch {
         _uiState.update { it.copy(isEditing = true) }
 
         challengeRepository.editChallengeCategory(challengeId, category)
@@ -58,7 +58,7 @@ class EditChallengeViewModel @Inject constructor(
     }
 
     private fun editTitleDescription(
-        challengeId: String,
+        challengeId: Int,
         title: String,
         description: String,
     ) = viewModelScope.launch {
@@ -70,7 +70,7 @@ class EditChallengeViewModel @Inject constructor(
         _uiState.update { it.copy(isEditing = false) }
     }
 
-    private fun editTargetDays(challengeId: String, targetDays: TargetDays) = viewModelScope.launch {
+    private fun editTargetDays(challengeId: Int, targetDays: TargetDays) = viewModelScope.launch {
         _uiState.update { it.copy(isEditing = true) }
 
         challengeRepository.editChallengeTargetDays(challengeId, targetDays)

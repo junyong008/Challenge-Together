@@ -28,20 +28,20 @@ interface ChallengeRepository {
         startDateTime: LocalDateTime? = null,
         maxParticipants: Int = 1,
         roomPassword: String = "",
-    ): NetworkResult<String>
+    ): NetworkResult<Int>
 
     suspend fun editChallengeTitleDescription(
-        challengeId: String,
+        challengeId: Int,
         title: String,
         description: String,
     ): NetworkResult<Unit>
-    suspend fun editChallengeCategory(challengeId: String, category: Category): NetworkResult<Unit>
-    suspend fun editChallengeTargetDays(challengeId: String, targetDays: TargetDays): NetworkResult<Unit>
+    suspend fun editChallengeCategory(challengeId: Int, category: Category): NetworkResult<Unit>
+    suspend fun editChallengeTargetDays(challengeId: Int, targetDays: TargetDays): NetworkResult<Unit>
 
-    suspend fun resetStartedChallenge(challengeId: String, memo: String): NetworkResult<Unit>
-    suspend fun deleteStartedChallenge(challengeId: String): NetworkResult<Unit>
-    suspend fun getStartedChallengeDetail(challengeId: String): Flow<NetworkResult<DetailedStartedChallenge>>
-    suspend fun getResetRecords(challengeId: String): NetworkResult<List<ResetRecord>>
+    suspend fun resetStartedChallenge(challengeId: Int, memo: String): NetworkResult<Unit>
+    suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit>
+    suspend fun getStartedChallengeDetail(challengeId: Int): Flow<NetworkResult<DetailedStartedChallenge>>
+    suspend fun getResetRecords(challengeId: Int): NetworkResult<List<ResetRecord>>
     suspend fun getRemoteTier(): NetworkResult<Tier>
     suspend fun setLocalTier(tier: Tier)
     suspend fun setSortOrder(order: SortOrder)

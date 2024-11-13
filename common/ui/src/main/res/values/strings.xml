@@ -4,7 +4,7 @@
     <string name="common_ui_error_body_retry">Retry</string>
     <string name="common_ui_started_challenge_card_timer_description">Icon of timer</string>
     <string name="common_ui_started_challenge_card_check_description">Icon of complete</string>
-    <string name="common_ui_waiting_challenge_number">No. %1$s</string>
+    <string name="common_ui_waiting_challenge_number">No. %1$d</string>
     <string name="common_ui_waiting_challenge_private">[Private]</string>
     <string name="common_ui_waiting_challenge_participant_number_format">%1$s / %2$s</string>
     <string name="common_ui_waiting_challenge_calendar_description">Icon of calendar</string>

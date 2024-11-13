@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 @Entity(tableName = "challenges")
 data class ChallengeEntity(
     @PrimaryKey
-    val id: String,
+    val id: Int,
     val title: String,
     val description: String,
     val category: String,

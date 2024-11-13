@@ -65,7 +65,7 @@ fun WaitingChallengeCard(
 
 @Composable
 private fun ChallengeHeader(
-    challengeId: String,
+    challengeId: Int,
     isPrivate: Boolean,
 ) {
     Row {
@@ -288,7 +288,7 @@ fun WaitingChallengeCardPreview() {
     ChallengeTogetherTheme {
         WaitingChallengeCard(
             challenge = SimpleWaitingChallenge(
-                id = "2024",
+                id = 2000,
                 title = "The Title Of Challenge",
                 description = "challenge description",
                 category = Category.ALL,

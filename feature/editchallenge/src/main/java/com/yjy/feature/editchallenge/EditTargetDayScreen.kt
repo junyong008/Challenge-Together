@@ -41,7 +41,7 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun EditTargetDayRoute(
-    challengeId: String,
+    challengeId: Int,
     targetDays: TargetDays,
     currentRecordDays: Int,
     onBackClick: () -> Unit,
@@ -67,7 +67,7 @@ internal fun EditTargetDayRoute(
 @Composable
 internal fun EditTargetDayScreen(
     modifier: Modifier = Modifier,
-    challengeId: String = "",
+    challengeId: Int = 0,
     targetDays: TargetDays = TargetDays.Infinite,
     currentRecordDays: Int = 0,
     uiState: EditChallengeUiState = EditChallengeUiState(),
