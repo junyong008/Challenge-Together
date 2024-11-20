@@ -117,7 +117,8 @@ internal fun EditTitleDescriptionScreen(
                             ),
                         )
                     },
-                    enabled = !uiState.isEditing,
+                    enabled = !uiState.isEditing && currentTitle.isNotBlank(),
+                    isLoading = uiState.isEditing,
                 )
             }
         },
@@ -144,7 +145,7 @@ internal fun EditTitleDescriptionScreen(
             SingleLineTextField(
                 value = currentTitle,
                 onValueChange = {
-                    if (it.length <= MAX_CHALLENGE_TITLE_LENGTH) currentTitle = it
+                    currentTitle = it.take(MAX_CHALLENGE_TITLE_LENGTH)
                 },
                 enabled = !uiState.isEditing,
                 placeholderText = stringResource(id = R.string.feature_editchallenge_title_placeholder),
@@ -159,7 +160,7 @@ internal fun EditTitleDescriptionScreen(
             ChallengeTogetherTextField(
                 value = currentDescription,
                 onValueChange = {
-                    if (it.length <= MAX_CHALLENGE_DESCRIPTION_LENGTH) currentDescription = it
+                    currentDescription = it.take(MAX_CHALLENGE_DESCRIPTION_LENGTH)
                 },
                 placeholderText = currentTitle.ifBlank {
                     stringResource(id = R.string.feature_editchallenge_description_placeholder)

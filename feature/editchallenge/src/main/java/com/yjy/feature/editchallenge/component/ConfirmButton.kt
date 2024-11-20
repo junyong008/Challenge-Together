@@ -19,16 +19,18 @@ import com.yjy.feature.editchallenge.R
 internal fun ConfirmButton(
     onClick: () -> Unit,
     enabled: Boolean,
+    isLoading: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     ChallengeTogetherButton(
         onClick = onClick,
-        enabled = enabled,
+        enabled = enabled && !isLoading,
         shape = MaterialTheme.shapes.extraLarge,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 55.dp),
     ) {
-        if (!enabled) {
+        if (isLoading) {
             CircularProgressIndicator(
                 color = CustomColorProvider.colorScheme.brand,
                 modifier = Modifier.size(24.dp),

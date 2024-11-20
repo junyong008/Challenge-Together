@@ -142,6 +142,7 @@ internal fun EditTargetDayScreen(
                         )
                     },
                     enabled = !uiState.isEditing,
+                    isLoading = uiState.isEditing,
                 )
             }
         },

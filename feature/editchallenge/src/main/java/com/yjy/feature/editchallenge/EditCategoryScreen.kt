@@ -108,6 +108,7 @@ internal fun EditCategoryScreen(
                         )
                     },
                     enabled = !uiState.isEditing,
+                    isLoading = uiState.isEditing,
                 )
             }
         },
