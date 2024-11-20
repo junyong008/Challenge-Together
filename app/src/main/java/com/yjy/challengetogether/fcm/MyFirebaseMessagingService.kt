@@ -3,6 +3,7 @@ package com.yjy.challengetogether.fcm
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.yjy.platform.notifications.NotificationHelper.postChallengeGiveUpNotification
+import com.yjy.platform.notifications.NotificationHelper.postChallengeNewPostNotification
 import com.yjy.platform.notifications.NotificationHelper.postChallengeResetNotification
 import timber.log.Timber
 
@@ -27,6 +28,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             FcmMessageType.CHALLENGE_DELETE ->
                 postChallengeGiveUpNotification(this, header, body, linkIdx ?: return)
+
+            FcmMessageType.CHALLENGE_POST ->
+                postChallengeNewPostNotification(this, header, body, linkIdx ?: return)
         }
 
         Timber.d("Received FCM Message - Header: $header")

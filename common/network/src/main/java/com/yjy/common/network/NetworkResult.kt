@@ -8,6 +8,12 @@ sealed interface NetworkResult<out T> {
         data class HttpError(val code: Int, val message: String?, val body: String) : Failure
         data class NetworkError(val throwable: Throwable) : Failure
         data class UnknownApiError(val throwable: Throwable) : Failure
+
+        fun safeThrowable(): Throwable = when (this) {
+            is HttpError -> IllegalStateException("$code $message $body")
+            is NetworkError -> throwable
+            is UnknownApiError -> throwable
+        }
     }
 }
 

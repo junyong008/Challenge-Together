@@ -1,0 +1,9 @@
+<resources>
+    <string name="feature_challengeboard_title">Board</string>
+    <string name="feature_challengeboard_content_placeholder">Enter content…</string>
+    <string name="feature_challengeboard_send">Send</string>
+    <string name="feature_challengeboard_no_posts_title">No Posts Yet</string>
+    <string name="feature_challengeboard_no_posts_description">Leave records or notes about your challenge.</string>
+    <string name="feature_challengeboard_post_add_failed">Failed to add the post.</string>
+    <string name="feature_challengeboard_scroll_to_bottom">Scroll to Bottom</string>
+</resources>

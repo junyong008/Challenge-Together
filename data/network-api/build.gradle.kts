@@ -1,3 +1,5 @@
+@file:Suppress("INLINE_FROM_HIGHER_PLATFORM")
+
 plugins {
     alias(libs.plugins.custom.android.library)
     alias(libs.plugins.kotlin.serialization)
@@ -8,6 +10,10 @@ android {
 }
 
 dependencies {
-    implementation(projects.common.network)
-    implementation(libs.kotlinx.serialization.json)
+    implementations(
+        projects.common.network,
+
+        libs.kotlinx.coroutines.core,
+        libs.kotlinx.serialization.json,
+    )
 }

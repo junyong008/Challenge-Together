@@ -58,6 +58,7 @@ include(
     ":feature:editchallenge",
     ":feature:startedchallenge",
     ":feature:resetrecord",
+    ":feature:challengeboard",
 
     ":feature:login",
     ":feature:signup",

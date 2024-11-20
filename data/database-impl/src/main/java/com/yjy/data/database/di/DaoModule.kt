@@ -2,6 +2,7 @@ package com.yjy.data.database.di
 
 import com.yjy.data.database.ChallengeTogetherDatabase
 import com.yjy.data.database.dao.ChallengeDao
+import com.yjy.data.database.dao.ChallengePostDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,4 +16,9 @@ internal object DaoModule {
     fun provideChallengeDao(
         database: ChallengeTogetherDatabase,
     ): ChallengeDao = database.challengeDao()
+
+    @Provides
+    fun provideChallengePostDao(
+        database: ChallengeTogetherDatabase,
+    ): ChallengePostDao = database.challengePostDao()
 }

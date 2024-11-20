@@ -1,7 +1,7 @@
 <resources>
     <string name="common_ui_error_body_title">Failed to load the screen</string>
-    <string name="common_ui_error_body_description">An error occurred.\nPlease try again later.</string>
-    <string name="common_ui_error_body_retry">Retry</string>
+    <string name="common_ui_error_description">An error occurred.\nPlease try again later.</string>
+    <string name="common_ui_error_retry">Retry</string>
     <string name="common_ui_started_challenge_card_timer_description">Icon of timer</string>
     <string name="common_ui_started_challenge_card_check_description">Icon of complete</string>
     <string name="common_ui_waiting_challenge_number">No. %1$d</string>

@@ -9,3 +9,7 @@ annotation class ChallengeTogetherCallFactory
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class ChallengeTogetherApi
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class WebSocketClient

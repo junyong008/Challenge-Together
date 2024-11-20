@@ -16,6 +16,7 @@ object ChallengeTogetherIcons {
     val Email = R.drawable.ic_email
     val Home = R.drawable.ic_home
     val Infinite = R.drawable.ic_infinite
+    val Send = R.drawable.ic_send
     val MoreHorizontal = R.drawable.ic_more_horiz
     val MoreVertical = R.drawable.ic_more_vert
     val QuoteLeft = R.drawable.ic_quote_left

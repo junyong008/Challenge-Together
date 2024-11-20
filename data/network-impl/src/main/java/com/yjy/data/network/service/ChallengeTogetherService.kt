@@ -11,6 +11,7 @@ import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.data.network.request.SignUpRequest
 import com.yjy.data.network.request.VerifyRequest
 import com.yjy.data.network.response.AddChallengeResponse
+import com.yjy.data.network.response.GetChallengePostsResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetNameResponse
 import com.yjy.data.network.response.GetRecordsResponse
@@ -71,12 +72,12 @@ internal interface ChallengeTogetherService {
 
     @DELETE("service/challenge/delete/started")
     suspend fun deleteStartedChallenge(
-        @Query("challengeId") challengeId: String,
+        @Query("challengeId") challengeId: Int,
     ): NetworkResult<Unit>
 
     @PATCH("service/challenge/edit/category")
     suspend fun editChallengeCategory(
-        @Query("challengeId") challengeId: String,
+        @Query("challengeId") challengeId: Int,
         @Query("category") category: String,
     ): NetworkResult<Unit>
 
@@ -87,7 +88,7 @@ internal interface ChallengeTogetherService {
 
     @PATCH("service/challenge/edit/target-days")
     suspend fun editChallengeGoal(
-        @Query("challengeId") challengeId: String,
+        @Query("challengeId") challengeId: Int,
         @Query("targetDays") targetDays: String,
     ): NetworkResult<Unit>
 
@@ -99,13 +100,26 @@ internal interface ChallengeTogetherService {
 
     @GET("service/challenge/get/started")
     suspend fun getStartedChallengeDetail(
-        @Query("challengeId") challengeId: String,
+        @Query("challengeId") challengeId: Int,
     ): NetworkResult<GetStartedChallengeDetailResponse>
 
     @GET("service/challenge/get/reset-records")
     suspend fun getResetRecords(
-        @Query("challengeId") challengeId: String,
+        @Query("challengeId") challengeId: Int,
     ): NetworkResult<List<GetResetRecordResponse>>
+
+    @GET("service/challenge/posts/get/list")
+    suspend fun getChallengePosts(
+        @Query("challengeId") challengeId: Int,
+        @Query("lastPostId") lastPostId: Int,
+        @Query("limit") limit: Int,
+    ): NetworkResult<List<GetChallengePostsResponse>>
+
+    @GET("service/challenge/posts/get/updated")
+    suspend fun getChallengePostsUpdated(
+        @Query("challengeId") challengeId: Int,
+        @Query("lastCachedPostId") lastCachedPostId: Int,
+    ): NetworkResult<List<GetChallengePostsResponse>>
 
     @GET("service/user/get/name")
     suspend fun getUserName(): NetworkResult<GetNameResponse>

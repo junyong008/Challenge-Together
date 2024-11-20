@@ -1,7 +1,14 @@
 package com.yjy.data.challenge.impl.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
+import com.yjy.common.core.extensions.mapToUnit
 import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.map
+import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.challenge.impl.mapper.toDetailedStartedChallengeModel
@@ -11,14 +18,19 @@ import com.yjy.data.challenge.impl.mapper.toProto
 import com.yjy.data.challenge.impl.mapper.toRequestString
 import com.yjy.data.challenge.impl.mapper.toSimpleStartedChallengeModel
 import com.yjy.data.challenge.impl.mapper.toSimpleWaitingChallengeModel
+import com.yjy.data.challenge.impl.mediator.ChallengePostRemoteMediator
 import com.yjy.data.challenge.impl.util.TimeManager
 import com.yjy.data.database.dao.ChallengeDao
+import com.yjy.data.database.dao.ChallengePostDao
 import com.yjy.data.database.model.ChallengeEntity
+import com.yjy.data.database.model.ChallengePostEntity
 import com.yjy.data.datastore.api.ChallengePreferencesDataSource
 import com.yjy.data.network.datasource.ChallengeDataSource
+import com.yjy.data.network.request.AddChallengePostRequest
 import com.yjy.data.network.request.AddChallengeRequest
 import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.ResetChallengeRequest
+import com.yjy.model.challenge.ChallengePost
 import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
@@ -31,13 +43,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.retry
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class ChallengeRepositoryImpl @Inject constructor(
     private val challengePreferencesDataSource: ChallengePreferencesDataSource,
     private val challengeDataSource: ChallengeDataSource,
+    private val challengePostDao: ChallengePostDao,
     private val challengeDao: ChallengeDao,
     timeManager: TimeManager,
 ) : ChallengeRepository {
@@ -75,8 +92,8 @@ internal class ChallengeRepositoryImpl @Inject constructor(
 
     private fun List<SimpleStartedChallenge>.sortBy(sortOrder: SortOrder): List<SimpleStartedChallenge> {
         return when (sortOrder) {
-            SortOrder.LATEST -> this.sortedByDescending { it.id.toInt() }
-            SortOrder.OLDEST -> this.sortedBy { it.id.toInt() }
+            SortOrder.LATEST -> this.sortedByDescending { it.id }
+            SortOrder.OLDEST -> this.sortedBy { it.id }
             SortOrder.TITLE -> this.sortedBy { it.title }
             SortOrder.HIGHEST_RECORD -> this.sortedByDescending { it.currentRecordInSeconds }
             SortOrder.LOWEST_RECORD -> this.sortedBy { it.currentRecordInSeconds }
@@ -145,6 +162,87 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         )
     }
 
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getChallengePosts(challengeId: Int): Flow<PagingData<ChallengePost>> {
+        val pager = Pager(
+            config = PagingConfig(
+                pageSize = PAGING_PAGE_SIZE,
+                initialLoadSize = PAGING_INITIAL_LOAD_SIZE,
+                prefetchDistance = PAGING_PREFETCH_DISTANCE,
+                enablePlaceholders = true,
+            ),
+            remoteMediator = ChallengePostRemoteMediator(
+                challengeId = challengeId,
+                challengePostDao = challengePostDao,
+                challengeDataSource = challengeDataSource,
+            ),
+            pagingSourceFactory = {
+                challengePostDao.pagingSource(challengeId)
+            },
+        )
+
+        return pager.flow.map { pagingData ->
+            pagingData.map { it.toModel() }
+        }
+    }
+
+    override fun getLatestChallengePost(challengeId: Int): Flow<ChallengePost?> =
+        challengePostDao.getLatestPost(challengeId).map { it?.toModel() }
+
+    override fun observeChallengePostUpdates(challengeId: Int): Flow<Unit> =
+        challengeDataSource.observeChallengePostUpdates(challengeId)
+            .onEach {
+                challengePostDao.replaceByTempId(it.toEntity())
+            }
+            .mapToUnit()
+            .onStart {
+                challengePostDao.deleteUnSynced()
+                challengePostDao.getLatestPostId(challengeId)?.let {
+                    syncNewlyAddedChallengePosts(challengeId, it)
+                }
+                emit(Unit)
+            }
+            .retry(CHALLENGE_POST_UPDATE_RETRY_COUNT) { cause ->
+                cause !is CancellationException
+            }
+
+    private suspend fun syncNewlyAddedChallengePosts(challengeId: Int, lastPostId: Int) {
+        challengeDataSource.getChallengePostsUpdated(challengeId, lastPostId)
+            .onSuccess { response ->
+                val entities = response.map { it.toEntity(challengeId) }
+                challengePostDao.insertAll(entities)
+            }
+            .onFailure { throw it.safeThrowable() }
+    }
+
+    override suspend fun addChallengePost(
+        challengeId: Int,
+        content: String,
+        tempWrittenDateTime: LocalDateTime,
+    ) {
+        val tempId = -(System.nanoTime().toInt())
+        challengePostDao.insert(
+            ChallengePostEntity(
+                id = tempId,
+                tempId = tempId,
+                challengeId = challengeId,
+                writerName = "",
+                writerBestRecordInSeconds = 0,
+                content = content,
+                writtenDateTime = tempWrittenDateTime,
+                isAuthor = true,
+                isSynced = false,
+            ),
+        )
+
+        challengeDataSource.addChallengePost(
+            AddChallengePostRequest(
+                content = content,
+                tempId = tempId,
+            ),
+        )
+    }
+
     override suspend fun resetStartedChallenge(challengeId: Int, memo: String): NetworkResult<Unit> {
         return challengeDataSource.resetStartedChallenge(
             ResetChallengeRequest(
@@ -210,5 +308,12 @@ internal class ChallengeRepositoryImpl @Inject constructor(
             .map { response ->
                 response.newlyCompletedTitles
             }
+    }
+
+    private companion object {
+        const val PAGING_PAGE_SIZE = 30
+        const val PAGING_INITIAL_LOAD_SIZE = 50
+        const val PAGING_PREFETCH_DISTANCE = 90
+        const val CHALLENGE_POST_UPDATE_RETRY_COUNT = 3L
     }
 }

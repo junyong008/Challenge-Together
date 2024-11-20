@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingCommand
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 
@@ -45,3 +46,5 @@ fun <T> Flow<T>.restartableStateIn(
         override fun restart() = sharingRestartable.restart()
     }
 }
+
+fun <T> Flow<T>.mapToUnit(): Flow<Unit> = map { }

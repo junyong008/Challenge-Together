@@ -8,4 +8,5 @@ android {
 
 dependencies {
     implementation(libs.room.ktx)
+    implementation(libs.androidx.paging.ktx)
 }

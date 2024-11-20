@@ -18,6 +18,7 @@ dependencies {
         projects.data.challengeApi,
         projects.data.userApi,
 
+        libs.androidx.paging.ktx,
         libs.javax.inject,
         libs.kotlinx.coroutines.core,
     )

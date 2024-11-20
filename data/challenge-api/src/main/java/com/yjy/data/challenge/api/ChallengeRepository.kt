@@ -1,6 +1,8 @@
 package com.yjy.data.challenge.api
 
+import androidx.paging.PagingData
 import com.yjy.common.network.NetworkResult
+import com.yjy.model.challenge.ChallengePost
 import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
@@ -38,6 +40,10 @@ interface ChallengeRepository {
     suspend fun editChallengeCategory(challengeId: Int, category: Category): NetworkResult<Unit>
     suspend fun editChallengeTargetDays(challengeId: Int, targetDays: TargetDays): NetworkResult<Unit>
 
+    fun getChallengePosts(challengeId: Int): Flow<PagingData<ChallengePost>>
+    fun getLatestChallengePost(challengeId: Int): Flow<ChallengePost?>
+    fun observeChallengePostUpdates(challengeId: Int): Flow<Unit>
+    suspend fun addChallengePost(challengeId: Int, content: String, tempWrittenDateTime: LocalDateTime)
     suspend fun resetStartedChallenge(challengeId: Int, memo: String): NetworkResult<Unit>
     suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun getStartedChallengeDetail(challengeId: Int): Flow<NetworkResult<DetailedStartedChallenge>>

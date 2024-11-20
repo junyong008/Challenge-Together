@@ -8,6 +8,8 @@ import androidx.navigation.navOptions
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.addchallenge.navigation.addChallengeNavGraph
+import com.yjy.feature.challengeboard.navigation.challengeBoardScreen
+import com.yjy.feature.challengeboard.navigation.navigateToChallengeBoard
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
 import com.yjy.feature.editchallenge.navigation.editChallengeScreen
 import com.yjy.feature.editchallenge.navigation.navigateToEditCategory
@@ -60,10 +62,15 @@ internal fun ServiceNavHost(
             onEditTitleClick = navController::navigateToEditTitleDescription,
             onEditTargetDaysClick = navController::navigateToEditTargetDays,
             onResetRecordClick = navController::navigateToResetRecord,
+            onBoardClick = navController::navigateToChallengeBoard,
             onShowSnackbar = onShowSnackbar,
         )
         resetRecordScreen(
             onBackClick = navController::popBackStack,
+        )
+        challengeBoardScreen(
+            onBackClick = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
         )
         changePasswordScreen(
             onBackClick = navController::popBackStack,

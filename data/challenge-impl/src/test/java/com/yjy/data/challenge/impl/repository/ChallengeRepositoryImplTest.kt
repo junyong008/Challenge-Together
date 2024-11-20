@@ -4,6 +4,7 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.data.challenge.impl.mapper.toProto
 import com.yjy.data.challenge.impl.util.TimeManager
 import com.yjy.data.database.dao.ChallengeDao
+import com.yjy.data.database.dao.ChallengePostDao
 import com.yjy.data.database.model.ChallengeEntity
 import com.yjy.data.datastore.api.ChallengePreferencesDataSource
 import com.yjy.data.network.datasource.ChallengeDataSource
@@ -36,6 +37,7 @@ class ChallengeRepositoryImplTest {
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var challengeDataSource: ChallengeDataSource
     private lateinit var challengePreferencesDataSource: ChallengePreferencesDataSource
+    private lateinit var challengePostDao: ChallengePostDao
     private lateinit var challengeDao: ChallengeDao
     private lateinit var timeManager: TimeManager
     private lateinit var challengeRepository: ChallengeRepositoryImpl
@@ -50,6 +52,7 @@ class ChallengeRepositoryImplTest {
 
         challengeDataSource = mockk(relaxed = true)
         challengePreferencesDataSource = mockk(relaxed = true)
+        challengePostDao = mockk(relaxed = true)
         challengeDao = mockk(relaxed = true)
         timeManager = mockk(relaxed = true)
 
@@ -60,6 +63,7 @@ class ChallengeRepositoryImplTest {
         challengeRepository = ChallengeRepositoryImpl(
             challengePreferencesDataSource = challengePreferencesDataSource,
             challengeDataSource = challengeDataSource,
+            challengePostDao = challengePostDao,
             challengeDao = challengeDao,
             timeManager = timeManager,
         )

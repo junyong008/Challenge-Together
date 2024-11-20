@@ -70,7 +70,7 @@ fun ErrorBody(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = stringResource(id = R.string.common_ui_error_body_description),
+                text = stringResource(id = R.string.common_ui_error_description),
                 color = CustomColorProvider.colorScheme.onBackgroundMuted,
                 style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center,
@@ -89,11 +89,11 @@ fun ErrorBody(
                     ) {
                         Icon(
                             ImageVector.vectorResource(id = ChallengeTogetherIcons.Refresh),
-                            contentDescription = stringResource(id = R.string.common_ui_error_body_retry),
+                            contentDescription = stringResource(id = R.string.common_ui_error_retry),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = stringResource(id = R.string.common_ui_error_body_retry),
+                            text = stringResource(id = R.string.common_ui_error_retry),
                             style = MaterialTheme.typography.labelMedium,
                             textAlign = TextAlign.Center,
                         )
