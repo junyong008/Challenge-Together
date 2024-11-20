@@ -97,13 +97,19 @@ class AddChallengeViewModel @Inject constructor(
     }
 
     private fun updateTitle(title: String) {
-        if (title.length > MAX_CHALLENGE_TITLE_LENGTH) return
-        _uiState.update { it.copy(title = title) }
+        _uiState.update {
+            it.copy(
+                title = title.take(MAX_CHALLENGE_TITLE_LENGTH),
+            )
+        }
     }
 
     private fun updateDescription(description: String) {
-        if (description.length > MAX_CHALLENGE_DESCRIPTION_LENGTH) return
-        _uiState.update { it.copy(description = description) }
+        _uiState.update {
+            it.copy(
+                description = description.take(MAX_CHALLENGE_DESCRIPTION_LENGTH),
+            )
+        }
     }
 
     private fun updateStartDateTime(
