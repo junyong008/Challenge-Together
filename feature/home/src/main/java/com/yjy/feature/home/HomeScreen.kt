@@ -46,6 +46,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -73,6 +74,7 @@ import com.yjy.common.ui.DevicePreviews
 import com.yjy.common.ui.ErrorBody
 import com.yjy.common.ui.StartedChallengeCard
 import com.yjy.common.ui.WaitingChallengeCard
+import com.yjy.common.ui.preview.ChallengePreviewParameterProvider
 import com.yjy.feature.home.model.ChallengeSyncUiState
 import com.yjy.feature.home.model.HomeUiAction
 import com.yjy.feature.home.model.HomeUiState
@@ -948,11 +950,16 @@ private fun TierUpAnimatedButton(
 
 @DevicePreviews
 @Composable
-fun HomeScreenPreview() {
+fun HomeScreenPreview(
+    @PreviewParameter(ChallengePreviewParameterProvider::class)
+    challenges: Pair<List<SimpleStartedChallenge>, List<SimpleWaitingChallenge>>,
+) {
     ChallengeTogetherTheme {
         ChallengeTogetherBackground {
             HomeScreen(
                 modifier = Modifier.fillMaxSize(),
+                startedChallenges = challenges.first,
+                waitingChallenges = challenges.second,
             )
         }
     }

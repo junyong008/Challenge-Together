@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -35,10 +36,10 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.DevicePreviews
 import com.yjy.common.ui.EmptyBody
 import com.yjy.common.ui.ErrorBody
+import com.yjy.common.ui.preview.ResetRecordPreviewParameterProvider
 import com.yjy.feature.resetrecord.component.ResetRecordChart
 import com.yjy.feature.resetrecord.model.ResetRecordsUiState
 import com.yjy.model.challenge.ResetRecord
-import java.time.LocalDateTime
 
 @Composable
 internal fun ResetRecordRoute(
@@ -196,24 +197,14 @@ private fun RecordItem(record: ResetRecord) {
 
 @DevicePreviews
 @Composable
-fun ResetRecordScreenPreview() {
+fun ResetRecordScreenPreview(
+    @PreviewParameter(ResetRecordPreviewParameterProvider::class)
+    resetRecords: List<ResetRecord>,
+) {
     ChallengeTogetherTheme {
         ChallengeTogetherBackground {
             ResetRecordScreen(
-                resetRecordsUiState = ResetRecordsUiState.Success(
-                    listOf(
-                        ResetRecord(
-                            recordInSeconds = 86400L * 2,
-                            resetDateTime = LocalDateTime.now().minusDays(1),
-                            content = "",
-                        ),
-                        ResetRecord(
-                            recordInSeconds = 86400L,
-                            resetDateTime = LocalDateTime.now().minusDays(3),
-                            content = "test",
-                        ),
-                    ),
-                ),
+                resetRecordsUiState = ResetRecordsUiState.Success(resetRecords),
             )
         }
     }
