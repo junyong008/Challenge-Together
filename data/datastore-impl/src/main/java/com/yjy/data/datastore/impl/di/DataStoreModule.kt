@@ -9,6 +9,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.yjy.data.datastore.api.ChallengePreferences
 import com.yjy.data.datastore.impl.ChallengePreferencesDataStore
 import com.yjy.data.datastore.impl.ChallengePreferencesSerializer
+import com.yjy.data.datastore.impl.NotificationDataStore
 import com.yjy.data.datastore.impl.SessionDataStore
 import com.yjy.data.datastore.impl.UserPreferencesDataStore
 import dagger.Module
@@ -28,6 +29,11 @@ private val Context.userPreferencesDataStore: DataStore<Preferences> by preferen
     name = USER_PREFERENCES_DATASTORE,
 )
 
+private const val NOTIFICATION_DATASTORE = "notification_datastore"
+private val Context.notificationDataStore: DataStore<Preferences> by preferencesDataStore(
+    name = NOTIFICATION_DATASTORE,
+)
+
 @Module
 @InstallIn(SingletonComponent::class)
 internal object DataStoreModule {
@@ -43,6 +49,12 @@ internal object DataStoreModule {
     @UserPreferencesDataStore
     fun provideUserPreferencesDataStore(@ApplicationContext context: Context) =
         context.userPreferencesDataStore
+
+    @Provides
+    @Singleton
+    @NotificationDataStore
+    fun provideNotificationDataStore(@ApplicationContext context: Context) =
+        context.notificationDataStore
 
     @Provides
     @Singleton

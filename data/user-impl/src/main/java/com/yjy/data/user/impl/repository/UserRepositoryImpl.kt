@@ -4,6 +4,7 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.map
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
+import com.yjy.data.datastore.api.NotificationDataSource
 import com.yjy.data.datastore.api.UserPreferencesDataSource
 import com.yjy.data.network.datasource.UserDataSource
 import com.yjy.data.network.request.RegisterFirebaseTokenRequest
@@ -15,11 +16,13 @@ import javax.inject.Inject
 
 internal class UserRepositoryImpl @Inject constructor(
     private val userPreferencesDataSource: UserPreferencesDataSource,
+    private val notificationDataSource: NotificationDataSource,
     private val fcmTokenProvider: FcmTokenProvider,
     private val userDataSource: UserDataSource,
 ) : UserRepository {
 
     override val timeDiff: Flow<Long> = userPreferencesDataSource.timeDiff
+    override val mutedChallengeBoardIds: Flow<List<Int>> = notificationDataSource.mutedChallengeBoards
 
     override suspend fun syncTime(): NetworkResult<Unit> = userDataSource.syncTime()
 
@@ -38,5 +41,16 @@ internal class UserRepositoryImpl @Inject constructor(
                 .onSuccess { userPreferencesDataSource.setFcmToken(currentToken) }
                 .onFailure { Timber.d("registerFcmToken() failed") }
         }
+    }
+
+    override suspend fun getMutedChallengeBoards(): List<Int> =
+        notificationDataSource.getMutedChallengeBoards()
+
+    override suspend fun muteChallengeBoardNotification(challengeId: Int) {
+        notificationDataSource.addMutedChallengeBoard(challengeId)
+    }
+
+    override suspend fun unMuteChallengeBoardNotification(challengeId: Int) {
+        notificationDataSource.removeMutedChallengeBoard(challengeId)
     }
 }

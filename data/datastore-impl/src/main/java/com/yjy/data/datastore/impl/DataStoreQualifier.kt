@@ -12,4 +12,8 @@ annotation class UserPreferencesDataStore
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class NotificationDataStore
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class ChallengePreferencesDataStore

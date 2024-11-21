@@ -7,4 +7,5 @@ sealed interface ChallengeBoardUiAction {
     data class OnDeletePostClick(val postId: Int) : ChallengeBoardUiAction
     data class OnReportPostClick(val postId: Int, val reason: ReportReason) : ChallengeBoardUiAction
     data object OnRetryClick : ChallengeBoardUiAction
+    data object ToggleNotification : ChallengeBoardUiAction
 }

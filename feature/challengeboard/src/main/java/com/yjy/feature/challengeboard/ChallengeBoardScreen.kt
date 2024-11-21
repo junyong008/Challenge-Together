@@ -111,6 +111,7 @@ internal fun ChallengeBoardRoute(
     val posts = viewModel.posts.collectAsLazyPagingItems()
     val latestPost by viewModel.latestPost.collectAsStateWithLifecycle()
     val postsUpdateState by viewModel.postsUpdateState.collectAsStateWithLifecycle()
+    val isNotificationOn by viewModel.isNotificationOn.collectAsStateWithLifecycle()
 
     ChallengeBoardScreen(
         modifier = modifier,
@@ -118,6 +119,7 @@ internal fun ChallengeBoardRoute(
         posts = posts,
         latestPost = latestPost,
         postsUpdateState = postsUpdateState,
+        isNotificationOn = isNotificationOn,
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
@@ -132,6 +134,7 @@ internal fun ChallengeBoardScreen(
     posts: LazyPagingItems<ChallengePost>,
     latestPost: ChallengePost? = null,
     postsUpdateState: PostsUpdateState = PostsUpdateState.Connected,
+    isNotificationOn: Boolean = true,
     uiEvent: Flow<ChallengeBoardUiEvent> = flowOf(),
     processAction: (ChallengeBoardUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
@@ -142,6 +145,8 @@ internal fun ChallengeBoardScreen(
     val reportSuccessMessage = stringResource(id = R.string.feature_challengeboard_report_success)
     val reportFailureMessage = stringResource(id = R.string.feature_challengeboard_report_failed)
     val reportDuplicateMessage = stringResource(id = R.string.feature_challengeboard_report_already_reported)
+    val notificationOnMessage = stringResource(id = R.string.feature_challengeboard_notification_enabled)
+    val notificationOffMessage = stringResource(id = R.string.feature_challengeboard_notification_disabled)
 
     ObserveAsEvents(flow = uiEvent) { event ->
         when (event) {
@@ -159,6 +164,12 @@ internal fun ChallengeBoardScreen(
 
             ChallengeBoardUiEvent.ReportDuplicated ->
                 onShowSnackbar(SnackbarType.ERROR, reportDuplicateMessage)
+
+            ChallengeBoardUiEvent.NotificationOn ->
+                onShowSnackbar(SnackbarType.MESSAGE, notificationOnMessage)
+
+            ChallengeBoardUiEvent.NotificationOff ->
+                onShowSnackbar(SnackbarType.MESSAGE, notificationOffMessage)
         }
     }
 
@@ -242,6 +253,14 @@ internal fun ChallengeBoardScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 onNavigationClick = onBackClick,
                 titleRes = R.string.feature_challengeboard_title,
+                rightContent = {
+                    if (!isAlone) {
+                        NotificationButton(
+                            isNotificationOn = isNotificationOn,
+                            onClick = { processAction(ChallengeBoardUiAction.ToggleNotification) },
+                        )
+                    }
+                },
             )
         },
         bottomBar = {
@@ -369,6 +388,32 @@ private fun PostMenuBottomSheet(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun NotificationButton(
+    isNotificationOn: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier.padding(end = 4.dp),
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(
+                id = if (isNotificationOn) {
+                    ChallengeTogetherIcons.NotificationOn
+                } else {
+                    ChallengeTogetherIcons.NotificationOff
+                },
+            ),
+            contentDescription = stringResource(
+                id = R.string.feature_challengeboard_toggle_notification,
+            ),
+            tint = CustomColorProvider.colorScheme.onBackground,
+        )
     }
 }
 

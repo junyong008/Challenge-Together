@@ -14,4 +14,7 @@
     <string name="feature_challengeboard_report_success">Reported successfully.</string>
     <string name="feature_challengeboard_report_failed">Report failed. Please try again later.</string>
     <string name="feature_challengeboard_report_already_reported">This post has already been reported.</string>
+    <string name="feature_challengeboard_toggle_notification">Toggle Notification</string>
+    <string name="feature_challengeboard_notification_enabled">Notifications enabled.</string>
+    <string name="feature_challengeboard_notification_disabled">Notifications disabled.</string>
 </resources>

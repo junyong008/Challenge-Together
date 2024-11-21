@@ -10,6 +10,7 @@ import com.yjy.common.network.handleNetworkResult
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.AddChallengePostUseCase
 import com.yjy.domain.GetChallengePostsUseCase
 import com.yjy.feature.challengeboard.model.ChallengeBoardUiAction
@@ -35,6 +36,7 @@ class ChallengeBoardViewModel @Inject constructor(
     getChallengePostsUseCase: GetChallengePostsUseCase,
     private val addChallengePostUseCase: AddChallengePostUseCase,
     private val challengeRepository: ChallengeRepository,
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     private val challengeId = savedStateHandle.getStateFlow<Int?>("challengeId", null)
@@ -73,6 +75,16 @@ class ChallengeBoardViewModel @Inject constructor(
             initialValue = PostsUpdateState.Loading,
         )
 
+    val isNotificationOn = userRepository.mutedChallengeBoardIds
+        .map { mutedChallengeBoardIds ->
+            mutedChallengeBoardIds.contains(challengeId.value).not()
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = true,
+        )
+
     private fun sendEvent(event: ChallengeBoardUiEvent) = viewModelScope.launch {
         _uiEvent.send(event)
     }
@@ -83,6 +95,7 @@ class ChallengeBoardViewModel @Inject constructor(
             is ChallengeBoardUiAction.OnDeletePostClick -> deletePost(action.postId)
             is ChallengeBoardUiAction.OnReportPostClick -> reportPost(action.postId, action.reason)
             ChallengeBoardUiAction.OnRetryClick -> postsUpdateState.restart()
+            ChallengeBoardUiAction.ToggleNotification -> toggleNotification()
         }
     }
 
@@ -111,5 +124,16 @@ class ChallengeBoardViewModel @Inject constructor(
             onUnknownError = { ChallengeBoardUiEvent.ReportFailure },
         )
         sendEvent(event)
+    }
+
+    private fun toggleNotification() = viewModelScope.launch {
+        if (challengeId.value == null) return@launch
+        if (isNotificationOn.value) {
+            userRepository.muteChallengeBoardNotification(challengeId.value!!)
+            sendEvent(ChallengeBoardUiEvent.NotificationOff)
+        } else {
+            userRepository.unMuteChallengeBoardNotification(challengeId.value!!)
+            sendEvent(ChallengeBoardUiEvent.NotificationOn)
+        }
     }
 }

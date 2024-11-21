@@ -18,10 +18,12 @@ dependencies {
         projects.domain,
 
         projects.data.challengeApi,
+        projects.data.userApi,
 
         libs.androidx.paging.compose,
         libs.androidx.paging.ktx,
     )
 
     runtimeOnly(projects.data.challengeImpl)
+    runtimeOnly(projects.data.userImpl)
 }
