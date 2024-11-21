@@ -8,16 +8,19 @@ class ResetRecordPreviewParameterProvider : PreviewParameterProvider<List<ResetR
     override val values = sequenceOf(
         listOf(
             ResetRecord(
+                id = 1,
                 recordInSeconds = 86400L * 2,
                 resetDateTime = LocalDateTime.now().minusDays(1),
                 content = "",
             ),
             ResetRecord(
+                id = 2,
                 recordInSeconds = 86400L,
                 resetDateTime = LocalDateTime.now().minusDays(3),
                 content = "예시 리셋 내용",
             ),
             ResetRecord(
+                id = 3,
                 recordInSeconds = 86400L * 5,
                 resetDateTime = LocalDateTime.now().minusDays(7),
                 content = "예시 리셋 내용\n2번째 줄 내용\n3번째 줄 내용",

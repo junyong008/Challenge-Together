@@ -128,7 +128,7 @@ private fun ResetRecordBody(
         ) {
             items(
                 items = listData,
-                key = { it.resetDateTime },
+                key = { it.id },
             ) { record ->
                 RecordItem(record = record)
             }

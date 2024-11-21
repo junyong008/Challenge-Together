@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetResetRecordResponse(
+    @SerialName("ROOMMEMRESET_IDX")
+    val resetRecordId: Int,
     @SerialName("RESETDATE")
     val resetDateTime: String,
     @SerialName("ABSTINENCETIME")
