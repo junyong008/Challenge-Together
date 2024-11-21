@@ -10,6 +10,7 @@ import com.yjy.model.challenge.SimpleWaitingChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.challenge.core.TargetDays
+import com.yjy.model.common.ReportReason
 import com.yjy.model.common.Tier
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
@@ -43,9 +44,11 @@ interface ChallengeRepository {
     fun getChallengePosts(challengeId: Int): Flow<PagingData<ChallengePost>>
     fun getLatestChallengePost(challengeId: Int): Flow<ChallengePost?>
     fun observeChallengePostUpdates(challengeId: Int): Flow<Unit>
+    suspend fun reportChallengePost(postId: Int, reportReason: ReportReason): NetworkResult<Unit>
     suspend fun addChallengePost(challengeId: Int, content: String, tempWrittenDateTime: LocalDateTime)
     suspend fun resetStartedChallenge(challengeId: Int, memo: String): NetworkResult<Unit>
     suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit>
+    suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit>
     suspend fun getStartedChallengeDetail(challengeId: Int): Flow<NetworkResult<DetailedStartedChallenge>>
     suspend fun getResetRecords(challengeId: Int): NetworkResult<List<ResetRecord>>
     suspend fun getRemoteTier(): NetworkResult<Tier>

@@ -29,6 +29,7 @@ import com.yjy.data.network.datasource.ChallengeDataSource
 import com.yjy.data.network.request.AddChallengePostRequest
 import com.yjy.data.network.request.AddChallengeRequest
 import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
+import com.yjy.data.network.request.ReportChallengePostRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.model.challenge.ChallengePost
 import com.yjy.model.challenge.DetailedStartedChallenge
@@ -38,6 +39,7 @@ import com.yjy.model.challenge.SimpleWaitingChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.challenge.core.TargetDays
+import com.yjy.model.common.ReportReason
 import com.yjy.model.common.Tier
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -215,6 +217,18 @@ internal class ChallengeRepositoryImpl @Inject constructor(
             .onFailure { throw it.safeThrowable() }
     }
 
+    override suspend fun reportChallengePost(
+        postId: Int,
+        reportReason: ReportReason,
+    ): NetworkResult<Unit> {
+        return challengeDataSource.reportChallengePost(
+            ReportChallengePostRequest(
+                postId = postId,
+                reason = reportReason.name,
+            ),
+        )
+    }
+
     override suspend fun addChallengePost(
         challengeId: Int,
         content: String,
@@ -254,6 +268,10 @@ internal class ChallengeRepositoryImpl @Inject constructor(
 
     override suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit> =
         challengeDataSource.deleteStartedChallenge(challengeId)
+
+    override suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit> =
+        challengeDataSource.deleteChallengePost(postId)
+            .onSuccess { challengePostDao.deleteById(postId) }
 
     override suspend fun getStartedChallengeDetail(
         challengeId: Int,

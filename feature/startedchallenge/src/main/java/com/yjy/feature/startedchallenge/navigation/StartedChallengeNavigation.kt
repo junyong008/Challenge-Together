@@ -31,7 +31,7 @@ fun NavGraphBuilder.startedChallengeScreen(
     onEditTitleClick: (Int, String, String) -> Unit,
     onEditTargetDaysClick: (Int, String, Int) -> Unit,
     onResetRecordClick: (Int) -> Unit,
-    onBoardClick: (Int) -> Unit,
+    onBoardClick: (Int, Boolean) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     composable<ServiceRoute.StartedChallenge>(

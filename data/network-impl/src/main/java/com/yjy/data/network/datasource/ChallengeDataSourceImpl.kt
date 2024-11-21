@@ -4,6 +4,7 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.data.network.request.AddChallengePostRequest
 import com.yjy.data.network.request.AddChallengeRequest
 import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
+import com.yjy.data.network.request.ReportChallengePostRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.data.network.response.AddChallengeResponse
 import com.yjy.data.network.response.GetChallengePostsResponse
@@ -28,6 +29,12 @@ internal class ChallengeDataSourceImpl @Inject constructor(
 
     override suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit> =
         challengeTogetherService.deleteStartedChallenge(challengeId)
+
+    override suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit> =
+        challengeTogetherService.deleteChallengePost(postId)
+
+    override suspend fun reportChallengePost(request: ReportChallengePostRequest): NetworkResult<Unit> =
+        challengeTogetherService.reportChallengePost(request)
 
     override suspend fun editChallengeCategory(challengeId: Int, category: String): NetworkResult<Unit> =
         challengeTogetherService.editChallengeCategory(challengeId, category)

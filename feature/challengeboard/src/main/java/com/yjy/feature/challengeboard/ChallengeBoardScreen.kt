@@ -7,9 +7,11 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,9 +48,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -61,11 +68,15 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.yjy.common.core.constants.ChallengeConst.MAX_CHALLENGE_POST_LENGTH
+import com.yjy.common.core.util.ObserveAsEvents
+import com.yjy.common.designsystem.component.BaseBottomSheet
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherTextField
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.common.designsystem.component.CircleMedal
+import com.yjy.common.designsystem.component.ClickableText
 import com.yjy.common.designsystem.component.LoadingWheel
+import com.yjy.common.designsystem.component.ReportDialog
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
@@ -76,10 +87,12 @@ import com.yjy.common.ui.ErrorBody
 import com.yjy.common.ui.ErrorItem
 import com.yjy.common.ui.preview.ChallengePostPreviewParameterProvider
 import com.yjy.feature.challengeboard.model.ChallengeBoardUiAction
+import com.yjy.feature.challengeboard.model.ChallengeBoardUiEvent
 import com.yjy.feature.challengeboard.model.PostsUpdateState
 import com.yjy.feature.challengeboard.model.isError
 import com.yjy.feature.challengeboard.model.isLoading
 import com.yjy.model.challenge.ChallengePost
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -89,6 +102,7 @@ import java.util.Date
 
 @Composable
 internal fun ChallengeBoardRoute(
+    isAlone: Boolean,
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
@@ -100,9 +114,11 @@ internal fun ChallengeBoardRoute(
 
     ChallengeBoardScreen(
         modifier = modifier,
+        isAlone = isAlone,
         posts = posts,
         latestPost = latestPost,
         postsUpdateState = postsUpdateState,
+        uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
         onShowSnackbar = onShowSnackbar,
@@ -112,19 +128,50 @@ internal fun ChallengeBoardRoute(
 @Composable
 internal fun ChallengeBoardScreen(
     modifier: Modifier = Modifier,
+    isAlone: Boolean = false,
     posts: LazyPagingItems<ChallengePost>,
     latestPost: ChallengePost? = null,
     postsUpdateState: PostsUpdateState = PostsUpdateState.Connected,
+    uiEvent: Flow<ChallengeBoardUiEvent> = flowOf(),
     processAction: (ChallengeBoardUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val deleteSuccessMessage = stringResource(id = R.string.feature_challengeboard_delete_success)
+    val deleteFailureMessage = stringResource(id = R.string.feature_challengeboard_delete_failed)
+    val reportSuccessMessage = stringResource(id = R.string.feature_challengeboard_report_success)
+    val reportFailureMessage = stringResource(id = R.string.feature_challengeboard_report_failed)
+    val reportDuplicateMessage = stringResource(id = R.string.feature_challengeboard_report_already_reported)
+
+    ObserveAsEvents(flow = uiEvent) { event ->
+        when (event) {
+            ChallengeBoardUiEvent.DeleteSuccess ->
+                onShowSnackbar(SnackbarType.SUCCESS, deleteSuccessMessage)
+
+            ChallengeBoardUiEvent.DeleteFailure ->
+                onShowSnackbar(SnackbarType.ERROR, deleteFailureMessage)
+
+            ChallengeBoardUiEvent.ReportSuccess ->
+                onShowSnackbar(SnackbarType.SUCCESS, reportSuccessMessage)
+
+            ChallengeBoardUiEvent.ReportFailure ->
+                onShowSnackbar(SnackbarType.ERROR, reportFailureMessage)
+
+            ChallengeBoardUiEvent.ReportDuplicated ->
+                onShowSnackbar(SnackbarType.ERROR, reportDuplicateMessage)
+        }
+    }
+
     var inputText by rememberSaveable { mutableStateOf("") }
-    var showScrollToBottom by rememberSaveable { mutableStateOf(false) }
+    var selectedPost by remember { mutableStateOf<ChallengePost?>(null) }
+    var shouldShowReportDialog by rememberSaveable { mutableStateOf(false) }
+    var shouldShowScrollToBottom by rememberSaveable { mutableStateOf(false) }
     var newPostContent by rememberSaveable { mutableStateOf("") }
     var previousFirstContent by rememberSaveable { mutableStateOf<String?>(null) }
+
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
+    val clipboardManager = LocalClipboardManager.current
 
     val isNearBottom by remember {
         derivedStateOf {
@@ -133,7 +180,7 @@ internal fun ChallengeBoardScreen(
     }
 
     LaunchedEffect(isNearBottom) {
-        showScrollToBottom = !isNearBottom
+        shouldShowScrollToBottom = !isNearBottom
         if (isNearBottom) newPostContent = ""
     }
 
@@ -147,6 +194,41 @@ internal fun ChallengeBoardScreen(
         } else {
             newPostContent = latestPost.content
         }
+    }
+
+    if (shouldShowReportDialog && selectedPost != null) {
+        ReportDialog(
+            onClickReport = { reason ->
+                processAction(
+                    ChallengeBoardUiAction.OnReportPostClick(
+                        postId = selectedPost!!.postId,
+                        reason = reason,
+                    ),
+                )
+                shouldShowReportDialog = false
+                selectedPost = null
+            },
+            onClickNegative = { shouldShowReportDialog = false },
+        )
+    }
+
+    if (selectedPost != null) {
+        PostMenuBottomSheet(
+            isAlone = isAlone,
+            isAuthor = selectedPost!!.isAuthor,
+            onCopyClick = {
+                clipboardManager.setText(AnnotatedString(selectedPost!!.content))
+                selectedPost = null
+            },
+            onReportClick = {
+                shouldShowReportDialog = true
+            },
+            onDeleteClick = {
+                processAction(ChallengeBoardUiAction.OnDeletePostClick(selectedPost!!.postId))
+                selectedPost = null
+            },
+            onDismiss = { selectedPost = null },
+        )
     }
 
     val isLoading = posts.loadState.refresh is LoadState.Loading || postsUpdateState.isLoading()
@@ -207,13 +289,14 @@ internal fun ChallengeBoardScreen(
                     PostsBody(
                         posts = posts,
                         listState = listState,
+                        onPostLongPress = { selectedPost = it },
                     )
                     ScrollToBottomButton(
-                        visible = showScrollToBottom,
+                        visible = shouldShowScrollToBottom,
                         onClick = {
                             coroutineScope.launch {
                                 listState.scrollToItem(0)
-                                showScrollToBottom = false
+                                shouldShowScrollToBottom = false
                                 newPostContent = ""
                             }
                         },
@@ -226,7 +309,7 @@ internal fun ChallengeBoardScreen(
                         onClick = {
                             coroutineScope.launch {
                                 listState.scrollToItem(0)
-                                showScrollToBottom = false
+                                shouldShowScrollToBottom = false
                                 newPostContent = ""
                             }
                         },
@@ -237,6 +320,55 @@ internal fun ChallengeBoardScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun PostMenuBottomSheet(
+    isAlone: Boolean,
+    isAuthor: Boolean,
+    onCopyClick: () -> Unit,
+    onReportClick: () -> Unit,
+    onDeleteClick: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    BaseBottomSheet(onDismiss = onDismiss) {
+        Spacer(modifier = Modifier.height(16.dp))
+        ClickableText(
+            text = stringResource(id = R.string.feature_challengeboard_menu_copy),
+            textAlign = TextAlign.Center,
+            textDecoration = TextDecoration.None,
+            style = MaterialTheme.typography.labelMedium,
+            color = CustomColorProvider.colorScheme.onSurface,
+            onClick = onCopyClick,
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(vertical = 16.dp),
+        )
+        if (!isAuthor) {
+            ClickableText(
+                text = stringResource(id = R.string.feature_challengeboard_menu_report),
+                textAlign = TextAlign.Center,
+                textDecoration = TextDecoration.None,
+                style = MaterialTheme.typography.labelMedium,
+                color = CustomColorProvider.colorScheme.onSurface,
+                onClick = onReportClick,
+                modifier = Modifier.fillMaxWidth(),
+                contentPadding = PaddingValues(vertical = 16.dp),
+            )
+        }
+        if (isAlone) {
+            ClickableText(
+                text = stringResource(id = R.string.feature_challengeboard_menu_delete),
+                textAlign = TextAlign.Center,
+                textDecoration = TextDecoration.None,
+                style = MaterialTheme.typography.labelMedium,
+                color = CustomColorProvider.colorScheme.red,
+                onClick = onDeleteClick,
+                modifier = Modifier.fillMaxWidth(),
+                contentPadding = PaddingValues(vertical = 16.dp),
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
@@ -337,6 +469,7 @@ private fun NewPostPopup(
 private fun PostsBody(
     posts: LazyPagingItems<ChallengePost>,
     listState: LazyListState,
+    onPostLongPress: (ChallengePost) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -355,6 +488,7 @@ private fun PostsBody(
                 index = index,
                 posts = posts,
                 showBottomSpacer = index == 0,
+                onLongPress = onPostLongPress,
             )
         }
         item {
@@ -379,6 +513,7 @@ private fun PostItem(
     index: Int,
     posts: LazyPagingItems<ChallengePost>,
     showBottomSpacer: Boolean,
+    onLongPress: (ChallengePost) -> Unit,
 ) {
     val post = posts[index] ?: return
     val previousPost = if (index < posts.itemCount - 1) posts.peek(index + 1) else null
@@ -392,6 +527,7 @@ private fun PostItem(
         post = post,
         previousPost = previousPost,
         nextPost = nextPost,
+        onLongPress = { onLongPress(post) },
     )
 
     if (previousPost != null && !isSameDay(post.writtenDateTime, previousPost.writtenDateTime)) {
@@ -464,6 +600,7 @@ private fun ChatMessageItem(
     post: ChallengePost,
     previousPost: ChallengePost?,
     nextPost: ChallengePost?,
+    onLongPress: () -> Unit,
 ) {
     val isSameAuthorAsPrevious = previousPost?.writer?.name == post.writer.name &&
         isSameMinute(previousPost.writtenDateTime, post.writtenDateTime)
@@ -474,6 +611,7 @@ private fun ChatMessageItem(
         MyMessage(
             post = post,
             showTime = !isSameAuthorAsNext,
+            onLongPress = onLongPress,
             shape = RoundedCornerShape(
                 topStart = MaterialTheme.shapes.medium.topStart,
                 topEnd = MaterialTheme.shapes.extraSmall.topEnd,
@@ -486,6 +624,7 @@ private fun ChatMessageItem(
             post = post,
             showProfile = !isSameAuthorAsPrevious,
             showTime = !isSameAuthorAsNext,
+            onLongPress = onLongPress,
             shape = RoundedCornerShape(
                 topStart = MaterialTheme.shapes.extraSmall.topStart,
                 topEnd = MaterialTheme.shapes.medium.topEnd,
@@ -501,6 +640,7 @@ private fun MyMessage(
     post: ChallengePost,
     showTime: Boolean,
     shape: RoundedCornerShape,
+    onLongPress: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -528,6 +668,11 @@ private fun MyMessage(
                             alpha = if (post.isSynced) 1f else 0.5f,
                         ),
                     )
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onLongPress = { onLongPress() },
+                        )
+                    }
                     .padding(horizontal = 12.dp, vertical = 8.dp),
             ) {
                 Text(
@@ -551,6 +696,7 @@ private fun OthersMessage(
     showProfile: Boolean,
     showTime: Boolean,
     shape: RoundedCornerShape,
+    onLongPress: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
@@ -595,6 +741,11 @@ private fun OthersMessage(
                         modifier = Modifier
                             .clip(shape)
                             .background(CustomColorProvider.colorScheme.surface)
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onLongPress = { onLongPress() },
+                                )
+                            }
                             .padding(horizontal = 12.dp, vertical = 8.dp)
                             .weight(1f, fill = false),
                     ) {

@@ -7,6 +7,7 @@ import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.EmailLoginRequest
 import com.yjy.data.network.request.EmailRequest
 import com.yjy.data.network.request.RegisterFirebaseTokenRequest
+import com.yjy.data.network.request.ReportChallengePostRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.data.network.request.SignUpRequest
 import com.yjy.data.network.request.VerifyRequest
@@ -73,6 +74,16 @@ internal interface ChallengeTogetherService {
     @DELETE("service/challenge/delete/started")
     suspend fun deleteStartedChallenge(
         @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
+    @DELETE("service/challenge/posts/delete")
+    suspend fun deleteChallengePost(
+        @Query("postId") postId: Int,
+    ): NetworkResult<Unit>
+
+    @POST("service/challenge/posts/report")
+    suspend fun reportChallengePost(
+        @Body request: ReportChallengePostRequest,
     ): NetworkResult<Unit>
 
     @PATCH("service/challenge/edit/category")

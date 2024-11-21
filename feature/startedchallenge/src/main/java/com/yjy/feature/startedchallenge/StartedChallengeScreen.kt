@@ -103,7 +103,7 @@ internal fun StartedChallengeRoute(
     onEditTitleClick: (Int, String, String) -> Unit,
     onEditTargetDaysClick: (Int, String, Int) -> Unit,
     onResetRecordClick: (Int) -> Unit,
-    onBoardClick: (Int) -> Unit,
+    onBoardClick: (Int, Boolean) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StartedChallengeViewModel = hiltViewModel(),
@@ -139,7 +139,7 @@ internal fun StartedChallengeScreen(
     onEditTitleClick: (Int, String, String) -> Unit = { _, _, _ -> },
     onEditTargetDaysClick: (Int, String, Int) -> Unit = { _, _, _ -> },
     onResetRecordClick: (Int) -> Unit = {},
-    onBoardClick: (Int) -> Unit = {},
+    onBoardClick: (Int, Boolean) -> Unit = { _, _ -> },
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     var shouldShowResetBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -299,7 +299,7 @@ internal fun StartedChallengeScreen(
                 rank = challenge.rank,
                 currentParticipantCounts = challenge.currentParticipantCounts,
                 onResetRecordClick = { onResetRecordClick(challenge.id) },
-                onBoardClick = { onBoardClick(challenge.id) },
+                onBoardClick = { onBoardClick(challenge.id, challenge.currentParticipantCounts == 1) },
                 onRankingClick = {},
                 modifier = Modifier.padding(horizontal = 16.dp),
             )

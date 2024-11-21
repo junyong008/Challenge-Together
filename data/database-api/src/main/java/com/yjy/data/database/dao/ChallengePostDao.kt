@@ -51,6 +51,9 @@ interface ChallengePostDao {
     @Query("DELETE FROM challenge_posts WHERE tempId = :tempId")
     suspend fun deleteByTempId(tempId: Int)
 
+    @Query("DELETE FROM challenge_posts WHERE id = :id")
+    suspend fun deleteById(id: Int)
+
     @Query("DELETE FROM challenge_posts")
     suspend fun deleteAll()
 
