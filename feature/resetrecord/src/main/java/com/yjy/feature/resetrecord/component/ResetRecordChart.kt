@@ -111,7 +111,7 @@ internal fun ResetRecordChart(
     dateBoxPadding: Dp = 8.dp,
     scaleToChartSpacing: Dp = 16.dp,
     dateToChartSpacing: Dp = 16.dp,
-    dateSpacing: Dp = 32.dp,
+    dateSpacing: Dp = 36.dp,
     startFromLeft: Boolean = true,
     enableAnimation: Boolean = true,
 ) {

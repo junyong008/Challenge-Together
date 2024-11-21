@@ -164,6 +164,7 @@ private fun RecordItem(record: ResetRecord) {
                     text = stringResource(id = R.string.feature_resetrecord_record),
                     style = MaterialTheme.typography.labelSmall,
                     color = CustomColorProvider.colorScheme.onSurfaceMuted,
+                    modifier = Modifier.padding(end = 8.dp),
                 )
                 Text(
                     text = formatTimeDuration(record.recordInSeconds),
