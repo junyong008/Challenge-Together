@@ -3,6 +3,7 @@ package com.yjy.feature.challengeranking
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -138,7 +139,7 @@ internal fun ChallengeRankingScreen(
             Column(
                 modifier = Modifier
                     .clip(
-                        MaterialTheme.shapes.large.copy(
+                        MaterialTheme.shapes.medium.copy(
                             topStart = CornerSize(0),
                             topEnd = CornerSize(0),
                         ),
@@ -276,42 +277,57 @@ private fun RankItem(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(vertical = 16.dp),
     ) {
-        RankNumber(rank = challengeRank.rank)
-        Spacer(modifier = Modifier.width(16.dp))
         RankingProfile(tier = challengeRank.user.tier)
-        if (challengeRank.isInActive) {
-            ClickableText(
-                text = challengeRank.user.name,
-                style = MaterialTheme.typography.labelSmall,
-                color = CustomColorProvider.colorScheme.red,
-                onClick = onForceRemoveClick,
+        Spacer(modifier = Modifier.width(8.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            RankNickName(
+                challengeRank = challengeRank,
+                onForceRemoveClick = onForceRemoveClick,
             )
-        } else {
-            Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = challengeRank.user.name,
-                style = MaterialTheme.typography.labelSmall,
-                color = CustomColorProvider.colorScheme.onBackground,
+                text = if (challengeRank.isComplete) {
+                    stringResource(id = R.string.feature_challengeranking_success)
+                } else {
+                    formatTimeDuration(challengeRank.currentRecordInSeconds)
+                },
+                style = MaterialTheme.typography.bodyLarge,
+                color = if (challengeRank.isComplete) {
+                    CustomColorProvider.colorScheme.onBackground
+                } else {
+                    CustomColorProvider.colorScheme.red
+                },
+                modifier = Modifier.padding(start = 8.dp),
             )
         }
-        Spacer(
-            modifier = Modifier
-                .weight(1f)
-                .widthIn(min = 8.dp),
+        RankNumber(rank = challengeRank.rank)
+    }
+}
+
+@Composable
+private fun RankNickName(
+    challengeRank: ChallengeRank,
+    onForceRemoveClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val paddingValues = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+    if (challengeRank.isInActive) {
+        ClickableText(
+            text = challengeRank.user.name,
+            style = MaterialTheme.typography.labelSmall,
+            color = CustomColorProvider.colorScheme.red,
+            onClick = onForceRemoveClick,
+            contentPadding = paddingValues,
         )
+    } else {
         Text(
-            text = if (challengeRank.isComplete) {
-                stringResource(id = R.string.feature_challengeranking_success)
+            text = challengeRank.user.name,
+            style = if (challengeRank.isMine) {
+                MaterialTheme.typography.bodySmall
             } else {
-                formatTimeDuration(challengeRank.currentRecordInSeconds)
+                MaterialTheme.typography.labelSmall
             },
-            textAlign = TextAlign.End,
-            style = MaterialTheme.typography.bodyLarge,
-            color = if (challengeRank.isComplete) {
-                CustomColorProvider.colorScheme.onBackground
-            } else {
-                CustomColorProvider.colorScheme.red
-            },
+            color = CustomColorProvider.colorScheme.onBackground,
+            modifier = modifier.padding(paddingValues),
         )
     }
 }
@@ -324,15 +340,15 @@ private fun RankingHeader(myChallengeRank: ChallengeRank) {
     ) {
         RankingProfile(
             tier = myChallengeRank.user.tier,
-            modifier = Modifier.size(75.dp),
-            padding = 12.dp,
+            modifier = Modifier.size(70.dp),
+            padding = 14.dp,
             backgroundColor = CustomColorProvider.colorScheme.background,
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = myChallengeRank.user.name,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 color = CustomColorProvider.colorScheme.onSurface,
             )
             Text(
@@ -387,7 +403,7 @@ private fun RankingProfile(
     padding: Dp = 8.dp,
     backgroundColor: Color = CustomColorProvider.colorScheme.surface,
 ) {
-    Box(modifier = modifier.width(40.dp)) {
+    Box(modifier = modifier.width(46.dp)) {
         Box(
             modifier = Modifier
                 .clip(CircleShape)
