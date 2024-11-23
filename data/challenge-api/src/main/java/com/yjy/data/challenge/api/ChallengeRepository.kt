@@ -3,6 +3,7 @@ package com.yjy.data.challenge.api
 import androidx.paging.PagingData
 import com.yjy.common.network.NetworkResult
 import com.yjy.model.challenge.ChallengePost
+import com.yjy.model.challenge.ChallengeRank
 import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
@@ -49,8 +50,10 @@ interface ChallengeRepository {
     suspend fun resetStartedChallenge(challengeId: Int, memo: String): NetworkResult<Unit>
     suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit>
+    suspend fun forceRemoveStartedChallengeMember(memberId: Int): NetworkResult<Unit>
     suspend fun getStartedChallengeDetail(challengeId: Int): Flow<NetworkResult<DetailedStartedChallenge>>
     suspend fun getResetRecords(challengeId: Int): NetworkResult<List<ResetRecord>>
+    suspend fun getChallengeRanking(challengeId: Int): Flow<NetworkResult<List<ChallengeRank>>>
     suspend fun getRemoteTier(): NetworkResult<Tier>
     suspend fun setLocalTier(tier: Tier)
     suspend fun setSortOrder(order: SortOrder)

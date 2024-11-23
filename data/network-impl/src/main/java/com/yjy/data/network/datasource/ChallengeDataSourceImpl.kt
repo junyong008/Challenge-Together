@@ -8,6 +8,7 @@ import com.yjy.data.network.request.ReportChallengePostRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.data.network.response.AddChallengeResponse
 import com.yjy.data.network.response.GetChallengePostsResponse
+import com.yjy.data.network.response.GetChallengeRankingResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
@@ -32,6 +33,9 @@ internal class ChallengeDataSourceImpl @Inject constructor(
 
     override suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit> =
         challengeTogetherService.deleteChallengePost(postId)
+
+    override suspend fun forceRemoveFromStartedChallenge(memberId: Int): NetworkResult<Unit> =
+        challengeTogetherService.forceRemoveFromStartedChallenge(memberId)
 
     override suspend fun reportChallengePost(request: ReportChallengePostRequest): NetworkResult<Unit> =
         challengeTogetherService.reportChallengePost(request)
@@ -61,6 +65,11 @@ internal class ChallengeDataSourceImpl @Inject constructor(
     override suspend fun getResetRecords(
         challengeId: Int,
     ): NetworkResult<List<GetResetRecordResponse>> = challengeTogetherService.getResetRecords(challengeId)
+
+    override suspend fun getChallengeRanking(
+        challengeId: Int,
+    ): NetworkResult<List<GetChallengeRankingResponse>> =
+        challengeTogetherService.getChallengeRanking(challengeId)
 
     override suspend fun getChallengePosts(
         challengeId: Int,

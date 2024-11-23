@@ -131,7 +131,7 @@ object NotificationHelper {
         notificationManager.notify(linkIdx.hashCode(), notification)
     }
 
-    fun postChallengeNewPostNotification(
+    fun postStartedChallengeNewPostNotification(
         context: Context,
         header: String,
         body: String,
@@ -144,6 +144,33 @@ object NotificationHelper {
         val notification = createChallengeNotification {
             setContentTitle(title)
                 .setContentText(body)
+                .setContentIntent(
+                    startedChallengePendingIntent(linkIdx),
+                )
+                .setSmallIcon(R.drawable.ic_notification)
+                .setGroup(CHALLENGE_NOTIFICATION_GROUP)
+                .setAutoCancel(true)
+                .build()
+        }
+
+        val notificationManager = NotificationManagerCompat.from(this)
+        notificationManager.notify(linkIdx.hashCode(), notification)
+    }
+
+    fun postChallengeForceRemoveNotification(
+        context: Context,
+        header: String,
+        body: String,
+        linkIdx: String,
+    ) = with(context) {
+        if (!isNotificationPermissionGranted()) return
+
+        val title = getString(R.string.platform_notifications_participant_force_remove, header)
+        val message = getString(R.string.platform_notifications_user_force_remove, body)
+
+        val notification = createChallengeNotification {
+            setContentTitle(title)
+                .setContentText(message)
                 .setContentIntent(
                     startedChallengePendingIntent(linkIdx),
                 )

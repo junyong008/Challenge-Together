@@ -52,3 +52,11 @@ inline fun <T, R> NetworkResult<T>.map(
     is NetworkResult.Success -> NetworkResult.Success(transform(data))
     is NetworkResult.Failure -> this
 }
+
+inline fun <T, R> NetworkResult<T>.fold(
+    onSuccess: (T) -> R,
+    onFailure: (NetworkResult.Failure) -> R,
+): R = when (this) {
+    is NetworkResult.Success -> onSuccess(data)
+    is NetworkResult.Failure -> onFailure(this)
+}

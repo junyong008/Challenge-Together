@@ -31,6 +31,7 @@ dependencies {
         projects.feature.editchallenge,
         projects.feature.resetrecord,
         projects.feature.challengeboard,
+        projects.feature.challengeranking,
         projects.feature.changepassword,
 
         libs.accompanist.permissions,

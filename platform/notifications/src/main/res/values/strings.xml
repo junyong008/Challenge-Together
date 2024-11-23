@@ -6,4 +6,6 @@
     <string name="platform_notifications_participant_give_up">%1$s Participant Gave Up</string>
     <string name="platform_notifications_user_give_up">%1$s has given up.</string>
     <string name="platform_notifications_challengeboard_post_added">New post in %1$s challenge board</string>
+    <string name="platform_notifications_participant_force_remove">%1$s Participant Forced Out</string>
+    <string name="platform_notifications_user_force_remove">%1$s has been forcibly removed due to prolonged inactivity.</string>
 </resources>

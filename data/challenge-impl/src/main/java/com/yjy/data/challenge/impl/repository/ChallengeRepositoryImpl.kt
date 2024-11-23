@@ -32,6 +32,7 @@ import com.yjy.data.network.request.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.ReportChallengePostRequest
 import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.model.challenge.ChallengePost
+import com.yjy.model.challenge.ChallengeRank
 import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
@@ -273,6 +274,9 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         challengeDataSource.deleteChallengePost(postId)
             .onSuccess { challengePostDao.deleteById(postId) }
 
+    override suspend fun forceRemoveStartedChallengeMember(memberId: Int): NetworkResult<Unit> =
+        challengeDataSource.forceRemoveFromStartedChallenge(memberId)
+
     override suspend fun getStartedChallengeDetail(
         challengeId: Int,
     ): Flow<NetworkResult<DetailedStartedChallenge>> = when (
@@ -285,7 +289,6 @@ internal class ChallengeRepositoryImpl @Inject constructor(
             // 리셋 등 이벤트에 대응하여 즉각적으로 데이터를 최신화 하기 위한 동기화
             challengeDao.insert(result.toEntity())
 
-            // tickerFlow 구독을 통한 현재 기록 업데이트
             tickerFlow.map { currentTime ->
                 NetworkResult.Success(challenge.updateCurrentRecord(currentTime))
             }
@@ -293,12 +296,29 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         is NetworkResult.Failure -> flowOf(response)
     }
 
+    private fun DetailedStartedChallenge.updateCurrentRecord(currentTime: LocalDateTime) = copy(
+        currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),
+    )
+
     override suspend fun getResetRecords(challengeId: Int): NetworkResult<List<ResetRecord>> =
         challengeDataSource.getResetRecords(challengeId).map { response ->
             response.map { it.toModel() }
         }
 
-    private fun DetailedStartedChallenge.updateCurrentRecord(currentTime: LocalDateTime) = copy(
+    override suspend fun getChallengeRanking(challengeId: Int): Flow<NetworkResult<List<ChallengeRank>>> =
+        when (val response = challengeDataSource.getChallengeRanking(challengeId)) {
+            is NetworkResult.Success -> {
+                val result = response.data
+                val challengeRanks = result.map { it.toModel() }
+
+                tickerFlow.map { currentTime ->
+                    NetworkResult.Success(challengeRanks.map { it.updateCurrentRecord(currentTime) })
+                }
+            }
+            is NetworkResult.Failure -> flowOf(response)
+        }
+
+    private fun ChallengeRank.updateCurrentRecord(currentTime: LocalDateTime) = copy(
         currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),
     )
 

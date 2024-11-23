@@ -10,6 +10,8 @@ import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.addchallenge.navigation.addChallengeNavGraph
 import com.yjy.feature.challengeboard.navigation.challengeBoardScreen
 import com.yjy.feature.challengeboard.navigation.navigateToChallengeBoard
+import com.yjy.feature.challengeranking.navigation.challengeRankingScreen
+import com.yjy.feature.challengeranking.navigation.navigateToChallengeRanking
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
 import com.yjy.feature.editchallenge.navigation.editChallengeScreen
 import com.yjy.feature.editchallenge.navigation.navigateToEditCategory
@@ -63,12 +65,17 @@ internal fun ServiceNavHost(
             onEditTargetDaysClick = navController::navigateToEditTargetDays,
             onResetRecordClick = navController::navigateToResetRecord,
             onBoardClick = navController::navigateToChallengeBoard,
+            onRankingClick = navController::navigateToChallengeRanking,
             onShowSnackbar = onShowSnackbar,
         )
         resetRecordScreen(
             onBackClick = navController::popBackStack,
         )
         challengeBoardScreen(
+            onBackClick = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
+        )
+        challengeRankingScreen(
             onBackClick = navController::popBackStack,
             onShowSnackbar = onShowSnackbar,
         )

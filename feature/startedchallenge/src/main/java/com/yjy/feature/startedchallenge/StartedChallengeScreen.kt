@@ -104,6 +104,7 @@ internal fun StartedChallengeRoute(
     onEditTargetDaysClick: (Int, String, Int) -> Unit,
     onResetRecordClick: (Int) -> Unit,
     onBoardClick: (Int, Boolean) -> Unit,
+    onRankingClick: (Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StartedChallengeViewModel = hiltViewModel(),
@@ -123,6 +124,7 @@ internal fun StartedChallengeRoute(
         onEditTargetDaysClick = onEditTargetDaysClick,
         onResetRecordClick = onResetRecordClick,
         onBoardClick = onBoardClick,
+        onRankingClick = onRankingClick,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -140,6 +142,7 @@ internal fun StartedChallengeScreen(
     onEditTargetDaysClick: (Int, String, Int) -> Unit = { _, _, _ -> },
     onResetRecordClick: (Int) -> Unit = {},
     onBoardClick: (Int, Boolean) -> Unit = { _, _ -> },
+    onRankingClick: (Int) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     var shouldShowResetBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -300,7 +303,7 @@ internal fun StartedChallengeScreen(
                 currentParticipantCounts = challenge.currentParticipantCounts,
                 onResetRecordClick = { onResetRecordClick(challenge.id) },
                 onBoardClick = { onBoardClick(challenge.id, challenge.currentParticipantCounts == 1) },
-                onRankingClick = {},
+                onRankingClick = { onRankingClick(challenge.id) },
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
             Spacer(modifier = Modifier.height(32.dp))

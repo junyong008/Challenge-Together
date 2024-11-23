@@ -9,6 +9,7 @@ import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.data.network.response.AddChallengeResponse
 import com.yjy.data.network.response.ChallengePostResponse
 import com.yjy.data.network.response.GetChallengePostsResponse
+import com.yjy.data.network.response.GetChallengeRankingResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
@@ -20,6 +21,7 @@ interface ChallengeDataSource {
     suspend fun resetStartedChallenge(request: ResetChallengeRequest): NetworkResult<Unit>
     suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit>
+    suspend fun forceRemoveFromStartedChallenge(memberId: Int): NetworkResult<Unit>
     suspend fun reportChallengePost(request: ReportChallengePostRequest): NetworkResult<Unit>
     suspend fun editChallengeCategory(challengeId: Int, category: String): NetworkResult<Unit>
     suspend fun editChallengeTitleDescription(request: EditChallengeTitleDescriptionRequest): NetworkResult<Unit>
@@ -32,6 +34,9 @@ interface ChallengeDataSource {
     suspend fun getResetRecords(
         challengeId: Int,
     ): NetworkResult<List<GetResetRecordResponse>>
+    suspend fun getChallengeRanking(
+        challengeId: Int,
+    ): NetworkResult<List<GetChallengeRankingResponse>>
     suspend fun getChallengePosts(
         challengeId: Int,
         lastPostId: Int,

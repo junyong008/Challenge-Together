@@ -3,9 +3,10 @@ package com.yjy.challengetogether.fcm
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.yjy.data.user.api.UserRepository
+import com.yjy.platform.notifications.NotificationHelper.postChallengeForceRemoveNotification
 import com.yjy.platform.notifications.NotificationHelper.postChallengeGiveUpNotification
-import com.yjy.platform.notifications.NotificationHelper.postChallengeNewPostNotification
 import com.yjy.platform.notifications.NotificationHelper.postChallengeResetNotification
+import com.yjy.platform.notifications.NotificationHelper.postStartedChallengeNewPostNotification
 import dagger.hilt.EntryPoints
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -69,16 +70,24 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     messageData.linkIdx,
                 )
 
-            FcmMessageType.CHALLENGE_POST -> {
+            FcmMessageType.CHALLENGE_STARTED_POST -> {
                 val linkIdxInt = messageData.linkIdx.toIntOrNull() ?: return
                 if (userRepository.getMutedChallengeBoards().contains(linkIdxInt)) return
-                postChallengeNewPostNotification(
+                postStartedChallengeNewPostNotification(
                     this,
                     messageData.header,
                     messageData.body,
                     messageData.linkIdx,
                 )
             }
+
+            FcmMessageType.CHALLENGE_FORCE_REMOVE ->
+                postChallengeForceRemoveNotification(
+                    this,
+                    messageData.header,
+                    messageData.body,
+                    messageData.linkIdx,
+                )
         }
     }
 

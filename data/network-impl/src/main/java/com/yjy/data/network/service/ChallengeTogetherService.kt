@@ -13,6 +13,7 @@ import com.yjy.data.network.request.SignUpRequest
 import com.yjy.data.network.request.VerifyRequest
 import com.yjy.data.network.response.AddChallengeResponse
 import com.yjy.data.network.response.GetChallengePostsResponse
+import com.yjy.data.network.response.GetChallengeRankingResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetNameResponse
 import com.yjy.data.network.response.GetRecordsResponse
@@ -81,6 +82,11 @@ internal interface ChallengeTogetherService {
         @Query("postId") postId: Int,
     ): NetworkResult<Unit>
 
+    @POST("service/challenge/force-remove")
+    suspend fun forceRemoveFromStartedChallenge(
+        @Query("memberId") memberId: Int,
+    ): NetworkResult<Unit>
+
     @POST("service/challenge/posts/report")
     suspend fun reportChallengePost(
         @Body request: ReportChallengePostRequest,
@@ -131,6 +137,11 @@ internal interface ChallengeTogetherService {
         @Query("challengeId") challengeId: Int,
         @Query("lastCachedPostId") lastCachedPostId: Int,
     ): NetworkResult<List<GetChallengePostsResponse>>
+
+    @GET("service/challenge/get/ranking")
+    suspend fun getChallengeRanking(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<List<GetChallengeRankingResponse>>
 
     @GET("service/user/get/name")
     suspend fun getUserName(): NetworkResult<GetNameResponse>

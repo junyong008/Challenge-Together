@@ -59,6 +59,7 @@ include(
     ":feature:startedchallenge",
     ":feature:resetrecord",
     ":feature:challengeboard",
+    ":feature:challengeranking",
 
     ":feature:login",
     ":feature:signup",
