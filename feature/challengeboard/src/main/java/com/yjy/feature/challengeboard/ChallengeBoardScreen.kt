@@ -412,7 +412,11 @@ private fun NotificationButton(
             contentDescription = stringResource(
                 id = R.string.feature_challengeboard_toggle_notification,
             ),
-            tint = CustomColorProvider.colorScheme.onBackground,
+            tint = if (isNotificationOn) {
+                CustomColorProvider.colorScheme.onBackground
+            } else {
+                CustomColorProvider.colorScheme.onBackgroundMuted
+            },
         )
     }
 }
