@@ -61,4 +61,7 @@
     <string name="common_designsystem_report_reason_disturbing_behavior">Disruptive behavior</string>
     <string name="common_designsystem_report_reason_defamation">Defamation or slander</string>
     <string name="common_designsystem_report_reason_incorrect_info">Incorrect information</string>
+
+    <string name="common_designsystem_user_withdrawn">(Withdrawn)</string>
+    <string name="common_designsystem_user_deleted">(Deleted)</string>
 </resources>

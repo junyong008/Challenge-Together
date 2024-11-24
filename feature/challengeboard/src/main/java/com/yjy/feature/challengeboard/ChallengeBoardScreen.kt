@@ -78,6 +78,8 @@ import com.yjy.common.designsystem.component.ClickableText
 import com.yjy.common.designsystem.component.LoadingWheel
 import com.yjy.common.designsystem.component.ReportDialog
 import com.yjy.common.designsystem.component.SnackbarType
+import com.yjy.common.designsystem.extensions.getDisplayColor
+import com.yjy.common.designsystem.extensions.getDisplayName
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
@@ -775,9 +777,12 @@ private fun OthersMessage(
             Column {
                 if (showProfile) {
                     Text(
-                        text = post.writer.name,
+                        text = post.writer.getDisplayName(),
                         style = MaterialTheme.typography.labelSmall,
-                        color = CustomColorProvider.colorScheme.onBackgroundMuted,
+                        color = post.writer.getDisplayColor(
+                            activeColor = CustomColorProvider.colorScheme.onBackgroundMuted,
+                            inActiveColor = CustomColorProvider.colorScheme.divider,
+                        ),
                         modifier = Modifier.padding(bottom = 8.dp),
                     )
                 }

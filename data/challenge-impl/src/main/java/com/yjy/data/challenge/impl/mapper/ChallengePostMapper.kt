@@ -5,7 +5,6 @@ import com.yjy.data.network.response.ChallengePostResponse
 import com.yjy.data.network.response.GetChallengePostsResponse
 import com.yjy.model.challenge.ChallengePost
 import com.yjy.model.common.Tier
-import com.yjy.model.common.User
 
 internal fun GetChallengePostsResponse.toEntity(challengeId: Int) = ChallengePostEntity(
     id = postId,
@@ -21,7 +20,7 @@ internal fun GetChallengePostsResponse.toEntity(challengeId: Int) = ChallengePos
 
 internal fun ChallengePostEntity.toModel() = ChallengePost(
     postId = id,
-    writer = User(
+    writer = UserMapper.create(
         name = writerName,
         tier = Tier.getCurrentTier(writerBestRecordInSeconds),
     ),
