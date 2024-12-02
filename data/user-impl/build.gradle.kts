@@ -15,8 +15,11 @@ dependencies {
         projects.model,
 
         projects.data.userApi,
+        projects.data.databaseApi,
         projects.data.datastoreApi,
         projects.data.networkApi,
+
+        libs.androidx.paging.ktx,
     )
 
     testImplementation(libs.kotlinx.coroutines.test)

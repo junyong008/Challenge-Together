@@ -42,6 +42,8 @@ dependencies {
         projects.navigation.auth,
         projects.navigation.service,
 
+        projects.model,
+
         projects.common.core,
         projects.common.designsystem,
         projects.common.navigation,
@@ -58,6 +60,7 @@ dependencies {
         libs.androidx.hilt.navigation.compose,
         libs.timber,
     )
+
     runtimeOnly(projects.data.authImpl)
     runtimeOnly(projects.data.userImpl)
     runtimeOnly(projects.data.challengeImpl)

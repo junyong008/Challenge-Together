@@ -3,7 +3,7 @@ package com.yjy.data.datastore.impl
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.yjy.data.datastore.api.NotificationDataSource
+import com.yjy.data.datastore.api.NotificationSettingDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -12,9 +12,9 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
-internal class NotificationDataSourceImpl @Inject constructor(
+internal class NotificationSettingDataSourceImpl @Inject constructor(
     @NotificationDataStore private val dataStore: DataStore<Preferences>,
-) : NotificationDataSource {
+) : NotificationSettingDataSource {
 
     override val mutedChallengeBoards: Flow<List<Int>> = dataStore.data
         .catch { recoverOrThrow(it) }

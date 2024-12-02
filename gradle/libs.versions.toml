@@ -66,6 +66,7 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 # build-logic의 커스텀 plugins에 포함된 기본 라이브러리
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "androidxCompose" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "androidxCompose" }
 androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "androidxCompose" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "androidxComposeMaterial3" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "androidxCompose" }
@@ -106,6 +107,7 @@ room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", vers
 [bundles]
 androidx-compose = [
     "androidx-compose-foundation",
+    "androidx-compose-material",
     "androidx-compose-material-iconsExtended",
     "androidx-compose-material3",
     "androidx-compose-runtime",

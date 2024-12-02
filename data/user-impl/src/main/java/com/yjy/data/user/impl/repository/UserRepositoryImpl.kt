@@ -1,28 +1,40 @@
 package com.yjy.data.user.impl.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.map
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
-import com.yjy.data.datastore.api.NotificationDataSource
+import com.yjy.data.database.dao.NotificationDao
+import com.yjy.data.datastore.api.NotificationSettingDataSource
 import com.yjy.data.datastore.api.UserPreferencesDataSource
 import com.yjy.data.network.datasource.UserDataSource
 import com.yjy.data.network.request.RegisterFirebaseTokenRequest
 import com.yjy.data.user.api.FcmTokenProvider
 import com.yjy.data.user.api.UserRepository
+import com.yjy.data.user.impl.mapper.toModel
+import com.yjy.data.user.impl.mediator.NotificationRemoteMediator
+import com.yjy.model.common.notification.Notification
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import javax.inject.Inject
 
 internal class UserRepositoryImpl @Inject constructor(
     private val userPreferencesDataSource: UserPreferencesDataSource,
-    private val notificationDataSource: NotificationDataSource,
+    private val notificationSettingDataSource: NotificationSettingDataSource,
+    private val notificationDao: NotificationDao,
     private val fcmTokenProvider: FcmTokenProvider,
     private val userDataSource: UserDataSource,
 ) : UserRepository {
 
     override val timeDiff: Flow<Long> = userPreferencesDataSource.timeDiff
-    override val mutedChallengeBoardIds: Flow<List<Int>> = notificationDataSource.mutedChallengeBoards
+    override val mutedChallengeBoardIds: Flow<List<Int>> = notificationSettingDataSource.mutedChallengeBoards
 
     override suspend fun syncTime(): NetworkResult<Unit> = userDataSource.syncTime()
 
@@ -31,6 +43,46 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUnViewedNotificationCount(): NetworkResult<Int> =
         userDataSource.getUnViewedNotificationCount().map { it.unViewedNotificationCount }
+
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getNotifications(): Flow<PagingData<Notification>> {
+        val pager = Pager(
+            config = PagingConfig(
+                pageSize = PAGING_PAGE_SIZE,
+                initialLoadSize = PAGING_INITIAL_LOAD_SIZE,
+                prefetchDistance = PAGING_PREFETCH_DISTANCE,
+                enablePlaceholders = true,
+            ),
+            remoteMediator = NotificationRemoteMediator(
+                userDataSource = userDataSource,
+                notificationDao = notificationDao,
+            ),
+            pagingSourceFactory = {
+                notificationDao.pagingSource()
+            },
+        )
+
+        return pager.flow.map { pagingData ->
+            val currentTimeDiff = timeDiff.first()
+            pagingData.map { notification ->
+                notification.toModel().copy(
+                    createdDateTime = notification.createdDateTime.plusSeconds(currentTimeDiff),
+                )
+            }
+        }
+    }
+
+    override suspend fun deleteNotification(notificationId: Int): NetworkResult<Unit> =
+        userDataSource.deleteNotification(notificationId)
+            .onSuccess {
+                notificationDao.deleteById(notificationId)
+            }
+
+    override suspend fun deleteAllNotifications(): NetworkResult<Unit> =
+        userDataSource.deleteNotifications()
+            .onSuccess {
+                notificationDao.deleteAll()
+            }
 
     override suspend fun registerFcmToken() {
         val currentToken: String = fcmTokenProvider.getToken()
@@ -44,13 +96,19 @@ internal class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMutedChallengeBoards(): List<Int> =
-        notificationDataSource.getMutedChallengeBoards()
+        notificationSettingDataSource.getMutedChallengeBoards()
 
     override suspend fun muteChallengeBoardNotification(challengeId: Int) {
-        notificationDataSource.addMutedChallengeBoard(challengeId)
+        notificationSettingDataSource.addMutedChallengeBoard(challengeId)
     }
 
     override suspend fun unMuteChallengeBoardNotification(challengeId: Int) {
-        notificationDataSource.removeMutedChallengeBoard(challengeId)
+        notificationSettingDataSource.removeMutedChallengeBoard(challengeId)
+    }
+
+    private companion object {
+        const val PAGING_PAGE_SIZE = 30
+        const val PAGING_INITIAL_LOAD_SIZE = 50
+        const val PAGING_PREFETCH_DISTANCE = 90
     }
 }

@@ -25,6 +25,8 @@ object ChallengeTogetherIcons {
     val Trophy = R.drawable.ic_trophy
     val TrophyOff = R.drawable.ic_trophy_off
     val Lock = R.drawable.ic_lock
+    val NotificationChallenge = R.drawable.ic_noti_challenge
+    val NotificationCommunity = R.drawable.ic_noti_community
     val NotificationOn = R.drawable.ic_notification_on
     val NotificationOff = R.drawable.ic_notification_off
     val Person = R.drawable.ic_person

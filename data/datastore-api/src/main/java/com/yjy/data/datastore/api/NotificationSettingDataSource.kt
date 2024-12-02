@@ -2,7 +2,7 @@ package com.yjy.data.datastore.api
 
 import kotlinx.coroutines.flow.Flow
 
-interface NotificationDataSource {
+interface NotificationSettingDataSource {
     val mutedChallengeBoards: Flow<List<Int>>
     suspend fun getMutedChallengeBoards(): List<Int>
     suspend fun addMutedChallengeBoard(challengeId: Int)

@@ -13,6 +13,7 @@ dependencies {
         projects.common.network,
         projects.model,
 
+        libs.androidx.paging.ktx,
         libs.kotlinx.coroutines.core,
     )
 }

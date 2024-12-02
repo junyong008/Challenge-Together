@@ -15,13 +15,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.net.toUri
-import com.yjy.platform.notifications.NotificationConst.CHALLENGE_NOTIFICATION_GROUP
-import com.yjy.platform.notifications.NotificationConst.CHANNEL_CHALLENGE_ID
-import com.yjy.platform.notifications.NotificationConst.CHANNEL_COMMUNITY_ID
-import com.yjy.platform.notifications.NotificationConst.DEEP_LINK_SCHEME_AND_HOST
-import com.yjy.platform.notifications.NotificationConst.SERVICE_ACTIVITY_NAME
-import com.yjy.platform.notifications.NotificationConst.STARTED_CHALLENGE_PATH
-import com.yjy.platform.notifications.NotificationConst.STARTED_CHALLENGE_REQUEST_CODE
+import com.yjy.platform.notifications.constants.DeepLinkConfig
+import com.yjy.platform.notifications.constants.NotificationChannels
+import com.yjy.platform.notifications.model.PlatformNotification
+import com.yjy.platform.notifications.model.PlatformNotificationNavigation
 
 object NotificationHelper {
 
@@ -34,7 +31,7 @@ object NotificationHelper {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createChallengeNotificationChannel(context: Context) {
         val challengeChannel = NotificationChannel(
-            CHANNEL_CHALLENGE_ID,
+            NotificationChannels.CHALLENGE,
             context.getString(R.string.platform_notifications_channel_challenge_name),
             NotificationManager.IMPORTANCE_HIGH,
         )
@@ -46,7 +43,7 @@ object NotificationHelper {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createCommunityNotificationChannel(context: Context) {
         val communityChannel = NotificationChannel(
-            CHANNEL_COMMUNITY_ID,
+            NotificationChannels.COMMUNITY,
             context.getString(R.string.platform_notifications_channel_community_name),
             NotificationManager.IMPORTANCE_HIGH,
         )
@@ -63,138 +60,48 @@ object NotificationHelper {
         }
     }
 
-    private fun Context.ensureNotificationChannelsExists() {
-        createNotificationChannels(this)
-    }
-
-    private fun Context.createChallengeNotification(
+    private fun Context.createNotification(
+        channelId: String,
         block: NotificationCompat.Builder.() -> Unit,
     ): Notification {
-        ensureNotificationChannelsExists()
-        return NotificationCompat.Builder(this, CHANNEL_CHALLENGE_ID)
+        createNotificationChannels(this)
+        return NotificationCompat.Builder(this, channelId)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .apply(block)
             .build()
     }
 
-    fun postChallengeResetNotification(
-        context: Context,
-        header: String,
-        body: String,
-        linkIdx: String,
-    ) = with(context) {
+    fun postNotification(context: Context, notification: PlatformNotification) = with(context) {
         if (!isNotificationPermissionGranted()) return
 
-        val title = getString(R.string.platform_notifications_participant_reset, header)
-        val message = getString(R.string.platform_notifications_user_reset, body)
-
-        val notification = createChallengeNotification {
-            setContentTitle(title)
-                .setContentText(message)
+        val androidNotification = createNotification(notification.channelId) {
+            setContentTitle(notification.title)
+                .setContentText(notification.message)
                 .setContentIntent(
-                    startedChallengePendingIntent(linkIdx),
+                    notification.navigation?.let { navigation ->
+                        createPendingIntent(navigation)
+                    },
                 )
                 .setSmallIcon(R.drawable.ic_notification)
-                .setGroup(CHALLENGE_NOTIFICATION_GROUP)
+                .setGroup(notification.group)
                 .setAutoCancel(true)
-                .build()
         }
 
         val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(linkIdx.hashCode(), notification)
+        notificationManager.notify(notification.id, androidNotification)
     }
 
-    fun postChallengeGiveUpNotification(
-        context: Context,
-        header: String,
-        body: String,
-        linkIdx: String,
-    ) = with(context) {
-        if (!isNotificationPermissionGranted()) return
-
-        val title = getString(R.string.platform_notifications_participant_give_up, header)
-        val message = getString(R.string.platform_notifications_user_give_up, body)
-
-        val notification = createChallengeNotification {
-            setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(
-                    startedChallengePendingIntent(linkIdx),
-                )
-                .setSmallIcon(R.drawable.ic_notification)
-                .setGroup(CHALLENGE_NOTIFICATION_GROUP)
-                .setAutoCancel(true)
-                .build()
-        }
-
-        val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(linkIdx.hashCode(), notification)
-    }
-
-    fun postStartedChallengeNewPostNotification(
-        context: Context,
-        header: String,
-        body: String,
-        linkIdx: String,
-    ) = with(context) {
-        if (!isNotificationPermissionGranted()) return
-
-        val title = getString(R.string.platform_notifications_challengeboard_post_added, header)
-
-        val notification = createChallengeNotification {
-            setContentTitle(title)
-                .setContentText(body)
-                .setContentIntent(
-                    startedChallengePendingIntent(linkIdx),
-                )
-                .setSmallIcon(R.drawable.ic_notification)
-                .setGroup(CHALLENGE_NOTIFICATION_GROUP)
-                .setAutoCancel(true)
-                .build()
-        }
-
-        val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(linkIdx.hashCode(), notification)
-    }
-
-    fun postChallengeForceRemoveNotification(
-        context: Context,
-        header: String,
-        body: String,
-        linkIdx: String,
-    ) = with(context) {
-        if (!isNotificationPermissionGranted()) return
-
-        val title = getString(R.string.platform_notifications_participant_force_remove, header)
-        val message = getString(R.string.platform_notifications_user_force_remove, body)
-
-        val notification = createChallengeNotification {
-            setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(
-                    startedChallengePendingIntent(linkIdx),
-                )
-                .setSmallIcon(R.drawable.ic_notification)
-                .setGroup(CHALLENGE_NOTIFICATION_GROUP)
-                .setAutoCancel(true)
-                .build()
-        }
-
-        val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(linkIdx.hashCode(), notification)
-    }
-
-    private fun Context.startedChallengePendingIntent(
-        challengeId: String,
-    ): PendingIntent? = PendingIntent.getActivity(
+    private fun Context.createPendingIntent(
+        navigation: PlatformNotificationNavigation,
+    ): PendingIntent = PendingIntent.getActivity(
         this,
-        STARTED_CHALLENGE_REQUEST_CODE,
+        navigation.requestCode,
         Intent().apply {
             action = Intent.ACTION_VIEW
-            data = "$DEEP_LINK_SCHEME_AND_HOST/$STARTED_CHALLENGE_PATH/$challengeId".toUri()
+            data = "${DeepLinkConfig.SCHEME_AND_HOST}/${navigation.deepLinkPath}/${navigation.param}".toUri()
             component = ComponentName(
                 packageName,
-                SERVICE_ACTIVITY_NAME,
+                DeepLinkConfig.SERVICE_ACTIVITY,
             )
         },
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,

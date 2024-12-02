@@ -97,6 +97,7 @@ import com.yjy.model.common.Tier
 @Composable
 internal fun HomeRoute(
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
+    onNotificationClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -125,6 +126,7 @@ internal fun HomeRoute(
         uiState = uiState,
         processAction = viewModel::processAction,
         onStartedChallengeClick = onStartedChallengeClick,
+        onNotificationClick = onNotificationClick,
     )
 }
 
@@ -143,6 +145,7 @@ internal fun HomeScreen(
     uiState: HomeUiState = HomeUiState(),
     processAction: (HomeUiAction) -> Unit = {},
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit = {},
+    onNotificationClick: () -> Unit = {},
 ) {
     var shouldShowSortOrderBottomSheet by remember { mutableStateOf(false) }
 
@@ -173,7 +176,10 @@ internal fun HomeScreen(
         completedChallengeTitles = recentCompletedChallenges,
         selectedSortOrder = sortOrder,
         shouldShowSortOrderBottomSheet = shouldShowSortOrderBottomSheet,
-        onSortOrderSelected = { processAction(HomeUiAction.OnSortOrderSelect(it)) },
+        onSortOrderSelected = {
+            processAction(HomeUiAction.OnSortOrderSelect(it))
+            shouldShowSortOrderBottomSheet = false
+        },
         onDismissTierUp = { processAction(HomeUiAction.OnDismissTierUpAnimation) },
         onDismissCompleted = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
         onDismissSortOrder = { shouldShowSortOrderBottomSheet = false },
@@ -193,7 +199,7 @@ internal fun HomeScreen(
     ) {
         HomeTopBar(
             onShowCompleteChallengeClick = {},
-            onShowNotificationClick = {},
+            onShowNotificationClick = onNotificationClick,
             hasNewNotification = unViewedNotificationUiState.hasNewNotification(),
         )
         HomeBody(

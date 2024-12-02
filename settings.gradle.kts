@@ -54,6 +54,7 @@ include(
     ":navigation:service",
 
     ":feature:home",
+    ":feature:notification",
     ":feature:addchallenge",
     ":feature:editchallenge",
     ":feature:startedchallenge",

@@ -3,4 +3,8 @@
     <string name="common_core_time_hour">h</string>
     <string name="common_core_time_minute">m</string>
     <string name="common_core_time_second">s</string>
+    <string name="common_core_time_seconds_ago">%d seconds ago</string>
+    <string name="common_core_time_minutes_ago">%d minutes ago</string>
+    <string name="common_core_time_hours_ago">%d hours ago</string>
+    <string name="common_core_time_days_ago">%d days ago</string>
 </resources>

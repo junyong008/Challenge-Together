@@ -9,4 +9,5 @@ import dagger.hilt.components.SingletonComponent
 @EntryPoint
 interface FcmEntryPoint {
     fun userRepository(): UserRepository
+    fun notificationMapper(): NotificationMapper
 }

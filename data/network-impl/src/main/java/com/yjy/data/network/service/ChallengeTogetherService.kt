@@ -16,6 +16,7 @@ import com.yjy.data.network.response.GetChallengePostsResponse
 import com.yjy.data.network.response.GetChallengeRankingResponse
 import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetNameResponse
+import com.yjy.data.network.response.GetNotificationsResponse
 import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
@@ -148,6 +149,20 @@ internal interface ChallengeTogetherService {
 
     @GET("service/user/get/notifications/un-viewed-count")
     suspend fun getUnViewedNotificationCount(): NetworkResult<GetUnViewedNotificationCountResponse>
+
+    @GET("service/user/get/notifications/list")
+    suspend fun getNotifications(
+        @Query("lastNotificationId") lastNotificationId: Int,
+        @Query("limit") limit: Int,
+    ): NetworkResult<List<GetNotificationsResponse>>
+
+    @DELETE("service/user/delete/notification")
+    suspend fun deleteNotification(
+        @Query("notificationId") notificationId: Int,
+    ): NetworkResult<Unit>
+
+    @DELETE("service/user/delete/notifications")
+    suspend fun deleteNotifications(): NetworkResult<Unit>
 
     @POST("service/user/fcm/register")
     suspend fun registerFirebaseToken(
