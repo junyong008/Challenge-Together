@@ -27,12 +27,12 @@ fun NavController.navigateToStartedChallenge(
 
 fun NavGraphBuilder.startedChallengeScreen(
     onBackClick: () -> Unit,
-    onEditCategoryClick: (Int, Category) -> Unit,
-    onEditTitleClick: (Int, String, String) -> Unit,
-    onEditTargetDaysClick: (Int, String, Int) -> Unit,
-    onResetRecordClick: (Int) -> Unit,
-    onBoardClick: (Int, Boolean) -> Unit,
-    onRankingClick: (Int) -> Unit,
+    onEditCategoryClick: (challengeId: Int, category: Category) -> Unit,
+    onEditTitleClick: (challengeId: Int, title: String, description: String) -> Unit,
+    onEditTargetDaysClick: (challengeId: Int, targetDays: String, currentDays: Int) -> Unit,
+    onResetRecordClick: (challengeId: Int) -> Unit,
+    onBoardClick: (challengeId: Int, isAlone: Boolean) -> Unit,
+    onRankingClick: (challengeId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     composable<ServiceRoute.StartedChallenge>(
