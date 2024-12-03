@@ -29,6 +29,6 @@ interface NotificationDao {
         insertAll(notifications)
     }
 
-    @Query(" SELECT id FROM notifications ORDER BY createdDateTime ASC LIMIT 1")
+    @Query("SELECT id FROM notifications ORDER BY createdDateTime ASC LIMIT 1")
     suspend fun getOldestNotificationId(): Int?
 }
