@@ -147,7 +147,6 @@ internal fun ChallengeRankingScreen(
                     .background(CustomColorProvider.colorScheme.surface),
             ) {
                 ChallengeTogetherTopAppBar(
-                    modifier = Modifier.padding(horizontal = 16.dp),
                     onNavigationClick = onBackClick,
                     titleRes = R.string.feature_challengeranking_title,
                     backgroundColor = CustomColorProvider.colorScheme.surface,

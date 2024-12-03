@@ -70,7 +70,6 @@ internal fun CompletedChallengesScreen(
     Scaffold(
         topBar = {
             ChallengeTogetherTopAppBar(
-                modifier = Modifier.padding(horizontal = 16.dp),
                 onNavigationClick = onBackClick,
                 titleRes = R.string.feature_completechallenges_title,
                 rightContent = {
