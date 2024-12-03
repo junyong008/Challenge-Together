@@ -124,7 +124,7 @@ private fun CategoryItem(
         Text(
             text = categoryTitle,
             color = CustomColorProvider.colorScheme.onSurface,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.weight(1f),
         )
         Box(
