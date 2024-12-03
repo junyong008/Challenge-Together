@@ -65,7 +65,8 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.DevicePreviews
 import com.yjy.common.ui.EmptyBody
 import com.yjy.common.ui.ErrorBody
-import com.yjy.common.ui.ErrorItem
+import com.yjy.common.ui.FooterState
+import com.yjy.common.ui.LoadStateFooter
 import com.yjy.common.ui.preview.NotificationPreviewParameterProvider
 import com.yjy.feature.notification.model.NotificationUiAction
 import com.yjy.feature.notification.model.NotificationUiEvent
@@ -154,7 +155,6 @@ internal fun NotificationScreen(
     Scaffold(
         topBar = {
             ChallengeTogetherTopAppBar(
-                modifier = Modifier.padding(horizontal = 16.dp),
                 onNavigationClick = onBackClick,
                 titleRes = R.string.feature_notification_title,
                 rightContent = {
@@ -299,7 +299,11 @@ private fun NotificationBody(
             }
             item {
                 LoadStateFooter(
-                    loadState = notifications.loadState.append,
+                    state = when (notifications.loadState.append) {
+                        is LoadState.Loading -> FooterState.Loading
+                        is LoadState.Error -> FooterState.Error
+                        is LoadState.NotLoading -> FooterState.Idle
+                    },
                     onClickRetry = { notifications.retry() },
                     modifier = Modifier.padding(horizontal = 16.dp),
                 )
@@ -381,26 +385,6 @@ private fun NotificationItem(
             color = CustomColorProvider.colorScheme.divider,
             modifier = Modifier.fillMaxWidth(),
         )
-    }
-}
-
-@Composable
-private fun LoadStateFooter(
-    loadState: LoadState,
-    onClickRetry: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 32.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        when (loadState) {
-            is LoadState.Loading -> LoadingWheel()
-            is LoadState.Error -> ErrorItem(onClickRetry = onClickRetry)
-            else -> Unit
-        }
     }
 }
 
