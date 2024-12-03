@@ -26,6 +26,7 @@ import com.yjy.feature.resetrecord.navigation.navigateToResetRecord
 import com.yjy.feature.resetrecord.navigation.resetRecordScreen
 import com.yjy.feature.startedchallenge.navigation.navigateToStartedChallenge
 import com.yjy.feature.startedchallenge.navigation.startedChallengeScreen
+import com.yjy.feature.together.navigation.togetherNavGraph
 
 @Composable
 internal fun ServiceNavHost(
@@ -45,6 +46,11 @@ internal fun ServiceNavHost(
             onStartedChallengeClick = navController::navigateToStartedChallenge,
             onCompletedChallengeClick = navController::navigateToCompletedChallenges,
             onNotificationClick = navController::navigateToNotification,
+        )
+        togetherNavGraph(
+            navController = navController,
+            onWaitingChallengeClick = { challengeId, password ->
+            },
         )
         completedChallengesScreen(
             onBackClick = navController::popBackStack,

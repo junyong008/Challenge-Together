@@ -13,6 +13,7 @@ import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
+import com.yjy.data.network.response.WaitingChallengeResponse
 import com.yjy.data.network.service.ChallengePostWebSocketService
 import com.yjy.data.network.service.ChallengeTogetherService
 import javax.inject.Inject
@@ -53,6 +54,19 @@ internal class ChallengeDataSourceImpl @Inject constructor(
 
     override suspend fun getRecords(): NetworkResult<GetRecordsResponse> =
         challengeTogetherService.getRecords()
+
+    override suspend fun getTogetherChallenges(
+        category: String,
+        query: String,
+        lastChallengeId: Int,
+        limit: Int,
+    ): NetworkResult<List<WaitingChallengeResponse>> =
+        challengeTogetherService.getTogetherChallenges(
+            category = category,
+            query = query,
+            lastChallengeId = lastChallengeId,
+            limit = limit,
+        )
 
     override suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse> =
         challengeTogetherService.getMyChallenges()

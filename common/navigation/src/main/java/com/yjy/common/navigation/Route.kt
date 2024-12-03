@@ -7,9 +7,18 @@ sealed interface Route
 
 sealed interface ServiceRoute : Route {
 
-    sealed class MainTab : ServiceRoute {
+    sealed interface MainTab : ServiceRoute {
         @Serializable
-        data object Home : MainTab()
+        data object Home : MainTab
+
+        @Serializable
+        data object Together : MainTab {
+            @Serializable
+            data object List : MainTab
+
+            @Serializable
+            data class Detail(val category: Category) : MainTab
+        }
     }
 
     @Serializable

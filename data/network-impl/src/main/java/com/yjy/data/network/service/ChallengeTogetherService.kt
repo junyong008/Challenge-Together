@@ -21,6 +21,7 @@ import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
 import com.yjy.data.network.response.GetUnViewedNotificationCountResponse
+import com.yjy.data.network.response.WaitingChallengeResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -112,6 +113,14 @@ internal interface ChallengeTogetherService {
 
     @GET("service/challenge/get/records")
     suspend fun getRecords(): NetworkResult<GetRecordsResponse>
+
+    @GET("service/challenge/get/togethers")
+    suspend fun getTogetherChallenges(
+        @Query("category") category: String,
+        @Query("query") query: String,
+        @Query("lastChallengeId") lastChallengeId: Int,
+        @Query("limit") limit: Int,
+    ): NetworkResult<List<WaitingChallengeResponse>>
 
     @GET("service/challenge/get/all")
     suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse>

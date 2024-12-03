@@ -43,6 +43,7 @@ interface ChallengeRepository {
     suspend fun editChallengeCategory(challengeId: Int, category: Category): NetworkResult<Unit>
     suspend fun editChallengeTargetDays(challengeId: Int, targetDays: TargetDays): NetworkResult<Unit>
 
+    fun getTogetherChallenges(query: String, category: Category): Flow<PagingData<SimpleWaitingChallenge>>
     fun getChallengePosts(challengeId: Int): Flow<PagingData<ChallengePost>>
     fun getLatestChallengePost(challengeId: Int): Flow<ChallengePost?>
     fun observeChallengePostUpdates(challengeId: Int): Flow<Unit>

@@ -23,6 +23,9 @@
     <string name="common_designsystem_time_picker_pm">PM</string>
     <string name="common_designsystem_dialog_report_title">Report</string>
     <string name="common_designsystem_dialog_report_description">Please select a reason for reporting.</string>
+    <string name="common_designsystem_dialog_password_title">Password</string>
+    <string name="common_designsystem_dialog_password_description">Please enter the entry password.</string>
+    <string name="common_designsystem_dialog_password_placeholder">Enter password</string>
 
     <string name="common_designsystem_tier_unspecified">unspecified tier</string>
     <string name="common_designsystem_tier_iron_description">iron tier</string>

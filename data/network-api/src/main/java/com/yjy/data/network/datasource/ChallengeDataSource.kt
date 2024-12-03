@@ -14,6 +14,7 @@ import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
+import com.yjy.data.network.response.WaitingChallengeResponse
 import kotlinx.coroutines.flow.Flow
 
 interface ChallengeDataSource {
@@ -27,6 +28,12 @@ interface ChallengeDataSource {
     suspend fun editChallengeTitleDescription(request: EditChallengeTitleDescriptionRequest): NetworkResult<Unit>
     suspend fun editChallengeTargetDays(challengeId: Int, targetDays: String): NetworkResult<Unit>
     suspend fun getRecords(): NetworkResult<GetRecordsResponse>
+    suspend fun getTogetherChallenges(
+        category: String,
+        query: String,
+        lastChallengeId: Int,
+        limit: Int,
+    ): NetworkResult<List<WaitingChallengeResponse>>
     suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse>
     suspend fun getStartedChallengeDetail(
         challengeId: Int,

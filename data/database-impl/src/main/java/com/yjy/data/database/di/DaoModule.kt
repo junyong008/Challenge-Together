@@ -4,6 +4,7 @@ import com.yjy.data.database.ChallengeTogetherDatabase
 import com.yjy.data.database.dao.ChallengeDao
 import com.yjy.data.database.dao.ChallengePostDao
 import com.yjy.data.database.dao.NotificationDao
+import com.yjy.data.database.dao.TogetherChallengeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +23,11 @@ internal object DaoModule {
     fun provideChallengePostDao(
         database: ChallengeTogetherDatabase,
     ): ChallengePostDao = database.challengePostDao()
+
+    @Provides
+    fun provideTogetherChallengeDao(
+        database: ChallengeTogetherDatabase,
+    ): TogetherChallengeDao = database.togetherChallengeDao()
 
     @Provides
     fun provideNotificationDao(

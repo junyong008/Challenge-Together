@@ -26,6 +26,7 @@ dependencies {
         projects.platform.time,
 
         projects.feature.home,
+        projects.feature.together,
         projects.feature.completedchallenges,
         projects.feature.notification,
         projects.feature.addchallenge,

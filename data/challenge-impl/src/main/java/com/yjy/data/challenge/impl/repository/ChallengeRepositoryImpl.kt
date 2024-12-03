@@ -19,9 +19,11 @@ import com.yjy.data.challenge.impl.mapper.toRequestString
 import com.yjy.data.challenge.impl.mapper.toSimpleStartedChallengeModel
 import com.yjy.data.challenge.impl.mapper.toSimpleWaitingChallengeModel
 import com.yjy.data.challenge.impl.mediator.ChallengePostRemoteMediator
+import com.yjy.data.challenge.impl.mediator.TogetherChallengeRemoteMediator
 import com.yjy.data.challenge.impl.util.TimeManager
 import com.yjy.data.database.dao.ChallengeDao
 import com.yjy.data.database.dao.ChallengePostDao
+import com.yjy.data.database.dao.TogetherChallengeDao
 import com.yjy.data.database.model.ChallengeEntity
 import com.yjy.data.database.model.ChallengePostEntity
 import com.yjy.data.datastore.api.ChallengePreferencesDataSource
@@ -57,6 +59,7 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class ChallengeRepositoryImpl @Inject constructor(
     private val challengePreferencesDataSource: ChallengePreferencesDataSource,
     private val challengeDataSource: ChallengeDataSource,
+    private val togetherChallengeDao: TogetherChallengeDao,
     private val challengePostDao: ChallengePostDao,
     private val challengeDao: ChallengeDao,
     timeManager: TimeManager,
@@ -170,6 +173,38 @@ internal class ChallengeRepositoryImpl @Inject constructor(
             challengeId = challengeId,
             targetDays = targetDays.toRequestString(),
         )
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getTogetherChallenges(
+        query: String,
+        category: Category,
+    ): Flow<PagingData<SimpleWaitingChallenge>> {
+        val pager = Pager(
+            config = PagingConfig(
+                pageSize = PAGING_PAGE_SIZE,
+                initialLoadSize = PAGING_INITIAL_LOAD_SIZE,
+                prefetchDistance = PAGING_PREFETCH_DISTANCE,
+                enablePlaceholders = true,
+            ),
+            remoteMediator = TogetherChallengeRemoteMediator(
+                query = query,
+                category = category,
+                togetherChallengeDao = togetherChallengeDao,
+                challengeDataSource = challengeDataSource,
+            ),
+            pagingSourceFactory = {
+                if (category == Category.ALL) {
+                    togetherChallengeDao.pagingSource()
+                } else {
+                    togetherChallengeDao.pagingSource(category.toRequestString())
+                }
+            },
+        )
+
+        return pager.flow.map { pagingData ->
+            pagingData.map { it.toModel() }
+        }
     }
 
     @OptIn(ExperimentalPagingApi::class)

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetStartedChallengeDetailResponse(
+data class WaitingChallengeResponse(
     @SerialName("ROOM_IDX")
     val challengeId: Int,
     @SerialName("TITLE")
@@ -19,16 +19,6 @@ data class GetStartedChallengeDetailResponse(
     val currentParticipantCount: Int,
     @SerialName("MAXUSERNUM")
     val maxParticipantCount: Int,
-    @SerialName("RECENTSTARTTIME")
-    val recentResetDateTime: String,
-    @SerialName("STARTTIME")
-    val startDateTime: String,
-    @SerialName("ISFREEMODE")
-    val isFreeMode: Boolean,
-    @SerialName("ISCOMPLETE")
-    val isCompleted: Boolean,
     @SerialName("ISPRIVATE")
     val isPrivate: Boolean,
-    @SerialName("RANK")
-    val rank: Int,
 )

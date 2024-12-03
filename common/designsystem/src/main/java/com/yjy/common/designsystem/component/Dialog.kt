@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
@@ -27,8 +29,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -37,6 +43,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.yjy.common.designsystem.R
 import com.yjy.common.designsystem.ThemePreviews
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
+import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.model.common.ReportReason
@@ -73,6 +80,48 @@ fun ChallengeTogetherDialog(
             negativeTextRes = negativeTextRes,
             positiveTextColor = positiveTextColor,
             negativeTextColor = negativeTextColor,
+        )
+    }
+}
+
+@Composable
+fun PasswordDialog(
+    value: String = "",
+    onValueChange: (String) -> Unit = {},
+    onConfirm: (password: String) -> Unit,
+    onClickNegative: () -> Unit,
+) {
+    BaseDialog(
+        onDismissRequest = onClickNegative,
+        title = stringResource(id = R.string.common_designsystem_dialog_password_title),
+        description = stringResource(id = R.string.common_designsystem_dialog_password_description),
+    ) {
+        SingleLineTextField(
+            value = value,
+            onValueChange = onValueChange,
+            leadingIcon = {
+                Icon(
+                    ImageVector.vectorResource(id = ChallengeTogetherIcons.Lock),
+                    contentDescription = stringResource(
+                        id = R.string.common_designsystem_dialog_password_placeholder,
+                    ),
+                    tint = CustomColorProvider.colorScheme.onBackground,
+                )
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done,
+            ),
+            textColor = CustomColorProvider.colorScheme.onBackground,
+            backgroundColor = CustomColorProvider.colorScheme.background,
+            placeholderText = stringResource(id = R.string.common_designsystem_dialog_password_placeholder),
+            placeholderColor = CustomColorProvider.colorScheme.onBackground.copy(alpha = 0.2f),
+            isPassword = true,
+        )
+        Spacer(modifier = Modifier.size(16.dp))
+        DialogButtonRow(
+            onClickNegative = onClickNegative,
+            onClickPositive = { onConfirm(value) },
         )
     }
 }
@@ -310,6 +359,19 @@ fun ChallengeTogetherDialogPreview() {
                 title = "Title",
                 description = "Description",
                 onClickPositive = {},
+                onClickNegative = {},
+            )
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun PasswordDialogPreview() {
+    ChallengeTogetherTheme {
+        ChallengeTogetherBackground {
+            PasswordDialog(
+                onConfirm = {},
                 onClickNegative = {},
             )
         }

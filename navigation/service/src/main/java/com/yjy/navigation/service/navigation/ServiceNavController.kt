@@ -4,13 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.yjy.feature.addchallenge.navigation.navigateToAddChallenge
 import com.yjy.feature.home.navigation.navigateToHome
+import com.yjy.feature.together.navigation.navigateToTogether
 
 @Composable
 internal fun rememberServiceNavController(
@@ -34,17 +35,20 @@ internal class ServiceNavController(
 
     val currentTab: MainTab?
         @Composable get() = MainTab.find { tab ->
-            currentDestination?.hasRoute(tab::class) == true
+            currentDestination?.hierarchy?.any {
+                it.hasRoute(tab::class)
+            } == true
         }
 
     fun navigateToMainTab(tab: MainTab) {
         val navOptions = navOptions {
-            popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+            popUpTo(navController.graph.id) { inclusive = true }
             launchSingleTop = true
         }
 
         when (tab) {
             MainTab.HOME -> navController.navigateToHome(navOptions)
+            MainTab.TOGETHER -> navController.navigateToTogether(navOptions)
         }
     }
 
@@ -53,7 +57,5 @@ internal class ServiceNavController(
     }
 
     @Composable
-    fun isOnMainTab(): Boolean = MainTab.contains {
-        currentDestination?.hasRoute(it::class) == true
-    }
+    fun isOnMainTab(): Boolean = currentTab != null
 }

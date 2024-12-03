@@ -23,8 +23,8 @@ data class ChallengeResponse(
     val recentResetDateTime: String,
     @SerialName("ISSTART")
     val isStarted: Boolean,
-    @SerialName("PASSWD")
-    val password: String,
+    @SerialName("ISPRIVATE")
+    val isPrivate: Boolean,
     @SerialName("ISFREEMODE")
     val isFreeMode: Boolean,
     @SerialName("ISCOMPLETE")

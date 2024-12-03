@@ -1,8 +1,10 @@
 package com.yjy.data.challenge.impl.mapper
 
 import com.yjy.data.database.model.ChallengeEntity
+import com.yjy.data.database.model.TogetherChallengeEntity
 import com.yjy.data.network.response.ChallengeResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
+import com.yjy.data.network.response.WaitingChallengeResponse
 import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.SimpleWaitingChallenge
@@ -18,7 +20,7 @@ internal fun ChallengeResponse.toEntity() = ChallengeEntity(
     maxParticipantCount = maxParticipantCount,
     recentResetDateTime = recentResetDateTime.toLocalDateTime(),
     isStarted = isStarted,
-    isPrivate = password.isNotEmpty(),
+    isPrivate = isPrivate,
     isCompleted = isCompleted,
     mode = if (isFreeMode) Mode.FREE.name else Mode.CHALLENGE.name,
 )
@@ -75,7 +77,29 @@ internal fun GetStartedChallengeDetailResponse.toEntity() = ChallengeEntity(
     maxParticipantCount = maxParticipantCount,
     recentResetDateTime = recentResetDateTime.toLocalDateTime(),
     isStarted = true,
-    isPrivate = password.isNotEmpty(),
+    isPrivate = isPrivate,
     isCompleted = isCompleted,
     mode = if (isFreeMode) Mode.FREE.name else Mode.CHALLENGE.name,
+)
+
+internal fun WaitingChallengeResponse.toTogetherEntity() = TogetherChallengeEntity(
+    id = challengeId,
+    title = title,
+    description = description,
+    category = category,
+    targetDays = targetDays,
+    currentParticipantCount = currentParticipantCount,
+    maxParticipantCount = maxParticipantCount,
+    isPrivate = isPrivate,
+)
+
+internal fun TogetherChallengeEntity.toModel() = SimpleWaitingChallenge(
+    id = id,
+    title = title,
+    description = description,
+    category = category.toCategory(),
+    targetDays = targetDays.toTargetDays(),
+    isPrivate = isPrivate,
+    currentParticipantCounts = currentParticipantCount,
+    maxParticipantCounts = maxParticipantCount,
 )
