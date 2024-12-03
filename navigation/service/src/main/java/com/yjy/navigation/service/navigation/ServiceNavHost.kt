@@ -13,6 +13,8 @@ import com.yjy.feature.challengeboard.navigation.navigateToChallengeBoard
 import com.yjy.feature.challengeranking.navigation.challengeRankingScreen
 import com.yjy.feature.challengeranking.navigation.navigateToChallengeRanking
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
+import com.yjy.feature.completedchallenges.navigation.completedChallengesScreen
+import com.yjy.feature.completedchallenges.navigation.navigateToCompletedChallenges
 import com.yjy.feature.editchallenge.navigation.editChallengeScreen
 import com.yjy.feature.editchallenge.navigation.navigateToEditCategory
 import com.yjy.feature.editchallenge.navigation.navigateToEditTargetDays
@@ -41,7 +43,12 @@ internal fun ServiceNavHost(
     ) {
         homeScreen(
             onStartedChallengeClick = navController::navigateToStartedChallenge,
+            onCompletedChallengeClick = navController::navigateToCompletedChallenges,
             onNotificationClick = navController::navigateToNotification,
+        )
+        completedChallengesScreen(
+            onBackClick = navController::popBackStack,
+            onCompletedChallengeClick = navController::navigateToStartedChallenge,
         )
         notificationScreen(
             onBackClick = navController::popBackStack,

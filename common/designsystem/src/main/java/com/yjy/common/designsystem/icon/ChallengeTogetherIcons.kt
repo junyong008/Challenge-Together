@@ -21,6 +21,8 @@ object ChallengeTogetherIcons {
     val MoreVertical = R.drawable.ic_more_vert
     val QuoteLeft = R.drawable.ic_quote_left
     val QuoteRight = R.drawable.ic_quote_right
+    val Search = R.drawable.ic_search
+    val SearchOff = R.drawable.ic_search_off
     val Sort = R.drawable.ic_sort
     val Trophy = R.drawable.ic_trophy
     val TrophyOff = R.drawable.ic_trophy_off

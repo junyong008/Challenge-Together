@@ -20,6 +20,9 @@ interface ChallengeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(challenges: List<ChallengeEntity>)
 
+    @Query("DELETE FROM challenges WHERE id = :id")
+    suspend fun deleteById(id: Int)
+
     @Query("DELETE FROM challenges WHERE id NOT IN (:ids)")
     suspend fun deleteChallengesNotIn(ids: List<Int>)
 

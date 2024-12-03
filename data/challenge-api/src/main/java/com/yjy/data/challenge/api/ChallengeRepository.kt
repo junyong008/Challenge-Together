@@ -23,6 +23,7 @@ interface ChallengeRepository {
     val recentCompletedChallengeTitles: Flow<List<String>>
     val startedChallenges: Flow<List<SimpleStartedChallenge>>
     val waitingChallenges: Flow<List<SimpleWaitingChallenge>>
+    val completedChallenges: Flow<List<SimpleStartedChallenge>>
 
     suspend fun addChallenge(
         category: Category,

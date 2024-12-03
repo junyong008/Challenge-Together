@@ -1,5 +1,10 @@
 package com.yjy.common.designsystem.component
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -23,9 +28,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +43,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -304,6 +314,71 @@ fun CursorLessNumberTextField(
         ),
         modifier = modifier.focusRequester(focusRequester),
     )
+}
+
+@Composable
+fun SearchTextField(
+    triggeredText: String,
+    onSearchTriggered: (String) -> Unit,
+    placeholderText: String,
+    modifier: Modifier = Modifier,
+    isVisible: Boolean = true,
+) {
+    var searchQuery by rememberSaveable { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    val onSearchExplicitlyTriggered = {
+        keyboardController?.hide()
+        onSearchTriggered(searchQuery)
+    }
+
+    LaunchedEffect(isVisible) {
+        if (!isVisible) {
+            keyboardController?.hide()
+            searchQuery = ""
+            onSearchTriggered("")
+        }
+    }
+
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = fadeIn() + expandVertically(),
+        exit = fadeOut() + shrinkVertically(),
+    ) {
+        SingleLineTextField(
+            value = searchQuery,
+            onValueChange = {
+                if ("\n" !in it) {
+                    searchQuery = it
+                }
+            },
+            shape = MaterialTheme.shapes.extraLarge,
+            leadingIcon = {
+                Icon(
+                    ImageVector.vectorResource(id = ChallengeTogetherIcons.Search),
+                    contentDescription = placeholderText,
+                    tint = CustomColorProvider.colorScheme.onSurface,
+                )
+            },
+            placeholderText = triggeredText.ifEmpty {
+                placeholderText
+            },
+            modifier = modifier.onKeyEvent {
+                if (it.key == Key.Enter) {
+                    onSearchExplicitlyTriggered()
+                    true
+                } else {
+                    false
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Search,
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = { onSearchExplicitlyTriggered() },
+            ),
+        )
+    }
 }
 
 @ComponentPreviews

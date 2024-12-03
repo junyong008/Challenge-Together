@@ -97,6 +97,7 @@ import com.yjy.model.common.Tier
 @Composable
 internal fun HomeRoute(
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
+    onCompletedChallengeClick: () -> Unit,
     onNotificationClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
@@ -126,6 +127,7 @@ internal fun HomeRoute(
         uiState = uiState,
         processAction = viewModel::processAction,
         onStartedChallengeClick = onStartedChallengeClick,
+        onCompletedChallengeClick = onCompletedChallengeClick,
         onNotificationClick = onNotificationClick,
     )
 }
@@ -145,6 +147,7 @@ internal fun HomeScreen(
     uiState: HomeUiState = HomeUiState(),
     processAction: (HomeUiAction) -> Unit = {},
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit = {},
+    onCompletedChallengeClick: () -> Unit = {},
     onNotificationClick: () -> Unit = {},
 ) {
     var shouldShowSortOrderBottomSheet by remember { mutableStateOf(false) }
@@ -198,7 +201,7 @@ internal fun HomeScreen(
             ),
     ) {
         HomeTopBar(
-            onShowCompleteChallengeClick = {},
+            onShowCompleteChallengeClick = onCompletedChallengeClick,
             onShowNotificationClick = onNotificationClick,
             hasNewNotification = unViewedNotificationUiState.hasNewNotification(),
         )

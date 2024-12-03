@@ -57,6 +57,7 @@ include(
     ":feature:notification",
     ":feature:addchallenge",
     ":feature:editchallenge",
+    ":feature:completedchallenges",
     ":feature:startedchallenge",
     ":feature:resetrecord",
     ":feature:challengeboard",

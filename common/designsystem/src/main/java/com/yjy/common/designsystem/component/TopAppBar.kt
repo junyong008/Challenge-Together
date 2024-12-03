@@ -9,10 +9,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +36,8 @@ fun ChallengeTogetherTopAppBar(
     backgroundColor: Color = CustomColorProvider.colorScheme.background,
     contentColor: Color = CustomColorProvider.colorScheme.onBackground,
 ) {
+    val density = LocalDensity.current
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -56,20 +62,33 @@ fun ChallengeTogetherTopAppBar(
             }
         }
 
+        val rightContentWidth = remember { mutableFloatStateOf(0f) }
+        rightContent?.let {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .onGloballyPositioned { coordinates ->
+                        rightContentWidth.floatValue = coordinates.size.width.toFloat()
+                    },
+            ) {
+                it()
+            }
+        }
+
         titleRes?.let {
+            val horizontalPadding = with(density) {
+                maxOf(48.dp.toPx(), rightContentWidth.floatValue).toDp()
+            }
+
             Text(
-                modifier = Modifier.align(Alignment.Center),
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(horizontal = horizontalPadding),
                 text = stringResource(id = it),
                 textAlign = TextAlign.Center,
                 color = contentColor,
                 style = MaterialTheme.typography.titleMedium,
             )
-        }
-
-        rightContent?.let {
-            Box(modifier = Modifier.align(Alignment.CenterEnd)) {
-                it()
-            }
         }
     }
 }

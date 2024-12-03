@@ -26,9 +26,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -48,6 +51,7 @@ fun WaitingChallengeCard(
     challenge: SimpleWaitingChallenge,
     onClick: (SimpleWaitingChallenge) -> Unit,
     modifier: Modifier = Modifier,
+    searchKeyword: String = "",
 ) {
     Column(
         modifier = modifier
@@ -57,8 +61,15 @@ fun WaitingChallengeCard(
             .padding(16.dp),
     ) {
         Spacer(modifier = Modifier.height(4.dp))
-        ChallengeHeader(challengeId = challenge.id, isPrivate = challenge.isPrivate)
-        ChallengeBody(challenge)
+        ChallengeHeader(
+            challengeId = challenge.id,
+            isPrivate = challenge.isPrivate,
+            searchKeyword = searchKeyword,
+        )
+        ChallengeBody(
+            challenge = challenge,
+            searchKeyword = searchKeyword,
+        )
         ChallengeFooter(challenge)
     }
 }
@@ -67,10 +78,30 @@ fun WaitingChallengeCard(
 private fun ChallengeHeader(
     challengeId: Int,
     isPrivate: Boolean,
+    searchKeyword: String,
 ) {
     Row {
+        val numberText = stringResource(id = R.string.common_ui_waiting_challenge_number, challengeId)
+        val numberAnnotatedString = buildAnnotatedString {
+            val startIndex = numberText.indexOf(searchKeyword, ignoreCase = true)
+            if (searchKeyword.isNotEmpty() && startIndex != -1) {
+                append(numberText.substring(0, startIndex))
+                withStyle(
+                    style = SpanStyle(
+                        background = CustomColorProvider.colorScheme.brandBright,
+                        color = CustomColorProvider.colorScheme.onBrandBright,
+                    ),
+                ) {
+                    append(numberText.substring(startIndex, startIndex + searchKeyword.length))
+                }
+                append(numberText.substring(startIndex + searchKeyword.length))
+            } else {
+                append(numberText)
+            }
+        }
+
         Text(
-            text = stringResource(id = R.string.common_ui_waiting_challenge_number, challengeId),
+            text = numberAnnotatedString,
             color = CustomColorProvider.colorScheme.onSurface,
             style = MaterialTheme.typography.labelSmall,
         )
@@ -88,12 +119,49 @@ private fun ChallengeHeader(
 @Composable
 private fun ChallengeBody(
     challenge: SimpleWaitingChallenge,
+    searchKeyword: String,
 ) {
+    val titleAnnotatedString = buildAnnotatedString {
+        val startIndex = challenge.title.indexOf(searchKeyword, ignoreCase = true)
+        if (searchKeyword.isNotEmpty() && startIndex != -1) {
+            append(challenge.title.substring(0, startIndex))
+            withStyle(
+                style = SpanStyle(
+                    background = CustomColorProvider.colorScheme.brandBright,
+                    color = CustomColorProvider.colorScheme.onBrandBright,
+                ),
+            ) {
+                append(challenge.title.substring(startIndex, startIndex + searchKeyword.length))
+            }
+            append(challenge.title.substring(startIndex + searchKeyword.length))
+        } else {
+            append(challenge.title)
+        }
+    }
+
+    val descriptionAnnotatedString = buildAnnotatedString {
+        val startIndex = challenge.description.indexOf(searchKeyword, ignoreCase = true)
+        if (searchKeyword.isNotEmpty() && startIndex != -1) {
+            append(challenge.description.substring(0, startIndex))
+            withStyle(
+                style = SpanStyle(
+                    background = CustomColorProvider.colorScheme.brandBright,
+                    color = CustomColorProvider.colorScheme.onBrandBright,
+                ),
+            ) {
+                append(challenge.description.substring(startIndex, startIndex + searchKeyword.length))
+            }
+            append(challenge.description.substring(startIndex + searchKeyword.length))
+        } else {
+            append(challenge.description)
+        }
+    }
+
     Row {
         Column(modifier = Modifier.weight(1f)) {
             Spacer(modifier = Modifier.height(32.dp))
             Text(
-                text = challenge.title,
+                text = titleAnnotatedString,
                 color = CustomColorProvider.colorScheme.onSurface,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
@@ -101,7 +169,7 @@ private fun ChallengeBody(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = challenge.description,
+                text = descriptionAnnotatedString,
                 color = CustomColorProvider.colorScheme.onSurfaceMuted,
                 style = MaterialTheme.typography.labelSmall,
                 maxLines = 2,

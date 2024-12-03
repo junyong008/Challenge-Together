@@ -89,6 +89,13 @@ internal class ChallengeRepositoryImpl @Inject constructor(
             challenges.sortBy(order)
         }
 
+    override val completedChallenges: Flow<List<SimpleStartedChallenge>> = challenges
+        .map { entities ->
+            entities
+                .filter { it.isStarted && it.isCompleted }
+                .map { it.toSimpleStartedChallengeModel() }
+        }
+
     private fun SimpleStartedChallenge.updateCurrentRecord(currentTime: LocalDateTime) = copy(
         currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),
     )
@@ -269,6 +276,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
 
     override suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit> =
         challengeDataSource.deleteStartedChallenge(challengeId)
+            .onSuccess { challengeDao.deleteById(challengeId) }
 
     override suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit> =
         challengeDataSource.deleteChallengePost(postId)

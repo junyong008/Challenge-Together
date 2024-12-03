@@ -1,0 +1,9 @@
+<resources>
+    <string name="feature_completechallenges_title">Completed Challenges</string>
+    <string name="feature_completechallenges_close_search_field">Close search field</string>
+    <string name="feature_completechallenges_search">Search…</string>
+    <string name="feature_completechallenges_empty_title">No Completed Challenges Yet</string>
+    <string name="feature_completechallenges_empty_description">You haven’t completed any challenges yet.\nStart a new challenge and see your accomplishments here!</string>
+    <string name="feature_completechallenges_search_empty_title">No Challenges Found</string>
+    <string name="feature_completechallenges_search_empty_description">We couldn’t find any challenges matching your search.\nTry different keywords or adjust your search criteria!</string>
+</resources>
