@@ -60,10 +60,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private suspend fun handleFcmMessage(notification: Notification) {
-        if (notification.type == NotificationType.CHALLENGE_STARTED_POST) {
-            if (userRepository.getMutedChallengeBoards().contains(notification.linkId)) return
-        }
-
+        if (isNotificationSettingOff(notification.type, notification.linkId)) return
         NotificationHelper.postNotification(
             context = this,
             notification = with(notificationMapper) {
@@ -71,6 +68,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             },
         )
     }
+
+    private suspend fun isNotificationSettingOff(
+        notificationType: NotificationType,
+        notificationLinkId: Int,
+    ) = when (notificationType) {
+        NotificationType.CHALLENGE_WAITING_POST,
+        NotificationType.CHALLENGE_STARTED_POST,
+        -> isChallengeBoardMuted(notificationLinkId)
+        else -> false
+    }
+
+    private suspend fun isChallengeBoardMuted(challengeBoardId: Int): Boolean =
+        userRepository.getMutedChallengeBoards().contains(challengeBoardId)
 
     private fun logNotification(notification: Notification) {
         with(notification) {

@@ -53,13 +53,21 @@
     <string name="common_designsystem_category_quit_swearing">Quit Swearing</string>
     <string name="common_designsystem_category_quit_smartphone">Quit Smartphone</string>
 
-    <string name="common_designsystem_notification_participant_reset">%1$s Participant Reset</string>
-    <string name="common_designsystem_notification_user_reset">%1$s has reset.</string>
-    <string name="common_designsystem_notification_participant_give_up">%1$s Participant Gave Up</string>
+    <string name="common_designsystem_notification_participant_reset">\"%1$s\" Participant reset</string>
+    <string name="common_designsystem_notification_user_reset">\"%1$s\" has reset.</string>
+    <string name="common_designsystem_notification_participant_give_up">\"%1$s\" Participant gave up</string>
     <string name="common_designsystem_notification_user_give_up">%1$s has given up.</string>
-    <string name="common_designsystem_notification_challengeboard_post_added">New post in %1$s challenge board</string>
-    <string name="common_designsystem_notification_participant_force_remove">%1$s Participant Forced Out</string>
-    <string name="common_designsystem_notification_user_force_remove">%1$s has been forcibly removed due to prolonged inactivity.</string>
+    <string name="common_designsystem_notification_challengeboard_post_added">New post in \"%1$s\" challenge board</string>
+    <string name="common_designsystem_notification_participant_force_remove">\"%1$s\" Participant forced out</string>
+    <string name="common_designsystem_notification_user_force_remove">\"%1$s\" has been forcibly removed due to prolonged inactivity.</string>
+    <string name="common_designsystem_notification_challenge_deleted">Challenge deleted</string>
+    <string name="common_designsystem_notification_challenge_deleted_detail">\"%1$s\" challenge has been deleted by the host.</string>
+    <string name="common_designsystem_notification_challenge_started">Challenge started</string>
+    <string name="common_designsystem_notification_challenge_started_detail">\"%1$s\" challenge has been started by the host.</string>
+    <string name="common_designsystem_notification_participant_joined">\"%1$s\" Participant joined</string>
+    <string name="common_designsystem_notification_participant_joined_detail">\"%1$s\" has joined the challenge.</string>
+    <string name="common_designsystem_notification_participant_left">\"%1$s\" Participant left</string>
+    <string name="common_designsystem_notification_participant_left_detail">\"%1$s\" has left the challenge.</string>
 
     <string name="common_designsystem_sort_order_latest">Latest</string>
     <string name="common_designsystem_sort_order_oldest">Oldest</string>

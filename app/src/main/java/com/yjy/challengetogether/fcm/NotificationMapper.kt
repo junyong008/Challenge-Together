@@ -35,6 +35,9 @@ class NotificationMapper @Inject constructor(
             is NotificationDestination.StaredChallenge ->
                 PlatformNotificationNavigation.StartedChallenge(dest.challengeId.toString())
 
+            is NotificationDestination.WaitingChallenge ->
+                PlatformNotificationNavigation.WaitingChallenge(dest.challengeId.toString())
+
             NotificationDestination.None -> null
         }
 

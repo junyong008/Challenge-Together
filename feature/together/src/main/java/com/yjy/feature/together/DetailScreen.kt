@@ -20,7 +20,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -38,11 +37,9 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
-import com.yjy.common.core.constants.ChallengeConst.MAX_ROOM_PASSWORD_LENGTH
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.common.designsystem.component.LoadingWheel
-import com.yjy.common.designsystem.component.PasswordDialog
 import com.yjy.common.designsystem.component.SearchTextField
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
@@ -63,7 +60,7 @@ import kotlinx.coroutines.flow.flowOf
 internal fun DetailRoute(
     category: Category,
     onBackClick: () -> Unit,
-    onWaitingChallengeClick: (SimpleWaitingChallenge, password: String) -> Unit,
+    onWaitingChallengeClick: (SimpleWaitingChallenge) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TogetherViewModel = hiltViewModel(),
 ) {
@@ -89,33 +86,14 @@ internal fun DetailScreen(
     updateSearchQuery: (String) -> Unit = {},
     waitingChallenges: LazyPagingItems<SimpleWaitingChallenge>,
     onBackClick: () -> Unit = {},
-    onWaitingChallengeClick: (SimpleWaitingChallenge, password: String) -> Unit = { _, _ -> },
+    onWaitingChallengeClick: (SimpleWaitingChallenge) -> Unit = {},
 ) {
     var shouldShowSearchTextField by rememberSaveable { mutableStateOf(false) }
-    var selectedWaitingChallenge by remember { mutableStateOf<SimpleWaitingChallenge?>(null) }
-    var inputPassword by remember { mutableStateOf("") }
 
     val isLoading = waitingChallenges.loadState.refresh is LoadState.Loading
     val isError = waitingChallenges.loadState.refresh is LoadState.Error
     val isIdle = waitingChallenges.loadState.isIdle
     val isEmpty = waitingChallenges.itemCount == 0
-
-    if (selectedWaitingChallenge != null) {
-        PasswordDialog(
-            value = inputPassword,
-            onValueChange = { inputPassword = it.take(MAX_ROOM_PASSWORD_LENGTH) },
-            onConfirm = { password ->
-                val challenge = selectedWaitingChallenge!!
-                selectedWaitingChallenge = null
-                inputPassword = ""
-                onWaitingChallengeClick(challenge, password)
-            },
-            onClickNegative = {
-                selectedWaitingChallenge = null
-                inputPassword = ""
-            },
-        )
-    }
 
     Scaffold(
         topBar = {
@@ -174,13 +152,7 @@ internal fun DetailScreen(
                     WaitingChallengesBody(
                         searchQuery = searchQuery,
                         waitingChallenges = waitingChallenges,
-                        onChallengeClick = {
-                            if (it.isPrivate) {
-                                selectedWaitingChallenge = it
-                            } else {
-                                onWaitingChallengeClick(it, "")
-                            }
-                        },
+                        onChallengeClick = { onWaitingChallengeClick(it) },
                     )
                 }
             }
@@ -285,7 +257,7 @@ fun DetailScreenPreview(
             DetailScreen(
                 modifier = Modifier.fillMaxSize(),
                 waitingChallenges = pagingData.collectAsLazyPagingItems(),
-                onWaitingChallengeClick = { _, _ -> },
+                onWaitingChallengeClick = {},
             )
         }
     }

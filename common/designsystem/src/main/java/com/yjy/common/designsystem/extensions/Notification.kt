@@ -11,17 +11,37 @@ private val notificationFormats = mapOf(
         R.string.common_designsystem_notification_participant_reset,
         R.string.common_designsystem_notification_user_reset,
     ),
-    NotificationType.CHALLENGE_DELETE to Pair(
+    NotificationType.CHALLENGE_GIVE_UP to Pair(
         R.string.common_designsystem_notification_participant_give_up,
         R.string.common_designsystem_notification_user_give_up,
+    ),
+    NotificationType.CHALLENGE_FORCE_REMOVE to Pair(
+        R.string.common_designsystem_notification_participant_force_remove,
+        R.string.common_designsystem_notification_user_force_remove,
     ),
     NotificationType.CHALLENGE_STARTED_POST to Pair(
         R.string.common_designsystem_notification_challengeboard_post_added,
         null,
     ),
-    NotificationType.CHALLENGE_FORCE_REMOVE to Pair(
-        R.string.common_designsystem_notification_participant_force_remove,
-        R.string.common_designsystem_notification_user_force_remove,
+    NotificationType.CHALLENGE_WAITING_POST to Pair(
+        R.string.common_designsystem_notification_challengeboard_post_added,
+        null,
+    ),
+    NotificationType.CHALLENGE_DELETE to Pair(
+        R.string.common_designsystem_notification_challenge_deleted,
+        R.string.common_designsystem_notification_challenge_deleted_detail,
+    ),
+    NotificationType.CHALLENGE_START to Pair(
+        R.string.common_designsystem_notification_challenge_started,
+        R.string.common_designsystem_notification_challenge_started_detail,
+    ),
+    NotificationType.CHALLENGE_JOIN to Pair(
+        R.string.common_designsystem_notification_participant_joined,
+        R.string.common_designsystem_notification_participant_joined_detail,
+    ),
+    NotificationType.CHALLENGE_LEAVE to Pair(
+        R.string.common_designsystem_notification_participant_left,
+        R.string.common_designsystem_notification_participant_left_detail,
     ),
 )
 

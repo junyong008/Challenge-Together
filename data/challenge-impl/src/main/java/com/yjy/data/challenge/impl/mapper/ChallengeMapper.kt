@@ -4,11 +4,14 @@ import com.yjy.data.database.model.ChallengeEntity
 import com.yjy.data.database.model.TogetherChallengeEntity
 import com.yjy.data.network.response.ChallengeResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
+import com.yjy.data.network.response.GetWaitingChallengeDetailResponse
 import com.yjy.data.network.response.WaitingChallengeResponse
 import com.yjy.model.challenge.DetailedStartedChallenge
+import com.yjy.model.challenge.DetailedWaitingChallenge
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.SimpleWaitingChallenge
 import com.yjy.model.challenge.core.Mode
+import com.yjy.model.common.Tier
 
 internal fun ChallengeResponse.toEntity() = ChallengeEntity(
     id = challengeId,
@@ -80,6 +83,39 @@ internal fun GetStartedChallengeDetailResponse.toEntity() = ChallengeEntity(
     isPrivate = isPrivate,
     isCompleted = isCompleted,
     mode = if (isFreeMode) Mode.FREE.name else Mode.CHALLENGE.name,
+)
+
+internal fun GetWaitingChallengeDetailResponse.toDetailedWaitingChallengeModel() = DetailedWaitingChallenge(
+    id = challengeId,
+    title = title,
+    description = description,
+    category = category.toCategory(),
+    targetDays = targetDays.toTargetDays(),
+    password = password,
+    author = UserMapper.create(
+        name = author.name,
+        tier = Tier.getCurrentTier(author.bestRecordInSeconds),
+    ),
+    participants = participants.map {
+        UserMapper.create(
+            name = it.name,
+            tier = Tier.getCurrentTier(it.bestRecordInSeconds),
+        )
+    },
+    maxParticipantCounts = maxParticipantCount,
+    isAuthor = isAuthor,
+    isParticipated = isParticipated,
+)
+
+internal fun GetWaitingChallengeDetailResponse.toTogetherEntity() = TogetherChallengeEntity(
+    id = challengeId,
+    title = title,
+    description = description,
+    category = category,
+    targetDays = targetDays,
+    currentParticipantCount = participants.size,
+    maxParticipantCount = maxParticipantCount,
+    isPrivate = password.isNotEmpty(),
 )
 
 internal fun WaitingChallengeResponse.toTogetherEntity() = TogetherChallengeEntity(

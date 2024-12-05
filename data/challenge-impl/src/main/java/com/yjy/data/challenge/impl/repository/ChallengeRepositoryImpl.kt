@@ -6,18 +6,22 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.yjy.common.core.extensions.mapToUnit
+import com.yjy.common.network.HttpStatusCodes
 import com.yjy.common.network.NetworkResult
+import com.yjy.common.network.fold
 import com.yjy.common.network.map
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.challenge.impl.mapper.toDetailedStartedChallengeModel
+import com.yjy.data.challenge.impl.mapper.toDetailedWaitingChallengeModel
 import com.yjy.data.challenge.impl.mapper.toEntity
 import com.yjy.data.challenge.impl.mapper.toModel
 import com.yjy.data.challenge.impl.mapper.toProto
 import com.yjy.data.challenge.impl.mapper.toRequestString
 import com.yjy.data.challenge.impl.mapper.toSimpleStartedChallengeModel
 import com.yjy.data.challenge.impl.mapper.toSimpleWaitingChallengeModel
+import com.yjy.data.challenge.impl.mapper.toTogetherEntity
 import com.yjy.data.challenge.impl.mediator.ChallengePostRemoteMediator
 import com.yjy.data.challenge.impl.mediator.TogetherChallengeRemoteMediator
 import com.yjy.data.challenge.impl.util.TimeManager
@@ -36,6 +40,7 @@ import com.yjy.data.network.request.ResetChallengeRequest
 import com.yjy.model.challenge.ChallengePost
 import com.yjy.model.challenge.ChallengeRank
 import com.yjy.model.challenge.DetailedStartedChallenge
+import com.yjy.model.challenge.DetailedWaitingChallenge
 import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.SimpleWaitingChallenge
@@ -260,6 +265,20 @@ internal class ChallengeRepositoryImpl @Inject constructor(
             .onFailure { throw it.safeThrowable() }
     }
 
+    override suspend fun deleteWaitingChallenge(challengeId: Int): NetworkResult<Unit> =
+        challengeDataSource.deleteWaitingChallenge(challengeId)
+            .onSuccess { togetherChallengeDao.deleteById(challengeId) }
+
+    override suspend fun startWaitingChallenge(challengeId: Int): NetworkResult<Unit> =
+        challengeDataSource.startWaitingChallenge(challengeId)
+            .onSuccess { togetherChallengeDao.deleteById(challengeId) }
+
+    override suspend fun joinWaitingChallenge(challengeId: Int): NetworkResult<Unit> =
+        challengeDataSource.joinWaitingChallenge(challengeId)
+
+    override suspend fun leaveWaitingChallenge(challengeId: Int): NetworkResult<Unit> =
+        challengeDataSource.leaveWaitingChallenge(challengeId)
+
     override suspend fun reportChallengePost(
         postId: Int,
         reportReason: ReportReason,
@@ -320,24 +339,41 @@ internal class ChallengeRepositoryImpl @Inject constructor(
     override suspend fun forceRemoveStartedChallengeMember(memberId: Int): NetworkResult<Unit> =
         challengeDataSource.forceRemoveFromStartedChallenge(memberId)
 
+    override suspend fun getWaitingChallengeDetail(
+        challengeId: Int,
+        password: String,
+    ): NetworkResult<DetailedWaitingChallenge> =
+        challengeDataSource.getWaitingChallengeDetail(challengeId, password)
+            .onSuccess {
+                togetherChallengeDao.insert(it.toTogetherEntity())
+            }
+            .onFailure {
+                if (it is NetworkResult.Failure.HttpError) {
+                    when (it.code) {
+                        HttpStatusCodes.NOT_FOUND,
+                        HttpStatusCodes.CONFLICT,
+                        -> togetherChallengeDao.deleteById(challengeId)
+                    }
+                }
+            }
+            .map {
+                it.toDetailedWaitingChallengeModel()
+            }
+
     override suspend fun getStartedChallengeDetail(
         challengeId: Int,
-    ): Flow<NetworkResult<DetailedStartedChallenge>> = when (
-        val response = challengeDataSource.getStartedChallengeDetail(challengeId)
-    ) {
-        is NetworkResult.Success -> {
-            val result = response.data
-            val challenge = result.toDetailedStartedChallengeModel()
+    ): Flow<NetworkResult<DetailedStartedChallenge>> =
+        challengeDataSource.getStartedChallengeDetail(challengeId).fold(
+            onSuccess = { result ->
+                val challenge = result.toDetailedStartedChallengeModel()
+                challengeDao.insert(result.toEntity())
 
-            // 리셋 등 이벤트에 대응하여 즉각적으로 데이터를 최신화 하기 위한 동기화
-            challengeDao.insert(result.toEntity())
-
-            tickerFlow.map { currentTime ->
-                NetworkResult.Success(challenge.updateCurrentRecord(currentTime))
-            }
-        }
-        is NetworkResult.Failure -> flowOf(response)
-    }
+                tickerFlow.map { currentTime ->
+                    NetworkResult.Success(challenge.updateCurrentRecord(currentTime))
+                }
+            },
+            onFailure = { flowOf(it) },
+        )
 
     private fun DetailedStartedChallenge.updateCurrentRecord(currentTime: LocalDateTime) = copy(
         currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),
@@ -349,17 +385,15 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         }
 
     override suspend fun getChallengeRanking(challengeId: Int): Flow<NetworkResult<List<ChallengeRank>>> =
-        when (val response = challengeDataSource.getChallengeRanking(challengeId)) {
-            is NetworkResult.Success -> {
-                val result = response.data
+        challengeDataSource.getChallengeRanking(challengeId).fold(
+            onSuccess = { result ->
                 val challengeRanks = result.map { it.toModel() }
-
                 tickerFlow.map { currentTime ->
                     NetworkResult.Success(challengeRanks.map { it.updateCurrentRecord(currentTime) })
                 }
-            }
-            is NetworkResult.Failure -> flowOf(response)
-        }
+            },
+            onFailure = { flowOf(it) },
+        )
 
     private fun ChallengeRank.updateCurrentRecord(currentTime: LocalDateTime) = copy(
         currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),

@@ -21,6 +21,7 @@ import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
 import com.yjy.data.network.response.GetUnViewedNotificationCountResponse
+import com.yjy.data.network.response.GetWaitingChallengeDetailResponse
 import com.yjy.data.network.response.WaitingChallengeResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -84,6 +85,26 @@ internal interface ChallengeTogetherService {
         @Query("postId") postId: Int,
     ): NetworkResult<Unit>
 
+    @DELETE("service/challenge/delete/waiting")
+    suspend fun deleteWaitingChallenge(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
+    @POST("service/challenge/start")
+    suspend fun startWaitingChallenge(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
+    @POST("service/challenge/join")
+    suspend fun joinWaitingChallenge(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
+    @POST("service/challenge/leave")
+    suspend fun leaveWaitingChallenge(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
     @POST("service/challenge/force-remove")
     suspend fun forceRemoveFromStartedChallenge(
         @Query("memberId") memberId: Int,
@@ -124,6 +145,12 @@ internal interface ChallengeTogetherService {
 
     @GET("service/challenge/get/all")
     suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse>
+
+    @GET("service/challenge/get/waiting")
+    suspend fun getWaitingChallengeDetail(
+        @Query("challengeId") challengeId: Int,
+        @Query("password") password: String,
+    ): NetworkResult<GetWaitingChallengeDetailResponse>
 
     @GET("service/challenge/get/started")
     suspend fun getStartedChallengeDetail(

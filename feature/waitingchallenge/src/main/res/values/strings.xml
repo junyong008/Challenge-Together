@@ -1,0 +1,29 @@
+<resources>
+    <string name="feature_waitingchallenge_number">No. %1$d</string>
+    <string name="feature_waitingchallenge_private">[Private]</string>
+    <string name="feature_waitingchallenge_target_day">Target Day</string>
+    <string name="feature_waitingchallenge_target_day_goal_days">%1$s Days</string>
+    <string name="feature_waitingchallenge_target_day_unlimited">Unlimited</string>
+    <string name="feature_waitingchallenge_menu_delete">Delete</string>
+    <string name="feature_waitingchallenge_menu_refresh">Refresh</string>
+    <string name="feature_waitingchallenge_delete">Delete</string>
+    <string name="feature_waitingchallenge_delete_prompt">Would you like to delete the challenge?</string>
+    <string name="feature_waitingchallenge_start">Start</string>
+    <string name="feature_waitingchallenge_start_prompt">Would you like to start the challenge?</string>
+    <string name="feature_waitingchallenge_join">Join</string>
+    <string name="feature_waitingchallenge_leave">Leave</string>
+    <string name="feature_waitingchallenge_board">Board</string>
+    <string name="feature_waitingchallenge_menu">Menu</string>
+    <string name="feature_waitingchallenge_board_description">Share your thoughts about the challenge.</string>
+    <string name="feature_waitingchallenge_password_incorrect">The password does not match.</string>
+    <string name="feature_waitingchallenge_not_found">The challenge does not exist.</string>
+    <string name="feature_waitingchallenge_already_started">The challenge has already started.</string>
+    <string name="feature_waitingchallenge_error">An error occurred. Please try again later.</string>
+    <string name="feature_waitingchallenge_check_network_connection">Please check your network connection.</string>
+    <string name="feature_waitingchallenge_delete_successful">Challenge has been deleted.</string>
+    <string name="feature_waitingchallenge_start_successful">Challenge has been started.</string>
+    <string name="feature_waitingchallenge_participant_full">The challenge is full.</string>
+    <string name="feature_waitingchallenge_password_copied">Password copied to clipboard.</string>
+    <string name="feature_waitingchallenge_created_by">Created by \"%1$s\"</string>
+    <string name="feature_waitingchallenge_participants_count">Participants %1$d / %2$d</string>
+</resources>

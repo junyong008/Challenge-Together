@@ -96,6 +96,7 @@ import com.yjy.model.common.Tier
 
 @Composable
 internal fun HomeRoute(
+    onWaitingChallengeClick: (SimpleWaitingChallenge) -> Unit,
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
     onCompletedChallengeClick: () -> Unit,
     onNotificationClick: () -> Unit,
@@ -126,6 +127,7 @@ internal fun HomeRoute(
         recentCompletedChallenges = recentCompletedChallenges,
         uiState = uiState,
         processAction = viewModel::processAction,
+        onWaitingChallengeClick = onWaitingChallengeClick,
         onStartedChallengeClick = onStartedChallengeClick,
         onCompletedChallengeClick = onCompletedChallengeClick,
         onNotificationClick = onNotificationClick,
@@ -146,6 +148,7 @@ internal fun HomeScreen(
     recentCompletedChallenges: List<String> = emptyList(),
     uiState: HomeUiState = HomeUiState(),
     processAction: (HomeUiAction) -> Unit = {},
+    onWaitingChallengeClick: (SimpleWaitingChallenge) -> Unit = {},
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit = {},
     onCompletedChallengeClick: () -> Unit = {},
     onNotificationClick: () -> Unit = {},
@@ -209,6 +212,7 @@ internal fun HomeScreen(
             uiState = uiState,
             processAction = processAction,
             onSortOrderClick = { shouldShowSortOrderBottomSheet = true },
+            onWaitingChallengeClick = onWaitingChallengeClick,
             onStartedChallengeClick = onStartedChallengeClick,
             isLoading = isLoading,
             hasError = hasError,
@@ -222,6 +226,7 @@ private fun HomeBody(
     uiState: HomeUiState,
     processAction: (HomeUiAction) -> Unit,
     onSortOrderClick: () -> Unit,
+    onWaitingChallengeClick: (SimpleWaitingChallenge) -> Unit,
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
     isLoading: Boolean,
     hasError: Boolean,
@@ -234,6 +239,7 @@ private fun HomeBody(
             uiState = uiState,
             processAction = processAction,
             onSortOrderClick = onSortOrderClick,
+            onWaitingChallengeClick = onWaitingChallengeClick,
             onStartedChallengeClick = onStartedChallengeClick,
             content = homeContents,
         )
@@ -245,6 +251,7 @@ private fun HomeContent(
     uiState: HomeUiState,
     processAction: (HomeUiAction) -> Unit,
     onSortOrderClick: () -> Unit,
+    onWaitingChallengeClick: (SimpleWaitingChallenge) -> Unit,
     onStartedChallengeClick: (SimpleStartedChallenge) -> Unit,
     content: HomeContents,
 ) {
@@ -265,7 +272,7 @@ private fun HomeContent(
             onCategorySelected = { processAction(HomeUiAction.OnCategorySelect(it)) },
             onSortOrderClick = onSortOrderClick,
             onStartedChallengeClick = onStartedChallengeClick,
-            onWaitingChallengeClick = {},
+            onWaitingChallengeClick = onWaitingChallengeClick,
         )
     }
 }

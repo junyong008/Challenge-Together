@@ -59,6 +59,7 @@ include(
     ":feature:addchallenge",
     ":feature:editchallenge",
     ":feature:completedchallenges",
+    ":feature:waitingchallenge",
     ":feature:startedchallenge",
     ":feature:resetrecord",
     ":feature:challengeboard",

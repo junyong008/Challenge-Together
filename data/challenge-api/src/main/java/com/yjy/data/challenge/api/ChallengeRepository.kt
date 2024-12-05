@@ -5,6 +5,7 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.model.challenge.ChallengePost
 import com.yjy.model.challenge.ChallengeRank
 import com.yjy.model.challenge.DetailedStartedChallenge
+import com.yjy.model.challenge.DetailedWaitingChallenge
 import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.SimpleWaitingChallenge
@@ -47,12 +48,17 @@ interface ChallengeRepository {
     fun getChallengePosts(challengeId: Int): Flow<PagingData<ChallengePost>>
     fun getLatestChallengePost(challengeId: Int): Flow<ChallengePost?>
     fun observeChallengePostUpdates(challengeId: Int): Flow<Unit>
+    suspend fun deleteWaitingChallenge(challengeId: Int): NetworkResult<Unit>
+    suspend fun startWaitingChallenge(challengeId: Int): NetworkResult<Unit>
+    suspend fun joinWaitingChallenge(challengeId: Int): NetworkResult<Unit>
+    suspend fun leaveWaitingChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun reportChallengePost(postId: Int, reportReason: ReportReason): NetworkResult<Unit>
     suspend fun addChallengePost(challengeId: Int, content: String, tempWrittenDateTime: LocalDateTime)
     suspend fun resetStartedChallenge(challengeId: Int, memo: String): NetworkResult<Unit>
     suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit>
     suspend fun forceRemoveStartedChallengeMember(memberId: Int): NetworkResult<Unit>
+    suspend fun getWaitingChallengeDetail(challengeId: Int, password: String): NetworkResult<DetailedWaitingChallenge>
     suspend fun getStartedChallengeDetail(challengeId: Int): Flow<NetworkResult<DetailedStartedChallenge>>
     suspend fun getResetRecords(challengeId: Int): NetworkResult<List<ResetRecord>>
     suspend fun getChallengeRanking(challengeId: Int): Flow<NetworkResult<List<ChallengeRank>>>

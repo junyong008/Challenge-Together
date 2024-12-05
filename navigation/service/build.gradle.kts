@@ -30,6 +30,7 @@ dependencies {
         projects.feature.completedchallenges,
         projects.feature.notification,
         projects.feature.addchallenge,
+        projects.feature.waitingchallenge,
         projects.feature.startedchallenge,
         projects.feature.editchallenge,
         projects.feature.resetrecord,

@@ -103,7 +103,7 @@ internal fun StartedChallengeRoute(
     onEditTitleClick: (challengeId: Int, title: String, description: String) -> Unit,
     onEditTargetDaysClick: (challengeId: Int, targetDays: String, currentDays: Int) -> Unit,
     onResetRecordClick: (challengeId: Int) -> Unit,
-    onBoardClick: (challengeId: Int, isAlone: Boolean) -> Unit,
+    onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit,
     onRankingClick: (challengeId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
@@ -141,7 +141,7 @@ internal fun StartedChallengeScreen(
     onEditTitleClick: (challengeId: Int, title: String, description: String) -> Unit = { _, _, _ -> },
     onEditTargetDaysClick: (challengeId: Int, targetDays: String, currentDays: Int) -> Unit = { _, _, _ -> },
     onResetRecordClick: (challengeId: Int) -> Unit = {},
-    onBoardClick: (challengeId: Int, isAlone: Boolean) -> Unit = { _, _ -> },
+    onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit = { _, _ -> },
     onRankingClick: (challengeId: Int) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {

@@ -29,7 +29,7 @@ private fun NavController.navigateToTogetherDetail(category: Category) {
 
 fun NavGraphBuilder.togetherNavGraph(
     navController: NavHostController,
-    onWaitingChallengeClick: (challengeId: Int, password: String) -> Unit,
+    onWaitingChallengeClick: (challengeId: Int) -> Unit,
 ) {
     navigation<ServiceRoute.MainTab.Together>(
         startDestination = ServiceRoute.MainTab.Together.List::class,
@@ -51,9 +51,7 @@ fun NavGraphBuilder.togetherNavGraph(
             DetailRoute(
                 category = category,
                 onBackClick = navController::popBackStack,
-                onWaitingChallengeClick = { challenge, password ->
-                    onWaitingChallengeClick(challenge.id, password)
-                },
+                onWaitingChallengeClick = { onWaitingChallengeClick(it.id) },
             )
         }
     }

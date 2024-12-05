@@ -24,6 +24,9 @@ interface TogetherChallengeDao {
     suspend fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(challenge: TogetherChallengeEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(challenges: List<TogetherChallengeEntity>)
 
     @Transaction

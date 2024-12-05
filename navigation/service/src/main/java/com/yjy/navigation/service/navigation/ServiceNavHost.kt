@@ -27,6 +27,8 @@ import com.yjy.feature.resetrecord.navigation.resetRecordScreen
 import com.yjy.feature.startedchallenge.navigation.navigateToStartedChallenge
 import com.yjy.feature.startedchallenge.navigation.startedChallengeScreen
 import com.yjy.feature.together.navigation.togetherNavGraph
+import com.yjy.feature.waitingchallenge.navigation.navigateToWaitingChallenge
+import com.yjy.feature.waitingchallenge.navigation.waitingChallengeScreen
 
 @Composable
 internal fun ServiceNavHost(
@@ -43,14 +45,14 @@ internal fun ServiceNavHost(
         modifier = modifier,
     ) {
         homeScreen(
+            onWaitingChallengeClick = navController::navigateToWaitingChallenge,
             onStartedChallengeClick = navController::navigateToStartedChallenge,
             onCompletedChallengeClick = navController::navigateToCompletedChallenges,
             onNotificationClick = navController::navigateToNotification,
         )
         togetherNavGraph(
             navController = navController,
-            onWaitingChallengeClick = { challengeId, password ->
-            },
+            onWaitingChallengeClick = navController::navigateToWaitingChallenge,
         )
         completedChallengesScreen(
             onBackClick = navController::popBackStack,
@@ -60,6 +62,7 @@ internal fun ServiceNavHost(
             onBackClick = navController::popBackStack,
             onSettingClick = {},
             onShowSnackbar = onShowSnackbar,
+            onWaitingChallengeNotificationClick = navController::navigateToWaitingChallenge,
             onStartedChallengeNotificationClick = navController::navigateToStartedChallenge,
         )
         addChallengeNavGraph(
@@ -72,12 +75,25 @@ internal fun ServiceNavHost(
                 navController.navigateToStartedChallenge(challengeId, navOptions)
             },
             onWaitingChallengeCreated = { challengeId ->
-                navController.popBackStack(route = ServiceRoute.AddChallenge, inclusive = true)
+                val navOptions = navOptions {
+                    popUpTo(ServiceRoute.AddChallenge) { inclusive = true }
+                    launchSingleTop = true
+                }
+                navController.navigateToWaitingChallenge(challengeId, navOptions)
             },
             onShowSnackbar = onShowSnackbar,
         )
         editChallengeScreen(
             onBackClick = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
+        )
+        waitingChallengeScreen(
+            onBackClick = navController::popBackStack,
+            onChallengeStart = { challengeId ->
+                navController.popBackStack()
+                navController.navigateToStartedChallenge(challengeId)
+            },
+            onBoardClick = navController::navigateToChallengeBoard,
             onShowSnackbar = onShowSnackbar,
         )
         startedChallengeScreen(

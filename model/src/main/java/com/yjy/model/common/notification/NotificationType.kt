@@ -10,8 +10,8 @@ enum class NotificationType(
         category = NotificationCategory.CHALLENGE,
         destination = { NotificationDestination.StaredChallenge(it) },
     ),
-    CHALLENGE_DELETE(
-        type = "challenge_delete",
+    CHALLENGE_GIVE_UP(
+        type = "challenge_give_up",
         category = NotificationCategory.CHALLENGE,
         destination = { NotificationDestination.StaredChallenge(it) },
     ),
@@ -20,10 +20,35 @@ enum class NotificationType(
         category = NotificationCategory.CHALLENGE,
         destination = { NotificationDestination.StaredChallenge(it) },
     ),
+    CHALLENGE_WAITING_POST(
+        type = "challenge_waiting_post",
+        category = NotificationCategory.CHALLENGE,
+        destination = { NotificationDestination.WaitingChallenge(it) },
+    ),
     CHALLENGE_FORCE_REMOVE(
         type = "challenge_force_remove",
         category = NotificationCategory.CHALLENGE,
         destination = { NotificationDestination.StaredChallenge(it) },
+    ),
+    CHALLENGE_START(
+        type = "challenge_start",
+        category = NotificationCategory.CHALLENGE,
+        destination = { NotificationDestination.StaredChallenge(it) },
+    ),
+    CHALLENGE_DELETE(
+        type = "challenge_delete",
+        category = NotificationCategory.CHALLENGE,
+        destination = { NotificationDestination.None },
+    ),
+    CHALLENGE_JOIN(
+        type = "challenge_join",
+        category = NotificationCategory.CHALLENGE,
+        destination = { NotificationDestination.WaitingChallenge(it) },
+    ),
+    CHALLENGE_LEAVE(
+        type = "challenge_leave",
+        category = NotificationCategory.CHALLENGE,
+        destination = { NotificationDestination.WaitingChallenge(it) },
     ),
     COMMON(
         type = "common",

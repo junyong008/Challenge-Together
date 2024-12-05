@@ -13,6 +13,7 @@ import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
+import com.yjy.data.network.response.GetWaitingChallengeDetailResponse
 import com.yjy.data.network.response.WaitingChallengeResponse
 import com.yjy.data.network.service.ChallengePostWebSocketService
 import com.yjy.data.network.service.ChallengeTogetherService
@@ -34,6 +35,18 @@ internal class ChallengeDataSourceImpl @Inject constructor(
 
     override suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit> =
         challengeTogetherService.deleteChallengePost(postId)
+
+    override suspend fun deleteWaitingChallenge(challengeId: Int): NetworkResult<Unit> =
+        challengeTogetherService.deleteWaitingChallenge(challengeId)
+
+    override suspend fun startWaitingChallenge(challengeId: Int): NetworkResult<Unit> =
+        challengeTogetherService.startWaitingChallenge(challengeId)
+
+    override suspend fun joinWaitingChallenge(challengeId: Int): NetworkResult<Unit> =
+        challengeTogetherService.joinWaitingChallenge(challengeId)
+
+    override suspend fun leaveWaitingChallenge(challengeId: Int): NetworkResult<Unit> =
+        challengeTogetherService.leaveWaitingChallenge(challengeId)
 
     override suspend fun forceRemoveFromStartedChallenge(memberId: Int): NetworkResult<Unit> =
         challengeTogetherService.forceRemoveFromStartedChallenge(memberId)
@@ -70,6 +83,12 @@ internal class ChallengeDataSourceImpl @Inject constructor(
 
     override suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse> =
         challengeTogetherService.getMyChallenges()
+
+    override suspend fun getWaitingChallengeDetail(
+        challengeId: Int,
+        password: String,
+    ): NetworkResult<GetWaitingChallengeDetailResponse> =
+        challengeTogetherService.getWaitingChallengeDetail(challengeId, password)
 
     override suspend fun getStartedChallengeDetail(
         challengeId: Int,

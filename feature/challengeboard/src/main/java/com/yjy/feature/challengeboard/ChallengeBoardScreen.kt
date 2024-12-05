@@ -105,7 +105,7 @@ import java.util.Date
 
 @Composable
 internal fun ChallengeBoardRoute(
-    isAlone: Boolean,
+    isEditable: Boolean,
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
@@ -118,7 +118,7 @@ internal fun ChallengeBoardRoute(
 
     ChallengeBoardScreen(
         modifier = modifier,
-        isAlone = isAlone,
+        isEditable = isEditable,
         posts = posts,
         latestPost = latestPost,
         postsUpdateState = postsUpdateState,
@@ -133,7 +133,7 @@ internal fun ChallengeBoardRoute(
 @Composable
 internal fun ChallengeBoardScreen(
     modifier: Modifier = Modifier,
-    isAlone: Boolean = false,
+    isEditable: Boolean = false,
     posts: LazyPagingItems<ChallengePost>,
     latestPost: ChallengePost? = null,
     postsUpdateState: PostsUpdateState = PostsUpdateState.Connected,
@@ -228,7 +228,7 @@ internal fun ChallengeBoardScreen(
 
     if (selectedPost != null) {
         PostMenuBottomSheet(
-            isAlone = isAlone,
+            isEditable = isEditable,
             isAuthor = selectedPost!!.isAuthor,
             onCopyClick = {
                 clipboardManager.setText(AnnotatedString(selectedPost!!.content))
@@ -256,7 +256,7 @@ internal fun ChallengeBoardScreen(
                 onNavigationClick = onBackClick,
                 titleRes = R.string.feature_challengeboard_title,
                 rightContent = {
-                    if (!isAlone) {
+                    if (!isEditable) {
                         NotificationButton(
                             isNotificationOn = isNotificationOn,
                             onClick = { processAction(ChallengeBoardUiAction.ToggleNotification) },
@@ -346,7 +346,7 @@ internal fun ChallengeBoardScreen(
 
 @Composable
 private fun PostMenuBottomSheet(
-    isAlone: Boolean,
+    isEditable: Boolean,
     isAuthor: Boolean,
     onCopyClick: () -> Unit,
     onReportClick: () -> Unit,
@@ -377,7 +377,7 @@ private fun PostMenuBottomSheet(
                 contentPadding = PaddingValues(vertical = 16.dp),
             )
         }
-        if (isAlone) {
+        if (isEditable) {
             ClickableText(
                 text = stringResource(id = R.string.feature_challengeboard_menu_delete),
                 textAlign = TextAlign.Center,

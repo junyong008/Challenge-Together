@@ -14,6 +14,7 @@ import com.yjy.data.network.response.GetMyChallengesResponse
 import com.yjy.data.network.response.GetRecordsResponse
 import com.yjy.data.network.response.GetResetRecordResponse
 import com.yjy.data.network.response.GetStartedChallengeDetailResponse
+import com.yjy.data.network.response.GetWaitingChallengeDetailResponse
 import com.yjy.data.network.response.WaitingChallengeResponse
 import kotlinx.coroutines.flow.Flow
 
@@ -22,6 +23,10 @@ interface ChallengeDataSource {
     suspend fun resetStartedChallenge(request: ResetChallengeRequest): NetworkResult<Unit>
     suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit>
+    suspend fun deleteWaitingChallenge(challengeId: Int): NetworkResult<Unit>
+    suspend fun startWaitingChallenge(challengeId: Int): NetworkResult<Unit>
+    suspend fun joinWaitingChallenge(challengeId: Int): NetworkResult<Unit>
+    suspend fun leaveWaitingChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun forceRemoveFromStartedChallenge(memberId: Int): NetworkResult<Unit>
     suspend fun reportChallengePost(request: ReportChallengePostRequest): NetworkResult<Unit>
     suspend fun editChallengeCategory(challengeId: Int, category: String): NetworkResult<Unit>
@@ -35,6 +40,10 @@ interface ChallengeDataSource {
         limit: Int,
     ): NetworkResult<List<WaitingChallengeResponse>>
     suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse>
+    suspend fun getWaitingChallengeDetail(
+        challengeId: Int,
+        password: String,
+    ): NetworkResult<GetWaitingChallengeDetailResponse>
     suspend fun getStartedChallengeDetail(
         challengeId: Int,
     ): NetworkResult<GetStartedChallengeDetailResponse>

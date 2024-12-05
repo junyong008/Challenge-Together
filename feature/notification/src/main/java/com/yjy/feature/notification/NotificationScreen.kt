@@ -80,7 +80,8 @@ import kotlinx.coroutines.flow.flowOf
 internal fun NotificationRoute(
     onBackClick: () -> Unit,
     onSettingClick: () -> Unit,
-    onStartedChallengeNotificationClick: (Int) -> Unit,
+    onWaitingChallengeNotificationClick: (challengeId: Int) -> Unit,
+    onStartedChallengeNotificationClick: (challengeId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: NotificationViewModel = hiltViewModel(),
@@ -94,6 +95,7 @@ internal fun NotificationRoute(
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
         onSettingClick = onSettingClick,
+        onWaitingChallengeNotificationClick = onWaitingChallengeNotificationClick,
         onStartedChallengeNotificationClick = onStartedChallengeNotificationClick,
         onShowSnackbar = onShowSnackbar,
     )
@@ -107,7 +109,8 @@ internal fun NotificationScreen(
     processAction: (NotificationUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onSettingClick: () -> Unit = {},
-    onStartedChallengeNotificationClick: (Int) -> Unit = {},
+    onWaitingChallengeNotificationClick: (challengeId: Int) -> Unit = {},
+    onStartedChallengeNotificationClick: (challengeId: Int) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val deleteSuccessMessage = stringResource(id = R.string.feature_notification_delete_success)
@@ -182,6 +185,7 @@ internal fun NotificationScreen(
             else -> {
                 NotificationBody(
                     notifications = notifications,
+                    onWaitingChallengeNotificationClick = onWaitingChallengeNotificationClick,
                     onStartedChallengeNotificationClick = onStartedChallengeNotificationClick,
                     onMenuClick = { selectedNotification = it },
                     modifier = Modifier.padding(padding),
@@ -266,7 +270,8 @@ private fun MenuButton(
 @Composable
 private fun NotificationBody(
     notifications: LazyPagingItems<Notification>,
-    onStartedChallengeNotificationClick: (Int) -> Unit,
+    onWaitingChallengeNotificationClick: (challengeId: Int) -> Unit,
+    onStartedChallengeNotificationClick: (challengeId: Int) -> Unit,
     onMenuClick: (Notification) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -288,6 +293,9 @@ private fun NotificationBody(
                             when (it.destination) {
                                 is NotificationDestination.StaredChallenge ->
                                     onStartedChallengeNotificationClick(it.linkId)
+
+                                is NotificationDestination.WaitingChallenge ->
+                                    onWaitingChallengeNotificationClick(it.linkId)
 
                                 NotificationDestination.None -> Unit
                             }

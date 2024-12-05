@@ -15,5 +15,6 @@ dependencies {
         projects.model,
 
         libs.lottie.compose,
+        libs.androidx.navigation.compose,
     )
 }

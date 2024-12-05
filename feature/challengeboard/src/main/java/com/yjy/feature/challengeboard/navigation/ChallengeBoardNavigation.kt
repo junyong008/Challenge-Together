@@ -10,8 +10,8 @@ import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.challengeboard.ChallengeBoardRoute
 
-fun NavController.navigateToChallengeBoard(challengeId: Int, isAlone: Boolean) {
-    navigate(ServiceRoute.ChallengeBoard(challengeId, isAlone))
+fun NavController.navigateToChallengeBoard(challengeId: Int, isEditable: Boolean) {
+    navigate(ServiceRoute.ChallengeBoard(challengeId, isEditable))
 }
 
 fun NavGraphBuilder.challengeBoardScreen(
@@ -22,10 +22,10 @@ fun NavGraphBuilder.challengeBoardScreen(
         enterTransition = { slideInToLeft() },
         popExitTransition = { slideOutToRight() },
     ) { entry ->
-        val isAlone = entry.toRoute<ServiceRoute.ChallengeBoard>().isAlone
+        val isEditable = entry.toRoute<ServiceRoute.ChallengeBoard>().isEditable
 
         ChallengeBoardRoute(
-            isAlone = isAlone,
+            isEditable = isEditable,
             onBackClick = onBackClick,
             onShowSnackbar = onShowSnackbar,
         )

@@ -18,7 +18,8 @@ fun NavController.navigateToNotification() {
 fun NavGraphBuilder.notificationScreen(
     onBackClick: () -> Unit,
     onSettingClick: () -> Unit,
-    onStartedChallengeNotificationClick: (Int) -> Unit,
+    onWaitingChallengeNotificationClick: (challengeId: Int) -> Unit,
+    onStartedChallengeNotificationClick: (challengeId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     composable<ServiceRoute.Notification>(
@@ -31,6 +32,7 @@ fun NavGraphBuilder.notificationScreen(
             onBackClick = onBackClick,
             onSettingClick = onSettingClick,
             onShowSnackbar = onShowSnackbar,
+            onWaitingChallengeNotificationClick = onWaitingChallengeNotificationClick,
             onStartedChallengeNotificationClick = onStartedChallengeNotificationClick,
         )
     }
