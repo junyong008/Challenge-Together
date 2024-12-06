@@ -106,6 +106,11 @@ internal class UserRepositoryImpl @Inject constructor(
         notificationSettingDataSource.removeMutedChallengeBoard(challengeId)
     }
 
+    override suspend fun clearLocalData() {
+        userPreferencesDataSource.setFcmToken(null)
+        notificationDao.deleteAll()
+    }
+
     private companion object {
         const val PAGING_PAGE_SIZE = 30
         const val PAGING_INITIAL_LOAD_SIZE = 50

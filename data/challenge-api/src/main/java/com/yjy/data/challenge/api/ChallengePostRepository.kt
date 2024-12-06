@@ -14,4 +14,5 @@ interface ChallengePostRepository {
     suspend fun addChallengePost(challengeId: Int, content: String, tempWrittenDateTime: LocalDateTime)
     suspend fun deleteChallengePost(postId: Int): NetworkResult<Unit>
     suspend fun reportChallengePost(postId: Int, reportReason: ReportReason): NetworkResult<Unit>
+    suspend fun clearLocalData()
 }

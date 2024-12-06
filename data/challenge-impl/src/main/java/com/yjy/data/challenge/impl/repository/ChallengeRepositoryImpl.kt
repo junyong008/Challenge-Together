@@ -79,4 +79,8 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         .map { response ->
             response.newlyCompletedTitles
         }
+
+    override suspend fun clearLocalData() {
+        challengeDao.deleteAll()
+    }
 }

@@ -26,6 +26,9 @@ interface ChallengeDao {
     @Query("DELETE FROM challenges WHERE id NOT IN (:ids)")
     suspend fun deleteChallengesNotIn(ids: List<Int>)
 
+    @Query("DELETE FROM challenges")
+    suspend fun deleteAll()
+
     @Transaction
     suspend fun syncChallenges(challenges: List<ChallengeEntity>) {
         insertAll(challenges)

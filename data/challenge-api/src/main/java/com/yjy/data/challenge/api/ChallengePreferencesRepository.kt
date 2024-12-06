@@ -15,4 +15,5 @@ interface ChallengePreferencesRepository {
     suspend fun setLocalTier(tier: Tier)
     suspend fun setSortOrder(order: SortOrder)
     suspend fun clearRecentCompletedChallenges()
+    suspend fun clearLocalData()
 }

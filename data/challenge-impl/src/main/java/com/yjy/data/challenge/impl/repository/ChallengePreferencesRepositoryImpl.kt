@@ -42,4 +42,8 @@ internal class ChallengePreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun clearRecentCompletedChallenges() =
         challengePreferencesDataSource.setCompletedChallengeTitles(emptyList())
+
+    override suspend fun clearLocalData() {
+        challengePreferencesDataSource.setCurrentTier(Tier.UNSPECIFIED.toProto())
+    }
 }

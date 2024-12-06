@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yjy.data.auth.api.AuthRepository
 import com.yjy.data.user.api.UserRepository
+import com.yjy.domain.LogoutUseCase
 import com.yjy.platform.network.NetworkMonitor
 import com.yjy.platform.time.TimeMonitor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ServiceViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
+    authRepository: AuthRepository,
+    logoutUseCase: LogoutUseCase,
     networkMonitor: NetworkMonitor,
     timeMonitor: TimeMonitor,
 ) : ViewModel() {
@@ -48,7 +50,7 @@ class ServiceViewModel @Inject constructor(
     ) { loggedIn, tokenAvailable ->
         loggedIn && !tokenAvailable
     }.onEach { isExpired ->
-        if (isExpired) authRepository.logout()
+        if (isExpired) logoutUseCase()
     }.shareIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

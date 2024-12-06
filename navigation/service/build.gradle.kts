@@ -20,6 +20,8 @@ dependencies {
         projects.data.authApi,
         projects.data.userApi,
 
+        projects.domain,
+
         projects.model,
 
         projects.platform.network,

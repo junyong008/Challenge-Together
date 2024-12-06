@@ -15,6 +15,7 @@ dependencies {
 
         projects.model,
 
+        projects.data.authApi,
         projects.data.challengeApi,
         projects.data.userApi,
 
@@ -25,6 +26,7 @@ dependencies {
 
     testImplementation(libs.kotlinx.coroutines.test)
 
+    runtimeOnly(projects.data.authImpl)
     runtimeOnly(projects.data.challengeImpl)
     runtimeOnly(projects.data.userImpl)
 }

@@ -129,6 +129,10 @@ internal class ChallengePostRepositoryImpl @Inject constructor(
         ),
     )
 
+    override suspend fun clearLocalData() {
+        challengePostDao.deleteAll()
+    }
+
     private companion object {
         const val PAGING_PAGE_SIZE = 30
         const val PAGING_INITIAL_LOAD_SIZE = 50
