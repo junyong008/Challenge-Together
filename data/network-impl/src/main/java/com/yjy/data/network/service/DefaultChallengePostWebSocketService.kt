@@ -1,8 +1,8 @@
 package com.yjy.data.network.service
 
 import com.yjy.data.network.WebSocketClient
-import com.yjy.data.network.request.AddChallengePostRequest
-import com.yjy.data.network.response.ChallengePostResponse
+import com.yjy.data.network.request.challenge.AddChallengePostRequest
+import com.yjy.data.network.response.challenge.ChallengePostResponse
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow

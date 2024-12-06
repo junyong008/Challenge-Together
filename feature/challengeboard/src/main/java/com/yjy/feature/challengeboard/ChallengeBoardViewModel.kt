@@ -9,7 +9,7 @@ import com.yjy.common.network.HttpStatusCodes
 import com.yjy.common.network.handleNetworkResult
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
-import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.ChallengePostRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.AddChallengePostUseCase
 import com.yjy.domain.GetChallengePostsUseCase
@@ -35,7 +35,7 @@ class ChallengeBoardViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getChallengePostsUseCase: GetChallengePostsUseCase,
     private val addChallengePostUseCase: AddChallengePostUseCase,
-    private val challengeRepository: ChallengeRepository,
+    private val challengePostRepository: ChallengePostRepository,
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
@@ -54,7 +54,7 @@ class ChallengeBoardViewModel @Inject constructor(
     val latestPost = challengeId
         .filterNotNull()
         .flatMapLatest {
-            challengeRepository.getLatestChallengePost(it)
+            challengePostRepository.getLatestChallengePost(it)
         }
         .stateIn(
             scope = viewModelScope,
@@ -65,7 +65,7 @@ class ChallengeBoardViewModel @Inject constructor(
     val postsUpdateState = challengeId
         .filterNotNull()
         .flatMapLatest { challengeId ->
-            challengeRepository.observeChallengePostUpdates(challengeId)
+            challengePostRepository.observeChallengePostUpdates(challengeId)
         }
         .map<Unit, PostsUpdateState> { PostsUpdateState.Connected }
         .catch { emit(PostsUpdateState.Error) }
@@ -105,14 +105,14 @@ class ChallengeBoardViewModel @Inject constructor(
     }
 
     private fun deletePost(postId: Int) = viewModelScope.launch {
-        challengeRepository.deleteChallengePost(postId)
+        challengePostRepository.deleteChallengePost(postId)
             .onSuccess { sendEvent(ChallengeBoardUiEvent.DeleteSuccess) }
             .onFailure { sendEvent(ChallengeBoardUiEvent.DeleteFailure) }
     }
 
     private fun reportPost(postId: Int, reason: ReportReason) = viewModelScope.launch {
         val event = handleNetworkResult(
-            result = challengeRepository.reportChallengePost(postId, reason),
+            result = challengePostRepository.reportChallengePost(postId, reason),
             onSuccess = { ChallengeBoardUiEvent.ReportSuccess },
             onHttpError = { code ->
                 when (code) {

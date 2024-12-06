@@ -1,11 +1,11 @@
 package com.yjy.data.network.datasource
 
 import com.yjy.common.network.NetworkResult
-import com.yjy.data.network.request.ChangePasswordRequest
-import com.yjy.data.network.request.EmailLoginRequest
-import com.yjy.data.network.request.EmailRequest
-import com.yjy.data.network.request.SignUpRequest
-import com.yjy.data.network.request.VerifyRequest
+import com.yjy.data.network.request.auth.ChangePasswordRequest
+import com.yjy.data.network.request.auth.EmailLoginRequest
+import com.yjy.data.network.request.auth.EmailRequest
+import com.yjy.data.network.request.auth.SignUpRequest
+import com.yjy.data.network.request.auth.VerifyRequest
 
 interface AuthDataSource {
     suspend fun signUp(signUpRequest: SignUpRequest): NetworkResult<Unit>

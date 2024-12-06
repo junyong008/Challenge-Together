@@ -1,8 +1,8 @@
 package com.yjy.data.challenge.impl.mapper
 
 import com.yjy.data.database.model.ChallengePostEntity
-import com.yjy.data.network.response.ChallengePostResponse
-import com.yjy.data.network.response.GetChallengePostsResponse
+import com.yjy.data.network.response.challenge.ChallengePostResponse
+import com.yjy.data.network.response.challenge.GetChallengePostsResponse
 import com.yjy.model.challenge.ChallengePost
 import com.yjy.model.common.Tier
 

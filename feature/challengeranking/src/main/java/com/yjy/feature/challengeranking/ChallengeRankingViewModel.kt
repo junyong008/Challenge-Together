@@ -7,7 +7,8 @@ import com.yjy.common.core.extensions.restartableStateIn
 import com.yjy.common.network.HttpStatusCodes
 import com.yjy.common.network.fold
 import com.yjy.common.network.handleNetworkResult
-import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.ChallengePreferencesRepository
+import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.domain.GetChallengeRanksUseCase
 import com.yjy.feature.challengeranking.model.ChallengeRankingUiAction
 import com.yjy.feature.challengeranking.model.ChallengeRankingUiEvent
@@ -28,7 +29,8 @@ import javax.inject.Inject
 class ChallengeRankingViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getChallengeRanksUseCase: GetChallengeRanksUseCase,
-    private val challengeRepository: ChallengeRepository,
+    challengePreferencesRepository: ChallengePreferencesRepository,
+    private val startedChallengeRepository: StartedChallengeRepository,
 ) : ViewModel() {
 
     private val challengeId = savedStateHandle.getStateFlow<Int?>("challengeId", null)
@@ -38,7 +40,7 @@ class ChallengeRankingViewModel @Inject constructor(
 
     val challengeRanks = merge(
         challengeId,
-        challengeRepository.timeChangedFlow.map { challengeId.value },
+        challengePreferencesRepository.timeChangedFlow.map { challengeId.value },
     ).filterNotNull().flatMapLatest { id ->
         getChallengeRanksUseCase(id)
     }.map { result ->
@@ -71,7 +73,7 @@ class ChallengeRankingViewModel @Inject constructor(
 
     private fun forceRemove(memberId: Int) = viewModelScope.launch {
         val event = handleNetworkResult(
-            result = challengeRepository.forceRemoveStartedChallengeMember(memberId),
+            result = startedChallengeRepository.forceRemoveStartedChallengeMember(memberId),
             onSuccess = {
                 challengeRanks.restart()
                 ChallengeRankingUiEvent.ForceRemoveSuccess

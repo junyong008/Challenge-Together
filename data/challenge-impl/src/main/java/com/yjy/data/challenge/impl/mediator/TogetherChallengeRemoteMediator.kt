@@ -9,7 +9,7 @@ import com.yjy.data.challenge.impl.mapper.toRequestString
 import com.yjy.data.challenge.impl.mapper.toTogetherEntity
 import com.yjy.data.database.dao.TogetherChallengeDao
 import com.yjy.data.database.model.TogetherChallengeEntity
-import com.yjy.data.network.datasource.ChallengeDataSource
+import com.yjy.data.network.datasource.WaitingChallengeDataSource
 import com.yjy.model.challenge.core.Category
 
 @OptIn(ExperimentalPagingApi::class)
@@ -17,7 +17,7 @@ internal class TogetherChallengeRemoteMediator(
     private val query: String,
     private val category: Category,
     private val togetherChallengeDao: TogetherChallengeDao,
-    private val challengeDataSource: ChallengeDataSource,
+    private val waitingChallengeDataSource: WaitingChallengeDataSource,
 ) : RemoteMediator<Int, TogetherChallengeEntity>() {
 
     override suspend fun load(
@@ -30,7 +30,7 @@ internal class TogetherChallengeRemoteMediator(
             LoadType.APPEND -> togetherChallengeDao.getOldestChallengeId() ?: REFRESH_LAST_ID
         }
 
-        val response = challengeDataSource.getTogetherChallenges(
+        val response = waitingChallengeDataSource.getTogetherChallenges(
             category = category.toRequestString(),
             query = query,
             lastChallengeId = lastChallengeId,

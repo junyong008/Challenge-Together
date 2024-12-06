@@ -7,7 +7,9 @@ import com.yjy.common.core.extensions.restartableStateIn
 import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
+import com.yjy.data.challenge.api.ChallengePreferencesRepository
 import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.WaitingChallengeRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.GetStartedChallengesUseCase
 import com.yjy.feature.home.model.ChallengeSyncUiState
@@ -48,8 +50,10 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     getStartedChallengesUseCase: GetStartedChallengesUseCase,
+    waitingChallengeRepository: WaitingChallengeRepository,
     private val userRepository: UserRepository,
     private val challengeRepository: ChallengeRepository,
+    private val challengePreferencesRepository: ChallengePreferencesRepository,
 ) : ViewModel() {
 
     private val tierTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
@@ -63,7 +67,7 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     val timeSyncState = merge(
-        challengeRepository.timeChangedFlow,
+        challengePreferencesRepository.timeChangedFlow,
         timeSyncTrigger,
     ).flatMapLatest {
         flow {
@@ -106,27 +110,39 @@ class HomeViewModel @Inject constructor(
     }.onEach { challenges ->
         handleStartedChallenges(challenges)
         lastProcessedChallenges = challenges
+    }.combine(challengePreferencesRepository.sortOrder) { challenges, order ->
+        challenges.sortBy(order)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = emptyList(),
     )
 
-    val waitingChallenges = challengeRepository.waitingChallenges
+    private fun List<SimpleStartedChallenge>.sortBy(sortOrder: SortOrder): List<SimpleStartedChallenge> {
+        return when (sortOrder) {
+            SortOrder.LATEST -> this.sortedByDescending { it.id }
+            SortOrder.OLDEST -> this.sortedBy { it.id }
+            SortOrder.TITLE -> this.sortedBy { it.title }
+            SortOrder.HIGHEST_RECORD -> this.sortedByDescending { it.currentRecordInSeconds }
+            SortOrder.LOWEST_RECORD -> this.sortedBy { it.currentRecordInSeconds }
+        }
+    }
+
+    val waitingChallenges = waitingChallengeRepository.waitingChallenges
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList(),
         )
 
-    val recentCompletedChallenges = challengeRepository.recentCompletedChallengeTitles
+    val recentCompletedChallenges = challengePreferencesRepository.recentCompletedChallengeTitles
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList(),
         )
 
-    val sortOrder = challengeRepository.sortOrder
+    val sortOrder = challengePreferencesRepository.sortOrder
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
@@ -157,8 +173,8 @@ class HomeViewModel @Inject constructor(
         .onStart { emit(Unit) }
         .flatMapLatest {
             combine(
-                flow { emit(challengeRepository.getRemoteTier()) },
-                challengeRepository.localTier,
+                flow { emit(challengePreferencesRepository.getRemoteTier()) },
+                challengePreferencesRepository.localTier,
             ) { remoteResult, localTier ->
                 when (remoteResult) {
                     is NetworkResult.Success -> {
@@ -179,7 +195,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun handleTier(old: Tier, new: Tier) {
         if (old == Tier.UNSPECIFIED || old > new) {
-            challengeRepository.setLocalTier(new)
+            challengePreferencesRepository.setLocalTier(new)
         } else if (new > old) {
             val animation = TierUpAnimationState(from = old, to = Tier.getNextTier(old))
             _uiState.update { it.copy(tierUpAnimation = animation) }
@@ -281,7 +297,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun clearRecentCompletedChallenges() = viewModelScope.launch {
-        challengeRepository.clearRecentCompletedChallenges()
+        challengePreferencesRepository.clearRecentCompletedChallenges()
     }
 
     private fun dismissTierUpAnimation() = viewModelScope.launch {
@@ -289,7 +305,7 @@ class HomeViewModel @Inject constructor(
 
         _uiState.update { it.copy(tierUpAnimation = null) }
         delay(TIER_UP_ANIMATION_CLOSE_DELAY) // 연속적인 승급시 중간 상태값(null)이 간혈적으로 씹히는 이슈
-        challengeRepository.setLocalTier(animation.to)
+        challengePreferencesRepository.setLocalTier(animation.to)
     }
 
     private fun updateSelectedCategory(category: Category) {
@@ -297,7 +313,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun updateSortOrder(sortOrder: SortOrder) = viewModelScope.launch {
-        challengeRepository.setSortOrder(sortOrder)
+        challengePreferencesRepository.setSortOrder(sortOrder)
     }
 
     companion object {

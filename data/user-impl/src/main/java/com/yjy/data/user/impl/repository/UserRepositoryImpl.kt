@@ -13,7 +13,7 @@ import com.yjy.data.database.dao.NotificationDao
 import com.yjy.data.datastore.api.NotificationSettingDataSource
 import com.yjy.data.datastore.api.UserPreferencesDataSource
 import com.yjy.data.network.datasource.UserDataSource
-import com.yjy.data.network.request.RegisterFirebaseTokenRequest
+import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
 import com.yjy.data.user.api.FcmTokenProvider
 import com.yjy.data.user.api.UserRepository
 import com.yjy.data.user.impl.mapper.toModel

@@ -1,6 +1,6 @@
 package com.yjy.domain
 
-import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.Category
@@ -18,16 +18,16 @@ import kotlin.test.assertEquals
 
 class GetStartedChallengesUseCaseTest {
 
-    private lateinit var challengeRepository: ChallengeRepository
+    private lateinit var startedChallengeRepository: StartedChallengeRepository
     private lateinit var userRepository: UserRepository
     private lateinit var getStartedChallengesUseCase: GetStartedChallengesUseCase
 
     @Before
     fun setUp() {
-        challengeRepository = mockk()
+        startedChallengeRepository = mockk()
         userRepository = mockk()
         getStartedChallengesUseCase = GetStartedChallengesUseCase(
-            challengeRepository = challengeRepository,
+            startedChallengeRepository = startedChallengeRepository,
             userRepository = userRepository,
         )
     }
@@ -64,7 +64,7 @@ class GetStartedChallengesUseCaseTest {
             ),
         )
 
-        every { challengeRepository.startedChallenges } returns flowOf(startedChallenges)
+        every { startedChallengeRepository.startedChallenges } returns flowOf(startedChallenges)
         every { userRepository.timeDiff } returns flowOf(timeDiff)
 
         // When

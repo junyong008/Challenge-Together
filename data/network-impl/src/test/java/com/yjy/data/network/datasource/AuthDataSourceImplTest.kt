@@ -6,9 +6,9 @@ import com.yjy.common.network.HttpStatusCodes.OK
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.network.adapter.NetworkResultCallAdapterFactory
 import com.yjy.data.network.interceptor.SessionInterceptor
-import com.yjy.data.network.request.EmailLoginRequest
-import com.yjy.data.network.request.SignUpRequest
-import com.yjy.data.network.request.VerifyRequest
+import com.yjy.data.network.request.auth.EmailLoginRequest
+import com.yjy.data.network.request.auth.SignUpRequest
+import com.yjy.data.network.request.auth.VerifyRequest
 import com.yjy.data.network.service.ChallengeTogetherService
 import com.yjy.data.network.util.SessionManager
 import io.mockk.coVerify

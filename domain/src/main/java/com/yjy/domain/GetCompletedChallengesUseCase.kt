@@ -1,7 +1,7 @@
 package com.yjy.domain
 
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
-import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.TargetDays
@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class GetCompletedChallengesUseCase @Inject constructor(
-    private val challengeRepository: ChallengeRepository,
+    private val startedChallengeRepository: StartedChallengeRepository,
     private val userRepository: UserRepository,
 ) {
     operator fun invoke(): Flow<List<SimpleStartedChallenge>> = combine(
-        challengeRepository.completedChallenges,
+        startedChallengeRepository.completedChallenges,
         userRepository.timeDiff,
     ) { challenges, timeDiff ->
         challenges.map { challenge ->

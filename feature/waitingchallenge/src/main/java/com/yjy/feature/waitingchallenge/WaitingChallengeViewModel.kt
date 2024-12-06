@@ -12,7 +12,7 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.handleNetworkResult
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
-import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.WaitingChallengeRepository
 import com.yjy.feature.waitingchallenge.model.ChallengeDetailUiState
 import com.yjy.feature.waitingchallenge.model.WaitingChallengeUiAction
 import com.yjy.feature.waitingchallenge.model.WaitingChallengeUiEvent
@@ -36,7 +36,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WaitingChallengeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val challengeRepository: ChallengeRepository,
+    private val waitingChallengeRepository: WaitingChallengeRepository,
 ) : ViewModel() {
 
     private val challengeId = savedStateHandle.getStateFlow<Int?>("challengeId", null)
@@ -56,7 +56,7 @@ class WaitingChallengeViewModel @Inject constructor(
     }.flatMapLatest { (challengeId, password) ->
         dismissPasswordDialog()
         val state = handleNetworkResult(
-            result = challengeRepository.getWaitingChallengeDetail(challengeId, password),
+            result = waitingChallengeRepository.getWaitingChallengeDetail(challengeId, password),
             onSuccess = { challenge ->
                 updatePassword(challenge.password)
                 ChallengeDetailUiState.Success(challenge)
@@ -131,7 +131,7 @@ class WaitingChallengeViewModel @Inject constructor(
     private fun deleteChallenge(challengeId: Int) = viewModelScope.launch {
         _uiState.update { it.copy(isDeleting = true) }
 
-        challengeRepository.deleteWaitingChallenge(challengeId)
+        waitingChallengeRepository.deleteWaitingChallenge(challengeId)
             .onSuccess { sendEvent(WaitingChallengeUiEvent.DeleteSuccess) }
             .onFailure { sendEvent(WaitingChallengeUiEvent.DeleteFailure) }
         _uiState.update { it.copy(isDeleting = false) }
@@ -140,7 +140,7 @@ class WaitingChallengeViewModel @Inject constructor(
     private fun startChallenge(challengeId: Int) = viewModelScope.launch {
         _uiState.update { it.copy(isActionProcessing = true) }
 
-        challengeRepository.startWaitingChallenge(challengeId)
+        waitingChallengeRepository.startWaitingChallenge(challengeId)
             .onSuccess { sendEvent(WaitingChallengeUiEvent.StartSuccess(challengeId)) }
             .onFailure { sendEvent(WaitingChallengeUiEvent.StartFailure) }
         _uiState.update { it.copy(isActionProcessing = false) }
@@ -149,7 +149,7 @@ class WaitingChallengeViewModel @Inject constructor(
     private fun joinChallenge(challengeId: Int) = viewModelScope.launch {
         _uiState.update { it.copy(isActionProcessing = true) }
 
-        challengeRepository.joinWaitingChallenge(challengeId)
+        waitingChallengeRepository.joinWaitingChallenge(challengeId)
             .onFailure {
                 if (it is NetworkResult.Failure.HttpError && it.code == FORBIDDEN) {
                     sendEvent(WaitingChallengeUiEvent.JoinFailure.Full)
@@ -164,7 +164,7 @@ class WaitingChallengeViewModel @Inject constructor(
     private fun leaveChallenge(challengeId: Int) = viewModelScope.launch {
         _uiState.update { it.copy(isActionProcessing = true) }
 
-        challengeRepository.leaveWaitingChallenge(challengeId)
+        waitingChallengeRepository.leaveWaitingChallenge(challengeId)
             .onFailure { sendEvent(WaitingChallengeUiEvent.LeaveFailure.Unknown) }
         challengeDetail.restart()
         _uiState.update { it.copy(isActionProcessing = false) }

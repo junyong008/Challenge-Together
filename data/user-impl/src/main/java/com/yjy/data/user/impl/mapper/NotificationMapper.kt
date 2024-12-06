@@ -1,7 +1,7 @@
 package com.yjy.data.user.impl.mapper
 
 import com.yjy.data.database.model.NotificationEntity
-import com.yjy.data.network.response.GetNotificationsResponse
+import com.yjy.data.network.response.user.GetNotificationsResponse
 import com.yjy.model.common.notification.Notification
 import com.yjy.model.common.notification.NotificationType
 

@@ -1,6 +1,6 @@
 package com.yjy.data.challenge.impl.mapper
 
-import com.yjy.data.network.response.GetChallengeRankingResponse
+import com.yjy.data.network.response.challenge.GetChallengeRankingResponse
 import com.yjy.model.challenge.ChallengeRank
 import com.yjy.model.common.Tier
 import com.yjy.model.common.User

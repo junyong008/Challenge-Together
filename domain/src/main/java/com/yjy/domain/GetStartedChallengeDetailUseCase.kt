@@ -3,7 +3,7 @@ package com.yjy.domain
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.map
-import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.core.TargetDays
@@ -12,12 +12,12 @@ import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class GetStartedChallengeDetailUseCase @Inject constructor(
-    private val challengeRepository: ChallengeRepository,
+    private val startedChallengeRepository: StartedChallengeRepository,
     private val userRepository: UserRepository,
 ) {
     suspend operator fun invoke(challengeId: Int): Flow<NetworkResult<DetailedStartedChallenge>> =
         combine(
-            challengeRepository.getStartedChallengeDetail(challengeId),
+            startedChallengeRepository.getStartedChallengeDetail(challengeId),
             userRepository.timeDiff,
         ) { result, timeDiff ->
             result.map { challenge ->

@@ -5,7 +5,8 @@ import com.yjy.common.network.HttpStatusCodes.CONFLICT
 import com.yjy.common.network.HttpStatusCodes.FORBIDDEN
 import com.yjy.common.network.HttpStatusCodes.NOT_FOUND
 import com.yjy.common.network.NetworkResult
-import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.ChallengePreferencesRepository
+import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.domain.GetStartedChallengeDetailUseCase
 import com.yjy.feature.startedchallenge.model.ChallengeDetailUiState
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiAction
@@ -43,7 +44,8 @@ class StartedChallengeViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var viewModel: StartedChallengeViewModel
-    private lateinit var challengeRepository: ChallengeRepository
+    private lateinit var challengePreferencesRepository: ChallengePreferencesRepository
+    private lateinit var startedChallengeRepository: StartedChallengeRepository
     private lateinit var getStartedChallengeDetail: GetStartedChallengeDetailUseCase
     private lateinit var savedStateHandle: SavedStateHandle
 
@@ -58,15 +60,17 @@ class StartedChallengeViewModelTest {
         every { savedStateHandle.getStateFlow<Int?>(STARTED_CHALLENGE_ID, null) } returns
             MutableStateFlow(testChallengeId)
 
-        challengeRepository = mockk(relaxed = true)
+        challengePreferencesRepository = mockk(relaxed = true)
+        startedChallengeRepository = mockk(relaxed = true)
         getStartedChallengeDetail = mockk()
 
-        coEvery { challengeRepository.timeChangedFlow } returns timeChangedFlow
+        coEvery { challengePreferencesRepository.timeChangedFlow } returns timeChangedFlow
 
         viewModel = StartedChallengeViewModel(
             savedStateHandle = savedStateHandle,
             getStartedChallengeDetail = getStartedChallengeDetail,
-            challengeRepository = challengeRepository,
+            challengePreferencesRepository = challengePreferencesRepository,
+            startedChallengeRepository = startedChallengeRepository,
         )
     }
 
@@ -185,7 +189,8 @@ class StartedChallengeViewModelTest {
             viewModel = StartedChallengeViewModel(
                 savedStateHandle = savedStateHandle,
                 getStartedChallengeDetail = getStartedChallengeDetail,
-                challengeRepository = challengeRepository,
+                challengePreferencesRepository = challengePreferencesRepository,
+                startedChallengeRepository = startedChallengeRepository,
             )
 
             coEvery { getStartedChallengeDetail(testChallengeId) } returns flowOf(
@@ -207,7 +212,9 @@ class StartedChallengeViewModelTest {
     @Test
     fun `delete challenge success should emit success event`() = runTest {
         // Given
-        coEvery { challengeRepository.deleteStartedChallenge(testChallengeId) } returns NetworkResult.Success(Unit)
+        coEvery {
+            startedChallengeRepository.deleteStartedChallenge(testChallengeId)
+        } returns NetworkResult.Success(Unit)
 
         // When
         viewModel.processAction(StartedChallengeUiAction.OnDeleteChallengeClick(testChallengeId))
@@ -222,7 +229,7 @@ class StartedChallengeViewModelTest {
     fun `delete challenge failure should emit failure event`() = runTest {
         // Given
         coEvery {
-            challengeRepository.deleteStartedChallenge(testChallengeId)
+            startedChallengeRepository.deleteStartedChallenge(testChallengeId)
         } returns NetworkResult.Failure.NetworkError(Throwable())
 
         // When
@@ -250,7 +257,7 @@ class StartedChallengeViewModelTest {
             }
         }
         coEvery {
-            challengeRepository.resetStartedChallenge(testChallengeId, testMemo)
+            startedChallengeRepository.resetStartedChallenge(testChallengeId, testMemo)
         } returns NetworkResult.Success(Unit)
 
         // When: 초기 로드
@@ -290,7 +297,7 @@ class StartedChallengeViewModelTest {
         )
 
         coEvery {
-            challengeRepository.resetStartedChallenge(testChallengeId, testMemo)
+            startedChallengeRepository.resetStartedChallenge(testChallengeId, testMemo)
         } returns NetworkResult.Failure.NetworkError(Throwable())
 
         // When

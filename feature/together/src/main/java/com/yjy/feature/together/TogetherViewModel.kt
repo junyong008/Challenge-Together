@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.WaitingChallengeRepository
 import com.yjy.model.challenge.core.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TogetherViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val challengeRepository: ChallengeRepository,
+    private val waitingChallengeRepository: WaitingChallengeRepository,
 ) : ViewModel() {
 
     private val category = savedStateHandle.getStateFlow<Category?>("category", null)
@@ -31,7 +31,7 @@ class TogetherViewModel @Inject constructor(
             Pair(query, category)
         }
         .flatMapLatest { (query, category) ->
-            challengeRepository.getTogetherChallenges(query, category)
+            waitingChallengeRepository.getTogetherChallenges(query, category)
         }
         .cachedIn(viewModelScope)
 

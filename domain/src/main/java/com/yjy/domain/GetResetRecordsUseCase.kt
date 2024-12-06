@@ -2,7 +2,7 @@ package com.yjy.domain
 
 import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.map
-import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.model.challenge.ResetRecord
 import kotlinx.coroutines.flow.Flow
@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class GetResetRecordsUseCase @Inject constructor(
-    private val challengeRepository: ChallengeRepository,
+    private val startedChallengeRepository: StartedChallengeRepository,
     private val userRepository: UserRepository,
 ) {
     suspend operator fun invoke(challengeId: Int): Flow<NetworkResult<List<ResetRecord>>> = combine(
-        flowOf(challengeRepository.getResetRecords(challengeId)),
+        flowOf(startedChallengeRepository.getResetRecords(challengeId)),
         userRepository.timeDiff,
     ) { result, timeDiff ->
         result.map { records ->

@@ -10,7 +10,8 @@ import com.yjy.common.network.HttpStatusCodes.NOT_FOUND
 import com.yjy.common.network.handleNetworkResult
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
-import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.ChallengePreferencesRepository
+import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.domain.GetStartedChallengeDetailUseCase
 import com.yjy.feature.startedchallenge.model.ChallengeDetailUiState
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiAction
@@ -36,7 +37,8 @@ import javax.inject.Inject
 class StartedChallengeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getStartedChallengeDetail: GetStartedChallengeDetailUseCase,
-    private val challengeRepository: ChallengeRepository,
+    challengePreferencesRepository: ChallengePreferencesRepository,
+    private val startedChallengeRepository: StartedChallengeRepository,
 ) : ViewModel() {
 
     private val challengeId = savedStateHandle.getStateFlow<Int?>("challengeId", null)
@@ -49,7 +51,7 @@ class StartedChallengeViewModel @Inject constructor(
 
     val challengeDetail = merge(
         challengeId,
-        challengeRepository.timeChangedFlow.map { challengeId.value },
+        challengePreferencesRepository.timeChangedFlow.map { challengeId.value },
     ).filterNotNull().flatMapLatest { id ->
         getStartedChallengeDetail(id)
     }.map { result ->
@@ -96,7 +98,7 @@ class StartedChallengeViewModel @Inject constructor(
     private fun deleteChallenge(challengeId: Int) = viewModelScope.launch {
         _uiState.update { it.copy(isDeleting = true) }
 
-        challengeRepository.deleteStartedChallenge(challengeId)
+        startedChallengeRepository.deleteStartedChallenge(challengeId)
             .onSuccess { sendEvent(StartedChallengeUiEvent.DeleteSuccess) }
             .onFailure { sendEvent(StartedChallengeUiEvent.DeleteFailure) }
         _uiState.update { it.copy(isDeleting = false) }
@@ -105,7 +107,7 @@ class StartedChallengeViewModel @Inject constructor(
     private fun resetRecord(challengeId: Int, memo: String) = viewModelScope.launch {
         _uiState.update { it.copy(isResetting = true) }
 
-        challengeRepository.resetStartedChallenge(challengeId, memo)
+        startedChallengeRepository.resetStartedChallenge(challengeId, memo)
             .onSuccess {
                 sendEvent(StartedChallengeUiEvent.ResetSuccess)
                 challengeDetail.restart()

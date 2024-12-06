@@ -8,13 +8,13 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.data.challenge.impl.mapper.toEntity
 import com.yjy.data.database.dao.ChallengePostDao
 import com.yjy.data.database.model.ChallengePostEntity
-import com.yjy.data.network.datasource.ChallengeDataSource
+import com.yjy.data.network.datasource.ChallengePostDataSource
 
 @OptIn(ExperimentalPagingApi::class)
 internal class ChallengePostRemoteMediator(
     private val challengeId: Int,
     private val challengePostDao: ChallengePostDao,
-    private val challengeDataSource: ChallengeDataSource,
+    private val challengePostDataSource: ChallengePostDataSource,
 ) : RemoteMediator<Int, ChallengePostEntity>() {
 
     override suspend fun load(
@@ -27,7 +27,7 @@ internal class ChallengePostRemoteMediator(
             LoadType.APPEND -> challengePostDao.getOldestPostId(challengeId) ?: REFRESH_LAST_ID
         }
 
-        val response = challengeDataSource.getChallengePosts(
+        val response = challengePostDataSource.getChallengePosts(
             challengeId = challengeId,
             lastPostId = lastPostId,
             limit = state.config.pageSize,

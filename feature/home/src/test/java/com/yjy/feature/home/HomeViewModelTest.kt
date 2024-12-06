@@ -2,7 +2,9 @@ package com.yjy.feature.home
 
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.network.NetworkResult
+import com.yjy.data.challenge.api.ChallengePreferencesRepository
 import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.WaitingChallengeRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.GetStartedChallengesUseCase
 import com.yjy.feature.home.model.ChallengeSyncUiState
@@ -50,6 +52,8 @@ class HomeViewModelTest {
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var getStartedChallengesUseCase: GetStartedChallengesUseCase
     private lateinit var challengeRepository: ChallengeRepository
+    private lateinit var waitingChallengeRepository: WaitingChallengeRepository
+    private lateinit var challengePreferencesRepository: ChallengePreferencesRepository
     private lateinit var userRepository: UserRepository
     private lateinit var viewModel: HomeViewModel
 
@@ -69,18 +73,20 @@ class HomeViewModelTest {
     fun setup() {
         Dispatchers.setMain(testDispatcher)
 
+        waitingChallengeRepository = mockk(relaxed = true)
+        challengePreferencesRepository = mockk(relaxed = true)
         challengeRepository = mockk(relaxed = true)
         userRepository = mockk(relaxed = true)
         getStartedChallengesUseCase = mockk(relaxed = true)
 
         coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Success(emptyList())
-        coEvery { challengeRepository.timeChangedFlow } returns timeChangedFlow
-        coEvery { challengeRepository.waitingChallenges } returns waitingChallengesFlow
-        coEvery { challengeRepository.recentCompletedChallengeTitles } returns recentCompletedFlow
-        coEvery { challengeRepository.sortOrder } returns sortOrderFlow
-        coEvery { challengeRepository.localTier } returns localTierFlow
-        coEvery { challengeRepository.setLocalTier(any()) } just runs
-        coEvery { challengeRepository.getRemoteTier() } returns NetworkResult.Success(Tier.IRON)
+        coEvery { challengePreferencesRepository.timeChangedFlow } returns timeChangedFlow
+        coEvery { waitingChallengeRepository.waitingChallenges } returns waitingChallengesFlow
+        coEvery { challengePreferencesRepository.recentCompletedChallengeTitles } returns recentCompletedFlow
+        coEvery { challengePreferencesRepository.sortOrder } returns sortOrderFlow
+        coEvery { challengePreferencesRepository.localTier } returns localTierFlow
+        coEvery { challengePreferencesRepository.setLocalTier(any()) } just runs
+        coEvery { challengePreferencesRepository.getRemoteTier() } returns NetworkResult.Success(Tier.IRON)
 
         coEvery { userRepository.syncTime() } returns NetworkResult.Success(Unit)
         coEvery { userRepository.getUserName() } returns NetworkResult.Success("test")
@@ -91,7 +97,9 @@ class HomeViewModelTest {
         viewModel = HomeViewModel(
             getStartedChallengesUseCase = getStartedChallengesUseCase,
             userRepository = userRepository,
+            waitingChallengeRepository = waitingChallengeRepository,
             challengeRepository = challengeRepository,
+            challengePreferencesRepository = challengePreferencesRepository,
         )
     }
 
@@ -328,7 +336,7 @@ class HomeViewModelTest {
     fun `calculated tier higher than remote tier should request remote tier again`() = runTest {
         // Given
         var remoteTierCallCount = 0
-        coEvery { challengeRepository.getRemoteTier() } answers {
+        coEvery { challengePreferencesRepository.getRemoteTier() } answers {
             remoteTierCallCount++
             println(remoteTierCallCount)
             NetworkResult.Success(Tier.BRONZE)
@@ -366,7 +374,7 @@ class HomeViewModelTest {
         var uiState: HomeUiState? = null
         var tierState: TierUiState? = null
 
-        coEvery { challengeRepository.getRemoteTier() } returns NetworkResult.Success(Tier.DIAMOND)
+        coEvery { challengePreferencesRepository.getRemoteTier() } returns NetworkResult.Success(Tier.DIAMOND)
         localTierFlow.emit(Tier.BRONZE)
 
         val job = launch {
@@ -396,12 +404,12 @@ class HomeViewModelTest {
         var tierState: TierUiState? = null
         val localTierSetCalls = mutableListOf<Tier>()
 
-        coEvery { challengeRepository.setLocalTier(any()) } coAnswers {
+        coEvery { challengePreferencesRepository.setLocalTier(any()) } coAnswers {
             localTierSetCalls.add(firstArg())
             localTierFlow.emit(firstArg())
         }
 
-        coEvery { challengeRepository.getRemoteTier() } returns NetworkResult.Success(Tier.GOLD)
+        coEvery { challengePreferencesRepository.getRemoteTier() } returns NetworkResult.Success(Tier.GOLD)
         localTierFlow.emit(Tier.BRONZE)
 
         val job = launch {

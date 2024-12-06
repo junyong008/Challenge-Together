@@ -3,9 +3,9 @@ package com.yjy.data.auth.impl.repository
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.datastore.api.SessionDataSource
 import com.yjy.data.network.datasource.AuthDataSource
-import com.yjy.data.network.request.ChangePasswordRequest
-import com.yjy.data.network.request.EmailLoginRequest
-import com.yjy.data.network.request.SignUpRequest
+import com.yjy.data.network.request.auth.ChangePasswordRequest
+import com.yjy.data.network.request.auth.EmailLoginRequest
+import com.yjy.data.network.request.auth.SignUpRequest
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
