@@ -21,7 +21,7 @@ import com.yjy.challengetogether.R
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 
-private const val SPLASH_DURATION = 300
+private const val SPLASH_DURATION = 150
 
 @Composable
 internal fun SplashScreen(
