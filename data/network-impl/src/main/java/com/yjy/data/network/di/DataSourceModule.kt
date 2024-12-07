@@ -6,6 +6,8 @@ import com.yjy.data.network.datasource.ChallengeDataSource
 import com.yjy.data.network.datasource.ChallengeDataSourceImpl
 import com.yjy.data.network.datasource.ChallengePostDataSource
 import com.yjy.data.network.datasource.ChallengePostDataSourceImpl
+import com.yjy.data.network.datasource.CommunityDataSource
+import com.yjy.data.network.datasource.CommunityDataSourceImpl
 import com.yjy.data.network.datasource.StartedChallengeDataSource
 import com.yjy.data.network.datasource.StartedChallengeDataSourceImpl
 import com.yjy.data.network.datasource.UserDataSource
@@ -38,4 +40,7 @@ internal abstract class DataSourceModule {
 
     @Binds
     abstract fun bindUserDataSource(impl: UserDataSourceImpl): UserDataSource
+
+    @Binds
+    abstract fun bindCommunityDataSource(impl: CommunityDataSourceImpl): CommunityDataSource
 }

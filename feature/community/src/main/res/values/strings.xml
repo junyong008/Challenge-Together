@@ -1,0 +1,18 @@
+<resources>
+    <string name="feature_community_title">Community</string>
+    <string name="feature_community_description">Share information with various people.</string>
+    <string name="feature_community_post_edited">%s · edited</string>
+    <string name="feature_community_cheer">Cheer</string>
+    <string name="feature_community_comment">Comment</string>
+    <string name="feature_community_search">Search…</string>
+    <string name="feature_community_menu">Menu</string>
+    <string name="feature_community_bookmarks">Bookmarks</string>
+    <string name="feature_community_my_posts">My Posts</string>
+    <string name="feature_community_commented_posts">Commented Posts</string>
+    <string name="feature_community_search_empty_title">No Posts Found</string>
+    <string name="feature_community_search_empty_description">There are no posts matching your search.\nTry using different keywords!</string>
+    <string name="feature_community_no_posts_title">No Posts Yet</string>
+    <string name="feature_community_no_bookmarks_description">You haven’t bookmarked any posts yet.\nSave posts you like and view them here.</string>
+    <string name="feature_community_no_my_posts_description">You haven’t written any posts yet.\nStart a conversation in the community!</string>
+    <string name="feature_community_no_commented_posts_description">You haven’t commented on any posts yet.\nJoin a discussion to leave your thoughts!</string>
+</resources>

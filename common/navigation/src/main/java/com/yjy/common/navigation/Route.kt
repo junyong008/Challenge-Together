@@ -19,6 +19,21 @@ sealed interface ServiceRoute : Route {
             @Serializable
             data class Detail(val category: Category) : MainTab
         }
+
+        @Serializable
+        data object Community : MainTab {
+            @Serializable
+            data object All : MainTab
+
+            @Serializable
+            data object Bookmarked : MainTab
+
+            @Serializable
+            data object Commented : MainTab
+
+            @Serializable
+            data object Authored : MainTab
+        }
     }
 
     @Serializable

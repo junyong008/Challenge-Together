@@ -3,6 +3,7 @@ package com.yjy.navigation.service.navigation
 import androidx.compose.runtime.Composable
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.navigation.ServiceRoute
+import com.yjy.feature.community.navigation.CommunityStrings
 import com.yjy.feature.home.navigation.HomeStrings
 import com.yjy.feature.together.navigation.TogetherStrings
 
@@ -23,6 +24,12 @@ internal enum class MainTab(
         unselectedIconResId = ChallengeTogetherIcons.Together,
         iconTextId = TogetherStrings.feature_together_title,
         route = ServiceRoute.MainTab.Together,
+    ),
+    COMMUNITY(
+        selectedIconResId = ChallengeTogetherIcons.Community,
+        unselectedIconResId = ChallengeTogetherIcons.Community,
+        iconTextId = CommunityStrings.feature_community_title,
+        route = ServiceRoute.MainTab.Community,
     ),
     ;
 

@@ -10,6 +10,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.yjy.feature.addchallenge.navigation.navigateToAddChallenge
+import com.yjy.feature.community.navigation.navigateToCommunity
 import com.yjy.feature.home.navigation.navigateToHome
 import com.yjy.feature.together.navigation.navigateToTogether
 
@@ -49,6 +50,7 @@ internal class ServiceNavController(
         when (tab) {
             MainTab.HOME -> navController.navigateToHome(navOptions)
             MainTab.TOGETHER -> navController.navigateToTogether(navOptions)
+            MainTab.COMMUNITY -> navController.navigateToCommunity(navOptions)
         }
     }
 

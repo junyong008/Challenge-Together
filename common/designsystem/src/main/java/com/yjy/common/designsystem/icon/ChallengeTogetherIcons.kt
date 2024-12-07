@@ -12,11 +12,13 @@ object ChallengeTogetherIcons {
     val Bell = R.drawable.ic_bell
     val Cancel = R.drawable.ic_cancel
     val Check = R.drawable.ic_check
+    val Comment = R.drawable.ic_comment
     val Community = R.drawable.ic_community
     val CompleteChallenge = R.drawable.ic_complete_challenge
     val Email = R.drawable.ic_email
     val Home = R.drawable.ic_home
     val Infinite = R.drawable.ic_infinite
+    val Like = R.drawable.ic_like
     val Lock = R.drawable.ic_lock
     val MoreHorizontal = R.drawable.ic_more_horiz
     val MoreVertical = R.drawable.ic_more_vert

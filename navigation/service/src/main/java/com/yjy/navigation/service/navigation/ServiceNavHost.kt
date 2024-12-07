@@ -13,6 +13,7 @@ import com.yjy.feature.challengeboard.navigation.navigateToChallengeBoard
 import com.yjy.feature.challengeranking.navigation.challengeRankingScreen
 import com.yjy.feature.challengeranking.navigation.navigateToChallengeRanking
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
+import com.yjy.feature.community.navigation.communityNavGraph
 import com.yjy.feature.completedchallenges.navigation.completedChallengesScreen
 import com.yjy.feature.completedchallenges.navigation.navigateToCompletedChallenges
 import com.yjy.feature.editchallenge.navigation.editChallengeScreen
@@ -53,6 +54,10 @@ internal fun ServiceNavHost(
         togetherNavGraph(
             navController = navController,
             onWaitingChallengeClick = navController::navigateToWaitingChallenge,
+        )
+        communityNavGraph(
+            navController = navController,
+            onPostClick = {},
         )
         completedChallengesScreen(
             onBackClick = navController::popBackStack,

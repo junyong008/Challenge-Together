@@ -3,6 +3,7 @@ package com.yjy.data.database.di
 import com.yjy.data.database.ChallengeTogetherDatabase
 import com.yjy.data.database.dao.ChallengeDao
 import com.yjy.data.database.dao.ChallengePostDao
+import com.yjy.data.database.dao.CommunityPostDao
 import com.yjy.data.database.dao.NotificationDao
 import com.yjy.data.database.dao.TogetherChallengeDao
 import dagger.Module
@@ -33,4 +34,9 @@ internal object DaoModule {
     fun provideNotificationDao(
         database: ChallengeTogetherDatabase,
     ): NotificationDao = database.notificationDao()
+
+    @Provides
+    fun provideCommunityPostDao(
+        database: ChallengeTogetherDatabase,
+    ): CommunityPostDao = database.communityPostDao()
 }

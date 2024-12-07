@@ -35,6 +35,8 @@ include(
     ":data:user-impl",
     ":data:challenge-api",
     ":data:challenge-impl",
+    ":data:community-api",
+    ":data:community-impl",
     ":data:database-api",
     ":data:database-impl",
     ":data:datastore-api",
@@ -55,6 +57,7 @@ include(
 
     ":feature:home",
     ":feature:together",
+    ":feature:community",
     ":feature:notification",
     ":feature:addchallenge",
     ":feature:editchallenge",

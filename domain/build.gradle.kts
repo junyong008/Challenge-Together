@@ -18,6 +18,7 @@ dependencies {
         projects.data.authApi,
         projects.data.challengeApi,
         projects.data.userApi,
+        projects.data.communityApi,
 
         libs.androidx.paging.ktx,
         libs.javax.inject,
@@ -29,4 +30,5 @@ dependencies {
     runtimeOnly(projects.data.authImpl)
     runtimeOnly(projects.data.challengeImpl)
     runtimeOnly(projects.data.userImpl)
+    runtimeOnly(projects.data.communityImpl)
 }

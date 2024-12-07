@@ -20,6 +20,7 @@ import com.yjy.data.network.response.challenge.GetResetRecordResponse
 import com.yjy.data.network.response.challenge.GetStartedChallengeDetailResponse
 import com.yjy.data.network.response.challenge.GetWaitingChallengeDetailResponse
 import com.yjy.data.network.response.challenge.WaitingChallengeResponse
+import com.yjy.data.network.response.community.GetPostsResponse
 import com.yjy.data.network.response.user.GetNameResponse
 import com.yjy.data.network.response.user.GetNotificationsResponse
 import com.yjy.data.network.response.user.GetUnViewedNotificationCountResponse
@@ -35,6 +36,7 @@ internal interface ChallengeTogetherService {
     @GET("time")
     suspend fun getTime(): NetworkResult<Unit>
 
+    // Auth
     @POST("auth/login/email")
     suspend fun emailLogin(
         @Body request: EmailLoginRequest,
@@ -65,55 +67,11 @@ internal interface ChallengeTogetherService {
         @Body request: ChangePasswordRequest,
     ): NetworkResult<Unit>
 
+    // Challenge
     @POST("service/challenge/add")
     suspend fun addChallenge(
         @Body request: AddChallengeRequest,
     ): NetworkResult<AddChallengeResponse>
-
-    @PATCH("service/challenge/reset")
-    suspend fun resetChallenge(
-        @Body request: ResetChallengeRequest,
-    ): NetworkResult<Unit>
-
-    @DELETE("service/challenge/delete/started")
-    suspend fun deleteStartedChallenge(
-        @Query("challengeId") challengeId: Int,
-    ): NetworkResult<Unit>
-
-    @DELETE("service/challenge/posts/delete")
-    suspend fun deleteChallengePost(
-        @Query("postId") postId: Int,
-    ): NetworkResult<Unit>
-
-    @DELETE("service/challenge/delete/waiting")
-    suspend fun deleteWaitingChallenge(
-        @Query("challengeId") challengeId: Int,
-    ): NetworkResult<Unit>
-
-    @POST("service/challenge/start")
-    suspend fun startWaitingChallenge(
-        @Query("challengeId") challengeId: Int,
-    ): NetworkResult<Unit>
-
-    @POST("service/challenge/join")
-    suspend fun joinWaitingChallenge(
-        @Query("challengeId") challengeId: Int,
-    ): NetworkResult<Unit>
-
-    @POST("service/challenge/leave")
-    suspend fun leaveWaitingChallenge(
-        @Query("challengeId") challengeId: Int,
-    ): NetworkResult<Unit>
-
-    @POST("service/challenge/force-remove")
-    suspend fun forceRemoveFromStartedChallenge(
-        @Query("memberId") memberId: Int,
-    ): NetworkResult<Unit>
-
-    @POST("service/challenge/posts/report")
-    suspend fun reportChallengePost(
-        @Body request: ReportChallengePostRequest,
-    ): NetworkResult<Unit>
 
     @PATCH("service/challenge/edit/category")
     suspend fun editChallengeCategory(
@@ -135,32 +93,19 @@ internal interface ChallengeTogetherService {
     @GET("service/challenge/get/records")
     suspend fun getRecords(): NetworkResult<GetRecordsResponse>
 
-    @GET("service/challenge/get/togethers")
-    suspend fun getTogetherChallenges(
-        @Query("category") category: String,
-        @Query("query") query: String,
-        @Query("lastChallengeId") lastChallengeId: Int,
-        @Query("limit") limit: Int,
-    ): NetworkResult<List<WaitingChallengeResponse>>
-
     @GET("service/challenge/get/all")
     suspend fun getMyChallenges(): NetworkResult<GetMyChallengesResponse>
 
-    @GET("service/challenge/get/waiting")
-    suspend fun getWaitingChallengeDetail(
-        @Query("challengeId") challengeId: Int,
-        @Query("password") password: String,
-    ): NetworkResult<GetWaitingChallengeDetailResponse>
+    // Challenge - Post
+    @DELETE("service/challenge/posts/delete")
+    suspend fun deleteChallengePost(
+        @Query("postId") postId: Int,
+    ): NetworkResult<Unit>
 
-    @GET("service/challenge/get/started")
-    suspend fun getStartedChallengeDetail(
-        @Query("challengeId") challengeId: Int,
-    ): NetworkResult<GetStartedChallengeDetailResponse>
-
-    @GET("service/challenge/get/reset-records")
-    suspend fun getResetRecords(
-        @Query("challengeId") challengeId: Int,
-    ): NetworkResult<List<GetResetRecordResponse>>
+    @POST("service/challenge/posts/report")
+    suspend fun reportChallengePost(
+        @Body request: ReportChallengePostRequest,
+    ): NetworkResult<Unit>
 
     @GET("service/challenge/posts/get/list")
     suspend fun getChallengePosts(
@@ -175,11 +120,73 @@ internal interface ChallengeTogetherService {
         @Query("lastCachedPostId") lastCachedPostId: Int,
     ): NetworkResult<List<GetChallengePostsResponse>>
 
+    // Challenge - Started
+    @PATCH("service/challenge/reset")
+    suspend fun resetChallenge(
+        @Body request: ResetChallengeRequest,
+    ): NetworkResult<Unit>
+
+    @DELETE("service/challenge/delete/started")
+    suspend fun deleteStartedChallenge(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
+    @POST("service/challenge/force-remove")
+    suspend fun forceRemoveFromStartedChallenge(
+        @Query("memberId") memberId: Int,
+    ): NetworkResult<Unit>
+
+    @GET("service/challenge/get/started")
+    suspend fun getStartedChallengeDetail(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<GetStartedChallengeDetailResponse>
+
+    @GET("service/challenge/get/reset-records")
+    suspend fun getResetRecords(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<List<GetResetRecordResponse>>
+
     @GET("service/challenge/get/ranking")
     suspend fun getChallengeRanking(
         @Query("challengeId") challengeId: Int,
     ): NetworkResult<List<GetChallengeRankingResponse>>
 
+    // Challenge - Waiting
+    @DELETE("service/challenge/delete/waiting")
+    suspend fun deleteWaitingChallenge(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
+    @POST("service/challenge/start")
+    suspend fun startWaitingChallenge(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
+    @POST("service/challenge/join")
+    suspend fun joinWaitingChallenge(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
+    @POST("service/challenge/leave")
+    suspend fun leaveWaitingChallenge(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
+    @GET("service/challenge/get/togethers")
+    suspend fun getTogetherChallenges(
+        @Query("category") category: String,
+        @Query("query") query: String,
+        @Query("lastChallengeId") lastChallengeId: Int,
+        @Query("limit") limit: Int,
+    ): NetworkResult<List<WaitingChallengeResponse>>
+
+    @GET("service/challenge/get/waiting")
+    suspend fun getWaitingChallengeDetail(
+        @Query("challengeId") challengeId: Int,
+        @Query("password") password: String,
+    ): NetworkResult<GetWaitingChallengeDetailResponse>
+
+    // User
     @GET("service/user/get/name")
     suspend fun getUserName(): NetworkResult<GetNameResponse>
 
@@ -204,4 +211,30 @@ internal interface ChallengeTogetherService {
     suspend fun registerFirebaseToken(
         @Body request: RegisterFirebaseTokenRequest,
     ): NetworkResult<Unit>
+
+    // Community
+    @GET("service/community/get/posts")
+    suspend fun getPosts(
+        @Query("query") query: String,
+        @Query("lastPostId") lastPostId: Int,
+        @Query("limit") limit: Int,
+    ): NetworkResult<List<GetPostsResponse>>
+
+    @GET("service/community/get/bookmarked")
+    suspend fun getBookmarkedPosts(
+        @Query("lastPostId") lastPostId: Int,
+        @Query("limit") limit: Int,
+    ): NetworkResult<List<GetPostsResponse>>
+
+    @GET("service/community/get/authored")
+    suspend fun getAuthoredPosts(
+        @Query("lastPostId") lastPostId: Int,
+        @Query("limit") limit: Int,
+    ): NetworkResult<List<GetPostsResponse>>
+
+    @GET("service/community/get/commented")
+    suspend fun getCommentedPosts(
+        @Query("lastPostId") lastPostId: Int,
+        @Query("limit") limit: Int,
+    ): NetworkResult<List<GetPostsResponse>>
 }
