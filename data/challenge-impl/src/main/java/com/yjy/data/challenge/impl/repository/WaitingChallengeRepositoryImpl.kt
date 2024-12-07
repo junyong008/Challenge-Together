@@ -77,7 +77,7 @@ internal class WaitingChallengeRepositoryImpl @Inject constructor(
     ): NetworkResult<DetailedWaitingChallenge> =
         waitingChallengeDataSource.getWaitingChallengeDetail(challengeId, password)
             .onSuccess {
-                togetherChallengeDao.insert(it.toTogetherEntity())
+                togetherChallengeDao.update(it.toTogetherEntity())
             }
             .onFailure {
                 if (it is NetworkResult.Failure.HttpError) {

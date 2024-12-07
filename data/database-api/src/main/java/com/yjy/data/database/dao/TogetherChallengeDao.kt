@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.yjy.data.database.model.TogetherChallengeEntity
 
 @Dao
@@ -23,8 +24,8 @@ interface TogetherChallengeDao {
     @Query("DELETE FROM together_challenges")
     suspend fun deleteAll()
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(challenge: TogetherChallengeEntity)
+    @Update
+    suspend fun update(challenge: TogetherChallengeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(challenges: List<TogetherChallengeEntity>)

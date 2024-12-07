@@ -77,7 +77,7 @@ internal class StartedChallengeRepositoryImpl @Inject constructor(
         startedChallengeDataSource.getStartedChallengeDetail(challengeId).fold(
             onSuccess = { result ->
                 val challenge = result.toDetailedStartedChallengeModel()
-                challengeDao.insert(result.toEntity())
+                challengeDao.update(result.toEntity())
 
                 tickerFlow.map { currentTime ->
                     NetworkResult.Success(challenge.updateCurrentRecord(currentTime))
