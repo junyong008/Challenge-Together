@@ -21,7 +21,7 @@ style:
     ignorePropertyDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
     ignoreEnums: true
-    ignoreAnnotated: ['Preview', 'DevicePreviews']
+    ignoreAnnotated: ['Preview', 'DevicePreviews', 'ComponentPreviews']
     excludes: ['**/*PreviewParameterProvider.kt', '**/test/**', '**/androidTest/**']
   UnusedPrivateMember:
     ignoreAnnotated: [ 'preview' ]
