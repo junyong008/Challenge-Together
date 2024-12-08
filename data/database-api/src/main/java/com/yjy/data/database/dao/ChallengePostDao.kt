@@ -71,10 +71,4 @@ interface ChallengePostDao {
         deleteByTempId(post.tempId)
         insert(post)
     }
-
-    @Transaction
-    suspend fun replaceAll(challengePosts: List<ChallengePostEntity>) {
-        deleteAll()
-        insertAll(challengePosts)
-    }
 }

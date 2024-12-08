@@ -5,7 +5,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.yjy.data.database.model.NotificationEntity
 
 @Dao
@@ -22,12 +21,6 @@ interface NotificationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(notifications: List<NotificationEntity>)
-
-    @Transaction
-    suspend fun replaceAll(notifications: List<NotificationEntity>) {
-        deleteAll()
-        insertAll(notifications)
-    }
 
     @Query("SELECT id FROM notifications ORDER BY createdDateTime ASC LIMIT 1")
     suspend fun getOldestNotificationId(): Int?

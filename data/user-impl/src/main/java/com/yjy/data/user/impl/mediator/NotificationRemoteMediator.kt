@@ -35,10 +35,9 @@ class NotificationRemoteMediator(
             is NetworkResult.Success -> {
                 val result = response.data.map { it.toEntity() }
                 if (loadType == LoadType.REFRESH) {
-                    notificationDao.replaceAll(result)
-                } else {
-                    notificationDao.insertAll(result)
+                    notificationDao.deleteAll()
                 }
+                notificationDao.insertAll(result)
 
                 MediatorResult.Success(endOfPaginationReached = result.size != state.config.pageSize)
             }

@@ -57,10 +57,9 @@ class PostRemoteMediator(
             is NetworkResult.Success -> {
                 val result = response.data.map { it.toEntity() }
                 if (loadType == LoadType.REFRESH) {
-                    communityPostDao.replaceAll(result, postType.toInternalModel())
-                } else {
-                    communityPostDao.insertAll(result)
+                    communityPostDao.deleteAllByType(postType.toInternalModel())
                 }
+                communityPostDao.insertAll(result)
 
                 MediatorResult.Success(endOfPaginationReached = result.size != state.config.pageSize)
             }

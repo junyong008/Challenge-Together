@@ -37,10 +37,9 @@ internal class ChallengePostRemoteMediator(
             is NetworkResult.Success -> {
                 val result = response.data.map { it.toEntity(challengeId) }
                 if (loadType == LoadType.REFRESH) {
-                    challengePostDao.replaceAll(result)
-                } else {
-                    challengePostDao.insertAll(result)
+                    challengePostDao.deleteAll()
                 }
+                challengePostDao.insertAll(result)
 
                 MediatorResult.Success(endOfPaginationReached = result.size != state.config.pageSize)
             }

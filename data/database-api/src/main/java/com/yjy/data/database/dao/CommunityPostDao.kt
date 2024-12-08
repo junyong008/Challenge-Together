@@ -53,12 +53,6 @@ interface CommunityPostDao {
         updatePostByRawQuery(query)
     }
 
-    @Transaction
-    suspend fun replaceAll(posts: List<CommunityPostEntity>, type: CommunityPostType) {
-        deleteAllByType(type)
-        insertAll(posts)
-    }
-
     @Query("SELECT id FROM community_posts WHERE type = :type ORDER BY id ASC LIMIT 1")
     suspend fun getOldestPostId(type: CommunityPostType): Int?
 }

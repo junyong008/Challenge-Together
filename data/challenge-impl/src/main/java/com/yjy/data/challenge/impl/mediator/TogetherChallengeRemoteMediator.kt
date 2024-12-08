@@ -41,10 +41,9 @@ internal class TogetherChallengeRemoteMediator(
             is NetworkResult.Success -> {
                 val result = response.data.map { it.toTogetherEntity() }
                 if (loadType == LoadType.REFRESH) {
-                    togetherChallengeDao.replaceAll(result)
-                } else {
-                    togetherChallengeDao.insertAll(result)
+                    togetherChallengeDao.deleteAll()
                 }
+                togetherChallengeDao.insertAll(result)
 
                 MediatorResult.Success(endOfPaginationReached = result.size != state.config.pageSize)
             }
