@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
+import com.yjy.common.core.util.NavigationAnimation.fadeIn
+import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.AuthRoute
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
@@ -28,6 +30,10 @@ internal fun AuthNavHost(
     NavHost(
         navController = navController,
         startDestination = startDestination,
+        enterTransition = { fadeIn() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
+        popExitTransition = { fadeOut() },
         modifier = modifier,
     ) {
         loginScreen(

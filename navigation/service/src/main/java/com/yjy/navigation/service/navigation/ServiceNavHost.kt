@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
+import com.yjy.common.core.util.NavigationAnimation.fadeIn
+import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.addchallenge.navigation.addChallengeNavGraph
@@ -43,6 +45,10 @@ internal fun ServiceNavHost(
     NavHost(
         navController = navController,
         startDestination = startDestination,
+        enterTransition = { fadeIn() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
+        popExitTransition = { fadeOut() },
         modifier = modifier,
     ) {
         homeScreen(
@@ -58,6 +64,7 @@ internal fun ServiceNavHost(
         communityNavGraph(
             navController = navController,
             onPostClick = {},
+            onShowSnackbar = onShowSnackbar,
         )
         completedChallengesScreen(
             onBackClick = navController::popBackStack,

@@ -1,6 +1,5 @@
 package com.yjy.feature.together.navigation
 
-import androidx.compose.animation.fadeIn
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -8,7 +7,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
 import com.yjy.common.core.util.NavigationAnimation.slideOutToRight
 import com.yjy.common.navigation.ServiceRoute
@@ -42,8 +40,6 @@ fun NavGraphBuilder.togetherNavGraph(
 
         composable<ServiceRoute.MainTab.Together.Detail>(
             enterTransition = { slideInToLeft() },
-            exitTransition = { fadeOut() },
-            popEnterTransition = { fadeIn() },
             popExitTransition = { slideOutToRight() },
         ) { entry ->
             val category = entry.toRoute<ServiceRoute.MainTab.Together.Detail>().category

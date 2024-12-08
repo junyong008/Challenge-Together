@@ -5,17 +5,15 @@ import android.os.Build.VERSION_CODES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -37,6 +35,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
+import com.yjy.common.core.util.NavigationAnimation.fadeIn
+import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.CustomSnackbarHost
@@ -115,18 +115,38 @@ internal fun ServiceScreen(
                 }
             },
             floatingActionButton = {
-                if (navigator.currentTab == MainTab.HOME) {
-                    FloatingActionButton(
-                        onClick = { navigator.navigateToAddChallenge() },
-                        containerColor = CustomColorProvider.colorScheme.brand,
-                        contentColor = CustomColorProvider.colorScheme.onBrand,
-                        shape = MaterialTheme.shapes.extraLarge,
-                    ) {
-                        Icon(
-                            ImageVector.vectorResource(id = ChallengeTogetherIcons.Add),
-                            contentDescription = stringResource(id = R.string.navigation_service_add_new_challenge),
-                        )
+                when (navigator.currentTab) {
+                    MainTab.HOME -> {
+                        FloatingActionButton(
+                            onClick = { navigator.navigateToAddChallenge() },
+                            containerColor = CustomColorProvider.colorScheme.brand,
+                            contentColor = CustomColorProvider.colorScheme.onBrand,
+                            shape = CircleShape,
+                        ) {
+                            Icon(
+                                ImageVector.vectorResource(id = ChallengeTogetherIcons.Add),
+                                contentDescription = stringResource(id = R.string.navigation_service_add_new_challenge),
+                            )
+                        }
                     }
+
+                    MainTab.COMMUNITY -> {
+                        FloatingActionButton(
+                            onClick = { navigator.navigateToAddCommunityPost() },
+                            containerColor = CustomColorProvider.colorScheme.brand,
+                            contentColor = CustomColorProvider.colorScheme.onBrand,
+                            shape = CircleShape,
+                        ) {
+                            Icon(
+                                ImageVector.vectorResource(id = ChallengeTogetherIcons.Edit),
+                                contentDescription = stringResource(
+                                    id = R.string.navigation_service_add_new_community_post,
+                                ),
+                            )
+                        }
+                    }
+
+                    else -> Unit
                 }
             },
             floatingActionButtonPosition = FabPosition.End,
