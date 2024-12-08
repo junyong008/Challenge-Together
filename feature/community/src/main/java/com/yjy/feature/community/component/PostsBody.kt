@@ -34,7 +34,7 @@ internal fun PostsBody(
     )
 
     Box(modifier = modifier.pullRefresh(pullRefreshState)) {
-        LazyColumn(modifier = modifier.fillMaxSize()) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(
                 count = posts.itemCount,
                 key = posts.itemKey { it.postId },

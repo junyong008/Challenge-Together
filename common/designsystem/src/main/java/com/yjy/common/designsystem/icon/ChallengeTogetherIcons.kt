@@ -15,6 +15,7 @@ object ChallengeTogetherIcons {
     val Comment = R.drawable.ic_comment
     val Community = R.drawable.ic_community
     val CompleteChallenge = R.drawable.ic_complete_challenge
+    val Edit = R.drawable.ic_edit
     val Email = R.drawable.ic_email
     val Home = R.drawable.ic_home
     val Infinite = R.drawable.ic_infinite

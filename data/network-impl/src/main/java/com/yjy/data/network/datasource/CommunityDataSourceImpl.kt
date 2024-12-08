@@ -1,6 +1,7 @@
 package com.yjy.data.network.datasource
 
 import com.yjy.common.network.NetworkResult
+import com.yjy.data.network.request.community.AddCommunityPostRequest
 import com.yjy.data.network.response.community.GetPostsResponse
 import com.yjy.data.network.service.ChallengeTogetherService
 import javax.inject.Inject
@@ -8,6 +9,9 @@ import javax.inject.Inject
 internal class CommunityDataSourceImpl @Inject constructor(
     private val challengeTogetherService: ChallengeTogetherService,
 ) : CommunityDataSource {
+
+    override suspend fun addPost(request: AddCommunityPostRequest): NetworkResult<Unit> =
+        challengeTogetherService.addPost(request)
 
     override suspend fun getPosts(
         query: String,

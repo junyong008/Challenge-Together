@@ -1,6 +1,5 @@
 package com.yjy.feature.community
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -69,29 +68,24 @@ internal fun AuthoredScreen(
         containerColor = CustomColorProvider.colorScheme.background,
         modifier = modifier.consumeWindowInsets(WindowInsets.navigationBars),
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize(),
-        ) {
-            when {
-                isLoading -> LoadingWheel()
-                isError -> ErrorBody(onClickRetry = { posts.refresh() })
-                isIdle && isEmpty -> {
-                    EmptyBody(
-                        title = stringResource(id = R.string.feature_community_no_posts_title),
-                        description = stringResource(
-                            id = R.string.feature_community_no_my_posts_description,
-                        ),
-                    )
-                }
+        when {
+            isLoading -> LoadingWheel()
+            isError -> ErrorBody(onClickRetry = { posts.refresh() })
+            isIdle && isEmpty -> {
+                EmptyBody(
+                    title = stringResource(id = R.string.feature_community_no_posts_title),
+                    description = stringResource(
+                        id = R.string.feature_community_no_my_posts_description,
+                    ),
+                )
+            }
 
-                else -> {
-                    PostsBody(
-                        posts = posts,
-                        onPostClick = { onPostClick(it.postId) },
-                    )
-                }
+            else -> {
+                PostsBody(
+                    posts = posts,
+                    onPostClick = { onPostClick(it.postId) },
+                    modifier = Modifier.padding(padding),
+                )
             }
         }
     }

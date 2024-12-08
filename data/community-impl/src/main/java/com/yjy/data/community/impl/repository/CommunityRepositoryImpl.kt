@@ -5,12 +5,14 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.yjy.common.network.NetworkResult
 import com.yjy.data.community.api.CommunityRepository
 import com.yjy.data.community.impl.mapper.toInternalModel
 import com.yjy.data.community.impl.mapper.toModel
 import com.yjy.data.community.impl.mediator.PostRemoteMediator
 import com.yjy.data.database.dao.CommunityPostDao
 import com.yjy.data.network.datasource.CommunityDataSource
+import com.yjy.data.network.request.community.AddCommunityPostRequest
 import com.yjy.model.community.SimpleCommunityPost
 import com.yjy.model.community.SimpleCommunityPostType
 import kotlinx.coroutines.flow.Flow
@@ -21,6 +23,10 @@ internal class CommunityRepositoryImpl @Inject constructor(
     private val communityDataSource: CommunityDataSource,
     private val communityPostDao: CommunityPostDao,
 ) : CommunityRepository {
+
+    override suspend fun addPost(content: String): NetworkResult<Unit> = communityDataSource.addPost(
+        request = AddCommunityPostRequest(content = content),
+    )
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getPosts(query: String, postType: SimpleCommunityPostType): Flow<PagingData<SimpleCommunityPost>> {

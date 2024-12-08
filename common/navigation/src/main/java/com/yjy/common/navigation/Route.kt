@@ -21,20 +21,23 @@ sealed interface ServiceRoute : Route {
         }
 
         @Serializable
-        data object Community : MainTab {
-            @Serializable
-            data object All : MainTab
-
-            @Serializable
-            data object Bookmarked : MainTab
-
-            @Serializable
-            data object Commented : MainTab
-
-            @Serializable
-            data object Authored : MainTab
-        }
+        data object Community : MainTab
     }
+
+    @Serializable
+    data object Community : ServiceRoute
+
+    @Serializable
+    data object AddCommunityPost : ServiceRoute
+
+    @Serializable
+    data object BookmarkedCommunityPosts : ServiceRoute
+
+    @Serializable
+    data object CommentedCommunityPosts : ServiceRoute
+
+    @Serializable
+    data object AuthoredCommunityPosts : ServiceRoute
 
     @Serializable
     data object Notification : ServiceRoute

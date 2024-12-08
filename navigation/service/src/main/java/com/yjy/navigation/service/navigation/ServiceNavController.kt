@@ -10,6 +10,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.yjy.feature.addchallenge.navigation.navigateToAddChallenge
+import com.yjy.feature.community.navigation.navigateToAddCommunityPost
 import com.yjy.feature.community.navigation.navigateToCommunity
 import com.yjy.feature.home.navigation.navigateToHome
 import com.yjy.feature.together.navigation.navigateToTogether
@@ -56,6 +57,10 @@ internal class ServiceNavController(
 
     fun navigateToAddChallenge() {
         navController.navigateToAddChallenge()
+    }
+
+    fun navigateToAddCommunityPost() {
+        navController.navigateToAddCommunityPost()
     }
 
     @Composable

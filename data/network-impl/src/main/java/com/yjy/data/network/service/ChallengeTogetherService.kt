@@ -10,6 +10,7 @@ import com.yjy.data.network.request.challenge.AddChallengeRequest
 import com.yjy.data.network.request.challenge.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.challenge.ReportChallengePostRequest
 import com.yjy.data.network.request.challenge.ResetChallengeRequest
+import com.yjy.data.network.request.community.AddCommunityPostRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
 import com.yjy.data.network.response.challenge.AddChallengeResponse
 import com.yjy.data.network.response.challenge.GetChallengePostsResponse
@@ -213,6 +214,11 @@ internal interface ChallengeTogetherService {
     ): NetworkResult<Unit>
 
     // Community
+    @POST("service/community/add")
+    suspend fun addPost(
+        @Body request: AddCommunityPostRequest,
+    ): NetworkResult<Unit>
+
     @GET("service/community/get/posts")
     suspend fun getPosts(
         @Query("query") query: String,
