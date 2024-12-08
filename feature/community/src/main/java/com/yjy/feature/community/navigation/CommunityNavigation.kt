@@ -19,6 +19,7 @@ import com.yjy.feature.community.BookmarkedRoute
 import com.yjy.feature.community.CommentedRoute
 import com.yjy.feature.community.CommunityViewModel
 import com.yjy.feature.community.ListRoute
+import com.yjy.feature.community.PostRoute
 import com.yjy.feature.community.R
 
 typealias CommunityStrings = R.string
@@ -28,28 +29,33 @@ fun NavController.navigateToCommunity(navOptions: NavOptions? = null) {
 }
 
 fun NavController.navigateToAddCommunityPost() {
-    navigate(ServiceRoute.AddCommunityPost)
+    navigate(ServiceRoute.Community.AddPost)
 }
 
 private fun NavController.navigateToBookmarked() {
-    navigate(ServiceRoute.BookmarkedCommunityPosts)
+    navigate(ServiceRoute.Community.BookmarkedPosts)
 }
 
 private fun NavController.navigateToAuthored() {
-    navigate(ServiceRoute.AuthoredCommunityPosts)
+    navigate(ServiceRoute.Community.AuthoredPosts)
 }
 
 private fun NavController.navigateToCommented() {
-    navigate(ServiceRoute.CommentedCommunityPosts)
+    navigate(ServiceRoute.Community.CommentedPosts)
+}
+
+private fun NavController.navigateToPost(postId: Int) {
+    navigate(ServiceRoute.Community.Post(postId))
 }
 
 fun NavGraphBuilder.communityNavGraph(
     navController: NavHostController,
-    onPostClick: (postId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     navigation<ServiceRoute.Community>(
         enterTransition = { slideInToLeft() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
         popExitTransition = { slideOutToRight() },
         startDestination = ServiceRoute.MainTab.Community::class,
     ) {
@@ -60,7 +66,7 @@ fun NavGraphBuilder.communityNavGraph(
             val viewModel = entry.sharedViewModel<CommunityViewModel>(navController)
 
             ListRoute(
-                onPostClick = onPostClick,
+                onPostClick = navController::navigateToPost,
                 onBookmarkedClick = navController::navigateToBookmarked,
                 onAuthoredClick = navController::navigateToAuthored,
                 onCommentedClick = navController::navigateToCommented,
@@ -68,34 +74,41 @@ fun NavGraphBuilder.communityNavGraph(
             )
         }
 
-        composable<ServiceRoute.BookmarkedCommunityPosts> {
-            BookmarkedRoute(
-                onBackClick = navController::popBackStack,
-                onPostClick = onPostClick,
-            )
-        }
-
-        composable<ServiceRoute.AuthoredCommunityPosts> {
-            AuthoredRoute(
-                onBackClick = navController::popBackStack,
-                onPostClick = onPostClick,
-            )
-        }
-
-        composable<ServiceRoute.CommentedCommunityPosts> {
-            CommentedRoute(
-                onBackClick = navController::popBackStack,
-                onPostClick = onPostClick,
-            )
-        }
-
-        composable<ServiceRoute.AddCommunityPost> { entry ->
+        composable<ServiceRoute.Community.AddPost> { entry ->
             val viewModel = entry.sharedViewModel<CommunityViewModel>(navController)
 
             AddPostRoute(
                 onBackClick = navController::popBackStack,
                 onShowSnackbar = onShowSnackbar,
                 viewModel = viewModel,
+            )
+        }
+
+        composable<ServiceRoute.Community.BookmarkedPosts> {
+            BookmarkedRoute(
+                onBackClick = navController::popBackStack,
+                onPostClick = navController::navigateToPost,
+            )
+        }
+
+        composable<ServiceRoute.Community.AuthoredPosts> {
+            AuthoredRoute(
+                onBackClick = navController::popBackStack,
+                onPostClick = navController::navigateToPost,
+            )
+        }
+
+        composable<ServiceRoute.Community.CommentedPosts> {
+            CommentedRoute(
+                onBackClick = navController::popBackStack,
+                onPostClick = navController::navigateToPost,
+            )
+        }
+
+        composable<ServiceRoute.Community.Post> {
+            PostRoute(
+                onBackClick = navController::popBackStack,
+                onShowSnackbar = onShowSnackbar,
             )
         }
     }

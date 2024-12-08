@@ -3,6 +3,8 @@ package com.yjy.feature.notification.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.yjy.common.core.util.NavigationAnimation.fadeIn
+import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
 import com.yjy.common.core.util.NavigationAnimation.slideOutToRight
 import com.yjy.common.designsystem.component.SnackbarType
@@ -22,6 +24,8 @@ fun NavGraphBuilder.notificationScreen(
 ) {
     composable<ServiceRoute.Notification>(
         enterTransition = { slideInToLeft() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
         popExitTransition = { slideOutToRight() },
     ) {
         NotificationRoute(

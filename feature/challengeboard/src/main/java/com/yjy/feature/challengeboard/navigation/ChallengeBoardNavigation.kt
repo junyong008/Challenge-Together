@@ -4,6 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.yjy.common.core.util.NavigationAnimation.fadeIn
+import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
 import com.yjy.common.core.util.NavigationAnimation.slideOutToRight
 import com.yjy.common.designsystem.component.SnackbarType
@@ -20,6 +22,8 @@ fun NavGraphBuilder.challengeBoardScreen(
 ) {
     composable<ServiceRoute.ChallengeBoard>(
         enterTransition = { slideInToLeft() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
         popExitTransition = { slideOutToRight() },
     ) { entry ->
         val isEditable = entry.toRoute<ServiceRoute.ChallengeBoard>().isEditable

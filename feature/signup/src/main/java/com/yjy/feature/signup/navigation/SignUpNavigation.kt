@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.yjy.common.core.extensions.sharedViewModel
+import com.yjy.common.core.util.NavigationAnimation.fadeIn
+import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
 import com.yjy.common.core.util.NavigationAnimation.slideInToRight
 import com.yjy.common.core.util.NavigationAnimation.slideOutToLeft
@@ -61,6 +63,8 @@ fun NavGraphBuilder.signUpNavGraph(
 
         composable<AuthRoute.SignUp.Nickname>(
             enterTransition = { slideInToLeft() },
+            exitTransition = { fadeOut() },
+            popEnterTransition = { fadeIn() },
             popExitTransition = { slideOutToRight() },
         ) { entry ->
             val viewModel = entry.sharedViewModel<SignUpViewModel>(navController)

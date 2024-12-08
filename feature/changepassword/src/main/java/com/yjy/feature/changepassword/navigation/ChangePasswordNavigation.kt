@@ -4,6 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.yjy.common.core.util.NavigationAnimation.fadeIn
+import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
 import com.yjy.common.core.util.NavigationAnimation.slideOutToRight
 import com.yjy.common.designsystem.component.SnackbarType
@@ -22,6 +24,8 @@ fun NavGraphBuilder.changePasswordScreen(
 ) {
     composable<CommonRoute.ChangePassword>(
         enterTransition = { slideInToLeft() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
         popExitTransition = { slideOutToRight() },
     ) {
         ChangePasswordRoute(

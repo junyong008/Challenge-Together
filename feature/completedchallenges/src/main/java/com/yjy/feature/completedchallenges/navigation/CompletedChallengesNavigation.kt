@@ -3,6 +3,8 @@ package com.yjy.feature.completedchallenges.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.yjy.common.core.util.NavigationAnimation.fadeIn
+import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
 import com.yjy.common.core.util.NavigationAnimation.slideOutToRight
 import com.yjy.common.navigation.ServiceRoute
@@ -18,6 +20,8 @@ fun NavGraphBuilder.completedChallengesScreen(
 ) {
     composable<ServiceRoute.CompletedChallenges>(
         enterTransition = { slideInToLeft() },
+        exitTransition = { fadeOut() },
+        popEnterTransition = { fadeIn() },
         popExitTransition = { slideOutToRight() },
     ) {
         CompletedChallengesRoute(
