@@ -27,6 +27,9 @@ interface CommunityPostDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(posts: List<CommunityPostEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(post: CommunityPostEntity)
+
     @Query(
         """
         UPDATE community_posts 

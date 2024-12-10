@@ -11,6 +11,7 @@ import com.yjy.common.network.map
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.community.api.CommunityRepository
+import com.yjy.data.community.impl.mapper.toEntity
 import com.yjy.data.community.impl.mapper.toInternalModel
 import com.yjy.data.community.impl.mapper.toLocalDateTime
 import com.yjy.data.community.impl.mapper.toModel
@@ -75,10 +76,14 @@ internal class CommunityRepositoryImpl @Inject constructor(
 
                 if (!postDetail.post.isBookmarked) {
                     communityPostDao.deleteByType(postDetail.post.postId, CommunityPostType.BOOKMARKED)
+                } else {
+                    communityPostDao.insert(postDetail.post.toEntity(CommunityPostType.BOOKMARKED))
                 }
 
                 if (postDetail.comments.none { it.isAuthor }) {
                     communityPostDao.deleteByType(postDetail.post.postId, CommunityPostType.COMMENTED)
+                } else {
+                    communityPostDao.insert(postDetail.post.toEntity(CommunityPostType.COMMENTED))
                 }
             }
             .onFailure {

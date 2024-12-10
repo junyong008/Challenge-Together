@@ -1,6 +1,7 @@
 package com.yjy.data.community.impl.mapper
 
 import com.yjy.data.database.model.CommunityPostEntity
+import com.yjy.data.database.model.CommunityPostType
 import com.yjy.data.network.response.community.CommentResponse
 import com.yjy.data.network.response.community.GetPostResponse
 import com.yjy.data.network.response.community.GetPostsResponse
@@ -34,6 +35,18 @@ internal fun CommunityPostEntity.toModel() = SimpleCommunityPost(
     likeCount = likeCount,
     writtenDateTime = writtenDateTime,
     modifiedDateTime = modifiedDateTime,
+)
+
+internal fun PostResponse.toEntity(type: CommunityPostType) = CommunityPostEntity(
+    id = postId,
+    content = content,
+    writerName = author.name,
+    writerBestRecordInSeconds = author.bestRecordInSeconds,
+    commentCount = commentCount,
+    likeCount = likeCount,
+    type = type,
+    writtenDateTime = writtenDateTime.toLocalDateTime(),
+    modifiedDateTime = modifiedDateTime.toLocalDateTime(),
 )
 
 internal fun GetPostResponse.toModel() = DetailedCommunityPost(
