@@ -1,7 +1,6 @@
 package com.yjy.feature.community.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,14 +8,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -29,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.core.util.toDisplayTimeFormat
 import com.yjy.common.designsystem.ComponentPreviews
-import com.yjy.common.designsystem.component.CircleMedal
 import com.yjy.common.designsystem.extensions.getDisplayColor
 import com.yjy.common.designsystem.extensions.getDisplayName
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
@@ -110,7 +106,7 @@ internal fun PostItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                ImageVector.vectorResource(id = ChallengeTogetherIcons.Like),
+                ImageVector.vectorResource(id = ChallengeTogetherIcons.LikeOn),
                 contentDescription = stringResource(id = R.string.feature_community_cheer),
                 tint = CustomColorProvider.colorScheme.onBackgroundMuted,
                 modifier = Modifier.size(20.dp),
@@ -134,24 +130,6 @@ internal fun PostItem(
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(start = 4.dp),
             )
-        }
-    }
-}
-
-@Composable
-private fun UserProfile(
-    tier: Tier,
-    modifier: Modifier = Modifier,
-) {
-    Box(modifier = modifier.width(34.dp)) {
-        Box(
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(CustomColorProvider.colorScheme.surface)
-                .padding(6.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            CircleMedal(tier = tier)
         }
     }
 }

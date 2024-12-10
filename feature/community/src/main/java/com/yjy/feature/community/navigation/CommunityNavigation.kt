@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.navDeepLink
 import com.yjy.common.core.extensions.sharedViewModel
 import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
@@ -22,6 +23,10 @@ import com.yjy.feature.community.ListRoute
 import com.yjy.feature.community.PostRoute
 import com.yjy.feature.community.R
 
+const val COMMUNITY_POST_ID = "postId"
+private const val DEEP_LINK_URI_PATTERN =
+    "https://www.challenge-together.apps.com/community/post/{$COMMUNITY_POST_ID}"
+
 typealias CommunityStrings = R.string
 
 fun NavController.navigateToCommunity(navOptions: NavOptions? = null) {
@@ -30,6 +35,10 @@ fun NavController.navigateToCommunity(navOptions: NavOptions? = null) {
 
 fun NavController.navigateToAddCommunityPost() {
     navigate(ServiceRoute.Community.AddPost)
+}
+
+fun NavController.navigateToCommunityPost(postId: Int) {
+    navigate(ServiceRoute.Community.Post(postId))
 }
 
 private fun NavController.navigateToBookmarked() {
@@ -42,10 +51,6 @@ private fun NavController.navigateToAuthored() {
 
 private fun NavController.navigateToCommented() {
     navigate(ServiceRoute.Community.CommentedPosts)
-}
-
-private fun NavController.navigateToPost(postId: Int) {
-    navigate(ServiceRoute.Community.Post(postId))
 }
 
 fun NavGraphBuilder.communityNavGraph(
@@ -66,7 +71,7 @@ fun NavGraphBuilder.communityNavGraph(
             val viewModel = entry.sharedViewModel<CommunityViewModel>(navController)
 
             ListRoute(
-                onPostClick = navController::navigateToPost,
+                onPostClick = navController::navigateToCommunityPost,
                 onBookmarkedClick = navController::navigateToBookmarked,
                 onAuthoredClick = navController::navigateToAuthored,
                 onCommentedClick = navController::navigateToCommented,
@@ -87,27 +92,30 @@ fun NavGraphBuilder.communityNavGraph(
         composable<ServiceRoute.Community.BookmarkedPosts> {
             BookmarkedRoute(
                 onBackClick = navController::popBackStack,
-                onPostClick = navController::navigateToPost,
+                onPostClick = navController::navigateToCommunityPost,
             )
         }
 
         composable<ServiceRoute.Community.AuthoredPosts> {
             AuthoredRoute(
                 onBackClick = navController::popBackStack,
-                onPostClick = navController::navigateToPost,
+                onPostClick = navController::navigateToCommunityPost,
             )
         }
 
         composable<ServiceRoute.Community.CommentedPosts> {
             CommentedRoute(
                 onBackClick = navController::popBackStack,
-                onPostClick = navController::navigateToPost,
+                onPostClick = navController::navigateToCommunityPost,
             )
         }
 
-        composable<ServiceRoute.Community.Post> {
+        composable<ServiceRoute.Community.Post>(
+            deepLinks = listOf(navDeepLink { uriPattern = DEEP_LINK_URI_PATTERN }),
+        ) {
             PostRoute(
                 onBackClick = navController::popBackStack,
+                onEditPostClick = {},
                 onShowSnackbar = onShowSnackbar,
             )
         }

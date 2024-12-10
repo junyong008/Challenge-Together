@@ -123,7 +123,7 @@ internal fun AddPostScreen(
                         onAddPostClick(content)
                     }
                 },
-                enabled = !isAddingPost,
+                enabled = !isAddingPost && content.isNotBlank(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),

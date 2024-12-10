@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
     val timeDiff: Flow<Long>
     val mutedChallengeBoardIds: Flow<List<Int>>
+    val mutedCommunityPostIds: Flow<List<Int>>
     fun getNotifications(): Flow<PagingData<Notification>>
     suspend fun syncTime(): NetworkResult<Unit>
     suspend fun getUserName(): NetworkResult<String>
@@ -16,7 +17,10 @@ interface UserRepository {
     suspend fun deleteAllNotifications(): NetworkResult<Unit>
     suspend fun registerFcmToken()
     suspend fun getMutedChallengeBoards(): List<Int>
+    suspend fun getMutedCommunityPosts(): List<Int>
     suspend fun muteChallengeBoardNotification(challengeId: Int)
+    suspend fun muteCommunityPostNotification(postId: Int)
     suspend fun unMuteChallengeBoardNotification(challengeId: Int)
+    suspend fun unMuteCommunityPostNotification(postId: Int)
     suspend fun clearLocalData()
 }

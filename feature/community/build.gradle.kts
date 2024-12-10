@@ -17,10 +17,12 @@ dependencies {
         projects.domain,
 
         projects.data.communityApi,
+        projects.data.userApi,
 
         libs.androidx.paging.compose,
         libs.androidx.paging.ktx,
     )
 
     runtimeOnly(projects.data.communityImpl)
+    runtimeOnly(projects.data.userImpl)
 }

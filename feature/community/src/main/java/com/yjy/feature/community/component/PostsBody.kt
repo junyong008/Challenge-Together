@@ -44,10 +44,12 @@ internal fun PostsBody(
                     post = post,
                     onClick = { onPostClick(post) },
                     searchKeyword = searchQuery,
+                    modifier = Modifier.animateItem(fadeOutSpec = null),
                 )
                 HorizontalDivider(
                     thickness = 1.dp,
                     color = CustomColorProvider.colorScheme.divider,
+                    modifier = Modifier.animateItem(fadeOutSpec = null),
                 )
             }
             item {

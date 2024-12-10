@@ -25,19 +25,22 @@ sealed interface ServiceRoute : Route {
     }
 
     @Serializable
-    data object Community : ServiceRoute
+    data object Community : ServiceRoute {
+        @Serializable
+        data class Post(val postId: Int) : ServiceRoute
 
-    @Serializable
-    data object AddCommunityPost : ServiceRoute
+        @Serializable
+        data object AddPost : ServiceRoute
 
-    @Serializable
-    data object BookmarkedCommunityPosts : ServiceRoute
+        @Serializable
+        data object BookmarkedPosts : ServiceRoute
 
-    @Serializable
-    data object CommentedCommunityPosts : ServiceRoute
+        @Serializable
+        data object CommentedPosts : ServiceRoute
 
-    @Serializable
-    data object AuthoredCommunityPosts : ServiceRoute
+        @Serializable
+        data object AuthoredPosts : ServiceRoute
+    }
 
     @Serializable
     data object Notification : ServiceRoute

@@ -10,6 +10,8 @@ object ChallengeTogetherIcons {
     val ArrowUp = R.drawable.ic_arrow_up
     val Back = R.drawable.ic_back
     val Bell = R.drawable.ic_bell
+    val BookmarkOff = R.drawable.ic_bookmark_off
+    val BookmarkOn = R.drawable.ic_bookmark_on
     val Cancel = R.drawable.ic_cancel
     val Check = R.drawable.ic_check
     val Comment = R.drawable.ic_comment
@@ -19,7 +21,8 @@ object ChallengeTogetherIcons {
     val Email = R.drawable.ic_email
     val Home = R.drawable.ic_home
     val Infinite = R.drawable.ic_infinite
-    val Like = R.drawable.ic_like
+    val LikeOff = R.drawable.ic_like_off
+    val LikeOn = R.drawable.ic_like_on
     val Lock = R.drawable.ic_lock
     val MoreHorizontal = R.drawable.ic_more_horiz
     val MoreVertical = R.drawable.ic_more_vert
@@ -32,6 +35,7 @@ object ChallengeTogetherIcons {
     val QuoteLeft = R.drawable.ic_quote_left
     val QuoteRight = R.drawable.ic_quote_right
     val Refresh = R.drawable.ic_refresh
+    val Reply = R.drawable.ic_reply
     val Search = R.drawable.ic_search
     val SearchOff = R.drawable.ic_search_off
     val Send = R.drawable.ic_send

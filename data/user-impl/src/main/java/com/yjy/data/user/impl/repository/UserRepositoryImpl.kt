@@ -35,6 +35,7 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override val timeDiff: Flow<Long> = userPreferencesDataSource.timeDiff
     override val mutedChallengeBoardIds: Flow<List<Int>> = notificationSettingDataSource.mutedChallengeBoards
+    override val mutedCommunityPostIds: Flow<List<Int>> = notificationSettingDataSource.mutedCommunityPosts
 
     override suspend fun syncTime(): NetworkResult<Unit> = userDataSource.syncTime()
 
@@ -98,16 +99,28 @@ internal class UserRepositoryImpl @Inject constructor(
     override suspend fun getMutedChallengeBoards(): List<Int> =
         notificationSettingDataSource.getMutedChallengeBoards()
 
+    override suspend fun getMutedCommunityPosts(): List<Int> =
+        notificationSettingDataSource.getMutedCommunityPosts()
+
     override suspend fun muteChallengeBoardNotification(challengeId: Int) {
         notificationSettingDataSource.addMutedChallengeBoard(challengeId)
+    }
+
+    override suspend fun muteCommunityPostNotification(postId: Int) {
+        notificationSettingDataSource.addMutedCommunityPost(postId)
     }
 
     override suspend fun unMuteChallengeBoardNotification(challengeId: Int) {
         notificationSettingDataSource.removeMutedChallengeBoard(challengeId)
     }
 
+    override suspend fun unMuteCommunityPostNotification(postId: Int) {
+        notificationSettingDataSource.removeMutedCommunityPost(postId)
+    }
+
     override suspend fun clearLocalData() {
         userPreferencesDataSource.setFcmToken(null)
+        notificationSettingDataSource.clear()
         notificationDao.deleteAll()
     }
 

@@ -50,6 +50,16 @@ enum class NotificationType(
         category = NotificationCategory.CHALLENGE,
         destination = { NotificationDestination.WaitingChallenge(it) },
     ),
+    COMMUNITY_POST(
+        type = "community_post",
+        category = NotificationCategory.COMMUNITY,
+        destination = { NotificationDestination.CommunityPost(it) },
+    ),
+    COMMUNITY_COMMENT(
+        type = "community_comment",
+        category = NotificationCategory.COMMUNITY,
+        destination = { NotificationDestination.CommunityPost(it) },
+    ),
     COMMON(
         type = "common",
         category = NotificationCategory.COMMON,

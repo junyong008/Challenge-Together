@@ -20,6 +20,7 @@ fun NavGraphBuilder.notificationScreen(
     onSettingClick: () -> Unit,
     onWaitingChallengeNotificationClick: (challengeId: Int) -> Unit,
     onStartedChallengeNotificationClick: (challengeId: Int) -> Unit,
+    onCommunityPostNotificationClick: (postId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     composable<ServiceRoute.Notification>(
@@ -34,6 +35,7 @@ fun NavGraphBuilder.notificationScreen(
             onShowSnackbar = onShowSnackbar,
             onWaitingChallengeNotificationClick = onWaitingChallengeNotificationClick,
             onStartedChallengeNotificationClick = onStartedChallengeNotificationClick,
+            onCommunityPostNotificationClick = onCommunityPostNotificationClick,
         )
     }
 }

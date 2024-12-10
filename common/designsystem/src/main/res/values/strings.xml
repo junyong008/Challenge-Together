@@ -68,6 +68,10 @@
     <string name="common_designsystem_notification_participant_joined_detail">\"%1$s\" has joined the challenge.</string>
     <string name="common_designsystem_notification_participant_left">\"%1$s\" Participant left</string>
     <string name="common_designsystem_notification_participant_left_detail">\"%1$s\" has left the challenge.</string>
+    <string name="common_designsystem_notification_user_commented">\"%1$s\" commented</string>
+    <string name="common_designsystem_notification_user_commented_detail">Comment: \"%1$s\"</string>
+    <string name="common_designsystem_notification_user_replied">\"%1$s\" replied to a comment</string>
+    <string name="common_designsystem_notification_user_replied_detail">Reply: \"%1$s\"</string>
 
     <string name="common_designsystem_sort_order_latest">Latest</string>
     <string name="common_designsystem_sort_order_oldest">Oldest</string>

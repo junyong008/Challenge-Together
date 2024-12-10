@@ -43,6 +43,14 @@ private val notificationFormats = mapOf(
         R.string.common_designsystem_notification_participant_left,
         R.string.common_designsystem_notification_participant_left_detail,
     ),
+    NotificationType.COMMUNITY_POST to Pair(
+        R.string.common_designsystem_notification_user_commented,
+        R.string.common_designsystem_notification_user_commented_detail,
+    ),
+    NotificationType.COMMUNITY_COMMENT to Pair(
+        R.string.common_designsystem_notification_user_replied,
+        R.string.common_designsystem_notification_user_replied_detail,
+    ),
 )
 
 @Composable

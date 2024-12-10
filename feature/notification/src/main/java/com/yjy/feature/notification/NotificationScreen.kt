@@ -82,6 +82,7 @@ internal fun NotificationRoute(
     onSettingClick: () -> Unit,
     onWaitingChallengeNotificationClick: (challengeId: Int) -> Unit,
     onStartedChallengeNotificationClick: (challengeId: Int) -> Unit,
+    onCommunityPostNotificationClick: (postId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: NotificationViewModel = hiltViewModel(),
@@ -97,6 +98,7 @@ internal fun NotificationRoute(
         onSettingClick = onSettingClick,
         onWaitingChallengeNotificationClick = onWaitingChallengeNotificationClick,
         onStartedChallengeNotificationClick = onStartedChallengeNotificationClick,
+        onCommunityPostNotificationClick = onCommunityPostNotificationClick,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -111,6 +113,7 @@ internal fun NotificationScreen(
     onSettingClick: () -> Unit = {},
     onWaitingChallengeNotificationClick: (challengeId: Int) -> Unit = {},
     onStartedChallengeNotificationClick: (challengeId: Int) -> Unit = {},
+    onCommunityPostNotificationClick: (postId: Int) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val deleteSuccessMessage = stringResource(id = R.string.feature_notification_delete_success)
@@ -187,6 +190,7 @@ internal fun NotificationScreen(
                     notifications = notifications,
                     onWaitingChallengeNotificationClick = onWaitingChallengeNotificationClick,
                     onStartedChallengeNotificationClick = onStartedChallengeNotificationClick,
+                    onCommunityPostNotificationClick = onCommunityPostNotificationClick,
                     onMenuClick = { selectedNotification = it },
                     modifier = Modifier.padding(padding),
                 )
@@ -272,6 +276,7 @@ private fun NotificationBody(
     notifications: LazyPagingItems<Notification>,
     onWaitingChallengeNotificationClick: (challengeId: Int) -> Unit,
     onStartedChallengeNotificationClick: (challengeId: Int) -> Unit,
+    onCommunityPostNotificationClick: (postId: Int) -> Unit,
     onMenuClick: (Notification) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -296,6 +301,9 @@ private fun NotificationBody(
 
                                 is NotificationDestination.WaitingChallenge ->
                                     onWaitingChallengeNotificationClick(it.linkId)
+
+                                is NotificationDestination.CommunityPost ->
+                                    onCommunityPostNotificationClick(it.linkId)
 
                                 NotificationDestination.None -> Unit
                             }

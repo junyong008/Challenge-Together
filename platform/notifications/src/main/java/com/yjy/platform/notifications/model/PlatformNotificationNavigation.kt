@@ -16,4 +16,9 @@ sealed interface PlatformNotificationNavigation {
         override val requestCode = DeepLinkPaths.Challenge.WAITING_REQUEST_CODE
         override val deepLinkPath = DeepLinkPaths.Challenge.WAITING
     }
+
+    data class CommunityPost(override val param: String) : PlatformNotificationNavigation {
+        override val requestCode = DeepLinkPaths.Community.POST_REQUEST_CODE
+        override val deepLinkPath = DeepLinkPaths.Community.POST
+    }
 }

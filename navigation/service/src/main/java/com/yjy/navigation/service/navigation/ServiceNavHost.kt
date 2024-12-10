@@ -16,6 +16,7 @@ import com.yjy.feature.challengeranking.navigation.challengeRankingScreen
 import com.yjy.feature.challengeranking.navigation.navigateToChallengeRanking
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
 import com.yjy.feature.community.navigation.communityNavGraph
+import com.yjy.feature.community.navigation.navigateToCommunityPost
 import com.yjy.feature.completedchallenges.navigation.completedChallengesScreen
 import com.yjy.feature.completedchallenges.navigation.navigateToCompletedChallenges
 import com.yjy.feature.editchallenge.navigation.editChallengeScreen
@@ -63,7 +64,6 @@ internal fun ServiceNavHost(
         )
         communityNavGraph(
             navController = navController,
-            onPostClick = {},
             onShowSnackbar = onShowSnackbar,
         )
         completedChallengesScreen(
@@ -76,6 +76,7 @@ internal fun ServiceNavHost(
             onShowSnackbar = onShowSnackbar,
             onWaitingChallengeNotificationClick = navController::navigateToWaitingChallenge,
             onStartedChallengeNotificationClick = navController::navigateToStartedChallenge,
+            onCommunityPostNotificationClick = navController::navigateToCommunityPost,
         )
         addChallengeNavGraph(
             navController = navController,

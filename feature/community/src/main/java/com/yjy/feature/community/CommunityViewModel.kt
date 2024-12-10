@@ -2,6 +2,7 @@ package com.yjy.feature.community
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
@@ -14,11 +15,13 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,16 +49,35 @@ class CommunityViewModel @Inject constructor(
         query
     }.flatMapLatest { query ->
         getCommunityPostsUseCase(query = query, postType = SimpleCommunityPostType.ALL)
-    }.cachedIn(viewModelScope)
+    }.cachedIn(viewModelScope).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = PagingData.empty(),
+    )
 
     val bookmarkedPosts = getCommunityPostsUseCase(postType = SimpleCommunityPostType.BOOKMARKED)
         .cachedIn(viewModelScope)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = PagingData.empty(),
+        )
 
     val commentedPosts = getCommunityPostsUseCase(postType = SimpleCommunityPostType.COMMENTED)
         .cachedIn(viewModelScope)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = PagingData.empty(),
+        )
 
     val authoredPosts = getCommunityPostsUseCase(postType = SimpleCommunityPostType.AUTHORED)
         .cachedIn(viewModelScope)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = PagingData.empty(),
+        )
 
     private fun sendEvent(event: CommunityUiEvent) = viewModelScope.launch {
         _uiEvent.send(event)

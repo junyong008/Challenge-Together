@@ -10,7 +10,10 @@ import com.yjy.data.network.request.challenge.AddChallengeRequest
 import com.yjy.data.network.request.challenge.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.challenge.ReportChallengePostRequest
 import com.yjy.data.network.request.challenge.ResetChallengeRequest
+import com.yjy.data.network.request.community.AddCommunityCommentRequest
 import com.yjy.data.network.request.community.AddCommunityPostRequest
+import com.yjy.data.network.request.community.ReportCommunityCommentRequest
+import com.yjy.data.network.request.community.ReportCommunityPostRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
 import com.yjy.data.network.response.challenge.AddChallengeResponse
 import com.yjy.data.network.response.challenge.GetChallengePostsResponse
@@ -21,6 +24,7 @@ import com.yjy.data.network.response.challenge.GetResetRecordResponse
 import com.yjy.data.network.response.challenge.GetStartedChallengeDetailResponse
 import com.yjy.data.network.response.challenge.GetWaitingChallengeDetailResponse
 import com.yjy.data.network.response.challenge.WaitingChallengeResponse
+import com.yjy.data.network.response.community.GetPostResponse
 import com.yjy.data.network.response.community.GetPostsResponse
 import com.yjy.data.network.response.user.GetNameResponse
 import com.yjy.data.network.response.user.GetNotificationsResponse
@@ -214,9 +218,14 @@ internal interface ChallengeTogetherService {
     ): NetworkResult<Unit>
 
     // Community
-    @POST("service/community/add")
+    @POST("service/community/add/post")
     suspend fun addPost(
         @Body request: AddCommunityPostRequest,
+    ): NetworkResult<Unit>
+
+    @POST("service/community/add/comment")
+    suspend fun addComment(
+        @Body request: AddCommunityCommentRequest,
     ): NetworkResult<Unit>
 
     @GET("service/community/get/posts")
@@ -243,4 +252,39 @@ internal interface ChallengeTogetherService {
         @Query("lastPostId") lastPostId: Int,
         @Query("limit") limit: Int,
     ): NetworkResult<List<GetPostsResponse>>
+
+    @GET("service/community/get/post")
+    suspend fun getPost(
+        @Query("postId") postId: Int,
+    ): NetworkResult<GetPostResponse>
+
+    @PATCH("service/community/post/toggle-bookmark")
+    suspend fun toggleBookmark(
+        @Query("postId") postId: Int,
+    ): NetworkResult<Unit>
+
+    @PATCH("service/community/post/toggle-like")
+    suspend fun toggleLike(
+        @Query("postId") postId: Int,
+    ): NetworkResult<Unit>
+
+    @DELETE("service/community/delete/post")
+    suspend fun deletePost(
+        @Query("postId") postId: Int,
+    ): NetworkResult<Unit>
+
+    @DELETE("service/community/delete/comment")
+    suspend fun deleteComment(
+        @Query("commentId") commentId: Int,
+    ): NetworkResult<Unit>
+
+    @POST("service/community/report/post")
+    suspend fun reportPost(
+        @Body request: ReportCommunityPostRequest,
+    ): NetworkResult<Unit>
+
+    @POST("service/community/report/comment")
+    suspend fun reportComment(
+        @Body request: ReportCommunityCommentRequest,
+    ): NetworkResult<Unit>
 }

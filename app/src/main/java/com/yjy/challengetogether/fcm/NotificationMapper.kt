@@ -38,6 +38,9 @@ class NotificationMapper @Inject constructor(
             is NotificationDestination.WaitingChallenge ->
                 PlatformNotificationNavigation.WaitingChallenge(dest.challengeId.toString())
 
+            is NotificationDestination.CommunityPost ->
+                PlatformNotificationNavigation.CommunityPost(dest.postId.toString())
+
             NotificationDestination.None -> null
         }
 
