@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ChallengeDao {
 
-    @Query("SELECT * FROM challenges")
+    @Query("SELECT * FROM challenges ORDER BY id DESC")
     fun getAll(): Flow<List<ChallengeEntity>>
 
     @Update
