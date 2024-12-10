@@ -94,7 +94,7 @@ private const val KEYBOARD_CLOSE_DELAY = 200L
 @Composable
 internal fun PostRoute(
     onBackClick: () -> Unit,
-    onEditPostClick: (postId: Int) -> Unit,
+    onEditPostClick: (postId: Int, content: String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CommunityPostViewModel = hiltViewModel(),
@@ -125,7 +125,7 @@ internal fun PostScreen(
     uiEvent: Flow<CommunityPostUiEvent> = flowOf(),
     processAction: (CommunityPostUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
-    onEditPostClick: (postId: Int) -> Unit = {},
+    onEditPostClick: (postId: Int, content: String) -> Unit = { _, _ -> },
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val scrollState = rememberScrollState()
@@ -287,7 +287,7 @@ internal fun PostScreen(
                     onReportClick = { shouldShowPostReportDialog = true },
                     onEditClick = {
                         shouldShowPostMenu = false
-                        onEditPostClick(post.postId)
+                        onEditPostClick(post.postId, post.content)
                     },
                     onDeleteAllClick = { shouldShowPostDeleteConfirmDialog = true },
                     onDismiss = { shouldShowPostMenu = false },
@@ -632,13 +632,18 @@ fun CommentContent(
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = if (isReply) 40.dp else 56.dp),
+            modifier = Modifier.padding(
+                start = if (isReply) 40.dp else 56.dp,
+                end = 16.dp,
+            ),
         ) {
             Text(
                 text = comment.writtenDateTime.toDisplayTimeFormat(),
                 color = CustomColorProvider.colorScheme.onSurfaceMuted,
                 style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier.padding(vertical = 16.dp),
+                modifier = Modifier
+                    .padding(vertical = 16.dp)
+                    .weight(1f, fill = false),
             )
             if (shouldShowReplyButton) {
                 Text(
