@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -44,7 +45,7 @@ internal class ServiceNavController(
 
     fun navigateToMainTab(tab: MainTab) {
         val navOptions = navOptions {
-            popUpTo(navController.graph.id) { inclusive = true }
+            popUpTo(navController.graph.findStartDestination().id)
             launchSingleTop = true
         }
 
