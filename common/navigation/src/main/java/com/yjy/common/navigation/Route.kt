@@ -30,6 +30,9 @@ sealed interface ServiceRoute : Route {
         data class Post(val postId: Int) : ServiceRoute
 
         @Serializable
+        data class EditPost(val postId: Int, val content: String) : ServiceRoute
+
+        @Serializable
         data object AddPost : ServiceRoute
 
         @Serializable

@@ -3,6 +3,7 @@ package com.yjy.data.network.datasource
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.network.request.community.AddCommunityCommentRequest
 import com.yjy.data.network.request.community.AddCommunityPostRequest
+import com.yjy.data.network.request.community.EditCommunityPostRequest
 import com.yjy.data.network.request.community.ReportCommunityCommentRequest
 import com.yjy.data.network.request.community.ReportCommunityPostRequest
 import com.yjy.data.network.response.community.GetPostResponse
@@ -19,6 +20,9 @@ internal class CommunityDataSourceImpl @Inject constructor(
 
     override suspend fun addComment(request: AddCommunityCommentRequest): NetworkResult<Unit> =
         challengeTogetherService.addComment(request)
+
+    override suspend fun editPost(request: EditCommunityPostRequest): NetworkResult<Unit> =
+        challengeTogetherService.editPost(request)
 
     override suspend fun getPosts(
         query: String,

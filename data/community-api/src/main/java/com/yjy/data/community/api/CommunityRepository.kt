@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface CommunityRepository {
     suspend fun addPost(content: String): NetworkResult<Unit>
     suspend fun addComment(postId: Int, content: String, parentCommentId: Int): NetworkResult<Unit>
+    suspend fun editPost(postId: Int, content: String): NetworkResult<Unit>
     suspend fun getPost(postId: Int): NetworkResult<DetailedCommunityPost>
     fun getPosts(query: String, postType: SimpleCommunityPostType): Flow<PagingData<SimpleCommunityPost>>
     suspend fun toggleBookmark(postId: Int): NetworkResult<Unit>

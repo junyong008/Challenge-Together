@@ -12,6 +12,7 @@ import com.yjy.data.network.request.challenge.ReportChallengePostRequest
 import com.yjy.data.network.request.challenge.ResetChallengeRequest
 import com.yjy.data.network.request.community.AddCommunityCommentRequest
 import com.yjy.data.network.request.community.AddCommunityPostRequest
+import com.yjy.data.network.request.community.EditCommunityPostRequest
 import com.yjy.data.network.request.community.ReportCommunityCommentRequest
 import com.yjy.data.network.request.community.ReportCommunityPostRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
@@ -226,6 +227,11 @@ internal interface ChallengeTogetherService {
     @POST("service/community/add/comment")
     suspend fun addComment(
         @Body request: AddCommunityCommentRequest,
+    ): NetworkResult<Unit>
+
+    @PATCH("service/community/edit/post")
+    suspend fun editPost(
+        @Body request: EditCommunityPostRequest,
     ): NetworkResult<Unit>
 
     @GET("service/community/get/posts")

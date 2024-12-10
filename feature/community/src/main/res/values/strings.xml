@@ -16,9 +16,12 @@
     <string name="feature_community_no_my_posts_description">You haven’t written any posts yet.\nStart a conversation in the community!</string>
     <string name="feature_community_no_commented_posts_description">You haven’t commented on any posts yet.\nJoin a discussion to leave your thoughts!</string>
     <string name="feature_community_post_create">Create Post</string>
+    <string name="feature_community_post_edit_title">Edit Post</string>
     <string name="feature_community_post_create_content_placeholder">Write your content here…</string>
     <string name="feature_community_post_create_success">Your post has been successfully created.</string>
     <string name="feature_community_post_create_failure">Failed to create the post. Please try again later.</string>
+    <string name="feature_community_post_edit_success">Your post has been successfully edited.</string>
+    <string name="feature_community_post_edit_failure">Failed to edit the post. Please try again later.</string>
     <string name="feature_community_rules_point_1_title">1. Mutual Respect and Consideration</string>
     <string name="feature_community_rules_point_1_description">Respect and consider the rights and dignity of others. Refrain from posting or sharing content that may harm someone\'s reputation or dignity.</string>
     <string name="feature_community_rules_point_2_title">2. Prohibition of Illegal or Commercial Content</string>

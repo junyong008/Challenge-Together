@@ -20,6 +20,7 @@ import com.yjy.data.database.model.CommunityPostType
 import com.yjy.data.network.datasource.CommunityDataSource
 import com.yjy.data.network.request.community.AddCommunityCommentRequest
 import com.yjy.data.network.request.community.AddCommunityPostRequest
+import com.yjy.data.network.request.community.EditCommunityPostRequest
 import com.yjy.data.network.request.community.ReportCommunityCommentRequest
 import com.yjy.data.network.request.community.ReportCommunityPostRequest
 import com.yjy.model.common.ReportReason
@@ -49,6 +50,13 @@ internal class CommunityRepositoryImpl @Inject constructor(
             content = content,
             parentCommentId = parentCommentId,
         ),
+    )
+
+    override suspend fun editPost(
+        postId: Int,
+        content: String,
+    ): NetworkResult<Unit> = communityDataSource.editPost(
+        request = EditCommunityPostRequest(postId = postId, content = content),
     )
 
     override suspend fun getPost(postId: Int): NetworkResult<DetailedCommunityPost> =

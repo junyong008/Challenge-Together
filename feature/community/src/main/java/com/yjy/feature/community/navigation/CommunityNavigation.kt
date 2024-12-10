@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
+import androidx.navigation.toRoute
 import com.yjy.common.core.extensions.sharedViewModel
 import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
@@ -19,6 +20,7 @@ import com.yjy.feature.community.AuthoredRoute
 import com.yjy.feature.community.BookmarkedRoute
 import com.yjy.feature.community.CommentedRoute
 import com.yjy.feature.community.CommunityViewModel
+import com.yjy.feature.community.EditPostRoute
 import com.yjy.feature.community.ListRoute
 import com.yjy.feature.community.PostRoute
 import com.yjy.feature.community.R
@@ -39,6 +41,10 @@ fun NavController.navigateToAddCommunityPost() {
 
 fun NavController.navigateToCommunityPost(postId: Int) {
     navigate(ServiceRoute.Community.Post(postId))
+}
+
+private fun NavController.navigateToEditPost(postId: Int, content: String) {
+    navigate(ServiceRoute.Community.EditPost(postId, content))
 }
 
 private fun NavController.navigateToBookmarked() {
@@ -115,7 +121,19 @@ fun NavGraphBuilder.communityNavGraph(
         ) {
             PostRoute(
                 onBackClick = navController::popBackStack,
-                onEditPostClick = {},
+                onEditPostClick = navController::navigateToEditPost,
+                onShowSnackbar = onShowSnackbar,
+            )
+        }
+
+        composable<ServiceRoute.Community.EditPost> { entry ->
+            val postId = entry.toRoute<ServiceRoute.Community.EditPost>().postId
+            val content = entry.toRoute<ServiceRoute.Community.EditPost>().content
+
+            EditPostRoute(
+                postId = postId,
+                content = content,
+                onBackClick = navController::popBackStack,
                 onShowSnackbar = onShowSnackbar,
             )
         }

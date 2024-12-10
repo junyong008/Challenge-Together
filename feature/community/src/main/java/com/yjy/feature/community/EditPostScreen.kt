@@ -46,57 +46,63 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 @Composable
-internal fun AddPostRoute(
+internal fun EditPostRoute(
+    postId: Int,
+    content: String,
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CommunityViewModel = hiltViewModel(),
 ) {
-    val isAddingPost by viewModel.isAddingPost.collectAsStateWithLifecycle()
+    val isEditingPost by viewModel.isEditingPost.collectAsStateWithLifecycle()
 
-    AddPostScreen(
+    EditPostScreen(
         modifier = modifier,
-        isAddingPost = isAddingPost,
+        postId = postId,
+        content = content,
+        isEditingPost = isEditingPost,
         uiEvent = viewModel.uiEvent,
-        onAddPostClick = viewModel::addPost,
         onBackClick = onBackClick,
+        onEditPostClick = viewModel::editPost,
         onShowSnackbar = onShowSnackbar,
     )
 }
 
 @Composable
-internal fun AddPostScreen(
+internal fun EditPostScreen(
     modifier: Modifier = Modifier,
-    isAddingPost: Boolean = false,
+    postId: Int = 0,
+    content: String = "",
+    isEditingPost: Boolean = false,
     uiEvent: Flow<CommunityUiEvent> = flowOf(),
-    onAddPostClick: (content: String) -> Unit = {},
     onBackClick: () -> Unit = {},
+    onEditPostClick: (postId: Int, content: String) -> Unit = { _, _ -> },
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
-    val addSuccessMessage = stringResource(id = R.string.feature_community_post_create_success)
-    val addFailureMessage = stringResource(id = R.string.feature_community_post_create_failure)
+    val editSuccessMessage = stringResource(id = R.string.feature_community_post_edit_success)
+    val editFailureMessage = stringResource(id = R.string.feature_community_post_edit_failure)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
-            CommunityUiEvent.AddSuccess -> {
-                onShowSnackbar(SnackbarType.SUCCESS, addSuccessMessage)
+            CommunityUiEvent.EditSuccess -> {
+                onShowSnackbar(SnackbarType.SUCCESS, editSuccessMessage)
                 onBackClick()
             }
 
-            CommunityUiEvent.AddFailure ->
-                onShowSnackbar(SnackbarType.ERROR, addFailureMessage)
+            CommunityUiEvent.EditFailure ->
+                onShowSnackbar(SnackbarType.ERROR, editFailureMessage)
 
             else -> Unit
         }
     }
 
-    var content by rememberSaveable { mutableStateOf("") }
+    var currentContent by rememberSaveable { mutableStateOf(content) }
 
     Scaffold(
         topBar = {
             ChallengeTogetherTopAppBar(
                 onNavigationClick = onBackClick,
-                titleRes = R.string.feature_community_post_create,
+                titleRes = R.string.feature_community_post_edit_title,
             )
         },
         containerColor = CustomColorProvider.colorScheme.background,
@@ -109,29 +115,29 @@ internal fun AddPostScreen(
                 .verticalScroll(rememberScrollState()),
         ) {
             ChallengeTogetherTextField(
-                value = content,
-                onValueChange = { content = it.take(MAX_POST_CONTENT_LENGTH) },
+                value = currentContent,
+                onValueChange = { currentContent = it.take(MAX_POST_CONTENT_LENGTH) },
                 placeholderText = stringResource(
                     id = R.string.feature_community_post_create_content_placeholder,
                 ),
                 shape = RectangleShape,
-                enabled = !isAddingPost,
+                enabled = !isEditingPost,
                 contentAlignment = Alignment.TopStart,
                 modifier = Modifier.heightIn(min = 180.dp, max = 250.dp),
             )
             Guidelines()
             ChallengeTogetherButton(
                 onClick = {
-                    if (content.isNotBlank()) {
-                        onAddPostClick(content)
+                    if (currentContent.isNotBlank()) {
+                        onEditPostClick(postId, currentContent)
                     }
                 },
-                enabled = !isAddingPost && content.isNotBlank(),
+                enabled = !isEditingPost && currentContent.isNotBlank(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
             ) {
-                if (isAddingPost) {
+                if (isEditingPost) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
                         color = CustomColorProvider.colorScheme.brand,
@@ -151,10 +157,10 @@ internal fun AddPostScreen(
 
 @DevicePreviews
 @Composable
-fun AddPostScreenPreview() {
+fun EditPostScreenPreview() {
     ChallengeTogetherTheme {
         ChallengeTogetherBackground {
-            AddPostScreen(
+            EditPostScreen(
                 modifier = Modifier.fillMaxSize(),
             )
         }

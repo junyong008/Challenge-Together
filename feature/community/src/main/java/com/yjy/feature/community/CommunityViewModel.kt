@@ -42,6 +42,9 @@ class CommunityViewModel @Inject constructor(
     private val _isAddingPost = MutableStateFlow(false)
     val isAddingPost = _isAddingPost.asStateFlow()
 
+    private val _isEditingPost = MutableStateFlow(false)
+    val isEditingPost = _isEditingPost.asStateFlow()
+
     val allPosts = combine(
         refreshTrigger.onStart { emit(Unit) },
         searchQuery,
@@ -99,5 +102,14 @@ class CommunityViewModel @Inject constructor(
             }
 
         _isAddingPost.value = false
+    }
+
+    fun editPost(postId: Int, content: String) = viewModelScope.launch {
+        _isEditingPost.value = true
+        communityRepository.editPost(postId, content)
+            .onSuccess { sendEvent(CommunityUiEvent.EditSuccess) }
+            .onFailure { sendEvent(CommunityUiEvent.EditFailure) }
+
+        _isEditingPost.value = false
     }
 }
