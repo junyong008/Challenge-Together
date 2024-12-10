@@ -34,6 +34,7 @@ internal class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     override val timeDiff: Flow<Long> = userPreferencesDataSource.timeDiff
+    override val notificationSettings: Flow<Int> = notificationSettingDataSource.notificationSettings
     override val mutedChallengeBoardIds: Flow<List<Int>> = notificationSettingDataSource.mutedChallengeBoards
     override val mutedCommunityPostIds: Flow<List<Int>> = notificationSettingDataSource.mutedCommunityPosts
 
@@ -96,11 +97,18 @@ internal class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getNotificationSettings(): Int =
+        notificationSettingDataSource.getNotificationSettings()
+
     override suspend fun getMutedChallengeBoards(): List<Int> =
         notificationSettingDataSource.getMutedChallengeBoards()
 
     override suspend fun getMutedCommunityPosts(): List<Int> =
         notificationSettingDataSource.getMutedCommunityPosts()
+
+    override suspend fun setNotificationSetting(flag: Int, enabled: Boolean) {
+        notificationSettingDataSource.setNotificationSetting(flag, enabled)
+    }
 
     override suspend fun muteChallengeBoardNotification(challengeId: Int) {
         notificationSettingDataSource.addMutedChallengeBoard(challengeId)

@@ -26,6 +26,8 @@ import com.yjy.feature.editchallenge.navigation.navigateToEditTitleDescription
 import com.yjy.feature.home.navigation.homeScreen
 import com.yjy.feature.notification.navigation.navigateToNotification
 import com.yjy.feature.notification.navigation.notificationScreen
+import com.yjy.feature.notificationsetting.navigation.navigateToNotificationSetting
+import com.yjy.feature.notificationsetting.navigation.notificationSettingScreen
 import com.yjy.feature.resetrecord.navigation.navigateToResetRecord
 import com.yjy.feature.resetrecord.navigation.resetRecordScreen
 import com.yjy.feature.startedchallenge.navigation.navigateToStartedChallenge
@@ -72,11 +74,14 @@ internal fun ServiceNavHost(
         )
         notificationScreen(
             onBackClick = navController::popBackStack,
-            onSettingClick = {},
+            onSettingClick = navController::navigateToNotificationSetting,
             onShowSnackbar = onShowSnackbar,
             onWaitingChallengeNotificationClick = navController::navigateToWaitingChallenge,
             onStartedChallengeNotificationClick = navController::navigateToStartedChallenge,
             onCommunityPostNotificationClick = navController::navigateToCommunityPost,
+        )
+        notificationSettingScreen(
+            onBackClick = navController::popBackStack,
         )
         addChallengeNavGraph(
             navController = navController,

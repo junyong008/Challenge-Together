@@ -32,6 +32,7 @@ dependencies {
         projects.feature.community,
         projects.feature.completedchallenges,
         projects.feature.notification,
+        projects.feature.notificationsetting,
         projects.feature.addchallenge,
         projects.feature.waitingchallenge,
         projects.feature.startedchallenge,

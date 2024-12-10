@@ -4,6 +4,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.yjy.data.user.api.UserRepository
 import com.yjy.model.common.notification.Notification
+import com.yjy.model.common.notification.NotificationSettingFlags
 import com.yjy.model.common.notification.NotificationType
 import com.yjy.platform.notifications.NotificationHelper
 import dagger.hilt.EntryPoints
@@ -61,12 +62,47 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private suspend fun handleFcmMessage(notification: Notification) {
         if (isNotificationMuted(notification.type, notification.linkId)) return
+        if (isNotificationSettingDisabled(notification.type)) return
+
         NotificationHelper.postNotification(
             context = this,
             notification = with(notificationMapper) {
                 notification.toPlatformNotification()
             },
         )
+    }
+
+    private suspend fun isNotificationSettingDisabled(notificationType: NotificationType): Boolean {
+        val settings = userRepository.getNotificationSettings()
+
+        if (!NotificationSettingFlags.isEnabled(settings, NotificationSettingFlags.ALL)) {
+            return true
+        }
+
+        val settingFlag = when (notificationType) {
+            NotificationType.CHALLENGE_JOIN,
+            NotificationType.CHALLENGE_LEAVE,
+            -> NotificationSettingFlags.WAITING_ROOM_PARTICIPANTS
+
+            NotificationType.CHALLENGE_START,
+            NotificationType.CHALLENGE_DELETE,
+            -> NotificationSettingFlags.WAITING_ROOM_UPDATE
+
+            NotificationType.CHALLENGE_RESET,
+            NotificationType.CHALLENGE_GIVE_UP,
+            NotificationType.CHALLENGE_FORCE_REMOVE,
+            -> NotificationSettingFlags.CHALLENGE_ROOM_PROGRESS
+
+            NotificationType.CHALLENGE_STARTED_POST,
+            NotificationType.CHALLENGE_WAITING_POST,
+            -> NotificationSettingFlags.CHALLENGE_BOARD
+
+            NotificationType.COMMUNITY_POST -> NotificationSettingFlags.COMMUNITY_COMMENT
+            NotificationType.COMMUNITY_COMMENT -> NotificationSettingFlags.COMMUNITY_REPLY
+            NotificationType.COMMON -> return false
+        }
+
+        return !NotificationSettingFlags.isEnabled(settings, settingFlag)
     }
 
     private suspend fun isNotificationMuted(
@@ -76,9 +112,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         NotificationType.CHALLENGE_WAITING_POST,
         NotificationType.CHALLENGE_STARTED_POST,
         -> isChallengeBoardMuted(notificationLinkId)
+
         NotificationType.COMMUNITY_POST,
         NotificationType.COMMUNITY_COMMENT,
         -> isCommunityPostMuted(notificationLinkId)
+
         else -> false
     }
 

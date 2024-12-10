@@ -1,0 +1,19 @@
+<resources>
+    <string name="feature_notification_setting_all">All Notifications</string>
+    <string name="feature_notification_setting_challenge">Challenge Notifications</string>
+    <string name="feature_notification_setting_community">Community Notifications</string>
+    <string name="feature_notification_setting_goal_achieved">Goal Achievement Notifications</string>
+    <string name="feature_notification_setting_goal_achieved_detail">Send notifications when a challenge goal is achieved.</string>
+    <string name="feature_notification_setting_waiting_room_participants">Waiting Room Participant Notifications</string>
+    <string name="feature_notification_setting_waiting_room_participants_detail">Notify when participants enter or leave the waiting room you created.</string>
+    <string name="feature_notification_setting_waiting_room_updates">Waiting Room Updates Notifications</string>
+    <string name="feature_notification_setting_waiting_room_updates_detail">Notify about updates to a waiting room you are in, such as starts or deletions.</string>
+    <string name="feature_notification_setting_challenge_room_progress">Challenge Room Progress Notifications</string>
+    <string name="feature_notification_setting_challenge_room_progress_detail">Notify when other participants in a challenge room reset or give up.</string>
+    <string name="feature_notification_setting_challenge_board">Challenge Board Notifications</string>
+    <string name="feature_notification_setting_challenge_board_detail">Notify when a post is added to the challenge board you are part of.</string>
+    <string name="feature_notification_setting_comment">Comment Notifications</string>
+    <string name="feature_notification_setting_comment_detail">Notify when someone comments on your posts.</string>
+    <string name="feature_notification_setting_reply">Reply Notifications</string>
+    <string name="feature_notification_setting_reply_detail">Notify when someone replies to your comments.</string>
+</resources>

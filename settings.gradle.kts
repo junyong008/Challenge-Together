@@ -59,6 +59,7 @@ include(
     ":feature:together",
     ":feature:community",
     ":feature:notification",
+    ":feature:notificationsetting",
     ":feature:addchallenge",
     ":feature:editchallenge",
     ":feature:completedchallenges",

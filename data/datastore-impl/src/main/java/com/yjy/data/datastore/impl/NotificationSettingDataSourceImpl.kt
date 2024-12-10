@@ -3,6 +3,7 @@ package com.yjy.data.datastore.impl
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.yjy.data.datastore.api.NotificationSettingDataSource
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,12 @@ import javax.inject.Inject
 internal class NotificationSettingDataSourceImpl @Inject constructor(
     @NotificationDataStore private val dataStore: DataStore<Preferences>,
 ) : NotificationSettingDataSource {
+
+    override val notificationSettings: Flow<Int> = dataStore.data
+        .catch { recoverOrThrow(it) }
+        .map { preferences ->
+            preferences[KEY_NOTIFICATION_SETTINGS] ?: ALL_NOTIFICATIONS_ENABLED
+        }
 
     override val mutedChallengeBoards: Flow<List<Int>> = dataStore.data
         .catch { recoverOrThrow(it) }
@@ -42,6 +49,21 @@ internal class NotificationSettingDataSourceImpl @Inject constructor(
                 }.getOrDefault(emptyList())
             }
         }
+
+    override suspend fun getNotificationSettings(): Int =
+        dataStore.readValue(KEY_NOTIFICATION_SETTINGS, ALL_NOTIFICATIONS_ENABLED)
+
+    override suspend fun setNotificationSetting(flag: Int, enabled: Boolean) {
+        dataStore.edit { preferences ->
+            val current = preferences[KEY_NOTIFICATION_SETTINGS] ?: ALL_NOTIFICATIONS_ENABLED
+            val new = if (enabled) {
+                current or flag
+            } else {
+                current and (flag.inv())
+            }
+            preferences[KEY_NOTIFICATION_SETTINGS] = new
+        }
+    }
 
     override suspend fun getMutedChallengeBoards(): List<Int> =
         mutedChallengeBoards.first()
@@ -92,6 +114,8 @@ internal class NotificationSettingDataSourceImpl @Inject constructor(
     }
 
     companion object {
+        private const val ALL_NOTIFICATIONS_ENABLED = 0xFF
+        private val KEY_NOTIFICATION_SETTINGS = intPreferencesKey("notification_settings")
         private val KEY_MUTED_CHALLENGE_BOARDS = stringPreferencesKey("muted_challenge_boards")
         private val KEY_MUTED_COMMUNITY_POSTS = stringPreferencesKey("muted_community_posts")
     }
