@@ -34,6 +34,7 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -50,6 +51,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -558,6 +560,8 @@ fun CommentItem(
     }
 }
 
+private const val LINE_FOR_COMMENT_EXPAND = 10
+
 @Composable
 fun CommentContent(
     comment: CommunityComment,
@@ -567,6 +571,9 @@ fun CommentContent(
     shouldShowReplyButton: Boolean = true,
     isReply: Boolean = false,
 ) {
+    var textLineCount by remember { mutableIntStateOf(0) }
+    var isExpanded by remember { mutableStateOf(false) }
+
     Column(modifier = modifier.fillMaxWidth()) {
         Row {
             Row(
@@ -628,8 +635,22 @@ fun CommentContent(
                 CustomColorProvider.colorScheme.onSurface
             },
             style = MaterialTheme.typography.labelSmall,
+            maxLines = if (isExpanded) Int.MAX_VALUE else LINE_FOR_COMMENT_EXPAND,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(horizontal = if (isReply) 40.dp else 56.dp),
+            onTextLayout = { textLayoutResult ->
+                textLineCount = textLayoutResult.lineCount
+            },
         )
+        if (textLineCount >= LINE_FOR_COMMENT_EXPAND && !isExpanded) {
+            ClickableText(
+                text = stringResource(id = R.string.feature_community_post_more),
+                style = MaterialTheme.typography.bodySmall,
+                color = CustomColorProvider.colorScheme.onSurfaceMuted,
+                modifier = Modifier.padding(start = if (isReply) 32.dp else 48.dp),
+                onClick = { isExpanded = true },
+            )
+        }
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(

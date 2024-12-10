@@ -28,9 +28,11 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.designsystem.ComponentPreviews
@@ -78,7 +80,10 @@ fun SelectableText(
     modifier: Modifier = Modifier,
     color: Color = CustomColorProvider.colorScheme.onBackground,
     style: TextStyle = MaterialTheme.typography.labelSmall,
+    overflow: TextOverflow = TextOverflow.Clip,
+    maxLines: Int = Int.MAX_VALUE,
     textAlign: TextAlign = TextAlign.Start,
+    onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
     val focusRequester = remember { FocusRequester() }
     var isFocused by remember { mutableStateOf(false) }
@@ -105,7 +110,10 @@ fun SelectableText(
                     text = text,
                     color = color,
                     style = style,
+                    overflow = overflow,
+                    maxLines = maxLines,
                     textAlign = textAlign,
+                    onTextLayout = onTextLayout,
                 )
             }
         }

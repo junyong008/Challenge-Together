@@ -39,6 +39,7 @@
     <string name="feature_community_post_report">Report</string>
     <string name="feature_community_post_delete">Delete</string>
     <string name="feature_community_post_edit">Edit</string>
+    <string name="feature_community_post_more">More</string>
     <string name="feature_community_post_cheer">CHEER</string>
     <string name="feature_community_post_comment_count">%d comments</string>
     <string name="feature_community_post_reply">Reply</string>
