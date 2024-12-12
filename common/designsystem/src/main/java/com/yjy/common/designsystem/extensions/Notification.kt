@@ -7,6 +7,10 @@ import com.yjy.common.designsystem.R
 import com.yjy.model.common.notification.NotificationType
 
 private val notificationFormats = mapOf(
+    NotificationType.CHALLENGE_COMPLETE to Pair(
+        R.string.common_designsystem_notification_challenge_completed,
+        R.string.common_designsystem_notification_user_challenge_completed,
+    ),
     NotificationType.CHALLENGE_RESET to Pair(
         R.string.common_designsystem_notification_participant_reset,
         R.string.common_designsystem_notification_user_reset,

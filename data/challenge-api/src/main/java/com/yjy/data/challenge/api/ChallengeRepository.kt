@@ -18,6 +18,6 @@ interface ChallengeRepository {
     suspend fun editChallengeTitleDescription(challengeId: Int, title: String, description: String): NetworkResult<Unit>
     suspend fun editChallengeCategory(challengeId: Int, category: Category): NetworkResult<Unit>
     suspend fun editChallengeTargetDays(challengeId: Int, targetDays: TargetDays): NetworkResult<Unit>
-    suspend fun syncChallenges(): NetworkResult<List<String>>
+    suspend fun syncChallenges(): NetworkResult<Unit>
     suspend fun clearLocalData()
 }

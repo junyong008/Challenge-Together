@@ -53,6 +53,11 @@ inline fun <T, R> NetworkResult<T>.map(
     is NetworkResult.Failure -> this
 }
 
+fun <T> NetworkResult<T>.mapToUnit(): NetworkResult<Unit> = when (this) {
+    is NetworkResult.Success -> NetworkResult.Success(Unit)
+    is NetworkResult.Failure -> this
+}
+
 inline fun <T, R> NetworkResult<T>.fold(
     onSuccess: (T) -> R,
     onFailure: (NetworkResult.Failure) -> R,

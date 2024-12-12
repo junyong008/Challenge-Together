@@ -2,6 +2,7 @@ package com.yjy.data.challenge.impl.repository
 
 import com.yjy.common.network.NetworkResult
 import com.yjy.common.network.map
+import com.yjy.common.network.mapToUnit
 import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.challenge.impl.mapper.toEntity
@@ -70,15 +71,14 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         targetDays = targetDays.toRequestString(),
     )
 
-    override suspend fun syncChallenges(): NetworkResult<List<String>> = challengeDataSource.getMyChallenges()
+    override suspend fun syncChallenges(): NetworkResult<Unit> = challengeDataSource.getMyChallenges()
         .onSuccess { response ->
             val challenges = response.challenges.map { it.toEntity() }
+            val newlyCompletedTitles = response.newlyCompletedTitles
+
             challengeDao.syncChallenges(challenges)
-            challengePreferencesDataSource.addCompletedChallengeTitles(response.newlyCompletedTitles)
-        }
-        .map { response ->
-            response.newlyCompletedTitles
-        }
+            challengePreferencesDataSource.addCompletedChallengeTitles(newlyCompletedTitles)
+        }.mapToUnit()
 
     override suspend fun clearLocalData() {
         challengeDao.deleteAll()

@@ -80,6 +80,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         val settingFlag = when (notificationType) {
+            NotificationType.CHALLENGE_COMPLETE,
+            -> NotificationSettingFlags.GOAL_ACHIEVED
+
             NotificationType.CHALLENGE_JOIN,
             NotificationType.CHALLENGE_LEAVE,
             -> NotificationSettingFlags.WAITING_ROOM_PARTICIPANTS

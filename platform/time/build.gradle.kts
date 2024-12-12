@@ -13,6 +13,8 @@ dependencies {
     implementations(
         projects.common.core,
 
+        projects.platform.worker,
+
         libs.kotlinx.coroutines.core,
     )
 }

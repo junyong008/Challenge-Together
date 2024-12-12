@@ -12,6 +12,10 @@ complexity:
   TooManyFunctions:
     active: false
 
+exceptions:
+  TooGenericExceptionCaught:
+    active: false
+
 formatting:
   Filename:
     active: false

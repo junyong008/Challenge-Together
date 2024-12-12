@@ -5,6 +5,11 @@ enum class NotificationType(
     val category: NotificationCategory,
     val destination: (Int) -> NotificationDestination,
 ) {
+    CHALLENGE_COMPLETE(
+        type = "challenge_complete",
+        category = NotificationCategory.CHALLENGE,
+        destination = { NotificationDestination.StaredChallenge(it) },
+    ),
     CHALLENGE_RESET(
         type = "challenge_reset",
         category = NotificationCategory.CHALLENGE,

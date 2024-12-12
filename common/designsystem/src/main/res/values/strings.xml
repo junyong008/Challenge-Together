@@ -53,6 +53,8 @@
     <string name="common_designsystem_category_quit_swearing">Quit Swearing</string>
     <string name="common_designsystem_category_quit_smartphone">Quit Smartphone</string>
 
+    <string name="common_designsystem_notification_challenge_completed">Challenge Completed</string>
+    <string name="common_designsystem_notification_user_challenge_completed">Completed the \"%1$s\" challenge!</string>
     <string name="common_designsystem_notification_participant_reset">\"%1$s\" Participant reset</string>
     <string name="common_designsystem_notification_user_reset">\"%1$s\" has reset.</string>
     <string name="common_designsystem_notification_participant_give_up">\"%1$s\" Participant gave up</string>

@@ -24,6 +24,7 @@ dependencies {
 
         projects.model,
 
+        projects.platform.worker,
         projects.platform.network,
         projects.platform.time,
 
@@ -47,6 +48,7 @@ dependencies {
         libs.androidx.hilt.navigation.compose,
         libs.kotlinx.collections.immutable,
     )
+
     runtimeOnly(projects.data.authImpl)
     runtimeOnly(projects.data.userImpl)
 }

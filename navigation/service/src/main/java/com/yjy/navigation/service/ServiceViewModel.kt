@@ -7,6 +7,7 @@ import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.LogoutUseCase
 import com.yjy.platform.network.NetworkMonitor
 import com.yjy.platform.time.TimeMonitor
+import com.yjy.platform.worker.manager.WorkerManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -22,6 +23,7 @@ class ServiceViewModel @Inject constructor(
     authRepository: AuthRepository,
     logoutUseCase: LogoutUseCase,
     networkMonitor: NetworkMonitor,
+    workerManager: WorkerManager,
     timeMonitor: TimeMonitor,
 ) : ViewModel() {
 
@@ -50,7 +52,12 @@ class ServiceViewModel @Inject constructor(
     ) { loggedIn, tokenAvailable ->
         loggedIn && !tokenAvailable
     }.onEach { isExpired ->
-        if (isExpired) logoutUseCase()
+        if (isExpired) {
+            logoutUseCase()
+            workerManager.stopPeriodicCheck()
+        } else {
+            workerManager.startPeriodicCheck()
+        }
     }.shareIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

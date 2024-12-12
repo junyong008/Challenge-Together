@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    ksp(libs.hilt.ext.compiler)
+
     implementations(
         projects.navigation.auth,
         projects.navigation.service,
@@ -58,6 +60,8 @@ dependencies {
         libs.androidx.startup,
         libs.androidx.navigation.compose,
         libs.androidx.hilt.navigation.compose,
+        libs.androidx.work.ktx,
+        libs.hilt.ext.work,
         libs.timber,
     )
 

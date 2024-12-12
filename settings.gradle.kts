@@ -47,6 +47,7 @@ include(
     ":platform:network",
     ":platform:notifications",
     ":platform:time",
+    ":platform:worker",
 
     ":domain",
 
