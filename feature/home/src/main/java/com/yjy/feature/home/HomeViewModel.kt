@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.core.extensions.restartableStateIn
-import com.yjy.common.network.NetworkResult
+import com.yjy.common.network.fold
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengePreferencesRepository
@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.merge
@@ -84,7 +85,7 @@ class HomeViewModel @Inject constructor(
 
     val challengeSyncState = challengeSyncTrigger
         .onStart { emit(Unit) }
-        .flatMapLatest {
+        .flatMapConcat {
             flow {
                 challengeRepository.syncChallenges()
                     .onSuccess { emit(ChallengeSyncUiState.Success) }
@@ -108,7 +109,9 @@ class HomeViewModel @Inject constructor(
             lastProcessedChallenges
         }
     }.onEach { challenges ->
-        handleStartedChallenges(challenges)
+        checkLocalUpdates(challenges)
+        updateUiStates(challenges)
+
         lastProcessedChallenges = challenges
     }.combine(challengePreferencesRepository.sortOrder) { challenges, order ->
         challenges.sortBy(order)
@@ -171,23 +174,18 @@ class HomeViewModel @Inject constructor(
 
     val tierState = tierTrigger
         .onStart { emit(Unit) }
-        .flatMapLatest {
-            combine(
-                flow { emit(challengePreferencesRepository.getRemoteTier()) },
-                challengePreferencesRepository.localTier,
-            ) { remoteResult, localTier ->
-                when (remoteResult) {
-                    is NetworkResult.Success -> {
-                        remoteTier = remoteResult.data
-                        handleTier(new = remoteResult.data, old = localTier)
-                        TierUiState.Success(localTier)
-                    }
-
-                    is NetworkResult.Failure -> TierUiState.Error
-                }
-            }
-        }
-        .restartableStateIn(
+        .flatMapConcat {
+            flow { emit(challengePreferencesRepository.getRemoteTier()) }
+        }.combine(challengePreferencesRepository.localTier) { remoteResult, localTier ->
+            remoteResult.fold(
+                onSuccess = {
+                    remoteTier = it
+                    handleTier(new = it, old = localTier)
+                    TierUiState.Success(localTier)
+                },
+                onFailure = { TierUiState.Error },
+            )
+        }.restartableStateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = TierUiState.Loading,
@@ -202,15 +200,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun handleStartedChallenges(challenges: List<SimpleStartedChallenge>) {
+    private suspend fun checkLocalUpdates(challenges: List<SimpleStartedChallenge>) {
         checkTierPromotion(challenges)
         checkNewlyCompletedChallenges(challenges)
+    }
+
+    private fun updateUiStates(challenges: List<SimpleStartedChallenge>) {
         updateTierProgress(challenges)
         updateCurrentBestRecord(challenges)
         updateCategoryList(challenges)
     }
 
-    private fun checkTierPromotion(challenges: List<SimpleStartedChallenge>) {
+    private suspend fun checkTierPromotion(challenges: List<SimpleStartedChallenge>) {
         if (uiState.value.tierUpAnimation != null || !tierState.value.isSuccess()) return
         val currentTierBestRecord = challenges
             .filter { it.mode == Mode.CHALLENGE }
@@ -218,14 +219,15 @@ class HomeViewModel @Inject constructor(
 
         val calculatedTier = Tier.getCurrentTier(currentTierBestRecord)
 
-        // 서버에서 받아온 현재 티어보다 높으면 서버로부터 티어 정보를 다시 받아온다
         if (remoteTier != Tier.UNSPECIFIED && calculatedTier > remoteTier) {
+            delay(SYNC_AFTER_LOCAL_UPDATE_DELAY)
             tierTrigger.tryEmit(Unit)
         }
     }
 
-    private fun checkNewlyCompletedChallenges(challenges: List<SimpleStartedChallenge>) {
+    private suspend fun checkNewlyCompletedChallenges(challenges: List<SimpleStartedChallenge>) {
         if (challenges.any { it.isCompleted() }) {
+            delay(SYNC_AFTER_LOCAL_UPDATE_DELAY)
             challengeSyncTrigger.tryEmit(Unit)
         }
     }
@@ -304,7 +306,7 @@ class HomeViewModel @Inject constructor(
         val animation = uiState.value.tierUpAnimation ?: return@launch
 
         _uiState.update { it.copy(tierUpAnimation = null) }
-        delay(TIER_UP_ANIMATION_CLOSE_DELAY) // 연속적인 승급시 중간 상태값(null)이 간혈적으로 씹히는 이슈
+        delay(TIER_UP_ANIMATION_CLOSE_DELAY)
         challengePreferencesRepository.setLocalTier(animation.to)
     }
 
@@ -317,6 +319,10 @@ class HomeViewModel @Inject constructor(
     }
 
     companion object {
+        // 연속적인 승급시 중간 상태값(null)이 간혈적으로 씹히는 이슈 방지
         private const val TIER_UP_ANIMATION_CLOSE_DELAY = 100L
+
+        // 완료된 챌린지 및 티어 승급 감지 시 과도한 서버 동기화 요청 방지
+        private const val SYNC_AFTER_LOCAL_UPDATE_DELAY = 1000L
     }
 }
