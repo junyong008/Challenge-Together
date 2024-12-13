@@ -150,6 +150,7 @@ internal fun ChallengeRankingScreen(
                     onNavigationClick = onBackClick,
                     titleRes = R.string.feature_challengeranking_title,
                     backgroundColor = CustomColorProvider.colorScheme.surface,
+                    modifier = Modifier.padding(vertical = 16.dp),
                 )
                 challengeRanksUiState.challengeRanksOrNull()?.findMyRank()?.let { myRank ->
                     RankingHeader(myChallengeRank = myRank)

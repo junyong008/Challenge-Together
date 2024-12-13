@@ -4,6 +4,8 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -19,18 +21,21 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -134,6 +139,7 @@ internal fun HomeRoute(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -153,6 +159,15 @@ internal fun HomeScreen(
     onCompletedChallengeClick: () -> Unit = {},
     onNotificationClick: () -> Unit = {},
 ) {
+    val lazyListState = rememberLazyListState()
+
+    // 스크롤 위치가 0보다 크면 scrolled = true
+    val scrolled by remember {
+        derivedStateOf {
+            lazyListState.firstVisibleItemIndex > 0 ||
+                lazyListState.firstVisibleItemScrollOffset > 0
+        }
+    }
     var shouldShowSortOrderBottomSheet by remember { mutableStateOf(false) }
 
     val hasError = tierUiState.isError() ||
@@ -191,33 +206,45 @@ internal fun HomeScreen(
         onDismissSortOrder = { shouldShowSortOrderBottomSheet = false },
     )
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(CustomColorProvider.colorScheme.background)
-            .then(
-                if (hasError || isLoading) {
-                    Modifier
-                } else {
-                    Modifier.verticalScroll(rememberScrollState())
-                },
-            ),
+    CompositionLocalProvider(
+        LocalOverscrollConfiguration provides null,
     ) {
-        HomeTopBar(
-            onShowCompleteChallengeClick = onCompletedChallengeClick,
-            onShowNotificationClick = onNotificationClick,
-            hasNewNotification = unViewedNotificationUiState.hasNewNotification(),
-        )
-        HomeBody(
-            uiState = uiState,
-            processAction = processAction,
-            onSortOrderClick = { shouldShowSortOrderBottomSheet = true },
-            onWaitingChallengeClick = onWaitingChallengeClick,
-            onStartedChallengeClick = onStartedChallengeClick,
-            isLoading = isLoading,
-            hasError = hasError,
-            homeContents = homeContents,
-        )
+        LazyColumn(
+            state = lazyListState,
+            modifier = modifier
+                .fillMaxSize()
+                .background(CustomColorProvider.colorScheme.background),
+            userScrollEnabled = !isLoading && !hasError,
+        ) {
+            stickyHeader {
+                HomeTopBar(
+                    scrolled = scrolled,
+                    onShowCompleteChallengeClick = onCompletedChallengeClick,
+                    onShowNotificationClick = onNotificationClick,
+                    hasNewNotification = unViewedNotificationUiState.hasNewNotification(),
+                )
+            }
+
+            item {
+                Box(
+                    modifier = Modifier.then(
+                        if (isLoading || hasError) Modifier.fillParentMaxSize() else Modifier,
+                    ),
+                    contentAlignment = if (isLoading || hasError) Alignment.Center else Alignment.TopStart,
+                ) {
+                    HomeBody(
+                        uiState = uiState,
+                        processAction = processAction,
+                        onSortOrderClick = { shouldShowSortOrderBottomSheet = true },
+                        onWaitingChallengeClick = onWaitingChallengeClick,
+                        onStartedChallengeClick = onStartedChallengeClick,
+                        isLoading = isLoading,
+                        hasError = hasError,
+                        homeContents = homeContents,
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -289,57 +316,67 @@ data class HomeContents(
 
 @Composable
 private fun HomeTopBar(
+    scrolled: Boolean,
     onShowCompleteChallengeClick: () -> Unit,
     onShowNotificationClick: () -> Unit,
     hasNewNotification: Boolean,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = stringResource(id = R.string.feature_home_title),
-            color = CustomColorProvider.colorScheme.onBackgroundMuted,
-            style = MaterialTheme.typography.bodyMedium,
+    Column {
+        Row(
             modifier = Modifier
-                .padding(start = 16.dp)
-                .weight(1f),
-        )
-        Row(modifier = Modifier.padding(end = 8.dp)) {
-            DebouncedIconButton(
-                onClick = onShowCompleteChallengeClick,
-                modifier = Modifier.size(40.dp),
-            ) {
-                Icon(
-                    ImageVector.vectorResource(id = ChallengeTogetherIcons.CompleteChallenge),
-                    contentDescription = stringResource(
-                        id = R.string.feature_home_complete_challenge_description,
-                    ),
-                    tint = CustomColorProvider.colorScheme.onBackgroundMuted,
-                )
-            }
-            DebouncedIconButton(
-                onClick = onShowNotificationClick,
-                modifier = Modifier.size(40.dp),
-            ) {
-                BadgedBox(
-                    badge = {
-                        if (hasNewNotification) {
-                            Badge(containerColor = CustomColorProvider.colorScheme.brand)
-                        }
-                    },
+                .fillMaxWidth()
+                .background(CustomColorProvider.colorScheme.background)
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(id = R.string.feature_home_title),
+                color = CustomColorProvider.colorScheme.onBackgroundMuted,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .weight(1f),
+            )
+            Row(modifier = Modifier.padding(end = 8.dp)) {
+                DebouncedIconButton(
+                    onClick = onShowCompleteChallengeClick,
+                    modifier = Modifier.size(40.dp),
                 ) {
                     Icon(
-                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Bell),
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.CompleteChallenge),
                         contentDescription = stringResource(
-                            id = R.string.feature_home_notification_description,
+                            id = R.string.feature_home_complete_challenge_description,
                         ),
                         tint = CustomColorProvider.colorScheme.onBackgroundMuted,
                     )
                 }
+                DebouncedIconButton(
+                    onClick = onShowNotificationClick,
+                    modifier = Modifier.size(40.dp),
+                ) {
+                    BadgedBox(
+                        badge = {
+                            if (hasNewNotification) {
+                                Badge(containerColor = CustomColorProvider.colorScheme.brand)
+                            }
+                        },
+                    ) {
+                        Icon(
+                            ImageVector.vectorResource(id = ChallengeTogetherIcons.Bell),
+                            contentDescription = stringResource(
+                                id = R.string.feature_home_notification_description,
+                            ),
+                            tint = CustomColorProvider.colorScheme.onBackgroundMuted,
+                        )
+                    }
+                }
             }
+        }
+        if (scrolled) {
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = CustomColorProvider.colorScheme.divider,
+            )
         }
     }
 }

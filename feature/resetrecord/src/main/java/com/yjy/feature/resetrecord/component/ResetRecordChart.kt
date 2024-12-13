@@ -2,11 +2,17 @@ package com.yjy.feature.resetrecord.component
 
 import android.graphics.Paint
 import android.graphics.Rect
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateOffsetAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,8 +20,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
@@ -47,6 +55,11 @@ import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.DEFAULT_CA
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.DEFAULT_CANVAS_PADDING
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.GRID_LINE_COUNT
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.GRID_LINE_STROKE_WIDTH
+import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.RIPPLE_EFFECT_DURATION
+import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.RIPPLE_EFFECT_INIT_ALPHA
+import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.RIPPLE_EFFECT_INIT_SCALE
+import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.RIPPLE_EFFECT_TARGET_ALPHA
+import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.RIPPLE_EFFECT_TARGET_SCALE
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.SELECTION_LINE_ALPHA
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.SELECTION_LINE_STROKE_WIDTH
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.TEXT_BASELINE_ADJUSTMENT
@@ -85,6 +98,13 @@ private object ResetRecordChartDefaults {
     // Corner Radius
     const val VALUE_BOX_CORNER_RADIUS = 8
     const val DATE_BOX_CORNER_RADIUS = 4
+
+    // Ripple
+    const val RIPPLE_EFFECT_DURATION = 800
+    const val RIPPLE_EFFECT_INIT_SCALE = 1f
+    const val RIPPLE_EFFECT_TARGET_SCALE = 2f
+    const val RIPPLE_EFFECT_INIT_ALPHA = 0.8f
+    const val RIPPLE_EFFECT_TARGET_ALPHA = 0f
 }
 
 @Composable
@@ -92,6 +112,10 @@ internal fun ResetRecordChart(
     data: List<LocalDateTime>,
     firstRecordInSeconds: Long,
     modifier: Modifier = Modifier,
+    selectedIndex: Int? = null,
+    onDateSelected: (Int) -> Unit = {},
+    onDragStart: () -> Unit = {},
+    onDragEnd: () -> Unit = {},
     valueSuffix: String = "",
     lineColor: Color = CustomColorProvider.colorScheme.brandDim,
     donutBackgroundColor: Color = CustomColorProvider.colorScheme.surface,
@@ -116,9 +140,12 @@ internal fun ResetRecordChart(
     enableAnimation: Boolean = true,
 ) {
     val context = LocalContext.current
-    var selectedIndex by remember { mutableStateOf<Int?>(null) }
     var points by remember { mutableStateOf<List<Offset>>(emptyList()) }
-    var isFirstRender by remember { mutableStateOf(true) }
+    var lastDragPoint by remember { mutableStateOf<Int?>(null) }
+    var isFirstRender by rememberSaveable { mutableStateOf(true) }
+    var selectedIndexState by rememberSaveable(selectedIndex) {
+        mutableIntStateOf(selectedIndex ?: (data.size - 1))
+    }
 
     val selectedPoint = if (enableAnimation && !isFirstRender) {
         animateOffsetAsState(
@@ -133,12 +160,43 @@ internal fun ResetRecordChart(
         points.getOrNull(selectedIndex ?: 0) ?: Offset.Zero
     }
 
+    // 초기 렌더링 시 마지막 데이터 포인트 선택
     LaunchedEffect(points) {
         if (isFirstRender && points.isNotEmpty()) {
-            selectedIndex = data.size - 1
+            selectedIndexState = data.size - 1
+            onDateSelected(selectedIndexState)
             isFirstRender = false
         }
     }
+
+    // 외부에서 selectedIndex가 변경될 때 처리
+    LaunchedEffect(selectedIndex) {
+        if (!isFirstRender && selectedIndex != null) {
+            selectedIndexState = selectedIndex
+        }
+    }
+
+    val infiniteTransition = rememberInfiniteTransition(label = "Ripple Transition")
+
+    val rippleScale by infiniteTransition.animateFloat(
+        initialValue = RIPPLE_EFFECT_INIT_SCALE,
+        targetValue = RIPPLE_EFFECT_TARGET_SCALE,
+        animationSpec = infiniteRepeatable(
+            animation = tween(RIPPLE_EFFECT_DURATION),
+            repeatMode = RepeatMode.Restart,
+        ),
+        label = "Ripple Scale",
+    )
+
+    val rippleAlpha by infiniteTransition.animateFloat(
+        initialValue = RIPPLE_EFFECT_INIT_ALPHA,
+        targetValue = RIPPLE_EFFECT_TARGET_ALPHA,
+        animationSpec = infiniteRepeatable(
+            animation = tween(RIPPLE_EFFECT_DURATION),
+            repeatMode = RepeatMode.Restart,
+        ),
+        label = "Ripple Alpha",
+    )
 
     // 날짜 포맷팅
     val currentYear = remember { LocalDateTime.now().year }
@@ -176,16 +234,37 @@ internal fun ResetRecordChart(
             .padding(DEFAULT_CANVAS_PADDING.dp)
             .pointerInput(Unit) {
                 awaitEachGesture {
+                    // 터치 다운 이벤트
+                    val down = awaitFirstDown()
+                    onDragStart()
+
+                    val initialPoint = points.indexOfMinBy { point ->
+                        abs(point.x - down.position.x)
+                    }
+                    lastDragPoint = initialPoint
+                    if (initialPoint != null) {
+                        onDateSelected(initialPoint)
+                    }
+
+                    // 드래그 이벤트
                     do {
                         val event = awaitPointerEvent()
                         val position = event.changes.first().position
 
-                        // 가장 가까운 포인트 찾기
-                        val index = points.indexOfMinBy { point ->
+                        val nearestPoint = points.indexOfMinBy { point ->
                             abs(point.x - position.x)
                         }
-                        selectedIndex = index
+
+                        // 가장 가까운 포인트가 변경되었을 때만 콜백 호출
+                        if (nearestPoint != null && nearestPoint != lastDragPoint) {
+                            lastDragPoint = nearestPoint
+                            onDateSelected(nearestPoint)
+                        }
                     } while (event.changes.any { it.pressed })
+
+                    // 드래그 종료
+                    onDragEnd()
+                    lastDragPoint = null
                 }
             },
     ) {
@@ -418,6 +497,14 @@ internal fun ResetRecordChart(
                 selectedPoint.x,
                 rectTop + rectHeight - rectPadding,
                 valueTextPaint,
+            )
+
+            // 도넛 뒤의 리플 효과
+            drawCircle(
+                color = lineColor.copy(alpha = rippleAlpha),
+                radius = endPointRadius.toPx() * rippleScale,
+                center = selectedPoint,
+                style = Stroke(width = lineWidth.toPx() / 2),
             )
 
             // 도넛 모양

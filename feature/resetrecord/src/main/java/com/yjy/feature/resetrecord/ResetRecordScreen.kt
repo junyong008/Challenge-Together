@@ -14,15 +14,25 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -43,6 +53,7 @@ import com.yjy.common.ui.preview.ResetRecordPreviewParameterProvider
 import com.yjy.feature.resetrecord.component.ResetRecordChart
 import com.yjy.feature.resetrecord.model.ResetRecordsUiState
 import com.yjy.model.challenge.ResetRecord
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun ResetRecordRoute(
@@ -113,6 +124,57 @@ private fun ResetRecordBody(
     val chartData = resetRecords.sortedBy { it.resetDateTime }
     val listData = resetRecords.sortedByDescending { it.resetDateTime }
 
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+    val scrollState by remember {
+        derivedStateOf {
+            Pair(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset)
+        }
+    }
+
+    var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
+    var shouldSnap by rememberSaveable { mutableStateOf(false) }
+    var itemHeight by remember { mutableIntStateOf(0) }
+    var isDraggingChart by remember { mutableStateOf(false) }
+
+    val currentVisibleIndex by remember {
+        derivedStateOf {
+            val firstVisibleItemOffset = listState.firstVisibleItemScrollOffset
+            val firstVisibleIndex = listState.firstVisibleItemIndex
+
+            if (itemHeight > 0 && firstVisibleItemOffset > itemHeight / 2) {
+                firstVisibleIndex + 1
+            } else {
+                firstVisibleIndex
+            }
+        }
+    }
+
+    LaunchedEffect(currentVisibleIndex) {
+        if (!isDraggingChart) {
+            selectedIndex = currentVisibleIndex
+        }
+    }
+
+    LaunchedEffect(scrollState) {
+        if (listState.isScrollInProgress) {
+            shouldSnap = true
+        }
+    }
+
+    LaunchedEffect(listState.isScrollInProgress) {
+        if (!listState.isScrollInProgress && !isDraggingChart && shouldSnap) {
+            shouldSnap = false
+            coroutineScope.launch {
+                listState.animateScrollToItem(index = selectedIndex)
+            }
+        }
+    }
+
+    val itemHeightModifier = Modifier.onGloballyPositioned { coordinates ->
+        itemHeight = coordinates.size.height
+    }
+
     Column(modifier = modifier.fillMaxSize()) {
         ResetRecordChart(
             data = chartData.map { it.resetDateTime },
@@ -122,9 +184,27 @@ private fun ResetRecordBody(
                 .fillMaxWidth()
                 .background(CustomColorProvider.colorScheme.surface)
                 .padding(start = 12.dp, end = 18.dp, top = 48.dp, bottom = 20.dp),
+            selectedIndex = resetRecords.size - 1 - selectedIndex,
+            onDateSelected = { newChartIndex ->
+                val newListIndex = listData.size - 1 - newChartIndex
+                selectedIndex = newListIndex
+                coroutineScope.launch {
+                    listState.scrollToItem(newListIndex)
+                }
+            },
+            onDragStart = { isDraggingChart = true },
+            onDragEnd = {
+                coroutineScope.launch {
+                    listState.animateScrollToItem(index = selectedIndex)
+                }.invokeOnCompletion {
+                    isDraggingChart = false
+                }
+            },
         )
+
         Spacer(modifier = Modifier.height(32.dp))
         LazyColumn(
+            state = listState,
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.padding(horizontal = 16.dp),
         ) {
@@ -132,7 +212,11 @@ private fun ResetRecordBody(
                 items = listData,
                 key = { it.id },
             ) { record ->
-                RecordItem(record = record)
+                RecordItem(
+                    record = record,
+                    isSelected = listData.indexOf(record) == selectedIndex,
+                    modifier = itemHeightModifier,
+                )
             }
             item {
                 Spacer(modifier = Modifier.height(32.dp))
@@ -142,11 +226,19 @@ private fun ResetRecordBody(
 }
 
 @Composable
-private fun RecordItem(record: ResetRecord) {
-    Column {
+private fun RecordItem(
+    record: ResetRecord,
+    isSelected: Boolean = false,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
         Text(
             text = formatLocalDateTime(record.resetDateTime),
-            style = MaterialTheme.typography.labelMedium,
+            style = if (isSelected) {
+                MaterialTheme.typography.bodyMedium
+            } else {
+                MaterialTheme.typography.labelMedium
+            },
             color = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -154,7 +246,13 @@ private fun RecordItem(record: ResetRecord) {
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(MaterialTheme.shapes.medium)
-                .background(CustomColorProvider.colorScheme.surface)
+                .background(
+                    if (isSelected) {
+                        CustomColorProvider.colorScheme.brandBright.copy(alpha = 0.4f)
+                    } else {
+                        CustomColorProvider.colorScheme.surface
+                    },
+                )
                 .padding(16.dp),
         ) {
             Row(

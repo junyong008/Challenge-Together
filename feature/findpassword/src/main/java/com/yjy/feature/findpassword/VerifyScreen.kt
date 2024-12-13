@@ -107,7 +107,7 @@ internal fun VerifyScreen(
     Scaffold(
         topBar = {
             ChallengeTogetherTopAppBar(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
                 onNavigationClick = onBackClick,
             )
         },

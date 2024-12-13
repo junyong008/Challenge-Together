@@ -3,8 +3,10 @@ package com.yjy.common.designsystem.component
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,61 +35,72 @@ fun ChallengeTogetherTopAppBar(
     @StringRes titleRes: Int? = null,
     rightContent: @Composable (() -> Unit)? = null,
     onNavigationClick: () -> Unit = {},
+    shouldShowDivider: Boolean = false,
     backgroundColor: Color = CustomColorProvider.colorScheme.background,
     contentColor: Color = CustomColorProvider.colorScheme.onBackground,
 ) {
     val density = LocalDensity.current
 
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(backgroundColor)
-            .padding(top = 32.dp, bottom = 32.dp),
-    ) {
+    Column {
         Box(
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .padding(start = 4.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .background(backgroundColor)
+                .padding(vertical = 16.dp),
         ) {
-            DebouncedIconButton(
-                onClick = { onNavigationClick() },
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .padding(start = 4.dp),
             ) {
-                Icon(
-                    ImageVector.vectorResource(id = ChallengeTogetherIcons.Back),
-                    contentDescription = stringResource(
-                        id = R.string.common_designsystem_app_bar_back,
-                    ),
-                    tint = contentColor,
+                DebouncedIconButton(
+                    onClick = { onNavigationClick() },
+                ) {
+                    Icon(
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Back),
+                        contentDescription = stringResource(
+                            id = R.string.common_designsystem_app_bar_back,
+                        ),
+                        tint = contentColor,
+                    )
+                }
+            }
+
+            val rightContentWidth = remember { mutableFloatStateOf(0f) }
+            rightContent?.let {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .onGloballyPositioned { coordinates ->
+                            rightContentWidth.floatValue = coordinates.size.width.toFloat()
+                        },
+                ) {
+                    it()
+                }
+            }
+
+            titleRes?.let {
+                val horizontalPadding = with(density) {
+                    maxOf(48.dp.toPx(), rightContentWidth.floatValue).toDp()
+                }
+
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(horizontal = horizontalPadding),
+                    text = stringResource(id = it),
+                    textAlign = TextAlign.Center,
+                    color = contentColor,
+                    style = MaterialTheme.typography.titleMedium,
                 )
             }
         }
 
-        val rightContentWidth = remember { mutableFloatStateOf(0f) }
-        rightContent?.let {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .onGloballyPositioned { coordinates ->
-                        rightContentWidth.floatValue = coordinates.size.width.toFloat()
-                    },
-            ) {
-                it()
-            }
-        }
-
-        titleRes?.let {
-            val horizontalPadding = with(density) {
-                maxOf(48.dp.toPx(), rightContentWidth.floatValue).toDp()
-            }
-
-            Text(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(horizontal = horizontalPadding),
-                text = stringResource(id = it),
-                textAlign = TextAlign.Center,
-                color = contentColor,
-                style = MaterialTheme.typography.titleMedium,
+        if (shouldShowDivider) {
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = CustomColorProvider.colorScheme.divider,
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }

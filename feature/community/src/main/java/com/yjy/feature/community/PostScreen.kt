@@ -232,6 +232,7 @@ internal fun PostScreen(
             ChallengeTogetherTopAppBar(
                 onNavigationClick = onBackClick,
                 titleRes = R.string.feature_community_post_title,
+                shouldShowDivider = true,
                 rightContent = {
                     val detail = postDetail.postDetailOrNull() ?: return@ChallengeTogetherTopAppBar
                     if (detail.post.isAuthor || detail.comments.any { it.isAuthor }) {
@@ -373,6 +374,7 @@ internal fun PostScreen(
                     .padding(padding)
                     .verticalScroll(scrollState),
             ) {
+                Spacer(modifier = Modifier.height(16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     ProfileSection(
                         user = post.writer,

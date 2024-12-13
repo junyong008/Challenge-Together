@@ -64,7 +64,12 @@ internal fun NotificationSettingScreen(
     val isAllEnabled = NotificationSettingFlags.isEnabled(settings, NotificationSettingFlags.ALL)
 
     Scaffold(
-        topBar = { ChallengeTogetherTopAppBar(onNavigationClick = onBackClick) },
+        topBar = {
+            ChallengeTogetherTopAppBar(
+                onNavigationClick = onBackClick,
+                modifier = Modifier.padding(vertical = 16.dp),
+            )
+        },
         containerColor = CustomColorProvider.colorScheme.background,
         modifier = modifier.consumeWindowInsets(WindowInsets.navigationBars),
     ) { padding ->

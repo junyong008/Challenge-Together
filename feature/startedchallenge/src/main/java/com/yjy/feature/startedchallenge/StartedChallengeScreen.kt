@@ -7,6 +7,8 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,9 +22,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -30,6 +32,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -41,9 +45,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -129,6 +133,7 @@ internal fun StartedChallengeRoute(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun StartedChallengeScreen(
     modifier: Modifier = Modifier,
@@ -148,6 +153,19 @@ internal fun StartedChallengeScreen(
     var shouldShowResetBottomSheet by rememberSaveable { mutableStateOf(false) }
     var shouldShowMenuBottomSheet by remember { mutableStateOf(false) }
     var shouldShowDeleteConfirmDialog by remember { mutableStateOf(false) }
+
+    val density = LocalDensity.current
+    val lazyListState = rememberLazyListState()
+    val isSticky by remember {
+        derivedStateOf {
+            val firstItemHeight = with(density) { 16.dp.toPx() }
+            lazyListState.firstVisibleItemIndex > 0 ||
+                (
+                    lazyListState.firstVisibleItemIndex == 0 &&
+                        lazyListState.firstVisibleItemScrollOffset > firstItemHeight
+                    )
+        }
+    }
 
     val errorMessages = mapOf(
         StartedChallengeUiEvent.LoadFailure.NotFound to stringResource(
@@ -251,69 +269,113 @@ internal fun StartedChallengeScreen(
             )
         }
 
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .background(CustomColorProvider.colorScheme.background)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        CompositionLocalProvider(
+            LocalOverscrollConfiguration provides null,
         ) {
-            ChallengeTogetherTopAppBar(
-                backgroundColor = Color.Transparent,
-                onNavigationClick = onBackClick,
-                rightContent = {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        CategoryIcon(category = challenge.category)
-                        MenuButton(onClick = { shouldShowMenuBottomSheet = true })
-                    }
-                },
-            )
-            TitleWithDescription(
-                title = challenge.title,
-                description = challenge.description,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .align(Alignment.Start),
-            )
-            Spacer(modifier = Modifier.height(50.dp))
-            ChallengeImage(mode = challenge.mode)
-            Spacer(modifier = Modifier.height(40.dp))
-            if (challenge.targetDays is TargetDays.Fixed) {
-                TargetProgress(
-                    currentSeconds = challenge.currentRecordInSeconds,
-                    targetDays = challenge.targetDays.toDays(),
-                    modifier = Modifier.padding(horizontal = 50.dp),
-                )
-                Spacer(modifier = Modifier.height(20.dp))
+            LazyColumn(
+                state = lazyListState,
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(CustomColorProvider.colorScheme.background),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                item {
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+                stickyHeader {
+                    ChallengeTogetherTopAppBar(
+                        onNavigationClick = onBackClick,
+                        shouldShowDivider = isSticky,
+                        rightContent = {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                CategoryIcon(category = challenge.category)
+                                MenuButton(onClick = { shouldShowMenuBottomSheet = true })
+                            }
+                        },
+                    )
+                }
+
+                item {
+                    ChallengeBody(
+                        challenge = challenge,
+                        isResetting = uiState.isResetting,
+                        onResetButtonClick = { shouldShowResetBottomSheet = true },
+                        onResetRecordClick = { onResetRecordClick(challenge.id) },
+                        onBoardClick = { challengeId, isEditable ->
+                            onBoardClick(challengeId, isEditable)
+                        },
+                        onRankingClick = { onRankingClick(challenge.id) },
+                    )
+                }
             }
-            CurrentRecord(
-                currentRecordInSeconds = challenge.currentRecordInSeconds,
+        }
+    }
+}
+
+@Composable
+private fun ChallengeBody(
+    challenge: DetailedStartedChallenge,
+    isResetting: Boolean,
+    onResetButtonClick: () -> Unit,
+    onResetRecordClick: (challengeId: Int) -> Unit,
+    onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit,
+    onRankingClick: (challengeId: Int) -> Unit,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Spacer(modifier = Modifier.height(16.dp))
+        TitleWithDescription(
+            title = challenge.title,
+            description = challenge.description,
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .align(Alignment.Start),
+        )
+        Spacer(modifier = Modifier.height(50.dp))
+        ChallengeImage(mode = challenge.mode)
+        Spacer(modifier = Modifier.height(40.dp))
+        if (challenge.targetDays is TargetDays.Fixed) {
+            TargetProgress(
+                currentSeconds = challenge.currentRecordInSeconds,
+                targetDays = challenge.targetDays.toDays(),
                 modifier = Modifier.padding(horizontal = 50.dp),
             )
-            if (challenge.currentRecordInSeconds < challenge.targetDays.toDays() * SECONDS_PER_DAY) {
-                Spacer(modifier = Modifier.height(20.dp))
-                ResetButton(
-                    onClick = { shouldShowResetBottomSheet = true },
-                    enabled = !uiState.isResetting,
-                )
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            ChallengeButtons(
-                rank = challenge.rank,
-                currentParticipantCounts = challenge.currentParticipantCounts,
-                onResetRecordClick = { onResetRecordClick(challenge.id) },
-                onBoardClick = { onBoardClick(challenge.id, challenge.currentParticipantCounts == 1) },
-                onRankingClick = { onRankingClick(challenge.id) },
-                modifier = Modifier.padding(horizontal = 16.dp),
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-            ChallengeInfos(
-                mode = challenge.mode,
-                startDateTime = challenge.startDateTime,
-                recentResetDateTime = challenge.recentResetDateTime,
-            )
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(20.dp))
         }
+        CurrentRecord(
+            currentRecordInSeconds = challenge.currentRecordInSeconds,
+            modifier = Modifier.padding(horizontal = 50.dp),
+        )
+        if (challenge.currentRecordInSeconds < challenge.targetDays.toDays() * SECONDS_PER_DAY) {
+            Spacer(modifier = Modifier.height(20.dp))
+            ResetButton(
+                onClick = onResetButtonClick,
+                enabled = !isResetting,
+            )
+        }
+        Spacer(modifier = Modifier.height(32.dp))
+        ChallengeButtons(
+            rank = challenge.rank,
+            currentParticipantCounts = challenge.currentParticipantCounts,
+            onResetRecordClick = { onResetRecordClick(challenge.id) },
+            onBoardClick = {
+                onBoardClick(
+                    challenge.id,
+                    challenge.currentParticipantCounts == 1,
+                )
+            },
+            onRankingClick = { onRankingClick(challenge.id) },
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
+        Spacer(modifier = Modifier.height(32.dp))
+        ChallengeInfos(
+            mode = challenge.mode,
+            startDateTime = challenge.startDateTime,
+            recentResetDateTime = challenge.recentResetDateTime,
+        )
+        Spacer(modifier = Modifier.height(32.dp))
     }
 }
 

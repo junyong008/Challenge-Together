@@ -1,5 +1,7 @@
 package com.yjy.feature.waitingchallenge
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -15,9 +17,9 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -25,8 +27,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,6 +41,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
@@ -333,6 +339,7 @@ private fun GradientBackground(modifier: Modifier = Modifier) {
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChallengeBody(
     challenge: DetailedWaitingChallenge,
@@ -343,32 +350,74 @@ private fun ChallengeBody(
     modifier: Modifier = Modifier,
 ) {
     val clipboardManager = LocalClipboardManager.current
-
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(CustomColorProvider.colorScheme.background)
-            .verticalScroll(rememberScrollState()),
-    ) {
-        ChallengeTogetherTopAppBar(
-            backgroundColor = Color.Transparent,
-            onNavigationClick = onBackClick,
-            rightContent = {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    InfoText(
-                        challengeId = challenge.id,
-                        isPrivate = challenge.password.isNotEmpty(),
-                        onPrivateClick = {
-                            clipboardManager.setText(AnnotatedString(challenge.password))
-                            processAction(WaitingChallengeUiAction.OnPasswordCopy)
-                        },
+    val density = LocalDensity.current
+    val lazyListState = rememberLazyListState()
+    val isSticky by remember {
+        derivedStateOf {
+            val firstItemHeight = with(density) { 16.dp.toPx() }
+            lazyListState.firstVisibleItemIndex > 0 ||
+                (
+                    lazyListState.firstVisibleItemIndex == 0 &&
+                        lazyListState.firstVisibleItemScrollOffset > firstItemHeight
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    CategoryIcon(category = challenge.category)
-                    Spacer(modifier = Modifier.width(16.dp))
-                }
-            },
-        )
+        }
+    }
+
+    CompositionLocalProvider(
+        LocalOverscrollConfiguration provides null,
+    ) {
+        LazyColumn(
+            state = lazyListState,
+            modifier = modifier
+                .fillMaxSize()
+                .background(CustomColorProvider.colorScheme.background),
+        ) {
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            stickyHeader {
+                ChallengeTogetherTopAppBar(
+                    onNavigationClick = onBackClick,
+                    shouldShowDivider = isSticky,
+                    rightContent = {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            InfoText(
+                                challengeId = challenge.id,
+                                isPrivate = challenge.password.isNotEmpty(),
+                                onPrivateClick = {
+                                    clipboardManager.setText(AnnotatedString(challenge.password))
+                                    processAction(WaitingChallengeUiAction.OnPasswordCopy)
+                                },
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            CategoryIcon(category = challenge.category)
+                            Spacer(modifier = Modifier.width(16.dp))
+                        }
+                    },
+                )
+            }
+
+            item {
+                ChallengeContent(
+                    challenge = challenge,
+                    onMenuClick = onMenuClick,
+                    onBoardClick = onBoardClick,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ChallengeContent(
+    challenge: DetailedWaitingChallenge,
+    onMenuClick: () -> Unit,
+    onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = challenge.title,
             style = MaterialTheme.typography.displaySmall,
@@ -401,6 +450,7 @@ private fun ChallengeBody(
                 modifier = Modifier.padding(top = 4.dp, end = 4.dp),
             )
         }
+        Spacer(modifier = Modifier.height(16.dp))
         TargetDaySection(
             targetDays = challenge.targetDays,
             modifier = Modifier.padding(horizontal = 16.dp),
