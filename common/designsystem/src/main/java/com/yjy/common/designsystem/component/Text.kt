@@ -1,6 +1,9 @@
 package com.yjy.common.designsystem.component
 
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -11,14 +14,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
@@ -27,6 +29,9 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
@@ -85,11 +90,28 @@ fun SelectableText(
     textAlign: TextAlign = TextAlign.Start,
     onTextLayout: (TextLayoutResult) -> Unit = {},
 ) {
-    val focusRequester = remember { FocusRequester() }
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     var isFocused by remember { mutableStateOf(false) }
+
+    val androidClipboardManager = remember {
+        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    }
 
     fun shouldIgnore(keyEvent: KeyEvent): Boolean {
         return isFocused && keyEvent.key == Key.Back && keyEvent.type == KeyEventType.KeyUp
+    }
+
+    DisposableEffect(androidClipboardManager) {
+        val listener = ClipboardManager.OnPrimaryClipChangedListener {
+            if (isFocused) focusManager.clearFocus()
+        }
+
+        androidClipboardManager.addPrimaryClipChangedListener(listener)
+
+        onDispose {
+            androidClipboardManager.removePrimaryClipChangedListener(listener)
+        }
     }
 
     CompositionLocalProvider(
@@ -102,8 +124,14 @@ fun SelectableText(
             SelectionContainer(
                 modifier = Modifier
                     .focusable()
-                    .focusRequester(focusRequester)
                     .onFocusChanged { isFocused = it.isFocused }
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onTap = {
+                                if (isFocused) focusManager.clearFocus()
+                            },
+                        )
+                    }
                     .onPreviewKeyEvent { shouldIgnore(it) },
             ) {
                 Text(
