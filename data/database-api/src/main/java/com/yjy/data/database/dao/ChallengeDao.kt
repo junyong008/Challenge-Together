@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Update
 import com.yjy.data.database.model.ChallengeEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -15,8 +14,8 @@ interface ChallengeDao {
     @Query("SELECT * FROM challenges ORDER BY id DESC")
     fun getAll(): Flow<List<ChallengeEntity>>
 
-    @Update
-    suspend fun update(challenge: ChallengeEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(challenge: ChallengeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(challenges: List<ChallengeEntity>)
