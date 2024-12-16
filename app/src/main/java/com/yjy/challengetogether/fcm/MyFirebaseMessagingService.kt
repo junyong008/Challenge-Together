@@ -2,6 +2,7 @@ package com.yjy.challengetogether.fcm
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.yjy.challengetogether.di.FcmEntryPoint
 import com.yjy.data.user.api.UserRepository
 import com.yjy.model.common.notification.Notification
 import com.yjy.model.common.notification.NotificationSettingFlags
