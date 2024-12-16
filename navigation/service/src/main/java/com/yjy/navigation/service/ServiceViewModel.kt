@@ -9,11 +9,12 @@ import com.yjy.platform.network.NetworkMonitor
 import com.yjy.platform.time.TimeMonitor
 import com.yjy.platform.worker.manager.WorkerManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -46,21 +47,32 @@ class ServiceViewModel @Inject constructor(
             initialValue = false,
         )
 
-    val sessionExpireEvent = combine(
+    val isLoggedIn = authRepository.isLoggedIn
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = true,
+        )
+
+    private val _sessionExpiredEvent = Channel<Unit>()
+    val sessionExpiredEvent = _sessionExpiredEvent.receiveAsFlow()
+
+    val isSessionExpired = combine(
         authRepository.isLoggedIn,
         authRepository.isSessionTokenAvailable,
     ) { loggedIn, tokenAvailable ->
         loggedIn && !tokenAvailable
     }.onEach { isExpired ->
         if (isExpired) {
-            logoutUseCase()
+            _sessionExpiredEvent.send(Unit)
             workerManager.stopPeriodicCheck()
+            logoutUseCase()
         } else {
             workerManager.startPeriodicCheck()
         }
-    }.shareIn(
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        replay = 1,
+        initialValue = false,
     )
 }
