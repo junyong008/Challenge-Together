@@ -1,0 +1,19 @@
+<resources>
+    <string name="platform_widget_challenge_list_widget_name">Challenge List</string>
+    <string name="platform_widget_challenge_tall_widget_name">Challenge Card</string>
+    <string name="platform_widget_challenge_wide_widget_name">Challenge Card</string>
+    <string name="platform_widget_challenge_simple_widget_name">Simple Challenge Card</string>
+    <string name="platform_widget_no_challenge">No Challenge</string>
+    <string name="platform_widget_no_challenges">No Challenges</string>
+    <string name="platform_widget_no_challenges_description">No challenges available.\nOpen the app to add your first challenge and start your journey!</string>
+    <string name="platform_widget_time_d">D</string>
+    <string name="platform_widget_time_day">d</string>
+    <string name="platform_widget_time_hour">h</string>
+    <string name="platform_widget_progress_description">Progress</string>
+    <string name="platform_widget_category_icon_description">Category Icon</string>
+    <string name="platform_widget_settings">Widget Settings</string>
+    <string name="platform_widget_opacity">Opacity</string>
+    <string name="platform_widget_cancel">Cancel</string>
+    <string name="platform_widget_confirm">Confirm</string>
+    <string name="platform_widget_select">Select</string>
+</resources>

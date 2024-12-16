@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -50,6 +51,7 @@ import com.yjy.navigation.service.navigation.MainTab
 import com.yjy.navigation.service.navigation.ServiceNavController
 import com.yjy.navigation.service.navigation.ServiceNavHost
 import com.yjy.navigation.service.navigation.rememberServiceNavController
+import com.yjy.platform.widget.WidgetManager
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -62,8 +64,12 @@ internal fun ServiceScreen(
     navigator: ServiceNavController = rememberServiceNavController(),
     snackbarScope: CoroutineScope = rememberCoroutineScope(),
 ) {
+    val context = LocalContext.current
     val isOffline by viewModel.isOffline.collectAsStateWithLifecycle()
+    val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
     val isManualTime by viewModel.isManualTime.collectAsStateWithLifecycle()
+    val isSessionExpired by viewModel.isSessionExpired.collectAsStateWithLifecycle()
+    val sessionExpiredMessage = stringResource(id = R.string.navigation_service_session_expired)
 
     val snackbarHostState = remember { SnackbarHostState() }
     val showSnackbar: (SnackbarType, String) -> Unit = { type, message ->
@@ -77,10 +83,13 @@ internal fun ServiceScreen(
         }
     }
 
-    val sessionExpiredMessage = stringResource(id = R.string.navigation_service_session_expired)
-    ObserveAsEvents(flow = viewModel.sessionExpireEvent) { hasExpired ->
-        if (hasExpired) {
-            onShowToast(sessionExpiredMessage)
+    ObserveAsEvents(flow = viewModel.sessionExpiredEvent) {
+        onShowToast(sessionExpiredMessage)
+    }
+
+    LaunchedEffect(isLoggedIn, isSessionExpired) {
+        if (!isLoggedIn || isSessionExpired) {
+            WidgetManager.updateAllWidgets(context)
             navigateToAuth()
         }
     }

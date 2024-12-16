@@ -35,6 +35,7 @@ import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,6 +47,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
@@ -98,6 +100,7 @@ import com.yjy.model.challenge.SimpleWaitingChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.common.Tier
+import com.yjy.platform.widget.WidgetManager
 
 @Composable
 internal fun HomeRoute(
@@ -159,15 +162,15 @@ internal fun HomeScreen(
     onCompletedChallengeClick: () -> Unit = {},
     onNotificationClick: () -> Unit = {},
 ) {
+    val context = LocalContext.current
     val lazyListState = rememberLazyListState()
-
-    // 스크롤 위치가 0보다 크면 scrolled = true
     val scrolled by remember {
         derivedStateOf {
             lazyListState.firstVisibleItemIndex > 0 ||
                 lazyListState.firstVisibleItemScrollOffset > 0
         }
     }
+
     var shouldShowSortOrderBottomSheet by remember { mutableStateOf(false) }
 
     val hasError = tierUiState.isError() ||
@@ -191,6 +194,10 @@ internal fun HomeScreen(
         categories = uiState.categories,
         sortOrder = sortOrder,
     )
+
+    LaunchedEffect(startedChallenges, sortOrder) {
+        WidgetManager.updateAllWidgets(context)
+    }
 
     HandleHomeDialogs(
         tierUpAnimation = uiState.tierUpAnimation,

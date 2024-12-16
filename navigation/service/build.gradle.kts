@@ -24,6 +24,7 @@ dependencies {
 
         projects.model,
 
+        projects.platform.widget,
         projects.platform.worker,
         projects.platform.network,
         projects.platform.time,

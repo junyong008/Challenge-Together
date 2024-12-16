@@ -17,6 +17,8 @@ dependencies {
 
         projects.domain,
 
+        projects.platform.widget,
+
         projects.data.challengeApi,
     )
 

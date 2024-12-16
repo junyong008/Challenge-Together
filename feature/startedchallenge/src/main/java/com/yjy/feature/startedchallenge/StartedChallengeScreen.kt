@@ -33,6 +33,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -47,6 +48,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -94,6 +96,7 @@ import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.TargetDays
+import com.yjy.platform.widget.WidgetManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import java.time.LocalDate
@@ -155,6 +158,7 @@ internal fun StartedChallengeScreen(
     var shouldShowDeleteConfirmDialog by remember { mutableStateOf(false) }
 
     val density = LocalDensity.current
+    val context = LocalContext.current
     val lazyListState = rememberLazyListState()
     val isSticky by remember {
         derivedStateOf {
@@ -213,6 +217,10 @@ internal fun StartedChallengeScreen(
             StartedChallengeUiEvent.DeleteFailure ->
                 onShowSnackbar(SnackbarType.ERROR, deleteFailureMessage)
         }
+    }
+
+    LaunchedEffect(challengeDetail) {
+        WidgetManager.updateAllWidgets(context)
     }
 
     if (challengeDetail.isLoading() || uiState.isDeleting) {

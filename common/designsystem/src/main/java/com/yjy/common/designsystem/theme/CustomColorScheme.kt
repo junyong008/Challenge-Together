@@ -13,6 +13,11 @@ object CustomColorProvider {
         get() = LocalCustomColorScheme.current
 }
 
+object WidgetColorProvider {
+    val lightColorScheme: CustomColorScheme = customLightColorScheme()
+    val darkColorScheme: CustomColorScheme = customDarkColorScheme()
+}
+
 internal val LocalCustomColorScheme = staticCompositionLocalOf { customLightColorScheme() }
 
 @Immutable
