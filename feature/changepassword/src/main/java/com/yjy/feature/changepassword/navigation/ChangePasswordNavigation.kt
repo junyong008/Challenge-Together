@@ -18,7 +18,7 @@ fun NavController.navigateToChangePassword(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.changePasswordScreen(
     onBackClick: () -> Unit,
-    onPasswordChanged: () -> Unit,
+    onPasswordChanged: () -> Unit = {},
     onShowToast: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {

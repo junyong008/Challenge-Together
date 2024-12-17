@@ -6,6 +6,7 @@ import com.yjy.common.core.constants.AuthConst.MAX_PASSWORD_LENGTH
 import com.yjy.common.core.constants.AuthConst.MIN_PASSWORD_LENGTH
 import com.yjy.common.network.handleNetworkResult
 import com.yjy.data.auth.api.AuthRepository
+import com.yjy.domain.LogoutUseCase
 import com.yjy.feature.changepassword.model.ChangePasswordUiAction
 import com.yjy.feature.changepassword.model.ChangePasswordUiEvent
 import com.yjy.feature.changepassword.model.ChangePasswordUiState
@@ -22,6 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChangePasswordViewModel @Inject constructor(
+    private val logoutUseCase: LogoutUseCase,
     private val authRepository: AuthRepository,
 ) : ViewModel() {
 
@@ -50,7 +52,10 @@ class ChangePasswordViewModel @Inject constructor(
 
             val event = handleNetworkResult(
                 result = authRepository.changePassword(password),
-                onSuccess = { ChangePasswordUiEvent.ChangeSuccess },
+                onSuccess = {
+                    logoutUseCase()
+                    ChangePasswordUiEvent.ChangeSuccess
+                },
                 onHttpError = { ChangePasswordUiEvent.Failure.UnknownError },
                 onNetworkError = { ChangePasswordUiEvent.Failure.NetworkError },
                 onUnknownError = { ChangePasswordUiEvent.Failure.UnknownError },

@@ -12,6 +12,8 @@ dependencies {
     implementations(
         projects.common.network,
 
+        projects.domain,
+
         projects.data.authApi,
     )
     runtimeOnly(projects.data.authImpl)
