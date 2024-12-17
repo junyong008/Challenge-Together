@@ -5,6 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import com.yjy.common.core.constants.DeepLinkConfig.SCHEME_AND_HOST
+import com.yjy.common.core.constants.DeepLinkPath.STARTED
 import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
@@ -15,8 +17,7 @@ import com.yjy.feature.startedchallenge.StartedChallengeRoute
 import com.yjy.model.challenge.core.Category
 
 const val STARTED_CHALLENGE_ID = "challengeId"
-private const val DEEP_LINK_URI_PATTERN =
-    "https://www.challenge-together.apps.com/challenge/started/{$STARTED_CHALLENGE_ID}"
+private const val DEEP_LINK_URI_PATTERN = "${SCHEME_AND_HOST}/$STARTED/{$STARTED_CHALLENGE_ID}"
 
 fun NavController.navigateToStartedChallenge(
     challengeId: Int,

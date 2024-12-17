@@ -7,6 +7,9 @@ import android.net.Uri
 import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.action.ActionCallback
+import com.yjy.common.core.constants.DeepLinkConfig.SCHEME_AND_HOST
+import com.yjy.common.core.constants.DeepLinkConfig.SERVICE_ACTIVITY
+import com.yjy.common.core.constants.DeepLinkPath.STARTED
 
 class WidgetClickAction : ActionCallback {
     override suspend fun onAction(
@@ -18,7 +21,7 @@ class WidgetClickAction : ActionCallback {
 
         val intent = Intent(
             Intent.ACTION_VIEW,
-            Uri.parse("${DeepLink.SCHEME_AND_HOST}/${DeepLink.CHALLENGE_STARTED}/$challengeId"),
+            Uri.parse("${SCHEME_AND_HOST}/$STARTED/$challengeId"),
         ).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                 Intent.FLAG_ACTIVITY_CLEAR_TOP or
@@ -26,7 +29,7 @@ class WidgetClickAction : ActionCallback {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK
             component = ComponentName(
                 context.packageName,
-                DeepLink.SERVICE_ACTIVITY,
+                SERVICE_ACTIVITY,
             )
         }
         context.startActivity(intent)

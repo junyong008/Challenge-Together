@@ -1,6 +1,11 @@
 package com.yjy.platform.notifications.model
 
-import com.yjy.platform.notifications.constants.DeepLinkPaths
+import com.yjy.common.core.constants.DeepLinkPath.POST
+import com.yjy.common.core.constants.DeepLinkPath.STARTED
+import com.yjy.common.core.constants.DeepLinkPath.WAITING
+import com.yjy.platform.notifications.constants.RequestCodes.POST_REQUEST_CODE
+import com.yjy.platform.notifications.constants.RequestCodes.STARTED_REQUEST_CODE
+import com.yjy.platform.notifications.constants.RequestCodes.WAITING_REQUEST_CODE
 
 sealed interface PlatformNotificationNavigation {
     val requestCode: Int
@@ -8,17 +13,17 @@ sealed interface PlatformNotificationNavigation {
     val param: String
 
     data class StartedChallenge(override val param: String) : PlatformNotificationNavigation {
-        override val requestCode = DeepLinkPaths.Challenge.STARTED_REQUEST_CODE
-        override val deepLinkPath = DeepLinkPaths.Challenge.STARTED
+        override val requestCode = STARTED_REQUEST_CODE
+        override val deepLinkPath = STARTED
     }
 
     data class WaitingChallenge(override val param: String) : PlatformNotificationNavigation {
-        override val requestCode = DeepLinkPaths.Challenge.WAITING_REQUEST_CODE
-        override val deepLinkPath = DeepLinkPaths.Challenge.WAITING
+        override val requestCode = WAITING_REQUEST_CODE
+        override val deepLinkPath = WAITING
     }
 
     data class CommunityPost(override val param: String) : PlatformNotificationNavigation {
-        override val requestCode = DeepLinkPaths.Community.POST_REQUEST_CODE
-        override val deepLinkPath = DeepLinkPaths.Community.POST
+        override val requestCode = POST_REQUEST_CODE
+        override val deepLinkPath = POST
     }
 }

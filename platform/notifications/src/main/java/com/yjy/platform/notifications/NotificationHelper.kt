@@ -15,10 +15,11 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.net.toUri
-import com.yjy.platform.notifications.constants.DeepLinkConfig
+import com.yjy.common.core.constants.DeepLinkConfig
 import com.yjy.platform.notifications.constants.NotificationChannels
 import com.yjy.platform.notifications.model.PlatformNotification
 import com.yjy.platform.notifications.model.PlatformNotificationNavigation
+import timber.log.Timber
 
 object NotificationHelper {
 
@@ -87,8 +88,12 @@ object NotificationHelper {
                 .setAutoCancel(true)
         }
 
-        val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(notification.id, androidNotification)
+        try {
+            val notificationManager = NotificationManagerCompat.from(this)
+            notificationManager.notify(notification.id, androidNotification)
+        } catch (e: SecurityException) {
+            Timber.e(e, "Failed to post notification")
+        }
     }
 
     private fun Context.createPendingIntent(

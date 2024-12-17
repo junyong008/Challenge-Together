@@ -5,6 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import com.yjy.common.core.constants.DeepLinkConfig.SCHEME_AND_HOST
+import com.yjy.common.core.constants.DeepLinkPath.WAITING
 import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
@@ -14,8 +16,7 @@ import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.waitingchallenge.WaitingChallengeRoute
 
 const val WAITING_CHALLENGE_ID = "challengeId"
-private const val DEEP_LINK_URI_PATTERN =
-    "https://www.challenge-together.apps.com/challenge/waiting/{$WAITING_CHALLENGE_ID}"
+private const val DEEP_LINK_URI_PATTERN = "${SCHEME_AND_HOST}/$WAITING/{$WAITING_CHALLENGE_ID}"
 
 fun NavController.navigateToWaitingChallenge(
     challengeId: Int,

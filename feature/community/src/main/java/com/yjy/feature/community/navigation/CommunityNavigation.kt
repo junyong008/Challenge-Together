@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
+import com.yjy.common.core.constants.DeepLinkConfig.SCHEME_AND_HOST
+import com.yjy.common.core.constants.DeepLinkPath.POST
 import com.yjy.common.core.extensions.sharedViewModel
 import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
@@ -26,8 +28,7 @@ import com.yjy.feature.community.PostRoute
 import com.yjy.feature.community.R
 
 const val COMMUNITY_POST_ID = "postId"
-private const val DEEP_LINK_URI_PATTERN =
-    "https://www.challenge-together.apps.com/community/post/{$COMMUNITY_POST_ID}"
+private const val DEEP_LINK_URI_PATTERN = "${SCHEME_AND_HOST}/$POST/{$COMMUNITY_POST_ID}"
 
 typealias CommunityStrings = R.string
 
