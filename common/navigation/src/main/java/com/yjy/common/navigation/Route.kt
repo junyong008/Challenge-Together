@@ -22,6 +22,9 @@ sealed interface ServiceRoute : Route {
 
         @Serializable
         data object Community : MainTab
+
+        @Serializable
+        data object My : MainTab
     }
 
     @Serializable

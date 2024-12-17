@@ -32,6 +32,7 @@ dependencies {
         projects.feature.home,
         projects.feature.together,
         projects.feature.community,
+        projects.feature.my,
         projects.feature.completedchallenges,
         projects.feature.notification,
         projects.feature.notificationsetting,

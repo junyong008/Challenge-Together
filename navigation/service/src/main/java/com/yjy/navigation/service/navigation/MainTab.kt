@@ -5,6 +5,7 @@ import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.community.navigation.CommunityStrings
 import com.yjy.feature.home.navigation.HomeStrings
+import com.yjy.feature.my.navigation.MyStrings
 import com.yjy.feature.together.navigation.TogetherStrings
 
 internal enum class MainTab(
@@ -30,6 +31,12 @@ internal enum class MainTab(
         unselectedIconResId = ChallengeTogetherIcons.Community,
         iconTextId = CommunityStrings.feature_community_title,
         route = ServiceRoute.MainTab.Community,
+    ),
+    MY(
+        selectedIconResId = ChallengeTogetherIcons.My,
+        unselectedIconResId = ChallengeTogetherIcons.My,
+        iconTextId = MyStrings.feature_my_navigation_title,
+        route = ServiceRoute.MainTab.My,
     ),
     ;
 

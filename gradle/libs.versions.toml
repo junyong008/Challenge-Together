@@ -24,6 +24,8 @@ desugar = "2.1.3"
 detekt = "1.23.6"
 firebaseBom = "33.7.0"
 firebaseCrashlyticsPlugin = "3.0.2"
+googleOss = "17.1.0"
+googleOssPlugin = "0.10.6"
 gradleDependencyHandlerExtensions = "1.1.0"
 gmsPlugin = "4.4.2"
 hilt = "2.52"
@@ -61,6 +63,8 @@ androidx-paging-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", 
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidXPaging" }
 androidx-work-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "androidxWork" }
+google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "googleOss" }
+google-oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "googleOssPlugin" }
 hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExt" }
 hilt-ext-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltExt" }
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }

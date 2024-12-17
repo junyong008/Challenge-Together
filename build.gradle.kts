@@ -1,3 +1,4 @@
+
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
@@ -16,6 +17,16 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.room) apply false
     alias(libs.plugins.secrets) apply false
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath(libs.google.oss.licenses.plugin)
+    }
 }
 
 allprojects {

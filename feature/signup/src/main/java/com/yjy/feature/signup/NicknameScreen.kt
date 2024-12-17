@@ -1,7 +1,5 @@
 package com.yjy.feature.signup
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -29,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.constants.AuthConst.MAX_NICKNAME_LENGTH
 import com.yjy.common.core.constants.AuthConst.MIN_NICKNAME_LENGTH
+import com.yjy.common.core.constants.UrlConst.PRIVACY_POLICY
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherBottomAppBar
@@ -201,11 +200,10 @@ internal fun NicknameScreen(
 
 @Composable
 fun PrivacyPolicyText() {
-    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
 
     val privacyAgreement = stringResource(id = R.string.feature_signup_privacy_policy_agreement)
     val privacyText = stringResource(id = R.string.feature_signup_privacy_policy)
-    val privacyUrl = "https://sites.google.com/view/challenge-together/%ED%99%88"
 
     val annotatedText = buildAnnotatedString {
         append(privacyAgreement)
@@ -228,10 +226,7 @@ fun PrivacyPolicyText() {
         text = annotatedText,
         textDecoration = TextDecoration.None,
         color = CustomColorProvider.colorScheme.onBackgroundMuted,
-        onClick = {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(privacyUrl))
-            context.startActivity(intent)
-        },
+        onClick = { uriHandler.openUri(PRIVACY_POLICY) },
     )
 }
 

@@ -15,6 +15,7 @@ import com.yjy.feature.challengeboard.navigation.navigateToChallengeBoard
 import com.yjy.feature.challengeranking.navigation.challengeRankingScreen
 import com.yjy.feature.challengeranking.navigation.navigateToChallengeRanking
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
+import com.yjy.feature.changepassword.navigation.navigateToChangePassword
 import com.yjy.feature.community.navigation.communityNavGraph
 import com.yjy.feature.community.navigation.navigateToCommunityPost
 import com.yjy.feature.completedchallenges.navigation.completedChallengesScreen
@@ -24,6 +25,7 @@ import com.yjy.feature.editchallenge.navigation.navigateToEditCategory
 import com.yjy.feature.editchallenge.navigation.navigateToEditTargetDays
 import com.yjy.feature.editchallenge.navigation.navigateToEditTitleDescription
 import com.yjy.feature.home.navigation.homeScreen
+import com.yjy.feature.my.navigation.myScreen
 import com.yjy.feature.notification.navigation.navigateToNotification
 import com.yjy.feature.notification.navigation.notificationScreen
 import com.yjy.feature.notificationsetting.navigation.navigateToNotificationSetting
@@ -38,7 +40,6 @@ import com.yjy.feature.waitingchallenge.navigation.waitingChallengeScreen
 
 @Composable
 internal fun ServiceNavHost(
-    navigateToAuth: () -> Unit,
     navController: NavHostController,
     onShowToast: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
@@ -66,6 +67,14 @@ internal fun ServiceNavHost(
         )
         communityNavGraph(
             navController = navController,
+            onShowSnackbar = onShowSnackbar,
+        )
+        myScreen(
+            onNotificationSettingClick = navController::navigateToNotificationSetting,
+            onAppLockSettingClick = { },
+            onChangeNicknameClick = { },
+            onChangePasswordClick = navController::navigateToChangePassword,
+            onDeleteAccountClick = { },
             onShowSnackbar = onShowSnackbar,
         )
         completedChallengesScreen(
@@ -137,7 +146,6 @@ internal fun ServiceNavHost(
         )
         changePasswordScreen(
             onBackClick = navController::popBackStack,
-            onPasswordChanged = navigateToAuth,
             onShowToast = onShowToast,
             onShowSnackbar = onShowSnackbar,
         )

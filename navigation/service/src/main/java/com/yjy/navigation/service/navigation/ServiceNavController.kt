@@ -14,6 +14,7 @@ import com.yjy.feature.addchallenge.navigation.navigateToAddChallenge
 import com.yjy.feature.community.navigation.navigateToAddCommunityPost
 import com.yjy.feature.community.navigation.navigateToCommunity
 import com.yjy.feature.home.navigation.navigateToHome
+import com.yjy.feature.my.navigation.navigateToMy
 import com.yjy.feature.together.navigation.navigateToTogether
 
 @Composable
@@ -53,6 +54,7 @@ internal class ServiceNavController(
             MainTab.HOME -> navController.navigateToHome(navOptions)
             MainTab.TOGETHER -> navController.navigateToTogether(navOptions)
             MainTab.COMMUNITY -> navController.navigateToCommunity(navOptions)
+            MainTab.MY -> navController.navigateToMy(navOptions)
         }
     }
 

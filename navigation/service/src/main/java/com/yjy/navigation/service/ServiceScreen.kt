@@ -168,7 +168,6 @@ internal fun ServiceScreen(
             ) {
                 ServiceNavHost(
                     navController = navigator.navController,
-                    navigateToAuth = navigateToAuth,
                     onShowToast = onShowToast,
                     onShowSnackbar = showSnackbar,
                 )

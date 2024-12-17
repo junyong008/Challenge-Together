@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.custom.android.application.compose)
     alias(libs.plugins.custom.android.firebase)
     alias(libs.plugins.custom.android.hilt)
+    id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {

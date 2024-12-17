@@ -8,6 +8,7 @@ import com.yjy.data.challenge.impl.mapper.toProto
 import com.yjy.data.challenge.impl.util.TimeManager
 import com.yjy.data.datastore.api.ChallengePreferencesDataSource
 import com.yjy.data.network.datasource.ChallengeDataSource
+import com.yjy.model.challenge.UserRecord
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.common.Tier
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +31,9 @@ internal class ChallengePreferencesRepositoryImpl @Inject constructor(
 
     override val recentCompletedChallengeTitles: Flow<List<String>> =
         challengePreferencesDataSource.completedChallengeTitles
+
+    override suspend fun getRecords(): NetworkResult<UserRecord> =
+        challengeDataSource.getRecords().map { it.toModel() }
 
     override suspend fun getRemoteTier(): NetworkResult<Tier> =
         challengeDataSource.getRecords().map { Tier.getCurrentTier(it.recordInSeconds) }

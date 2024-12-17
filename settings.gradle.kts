@@ -60,6 +60,7 @@ include(
     ":feature:home",
     ":feature:together",
     ":feature:community",
+    ":feature:my",
     ":feature:notification",
     ":feature:notificationsetting",
     ":feature:addchallenge",
