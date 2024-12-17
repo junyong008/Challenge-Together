@@ -16,4 +16,7 @@
     <string name="feature_notification_setting_comment_detail">Notify when someone comments on your posts.</string>
     <string name="feature_notification_setting_reply">Reply Notifications</string>
     <string name="feature_notification_setting_reply_detail">Notify when someone replies to your comments.</string>
+    <string name="feature_notification_setting_permission_denied_title">Permission Denied</string>
+    <string name="feature_notification_setting_permission_denied_description">Notifications are currently disabled.\nPlease enable them in your device settings to stay updated.</string>
+    <string name="feature_notification_setting_settings">Settings</string>
 </resources>

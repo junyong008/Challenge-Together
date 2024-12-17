@@ -15,6 +15,8 @@ dependencies {
         projects.model,
 
         projects.data.userApi,
+
+        libs.accompanist.permissions,
     )
 
     runtimeOnly(projects.data.userImpl)

@@ -1,5 +1,11 @@
 package com.yjy.feature.notificationsetting
 
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -21,16 +27,28 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.rememberPermissionState
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
+import com.yjy.common.designsystem.component.ChallengeTogetherDialog
 import com.yjy.common.designsystem.component.ChallengeTogetherSwitch
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
@@ -54,6 +72,7 @@ internal fun NotificationSettingRoute(
     )
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun NotificationSettingScreen(
     modifier: Modifier = Modifier,
@@ -61,7 +80,55 @@ internal fun NotificationSettingScreen(
     setNotificationSetting: (Int, Boolean) -> Unit = { _, _ -> },
     onBackClick: () -> Unit = {},
 ) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val isAllEnabled = NotificationSettingFlags.isEnabled(settings, NotificationSettingFlags.ALL)
+
+    // TIRAMISU 미만 버전을 위한 조치: notificationManager, isNotificationEnabled, lifecycle
+    val notificationManager = remember {
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    }
+
+    var isNotificationEnabled by remember {
+        mutableStateOf(notificationManager.areNotificationsEnabled())
+    }
+
+    var shouldShowNotificationDeniedDialog by remember { mutableStateOf(false) }
+    val isNotificationPermissionDenied = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        val notificationsPermissionState = rememberPermissionState(
+            android.Manifest.permission.POST_NOTIFICATIONS,
+        )
+        notificationsPermissionState.status.let { status ->
+            status is PermissionStatus.Denied && status.shouldShowRationale
+        }
+    } else {
+        !isNotificationEnabled
+    }
+
+    LaunchedEffect(lifecycleOwner.lifecycle) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            isNotificationEnabled = notificationManager.areNotificationsEnabled()
+        }
+    }
+
+    LaunchedEffect(isNotificationPermissionDenied) {
+        shouldShowNotificationDeniedDialog = isNotificationPermissionDenied
+    }
+
+    if (shouldShowNotificationDeniedDialog) {
+        ChallengeTogetherDialog(
+            title = stringResource(id = R.string.feature_notification_setting_permission_denied_title),
+            description = stringResource(
+                id = R.string.feature_notification_setting_permission_denied_description,
+            ),
+            positiveTextRes = R.string.feature_notification_setting_settings,
+            onClickPositive = { context.openNotificationSettings() },
+            onClickNegative = {
+                shouldShowNotificationDeniedDialog = false
+                onBackClick()
+            },
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -209,6 +276,24 @@ internal fun NotificationSettingScreen(
             }
         }
     }
+}
+
+private fun Context.openNotificationSettings() {
+    val intent = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+            Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+            }
+        }
+        else -> {
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                data = Uri.fromParts("package", packageName, null)
+            }
+        }
+    }
+
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    startActivity(intent)
 }
 
 private const val ITEM_SWITCH_SCALE = 0.8f
