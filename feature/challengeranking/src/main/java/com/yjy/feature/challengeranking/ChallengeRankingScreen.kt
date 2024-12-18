@@ -31,22 +31,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextIndent
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.core.util.formatTimeDuration
+import com.yjy.common.designsystem.component.BulletText
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherDialog
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
@@ -211,6 +206,7 @@ private fun RankingBody(
         item {
             Spacer(modifier = Modifier.height(16.dp))
             TipDescriptions()
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
@@ -234,38 +230,6 @@ private fun TipDescriptions() {
             modifier = Modifier.padding(start = 4.dp),
         )
     }
-}
-
-@Composable
-fun BulletText(
-    text: String,
-    modifier: Modifier = Modifier,
-    color: Color = CustomColorProvider.colorScheme.onBackgroundMuted,
-    style: TextStyle = MaterialTheme.typography.labelSmall,
-) {
-    val bullet = "•  "
-    val bulletWidth = with(LocalDensity.current) {
-        style.fontSize.toPx().toSp()
-    }
-
-    Text(
-        text = buildAnnotatedString {
-            withStyle(
-                ParagraphStyle(
-                    textIndent = TextIndent(
-                        firstLine = 0.sp,
-                        restLine = bulletWidth,
-                    ),
-                ),
-            ) {
-                append(bullet)
-                append(text)
-            }
-        },
-        modifier = modifier,
-        color = color,
-        style = style,
-    )
 }
 
 @Composable

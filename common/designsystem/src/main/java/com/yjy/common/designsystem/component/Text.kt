@@ -31,14 +31,20 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.designsystem.ComponentPreviews
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
@@ -146,6 +152,38 @@ fun SelectableText(
             }
         }
     }
+}
+
+@Composable
+fun BulletText(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = CustomColorProvider.colorScheme.onBackgroundMuted,
+    style: TextStyle = MaterialTheme.typography.labelSmall,
+) {
+    val bullet = "•  "
+    val bulletWidth = with(LocalDensity.current) {
+        style.fontSize.toPx().toSp()
+    }
+
+    Text(
+        text = buildAnnotatedString {
+            withStyle(
+                ParagraphStyle(
+                    textIndent = TextIndent(
+                        firstLine = 0.sp,
+                        restLine = bulletWidth,
+                    ),
+                ),
+            ) {
+                append(bullet)
+                append(text)
+            }
+        },
+        modifier = modifier,
+        color = color,
+        style = style,
+    )
 }
 
 @ComponentPreviews
