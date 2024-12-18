@@ -12,9 +12,11 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.glance.ColorFilter
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.action.Action
@@ -31,6 +33,7 @@ import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
+import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
@@ -42,6 +45,7 @@ import androidx.glance.state.PreferencesGlanceStateDefinition
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import com.yjy.common.designsystem.extensions.getIconResId
+import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.platform.widget.R
 import com.yjy.platform.widget.components.GlanceCircularProgressBar
@@ -68,6 +72,7 @@ class ChallengeWideWidget : GlanceAppWidget() {
             val backgroundAlpha = prefs[floatPreferencesKey(BACKGROUND_ALPHA_KEY)] ?: DEFAULT_BACKGROUND_ALPHA
 
             val localContext = LocalContext.current
+            var shouldHideContent by remember { mutableStateOf(false) }
             var challenge by remember { mutableStateOf<SimpleStartedChallenge?>(null) }
 
             LaunchedEffect(lastUpdate, challengeId) {
@@ -77,6 +82,9 @@ class ChallengeWideWidget : GlanceAppWidget() {
                 )
 
                 val useCase = entryPoint.getStartedChallengesUseCase()
+                val appLockRepository = entryPoint.appLockRepository()
+
+                shouldHideContent = appLockRepository.shouldHideWidgetContents.first()
                 challenge = useCase().first().find { it.id == challengeId }
             }
 
@@ -87,26 +95,53 @@ class ChallengeWideWidget : GlanceAppWidget() {
                     .cornerRadius(WidgetRadius.large),
                 contentAlignment = Alignment.Center,
             ) {
-                if (challenge == null) {
-                    Text(
-                        text = localContext.getString(R.string.platform_widget_no_challenge),
-                        style = WidgetTypography.bodyLarge.copy(
-                            color = WidgetColorScheme.onSurface(),
-                            textAlign = TextAlign.Center,
-                        ),
-                    )
-                } else {
-                    ChallengeContent(
-                        challenge = challenge!!,
-                        backgroundAlpha = backgroundAlpha,
-                        onClick = {
-                            actionRunCallback<WidgetClickAction>(
-                                actionParametersOf(
-                                    WidgetClickAction.CHALLENGE_ID to challenge!!.id.toString(),
+                when {
+                    shouldHideContent -> {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = GlanceModifier.padding(16.dp),
+                        ) {
+                            Image(
+                                provider = ImageProvider(ChallengeTogetherIcons.Hide),
+                                contentDescription = context.getString(
+                                    R.string.platform_widget_hidden_due_to_app_lock,
+                                ),
+                                contentScale = ContentScale.Fit,
+                                colorFilter = ColorFilter.tint(WidgetColorScheme.onSurface()),
+                            )
+                            Spacer(modifier = GlanceModifier.width(16.dp))
+                            Text(
+                                text = localContext.getString(R.string.platform_widget_hidden_due_to_app_lock),
+                                style = WidgetTypography.labelSmall.copy(
+                                    color = WidgetColorScheme.onSurfaceMuted(),
                                 ),
                             )
-                        },
-                    )
+                        }
+                    }
+
+                    challenge == null -> {
+                        Text(
+                            text = localContext.getString(R.string.platform_widget_no_challenge),
+                            style = WidgetTypography.bodyLarge.copy(
+                                color = WidgetColorScheme.onSurface(),
+                                textAlign = TextAlign.Center,
+                            ),
+                        )
+                    }
+
+                    else -> {
+                        ChallengeContent(
+                            challenge = challenge!!,
+                            backgroundAlpha = backgroundAlpha,
+                            onClick = {
+                                actionRunCallback<WidgetClickAction>(
+                                    actionParametersOf(
+                                        WidgetClickAction.CHALLENGE_ID to challenge!!.id.toString(),
+                                    ),
+                                )
+                            },
+                        )
+                    }
                 }
             }
         }

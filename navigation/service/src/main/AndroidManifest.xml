@@ -4,7 +4,7 @@
         <activity
             android:name=".ServiceActivity"
             android:exported="false"
-            android:theme="@style/Theme.ChallengeTogether">
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         </activity>
     </application>
 </manifest>

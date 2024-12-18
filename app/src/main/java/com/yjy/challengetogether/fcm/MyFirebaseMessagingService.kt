@@ -3,6 +3,7 @@ package com.yjy.challengetogether.fcm
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.yjy.challengetogether.di.FcmEntryPoint
+import com.yjy.data.auth.api.AppLockRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.model.common.notification.Notification
 import com.yjy.model.common.notification.NotificationSettingFlags
@@ -13,6 +14,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDateTime
@@ -27,6 +29,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private val userRepository: UserRepository by lazy {
         EntryPoints.get(applicationContext, FcmEntryPoint::class.java).userRepository()
+    }
+
+    private val appLockRepository: AppLockRepository by lazy {
+        EntryPoints.get(applicationContext, FcmEntryPoint::class.java).appLockRepository()
     }
 
     override fun onNewToken(token: String) {
@@ -68,7 +74,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         NotificationHelper.postNotification(
             context = this,
             notification = with(notificationMapper) {
-                notification.toPlatformNotification()
+                notification.toPlatformNotification(
+                    shouldHideContent = appLockRepository.shouldHideNotificationContents.first(),
+                )
             },
         )
     }

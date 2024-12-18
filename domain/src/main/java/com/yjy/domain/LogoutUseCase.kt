@@ -1,5 +1,6 @@
 package com.yjy.domain
 
+import com.yjy.data.auth.api.AppLockRepository
 import com.yjy.data.auth.api.AuthRepository
 import com.yjy.data.challenge.api.ChallengePostRepository
 import com.yjy.data.challenge.api.ChallengePreferencesRepository
@@ -9,6 +10,7 @@ import javax.inject.Inject
 
 class LogoutUseCase @Inject constructor(
     private val authRepository: AuthRepository,
+    private val appLockRepository: AppLockRepository,
     private val userRepository: UserRepository,
     private val challengeRepository: ChallengeRepository,
     private val challengePreferencesRepository: ChallengePreferencesRepository,
@@ -19,6 +21,7 @@ class LogoutUseCase @Inject constructor(
         challengePreferencesRepository.clearLocalData()
         challengeRepository.clearLocalData()
         userRepository.clearLocalData()
+        appLockRepository.removePin()
         authRepository.logout()
     }
 }

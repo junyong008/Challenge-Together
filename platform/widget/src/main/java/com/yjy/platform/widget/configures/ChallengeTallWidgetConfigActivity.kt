@@ -45,6 +45,7 @@ import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.platform.widget.R
 import com.yjy.platform.widget.configures.preview.ChallengeTallWidgetPreview
 import com.yjy.platform.widget.configures.screen.ChallengeSelectScreen
+import com.yjy.platform.widget.configures.screen.HiddenScreen
 import com.yjy.platform.widget.configures.screen.SettingScreen
 import com.yjy.platform.widget.widgets.ChallengeTallWidget
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,6 +99,7 @@ class ChallengeTallWidgetConfigActivity : ComponentActivity() {
         viewModel: WidgetConfigViewModel = hiltViewModel(),
     ) {
         val challenges by viewModel.challenges.collectAsStateWithLifecycle()
+        val shouldHideWidgetContents by viewModel.shouldHideWidgetContents.collectAsStateWithLifecycle()
 
         val scope = rememberCoroutineScope()
         var isSettingScreen by remember { mutableStateOf(false) }
@@ -176,7 +178,7 @@ class ChallengeTallWidgetConfigActivity : ComponentActivity() {
                                 isSettingScreen = true
                             }
                         },
-                        enabled = isSettingScreen || selectedChallenge != null,
+                        enabled = (isSettingScreen || selectedChallenge != null) && !shouldHideWidgetContents,
                         color = CustomColorProvider.colorScheme.brand,
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.weight(1f),
@@ -187,27 +189,33 @@ class ChallengeTallWidgetConfigActivity : ComponentActivity() {
             },
             containerColor = CustomColorProvider.colorScheme.background,
         ) { padding ->
-            if (isSettingScreen) {
-                SettingScreen(
-                    backgroundAlpha = backgroundAlpha,
-                    onBackgroundAlphaChange = { backgroundAlpha = it },
-                    modifier = Modifier.padding(padding),
-                ) {
-                    ChallengeTallWidgetPreview(
-                        challenge = selectedChallenge,
-                        modifier = Modifier
-                            .width(270.dp)
-                            .padding(32.dp),
+            when {
+                shouldHideWidgetContents -> HiddenScreen()
+                isSettingScreen -> {
+                    SettingScreen(
                         backgroundAlpha = backgroundAlpha,
+                        onBackgroundAlphaChange = { backgroundAlpha = it },
+                        modifier = Modifier.padding(padding),
+                    ) {
+                        ChallengeTallWidgetPreview(
+                            challenge = selectedChallenge,
+                            shouldHideContent = shouldHideWidgetContents,
+                            modifier = Modifier
+                                .width(270.dp)
+                                .padding(32.dp),
+                            backgroundAlpha = backgroundAlpha,
+                        )
+                    }
+                }
+
+                else -> {
+                    ChallengeSelectScreen(
+                        challenges = challenges,
+                        selectedChallenge = selectedChallenge,
+                        onChallengeSelect = { selectedChallenge = it },
+                        modifier = Modifier.padding(padding),
                     )
                 }
-            } else {
-                ChallengeSelectScreen(
-                    challenges = challenges,
-                    selectedChallenge = selectedChallenge,
-                    onChallengeSelect = { selectedChallenge = it },
-                    modifier = Modifier.padding(padding),
-                )
             }
         }
     }

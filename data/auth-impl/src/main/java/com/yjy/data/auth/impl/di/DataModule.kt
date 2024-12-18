@@ -1,6 +1,8 @@
 package com.yjy.data.auth.impl.di
 
+import com.yjy.data.auth.api.AppLockRepository
 import com.yjy.data.auth.api.AuthRepository
+import com.yjy.data.auth.impl.repository.AppLockRepositoryImpl
 import com.yjy.data.auth.impl.repository.AuthRepositoryImpl
 import com.yjy.data.auth.impl.util.SessionManagerImpl
 import com.yjy.data.network.util.SessionManager
@@ -17,6 +19,11 @@ internal abstract class DataModule {
     abstract fun bindAuthRepository(
         impl: AuthRepositoryImpl,
     ): AuthRepository
+
+    @Binds
+    abstract fun bindAppLockRepository(
+        impl: AppLockRepositoryImpl,
+    ): AppLockRepository
 
     @Binds
     abstract fun bindSessionManager(

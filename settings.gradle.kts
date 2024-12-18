@@ -61,6 +61,7 @@ include(
     ":feature:together",
     ":feature:community",
     ":feature:my",
+    ":feature:applock",
     ":feature:notification",
     ":feature:notificationsetting",
     ":feature:addchallenge",

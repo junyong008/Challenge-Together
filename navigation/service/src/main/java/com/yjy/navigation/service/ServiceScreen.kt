@@ -32,7 +32,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
@@ -54,6 +57,7 @@ import com.yjy.navigation.service.navigation.rememberServiceNavController
 import com.yjy.platform.widget.WidgetManager
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
@@ -65,6 +69,8 @@ internal fun ServiceScreen(
     snackbarScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+
     val isOffline by viewModel.isOffline.collectAsStateWithLifecycle()
     val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
     val isManualTime by viewModel.isManualTime.collectAsStateWithLifecycle()
@@ -80,6 +86,14 @@ internal fun ServiceScreen(
                 actionLabel = type.name,
                 duration = SnackbarDuration.Short,
             )
+        }
+    }
+
+    LaunchedEffect(lifecycleOwner.lifecycle) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            if (viewModel.isPinSet.first()) {
+                navigator.navigateToAppLockPinValidation()
+            }
         }
     }
 

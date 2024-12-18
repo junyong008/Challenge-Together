@@ -57,6 +57,7 @@ dependencies {
 
         projects.platform.notifications,
 
+        libs.androidx.appcompat,
         libs.androidx.core.splashscreen,
         libs.androidx.startup,
         libs.androidx.navigation.compose,

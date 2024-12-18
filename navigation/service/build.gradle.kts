@@ -33,6 +33,7 @@ dependencies {
         projects.feature.together,
         projects.feature.community,
         projects.feature.my,
+        projects.feature.applock,
         projects.feature.completedchallenges,
         projects.feature.notification,
         projects.feature.notificationsetting,
@@ -46,6 +47,7 @@ dependencies {
         projects.feature.changepassword,
 
         libs.accompanist.permissions,
+        libs.androidx.appcompat,
         libs.androidx.navigation.compose,
         libs.androidx.hilt.navigation.compose,
         libs.kotlinx.collections.immutable,

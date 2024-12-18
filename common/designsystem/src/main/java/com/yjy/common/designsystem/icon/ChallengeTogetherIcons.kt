@@ -9,11 +9,13 @@ object ChallengeTogetherIcons {
     val ArrowRight = R.drawable.ic_arrow_right
     val ArrowUp = R.drawable.ic_arrow_up
     val Back = R.drawable.ic_back
+    val Backspace = R.drawable.ic_backspace
     val Bell = R.drawable.ic_bell
     val BookmarkOff = R.drawable.ic_bookmark_off
     val BookmarkOn = R.drawable.ic_bookmark_on
     val Cancel = R.drawable.ic_cancel
     val Check = R.drawable.ic_check
+    val Close = R.drawable.ic_close
     val Comment = R.drawable.ic_comment
     val Community = R.drawable.ic_community
     val CompleteChallenge = R.drawable.ic_complete_challenge
@@ -22,7 +24,6 @@ object ChallengeTogetherIcons {
     val Email = R.drawable.ic_email
     val FingerPrint = R.drawable.ic_fingerprint
     val Hide = R.drawable.ic_hide
-    val HideNotification = R.drawable.ic_hide_notification
     val Home = R.drawable.ic_home
     val Infinite = R.drawable.ic_infinite
     val Key = R.drawable.ic_key

@@ -11,9 +11,11 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.glance.ColorFilter
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.action.Action
@@ -30,16 +32,21 @@ import androidx.glance.background
 import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
+import androidx.glance.layout.Column
+import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.layout.width
 import androidx.glance.state.PreferencesGlanceStateDefinition
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import com.yjy.common.designsystem.extensions.getIconResId
+import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
+import com.yjy.data.auth.api.AppLockRepository
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.platform.widget.R
@@ -66,6 +73,7 @@ class ChallengeListWidget : GlanceAppWidget() {
             val backgroundAlpha = prefs[floatPreferencesKey(BACKGROUND_ALPHA_KEY)] ?: DEFAULT_BACKGROUND_ALPHA
 
             val localContext = LocalContext.current
+            var shouldHideContent by remember { mutableStateOf(false) }
             var challenges by remember { mutableStateOf<List<SimpleStartedChallenge>>(emptyList()) }
 
             LaunchedEffect(lastUpdate) {
@@ -75,8 +83,10 @@ class ChallengeListWidget : GlanceAppWidget() {
                 )
 
                 val useCase = entryPoint.getStartedChallengesUseCase()
+                val appLockRepository = appLockRepository(entryPoint)
                 val challengePreferencesRepository = entryPoint.challengePreferencesRepository()
 
+                shouldHideContent = appLockRepository.shouldHideWidgetContents.first()
                 challenges = useCase().first().sortBy(challengePreferencesRepository.sortOrder.first())
             }
 
@@ -88,37 +98,70 @@ class ChallengeListWidget : GlanceAppWidget() {
                     .padding(8.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                if (challenges.isEmpty()) {
-                    Text(
-                        text = localContext.getString(R.string.platform_widget_no_challenges),
-                        style = WidgetTypography.bodyLarge.copy(
-                            color = WidgetColorScheme.onSurface(),
-                            textAlign = TextAlign.Center,
-                        ),
-                    )
-                } else {
-                    LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
-                        items(
-                            count = challenges.size,
-                            itemId = { index -> challenges[index].id.toLong() },
-                        ) { index ->
-                            val challenge = challenges[index]
-                            ChallengeItem(
-                                challenge = challenge,
-                                backgroundAlpha = backgroundAlpha,
-                                onClick = {
-                                    actionRunCallback<WidgetClickAction>(
-                                        actionParametersOf(
-                                            WidgetClickAction.CHALLENGE_ID to challenge.id.toString(),
-                                        ),
-                                    )
-                                },
+                when {
+                    shouldHideContent -> {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = GlanceModifier.padding(16.dp),
+                        ) {
+                            Image(
+                                provider = ImageProvider(ChallengeTogetherIcons.Hide),
+                                contentDescription = context.getString(
+                                    R.string.platform_widget_hidden_due_to_app_lock,
+                                ),
+                                contentScale = ContentScale.Fit,
+                                colorFilter = ColorFilter.tint(WidgetColorScheme.onSurface()),
                             )
+                            Spacer(modifier = GlanceModifier.height(8.dp))
+                            Text(
+                                text = localContext.getString(R.string.platform_widget_hidden_due_to_app_lock),
+                                style = WidgetTypography.labelSmall.copy(
+                                    color = WidgetColorScheme.onSurfaceMuted(),
+                                    textAlign = TextAlign.Center,
+                                ),
+                            )
+                        }
+                    }
+
+                    challenges.isEmpty() -> {
+                        Text(
+                            text = localContext.getString(R.string.platform_widget_no_challenges),
+                            style = WidgetTypography.bodyLarge.copy(
+                                color = WidgetColorScheme.onSurface(),
+                                textAlign = TextAlign.Center,
+                            ),
+                        )
+                    }
+
+                    else -> {
+                        LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
+                            items(
+                                count = challenges.size,
+                                itemId = { index -> challenges[index].id.toLong() },
+                            ) { index ->
+                                val challenge = challenges[index]
+                                ChallengeItem(
+                                    challenge = challenge,
+                                    backgroundAlpha = backgroundAlpha,
+                                    onClick = {
+                                        actionRunCallback<WidgetClickAction>(
+                                            actionParametersOf(
+                                                WidgetClickAction.CHALLENGE_ID to challenge.id.toString(),
+                                            ),
+                                        )
+                                    },
+                                )
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun appLockRepository(entryPoint: WidgetEntryPoint): AppLockRepository {
+        val appLockRepository = entryPoint.appLockRepository()
+        return appLockRepository
     }
 
     private fun List<SimpleStartedChallenge>.sortBy(sortOrder: SortOrder): List<SimpleStartedChallenge> {

@@ -10,6 +10,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -44,6 +45,7 @@ import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.platform.widget.R
 import com.yjy.platform.widget.configures.preview.ChallengeWideWidgetPreview
 import com.yjy.platform.widget.configures.screen.ChallengeSelectScreen
+import com.yjy.platform.widget.configures.screen.HiddenScreen
 import com.yjy.platform.widget.configures.screen.SettingScreen
 import com.yjy.platform.widget.widgets.ChallengeWideWidget
 import dagger.hilt.android.AndroidEntryPoint
@@ -96,6 +98,7 @@ class ChallengeWideWidgetConfigActivity : ComponentActivity() {
         viewModel: WidgetConfigViewModel = hiltViewModel(),
     ) {
         val challenges by viewModel.challenges.collectAsStateWithLifecycle()
+        val shouldHideWidgetContents by viewModel.shouldHideWidgetContents.collectAsStateWithLifecycle()
 
         val scope = rememberCoroutineScope()
         var isSettingScreen by remember { mutableStateOf(false) }
@@ -174,7 +177,7 @@ class ChallengeWideWidgetConfigActivity : ComponentActivity() {
                                 isSettingScreen = true
                             }
                         },
-                        enabled = isSettingScreen || selectedChallenge != null,
+                        enabled = (isSettingScreen || selectedChallenge != null) && !shouldHideWidgetContents,
                         color = CustomColorProvider.colorScheme.brand,
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.weight(1f),
@@ -185,25 +188,33 @@ class ChallengeWideWidgetConfigActivity : ComponentActivity() {
             },
             containerColor = CustomColorProvider.colorScheme.background,
         ) { padding ->
-            if (isSettingScreen) {
-                SettingScreen(
-                    backgroundAlpha = backgroundAlpha,
-                    onBackgroundAlphaChange = { backgroundAlpha = it },
-                    modifier = Modifier.padding(padding),
-                ) {
-                    ChallengeWideWidgetPreview(
-                        challenge = selectedChallenge,
-                        modifier = Modifier.padding(32.dp),
+            when {
+                shouldHideWidgetContents -> HiddenScreen()
+                isSettingScreen -> {
+                    SettingScreen(
                         backgroundAlpha = backgroundAlpha,
+                        onBackgroundAlphaChange = { backgroundAlpha = it },
+                        modifier = Modifier.padding(padding),
+                    ) {
+                        ChallengeWideWidgetPreview(
+                            challenge = selectedChallenge,
+                            shouldHideContent = shouldHideWidgetContents,
+                            modifier = Modifier
+                                .heightIn(min = 160.dp)
+                                .padding(32.dp),
+                            backgroundAlpha = backgroundAlpha,
+                        )
+                    }
+                }
+
+                else -> {
+                    ChallengeSelectScreen(
+                        challenges = challenges,
+                        selectedChallenge = selectedChallenge,
+                        onChallengeSelect = { selectedChallenge = it },
+                        modifier = Modifier.padding(padding),
                     )
                 }
-            } else {
-                ChallengeSelectScreen(
-                    challenges = challenges,
-                    selectedChallenge = selectedChallenge,
-                    onChallengeSelect = { selectedChallenge = it },
-                    modifier = Modifier.padding(padding),
-                )
             }
         }
     }

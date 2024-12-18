@@ -7,6 +7,7 @@ import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.yjy.data.datastore.api.ChallengePreferences
+import com.yjy.data.datastore.impl.AppLockDataStore
 import com.yjy.data.datastore.impl.ChallengePreferencesDataStore
 import com.yjy.data.datastore.impl.ChallengePreferencesSerializer
 import com.yjy.data.datastore.impl.NotificationDataStore
@@ -34,6 +35,11 @@ private val Context.notificationDataStore: DataStore<Preferences> by preferences
     name = NOTIFICATION_DATASTORE,
 )
 
+private const val APP_LOCK_DATASTORE = "app_lock_datastore"
+private val Context.appLockDataStore: DataStore<Preferences> by preferencesDataStore(
+    name = APP_LOCK_DATASTORE,
+)
+
 @Module
 @InstallIn(SingletonComponent::class)
 internal object DataStoreModule {
@@ -55,6 +61,12 @@ internal object DataStoreModule {
     @NotificationDataStore
     fun provideNotificationDataStore(@ApplicationContext context: Context) =
         context.notificationDataStore
+
+    @Provides
+    @Singleton
+    @AppLockDataStore
+    fun provideAppLockDataStore(@ApplicationContext context: Context) =
+        context.appLockDataStore
 
     @Provides
     @Singleton

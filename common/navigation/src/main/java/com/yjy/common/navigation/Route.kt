@@ -49,6 +49,18 @@ sealed interface ServiceRoute : Route {
     }
 
     @Serializable
+    data object AppLock {
+        @Serializable
+        data object Setting : ServiceRoute
+
+        @Serializable
+        data object PinSetting : ServiceRoute
+
+        @Serializable
+        data object PinValidation : ServiceRoute
+    }
+
+    @Serializable
     data object Notification : ServiceRoute
 
     @Serializable

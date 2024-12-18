@@ -1,0 +1,16 @@
+<resources>
+    <string name="feature_applock_title">App Lock</string>
+    <string name="feature_applock_password">Password</string>
+    <string name="feature_applock_enter_password">Please enter your password</string>
+    <string name="feature_applock_reenter_password">Please enter your password again</string>
+    <string name="feature_applock_password_mismatch">Passwords do not match.</string>
+    <string name="feature_applock_password_set_success">Password has been set.</string>
+    <string name="feature_applock_change_password">Change Password</string>
+    <string name="feature_applock_biometric_authentication">Biometric Authentication</string>
+    <string name="feature_applock_biometric_cancel">Cancel</string>
+    <string name="feature_applock_password_reset_warning">If you forget your password, you will need to reinstall the app.</string>
+    <string name="feature_applock_hide_widget_content">Hide Widget Content</string>
+    <string name="feature_applock_hide_notification_content">Hide Notification Content</string>
+    <string name="feature_applock_close">Close</string>
+    <string name="feature_applock_backspace">Backspace</string>
+</resources>

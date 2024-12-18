@@ -74,6 +74,8 @@
     <string name="common_designsystem_notification_user_commented_detail">Comment: \"%1$s\"</string>
     <string name="common_designsystem_notification_user_replied">\"%1$s\" replied to a comment</string>
     <string name="common_designsystem_notification_user_replied_detail">Reply: \"%1$s\"</string>
+    <string name="common_designsystem_notification_hidden_title">New notification</string>
+    <string name="common_designsystem_notification_hidden_body">Hidden due to App Lock settings</string>
 
     <string name="common_designsystem_sort_order_latest">Latest</string>
     <string name="common_designsystem_sort_order_oldest">Oldest</string>

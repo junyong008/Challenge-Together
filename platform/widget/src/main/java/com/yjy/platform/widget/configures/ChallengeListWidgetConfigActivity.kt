@@ -87,6 +87,8 @@ class ChallengeListWidgetConfigActivity : ComponentActivity() {
     ) {
         val scope = rememberCoroutineScope()
         var backgroundAlpha by remember { mutableFloatStateOf(1f) }
+
+        val shouldHideWidgetContents by viewModel.shouldHideWidgetContents.collectAsStateWithLifecycle()
         val challenges by viewModel.challenges.collectAsStateWithLifecycle()
 
         LaunchedEffect(Unit) {
@@ -152,6 +154,7 @@ class ChallengeListWidgetConfigActivity : ComponentActivity() {
             ) {
                 ChallengeListWidgetPreview(
                     challenges = challenges,
+                    shouldHideContent = shouldHideWidgetContents,
                     modifier = Modifier.padding(32.dp),
                     backgroundAlpha = backgroundAlpha,
                 )

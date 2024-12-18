@@ -70,7 +70,15 @@ fun NotificationType.formatMessageWithContext(
     context: Context,
     header: String,
     body: String,
+    shouldHideContent: Boolean,
 ): Pair<String, String> {
+    if (shouldHideContent) {
+        return Pair(
+            context.getString(R.string.common_designsystem_notification_hidden_title),
+            context.getString(R.string.common_designsystem_notification_hidden_body),
+        )
+    }
+
     val (titleResId, bodyResId) = notificationFormats[this] ?: return Pair(header, body)
     return Pair(
         context.getString(titleResId, header),

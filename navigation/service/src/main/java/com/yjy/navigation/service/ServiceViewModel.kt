@@ -2,6 +2,7 @@ package com.yjy.navigation.service
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yjy.data.auth.api.AppLockRepository
 import com.yjy.data.auth.api.AuthRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.LogoutUseCase
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class ServiceViewModel @Inject constructor(
     private val userRepository: UserRepository,
     authRepository: AuthRepository,
+    appLockRepository: AppLockRepository,
     logoutUseCase: LogoutUseCase,
     networkMonitor: NetworkMonitor,
     workerManager: WorkerManager,
@@ -46,6 +48,8 @@ class ServiceViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = false,
         )
+
+    val isPinSet = appLockRepository.isPinSet
 
     val isLoggedIn = authRepository.isLoggedIn
         .stateIn(

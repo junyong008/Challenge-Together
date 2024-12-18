@@ -21,6 +21,7 @@ dependencies {
 
         projects.domain,
 
+        projects.data.authApi,
         projects.data.challengeApi,
 
         libs.androidx.activity.compose,
@@ -29,5 +30,6 @@ dependencies {
         libs.androidx.hilt.navigation.compose,
     )
 
+    runtimeOnly(projects.data.authImpl)
     runtimeOnly(projects.data.challengeImpl)
 }

@@ -10,6 +10,8 @@ import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.addchallenge.navigation.addChallengeNavGraph
+import com.yjy.feature.applock.navigation.appLockNavGraph
+import com.yjy.feature.applock.navigation.navigateToAppLockSetting
 import com.yjy.feature.challengeboard.navigation.challengeBoardScreen
 import com.yjy.feature.challengeboard.navigation.navigateToChallengeBoard
 import com.yjy.feature.challengeranking.navigation.challengeRankingScreen
@@ -71,10 +73,14 @@ internal fun ServiceNavHost(
         )
         myScreen(
             onNotificationSettingClick = navController::navigateToNotificationSetting,
-            onAppLockSettingClick = { },
+            onAppLockSettingClick = navController::navigateToAppLockSetting,
             onChangeNicknameClick = { },
             onChangePasswordClick = navController::navigateToChangePassword,
             onDeleteAccountClick = { },
+            onShowSnackbar = onShowSnackbar,
+        )
+        appLockNavGraph(
+            navController = navController,
             onShowSnackbar = onShowSnackbar,
         )
         completedChallengesScreen(

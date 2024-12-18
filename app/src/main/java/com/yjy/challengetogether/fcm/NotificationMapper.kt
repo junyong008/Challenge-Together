@@ -16,8 +16,8 @@ import javax.inject.Singleton
 class NotificationMapper @Inject constructor(
     @ApplicationContext private val context: Context,
 ) {
-    fun Notification.toPlatformNotification(): PlatformNotification {
-        val (title, message) = type.formatMessageWithContext(context, header, body)
+    fun Notification.toPlatformNotification(shouldHideContent: Boolean): PlatformNotification {
+        val (title, message) = type.formatMessageWithContext(context, header, body, shouldHideContent)
 
         val channelId = when (type.category) {
             NotificationCategory.CHALLENGE -> NotificationChannels.CHALLENGE

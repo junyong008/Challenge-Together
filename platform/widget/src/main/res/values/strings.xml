@@ -16,4 +16,5 @@
     <string name="platform_widget_cancel">Cancel</string>
     <string name="platform_widget_confirm">Confirm</string>
     <string name="platform_widget_select">Select</string>
+    <string name="platform_widget_hidden_due_to_app_lock">Hidden due to App Lock settings</string>
 </resources>

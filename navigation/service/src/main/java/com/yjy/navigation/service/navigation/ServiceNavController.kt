@@ -11,6 +11,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.yjy.feature.addchallenge.navigation.navigateToAddChallenge
+import com.yjy.feature.applock.navigation.navigateToAppLockPinValidation
 import com.yjy.feature.community.navigation.navigateToAddCommunityPost
 import com.yjy.feature.community.navigation.navigateToCommunity
 import com.yjy.feature.home.navigation.navigateToHome
@@ -64,6 +65,14 @@ internal class ServiceNavController(
 
     fun navigateToAddCommunityPost() {
         navController.navigateToAddCommunityPost()
+    }
+
+    fun navigateToAppLockPinValidation() {
+        val navOptions = navOptions {
+            launchSingleTop = true
+        }
+
+        navController.navigateToAppLockPinValidation(navOptions)
     }
 
     @Composable
