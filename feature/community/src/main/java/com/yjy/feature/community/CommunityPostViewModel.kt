@@ -11,7 +11,7 @@ import com.yjy.common.network.handleNetworkResult
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.community.api.CommunityRepository
-import com.yjy.data.user.api.UserRepository
+import com.yjy.data.user.api.NotificationRepository
 import com.yjy.domain.GetCommunityPostUseCase
 import com.yjy.feature.community.model.CommunityPostDetailUiState
 import com.yjy.feature.community.model.CommunityPostUiAction
@@ -41,7 +41,7 @@ import javax.inject.Inject
 class CommunityPostViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getCommunityPostUseCase: GetCommunityPostUseCase,
-    private val userRepository: UserRepository,
+    private val notificationRepository: NotificationRepository,
     private val communityRepository: CommunityRepository,
 ) : ViewModel() {
 
@@ -87,7 +87,7 @@ class CommunityPostViewModel @Inject constructor(
         initialValue = CommunityPostDetailUiState.Loading,
     )
 
-    val isNotificationOn = userRepository.mutedCommunityPostIds
+    val isNotificationOn = notificationRepository.mutedCommunityPostIds
         .map { mutedCommunityPostIds ->
             mutedCommunityPostIds.contains(postId.value).not()
         }
@@ -130,10 +130,10 @@ class CommunityPostViewModel @Inject constructor(
 
     private fun toggleNotification(postId: Int, isMuted: Boolean) = viewModelScope.launch {
         if (isMuted) {
-            userRepository.unMuteCommunityPostNotification(postId)
+            notificationRepository.unMuteCommunityPostNotification(postId)
             sendEvent(CommunityPostUiEvent.NotificationOn)
         } else {
-            userRepository.muteCommunityPostNotification(postId)
+            notificationRepository.muteCommunityPostNotification(postId)
             sendEvent(CommunityPostUiEvent.NotificationOff)
         }
     }

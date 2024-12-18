@@ -4,7 +4,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.yjy.challengetogether.di.FcmEntryPoint
 import com.yjy.data.auth.api.AppLockRepository
-import com.yjy.data.user.api.UserRepository
+import com.yjy.data.user.api.NotificationRepository
 import com.yjy.model.common.notification.Notification
 import com.yjy.model.common.notification.NotificationSettingFlags
 import com.yjy.model.common.notification.NotificationType
@@ -27,8 +27,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         EntryPoints.get(applicationContext, FcmEntryPoint::class.java).notificationMapper()
     }
 
-    private val userRepository: UserRepository by lazy {
-        EntryPoints.get(applicationContext, FcmEntryPoint::class.java).userRepository()
+    private val notificationRepository: NotificationRepository by lazy {
+        EntryPoints.get(applicationContext, FcmEntryPoint::class.java).notificationRepository()
     }
 
     private val appLockRepository: AppLockRepository by lazy {
@@ -82,7 +82,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private suspend fun isNotificationSettingDisabled(notificationType: NotificationType): Boolean {
-        val settings = userRepository.getNotificationSettings()
+        val settings = notificationRepository.notificationSettings.first()
 
         if (!NotificationSettingFlags.isEnabled(settings, NotificationSettingFlags.ALL)) {
             return true
@@ -133,10 +133,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private suspend fun isChallengeBoardMuted(challengeBoardId: Int): Boolean =
-        userRepository.getMutedChallengeBoards().contains(challengeBoardId)
+        notificationRepository.mutedChallengeBoardIds.first().contains(challengeBoardId)
 
     private suspend fun isCommunityPostMuted(communityPostId: Int): Boolean =
-        userRepository.getMutedCommunityPosts().contains(communityPostId)
+        notificationRepository.mutedCommunityPostIds.first().contains(communityPostId)
 
     private fun logNotification(notification: Notification) {
         with(notification) {

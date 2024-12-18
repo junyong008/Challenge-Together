@@ -15,6 +15,8 @@ dependencies {
 
         projects.model,
 
+        projects.domain,
+
         projects.data.userApi,
 
         libs.androidx.paging.compose,

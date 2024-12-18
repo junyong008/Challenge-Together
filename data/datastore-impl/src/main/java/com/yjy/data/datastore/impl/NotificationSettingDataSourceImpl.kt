@@ -50,9 +50,6 @@ internal class NotificationSettingDataSourceImpl @Inject constructor(
             }
         }
 
-    override suspend fun getNotificationSettings(): Int =
-        dataStore.readValue(KEY_NOTIFICATION_SETTINGS, ALL_NOTIFICATIONS_ENABLED)
-
     override suspend fun setNotificationSetting(flag: Int, enabled: Boolean) {
         dataStore.edit { preferences ->
             val current = preferences[KEY_NOTIFICATION_SETTINGS] ?: ALL_NOTIFICATIONS_ENABLED
@@ -65,14 +62,8 @@ internal class NotificationSettingDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMutedChallengeBoards(): List<Int> =
-        mutedChallengeBoards.first()
-
-    override suspend fun getMutedCommunityPosts(): List<Int> =
-        mutedCommunityPosts.first()
-
     override suspend fun addMutedChallengeBoard(challengeId: Int) {
-        val currentList = getMutedChallengeBoards()
+        val currentList = mutedChallengeBoards.first()
         if (!currentList.contains(challengeId)) {
             val updatedList = currentList + challengeId
             val json = Json.encodeToString(updatedList)
@@ -81,7 +72,7 @@ internal class NotificationSettingDataSourceImpl @Inject constructor(
     }
 
     override suspend fun addMutedCommunityPost(postId: Int) {
-        val currentList = getMutedCommunityPosts()
+        val currentList = mutedCommunityPosts.first()
         if (!currentList.contains(postId)) {
             val updatedList = currentList + postId
             val json = Json.encodeToString(updatedList)
@@ -90,7 +81,7 @@ internal class NotificationSettingDataSourceImpl @Inject constructor(
     }
 
     override suspend fun removeMutedChallengeBoard(challengeId: Int) {
-        val currentList = getMutedChallengeBoards()
+        val currentList = mutedChallengeBoards.first()
         if (currentList.contains(challengeId)) {
             val updatedList = currentList - challengeId
             val json = Json.encodeToString(updatedList)
@@ -99,7 +90,7 @@ internal class NotificationSettingDataSourceImpl @Inject constructor(
     }
 
     override suspend fun removeMutedCommunityPost(postId: Int) {
-        val currentList = getMutedCommunityPosts()
+        val currentList = mutedCommunityPosts.first()
         if (currentList.contains(postId)) {
             val updatedList = currentList - postId
             val json = Json.encodeToString(updatedList)

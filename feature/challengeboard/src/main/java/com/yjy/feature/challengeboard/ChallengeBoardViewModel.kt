@@ -10,7 +10,7 @@ import com.yjy.common.network.handleNetworkResult
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengePostRepository
-import com.yjy.data.user.api.UserRepository
+import com.yjy.data.user.api.NotificationRepository
 import com.yjy.domain.AddChallengePostUseCase
 import com.yjy.domain.GetChallengePostsUseCase
 import com.yjy.feature.challengeboard.model.ChallengeBoardUiAction
@@ -36,7 +36,7 @@ class ChallengeBoardViewModel @Inject constructor(
     getChallengePostsUseCase: GetChallengePostsUseCase,
     private val addChallengePostUseCase: AddChallengePostUseCase,
     private val challengePostRepository: ChallengePostRepository,
-    private val userRepository: UserRepository,
+    private val notificationRepository: NotificationRepository,
 ) : ViewModel() {
 
     private val challengeId = savedStateHandle.getStateFlow<Int?>("challengeId", null)
@@ -75,7 +75,7 @@ class ChallengeBoardViewModel @Inject constructor(
             initialValue = PostsUpdateState.Loading,
         )
 
-    val isNotificationOn = userRepository.mutedChallengeBoardIds
+    val isNotificationOn = notificationRepository.mutedChallengeBoardIds
         .map { mutedChallengeBoardIds ->
             mutedChallengeBoardIds.contains(challengeId.value).not()
         }
@@ -129,10 +129,10 @@ class ChallengeBoardViewModel @Inject constructor(
     private fun toggleNotification() = viewModelScope.launch {
         if (challengeId.value == null) return@launch
         if (isNotificationOn.value) {
-            userRepository.muteChallengeBoardNotification(challengeId.value!!)
+            notificationRepository.muteChallengeBoardNotification(challengeId.value!!)
             sendEvent(ChallengeBoardUiEvent.NotificationOff)
         } else {
-            userRepository.unMuteChallengeBoardNotification(challengeId.value!!)
+            notificationRepository.unMuteChallengeBoardNotification(challengeId.value!!)
             sendEvent(ChallengeBoardUiEvent.NotificationOn)
         }
     }

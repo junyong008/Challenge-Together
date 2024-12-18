@@ -1,7 +1,9 @@
 package com.yjy.data.user.impl.di
 
 import com.yjy.data.network.util.TimeDiffManager
+import com.yjy.data.user.api.NotificationRepository
 import com.yjy.data.user.api.UserRepository
+import com.yjy.data.user.impl.repository.NotificationRepositoryImpl
 import com.yjy.data.user.impl.repository.UserRepositoryImpl
 import com.yjy.data.user.impl.util.TimeDiffManagerImpl
 import dagger.Binds
@@ -17,6 +19,11 @@ internal abstract class DataModule {
     abstract fun bindUserRepository(
         impl: UserRepositoryImpl,
     ): UserRepository
+
+    @Binds
+    abstract fun bindNotificationRepository(
+        impl: NotificationRepositoryImpl,
+    ): NotificationRepository
 
     @Binds
     abstract fun bindTimeDiffManager(

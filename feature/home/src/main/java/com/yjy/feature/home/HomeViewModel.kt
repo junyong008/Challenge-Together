@@ -10,6 +10,7 @@ import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengePreferencesRepository
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.challenge.api.WaitingChallengeRepository
+import com.yjy.data.user.api.NotificationRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.GetStartedChallengesUseCase
 import com.yjy.feature.home.model.ChallengeSyncUiState
@@ -53,6 +54,7 @@ class HomeViewModel @Inject constructor(
     getStartedChallengesUseCase: GetStartedChallengesUseCase,
     waitingChallengeRepository: WaitingChallengeRepository,
     private val userRepository: UserRepository,
+    private val notificationRepository: NotificationRepository,
     private val challengeRepository: ChallengeRepository,
     private val challengePreferencesRepository: ChallengePreferencesRepository,
 ) : ViewModel() {
@@ -163,7 +165,7 @@ class HomeViewModel @Inject constructor(
     )
 
     val unViewedNotificationState = flow {
-        userRepository.getUnViewedNotificationCount()
+        notificationRepository.getUnViewedNotificationCount()
             .onSuccess { emit(UnViewedNotificationUiState.Success(it)) }
             .onFailure { emit(UnViewedNotificationUiState.Error) }
     }.restartableStateIn(

@@ -5,6 +5,7 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.data.challenge.api.ChallengePreferencesRepository
 import com.yjy.data.challenge.api.ChallengeRepository
 import com.yjy.data.challenge.api.WaitingChallengeRepository
+import com.yjy.data.user.api.NotificationRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.GetStartedChallengesUseCase
 import com.yjy.feature.home.model.ChallengeSyncUiState
@@ -55,6 +56,7 @@ class HomeViewModelTest {
     private lateinit var waitingChallengeRepository: WaitingChallengeRepository
     private lateinit var challengePreferencesRepository: ChallengePreferencesRepository
     private lateinit var userRepository: UserRepository
+    private lateinit var notificationRepository: NotificationRepository
     private lateinit var viewModel: HomeViewModel
 
     private val startedChallengesFlow = MutableStateFlow(emptyList<SimpleStartedChallenge>())
@@ -77,9 +79,10 @@ class HomeViewModelTest {
         challengePreferencesRepository = mockk(relaxed = true)
         challengeRepository = mockk(relaxed = true)
         userRepository = mockk(relaxed = true)
+        notificationRepository = mockk(relaxed = true)
         getStartedChallengesUseCase = mockk(relaxed = true)
 
-        coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Success(emptyList())
+        coEvery { challengeRepository.syncChallenges() } returns NetworkResult.Success(Unit)
         coEvery { challengePreferencesRepository.timeChangedFlow } returns timeChangedFlow
         coEvery { waitingChallengeRepository.waitingChallenges } returns waitingChallengesFlow
         coEvery { challengePreferencesRepository.recentCompletedChallengeTitles } returns recentCompletedFlow
@@ -90,13 +93,14 @@ class HomeViewModelTest {
 
         coEvery { userRepository.syncTime() } returns NetworkResult.Success(Unit)
         coEvery { userRepository.getUserName() } returns NetworkResult.Success("test")
-        coEvery { userRepository.getUnViewedNotificationCount() } returns NetworkResult.Success(0)
+        coEvery { notificationRepository.getUnViewedNotificationCount() } returns NetworkResult.Success(0)
 
         coEvery { getStartedChallengesUseCase() } returns startedChallengesFlow
 
         viewModel = HomeViewModel(
             getStartedChallengesUseCase = getStartedChallengesUseCase,
             userRepository = userRepository,
+            notificationRepository = notificationRepository,
             waitingChallengeRepository = waitingChallengeRepository,
             challengeRepository = challengeRepository,
             challengePreferencesRepository = challengePreferencesRepository,
@@ -198,7 +202,7 @@ class HomeViewModelTest {
 
         coEvery { challengeRepository.syncChallenges() } coAnswers {
             delay(SYNC_DELAY)
-            NetworkResult.Success(emptyList())
+            NetworkResult.Success(Unit)
         }
 
         val job = launch {
@@ -270,7 +274,7 @@ class HomeViewModelTest {
             if (syncCallCount == 1) {
                 NetworkResult.Failure.UnknownApiError(Throwable("Error"))
             } else {
-                NetworkResult.Success(emptyList())
+                NetworkResult.Success(Unit)
             }
         }
 
@@ -299,7 +303,7 @@ class HomeViewModelTest {
         var syncCallCount = 0
         coEvery { challengeRepository.syncChallenges() } answers {
             syncCallCount++
-            NetworkResult.Success(emptyList())
+            NetworkResult.Success(Unit)
         }
 
         val initialChallenge = createTestChallenge(

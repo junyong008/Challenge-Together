@@ -4,7 +4,7 @@ import com.yjy.challengetogether.fcm.DefaultFcmTokenProvider
 import com.yjy.challengetogether.fcm.NotificationMapper
 import com.yjy.data.auth.api.AppLockRepository
 import com.yjy.data.user.api.FcmTokenProvider
-import com.yjy.data.user.api.UserRepository
+import com.yjy.data.user.api.NotificationRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.EntryPoint
@@ -24,7 +24,7 @@ internal abstract class FirebaseModule {
 @InstallIn(SingletonComponent::class)
 @EntryPoint
 interface FcmEntryPoint {
-    fun userRepository(): UserRepository
+    fun notificationRepository(): NotificationRepository
     fun appLockRepository(): AppLockRepository
     fun notificationMapper(): NotificationMapper
 }

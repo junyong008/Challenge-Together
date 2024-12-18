@@ -5,7 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
-import com.yjy.data.user.api.UserRepository
+import com.yjy.data.user.api.NotificationRepository
+import com.yjy.domain.GetNotificationsUseCase
 import com.yjy.feature.notification.model.NotificationUiAction
 import com.yjy.feature.notification.model.NotificationUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,13 +18,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotificationViewModel @Inject constructor(
-    private val userRepository: UserRepository,
+    getNotificationsUseCase: GetNotificationsUseCase,
+    private val notificationRepository: NotificationRepository,
 ) : ViewModel() {
 
     private val _uiEvent = Channel<NotificationUiEvent>()
     val uiEvent: Flow<NotificationUiEvent> = _uiEvent.receiveAsFlow()
 
-    val notifications = userRepository.getNotifications().cachedIn(viewModelScope)
+    val notifications = getNotificationsUseCase().cachedIn(viewModelScope)
 
     private fun sendEvent(event: NotificationUiEvent) = viewModelScope.launch {
         _uiEvent.send(event)
@@ -37,13 +39,13 @@ class NotificationViewModel @Inject constructor(
     }
 
     private fun deleteNotification(notificationId: Int) = viewModelScope.launch {
-        userRepository.deleteNotification(notificationId)
+        notificationRepository.deleteNotification(notificationId)
             .onSuccess { sendEvent(NotificationUiEvent.DeleteSuccess) }
             .onFailure { sendEvent(NotificationUiEvent.DeleteFailed) }
     }
 
     private fun deleteAllNotifications() = viewModelScope.launch {
-        userRepository.deleteAllNotifications()
+        notificationRepository.deleteAllNotifications()
             .onSuccess { sendEvent(NotificationUiEvent.DeleteSuccess) }
             .onFailure { sendEvent(NotificationUiEvent.DeleteFailed) }
     }
