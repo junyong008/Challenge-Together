@@ -50,6 +50,31 @@ fun ConditionIndicator(
     }
 }
 
+@Composable
+fun ErrorIndicator(
+    text: String,
+    modifier: Modifier = Modifier,
+    indicatorColor: Color = CustomColorProvider.colorScheme.red,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.padding(top = 8.dp),
+    ) {
+        Icon(
+            ImageVector.vectorResource(id = ChallengeTogetherIcons.Cancel),
+            contentDescription = text,
+            tint = indicatorColor,
+            modifier = Modifier.size(16.dp),
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = text,
+            color = indicatorColor,
+            style = MaterialTheme.typography.labelSmall,
+        )
+    }
+}
+
 @ComponentPreviews
 @Composable
 fun ConditionIndicatorPreviewMatched() {

@@ -1,9 +1,11 @@
 package com.yjy.data.network.datasource
 
 import com.yjy.common.network.NetworkResult
+import com.yjy.data.network.request.user.ChangeUserNameRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
 import com.yjy.data.network.response.user.GetNameResponse
 import com.yjy.data.network.response.user.GetNotificationsResponse
+import com.yjy.data.network.response.user.GetRemainTimeForChangeNameResponse
 import com.yjy.data.network.response.user.GetUnViewedNotificationCountResponse
 import com.yjy.data.network.service.ChallengeTogetherService
 import javax.inject.Inject
@@ -16,6 +18,9 @@ internal class UserDataSourceImpl @Inject constructor(
 
     override suspend fun getUserName(): NetworkResult<GetNameResponse> =
         challengeTogetherService.getUserName()
+
+    override suspend fun getRemainTimeForChangeName(): NetworkResult<GetRemainTimeForChangeNameResponse> =
+        challengeTogetherService.getRemainTimeForChangeName()
 
     override suspend fun getUnViewedNotificationCount(): NetworkResult<GetUnViewedNotificationCountResponse> =
         challengeTogetherService.getUnViewedNotificationCount()
@@ -31,6 +36,9 @@ internal class UserDataSourceImpl @Inject constructor(
 
     override suspend fun deleteNotifications(): NetworkResult<Unit> =
         challengeTogetherService.deleteNotifications()
+
+    override suspend fun changeUserName(request: ChangeUserNameRequest): NetworkResult<Unit> =
+        challengeTogetherService.changeUserName(request)
 
     override suspend fun registerFirebaseToken(request: RegisterFirebaseTokenRequest): NetworkResult<Unit> =
         challengeTogetherService.registerFirebaseToken(request)

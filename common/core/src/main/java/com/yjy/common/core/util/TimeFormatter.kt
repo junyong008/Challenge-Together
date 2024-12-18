@@ -47,6 +47,23 @@ fun formatTimeDuration(seconds: Long): String {
     return parts.joinToString(" ")
 }
 
+@Composable
+fun formatLargestTimeDuration(seconds: Long): String {
+    if (seconds <= 0L) return "0${stringResource(R.string.common_core_time_second)}"
+
+    val days = seconds / SECONDS_PER_DAY
+    val hours = (seconds % SECONDS_PER_DAY) / SECONDS_PER_HOUR
+    val minutes = (seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE
+    val secs = seconds % SECONDS_PER_MINUTE
+
+    return when {
+        days > 0 -> "${days}${stringResource(R.string.common_core_time_day)}"
+        hours > 0 -> "${hours}${stringResource(R.string.common_core_time_hour)}"
+        minutes > 0 -> "${minutes}${stringResource(R.string.common_core_time_minute)}"
+        else -> "${secs}${stringResource(R.string.common_core_time_second)}"
+    }
+}
+
 fun LocalDateTime.to12HourFormat(): Triple<Int, Int, Boolean> {
     val hour = if (this.hour % HOURS_PER_HALF_DAY == 0) HOURS_PER_HALF_DAY else this.hour % HOURS_PER_HALF_DAY
     val minute = this.minute

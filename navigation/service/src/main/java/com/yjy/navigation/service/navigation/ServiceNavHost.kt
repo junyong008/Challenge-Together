@@ -16,6 +16,8 @@ import com.yjy.feature.challengeboard.navigation.challengeBoardScreen
 import com.yjy.feature.challengeboard.navigation.navigateToChallengeBoard
 import com.yjy.feature.challengeranking.navigation.challengeRankingScreen
 import com.yjy.feature.challengeranking.navigation.navigateToChallengeRanking
+import com.yjy.feature.changename.navigation.changeNameScreen
+import com.yjy.feature.changename.navigation.navigateToChangeName
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
 import com.yjy.feature.changepassword.navigation.navigateToChangePassword
 import com.yjy.feature.community.navigation.communityNavGraph
@@ -74,7 +76,7 @@ internal fun ServiceNavHost(
         myScreen(
             onNotificationSettingClick = navController::navigateToNotificationSetting,
             onAppLockSettingClick = navController::navigateToAppLockSetting,
-            onChangeNicknameClick = { },
+            onChangeNicknameClick = navController::navigateToChangeName,
             onChangePasswordClick = navController::navigateToChangePassword,
             onDeleteAccountClick = { },
             onShowSnackbar = onShowSnackbar,
@@ -97,6 +99,10 @@ internal fun ServiceNavHost(
         )
         notificationSettingScreen(
             onBackClick = navController::popBackStack,
+        )
+        changeNameScreen(
+            onBackClick = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
         )
         addChallengeNavGraph(
             navController = navController,

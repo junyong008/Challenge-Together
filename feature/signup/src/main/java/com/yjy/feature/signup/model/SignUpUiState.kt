@@ -4,7 +4,7 @@ data class SignUpUiState(
     val email: String = "",
     val password: String = "",
     val nickname: String = "",
-    val isNicknameLengthValid: Boolean = true,
+    val isNicknameLengthValid: Boolean = false,
     val isNicknameHasOnlyConsonantOrVowel: Boolean = false,
     val isValidatingEmail: Boolean = false,
     val isValidEmailFormat: Boolean = false,

@@ -15,6 +15,7 @@ import com.yjy.data.network.request.community.AddCommunityPostRequest
 import com.yjy.data.network.request.community.EditCommunityPostRequest
 import com.yjy.data.network.request.community.ReportCommunityCommentRequest
 import com.yjy.data.network.request.community.ReportCommunityPostRequest
+import com.yjy.data.network.request.user.ChangeUserNameRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
 import com.yjy.data.network.response.challenge.AddChallengeResponse
 import com.yjy.data.network.response.challenge.GetChallengePostsResponse
@@ -29,6 +30,7 @@ import com.yjy.data.network.response.community.GetPostResponse
 import com.yjy.data.network.response.community.GetPostsResponse
 import com.yjy.data.network.response.user.GetNameResponse
 import com.yjy.data.network.response.user.GetNotificationsResponse
+import com.yjy.data.network.response.user.GetRemainTimeForChangeNameResponse
 import com.yjy.data.network.response.user.GetUnViewedNotificationCountResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -196,6 +198,9 @@ internal interface ChallengeTogetherService {
     @GET("service/user/get/name")
     suspend fun getUserName(): NetworkResult<GetNameResponse>
 
+    @GET("service/user/get/remain-time-for-change-name")
+    suspend fun getRemainTimeForChangeName(): NetworkResult<GetRemainTimeForChangeNameResponse>
+
     @GET("service/user/get/notifications/un-viewed-count")
     suspend fun getUnViewedNotificationCount(): NetworkResult<GetUnViewedNotificationCountResponse>
 
@@ -216,6 +221,11 @@ internal interface ChallengeTogetherService {
     @POST("service/user/fcm/register")
     suspend fun registerFirebaseToken(
         @Body request: RegisterFirebaseTokenRequest,
+    ): NetworkResult<Unit>
+
+    @PATCH("service/user/change-name")
+    suspend fun changeUserName(
+        @Body request: ChangeUserNameRequest,
     ): NetworkResult<Unit>
 
     // Community

@@ -13,6 +13,7 @@ import com.yjy.data.database.dao.NotificationDao
 import com.yjy.data.datastore.api.NotificationSettingDataSource
 import com.yjy.data.datastore.api.UserPreferencesDataSource
 import com.yjy.data.network.datasource.UserDataSource
+import com.yjy.data.network.request.user.ChangeUserNameRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
 import com.yjy.data.user.api.FcmTokenProvider
 import com.yjy.data.user.api.UserRepository
@@ -42,6 +43,9 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUserName(): NetworkResult<String> =
         userDataSource.getUserName().map { it.userName }
+
+    override suspend fun getRemainSecondsForChangeName(): NetworkResult<Long> =
+        userDataSource.getRemainTimeForChangeName().map { it.remainSecondsForChangeName }
 
     override suspend fun getUnViewedNotificationCount(): NetworkResult<Int> =
         userDataSource.getUnViewedNotificationCount().map { it.unViewedNotificationCount }
@@ -85,6 +89,9 @@ internal class UserRepositoryImpl @Inject constructor(
             .onSuccess {
                 notificationDao.deleteAll()
             }
+
+    override suspend fun changeUserName(name: String): NetworkResult<Unit> =
+        userDataSource.changeUserName(ChangeUserNameRequest(name))
 
     override suspend fun registerFcmToken() {
         val currentToken: String = fcmTokenProvider.getToken()

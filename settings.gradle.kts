@@ -64,6 +64,7 @@ include(
     ":feature:applock",
     ":feature:notification",
     ":feature:notificationsetting",
+    ":feature:changename",
     ":feature:addchallenge",
     ":feature:editchallenge",
     ":feature:completedchallenges",

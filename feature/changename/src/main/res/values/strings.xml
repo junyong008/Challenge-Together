@@ -1,0 +1,14 @@
+<resources>
+    <string name="feature_changename_title">Change Nickname</string>
+    <string name="feature_changename_description">You can change your nickname once a week.</string>
+    <string name="feature_changename_action">Change</string>
+    <string name="feature_changenam_confirm_info">Do you want to change your Nickname?\nYou can change your nickname once a week.</string>
+    <string name="feature_changename_info_graphic">Nickname Information Graphic</string>
+    <string name="feature_changename_success">Your Nickname has been changed.</string>
+    <string name="feature_changename_nickname_already_taken">This nickname is already taken.</string>
+    <string name="feature_changename_error">An error occurred. Please try again later.</string>
+    <string name="feature_changename_check_network_connection">Please check your network connection.</string>
+    <string name="feature_changename_length_indicator">Nickname must be between %1$d and %2$d characters long</string>
+    <string name="feature_changename_korean_constraint">Korean nicknames cannot contain only consonants or vowels</string>
+    <string name="feature_changename_next_change_notice">You can change it again after %1$s.</string>
+</resources>

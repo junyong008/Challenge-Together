@@ -30,9 +30,11 @@ import com.yjy.common.core.constants.AuthConst.MIN_NICKNAME_LENGTH
 import com.yjy.common.core.constants.UrlConst.PRIVACY_POLICY
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
-import com.yjy.common.designsystem.component.ChallengeTogetherBottomAppBar
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
+import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.common.designsystem.component.ClickableText
+import com.yjy.common.designsystem.component.ConditionIndicator
+import com.yjy.common.designsystem.component.ErrorIndicator
 import com.yjy.common.designsystem.component.SingleLineTextField
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.component.StableImage
@@ -106,11 +108,10 @@ internal fun NicknameScreen(
     }
 
     Scaffold(
-        bottomBar = {
-            ChallengeTogetherBottomAppBar(
-                showBackButton = true,
-                showContinueButton = false,
-                onBackClick = onBackClick,
+        topBar = {
+            ChallengeTogetherTopAppBar(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
+                onNavigationClick = onBackClick,
             )
         },
         containerColor = CustomColorProvider.colorScheme.background,
@@ -122,7 +123,6 @@ internal fun NicknameScreen(
                 .padding(padding)
                 .padding(horizontal = 32.dp),
         ) {
-            Spacer(modifier = Modifier.height(110.dp))
             TitleWithDescription(
                 titleRes = R.string.feature_signup_set_nickname_title,
                 descriptionRes = R.string.feature_signup_set_nickname_description,
@@ -145,27 +145,20 @@ internal fun NicknameScreen(
                 placeholderText = stringResource(id = R.string.feature_signup_nickname_place_holder),
                 enabled = !uiState.isSigningUp,
             )
-            val errorMessage = when {
-                !uiState.isNicknameLengthValid -> stringResource(
+            ConditionIndicator(
+                text = stringResource(
                     id = R.string.feature_signup_nickname_length_indicator,
                     MIN_NICKNAME_LENGTH,
                     MAX_NICKNAME_LENGTH,
-                )
-                uiState.isNicknameHasOnlyConsonantOrVowel -> stringResource(
-                    id = R.string.feature_signup_nickname_korean_constraint,
-                )
-                else -> null
-            }
-            errorMessage?.let {
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = it,
-                    color = CustomColorProvider.colorScheme.red,
-                    style = MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.align(Alignment.Start),
+                ),
+                isMatched = uiState.isNicknameLengthValid,
+            )
+            if (uiState.isNicknameHasOnlyConsonantOrVowel) {
+                ErrorIndicator(
+                    text = stringResource(id = R.string.feature_signup_nickname_korean_constraint),
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             ChallengeTogetherButton(
                 onClick = {
                     processAction(
@@ -193,13 +186,17 @@ internal fun NicknameScreen(
                     )
                 }
             }
-            PrivacyPolicyText()
+            Spacer(modifier = Modifier.weight(1f))
+            PrivacyPolicyText(modifier = Modifier.align(Alignment.CenterHorizontally))
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
 
 @Composable
-fun PrivacyPolicyText() {
+fun PrivacyPolicyText(
+    modifier: Modifier = Modifier,
+) {
     val uriHandler = LocalUriHandler.current
 
     val privacyAgreement = stringResource(id = R.string.feature_signup_privacy_policy_agreement)
@@ -224,9 +221,11 @@ fun PrivacyPolicyText() {
 
     ClickableText(
         text = annotatedText,
+        textAlign = TextAlign.Center,
         textDecoration = TextDecoration.None,
         color = CustomColorProvider.colorScheme.onBackgroundMuted,
         onClick = { uriHandler.openUri(PRIVACY_POLICY) },
+        modifier = modifier,
     )
 }
 

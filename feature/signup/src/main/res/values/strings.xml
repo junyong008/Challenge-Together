@@ -9,7 +9,7 @@
     <string name="feature_signup_email_already_registered">This email is already registered.</string>
     <string name="feature_signup_error">An error occurred. Please try again later.</string>
     <string name="feature_signup_set_nickname_title">Set Your Own Nickname</string>
-    <string name="feature_signup_set_nickname_description">You can change your nickname anytime later in the settings.</string>
+    <string name="feature_signup_set_nickname_description">Your nickname is visible to other users in the app.</string>
     <string name="feature_signup_smile_image_description">Smile Image</string>
     <string name="feature_signup_nickname_place_holder">Enter your nickname</string>
     <string name="feature_signup_start">START</string>

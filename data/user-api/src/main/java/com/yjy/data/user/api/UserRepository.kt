@@ -13,9 +13,11 @@ interface UserRepository {
     fun getNotifications(): Flow<PagingData<Notification>>
     suspend fun syncTime(): NetworkResult<Unit>
     suspend fun getUserName(): NetworkResult<String>
+    suspend fun getRemainSecondsForChangeName(): NetworkResult<Long>
     suspend fun getUnViewedNotificationCount(): NetworkResult<Int>
     suspend fun deleteNotification(notificationId: Int): NetworkResult<Unit>
     suspend fun deleteAllNotifications(): NetworkResult<Unit>
+    suspend fun changeUserName(name: String): NetworkResult<Unit>
     suspend fun registerFcmToken()
     suspend fun getNotificationSettings(): Int
     suspend fun getMutedChallengeBoards(): List<Int>
