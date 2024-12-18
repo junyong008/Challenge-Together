@@ -24,6 +24,8 @@ import com.yjy.feature.community.navigation.communityNavGraph
 import com.yjy.feature.community.navigation.navigateToCommunityPost
 import com.yjy.feature.completedchallenges.navigation.completedChallengesScreen
 import com.yjy.feature.completedchallenges.navigation.navigateToCompletedChallenges
+import com.yjy.feature.deleteaccount.navigation.deleteAccountScreen
+import com.yjy.feature.deleteaccount.navigation.navigateToDeleteAccount
 import com.yjy.feature.editchallenge.navigation.editChallengeScreen
 import com.yjy.feature.editchallenge.navigation.navigateToEditCategory
 import com.yjy.feature.editchallenge.navigation.navigateToEditTargetDays
@@ -78,7 +80,7 @@ internal fun ServiceNavHost(
             onAppLockSettingClick = navController::navigateToAppLockSetting,
             onChangeNicknameClick = navController::navigateToChangeName,
             onChangePasswordClick = navController::navigateToChangePassword,
-            onDeleteAccountClick = { },
+            onDeleteAccountClick = navController::navigateToDeleteAccount,
             onShowSnackbar = onShowSnackbar,
         )
         appLockNavGraph(
@@ -101,6 +103,10 @@ internal fun ServiceNavHost(
             onBackClick = navController::popBackStack,
         )
         changeNameScreen(
+            onBackClick = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
+        )
+        deleteAccountScreen(
             onBackClick = navController::popBackStack,
             onShowSnackbar = onShowSnackbar,
         )

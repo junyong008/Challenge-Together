@@ -38,6 +38,7 @@ dependencies {
         projects.feature.notification,
         projects.feature.notificationsetting,
         projects.feature.changename,
+        projects.feature.deleteaccount,
         projects.feature.addchallenge,
         projects.feature.waitingchallenge,
         projects.feature.startedchallenge,

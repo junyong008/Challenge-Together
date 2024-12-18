@@ -30,4 +30,7 @@ internal class AuthDataSourceImpl @Inject constructor(
 
     override suspend fun changePassword(changePasswordRequest: ChangePasswordRequest): NetworkResult<Unit> =
         challengeTogetherService.changePassword(changePasswordRequest)
+
+    override suspend fun deleteAccount(): NetworkResult<Unit> =
+        challengeTogetherService.deleteAccount()
 }

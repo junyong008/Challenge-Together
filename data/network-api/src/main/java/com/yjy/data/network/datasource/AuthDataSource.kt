@@ -14,4 +14,5 @@ interface AuthDataSource {
     suspend fun requestVerifyCode(emailRequest: EmailRequest): NetworkResult<Unit>
     suspend fun verifyCode(verifyRequest: VerifyRequest): NetworkResult<Unit>
     suspend fun changePassword(changePasswordRequest: ChangePasswordRequest): NetworkResult<Unit>
+    suspend fun deleteAccount(): NetworkResult<Unit>
 }

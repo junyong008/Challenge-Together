@@ -24,4 +24,5 @@ interface AuthRepository {
     suspend fun requestVerifyCode(email: String): NetworkResult<Unit>
     suspend fun verifyCode(email: String, verifyCode: String): NetworkResult<Unit>
     suspend fun changePassword(password: String): NetworkResult<Unit>
+    suspend fun deleteAccount(): NetworkResult<Unit>
 }

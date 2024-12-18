@@ -75,6 +75,9 @@ internal interface ChallengeTogetherService {
         @Body request: ChangePasswordRequest,
     ): NetworkResult<Unit>
 
+    @DELETE("auth/delete/account")
+    suspend fun deleteAccount(): NetworkResult<Unit>
+
     // Challenge
     @POST("service/challenge/add")
     suspend fun addChallenge(

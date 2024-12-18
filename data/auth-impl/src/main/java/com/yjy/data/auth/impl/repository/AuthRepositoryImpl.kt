@@ -83,6 +83,8 @@ internal class AuthRepositoryImpl @Inject constructor(
             sessionDataSource.setToken(null)
         }
 
+    override suspend fun deleteAccount(): NetworkResult<Unit> = authDataSource.deleteAccount()
+
     private fun hashPassword(password: String): String {
         val bytes = password.toByteArray()
         val md = MessageDigest.getInstance("SHA-256")

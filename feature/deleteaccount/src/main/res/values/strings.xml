@@ -1,0 +1,13 @@
+<resources>
+    <string name="feature_deleteaccount_title">Delete Account</string>
+    <string name="feature_deleteaccount_warning_title">Wait! Please review the following before deleting your account.</string>
+    <string name="feature_deleteaccount_warning_challenges">All challenge-related data associated with you will be removed.</string>
+    <string name="feature_deleteaccount_warning_community">Posts and comments in the community will be labeled as "Deleted Member."</string>
+    <string name="feature_deleteaccount_warning_irreversible">All data will be permanently deleted and cannot be recovered.</string>
+    <string name="feature_deleteaccount_info_graphic">Delete Information Graphic</string>
+    <string name="feature_deleteaccount_delete">Delete</string>
+    <string name="feature_deleteaccount_confirmation">Delete Account?</string>
+    <string name="feature_deleteaccount_irreversible_notice">Once deleted, your account cannot be restored.</string>
+    <string name="feature_deleteaccount_success">Your account has been successfully deleted.</string>
+    <string name="feature_deleteaccount_error">An error occurred. Please try again later.</string>
+</resources>
