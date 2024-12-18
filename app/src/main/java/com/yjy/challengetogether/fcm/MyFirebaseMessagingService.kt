@@ -4,6 +4,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.yjy.challengetogether.di.FcmEntryPoint
 import com.yjy.data.auth.api.AppLockRepository
+import com.yjy.data.auth.api.AuthRepository
 import com.yjy.data.user.api.NotificationRepository
 import com.yjy.model.common.notification.Notification
 import com.yjy.model.common.notification.NotificationSettingFlags
@@ -22,6 +23,10 @@ import java.time.LocalDateTime
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    private val authRepository: AuthRepository by lazy {
+        EntryPoints.get(applicationContext, FcmEntryPoint::class.java).authRepository()
+    }
 
     private val notificationMapper: NotificationMapper by lazy {
         EntryPoints.get(applicationContext, FcmEntryPoint::class.java).notificationMapper()
@@ -68,6 +73,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private suspend fun handleFcmMessage(notification: Notification) {
+        if (!authRepository.getIsLoggedIn()) return
         if (isNotificationMuted(notification.type, notification.linkId)) return
         if (isNotificationSettingDisabled(notification.type)) return
 
