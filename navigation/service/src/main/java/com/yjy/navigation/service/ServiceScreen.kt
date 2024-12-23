@@ -1,7 +1,10 @@
 package com.yjy.navigation.service
 
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
+import android.provider.Settings
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.expandVertically
@@ -28,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -39,15 +43,22 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
+import com.yjy.common.core.constants.UrlConst.PLAY_STORE
 import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.ObserveAsEvents
+import com.yjy.common.core.util.formatLocalDateTime
+import com.yjy.common.designsystem.component.BanDialog
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
+import com.yjy.common.designsystem.component.ChallengeTogetherDialog
 import com.yjy.common.designsystem.component.CustomSnackbarHost
+import com.yjy.common.designsystem.component.MaintenanceDialog
 import com.yjy.common.designsystem.component.SnackbarType
+import com.yjy.common.designsystem.extensions.getDisplayNameResId
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.ManualTimeWarning
+import com.yjy.model.common.Version
 import com.yjy.navigation.service.component.NetworkTopBar
 import com.yjy.navigation.service.component.ServiceBottomBar
 import com.yjy.navigation.service.navigation.MainTab
@@ -60,20 +71,26 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+@SuppressLint("HardwareIds")
 @Composable
 internal fun ServiceScreen(
     navigateToAuth: () -> Unit,
     onShowToast: (String) -> Unit,
+    onFinishApp: () -> Unit,
     viewModel: ServiceViewModel = hiltViewModel(),
     navigator: ServiceNavController = rememberServiceNavController(),
     snackbarScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
+    val banStatus by viewModel.banStatus.collectAsStateWithLifecycle()
     val isOffline by viewModel.isOffline.collectAsStateWithLifecycle()
     val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
     val isManualTime by viewModel.isManualTime.collectAsStateWithLifecycle()
+    val remoteAppVersion by viewModel.remoteAppVersion.collectAsStateWithLifecycle()
+    val maintenanceEndTime by viewModel.maintenanceEndTime.collectAsStateWithLifecycle()
     val isSessionExpired by viewModel.isSessionExpired.collectAsStateWithLifecycle()
     val sessionExpiredMessage = stringResource(id = R.string.navigation_service_session_expired)
 
@@ -89,12 +106,53 @@ internal fun ServiceScreen(
         }
     }
 
+    val currentVersion = remember {
+        val packageInfo = if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
+            context.packageManager.getPackageInfo(context.packageName, PackageManager.PackageInfoFlags.of(0))
+        } else {
+            context.packageManager.getPackageInfo(context.packageName, 0)
+        }
+        packageInfo.versionName?.let { Version(it) }
+    }
+
     LaunchedEffect(lifecycleOwner.lifecycle) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             if (viewModel.isPinSet.first()) {
                 navigator.navigateToAppLockPinValidation()
             }
         }
+    }
+
+    LaunchedEffect(isOffline) {
+        if (!isOffline) {
+            val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+            viewModel.checkBan(identifier = androidId)
+        }
+    }
+
+    if (banStatus != null) {
+        BanDialog(
+            banReason = stringResource(id = banStatus!!.reason.getDisplayNameResId()),
+            banEndTime = formatLocalDateTime(banStatus!!.endAt),
+            onDismiss = onFinishApp,
+        )
+    }
+
+    if (remoteAppVersion != null && currentVersion != null && currentVersion < remoteAppVersion!!) {
+        ChallengeTogetherDialog(
+            title = stringResource(id = R.string.navigation_service_update),
+            description = stringResource(id = R.string.navigation_service_update_description),
+            positiveTextRes = R.string.navigation_service_update,
+            onClickPositive = { uriHandler.openUri(PLAY_STORE) },
+            onClickNegative = onFinishApp,
+        )
+    }
+
+    if (maintenanceEndTime != null) {
+        MaintenanceDialog(
+            expectedCompletionTime = formatLocalDateTime(maintenanceEndTime!!),
+            onDismiss = onFinishApp,
+        )
     }
 
     ObserveAsEvents(flow = viewModel.sessionExpiredEvent) {

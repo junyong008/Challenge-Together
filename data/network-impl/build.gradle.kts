@@ -3,6 +3,7 @@
 plugins {
     alias(libs.plugins.custom.android.library)
     alias(libs.plugins.custom.android.retrofit)
+    alias(libs.plugins.custom.android.firebase)
     alias(libs.plugins.custom.android.hilt)
     alias(libs.plugins.secrets)
 }

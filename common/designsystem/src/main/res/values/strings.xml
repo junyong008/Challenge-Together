@@ -26,6 +26,15 @@
     <string name="common_designsystem_dialog_password_title">Password</string>
     <string name="common_designsystem_dialog_password_description">Please enter the entry password.</string>
     <string name="common_designsystem_dialog_password_placeholder">Enter password</string>
+    <string name="common_designsystem_dialog_system_maintenance_title">System Maintenance Notice</string>
+    <string name="common_designsystem_dialog_system_maintenance_description">We are currently performing system maintenance to provide better service.\nService will be temporarily unavailable during the maintenance period. Thank you for your understanding.</string>
+    <string name="common_designsystem_dialog_expected_completion">Expected Completion Time</string>
+    <string name="common_designsystem_dialog_exit">Exit</string>
+    <string name="common_designsystem_dialog_service_restriction_title">Service Restriction</string>
+    <string name="common_designsystem_dialog_service_restriction_description">Your access to the service has been restricted due to a violation of our operating principles.</string>
+    <string name="common_designsystem_dialog_restriction_reason">Reason</string>
+    <string name="common_designsystem_dialog_restriction_period">Restriction Period</string>
+    <string name="common_designsystem_dialog_until">Until %1$s</string>
 
     <string name="common_designsystem_tier_unspecified">unspecified tier</string>
     <string name="common_designsystem_tier_iron_description">iron tier</string>

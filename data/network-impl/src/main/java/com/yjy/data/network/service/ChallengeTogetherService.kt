@@ -28,6 +28,7 @@ import com.yjy.data.network.response.challenge.GetWaitingChallengeDetailResponse
 import com.yjy.data.network.response.challenge.WaitingChallengeResponse
 import com.yjy.data.network.response.community.GetPostResponse
 import com.yjy.data.network.response.community.GetPostsResponse
+import com.yjy.data.network.response.user.CheckBanResponse
 import com.yjy.data.network.response.user.GetNameResponse
 import com.yjy.data.network.response.user.GetNotificationsResponse
 import com.yjy.data.network.response.user.GetRemainTimeForChangeNameResponse
@@ -198,6 +199,11 @@ internal interface ChallengeTogetherService {
     ): NetworkResult<GetWaitingChallengeDetailResponse>
 
     // User
+    @GET("service/user/check-ban")
+    suspend fun checkBan(
+        @Query("identifier") identifier: String,
+    ): NetworkResult<CheckBanResponse?>
+
     @GET("service/user/get/name")
     suspend fun getUserName(): NetworkResult<GetNameResponse>
 

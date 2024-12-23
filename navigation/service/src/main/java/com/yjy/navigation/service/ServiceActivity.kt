@@ -46,6 +46,9 @@ class ServiceActivity : AppCompatActivity() {
                     onShowToast = { message ->
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     },
+                    onFinishApp = {
+                        finish()
+                    },
                 )
             }
         }

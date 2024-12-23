@@ -10,8 +10,17 @@ import com.yjy.data.network.request.user.ChangeUserNameRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
 import com.yjy.data.user.api.FcmTokenProvider
 import com.yjy.data.user.api.UserRepository
+import com.yjy.data.user.impl.mapper.toLocalDateTimeOrNull
+import com.yjy.data.user.impl.mapper.toModel
+import com.yjy.model.common.Ban
+import com.yjy.model.common.Version
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
+import java.security.MessageDigest
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 internal class UserRepositoryImpl @Inject constructor(
@@ -22,10 +31,27 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override val timeDiff: Flow<Long> = userPreferencesDataSource.timeDiff
 
+    override val remoteAppVersion: Flow<Version> =
+        userDataSource.getRemoteAppVersion().map { Version(it) }
+
+    override val maintenanceEndTime: Flow<LocalDateTime?> =
+        userDataSource.getMaintenanceEndTime()
+            .map { it.toLocalDateTimeOrNull() }
+            .combine(timeDiff) { endTime, timeDiff ->
+                endTime?.plusSeconds(timeDiff)
+            }
+
     override suspend fun syncTime(): NetworkResult<Unit> = userDataSource.syncTime()
 
     override suspend fun getUserName(): NetworkResult<String> =
         userDataSource.getUserName().map { it.userName }
+
+    override suspend fun checkBan(identifier: String): NetworkResult<Ban?> {
+        val hashedIdentifier = hashIdentifier(identifier)
+        return userDataSource.checkBan(hashedIdentifier)
+            .map { it?.toModel() }
+            .map { it?.copy(endAt = it.endAt.plusSeconds(timeDiff.first())) }
+    }
 
     override suspend fun getRemainSecondsForChangeName(): NetworkResult<Long> =
         userDataSource.getRemainTimeForChangeName().map { it.remainSecondsForChangeName }
@@ -46,5 +72,12 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override suspend fun clearLocalData() {
         userPreferencesDataSource.setFcmToken(null)
+    }
+
+    private fun hashIdentifier(identifier: String): String {
+        val bytes = identifier.toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val hashedBytes = md.digest(bytes)
+        return hashedBytes.joinToString("") { "%02x".format(it) }
     }
 }

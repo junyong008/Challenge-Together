@@ -2,6 +2,7 @@ package com.yjy.common.core.constants
 
 object UrlConst {
     const val PRIVACY_POLICY = "https://sites.google.com/view/challenge-together/%ED%99%88"
+    const val PLAY_STORE = "https://play.google.com/store/apps/details?id=com.yjy.challengetogether"
 }
 
 object DeepLinkConfig {

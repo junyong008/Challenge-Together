@@ -16,6 +16,7 @@ dependencies {
         projects.common.designsystem,
         projects.common.ui,
         projects.common.navigation,
+        projects.common.network,
 
         projects.data.authApi,
         projects.data.userApi,

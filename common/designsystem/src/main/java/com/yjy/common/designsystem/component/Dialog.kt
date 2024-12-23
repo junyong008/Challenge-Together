@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -80,6 +81,122 @@ fun ChallengeTogetherDialog(
             negativeTextRes = negativeTextRes,
             positiveTextColor = positiveTextColor,
             negativeTextColor = negativeTextColor,
+        )
+    }
+}
+
+@Composable
+fun MaintenanceDialog(
+    expectedCompletionTime: String,
+    onDismiss: () -> Unit,
+) {
+    BaseDialog(
+        onDismissRequest = onDismiss,
+        title = stringResource(id = R.string.common_designsystem_dialog_system_maintenance_title),
+        description = stringResource(id = R.string.common_designsystem_dialog_system_maintenance_description),
+    ) {
+        Spacer(modifier = Modifier.height(16.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.extraLarge)
+                .background(CustomColorProvider.colorScheme.background)
+                .padding(horizontal = 24.dp, vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = stringResource(id = R.string.common_designsystem_dialog_expected_completion),
+                color = CustomColorProvider.colorScheme.onBackgroundMuted,
+                style = MaterialTheme.typography.labelSmall,
+                textAlign = TextAlign.Center,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(id = R.string.common_designsystem_dialog_until, expectedCompletionTime),
+                color = CustomColorProvider.colorScheme.onBackground,
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center,
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        ClickableText(
+            text = stringResource(id = R.string.common_designsystem_dialog_exit),
+            onClick = onDismiss,
+            color = CustomColorProvider.colorScheme.onSurfaceMuted,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            textDecoration = TextDecoration.None,
+        )
+    }
+}
+
+@Composable
+fun BanDialog(
+    banReason: String,
+    banEndTime: String,
+    onDismiss: () -> Unit,
+) {
+    BaseDialog(
+        onDismissRequest = onDismiss,
+        title = stringResource(id = R.string.common_designsystem_dialog_service_restriction_title),
+        description = stringResource(
+            id = R.string.common_designsystem_dialog_service_restriction_description,
+        ),
+    ) {
+        Spacer(modifier = Modifier.height(16.dp))
+        Column(
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.large)
+                .background(CustomColorProvider.colorScheme.background)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = stringResource(id = R.string.common_designsystem_dialog_restriction_reason),
+                    color = CustomColorProvider.colorScheme.onBackgroundMuted,
+                    style = MaterialTheme.typography.labelSmall,
+                )
+                Text(
+                    text = banReason,
+                    color = CustomColorProvider.colorScheme.onBackground,
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.weight(1f),
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = CustomColorProvider.colorScheme.divider,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(id = R.string.common_designsystem_dialog_restriction_period),
+                color = CustomColorProvider.colorScheme.onBackgroundMuted,
+                style = MaterialTheme.typography.labelSmall,
+                modifier = Modifier.align(Alignment.Start),
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(id = R.string.common_designsystem_dialog_until, banEndTime),
+                color = CustomColorProvider.colorScheme.onBackground,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.End,
+                modifier = Modifier.align(Alignment.End),
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        ClickableText(
+            text = stringResource(id = R.string.common_designsystem_dialog_exit),
+            onClick = onDismiss,
+            color = CustomColorProvider.colorScheme.onSurfaceMuted,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            textDecoration = TextDecoration.None,
         )
     }
 }

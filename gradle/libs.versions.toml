@@ -100,7 +100,7 @@ detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-form
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx"}
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
@@ -164,6 +164,7 @@ secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugi
 # build-logic으로 커스텀한 plugins
 custom-android-application = { id = "custom.android.application", version = "unspecified" }
 custom-android-application-compose = { id = "custom.android.application.compose", version = "unspecified" }
+custom-android-application-firebase = { id = "custom.android.application.firebase", version = "unspecified" }
 custom-android-firebase = { id = "custom.android.firebase", version = "unspecified" }
 custom-android-library = { id = "custom.android.library", version = "unspecified" }
 custom-android-library-compose = { id = "custom.android.library.compose", version = "unspecified" }
