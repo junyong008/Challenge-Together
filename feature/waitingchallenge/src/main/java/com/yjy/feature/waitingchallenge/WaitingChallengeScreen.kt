@@ -1,5 +1,6 @@
 package com.yjy.feature.waitingchallenge
 
+import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
@@ -41,6 +42,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -54,6 +56,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.constants.ChallengeConst.MAX_ROOM_PASSWORD_LENGTH
+import com.yjy.common.core.constants.DeepLinkConfig
+import com.yjy.common.core.constants.DeepLinkType
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.BaseBottomSheet
@@ -125,6 +129,7 @@ internal fun WaitingChallengeScreen(
     onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit = { _, _ -> },
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val context = LocalContext.current
     val passwordCopiedMessage = stringResource(id = R.string.feature_waitingchallenge_password_copied)
     val deleteSuccessMessage = stringResource(id = R.string.feature_waitingchallenge_delete_successful)
     val startSuccessMessage = stringResource(id = R.string.feature_waitingchallenge_start_successful)
@@ -202,8 +207,27 @@ internal fun WaitingChallengeScreen(
         val challenge = challengeDetail.challengeOrNull() ?: return
 
         if (shouldShowMenuBottomSheet) {
+            val shareMessage = stringResource(
+                id = R.string.feature_waitingchallenge_menu_share_message,
+                challenge.title,
+                challenge.participants.size,
+            )
+
             MenuBottomSheet(
                 isAuthor = challenge.isAuthor,
+                onShareClick = {
+                    val shareLink = "${DeepLinkConfig.ONE_LINK_URL}?" +
+                            "${DeepLinkType.TYPE_PARAM}=${DeepLinkType.WAITING}&" +
+                            "${DeepLinkType.ID_PARAM}=${challenge.id}"
+
+                    val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, "$shareMessage\n\n$shareLink")
+                    }
+
+                    context.startActivity(Intent.createChooser(shareIntent, null))
+                },
                 onRefreshClick = {
                     shouldShowMenuBottomSheet = false
                     processAction(WaitingChallengeUiAction.OnRefreshClick)
@@ -472,12 +496,23 @@ private fun ChallengeContent(
 @Composable
 private fun MenuBottomSheet(
     isAuthor: Boolean,
+    onShareClick: () -> Unit,
     onRefreshClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onDismiss: () -> Unit,
 ) {
     BaseBottomSheet(onDismiss = onDismiss) {
         Spacer(modifier = Modifier.height(16.dp))
+        ClickableText(
+            text = stringResource(id = R.string.feature_waitingchallenge_menu_share),
+            textAlign = TextAlign.Center,
+            textDecoration = TextDecoration.None,
+            style = MaterialTheme.typography.labelMedium,
+            color = CustomColorProvider.colorScheme.onSurface,
+            onClick = onShareClick,
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(vertical = 16.dp),
+        )
         ClickableText(
             text = stringResource(id = R.string.feature_waitingchallenge_menu_refresh),
             textAlign = TextAlign.Center,

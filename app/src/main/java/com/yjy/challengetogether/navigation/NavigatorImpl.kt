@@ -14,8 +14,16 @@ class NavigatorImpl @Inject constructor(
 
     override fun createIntent(destination: Destination): Intent {
         return when (destination) {
-            Destination.Auth -> Intent(context, AuthActivity::class.java)
-            Destination.Service -> Intent(context, ServiceActivity::class.java)
+            Destination.Auth -> Intent(context, AuthActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                        Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+            Destination.Service -> Intent(context, ServiceActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                        Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
         }
     }
 }

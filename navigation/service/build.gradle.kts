@@ -53,6 +53,7 @@ dependencies {
         libs.androidx.appcompat,
         libs.androidx.navigation.compose,
         libs.androidx.hilt.navigation.compose,
+        libs.appsflyer.sdk,
         libs.kotlinx.collections.immutable,
     )
 

@@ -1,6 +1,5 @@
 package com.yjy.platform.widget.util
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +7,6 @@ import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.action.ActionCallback
 import com.yjy.common.core.constants.DeepLinkConfig.SCHEME_AND_HOST
-import com.yjy.common.core.constants.DeepLinkConfig.SERVICE_ACTIVITY
 import com.yjy.common.core.constants.DeepLinkPath.STARTED
 
 class WidgetClickAction : ActionCallback {
@@ -27,10 +25,6 @@ class WidgetClickAction : ActionCallback {
                 Intent.FLAG_ACTIVITY_CLEAR_TOP or
                 Intent.FLAG_ACTIVITY_SINGLE_TOP or
                 Intent.FLAG_ACTIVITY_CLEAR_TASK
-            component = ComponentName(
-                context.packageName,
-                SERVICE_ACTIVITY,
-            )
         }
         context.startActivity(intent)
     }

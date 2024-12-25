@@ -5,7 +5,6 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
@@ -104,10 +103,10 @@ object NotificationHelper {
         Intent().apply {
             action = Intent.ACTION_VIEW
             data = "${DeepLinkConfig.SCHEME_AND_HOST}/${navigation.deepLinkPath}/${navigation.param}".toUri()
-            component = ComponentName(
-                packageName,
-                DeepLinkConfig.SERVICE_ACTIVITY,
-            )
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                    Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK
         },
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
     )

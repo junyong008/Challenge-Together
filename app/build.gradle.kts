@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.custom.android.application.compose)
     alias(libs.plugins.custom.android.application.firebase)
     alias(libs.plugins.custom.android.hilt)
+    alias(libs.plugins.secrets)
     id("com.google.android.gms.oss-licenses-plugin")
 }
 
@@ -38,6 +39,10 @@ android {
     }
 }
 
+secrets {
+    defaultPropertiesFileName = "secrets.defaults.properties"
+}
+
 dependencies {
     ksp(libs.hilt.ext.compiler)
 
@@ -57,12 +62,14 @@ dependencies {
 
         projects.platform.notifications,
 
+        libs.android.installreferrer,
         libs.androidx.appcompat,
         libs.androidx.core.splashscreen,
         libs.androidx.startup,
         libs.androidx.navigation.compose,
         libs.androidx.hilt.navigation.compose,
         libs.androidx.work.ktx,
+        libs.appsflyer.sdk,
         libs.hilt.ext.work,
         libs.timber,
     )

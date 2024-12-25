@@ -35,6 +35,7 @@
     <string name="feature_community_post_dot"> · </string>
     <string name="feature_community_post_title">Post</string>
     <string name="feature_community_post_bookmark">Bookmark</string>
+    <string name="feature_community_post_share">Share</string>
     <string name="feature_community_post_refresh">Refresh</string>
     <string name="feature_community_post_report">Report</string>
     <string name="feature_community_post_delete">Delete</string>

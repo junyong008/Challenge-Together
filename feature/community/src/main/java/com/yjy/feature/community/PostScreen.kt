@@ -1,5 +1,6 @@
 package com.yjy.feature.community
 
+import android.content.Intent
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -46,6 +47,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -55,6 +57,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.yjy.common.core.constants.DeepLinkConfig
+import com.yjy.common.core.constants.DeepLinkType
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.core.util.toDisplayTimeFormat
 import com.yjy.common.designsystem.component.BaseBottomSheet
@@ -130,6 +134,7 @@ internal fun PostScreen(
     onEditPostClick: (postId: Int, content: String) -> Unit = { _, _ -> },
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -283,6 +288,19 @@ internal fun PostScreen(
             if (shouldShowPostMenu) {
                 PostMenuBottomSheet(
                     isAuthor = post.isAuthor,
+                    onShareClick = {
+                        val shareLink = "${DeepLinkConfig.ONE_LINK_URL}?" +
+                                "${DeepLinkType.TYPE_PARAM}=${DeepLinkType.POST}&" +
+                                "${DeepLinkType.ID_PARAM}=${post.postId}"
+
+                        val shareIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, shareLink)
+                        }
+
+                        context.startActivity(Intent.createChooser(shareIntent, null))
+                    },
                     onRefreshClick = {
                         shouldShowPostMenu = false
                         processAction(CommunityPostUiAction.OnRefreshClick)
@@ -840,6 +858,7 @@ private fun CommentMenuBottomSheet(
 @Composable
 private fun PostMenuBottomSheet(
     isAuthor: Boolean,
+    onShareClick: () -> Unit,
     onRefreshClick: () -> Unit,
     onReportClick: () -> Unit,
     onEditClick: () -> Unit,
@@ -848,6 +867,16 @@ private fun PostMenuBottomSheet(
 ) {
     BaseBottomSheet(onDismiss = onDismiss) {
         Spacer(modifier = Modifier.height(16.dp))
+        ClickableText(
+            text = stringResource(id = R.string.feature_community_post_share),
+            textAlign = TextAlign.Center,
+            textDecoration = TextDecoration.None,
+            style = MaterialTheme.typography.labelMedium,
+            color = CustomColorProvider.colorScheme.onSurface,
+            onClick = onShareClick,
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(vertical = 16.dp),
+        )
         ClickableText(
             text = stringResource(id = R.string.feature_community_post_refresh),
             textAlign = TextAlign.Center,

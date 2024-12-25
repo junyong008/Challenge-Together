@@ -6,6 +6,8 @@
     <string name="feature_waitingchallenge_target_day_unlimited">Unlimited</string>
     <string name="feature_waitingchallenge_menu_delete">Delete</string>
     <string name="feature_waitingchallenge_menu_refresh">Refresh</string>
+    <string name="feature_waitingchallenge_menu_share">Share</string>
+    <string name="feature_waitingchallenge_menu_share_message">Let\'s take on the \"%1$s\" challenge together!\nCurrently, %2$d people are participating.</string>
     <string name="feature_waitingchallenge_delete">Delete</string>
     <string name="feature_waitingchallenge_delete_prompt">Would you like to delete the challenge?</string>
     <string name="feature_waitingchallenge_start">Start</string>

@@ -8,6 +8,7 @@ packageName = "com.yjy.challengetogether"
 
 # 라이브러리 버전
 accompanist = "0.34.0"
+androidInstallreferrer = "2.2"
 androidGradlePlugin = "8.7.3"
 androidxActivityCompose = "1.9.3"
 androidxCompose = "1.7.6"
@@ -21,8 +22,9 @@ androidxNavigation = "2.8.5"
 androidXPaging = "3.3.5"
 androidxWork = "2.10.0"
 appcompat = "1.7.0"
+appsflyer = "6.16.0"
 biometric = "1.4.0-alpha02"
-desugar = "2.1.3"
+desugar = "2.1.4"
 detekt = "1.23.6"
 firebaseBom = "33.7.0"
 firebaseCrashlyticsPlugin = "3.0.2"
@@ -54,6 +56,7 @@ timber = "5.0.1"
 
 [libraries]
 # 각 모듈에서 사용되는 개별 라이브러리
+android-installreferrer = { group = "com.android.installreferrer", name = "installreferrer", version.ref = "androidInstallreferrer" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivityCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-biometric = { group = "androidx.biometric", name = "biometric-ktx", version.ref = "biometric" }
@@ -67,6 +70,7 @@ androidx-paging-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", 
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidXPaging" }
 androidx-work-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "androidxWork" }
+appsflyer-sdk = { group = "com.appsflyer", name = "af-android-sdk", version.ref = "appsflyer" }
 google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "googleOss" }
 google-oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "googleOssPlugin" }
 hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExt" }

@@ -8,7 +8,12 @@ inline fun <reified T : Activity> Activity.startActivityWithAnimation(
     withFinish: Boolean,
     intentBuilder: Intent.() -> Intent = { this },
 ) {
-    startActivity(Intent(this, T::class.java).intentBuilder())
+    val intent = Intent(this, T::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+    }.intentBuilder()
+
+    startActivity(intent)
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
         overrideActivityTransition(
             Activity.OVERRIDE_TRANSITION_OPEN,
