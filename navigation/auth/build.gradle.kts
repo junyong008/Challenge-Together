@@ -17,8 +17,13 @@ dependencies {
         projects.common.ui,
         projects.common.navigation,
 
+        projects.data.userApi,
+
+        projects.model,
+
         projects.platform.time,
 
+        projects.feature.intro,
         projects.feature.login,
         projects.feature.signup,
         projects.feature.findpassword,
@@ -27,4 +32,6 @@ dependencies {
         libs.androidx.navigation.compose,
         libs.androidx.hilt.navigation.compose,
     )
+
+    runtimeOnly(projects.data.userImpl)
 }

@@ -46,6 +46,7 @@ class AuthActivity : ComponentActivity() {
                     onShowToast = { message ->
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     },
+                    onFinishApp = { finish() },
                 )
             }
         }
