@@ -26,6 +26,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -184,16 +185,18 @@ fun NumberPicker(
             modifier = Modifier
                 .width(parentWidth.dp)
                 .align(Alignment.Center)
-                .offset(y = (-itemHeight / 2)),
-            color = contentColor,
+                .offset(y = (-itemHeight / 2))
+                .clip(MaterialTheme.shapes.extraLarge),
+            color = CustomColorProvider.colorScheme.divider,
             thickness = 1.dp,
         )
         HorizontalDivider(
             modifier = Modifier
                 .width(parentWidth.dp)
                 .align(Alignment.Center)
-                .offset(y = (itemHeight / 2)),
-            color = contentColor,
+                .offset(y = (itemHeight / 2))
+                .clip(MaterialTheme.shapes.extraLarge),
+            color = CustomColorProvider.colorScheme.divider,
             thickness = 1.dp,
         )
     }
