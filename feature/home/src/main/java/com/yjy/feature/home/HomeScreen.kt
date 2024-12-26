@@ -1,5 +1,7 @@
 package com.yjy.feature.home
 
+import android.app.Activity
+import android.content.Context
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -61,6 +63,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.android.play.core.review.ReviewManagerFactory
 import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.component.BaseBottomSheet
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
@@ -101,6 +104,7 @@ import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.SortOrder
 import com.yjy.model.common.Tier
 import com.yjy.platform.widget.WidgetManager
+import timber.log.Timber
 
 @Composable
 internal fun HomeRoute(
@@ -208,7 +212,10 @@ internal fun HomeScreen(
             processAction(HomeUiAction.OnSortOrderSelect(it))
             shouldShowSortOrderBottomSheet = false
         },
-        onDismissTierUp = { processAction(HomeUiAction.OnDismissTierUpAnimation) },
+        onDismissTierUp = {
+            processAction(HomeUiAction.OnDismissTierUpAnimation)
+            context.requestInAppReview()
+        },
         onDismissCompleted = { processAction(HomeUiAction.OnCloseCompletedChallengeNotification) },
         onDismissSortOrder = { shouldShowSortOrderBottomSheet = false },
     )
@@ -251,6 +258,20 @@ internal fun HomeScreen(
                     )
                 }
             }
+        }
+    }
+}
+
+fun Context.requestInAppReview() {
+    if (this !is Activity) return
+    val manager = ReviewManagerFactory.create(this)
+    val request = manager.requestReviewFlow()
+
+    request.addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            manager.launchReviewFlow(this, task.result)
+        } else {
+            Timber.e("Failed to request in-app review: ${task.exception}")
         }
     }
 }

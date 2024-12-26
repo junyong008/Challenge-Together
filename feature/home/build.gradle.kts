@@ -20,6 +20,9 @@ dependencies {
 
         projects.data.challengeApi,
         projects.data.userApi,
+
+        libs.google.play.review,
+        libs.google.play.review.ktx,
     )
 
     runtimeOnly(projects.data.challengeImpl)
