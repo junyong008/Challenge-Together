@@ -3,17 +3,26 @@ package com.yjy.feature.completedchallenges
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -65,23 +74,46 @@ internal fun CompletedChallengesScreen(
     onBackClick: () -> Unit = {},
     onCompletedChallengeClick: (SimpleStartedChallenge) -> Unit = {},
 ) {
+    val lazyListState = rememberLazyListState()
+    val scrolled by remember {
+        derivedStateOf {
+            lazyListState.firstVisibleItemIndex > 0 ||
+                    lazyListState.firstVisibleItemScrollOffset > 0
+        }
+    }
+
     var shouldShowSearchTextField by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
-            ChallengeTogetherTopAppBar(
-                onNavigationClick = onBackClick,
-                titleRes = R.string.feature_completechallenges_title,
-                rightContent = {
-                    if (completedChallenges.isNotEmpty() || searchQuery.isNotEmpty()) {
-                        SearchButton(
-                            onClick = { shouldShowSearchTextField = !shouldShowSearchTextField },
-                            isSearchActive = shouldShowSearchTextField,
-                            modifier = Modifier.padding(end = 4.dp),
-                        )
-                    }
-                },
-            )
+            Column {
+                ChallengeTogetherTopAppBar(
+                    onNavigationClick = onBackClick,
+                    titleRes = R.string.feature_completechallenges_title,
+                    rightContent = {
+                        if (completedChallenges.isNotEmpty() || searchQuery.isNotEmpty()) {
+                            SearchButton(
+                                onClick = { shouldShowSearchTextField = !shouldShowSearchTextField },
+                                isSearchActive = shouldShowSearchTextField,
+                                modifier = Modifier.padding(end = 4.dp),
+                            )
+                        }
+                    },
+                )
+                SearchTextField(
+                    triggeredText = searchQuery,
+                    onSearchTriggered = updateSearchQuery,
+                    isVisible = shouldShowSearchTextField,
+                    placeholderText = stringResource(id = R.string.feature_completechallenges_search),
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                )
+                if (scrolled) {
+                    HorizontalDivider(
+                        thickness = 1.dp,
+                        color = CustomColorProvider.colorScheme.divider,
+                    )
+                }
+            }
         },
         containerColor = CustomColorProvider.colorScheme.background,
         modifier = modifier.consumeWindowInsets(WindowInsets.navigationBars),
@@ -99,12 +131,6 @@ internal fun CompletedChallengesScreen(
                     .fillMaxSize()
                     .animateContentSize(),
             ) {
-                SearchTextField(
-                    triggeredText = searchQuery,
-                    onSearchTriggered = updateSearchQuery,
-                    isVisible = shouldShowSearchTextField,
-                    placeholderText = stringResource(id = R.string.feature_completechallenges_search),
-                )
                 if (completedChallenges.isEmpty()) {
                     EmptyBody(
                         title = stringResource(id = R.string.feature_completechallenges_search_empty_title),
@@ -114,6 +140,7 @@ internal fun CompletedChallengesScreen(
                     )
                 } else {
                     CompletedChallenges(
+                        scrollState = lazyListState,
                         searchQuery = searchQuery,
                         completedChallenges = completedChallenges,
                         onChallengeClick = onCompletedChallengeClick,
@@ -150,21 +177,29 @@ private fun SearchButton(
 
 @Composable
 private fun CompletedChallenges(
+    scrollState: LazyListState,
     searchQuery: String,
     completedChallenges: List<SimpleStartedChallenge>,
     onChallengeClick: (SimpleStartedChallenge) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    LazyColumn(
+        state = scrollState,
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = modifier.padding(top = 16.dp),
+        modifier = modifier,
     ) {
-        completedChallenges.forEach { challenge ->
+        items(
+            items = completedChallenges,
+            key = { it.id },
+        ) { challenge ->
             StartedChallengeCard(
                 challenge = challenge,
                 onClick = onChallengeClick,
                 searchKeyword = searchQuery,
             )
+        }
+        item {
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
