@@ -182,6 +182,11 @@ internal fun ChangeNameScreen(
                         ),
                         isMatched = uiState.isNameLengthValid,
                     )
+                    if (uiState.name == placeHolderName) {
+                        ErrorIndicator(
+                            text = stringResource(id = R.string.feature_changename_duplicate_name),
+                        )
+                    }
                     if (uiState.isNameHasOnlyConsonantOrVowel) {
                         ErrorIndicator(
                             text = stringResource(id = R.string.feature_changename_korean_constraint),
@@ -201,6 +206,7 @@ internal fun ChangeNameScreen(
                         enabled = uiState.isNameLengthValid &&
                             !uiState.isNameHasOnlyConsonantOrVowel &&
                             !uiState.isChangingName &&
+                            uiState.name != placeHolderName &&
                             remainSeconds <= 0,
                         modifier = Modifier.fillMaxWidth(),
                     ) {
