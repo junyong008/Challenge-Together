@@ -1,13 +1,20 @@
-package com.yjy.feature.intro.util
+package com.yjy.common.core.login
 
 import android.content.Context
 import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.yjy.common.core.BuildConfig.KAKAO_NATIVE_APP_KEY
 import timber.log.Timber
 
 object KakaoLoginManager {
+
+    fun init(context: Context) {
+        KakaoSdk.init(context, KAKAO_NATIVE_APP_KEY)
+    }
+
     fun login(
         context: Context,
         onSuccess: (kakaoId: String) -> Unit,
@@ -24,6 +31,26 @@ object KakaoLoginManager {
             loginWithKakaoApp(context, handleLoginResult, onSuccess, onFailure)
         } else {
             UserApiClient.instance.loginWithKakaoAccount(context, callback = handleLoginResult)
+        }
+    }
+
+    fun logout() {
+        UserApiClient.instance.logout { error ->
+            if (error != null) {
+                Timber.e(error, "Failed to kakao logout. Token deleted from sdk")
+            } else {
+                Timber.d("Kakao logout success")
+            }
+        }
+    }
+
+    fun unlink() {
+        UserApiClient.instance.unlink { error ->
+            if (error != null) {
+                Timber.e(error, "Failed to unlink kakao. Token deleted from sdk")
+            } else {
+                Timber.d("Kakao unlink success")
+            }
         }
     }
 

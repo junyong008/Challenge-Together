@@ -1,4 +1,4 @@
-package com.yjy.feature.intro.util
+package com.yjy.common.core.login
 
 import android.content.Context
 import com.navercorp.nid.NaverIdLoginSDK
@@ -6,9 +6,19 @@ import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
+import com.yjy.common.core.BuildConfig.NAVER_CLIENT_ID
+import com.yjy.common.core.BuildConfig.NAVER_CLIENT_SECRET
 import timber.log.Timber
 
 object NaverLoginManager {
+
+    fun init(
+        context: Context,
+        appName: String,
+    ) {
+        NaverIdLoginSDK.initialize(context, NAVER_CLIENT_ID, NAVER_CLIENT_SECRET, appName)
+    }
+
     fun login(
         context: Context,
         onSuccess: (naverId: String) -> Unit,
@@ -33,6 +43,10 @@ object NaverLoginManager {
         }
 
         NaverIdLoginSDK.authenticate(context, oauthLoginCallback)
+    }
+
+    fun logout() {
+        NaverIdLoginSDK.logout()
     }
 
     private fun fetchUserProfile(

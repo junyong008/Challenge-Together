@@ -1,7 +1,8 @@
-package com.yjy.feature.intro.util
+package com.yjy.common.core.login
 
 import android.content.Context
 import androidx.activity.ComponentActivity
+import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
@@ -11,13 +12,14 @@ import androidx.credentials.exceptions.GetCredentialException
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import com.yjy.feature.intro.BuildConfig.GOOGLE_WEB_CLIENT_ID
+import com.yjy.common.core.BuildConfig.GOOGLE_WEB_CLIENT_ID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 object GoogleLoginManager {
+
     fun login(
         context: Context,
         onSuccess: (googleId: String) -> Unit,
@@ -41,6 +43,19 @@ object GoogleLoginManager {
             } catch (e: GetCredentialException) {
                 Timber.e(e, "Failed to get credential")
                 onFailure()
+            }
+        }
+    }
+
+    fun logout(context: Context) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val credentialManager = CredentialManager.create(context)
+                credentialManager.clearCredentialState(
+                    ClearCredentialStateRequest(),
+                )
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to unlink google")
             }
         }
     }

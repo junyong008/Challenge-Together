@@ -2,19 +2,10 @@
 
 plugins {
     alias(libs.plugins.custom.android.feature)
-    alias(libs.plugins.secrets)
 }
 
 android {
     namespace = "com.yjy.feature.intro"
-
-    buildFeatures {
-        buildConfig = true
-    }
-}
-
-secrets {
-    defaultPropertiesFileName = "secrets.defaults.properties"
 }
 
 dependencies {
@@ -22,12 +13,6 @@ dependencies {
         projects.common.network,
 
         projects.data.authApi,
-
-        libs.androidx.credentials,
-        libs.androidx.credentials.auth,
-        libs.google.identity,
-        libs.kakao.sdk.login,
-        libs.naver.oauth,
     )
 
     runtimeOnly(projects.data.authImpl)

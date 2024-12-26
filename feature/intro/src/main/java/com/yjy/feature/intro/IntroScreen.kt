@@ -51,6 +51,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.extensions.clickableSingle
+import com.yjy.common.core.login.GoogleLoginManager
+import com.yjy.common.core.login.KakaoLoginManager
+import com.yjy.common.core.login.NaverLoginManager
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.BaseBottomSheet
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
@@ -65,9 +68,6 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.DevicePreviews
 import com.yjy.feature.intro.model.IntroUiAction
 import com.yjy.feature.intro.model.IntroUiEvent
-import com.yjy.feature.intro.util.GoogleLoginManager
-import com.yjy.feature.intro.util.KakaoLoginManager
-import com.yjy.feature.intro.util.NaverLoginManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
