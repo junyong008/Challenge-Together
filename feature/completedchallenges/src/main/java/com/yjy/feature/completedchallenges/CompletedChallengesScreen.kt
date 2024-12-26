@@ -78,7 +78,7 @@ internal fun CompletedChallengesScreen(
     val scrolled by remember {
         derivedStateOf {
             lazyListState.firstVisibleItemIndex > 0 ||
-                    lazyListState.firstVisibleItemScrollOffset > 0
+                lazyListState.firstVisibleItemScrollOffset > 0
         }
     }
 
