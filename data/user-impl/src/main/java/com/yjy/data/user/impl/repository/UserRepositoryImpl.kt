@@ -7,6 +7,7 @@ import com.yjy.common.network.onSuccess
 import com.yjy.data.datastore.api.UserPreferencesDataSource
 import com.yjy.data.network.datasource.UserDataSource
 import com.yjy.data.network.request.user.ChangeUserNameRequest
+import com.yjy.data.network.request.user.LinkAccountRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
 import com.yjy.data.user.api.FcmTokenProvider
 import com.yjy.data.user.api.UserRepository
@@ -46,6 +47,9 @@ internal class UserRepositoryImpl @Inject constructor(
     override suspend fun getUserName(): NetworkResult<String> =
         userDataSource.getUserName().map { it.userName }
 
+    override suspend fun getAccountType(): NetworkResult<com.yjy.model.common.AccountType> =
+        userDataSource.getAccountType().map { it.toModel() }
+
     override suspend fun checkBan(identifier: String): NetworkResult<Ban?> {
         val hashedIdentifier = hashIdentifier(identifier)
         return userDataSource.checkBan(hashedIdentifier)
@@ -58,6 +62,15 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override suspend fun changeUserName(name: String): NetworkResult<Unit> =
         userDataSource.changeUserName(ChangeUserNameRequest(name))
+
+    override suspend fun linkAccount(kakaoId: String, googleId: String, naverId: String): NetworkResult<Unit> =
+        userDataSource.linkAccount(
+            request = LinkAccountRequest(
+                kakaoId = kakaoId,
+                googleId = googleId,
+                naverId = naverId,
+            ),
+        )
 
     override suspend fun registerFcmToken() {
         val currentToken: String = fcmTokenProvider.getToken()

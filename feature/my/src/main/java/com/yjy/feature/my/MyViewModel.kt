@@ -9,6 +9,7 @@ import com.yjy.data.challenge.api.ChallengePreferencesRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.GetStartedChallengesUseCase
 import com.yjy.domain.LogoutUseCase
+import com.yjy.feature.my.model.AccountTypeUiState
 import com.yjy.feature.my.model.MyUiAction
 import com.yjy.feature.my.model.MyUiEvent
 import com.yjy.feature.my.model.RecordUiState
@@ -57,6 +58,16 @@ class MyViewModel @Inject constructor(
             initialValue = TierProgress(0, 0f),
         )
 
+    val accountType = flow {
+        userRepository.getAccountType()
+            .onSuccess { emit(AccountTypeUiState.Success(it)) }
+            .onFailure { emit(AccountTypeUiState.Error) }
+    }.restartableStateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = AccountTypeUiState.Loading,
+    )
+
     val userName = flow {
         userRepository.getUserName()
             .onSuccess { emit(UserNameUiState.Success(it)) }
@@ -98,6 +109,7 @@ class MyViewModel @Inject constructor(
     }
 
     private fun retryOnError() {
+        accountType.restart()
         userName.restart()
         records.restart()
     }

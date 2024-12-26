@@ -66,6 +66,7 @@ include(
     ":feature:notification",
     ":feature:notificationsetting",
     ":feature:changename",
+    ":feature:linkaccount",
     ":feature:deleteaccount",
     ":feature:addchallenge",
     ":feature:editchallenge",

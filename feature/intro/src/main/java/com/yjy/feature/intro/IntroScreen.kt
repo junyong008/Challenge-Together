@@ -312,7 +312,7 @@ private fun EmailLoginButton(
                     contentDescription = stringResource(id = R.string.feature_intro_start_email),
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .padding(vertical = 8.dp),
+                        .padding(vertical = 10.dp),
                 )
                 Text(
                     text = stringResource(id = R.string.feature_intro_start_email),
@@ -345,7 +345,7 @@ private fun GuestStartButton(
                     contentDescription = stringResource(id = R.string.feature_intro_start_guest),
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .padding(vertical = 8.dp),
+                        .padding(vertical = 10.dp),
                 )
                 Text(
                     text = stringResource(id = R.string.feature_intro_start_guest),

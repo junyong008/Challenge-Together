@@ -13,6 +13,11 @@
     <string name="feature_my_app_info">App Info</string>
     <string name="feature_my_notification_settings">Notification Settings</string>
     <string name="feature_my_app_lock_settings">App Lock Settings</string>
+    <string name="feature_my_account_linking">Account Linking</string>
+    <string name="feature_my_linked_with_kakao">Linked with Kakao</string>
+    <string name="feature_my_linked_with_google">Linked with Google</string>
+    <string name="feature_my_linked_with_naver">Linked with Naver</string>
+    <string name="feature_my_linked_with">Linked with</string>
     <string name="feature_my_nickname_change">Change Nickname</string>
     <string name="feature_my_password_change">Change Password</string>
     <string name="feature_my_logout">Logout</string>

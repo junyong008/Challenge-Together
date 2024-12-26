@@ -2,8 +2,10 @@ package com.yjy.data.network.datasource
 
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.network.request.user.ChangeUserNameRequest
+import com.yjy.data.network.request.user.LinkAccountRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
 import com.yjy.data.network.response.user.CheckBanResponse
+import com.yjy.data.network.response.user.GetAccountTypeResponse
 import com.yjy.data.network.response.user.GetNameResponse
 import com.yjy.data.network.response.user.GetNotificationsResponse
 import com.yjy.data.network.response.user.GetRemainTimeForChangeNameResponse
@@ -15,6 +17,7 @@ interface UserDataSource {
     fun getMaintenanceEndTime(): Flow<String>
     suspend fun syncTime(): NetworkResult<Unit>
     suspend fun getUserName(): NetworkResult<GetNameResponse>
+    suspend fun getAccountType(): NetworkResult<GetAccountTypeResponse>
     suspend fun checkBan(identifier: String): NetworkResult<CheckBanResponse?>
     suspend fun getRemainTimeForChangeName(): NetworkResult<GetRemainTimeForChangeNameResponse>
     suspend fun getUnViewedNotificationCount(): NetworkResult<GetUnViewedNotificationCountResponse>
@@ -22,5 +25,6 @@ interface UserDataSource {
     suspend fun deleteNotification(notificationId: Int): NetworkResult<Unit>
     suspend fun deleteNotifications(): NetworkResult<Unit>
     suspend fun changeUserName(request: ChangeUserNameRequest): NetworkResult<Unit>
+    suspend fun linkAccount(request: LinkAccountRequest): NetworkResult<Unit>
     suspend fun registerFirebaseToken(request: RegisterFirebaseTokenRequest): NetworkResult<Unit>
 }

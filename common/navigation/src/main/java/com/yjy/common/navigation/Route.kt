@@ -70,6 +70,9 @@ sealed interface ServiceRoute : Route {
     data object ChangeName : ServiceRoute
 
     @Serializable
+    data object LinkAccount : ServiceRoute
+
+    @Serializable
     data object DeleteAccount : ServiceRoute
 
     @Serializable

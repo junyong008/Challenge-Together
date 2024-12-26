@@ -30,6 +30,7 @@ object ChallengeTogetherIcons {
     val Key = R.drawable.ic_key
     val LikeOff = R.drawable.ic_like_off
     val LikeOn = R.drawable.ic_like_on
+    val Link = R.drawable.ic_link
     val Lock = R.drawable.ic_lock
     val LockFilled = R.drawable.ic_lock_filled
     val Logout = R.drawable.ic_logout

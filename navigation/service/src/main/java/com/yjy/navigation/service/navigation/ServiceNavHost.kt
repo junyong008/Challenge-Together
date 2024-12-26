@@ -31,6 +31,8 @@ import com.yjy.feature.editchallenge.navigation.navigateToEditCategory
 import com.yjy.feature.editchallenge.navigation.navigateToEditTargetDays
 import com.yjy.feature.editchallenge.navigation.navigateToEditTitleDescription
 import com.yjy.feature.home.navigation.homeScreen
+import com.yjy.feature.linkaccount.navigation.linkAccountScreen
+import com.yjy.feature.linkaccount.navigation.navigateToLinkAccount
 import com.yjy.feature.my.navigation.myScreen
 import com.yjy.feature.notification.navigation.navigateToNotification
 import com.yjy.feature.notification.navigation.notificationScreen
@@ -78,6 +80,7 @@ internal fun ServiceNavHost(
         myScreen(
             onNotificationSettingClick = navController::navigateToNotificationSetting,
             onAppLockSettingClick = navController::navigateToAppLockSetting,
+            onAccountLinkClick = navController::navigateToLinkAccount,
             onChangeNicknameClick = navController::navigateToChangeName,
             onChangePasswordClick = navController::navigateToChangePassword,
             onDeleteAccountClick = navController::navigateToDeleteAccount,
@@ -103,6 +106,10 @@ internal fun ServiceNavHost(
             onBackClick = navController::popBackStack,
         )
         changeNameScreen(
+            onBackClick = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
+        )
+        linkAccountScreen(
             onBackClick = navController::popBackStack,
             onShowSnackbar = onShowSnackbar,
         )

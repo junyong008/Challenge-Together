@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -35,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
@@ -63,15 +66,18 @@ import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.DevicePreviews
 import com.yjy.common.ui.ErrorBody
+import com.yjy.feature.my.model.AccountTypeUiState
 import com.yjy.feature.my.model.MyUiAction
 import com.yjy.feature.my.model.MyUiEvent
 import com.yjy.feature.my.model.RecordUiState
 import com.yjy.feature.my.model.UserNameUiState
 import com.yjy.feature.my.model.getNameOrDefault
 import com.yjy.feature.my.model.getRecordOrNull
+import com.yjy.feature.my.model.getTypeOrNull
 import com.yjy.feature.my.model.isError
 import com.yjy.feature.my.model.isLoading
 import com.yjy.model.challenge.UserRecord
+import com.yjy.model.common.AccountType
 import com.yjy.model.common.Tier
 import com.yjy.model.common.TierProgress
 import kotlinx.coroutines.flow.Flow
@@ -82,6 +88,7 @@ import timber.log.Timber
 internal fun MyRoute(
     onNotificationSettingClick: () -> Unit,
     onAppLockSettingClick: () -> Unit,
+    onAccountLinkClick: () -> Unit,
     onChangeNicknameClick: () -> Unit,
     onChangePasswordClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
@@ -91,6 +98,7 @@ internal fun MyRoute(
 ) {
     val currentTier by viewModel.currentTier.collectAsStateWithLifecycle()
     val tierProgress by viewModel.tierProgress.collectAsStateWithLifecycle()
+    val accountType by viewModel.accountType.collectAsStateWithLifecycle()
     val userName by viewModel.userName.collectAsStateWithLifecycle()
     val records by viewModel.records.collectAsStateWithLifecycle()
 
@@ -98,12 +106,14 @@ internal fun MyRoute(
         modifier = modifier,
         currentTier = currentTier,
         tierProgress = tierProgress,
+        accountType = accountType,
         userName = userName,
         records = records,
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onNotificationSettingClick = onNotificationSettingClick,
         onAppLockSettingClick = onAppLockSettingClick,
+        onAccountLinkClick = onAccountLinkClick,
         onChangeNicknameClick = onChangeNicknameClick,
         onChangePasswordClick = onChangePasswordClick,
         onDeleteAccountClick = onDeleteAccountClick,
@@ -117,20 +127,22 @@ internal fun MyScreen(
     modifier: Modifier = Modifier,
     currentTier: Tier = Tier.UNSPECIFIED,
     tierProgress: TierProgress = TierProgress(0, 0f),
+    accountType: AccountTypeUiState = AccountTypeUiState.Loading,
     userName: UserNameUiState = UserNameUiState.Loading,
     records: RecordUiState = RecordUiState.Loading,
     uiEvent: Flow<MyUiEvent> = flowOf(),
     processAction: (MyUiAction) -> Unit = {},
     onNotificationSettingClick: () -> Unit = {},
     onAppLockSettingClick: () -> Unit = {},
+    onAccountLinkClick: () -> Unit = {},
     onChangeNicknameClick: () -> Unit = {},
     onChangePasswordClick: () -> Unit = {},
     onDeleteAccountClick: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val context = LocalContext.current
-    val hasError = userName.isError() || records.isError()
-    val isLoading = userName.isLoading() || records.isLoading()
+    val hasError = accountType.isError() || userName.isError() || records.isError()
+    val isLoading = accountType.isLoading() || userName.isLoading() || records.isLoading()
     var shouldShowLogoutConfirmDialog by remember { mutableStateOf(false) }
 
     val findEmailAppFailureMessage = stringResource(id = R.string.feature_my_email_app_not_found)
@@ -171,6 +183,7 @@ internal fun MyScreen(
         }
 
         else -> {
+            val userAccountType = accountType.getTypeOrNull() ?: return
             val userRecords = records.getRecordOrNull() ?: return
 
             CompositionLocalProvider(
@@ -208,6 +221,8 @@ internal fun MyScreen(
                         modifier = Modifier.padding(horizontal = 24.dp),
                     )
                     AccountSection(
+                        accountType = userAccountType,
+                        onAccountLinkClick = onAccountLinkClick,
                         onChangeNicknameClick = onChangeNicknameClick,
                         onChangePasswordClick = onChangePasswordClick,
                         onLogoutClick = { shouldShowLogoutConfirmDialog = true },
@@ -318,6 +333,8 @@ private fun AppInfoSection(
 
 @Composable
 private fun AccountSection(
+    accountType: AccountType,
+    onAccountLinkClick: () -> Unit,
     onChangeNicknameClick: () -> Unit,
     onChangePasswordClick: () -> Unit,
     onLogoutClick: () -> Unit,
@@ -331,18 +348,32 @@ private fun AccountSection(
             color = CustomColorProvider.colorScheme.onBackground,
             style = MaterialTheme.typography.bodyLarge,
         )
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(4.dp))
+        if (accountType == AccountType.EMAIL || accountType == AccountType.GUEST) {
+            Spacer(modifier = Modifier.height(8.dp))
+            MyCard(
+                titleResId = R.string.feature_my_account_linking,
+                iconResId = ChallengeTogetherIcons.Link,
+                onClick = onAccountLinkClick,
+            )
+        } else {
+            Spacer(modifier = Modifier.height(8.dp))
+            AccountTypeCard(accountType = accountType)
+        }
+        Spacer(modifier = Modifier.height(8.dp))
         MyCard(
             titleResId = R.string.feature_my_nickname_change,
             iconResId = ChallengeTogetherIcons.EditLined,
             onClick = onChangeNicknameClick,
         )
-        Spacer(modifier = Modifier.height(8.dp))
-        MyCard(
-            titleResId = R.string.feature_my_password_change,
-            iconResId = ChallengeTogetherIcons.Key,
-            onClick = onChangePasswordClick,
-        )
+        if (accountType == AccountType.EMAIL) {
+            Spacer(modifier = Modifier.height(8.dp))
+            MyCard(
+                titleResId = R.string.feature_my_password_change,
+                iconResId = ChallengeTogetherIcons.Key,
+                onClick = onChangePasswordClick,
+            )
+        }
         Spacer(modifier = Modifier.height(8.dp))
         MyCard(
             titleResId = R.string.feature_my_logout,
@@ -355,6 +386,59 @@ private fun AccountSection(
             iconResId = ChallengeTogetherIcons.Trash,
             onClick = onDeleteAccountClick,
         )
+    }
+}
+
+@Composable
+private fun AccountTypeCard(
+    accountType: AccountType,
+    modifier: Modifier = Modifier,
+) {
+    val iconResId = when (accountType) {
+        AccountType.KAKAO -> ChallengeTogetherIcons.Kakao
+        AccountType.GOOGLE -> ChallengeTogetherIcons.Google
+        AccountType.NAVER -> ChallengeTogetherIcons.Naver
+        else -> return
+    }
+
+    val descriptionResId = when (accountType) {
+        AccountType.KAKAO -> R.string.feature_my_linked_with_kakao
+        AccountType.GOOGLE -> R.string.feature_my_linked_with_google
+        AccountType.NAVER -> R.string.feature_my_linked_with_naver
+        else -> return
+    }
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.medium)
+            .background(CustomColorProvider.colorScheme.surface)
+            .padding(24.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = stringResource(id = R.string.feature_my_linked_with),
+            color = CustomColorProvider.colorScheme.onSurface,
+            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier.weight(1f),
+        )
+        Box(
+            modifier = Modifier
+                .clip(CircleShape)
+                .background(CustomColorProvider.colorScheme.background)
+                .padding(12.dp),
+        ) {
+            Icon(
+                imageVector = ImageVector.vectorResource(id = iconResId),
+                contentDescription = stringResource(id = descriptionResId),
+                tint = if (accountType == AccountType.NAVER) {
+                    CustomColorProvider.colorScheme.naverBackground
+                } else {
+                    Color.Unspecified
+                },
+                modifier = Modifier.size(16.dp),
+            )
+        }
     }
 }
 

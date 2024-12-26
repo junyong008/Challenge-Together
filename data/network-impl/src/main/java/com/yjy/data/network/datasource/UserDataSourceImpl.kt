@@ -2,8 +2,10 @@ package com.yjy.data.network.datasource
 
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.network.request.user.ChangeUserNameRequest
+import com.yjy.data.network.request.user.LinkAccountRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
 import com.yjy.data.network.response.user.CheckBanResponse
+import com.yjy.data.network.response.user.GetAccountTypeResponse
 import com.yjy.data.network.response.user.GetNameResponse
 import com.yjy.data.network.response.user.GetNotificationsResponse
 import com.yjy.data.network.response.user.GetRemainTimeForChangeNameResponse
@@ -26,6 +28,9 @@ internal class UserDataSourceImpl @Inject constructor(
 
     override suspend fun getUserName(): NetworkResult<GetNameResponse> =
         challengeTogetherService.getUserName()
+
+    override suspend fun getAccountType(): NetworkResult<GetAccountTypeResponse> =
+        challengeTogetherService.getAccountType()
 
     override suspend fun checkBan(identifier: String): NetworkResult<CheckBanResponse?> =
         challengeTogetherService.checkBan(identifier)
@@ -50,6 +55,9 @@ internal class UserDataSourceImpl @Inject constructor(
 
     override suspend fun changeUserName(request: ChangeUserNameRequest): NetworkResult<Unit> =
         challengeTogetherService.changeUserName(request)
+
+    override suspend fun linkAccount(request: LinkAccountRequest): NetworkResult<Unit> =
+        challengeTogetherService.linkAccount(request)
 
     override suspend fun registerFirebaseToken(request: RegisterFirebaseTokenRequest): NetworkResult<Unit> =
         challengeTogetherService.registerFirebaseToken(request)
