@@ -4,6 +4,10 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.data.network.request.auth.ChangePasswordRequest
 import com.yjy.data.network.request.auth.EmailLoginRequest
 import com.yjy.data.network.request.auth.EmailRequest
+import com.yjy.data.network.request.auth.GoogleLoginRequest
+import com.yjy.data.network.request.auth.GuestLoginRequest
+import com.yjy.data.network.request.auth.KakaoLoginRequest
+import com.yjy.data.network.request.auth.NaverLoginRequest
 import com.yjy.data.network.request.auth.SignUpRequest
 import com.yjy.data.network.request.auth.VerifyRequest
 import com.yjy.data.network.request.challenge.AddChallengeRequest
@@ -49,6 +53,26 @@ internal interface ChallengeTogetherService {
     @POST("auth/login/email")
     suspend fun emailLogin(
         @Body request: EmailLoginRequest,
+    ): NetworkResult<Unit>
+
+    @POST("auth/login/kakao")
+    suspend fun kakaoLogin(
+        @Body request: KakaoLoginRequest,
+    ): NetworkResult<Unit>
+
+    @POST("auth/login/google")
+    suspend fun googleLogin(
+        @Body request: GoogleLoginRequest,
+    ): NetworkResult<Unit>
+
+    @POST("auth/login/naver")
+    suspend fun naverLogin(
+        @Body request: NaverLoginRequest,
+    ): NetworkResult<Unit>
+
+    @POST("auth/login/guest")
+    suspend fun guestLogin(
+        @Body request: GuestLoginRequest,
     ): NetworkResult<Unit>
 
     @GET("auth/check-email-duplicate")

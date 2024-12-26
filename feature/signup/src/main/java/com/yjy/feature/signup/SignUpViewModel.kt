@@ -38,6 +38,7 @@ class SignUpViewModel @Inject constructor(
     private val kakaoId = arguments.kakaoId
     private val googleId = arguments.googleId
     private val naverId = arguments.naverId
+    private val guestId = arguments.guestId
 
     private val _uiState: MutableStateFlow<SignUpUiState> = MutableStateFlow(SignUpUiState())
     val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
@@ -62,12 +63,12 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun signUp(nickname: String, email: String, password: String) {
-        if (email.isBlank() && kakaoId.isBlank() && googleId.isBlank() && naverId.isBlank()) return
+        if (email.isBlank() && kakaoId.isBlank() && googleId.isBlank() && naverId.isBlank() && guestId.isBlank()) return
         viewModelScope.launch {
             _uiState.update { it.copy(isSigningUp = true) }
 
             val event = handleNetworkResult(
-                result = authRepository.signUp(nickname, email, password, kakaoId, googleId, naverId),
+                result = authRepository.signUp(nickname, email, password, kakaoId, googleId, naverId, guestId),
                 onSuccess = { SignUpUiEvent.SignUpSuccess },
                 onHttpError = { code ->
                     when (code) {

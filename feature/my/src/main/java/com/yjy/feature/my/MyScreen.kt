@@ -1,5 +1,6 @@
 package com.yjy.feature.my
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -42,9 +43,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.credentials.ClearCredentialStateRequest
+import androidx.credentials.CredentialManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.kakao.sdk.user.UserApiClient
+import com.navercorp.nid.NaverIdLoginSDK
 import com.yjy.common.core.constants.UrlConst.PRIVACY_POLICY
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.core.util.ObserveAsEvents
@@ -71,8 +76,11 @@ import com.yjy.feature.my.model.isLoading
 import com.yjy.model.challenge.UserRecord
 import com.yjy.model.common.Tier
 import com.yjy.model.common.TierProgress
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @Composable
@@ -149,6 +157,9 @@ internal fun MyScreen(
             positiveTextRes = R.string.feature_my_logout,
             onClickPositive = {
                 shouldShowLogoutConfirmDialog = false
+                kakaoLogout()
+                naverLogout()
+                googleLogout(context)
                 processAction(MyUiAction.OnLogoutClick)
             },
             onClickNegative = { shouldShowLogoutConfirmDialog = false },
@@ -217,6 +228,33 @@ internal fun MyScreen(
             }
         }
     }
+}
+
+private fun kakaoLogout() {
+    UserApiClient.instance.logout { error ->
+        if (error != null) {
+            Timber.e(error, "Failed to kakao logout. Token deleted from sdk")
+        } else {
+            Timber.d("Kakao logout success")
+        }
+    }
+}
+
+private fun googleLogout(context: Context) {
+    CoroutineScope(Dispatchers.Main).launch {
+        try {
+            val credentialManager = CredentialManager.create(context)
+            credentialManager.clearCredentialState(
+                ClearCredentialStateRequest(),
+            )
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to unlink google")
+        }
+    }
+}
+
+private fun naverLogout() {
+    NaverIdLoginSDK.logout()
 }
 
 @Composable

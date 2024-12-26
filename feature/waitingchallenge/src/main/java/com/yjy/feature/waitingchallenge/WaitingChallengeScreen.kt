@@ -217,8 +217,8 @@ internal fun WaitingChallengeScreen(
                 isAuthor = challenge.isAuthor,
                 onShareClick = {
                     val shareLink = "${DeepLinkConfig.ONE_LINK_URL}?" +
-                            "${DeepLinkType.TYPE_PARAM}=${DeepLinkType.WAITING}&" +
-                            "${DeepLinkType.ID_PARAM}=${challenge.id}"
+                        "${DeepLinkType.TYPE_PARAM}=${DeepLinkType.WAITING}&" +
+                        "${DeepLinkType.ID_PARAM}=${challenge.id}"
 
                     val shareIntent = Intent().apply {
                         action = Intent.ACTION_SEND

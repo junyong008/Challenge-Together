@@ -8,10 +8,6 @@
     <string name="feature_login_button_text">LOGIN</string>
     <string name="feature_login_find_password">Find Password</string>
     <string name="feature_login_sign_up">Sign Up</string>
-    <string name="feature_login_social_login_text">or sign in with</string>
-    <string name="feature_login_kakao_content_description">Sign in with Kakao</string>
-    <string name="feature_login_google_content_description">Sign in with Google</string>
-    <string name="feature_login_naver_content_description">Sign in with Naver</string>
     <string name="feature_login_login_success">Login successful</string>
     <string name="feature_login_user_not_found">The ID or password is incorrect.</string>
     <string name="feature_login_invalid_email_format">Please enter a correct email format.</string>

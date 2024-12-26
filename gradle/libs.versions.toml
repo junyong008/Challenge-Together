@@ -14,6 +14,7 @@ androidxActivityCompose = "1.9.3"
 androidxCompose = "1.7.6"
 androidxComposeMaterial3 = "1.3.1"
 androidxCoreSplashscreen = "1.0.1"
+androidxCredentials = "1.3.0"
 androidxDatastore = "1.1.1"
 androidxGlance = "1.1.1"
 androidxHiltNavigationCompose = "1.2.0"
@@ -28,6 +29,7 @@ desugar = "2.1.4"
 detekt = "1.23.6"
 firebaseBom = "33.7.0"
 firebaseCrashlyticsPlugin = "3.0.2"
+googleIdentity = "1.1.1"
 googleOss = "17.1.0"
 googleOssPlugin = "0.10.6"
 gradleDependencyHandlerExtensions = "1.1.0"
@@ -35,6 +37,7 @@ gmsPlugin = "4.4.2"
 hilt = "2.52"
 hiltExt = "1.2.0"
 javaxInject = "1"
+kakaoSdk = "2.20.6"
 kotlin = "2.0.20"
 kotlinxSerialization = "1.7.2"
 ktlintGradle = "11.6.1"
@@ -44,6 +47,7 @@ kotlinxCoroutines = "1.9.0"
 ksp = "2.0.20-1.0.25"
 lottie = "6.0.0"
 mockk = "1.13.11"
+naverOauth = "5.10.0"
 okhttp = "4.12.0"
 protobuf = "4.26.1"
 protobufPlugin = "0.9.4"
@@ -61,6 +65,8 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-biometric = { group = "androidx.biometric", name = "biometric-ktx", version.ref = "biometric" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
+androidx-credentials = { group = "androidx.credentials", name = "credentials", version.ref = "androidxCredentials" }
+androidx-credentials-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "androidxCredentials" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDatastore" }
 androidx-glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "androidxGlance" }
 androidx-glance-material3 = { group = "androidx.glance", name = "glance-material3", version.ref = "androidxGlance" }
@@ -71,17 +77,20 @@ androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", 
 androidx-work-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "androidxWork" }
 appsflyer-sdk = { group = "com.appsflyer", name = "af-android-sdk", version.ref = "appsflyer" }
+google-identity = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleIdentity" }
 google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "googleOss" }
 google-oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "googleOssPlugin" }
 hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExt" }
 hilt-ext-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltExt" }
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
+kakao-sdk-login = { group = "com.kakao.sdk", name = "v2-user", version.ref = "kakaoSdk" }
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
+naver-oauth = { group = "com.navercorp.nid", name = "oauth", version.ref = "naverOauth" }
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }

@@ -290,8 +290,8 @@ internal fun PostScreen(
                     isAuthor = post.isAuthor,
                     onShareClick = {
                         val shareLink = "${DeepLinkConfig.ONE_LINK_URL}?" +
-                                "${DeepLinkType.TYPE_PARAM}=${DeepLinkType.POST}&" +
-                                "${DeepLinkType.ID_PARAM}=${post.postId}"
+                            "${DeepLinkType.TYPE_PARAM}=${DeepLinkType.POST}&" +
+                            "${DeepLinkType.ID_PARAM}=${post.postId}"
 
                         val shareIntent = Intent().apply {
                             action = Intent.ACTION_SEND

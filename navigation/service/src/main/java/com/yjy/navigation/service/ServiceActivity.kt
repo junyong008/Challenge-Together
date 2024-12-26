@@ -71,7 +71,7 @@ class ServiceActivity : AppCompatActivity() {
                 val id = deepLink.getStringValue(ID_PARAM)?.toIntOrNull()
 
                 if (type != null && id != null) {
-                    val path = when(type) {
+                    val path = when (type) {
                         DeepLinkType.WAITING -> DeepLinkPath.WAITING
                         DeepLinkType.POST -> DeepLinkPath.POST
                         else -> return@subscribeForDeepLink
@@ -88,9 +88,9 @@ class ServiceActivity : AppCompatActivity() {
             action = Intent.ACTION_VIEW
             data = "${DeepLinkConfig.SCHEME_AND_HOST}$path".toUri()
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                    Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                    Intent.FLAG_ACTIVITY_SINGLE_TOP or
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)
         finish()

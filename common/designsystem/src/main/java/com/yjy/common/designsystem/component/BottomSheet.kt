@@ -29,6 +29,7 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 fun BaseBottomSheet(
     onDismiss: () -> Unit,
     disableDragToDismiss: Boolean = false,
+    showCloseButton: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     ModalBottomSheet(
@@ -55,17 +56,19 @@ fun BaseBottomSheet(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             content()
-            ChallengeTogetherButton(
-                onClick = onDismiss,
-                containerColor = CustomColorProvider.colorScheme.background,
-                contentColor = CustomColorProvider.colorScheme.onBackground,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = stringResource(id = R.string.common_designsystem_bottom_sheet_close),
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                )
+            if (showCloseButton) {
+                ChallengeTogetherButton(
+                    onClick = onDismiss,
+                    containerColor = CustomColorProvider.colorScheme.background,
+                    contentColor = CustomColorProvider.colorScheme.onBackground,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.common_designsystem_bottom_sheet_close),
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(16.dp))
         }

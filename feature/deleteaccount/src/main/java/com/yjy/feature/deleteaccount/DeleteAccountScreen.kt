@@ -1,5 +1,6 @@
 package com.yjy.feature.deleteaccount
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,8 +26,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.credentials.ClearCredentialStateRequest
+import androidx.credentials.CredentialManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kakao.sdk.user.UserApiClient
+import com.navercorp.nid.NaverIdLoginSDK
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.BulletText
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
@@ -40,8 +45,12 @@ import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.DevicePreviews
 import com.yjy.feature.deleteaccount.model.DeleteAccountUiEvent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @Composable
 internal fun DeleteAccountRoute(
@@ -98,6 +107,9 @@ internal fun DeleteAccountScreen(
             positiveTextColor = CustomColorProvider.colorScheme.red,
             onClickPositive = {
                 shouldShowDeleteConfirmDialog = false
+                unlinkKakao()
+                unlinkNaver()
+                unlinkGoogle(context)
                 deleteAccount()
             },
             onClickNegative = { shouldShowDeleteConfirmDialog = false },
@@ -164,6 +176,33 @@ internal fun DeleteAccountScreen(
             )
         }
     }
+}
+
+private fun unlinkKakao() {
+    UserApiClient.instance.unlink { error ->
+        if (error != null) {
+            Timber.e(error, "Failed to unlink kakao. Token deleted from sdk")
+        } else {
+            Timber.d("Kakao unlink success")
+        }
+    }
+}
+
+private fun unlinkGoogle(context: Context) {
+    CoroutineScope(Dispatchers.Main).launch {
+        try {
+            val credentialManager = CredentialManager.create(context)
+            credentialManager.clearCredentialState(
+                ClearCredentialStateRequest(),
+            )
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to unlink google")
+        }
+    }
+}
+
+private fun unlinkNaver() {
+    NaverIdLoginSDK.logout()
 }
 
 @Composable

@@ -9,13 +9,16 @@ import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.AuthRoute
+import com.yjy.common.navigation.CommonRoute
 import com.yjy.feature.changepassword.navigation.changePasswordScreen
 import com.yjy.feature.changepassword.navigation.navigateToChangePassword
 import com.yjy.feature.findpassword.navigation.findPasswordNavGraph
 import com.yjy.feature.findpassword.navigation.navigateToFindPassword
+import com.yjy.feature.intro.navigation.introScreen
 import com.yjy.feature.login.navigation.loginScreen
 import com.yjy.feature.login.navigation.navigateToLogin
 import com.yjy.feature.signup.navigation.navigateToSignUp
+import com.yjy.feature.signup.navigation.navigateToSignUpNickname
 import com.yjy.feature.signup.navigation.signUpNavGraph
 
 @Composable
@@ -25,7 +28,7 @@ internal fun AuthNavHost(
     onShowToast: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
-    startDestination: AuthRoute = AuthRoute.Login,
+    startDestination: AuthRoute = AuthRoute.Intro,
 ) {
     NavHost(
         navController = navController,
@@ -36,7 +39,18 @@ internal fun AuthNavHost(
         popExitTransition = { fadeOut() },
         modifier = modifier,
     ) {
+        introScreen(
+            onLoginSuccess = navigateToService,
+            onStartWithEmailClick = navController::navigateToLogin,
+            onSignUpWithKakaoClick = { navController.navigateToSignUpNickname(kakaoId = it) },
+            onSignUpWithGoogleClick = { navController.navigateToSignUpNickname(googleId = it) },
+            onSignUpWithNaver = { navController.navigateToSignUpNickname(naverId = it) },
+            onSignUpWithGuest = { navController.navigateToSignUpNickname(guestId = it) },
+            onShowToast = onShowToast,
+            onShowSnackbar = onShowSnackbar,
+        )
         loginScreen(
+            onBackClick = navController::popBackStack,
             onLoginSuccess = navigateToService,
             onSignUpClick = navController::navigateToSignUp,
             onFindPasswordClick = navController::navigateToFindPassword,
@@ -62,7 +76,13 @@ internal fun AuthNavHost(
         )
         changePasswordScreen(
             onBackClick = navController::popBackStack,
-            onPasswordChanged = navController::navigateToLogin,
+            onPasswordChanged = {
+                val navOptions = navOptions {
+                    popUpTo(CommonRoute.ChangePassword) { inclusive = true }
+                    launchSingleTop = true
+                }
+                navController.navigateToLogin(navOptions)
+            },
             onShowToast = onShowToast,
             onShowSnackbar = onShowSnackbar,
         )

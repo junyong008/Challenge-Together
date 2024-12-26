@@ -1,0 +1,20 @@
+<resources>
+    <string name="feature_intro_start">Start</string>
+    <string name="feature_intro_start_with">Start with</string>
+    <string name="feature_intro_start_email">Email</string>
+    <string name="feature_intro_start_guest">Guest</string>
+    <string name="feature_intro_start_guest_warning">Caution</string>
+    <string name="feature_intro_start_guest_warning_detail">Logging in as a guest may result in data loss if the app is deleted or the device is changed.</string>
+    <string name="feature_intro_life_changing_challenges">Life-Changing Challenges</string>
+    <string name="feature_intro_features">Reset logs, widgets, calendars, graphs, rankings, etc.\nWe provide a variety of features.</string>
+    <string name="feature_intro_challenge_together">Challenge Together</string>
+    <string name="feature_intro_challenge_together_detail">Compete in real-time rankings,\nand achieve a sense of accomplishment by challenging together.</string>
+    <string name="feature_intro_community">Community</string>
+    <string name="feature_intro_community_detail">Share your experiences in the community,\nand bookmark your favorite quotes to keep them.</string>
+    <string name="feature_intro_divider_text">or</string>
+    <string name="feature_intro_kakao_content_description">Sign in with Kakao</string>
+    <string name="feature_intro_google_content_description">Sign in with Google</string>
+    <string name="feature_intro_naver_content_description">Sign in with Naver</string>
+    <string name="feature_intro_login_success">Login successful</string>
+    <string name="feature_intro_unknown_error">An error occurred. Please try again later.</string>
+</resources>

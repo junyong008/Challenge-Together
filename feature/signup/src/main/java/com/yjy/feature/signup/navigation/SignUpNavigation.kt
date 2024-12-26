@@ -26,12 +26,14 @@ fun NavController.navigateToSignUpNickname(
     kakaoId: String = "",
     googleId: String = "",
     naverId: String = "",
+    guestId: String = "",
 ) {
     navigate(
         AuthRoute.SignUp.Nickname(
             kakaoId = kakaoId,
             googleId = googleId,
             naverId = naverId,
+            guestId = guestId,
         ),
     )
 }

@@ -19,7 +19,12 @@ dependencies {
         projects.data.challengeApi,
         projects.data.userApi,
 
+        libs.androidx.credentials,
+        libs.androidx.credentials.auth,
+        libs.google.identity,
         libs.google.oss.licenses,
+        libs.kakao.sdk.login,
+        libs.naver.oauth,
     )
 
     runtimeOnly(projects.data.challengeImpl)

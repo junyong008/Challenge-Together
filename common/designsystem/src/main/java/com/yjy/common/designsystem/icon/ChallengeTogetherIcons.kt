@@ -23,6 +23,7 @@ object ChallengeTogetherIcons {
     val EditLined = R.drawable.ic_edit_lined
     val Email = R.drawable.ic_email
     val FingerPrint = R.drawable.ic_fingerprint
+    val Guest = R.drawable.ic_guest
     val Hide = R.drawable.ic_hide
     val Home = R.drawable.ic_home
     val Infinite = R.drawable.ic_infinite

@@ -137,6 +137,9 @@ sealed interface ServiceRoute : Route {
 
 sealed interface AuthRoute : Route {
     @Serializable
+    data object Intro : AuthRoute
+
+    @Serializable
     data object Login : AuthRoute
 
     @Serializable
@@ -149,6 +152,7 @@ sealed interface AuthRoute : Route {
             val kakaoId: String = "",
             val googleId: String = "",
             val naverId: String = "",
+            val guestId: String = "",
         ) : AuthRoute
     }
 

@@ -17,4 +17,6 @@ data class SignUpRequest(
     val googleId: String,
     @SerialName("naverId")
     val naverId: String,
+    @SerialName("guestId")
+    val guestId: String,
 )

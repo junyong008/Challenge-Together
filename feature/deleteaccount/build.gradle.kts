@@ -15,6 +15,12 @@ dependencies {
         projects.domain,
 
         projects.data.authApi,
+
+        libs.androidx.credentials,
+        libs.androidx.credentials.auth,
+        libs.google.identity,
+        libs.kakao.sdk.login,
+        libs.naver.oauth,
     )
 
     runtimeOnly(projects.data.authImpl)

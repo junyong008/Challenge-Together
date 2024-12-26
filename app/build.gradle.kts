@@ -71,6 +71,8 @@ dependencies {
         libs.androidx.work.ktx,
         libs.appsflyer.sdk,
         libs.hilt.ext.work,
+        libs.kakao.sdk.login,
+        libs.naver.oauth,
         libs.timber,
     )
 

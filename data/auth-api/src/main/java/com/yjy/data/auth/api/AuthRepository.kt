@@ -4,7 +4,6 @@ import com.yjy.common.network.NetworkResult
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
-
     val isLoggedIn: Flow<Boolean>
     val isSessionTokenAvailable: Flow<Boolean>
 
@@ -15,11 +14,15 @@ interface AuthRepository {
         kakaoId: String = "",
         googleId: String = "",
         naverId: String = "",
+        guestId: String = "",
     ): NetworkResult<Unit>
-
     suspend fun getIsLoggedIn(): Boolean
     suspend fun logout()
     suspend fun emailLogin(email: String, password: String): NetworkResult<Unit>
+    suspend fun kakaoLogin(kakaoId: String): NetworkResult<Unit>
+    suspend fun googleLogin(googleId: String): NetworkResult<Unit>
+    suspend fun naverLogin(naverId: String): NetworkResult<Unit>
+    suspend fun guestLogin(guestId: String): NetworkResult<Unit>
     suspend fun checkEmailDuplicate(email: String): NetworkResult<Unit>
     suspend fun requestVerifyCode(email: String): NetworkResult<Unit>
     suspend fun verifyCode(email: String, verifyCode: String): NetworkResult<Unit>
