@@ -1,16 +1,13 @@
 package com.yjy.feature.signup
 
 import androidx.core.util.PatternsCompat.EMAIL_ADDRESS
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import com.yjy.common.core.constants.AuthConst.MAX_EMAIL_LENGTH
 import com.yjy.common.core.constants.AuthConst.MAX_NICKNAME_LENGTH
 import com.yjy.common.core.constants.AuthConst.MAX_PASSWORD_LENGTH
 import com.yjy.common.core.constants.AuthConst.MIN_NICKNAME_LENGTH
 import com.yjy.common.core.constants.AuthConst.MIN_PASSWORD_LENGTH
-import com.yjy.common.navigation.AuthRoute
 import com.yjy.common.network.HttpStatusCodes
 import com.yjy.common.network.handleNetworkResult
 import com.yjy.data.auth.api.AuthRepository
@@ -31,14 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
-    private val arguments = savedStateHandle.toRoute<AuthRoute.SignUp.Nickname>()
-    private val kakaoId = arguments.kakaoId
-    private val googleId = arguments.googleId
-    private val naverId = arguments.naverId
-    private val guestId = arguments.guestId
 
     private val _uiState: MutableStateFlow<SignUpUiState> = MutableStateFlow(SignUpUiState())
     val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
@@ -54,7 +44,16 @@ class SignUpViewModel @Inject constructor(
 
     fun processAction(action: SignUpUiAction) {
         when (action) {
-            is SignUpUiAction.OnStartClick -> signUp(action.nickname, action.email, action.password)
+            is SignUpUiAction.OnStartClick -> signUp(
+                nickname = action.nickname,
+                email = action.email,
+                password = action.password,
+                kakaoId = action.kakaoId,
+                googleId = action.googleId,
+                naverId = action.naverId,
+                guestId = action.guestId,
+            )
+
             is SignUpUiAction.OnEmailPasswordContinueClick -> checkEmailDuplicate(action.email)
             is SignUpUiAction.OnEmailUpdated -> updateEmail(action.email)
             is SignUpUiAction.OnPasswordUpdated -> updatePassword(action.password)
@@ -62,8 +61,15 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    private fun signUp(nickname: String, email: String, password: String) {
-        if (email.isBlank() && kakaoId.isBlank() && googleId.isBlank() && naverId.isBlank() && guestId.isBlank()) return
+    private fun signUp(
+        nickname: String,
+        email: String,
+        password: String,
+        kakaoId: String,
+        googleId: String,
+        naverId: String,
+        guestId: String,
+    ) {
         viewModelScope.launch {
             _uiState.update { it.copy(isSigningUp = true) }
 

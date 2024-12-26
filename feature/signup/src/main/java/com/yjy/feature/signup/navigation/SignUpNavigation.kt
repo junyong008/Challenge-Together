@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.toRoute
 import com.yjy.common.core.extensions.sharedViewModel
 import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
@@ -70,8 +71,13 @@ fun NavGraphBuilder.signUpNavGraph(
             popExitTransition = { slideOutToRight() },
         ) { entry ->
             val viewModel = entry.sharedViewModel<SignUpViewModel>(navController)
+            val arguments = entry.toRoute<AuthRoute.SignUp.Nickname>()
 
             NicknameRoute(
+                kakaoId = arguments.kakaoId,
+                googleId = arguments.googleId,
+                naverId = arguments.naverId,
+                guestId = arguments.guestId,
                 onBackClick = navController::popBackStack,
                 onSignUpSuccess = onSignUpSuccess,
                 onShowToast = onShowToast,

@@ -50,6 +50,10 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun NicknameRoute(
+    kakaoId: String,
+    googleId: String,
+    naverId: String,
+    guestId: String,
     onBackClick: () -> Unit,
     onSignUpSuccess: () -> Unit,
     onShowToast: (String) -> Unit,
@@ -61,6 +65,10 @@ internal fun NicknameRoute(
 
     NicknameScreen(
         modifier = modifier,
+        kakaoId = kakaoId,
+        googleId = googleId,
+        naverId = naverId,
+        guestId = guestId,
         uiState = uiState,
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
@@ -73,6 +81,10 @@ internal fun NicknameRoute(
 
 @Composable
 internal fun NicknameScreen(
+    kakaoId: String = "",
+    googleId: String = "",
+    naverId: String = "",
+    guestId: String = "",
     modifier: Modifier = Modifier,
     uiState: SignUpUiState = SignUpUiState(),
     uiEvent: Flow<SignUpUiEvent> = flowOf(),
@@ -166,6 +178,10 @@ internal fun NicknameScreen(
                             nickname = uiState.nickname,
                             email = uiState.email,
                             password = uiState.password,
+                            kakaoId = kakaoId,
+                            googleId = googleId,
+                            naverId = naverId,
+                            guestId = guestId,
                         ),
                     )
                 },
