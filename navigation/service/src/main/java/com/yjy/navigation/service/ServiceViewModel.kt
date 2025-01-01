@@ -39,9 +39,19 @@ class ServiceViewModel @Inject constructor(
     private val _banStatus = MutableStateFlow<Ban?>(null)
     val banStatus: StateFlow<Ban?> = _banStatus.asStateFlow()
 
+    val isPremium = userRepository.isPremium
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = false,
+        )
+
     val isOffline = networkMonitor.isOnline
         .onEach { isOnline ->
-            if (isOnline) userRepository.registerFcmToken()
+            if (isOnline) {
+                userRepository.checkPremium()
+                userRepository.registerFcmToken()
+            }
         }
         .map(Boolean::not)
         .stateIn(

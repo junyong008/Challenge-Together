@@ -67,6 +67,9 @@ sealed interface ServiceRoute : Route {
     data object NotificationSetting : ServiceRoute
 
     @Serializable
+    data object Premium : ServiceRoute
+
+    @Serializable
     data object ChangeName : ServiceRoute
 
     @Serializable

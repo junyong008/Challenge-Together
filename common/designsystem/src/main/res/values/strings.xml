@@ -35,6 +35,9 @@
     <string name="common_designsystem_dialog_restriction_reason">Reason</string>
     <string name="common_designsystem_dialog_restriction_period">Restriction Period</string>
     <string name="common_designsystem_dialog_until">Until %1$s</string>
+    <string name="common_designsystem_dialog_premium_feature_title">Premium Feature</string>
+    <string name="common_designsystem_dialog_premium_feature_message">This feature is available exclusively for premium accounts.</string>
+    <string name="common_designsystem_dialog_go_to_premium">Explore</string>
 
     <string name="common_designsystem_tier_unspecified">unspecified tier</string>
     <string name="common_designsystem_tier_iron_description">iron tier</string>

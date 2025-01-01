@@ -52,6 +52,7 @@ private fun NavController.navigateToSetTogether() {
 fun NavGraphBuilder.addChallengeNavGraph(
     navController: NavHostController,
     onChallengeStarted: (Int) -> Unit,
+    onCreateClick: () -> Unit,
     onWaitingChallengeCreated: (Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
@@ -119,6 +120,7 @@ fun NavGraphBuilder.addChallengeNavGraph(
 
             ConfirmRoute(
                 onBackClick = navController::popBackStack,
+                onCreateClick = onCreateClick,
                 onSetTogetherClick = navController::navigateToSetTogether,
                 onChallengeStarted = onChallengeStarted,
                 onShowSnackbar = onShowSnackbar,
@@ -131,6 +133,7 @@ fun NavGraphBuilder.addChallengeNavGraph(
 
             SetTogetherRoute(
                 onBackClick = navController::popBackStack,
+                onCreateClick = onCreateClick,
                 onWaitingChallengeCreated = onWaitingChallengeCreated,
                 onShowSnackbar = onShowSnackbar,
                 viewModel = viewModel,

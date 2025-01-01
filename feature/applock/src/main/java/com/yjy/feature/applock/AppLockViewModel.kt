@@ -3,6 +3,7 @@ package com.yjy.feature.applock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yjy.data.auth.api.AppLockRepository
+import com.yjy.data.user.api.UserRepository
 import com.yjy.feature.applock.model.AppLockUiAction
 import com.yjy.feature.applock.model.AppLockUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +17,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppLockViewModel @Inject constructor(
+    userRepository: UserRepository,
     private val appLockRepository: AppLockRepository,
 ) : ViewModel() {
+
+    val isPremium = userRepository.isPremium
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = false,
+        )
 
     val isPinSet = appLockRepository.isPinSet
         .stateIn(

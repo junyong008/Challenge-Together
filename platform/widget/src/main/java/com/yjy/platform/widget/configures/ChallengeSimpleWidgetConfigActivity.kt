@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +40,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.common.designsystem.component.ClickableText
+import com.yjy.common.designsystem.component.PremiumDialog
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.model.challenge.SimpleStartedChallenge
@@ -47,7 +49,9 @@ import com.yjy.platform.widget.configures.preview.ChallengeSimpleWidgetPreview
 import com.yjy.platform.widget.configures.screen.ChallengeSelectScreen
 import com.yjy.platform.widget.configures.screen.HiddenScreen
 import com.yjy.platform.widget.configures.screen.SettingScreen
+import com.yjy.platform.widget.util.DeepLinkUtils
 import com.yjy.platform.widget.widgets.ChallengeSimpleWidget
+import com.yjy.platform.widget.widgets.ChallengeWideWidget
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -99,6 +103,8 @@ class ChallengeSimpleWidgetConfigActivity : ComponentActivity() {
         viewModel: WidgetConfigViewModel = hiltViewModel(),
     ) {
         val challenges by viewModel.challenges.collectAsStateWithLifecycle()
+        val isPremium by viewModel.isPremium.collectAsStateWithLifecycle()
+        var shouldShowPremiumDialog by rememberSaveable { mutableStateOf(false) }
         val shouldHideWidgetContents by viewModel.shouldHideWidgetContents.collectAsStateWithLifecycle()
 
         val scope = rememberCoroutineScope()
@@ -112,6 +118,17 @@ class ChallengeSimpleWidgetConfigActivity : ComponentActivity() {
             } else {
                 onFinish(RESULT_CANCELED)
             }
+        }
+
+        if (shouldShowPremiumDialog) {
+            PremiumDialog(
+                onExploreClick = {
+                    shouldShowPremiumDialog = false
+                    DeepLinkUtils.navigateToPremium(context)
+                    onFinish(RESULT_CANCELED)
+                },
+                onDismiss = { shouldShowPremiumDialog = false },
+            )
         }
 
         BackHandler(onBack = onBack)
@@ -164,15 +181,19 @@ class ChallengeSimpleWidgetConfigActivity : ComponentActivity() {
                         ),
                         onClick = {
                             if (isSettingScreen) {
-                                scope.launch {
-                                    ChallengeSimpleWidget.updateWidgetConfig(
-                                        context = context,
-                                        challengeId = selectedChallenge?.id ?: 0,
-                                        alpha = backgroundAlpha,
-                                        appWidgetId = appWidgetId,
-                                    )
+                                if (isPremium) {
+                                    scope.launch {
+                                        ChallengeWideWidget.updateWidgetConfig(
+                                            context = context,
+                                            challengeId = selectedChallenge?.id ?: 0,
+                                            alpha = backgroundAlpha,
+                                            appWidgetId = appWidgetId,
+                                        )
 
-                                    onFinish(RESULT_OK)
+                                        onFinish(RESULT_OK)
+                                    }
+                                } else {
+                                    shouldShowPremiumDialog = true
                                 }
                             } else {
                                 isSettingScreen = true

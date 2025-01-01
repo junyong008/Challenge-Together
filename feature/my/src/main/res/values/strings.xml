@@ -14,6 +14,7 @@
     <string name="feature_my_notification_settings">Notification Settings</string>
     <string name="feature_my_app_lock_settings">App Lock Settings</string>
     <string name="feature_my_account_linking">Account Linking</string>
+    <string name="feature_my_account_premium">Premium Upgrade</string>
     <string name="feature_my_linked_with_kakao">Linked with Kakao</string>
     <string name="feature_my_linked_with_google">Linked with Google</string>
     <string name="feature_my_linked_with_naver">Linked with Naver</string>

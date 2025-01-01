@@ -4,7 +4,9 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.data.network.request.user.ChangeUserNameRequest
 import com.yjy.data.network.request.user.LinkAccountRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
+import com.yjy.data.network.request.user.UpgradePremiumRequest
 import com.yjy.data.network.response.user.CheckBanResponse
+import com.yjy.data.network.response.user.CheckPremiumResponse
 import com.yjy.data.network.response.user.GetAccountTypeResponse
 import com.yjy.data.network.response.user.GetNameResponse
 import com.yjy.data.network.response.user.GetNotificationsResponse
@@ -35,6 +37,9 @@ internal class UserDataSourceImpl @Inject constructor(
     override suspend fun checkBan(identifier: String): NetworkResult<CheckBanResponse?> =
         challengeTogetherService.checkBan(identifier)
 
+    override suspend fun checkPremium(): NetworkResult<CheckPremiumResponse> =
+        challengeTogetherService.checkPremium()
+
     override suspend fun getRemainTimeForChangeName(): NetworkResult<GetRemainTimeForChangeNameResponse> =
         challengeTogetherService.getRemainTimeForChangeName()
 
@@ -58,6 +63,9 @@ internal class UserDataSourceImpl @Inject constructor(
 
     override suspend fun linkAccount(request: LinkAccountRequest): NetworkResult<Unit> =
         challengeTogetherService.linkAccount(request)
+
+    override suspend fun upgradePremium(request: UpgradePremiumRequest): NetworkResult<Unit> =
+        challengeTogetherService.upgradePremium(request)
 
     override suspend fun registerFirebaseToken(request: RegisterFirebaseTokenRequest): NetworkResult<Unit> =
         challengeTogetherService.registerFirebaseToken(request)

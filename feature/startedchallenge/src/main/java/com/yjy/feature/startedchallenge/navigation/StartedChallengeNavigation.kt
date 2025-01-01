@@ -28,6 +28,8 @@ fun NavController.navigateToStartedChallenge(
 
 fun NavGraphBuilder.startedChallengeScreen(
     onBackClick: () -> Unit,
+    onResetClick: () -> Unit,
+    onDeleteClick: () -> Unit,
     onEditCategoryClick: (challengeId: Int, category: Category) -> Unit,
     onEditTitleClick: (challengeId: Int, title: String, description: String) -> Unit,
     onEditTargetDaysClick: (challengeId: Int, targetDays: String, currentDays: Int) -> Unit,
@@ -47,6 +49,8 @@ fun NavGraphBuilder.startedChallengeScreen(
     ) {
         StartedChallengeRoute(
             onBackClick = onBackClick,
+            onResetClick = onResetClick,
+            onDeleteClick = onDeleteClick,
             onEditCategoryClick = onEditCategoryClick,
             onEditTitleClick = onEditTitleClick,
             onEditTargetDaysClick = onEditTargetDaysClick,

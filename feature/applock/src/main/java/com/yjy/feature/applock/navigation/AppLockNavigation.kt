@@ -33,6 +33,7 @@ private fun NavController.navigateToAppLockPinSetting() {
 
 fun NavGraphBuilder.appLockNavGraph(
     navController: NavHostController,
+    onPremiumExploreClick: () -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     navigation<ServiceRoute.AppLock>(
@@ -49,6 +50,7 @@ fun NavGraphBuilder.appLockNavGraph(
                 onBackClick = navController::popBackStack,
                 onSetPinClick = navController::navigateToAppLockPinSetting,
                 onChangePinClick = navController::navigateToAppLockPinSetting,
+                onPremiumExploreClick = onPremiumExploreClick,
                 viewModel = viewModel,
             )
         }

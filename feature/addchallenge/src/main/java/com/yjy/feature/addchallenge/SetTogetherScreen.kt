@@ -63,6 +63,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun SetTogetherRoute(
     onBackClick: () -> Unit,
+    onCreateClick: () -> Unit,
     onWaitingChallengeCreated: (Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
@@ -76,7 +77,9 @@ internal fun SetTogetherRoute(
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
+        onCreateClick = onCreateClick,
         onWaitingChallengeCreated = onWaitingChallengeCreated,
+        checkShouldShowAd = viewModel::shouldShowAd,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -88,7 +91,9 @@ internal fun SetTogetherScreen(
     uiEvent: Flow<AddChallengeUiEvent> = flowOf(),
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
+    onCreateClick: () -> Unit = {},
     onWaitingChallengeCreated: (Int) -> Unit = {},
+    checkShouldShowAd: suspend () -> Boolean = { false },
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     var shouldShowAddConfirmDialog by remember { mutableStateOf(false) }
@@ -100,6 +105,7 @@ internal fun SetTogetherScreen(
     ObserveAsEvents(flow = uiEvent, useMainImmediate = false) {
         when (it) {
             is AddChallengeUiEvent.WaitingChallengeCreated -> {
+                if (checkShouldShowAd()) { onCreateClick() }
                 onShowSnackbar(SnackbarType.SUCCESS, waitingRoomCreatedMessage)
                 onWaitingChallengeCreated(it.challengeId)
             }

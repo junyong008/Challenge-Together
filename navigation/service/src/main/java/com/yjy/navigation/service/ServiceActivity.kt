@@ -20,6 +20,7 @@ import com.yjy.common.core.constants.DeepLinkType.TYPE_PARAM
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.navigation.Destination
 import com.yjy.common.navigation.Navigator
+import com.yjy.navigation.service.util.InterstitialAdManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,6 +29,9 @@ class ServiceActivity : AppCompatActivity() {
 
     @Inject
     lateinit var navigator: Navigator
+
+    @Inject
+    lateinit var adManager: InterstitialAdManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +59,9 @@ class ServiceActivity : AppCompatActivity() {
                     },
                     onShowToast = { message ->
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    },
+                    onShowAd = { adType ->
+                        adManager.show(this, adType)
                     },
                     onFinishApp = { finish() },
                 )

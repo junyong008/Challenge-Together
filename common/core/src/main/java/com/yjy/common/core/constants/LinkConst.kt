@@ -25,4 +25,5 @@ object DeepLinkPath {
     const val STARTED = "challenge/started"
     const val WAITING = "challenge/waiting"
     const val POST = "community/post"
+    const val PREMIUM = "premium"
 }

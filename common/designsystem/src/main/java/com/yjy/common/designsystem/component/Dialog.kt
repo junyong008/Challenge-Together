@@ -86,6 +86,20 @@ fun ChallengeTogetherDialog(
 }
 
 @Composable
+fun PremiumDialog(
+    onExploreClick: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    ChallengeTogetherDialog(
+        title = stringResource(id = R.string.common_designsystem_dialog_premium_feature_title),
+        description = stringResource(id = R.string.common_designsystem_dialog_premium_feature_message),
+        onClickPositive = onExploreClick,
+        onClickNegative = onDismiss,
+        positiveTextRes = R.string.common_designsystem_dialog_go_to_premium,
+    )
+}
+
+@Composable
 fun MaintenanceDialog(
     expectedCompletionTime: String,
     onDismiss: () -> Unit,

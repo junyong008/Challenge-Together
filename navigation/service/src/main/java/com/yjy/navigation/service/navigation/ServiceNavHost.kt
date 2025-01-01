@@ -38,6 +38,8 @@ import com.yjy.feature.notification.navigation.navigateToNotification
 import com.yjy.feature.notification.navigation.notificationScreen
 import com.yjy.feature.notificationsetting.navigation.navigateToNotificationSetting
 import com.yjy.feature.notificationsetting.navigation.notificationSettingScreen
+import com.yjy.feature.premium.navigation.navigateToPremium
+import com.yjy.feature.premium.navigation.premiumScreen
 import com.yjy.feature.resetrecord.navigation.navigateToResetRecord
 import com.yjy.feature.resetrecord.navigation.resetRecordScreen
 import com.yjy.feature.startedchallenge.navigation.navigateToStartedChallenge
@@ -45,10 +47,12 @@ import com.yjy.feature.startedchallenge.navigation.startedChallengeScreen
 import com.yjy.feature.together.navigation.togetherNavGraph
 import com.yjy.feature.waitingchallenge.navigation.navigateToWaitingChallenge
 import com.yjy.feature.waitingchallenge.navigation.waitingChallengeScreen
+import com.yjy.navigation.service.util.AdType
 
 @Composable
 internal fun ServiceNavHost(
     navController: NavHostController,
+    onShowAd: (AdType) -> Unit,
     onShowToast: (String) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
@@ -81,6 +85,7 @@ internal fun ServiceNavHost(
             onNotificationSettingClick = navController::navigateToNotificationSetting,
             onAppLockSettingClick = navController::navigateToAppLockSetting,
             onAccountLinkClick = navController::navigateToLinkAccount,
+            onPremiumClick = navController::navigateToPremium,
             onChangeNicknameClick = navController::navigateToChangeName,
             onChangePasswordClick = navController::navigateToChangePassword,
             onDeleteAccountClick = navController::navigateToDeleteAccount,
@@ -88,6 +93,7 @@ internal fun ServiceNavHost(
         )
         appLockNavGraph(
             navController = navController,
+            onPremiumExploreClick = navController::navigateToPremium,
             onShowSnackbar = onShowSnackbar,
         )
         completedChallengesScreen(
@@ -105,6 +111,10 @@ internal fun ServiceNavHost(
         notificationSettingScreen(
             onBackClick = navController::popBackStack,
         )
+        premiumScreen(
+            onBackClick = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
+        )
         changeNameScreen(
             onBackClick = navController::popBackStack,
             onShowSnackbar = onShowSnackbar,
@@ -119,6 +129,7 @@ internal fun ServiceNavHost(
         )
         addChallengeNavGraph(
             navController = navController,
+            onCreateClick = { onShowAd(AdType.CHALLENGE_CREATE) },
             onChallengeStarted = { challengeId ->
                 val navOptions = navOptions {
                     popUpTo(ServiceRoute.AddChallenge) { inclusive = true }
@@ -150,6 +161,8 @@ internal fun ServiceNavHost(
         )
         startedChallengeScreen(
             onBackClick = navController::popBackStack,
+            onResetClick = { onShowAd(AdType.CHALLENGE_RESET) },
+            onDeleteClick = { onShowAd(AdType.CHALLENGE_DELETE) },
             onEditCategoryClick = navController::navigateToEditCategory,
             onEditTitleClick = navController::navigateToEditTitleDescription,
             onEditTargetDaysClick = navController::navigateToEditTargetDays,

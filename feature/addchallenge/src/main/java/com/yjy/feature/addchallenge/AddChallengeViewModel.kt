@@ -12,6 +12,7 @@ import com.yjy.common.core.constants.TimeConst.MIDNIGHT_HOUR
 import com.yjy.common.core.constants.TimeConst.NOON_HOUR
 import com.yjy.common.network.handleNetworkResult
 import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
 import com.yjy.feature.addchallenge.model.AddChallengeUiState
@@ -24,6 +25,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -34,6 +37,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddChallengeViewModel @Inject constructor(
     private val challengeRepository: ChallengeRepository,
+    private val startedChallengeRepository: StartedChallengeRepository,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<AddChallengeUiState> = MutableStateFlow(AddChallengeUiState())
@@ -46,6 +50,12 @@ class AddChallengeViewModel @Inject constructor(
         viewModelScope.launch {
             _uiEvent.send(event)
         }
+    }
+
+    suspend fun shouldShowAd(): Boolean {
+        return startedChallengeRepository.startedChallenges
+            .map { it.size >= MIN_CHALLENGES_FOR_AD }
+            .first()
     }
 
     fun processAction(action: AddChallengeUiAction) {
@@ -225,5 +235,9 @@ class AddChallengeViewModel @Inject constructor(
             sendEvent(event)
             _uiState.update { it.copy(isAddingChallenge = false) }
         }
+    }
+
+    companion object {
+        private const val MIN_CHALLENGES_FOR_AD = 1
     }
 }

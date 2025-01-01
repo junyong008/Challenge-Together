@@ -25,6 +25,7 @@ dependencies {
 
         libs.androidx.work.ktx,
         libs.hilt.ext.work,
+        libs.kotlinx.coroutines.guava,
     )
 
     runtimeOnly(projects.data.userImpl)

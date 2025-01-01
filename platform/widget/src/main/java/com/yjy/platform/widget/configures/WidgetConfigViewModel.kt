@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yjy.data.auth.api.AppLockRepository
 import com.yjy.data.challenge.api.ChallengePreferencesRepository
+import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.GetStartedChallengesUseCase
 import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.model.challenge.core.SortOrder
@@ -15,10 +16,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WidgetConfigViewModel @Inject constructor(
+    userRepository: UserRepository,
     appLockRepository: AppLockRepository,
     getStartedChallengesUseCase: GetStartedChallengesUseCase,
     challengePreferencesRepository: ChallengePreferencesRepository,
 ) : ViewModel() {
+
+    val isPremium = userRepository.isPremium
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = false,
+        )
 
     val shouldHideWidgetContents = appLockRepository.shouldHideWidgetContents
         .stateIn(

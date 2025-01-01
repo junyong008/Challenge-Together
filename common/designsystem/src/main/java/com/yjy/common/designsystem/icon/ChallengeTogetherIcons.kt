@@ -15,6 +15,7 @@ object ChallengeTogetherIcons {
     val BookmarkOn = R.drawable.ic_bookmark_on
     val Cancel = R.drawable.ic_cancel
     val Check = R.drawable.ic_check
+    val CheckOnly = R.drawable.ic_check_only
     val Close = R.drawable.ic_close
     val Comment = R.drawable.ic_comment
     val Community = R.drawable.ic_community
@@ -43,6 +44,7 @@ object ChallengeTogetherIcons {
     val NotificationOn = R.drawable.ic_notification_on
     val Person = R.drawable.ic_person
     val Policy = R.drawable.ic_policy
+    val Premium = R.drawable.ic_premium
     val QuoteLeft = R.drawable.ic_quote_left
     val QuoteRight = R.drawable.ic_quote_right
     val Refresh = R.drawable.ic_refresh

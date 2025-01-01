@@ -9,6 +9,7 @@ import com.yjy.data.network.datasource.UserDataSource
 import com.yjy.data.network.request.user.ChangeUserNameRequest
 import com.yjy.data.network.request.user.LinkAccountRequest
 import com.yjy.data.network.request.user.RegisterFirebaseTokenRequest
+import com.yjy.data.network.request.user.UpgradePremiumRequest
 import com.yjy.data.user.api.FcmTokenProvider
 import com.yjy.data.user.api.UserRepository
 import com.yjy.data.user.impl.mapper.toLocalDateTimeOrNull
@@ -31,6 +32,7 @@ internal class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     override val timeDiff: Flow<Long> = userPreferencesDataSource.timeDiff
+    override val isPremium: Flow<Boolean> = userPreferencesDataSource.isPremium
 
     override val remoteAppVersion: Flow<Version> =
         userDataSource.getRemoteAppVersion().map { Version(it) }
@@ -72,6 +74,10 @@ internal class UserRepositoryImpl @Inject constructor(
             ),
         )
 
+    override suspend fun upgradeToPremium(purchaseToken: String): NetworkResult<Unit> =
+        userDataSource.upgradePremium(UpgradePremiumRequest(purchaseToken))
+            .onSuccess { userPreferencesDataSource.setIsPremium(true) }
+
     override suspend fun registerFcmToken() {
         val currentToken: String = fcmTokenProvider.getToken()
         val lastRegisteredToken: String? = userPreferencesDataSource.getFcmToken()
@@ -83,8 +89,15 @@ internal class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun checkPremium() {
+        userDataSource.checkPremium()
+            .onSuccess { userPreferencesDataSource.setIsPremium(it.isPremium) }
+            .onFailure { Timber.d("checkPremium() failed") }
+    }
+
     override suspend fun clearLocalData() {
         userPreferencesDataSource.setFcmToken(null)
+        userPreferencesDataSource.setIsPremium(false)
     }
 
     private fun hashIdentifier(identifier: String): String {

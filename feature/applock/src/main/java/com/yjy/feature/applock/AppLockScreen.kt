@@ -28,6 +28,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,6 +46,7 @@ import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherSwitch
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
+import com.yjy.common.designsystem.component.PremiumDialog
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
@@ -55,9 +59,11 @@ internal fun AppLockRoute(
     onBackClick: () -> Unit,
     onSetPinClick: () -> Unit,
     onChangePinClick: () -> Unit,
+    onPremiumExploreClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AppLockViewModel = hiltViewModel(),
 ) {
+    val isPremium by viewModel.isPremium.collectAsStateWithLifecycle()
     val isPinSet by viewModel.isPinSet.collectAsStateWithLifecycle()
     val isBiometricEnabled by viewModel.isBiometricEnabled.collectAsStateWithLifecycle()
     val shouldHideWidgetContents by viewModel.shouldHideWidgetContents.collectAsStateWithLifecycle()
@@ -65,6 +71,7 @@ internal fun AppLockRoute(
 
     AppLockScreen(
         modifier = modifier,
+        isPremium = isPremium,
         isPinSet = isPinSet,
         isBiometricEnabled = isBiometricEnabled,
         shouldHideWidgetContents = shouldHideWidgetContents,
@@ -73,12 +80,14 @@ internal fun AppLockRoute(
         onBackClick = onBackClick,
         onSetPinClick = onSetPinClick,
         onChangePinClick = onChangePinClick,
+        onPremiumExploreClick = onPremiumExploreClick,
     )
 }
 
 @Composable
 internal fun AppLockScreen(
     modifier: Modifier = Modifier,
+    isPremium: Boolean = false,
     isPinSet: Boolean = false,
     isBiometricEnabled: Boolean = false,
     shouldHideWidgetContents: Boolean = false,
@@ -87,8 +96,20 @@ internal fun AppLockScreen(
     onBackClick: () -> Unit = {},
     onSetPinClick: () -> Unit = {},
     onChangePinClick: () -> Unit = {},
+    onPremiumExploreClick: () -> Unit = {},
 ) {
     val context = LocalContext.current
+    var shouldShowPremiumDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (shouldShowPremiumDialog) {
+        PremiumDialog(
+            onExploreClick = {
+                shouldShowPremiumDialog = false
+                onPremiumExploreClick()
+            },
+            onDismiss = { shouldShowPremiumDialog = false },
+        )
+    }
 
     LaunchedEffect(shouldHideWidgetContents) {
         WidgetManager.updateAllWidgets(context)
@@ -120,7 +141,11 @@ internal fun AppLockScreen(
                     if (isPinSet) {
                         processAction(AppLockUiAction.OnRemovePin)
                     } else {
-                        onSetPinClick()
+                        if (isPremium) {
+                            onSetPinClick()
+                        } else {
+                            shouldShowPremiumDialog = true
+                        }
                     }
                 },
             )

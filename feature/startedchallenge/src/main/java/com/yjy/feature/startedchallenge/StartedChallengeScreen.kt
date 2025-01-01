@@ -106,6 +106,8 @@ import com.yjy.common.designsystem.R as designSystemR
 @Composable
 internal fun StartedChallengeRoute(
     onBackClick: () -> Unit,
+    onResetClick: () -> Unit,
+    onDeleteClick: () -> Unit,
     onEditCategoryClick: (challengeId: Int, category: Category) -> Unit,
     onEditTitleClick: (challengeId: Int, title: String, description: String) -> Unit,
     onEditTargetDaysClick: (challengeId: Int, targetDays: String, currentDays: Int) -> Unit,
@@ -126,6 +128,8 @@ internal fun StartedChallengeRoute(
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
+        onResetClick = onResetClick,
+        onDeleteClick = onDeleteClick,
         onEditCategoryClick = onEditCategoryClick,
         onEditTitleClick = onEditTitleClick,
         onEditTargetDaysClick = onEditTargetDaysClick,
@@ -145,6 +149,8 @@ internal fun StartedChallengeScreen(
     uiEvent: Flow<StartedChallengeUiEvent> = flowOf(),
     processAction: (StartedChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
+    onResetClick: () -> Unit = {},
+    onDeleteClick: () -> Unit = {},
     onEditCategoryClick: (challengeId: Int, category: Category) -> Unit = { _, _ -> },
     onEditTitleClick: (challengeId: Int, title: String, description: String) -> Unit = { _, _, _ -> },
     onEditTargetDaysClick: (challengeId: Int, targetDays: String, currentDays: Int) -> Unit = { _, _, _ -> },
@@ -203,13 +209,16 @@ internal fun StartedChallengeScreen(
                 onBackClick()
             }
 
-            StartedChallengeUiEvent.ResetSuccess ->
+            StartedChallengeUiEvent.ResetSuccess -> {
+                onResetClick()
                 onShowSnackbar(SnackbarType.SUCCESS, resetSuccessMessage)
+            }
 
             StartedChallengeUiEvent.ResetFailure ->
                 onShowSnackbar(SnackbarType.ERROR, resetFailureMessage)
 
             StartedChallengeUiEvent.DeleteSuccess -> {
+                onDeleteClick()
                 onShowSnackbar(SnackbarType.SUCCESS, deleteSuccessMessage)
                 onBackClick()
             }

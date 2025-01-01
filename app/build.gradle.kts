@@ -20,15 +20,11 @@ android {
         debug {
             isDebuggable = true
             applicationIdSuffix = ".debug"
-            manifestPlaceholders += mapOf(
-                "appName" to "@string/app_name_debug",
-            )
+            manifestPlaceholders["appName"] = "@string/app_name_debug"
         }
         release {
             isDebuggable = false
-            manifestPlaceholders += mapOf(
-                "appName" to "@string/app_name",
-            )
+            manifestPlaceholders["appName"] = "@string/app_name"
         }
     }
 
@@ -70,6 +66,7 @@ dependencies {
         libs.androidx.hilt.navigation.compose,
         libs.androidx.work.ktx,
         libs.appsflyer.sdk,
+        libs.google.ads,
         libs.hilt.ext.work,
         libs.timber,
     )

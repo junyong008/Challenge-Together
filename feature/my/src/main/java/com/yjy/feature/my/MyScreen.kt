@@ -89,6 +89,7 @@ internal fun MyRoute(
     onNotificationSettingClick: () -> Unit,
     onAppLockSettingClick: () -> Unit,
     onAccountLinkClick: () -> Unit,
+    onPremiumClick: () -> Unit,
     onChangeNicknameClick: () -> Unit,
     onChangePasswordClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
@@ -114,6 +115,7 @@ internal fun MyRoute(
         onNotificationSettingClick = onNotificationSettingClick,
         onAppLockSettingClick = onAppLockSettingClick,
         onAccountLinkClick = onAccountLinkClick,
+        onPremiumClick = onPremiumClick,
         onChangeNicknameClick = onChangeNicknameClick,
         onChangePasswordClick = onChangePasswordClick,
         onDeleteAccountClick = onDeleteAccountClick,
@@ -135,6 +137,7 @@ internal fun MyScreen(
     onNotificationSettingClick: () -> Unit = {},
     onAppLockSettingClick: () -> Unit = {},
     onAccountLinkClick: () -> Unit = {},
+    onPremiumClick: () -> Unit = {},
     onChangeNicknameClick: () -> Unit = {},
     onChangePasswordClick: () -> Unit = {},
     onDeleteAccountClick: () -> Unit = {},
@@ -223,6 +226,7 @@ internal fun MyScreen(
                     AccountSection(
                         accountType = userAccountType,
                         onAccountLinkClick = onAccountLinkClick,
+                        onPremiumClick = onPremiumClick,
                         onChangeNicknameClick = onChangeNicknameClick,
                         onChangePasswordClick = onChangePasswordClick,
                         onLogoutClick = { shouldShowLogoutConfirmDialog = true },
@@ -335,6 +339,7 @@ private fun AppInfoSection(
 private fun AccountSection(
     accountType: AccountType,
     onAccountLinkClick: () -> Unit,
+    onPremiumClick: () -> Unit,
     onChangeNicknameClick: () -> Unit,
     onChangePasswordClick: () -> Unit,
     onLogoutClick: () -> Unit,
@@ -360,6 +365,12 @@ private fun AccountSection(
             Spacer(modifier = Modifier.height(8.dp))
             AccountTypeCard(accountType = accountType)
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        MyCard(
+            titleResId = R.string.feature_my_account_premium,
+            iconResId = ChallengeTogetherIcons.Premium,
+            onClick = onPremiumClick,
+        )
         Spacer(modifier = Modifier.height(8.dp))
         MyCard(
             titleResId = R.string.feature_my_nickname_change,

@@ -17,9 +17,11 @@ dependencies {
         projects.platform.widget,
 
         projects.data.authApi,
+        projects.data.userApi,
 
         libs.androidx.biometric,
     )
 
     runtimeOnly(projects.data.authImpl)
+    runtimeOnly(projects.data.userImpl)
 }

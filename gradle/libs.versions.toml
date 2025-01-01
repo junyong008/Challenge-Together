@@ -24,11 +24,14 @@ androidXPaging = "3.3.5"
 androidxWork = "2.10.0"
 appcompat = "1.7.0"
 appsflyer = "6.16.0"
+billing = "7.1.1"
 biometric = "1.4.0-alpha02"
+coroutinesGuava = "1.9.0"
 desugar = "2.1.4"
 detekt = "1.23.6"
 firebaseBom = "33.7.0"
 firebaseCrashlyticsPlugin = "3.0.2"
+googleAds = "23.6.0"
 googleIdentity = "1.1.1"
 googleOss = "17.1.0"
 googleOssPlugin = "0.10.6"
@@ -78,6 +81,8 @@ androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", 
 androidx-work-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "androidxWork" }
 appsflyer-sdk = { group = "com.appsflyer", name = "af-android-sdk", version.ref = "appsflyer" }
+billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billing" }
+google-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "googleAds" }
 google-identity = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleIdentity" }
 google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "googleOss" }
 google-oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "googleOssPlugin" }
@@ -90,6 +95,7 @@ kakao-sdk-login = { group = "com.kakao.sdk", name = "v2-user", version.ref = "ka
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-guava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "coroutinesGuava" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }

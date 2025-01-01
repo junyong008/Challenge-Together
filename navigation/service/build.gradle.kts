@@ -4,10 +4,19 @@ plugins {
     alias(libs.plugins.custom.android.library)
     alias(libs.plugins.custom.android.library.compose)
     alias(libs.plugins.custom.android.hilt)
+    alias(libs.plugins.secrets)
 }
 
 android {
     namespace = "com.yjy.navigation.service"
+
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
+secrets {
+    defaultPropertiesFileName = "secrets.defaults.properties"
 }
 
 dependencies {
@@ -38,6 +47,7 @@ dependencies {
         projects.feature.completedchallenges,
         projects.feature.notification,
         projects.feature.notificationsetting,
+        projects.feature.premium,
         projects.feature.changename,
         projects.feature.linkaccount,
         projects.feature.deleteaccount,
@@ -55,6 +65,7 @@ dependencies {
         libs.androidx.navigation.compose,
         libs.androidx.hilt.navigation.compose,
         libs.appsflyer.sdk,
+        libs.google.ads,
         libs.kotlinx.collections.immutable,
     )
 

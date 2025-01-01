@@ -70,6 +70,7 @@ import com.yjy.common.designsystem.R as designSystemR
 @Composable
 internal fun ConfirmRoute(
     onBackClick: () -> Unit,
+    onCreateClick: () -> Unit,
     onSetTogetherClick: () -> Unit,
     onChallengeStarted: (Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
@@ -84,8 +85,10 @@ internal fun ConfirmRoute(
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
+        onCreateClick = onCreateClick,
         onSetTogetherClick = onSetTogetherClick,
         onChallengeStarted = onChallengeStarted,
+        checkShouldShowAd = viewModel::shouldShowAd,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -97,8 +100,10 @@ internal fun ConfirmScreen(
     uiEvent: Flow<AddChallengeUiEvent> = flowOf(),
     processAction: (AddChallengeUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
+    onCreateClick: () -> Unit = {},
     onSetTogetherClick: () -> Unit = {},
     onChallengeStarted: (Int) -> Unit = {},
+    checkShouldShowAd: suspend () -> Boolean = { false },
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     var shouldShowAddConfirmDialog by remember { mutableStateOf(false) }
@@ -110,6 +115,7 @@ internal fun ConfirmScreen(
     ObserveAsEvents(flow = uiEvent, useMainImmediate = false) {
         when (it) {
             is AddChallengeUiEvent.ChallengeStarted -> {
+                if (checkShouldShowAd()) { onCreateClick() }
                 onShowSnackbar(SnackbarType.SUCCESS, challengeAddedMessage)
                 onChallengeStarted(it.challengeId)
             }

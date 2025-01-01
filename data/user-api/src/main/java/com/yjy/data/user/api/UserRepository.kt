@@ -9,6 +9,7 @@ import java.time.LocalDateTime
 
 interface UserRepository {
     val timeDiff: Flow<Long>
+    val isPremium: Flow<Boolean>
     val remoteAppVersion: Flow<Version>
     val maintenanceEndTime: Flow<LocalDateTime?>
     suspend fun syncTime(): NetworkResult<Unit>
@@ -18,6 +19,8 @@ interface UserRepository {
     suspend fun getRemainSecondsForChangeName(): NetworkResult<Long>
     suspend fun changeUserName(name: String): NetworkResult<Unit>
     suspend fun linkAccount(kakaoId: String, googleId: String, naverId: String): NetworkResult<Unit>
+    suspend fun upgradeToPremium(purchaseToken: String): NetworkResult<Unit>
     suspend fun registerFcmToken()
+    suspend fun checkPremium()
     suspend fun clearLocalData()
 }

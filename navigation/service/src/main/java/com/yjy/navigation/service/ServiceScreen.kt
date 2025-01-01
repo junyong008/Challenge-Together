@@ -65,6 +65,7 @@ import com.yjy.navigation.service.navigation.MainTab
 import com.yjy.navigation.service.navigation.ServiceNavController
 import com.yjy.navigation.service.navigation.ServiceNavHost
 import com.yjy.navigation.service.navigation.rememberServiceNavController
+import com.yjy.navigation.service.util.AdType
 import com.yjy.platform.widget.WidgetManager
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
@@ -76,6 +77,7 @@ import kotlinx.coroutines.launch
 internal fun ServiceScreen(
     navigateToAuth: () -> Unit,
     onShowToast: (String) -> Unit,
+    onShowAd: (AdType) -> Unit,
     onFinishApp: () -> Unit,
     viewModel: ServiceViewModel = hiltViewModel(),
     navigator: ServiceNavController = rememberServiceNavController(),
@@ -86,6 +88,7 @@ internal fun ServiceScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
 
     val banStatus by viewModel.banStatus.collectAsStateWithLifecycle()
+    val isPremium by viewModel.isPremium.collectAsStateWithLifecycle()
     val isOffline by viewModel.isOffline.collectAsStateWithLifecycle()
     val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
     val isManualTime by viewModel.isManualTime.collectAsStateWithLifecycle()
@@ -241,6 +244,9 @@ internal fun ServiceScreen(
                 ServiceNavHost(
                     navController = navigator.navController,
                     onShowToast = onShowToast,
+                    onShowAd = { adType ->
+                        if (!isPremium) { onShowAd(adType) }
+                    },
                     onShowSnackbar = showSnackbar,
                 )
 

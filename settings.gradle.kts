@@ -65,6 +65,7 @@ include(
     ":feature:applock",
     ":feature:notification",
     ":feature:notificationsetting",
+    ":feature:premium",
     ":feature:changename",
     ":feature:linkaccount",
     ":feature:deleteaccount",
