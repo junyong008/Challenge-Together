@@ -5,4 +5,6 @@ sealed interface CommunityUiEvent {
     data object AddFailure : CommunityUiEvent
     data object EditSuccess : CommunityUiEvent
     data object EditFailure : CommunityUiEvent
+    data object GlobalOn : CommunityUiEvent
+    data object GlobalOff : CommunityUiEvent
 }

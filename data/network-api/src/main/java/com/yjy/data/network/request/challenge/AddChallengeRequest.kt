@@ -19,4 +19,6 @@ data class AddChallengeRequest(
     val maxParticipants: String,
     @SerialName("roomPassword")
     val password: String,
+    @SerialName("languageCode")
+    val languageCode: String,
 )

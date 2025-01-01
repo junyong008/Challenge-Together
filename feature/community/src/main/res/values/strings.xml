@@ -5,10 +5,15 @@
     <string name="feature_community_cheer">Cheer</string>
     <string name="feature_community_comment">Comment</string>
     <string name="feature_community_search">Search…</string>
+    <string name="feature_community_global">Other Language Posts</string>
     <string name="feature_community_menu">Menu</string>
     <string name="feature_community_bookmarks">Bookmarks</string>
     <string name="feature_community_my_posts">My Posts</string>
+    <string name="feature_community_global_posts_on">Global posts have been enabled.</string>
+    <string name="feature_community_global_posts_off">Global posts have been disabled.</string>
     <string name="feature_community_commented_posts">Commented Posts</string>
+    <string name="feature_community_empty_title">No Posts Yet</string>
+    <string name="feature_community_empty_description">There are no posts written in \"%1$s\" yet.\nTap the globe icon to see other languages.</string>
     <string name="feature_community_search_empty_title">No Posts Found</string>
     <string name="feature_community_search_empty_description">There are no posts matching your search.\nTry using different keywords!</string>
     <string name="feature_community_no_posts_title">No Posts Yet</string>

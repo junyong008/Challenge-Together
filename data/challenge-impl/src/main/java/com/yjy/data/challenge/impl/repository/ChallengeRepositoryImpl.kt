@@ -31,6 +31,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
         startDateTime: LocalDateTime?,
         maxParticipants: Int,
         roomPassword: String,
+        languageCode: String,
     ): NetworkResult<Int> = challengeDataSource.addChallenge(
         request = AddChallengeRequest(
             category = category.toRequestString(),
@@ -40,6 +41,7 @@ internal class ChallengeRepositoryImpl @Inject constructor(
             startDateTime = startDateTime?.toRequestString() ?: "",
             maxParticipants = maxParticipants.toString(),
             password = roomPassword,
+            languageCode = languageCode,
         ),
     ).map { it.challengeId }
 

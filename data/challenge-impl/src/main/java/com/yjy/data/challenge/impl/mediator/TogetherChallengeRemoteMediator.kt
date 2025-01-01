@@ -15,6 +15,7 @@ import com.yjy.model.challenge.core.Category
 @OptIn(ExperimentalPagingApi::class)
 internal class TogetherChallengeRemoteMediator(
     private val query: String,
+    private val languageCode: String,
     private val category: Category,
     private val togetherChallengeDao: TogetherChallengeDao,
     private val waitingChallengeDataSource: WaitingChallengeDataSource,
@@ -33,6 +34,7 @@ internal class TogetherChallengeRemoteMediator(
         val response = waitingChallengeDataSource.getTogetherChallenges(
             category = category.toRequestString(),
             query = query,
+            languageCode = languageCode,
             lastChallengeId = lastChallengeId,
             limit = state.config.pageSize,
         )

@@ -26,10 +26,12 @@ internal class CommunityDataSourceImpl @Inject constructor(
 
     override suspend fun getPosts(
         query: String,
+        languageCode: String,
         lastPostId: Int,
         limit: Int,
     ): NetworkResult<List<GetPostsResponse>> = challengeTogetherService.getPosts(
         query = query,
+        languageCode = languageCode,
         lastPostId = lastPostId,
         limit = limit,
     )

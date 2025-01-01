@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
@@ -96,6 +97,9 @@ internal fun SetTogetherScreen(
     checkShouldShowAd: suspend () -> Boolean = { false },
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val context = LocalContext.current
+    val languageCode = context.resources.configuration.locales[0].language
+
     var shouldShowAddConfirmDialog by remember { mutableStateOf(false) }
 
     val waitingRoomCreatedMessage = stringResource(id = R.string.feature_addchallenge_waiting_room_created)
@@ -149,6 +153,7 @@ internal fun SetTogetherScreen(
                             maxParticipants = uiState.maxParticipants,
                             enableRoomPassword = uiState.enableRoomPassword,
                             roomPassword = uiState.roomPassword,
+                            languageCode = languageCode,
                         ),
                     )
                 },

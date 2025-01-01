@@ -82,6 +82,7 @@ fun NavGraphBuilder.communityNavGraph(
                 onBookmarkedClick = navController::navigateToBookmarked,
                 onAuthoredClick = navController::navigateToAuthored,
                 onCommentedClick = navController::navigateToCommented,
+                onShowSnackbar = onShowSnackbar,
                 viewModel = viewModel,
             )
         }

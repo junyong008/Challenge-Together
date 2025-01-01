@@ -13,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -34,11 +36,13 @@ import androidx.paging.LoadStates
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.designsystem.component.BaseBottomSheet
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ClickableText
 import com.yjy.common.designsystem.component.LoadingWheel
 import com.yjy.common.designsystem.component.SearchTextField
+import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.component.TitleWithDescription
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
@@ -48,7 +52,9 @@ import com.yjy.common.ui.EmptyBody
 import com.yjy.common.ui.ErrorBody
 import com.yjy.common.ui.preview.CommunityPostPreviewParameterProvider
 import com.yjy.feature.community.component.PostsBody
+import com.yjy.feature.community.model.CommunityUiEvent
 import com.yjy.model.community.SimpleCommunityPost
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 @Composable
@@ -57,21 +63,28 @@ internal fun ListRoute(
     onBookmarkedClick: () -> Unit,
     onAuthoredClick: () -> Unit,
     onCommentedClick: () -> Unit,
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CommunityViewModel = hiltViewModel(),
 ) {
     val posts = viewModel.allPosts.collectAsLazyPagingItems()
+    val isGlobalActive by viewModel.isGlobalActive.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
 
     ListScreen(
         modifier = modifier,
         searchQuery = searchQuery,
+        isGlobalActive = isGlobalActive,
         posts = posts,
+        uiEvent = viewModel.uiEvent,
         updateSearchQuery = viewModel::updateSearchQuery,
+        updateLanguageCode = viewModel::updateLanguageCode,
+        toggleGlobalMode = viewModel::toggleGlobalMode,
         onPostClick = onPostClick,
         onBookmarkedClick = onBookmarkedClick,
         onAuthoredClick = onAuthoredClick,
         onCommentedClick = onCommentedClick,
+        onShowSnackbar = onShowSnackbar,
     )
 }
 
@@ -79,13 +92,23 @@ internal fun ListRoute(
 internal fun ListScreen(
     modifier: Modifier = Modifier,
     searchQuery: String = "",
+    isGlobalActive: Boolean = false,
     posts: LazyPagingItems<SimpleCommunityPost>,
+    uiEvent: Flow<CommunityUiEvent> = flowOf(),
     updateSearchQuery: (String) -> Unit = {},
+    updateLanguageCode: (String) -> Unit = {},
+    toggleGlobalMode: () -> Unit = {},
     onPostClick: (postId: Int) -> Unit = {},
     onBookmarkedClick: () -> Unit = {},
     onAuthoredClick: () -> Unit = {},
     onCommentedClick: () -> Unit = {},
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val context = LocalContext.current
+    val locale = context.resources.configuration.locales[0]
+    val languageCode = locale.language
+    val displayLanguage = locale.displayLanguage
+
     var shouldShowSearchTextField by rememberSaveable { mutableStateOf(false) }
     var shouldShowCommunityMenu by remember { mutableStateOf(false) }
 
@@ -112,6 +135,21 @@ internal fun ListScreen(
         )
     }
 
+    val globalOnMessage = stringResource(id = R.string.feature_community_global_posts_on)
+    val globalOffMessage = stringResource(id = R.string.feature_community_global_posts_off)
+
+    ObserveAsEvents(flow = uiEvent) {
+        when (it) {
+            CommunityUiEvent.GlobalOn -> onShowSnackbar(SnackbarType.MESSAGE, globalOnMessage)
+            CommunityUiEvent.GlobalOff -> onShowSnackbar(SnackbarType.MESSAGE, globalOffMessage)
+            else -> Unit
+        }
+    }
+
+    LaunchedEffect(languageCode) {
+        updateLanguageCode(languageCode)
+    }
+
     Column(modifier = modifier.fillMaxSize()) {
         Row(
             modifier = Modifier.padding(start = 32.dp, top = 32.dp, bottom = 32.dp, end = 20.dp),
@@ -125,6 +163,10 @@ internal fun ListScreen(
             SearchButton(
                 onClick = { shouldShowSearchTextField = !shouldShowSearchTextField },
                 isSearchActive = shouldShowSearchTextField,
+            )
+            LanguageButton(
+                onClick = { toggleGlobalMode() },
+                isGlobalActive = isGlobalActive,
             )
             MenuButton(onClick = { shouldShowCommunityMenu = true })
         }
@@ -142,7 +184,14 @@ internal fun ListScreen(
         when {
             isLoading -> LoadingWheel()
             isError -> ErrorBody(onClickRetry = { posts.refresh() })
-            isIdle && isEmpty && searchQuery.isNotEmpty() -> {
+            isIdle && isEmpty && searchQuery.isEmpty() -> {
+                EmptyBody(
+                    title = stringResource(id = R.string.feature_community_empty_title),
+                    description = stringResource(id = R.string.feature_community_empty_description, displayLanguage),
+                )
+            }
+
+            isEmpty -> {
                 EmptyBody(
                     title = stringResource(id = R.string.feature_community_search_empty_title),
                     description = stringResource(id = R.string.feature_community_search_empty_description),
@@ -215,6 +264,28 @@ private fun MenuButton(onClick: () -> Unit) {
 }
 
 @Composable
+private fun LanguageButton(
+    onClick: () -> Unit,
+    isGlobalActive: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier,
+    ) {
+        Icon(
+            ImageVector.vectorResource(id = ChallengeTogetherIcons.Language),
+            contentDescription = stringResource(id = R.string.feature_community_global),
+            tint = if (isGlobalActive) {
+                CustomColorProvider.colorScheme.onBackground
+            } else {
+                CustomColorProvider.colorScheme.onBackgroundMuted
+            },
+        )
+    }
+}
+
+@Composable
 private fun SearchButton(
     onClick: () -> Unit,
     isSearchActive: Boolean,
@@ -233,7 +304,11 @@ private fun SearchButton(
                 },
             ),
             contentDescription = stringResource(id = R.string.feature_community_search),
-            tint = CustomColorProvider.colorScheme.onBackgroundMuted,
+            tint = if (isSearchActive) {
+                CustomColorProvider.colorScheme.onBackground
+            } else {
+                CustomColorProvider.colorScheme.onBackgroundMuted
+            },
         )
     }
 }

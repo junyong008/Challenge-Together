@@ -25,11 +25,13 @@ internal class WaitingChallengeDataSourceImpl @Inject constructor(
     override suspend fun getTogetherChallenges(
         category: String,
         query: String,
+        languageCode: String,
         lastChallengeId: Int,
         limit: Int,
     ): NetworkResult<List<WaitingChallengeResponse>> = challengeTogetherService.getTogetherChallenges(
         category = category,
         query = query,
+        languageCode = languageCode,
         lastChallengeId = lastChallengeId,
         limit = limit,
     )

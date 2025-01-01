@@ -17,9 +17,10 @@ class GetCommunityPostsUseCase @Inject constructor(
 ) {
     operator fun invoke(
         query: String = "",
+        languageCode: String = "",
         postType: SimpleCommunityPostType,
     ): Flow<PagingData<SimpleCommunityPost>> =
-        communityRepository.getPosts(query, postType)
+        communityRepository.getPosts(query, languageCode, postType)
             .map { pagingData ->
                 val timeDiff = userRepository.timeDiff.first()
                 pagingData.map { post ->

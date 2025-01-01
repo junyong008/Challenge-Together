@@ -216,6 +216,7 @@ internal interface ChallengeTogetherService {
     suspend fun getTogetherChallenges(
         @Query("category") category: String,
         @Query("query") query: String,
+        @Query("languageCode") languageCode: String,
         @Query("lastChallengeId") lastChallengeId: Int,
         @Query("limit") limit: Int,
     ): NetworkResult<List<WaitingChallengeResponse>>
@@ -300,6 +301,7 @@ internal interface ChallengeTogetherService {
     @GET("service/community/get/posts")
     suspend fun getPosts(
         @Query("query") query: String,
+        @Query("languageCode") languageCode: String,
         @Query("lastPostId") lastPostId: Int,
         @Query("limit") limit: Int,
     ): NetworkResult<List<GetPostsResponse>>

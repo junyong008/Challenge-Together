@@ -37,9 +37,13 @@ internal class CommunityRepositoryImpl @Inject constructor(
     private val communityPostDao: CommunityPostDao,
 ) : CommunityRepository {
 
-    override suspend fun addPost(content: String): NetworkResult<Unit> = communityDataSource.addPost(
-        request = AddCommunityPostRequest(content = content),
-    )
+    override suspend fun addPost(content: String, languageCode: String): NetworkResult<Unit> =
+        communityDataSource.addPost(
+            request = AddCommunityPostRequest(
+                content = content,
+                languageCode = languageCode,
+            ),
+        )
 
     override suspend fun addComment(
         postId: Int,
@@ -94,7 +98,11 @@ internal class CommunityRepositoryImpl @Inject constructor(
             .map { it.toModel() }
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getPosts(query: String, postType: SimpleCommunityPostType): Flow<PagingData<SimpleCommunityPost>> {
+    override fun getPosts(
+        query: String,
+        languageCode: String,
+        postType: SimpleCommunityPostType,
+    ): Flow<PagingData<SimpleCommunityPost>> {
         val pager = Pager(
             config = PagingConfig(
                 pageSize = PAGING_PAGE_SIZE,
@@ -105,6 +113,7 @@ internal class CommunityRepositoryImpl @Inject constructor(
             remoteMediator = PostRemoteMediator(
                 query = query,
                 postType = postType,
+                languageCode = languageCode,
                 communityDataSource = communityDataSource,
                 communityPostDao = communityPostDao,
             ),

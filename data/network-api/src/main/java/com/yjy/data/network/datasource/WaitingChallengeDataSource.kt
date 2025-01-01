@@ -12,6 +12,7 @@ interface WaitingChallengeDataSource {
     suspend fun getTogetherChallenges(
         category: String,
         query: String,
+        languageCode: String,
         lastChallengeId: Int,
         limit: Int,
     ): NetworkResult<List<WaitingChallengeResponse>>

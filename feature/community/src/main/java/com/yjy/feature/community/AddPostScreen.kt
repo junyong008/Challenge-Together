@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -69,10 +70,12 @@ internal fun AddPostScreen(
     modifier: Modifier = Modifier,
     isAddingPost: Boolean = false,
     uiEvent: Flow<CommunityUiEvent> = flowOf(),
-    onAddPostClick: (content: String) -> Unit = {},
+    onAddPostClick: (content: String, languageCode: String) -> Unit = { _, _ -> },
     onBackClick: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
+    val context = LocalContext.current
+    val languageCode = context.resources.configuration.locales[0].language
     val addSuccessMessage = stringResource(id = R.string.feature_community_post_create_success)
     val addFailureMessage = stringResource(id = R.string.feature_community_post_create_failure)
 
@@ -123,7 +126,7 @@ internal fun AddPostScreen(
             ChallengeTogetherButton(
                 onClick = {
                     if (content.isNotBlank()) {
-                        onAddPostClick(content)
+                        onAddPostClick(content, languageCode)
                     }
                 },
                 enabled = !isAddingPost && content.isNotBlank(),

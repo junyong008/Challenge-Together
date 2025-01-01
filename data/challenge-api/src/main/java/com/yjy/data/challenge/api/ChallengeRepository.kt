@@ -14,6 +14,7 @@ interface ChallengeRepository {
         startDateTime: LocalDateTime? = null,
         maxParticipants: Int = 1,
         roomPassword: String = "",
+        languageCode: String = "",
     ): NetworkResult<Int>
     suspend fun editChallengeTitleDescription(challengeId: Int, title: String, description: String): NetworkResult<Unit>
     suspend fun editChallengeCategory(challengeId: Int, category: Category): NetworkResult<Unit>

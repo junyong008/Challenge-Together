@@ -13,7 +13,12 @@ interface CommunityDataSource {
     suspend fun addPost(request: AddCommunityPostRequest): NetworkResult<Unit>
     suspend fun addComment(request: AddCommunityCommentRequest): NetworkResult<Unit>
     suspend fun editPost(request: EditCommunityPostRequest): NetworkResult<Unit>
-    suspend fun getPosts(query: String, lastPostId: Int, limit: Int): NetworkResult<List<GetPostsResponse>>
+    suspend fun getPosts(
+        query: String,
+        languageCode: String,
+        lastPostId: Int,
+        limit: Int,
+    ): NetworkResult<List<GetPostsResponse>>
     suspend fun getBookmarkedPosts(lastPostId: Int, limit: Int): NetworkResult<List<GetPostsResponse>>
     suspend fun getAuthoredPosts(lastPostId: Int, limit: Int): NetworkResult<List<GetPostsResponse>>
     suspend fun getCommentedPosts(lastPostId: Int, limit: Int): NetworkResult<List<GetPostsResponse>>

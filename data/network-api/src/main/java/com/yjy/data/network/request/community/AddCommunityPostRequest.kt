@@ -5,4 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AddCommunityPostRequest(
     val content: String,
+    val languageCode: String,
 )

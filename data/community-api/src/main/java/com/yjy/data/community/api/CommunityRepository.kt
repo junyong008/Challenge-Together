@@ -9,11 +9,15 @@ import com.yjy.model.community.SimpleCommunityPostType
 import kotlinx.coroutines.flow.Flow
 
 interface CommunityRepository {
-    suspend fun addPost(content: String): NetworkResult<Unit>
+    suspend fun addPost(content: String, languageCode: String): NetworkResult<Unit>
     suspend fun addComment(postId: Int, content: String, parentCommentId: Int): NetworkResult<Unit>
     suspend fun editPost(postId: Int, content: String): NetworkResult<Unit>
     suspend fun getPost(postId: Int): NetworkResult<DetailedCommunityPost>
-    fun getPosts(query: String, postType: SimpleCommunityPostType): Flow<PagingData<SimpleCommunityPost>>
+    fun getPosts(
+        query: String,
+        languageCode: String,
+        postType: SimpleCommunityPostType,
+    ): Flow<PagingData<SimpleCommunityPost>>
     suspend fun toggleBookmark(postId: Int): NetworkResult<Unit>
     suspend fun toggleLike(postId: Int): NetworkResult<Unit>
     suspend fun deletePost(postId: Int): NetworkResult<Unit>

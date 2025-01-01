@@ -45,13 +45,24 @@ class CommunityViewModel @Inject constructor(
     private val _isEditingPost = MutableStateFlow(false)
     val isEditingPost = _isEditingPost.asStateFlow()
 
+    private val _isGlobalActive = MutableStateFlow(false)
+    val isGlobalActive = _isGlobalActive.asStateFlow()
+
+    private val _currentLanguageCode = MutableStateFlow("")
+
     val allPosts = combine(
         refreshTrigger.onStart { emit(Unit) },
         searchQuery,
-    ) { _, query ->
-        query
-    }.flatMapLatest { query ->
-        getCommunityPostsUseCase(query = query, postType = SimpleCommunityPostType.ALL)
+        _isGlobalActive,
+        _currentLanguageCode,
+    ) { _, query, isGlobal, languageCode ->
+        Triple(query, isGlobal, languageCode)
+    }.flatMapLatest { (query, isGlobal, languageCode) ->
+        getCommunityPostsUseCase(
+            query = query,
+            languageCode = if (!isGlobal) languageCode else "",
+            postType = SimpleCommunityPostType.ALL,
+        )
     }.cachedIn(viewModelScope).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
@@ -82,17 +93,30 @@ class CommunityViewModel @Inject constructor(
             initialValue = PagingData.empty(),
         )
 
-    private fun sendEvent(event: CommunityUiEvent) = viewModelScope.launch {
-        _uiEvent.send(event)
+    fun toggleGlobalMode() {
+        _isGlobalActive.value = !_isGlobalActive.value
+        if (_isGlobalActive.value) {
+            sendEvent(CommunityUiEvent.GlobalOn)
+        } else {
+            sendEvent(CommunityUiEvent.GlobalOff)
+        }
+    }
+
+    fun updateLanguageCode(languageCode: String) {
+        _currentLanguageCode.value = languageCode
+    }
+
+    private fun sendEvent(event: CommunityUiEvent) {
+        viewModelScope.launch { _uiEvent.send(event) }
     }
 
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
     }
 
-    fun addPost(content: String) = viewModelScope.launch {
+    fun addPost(content: String, languageCode: String) = viewModelScope.launch {
         _isAddingPost.value = true
-        communityRepository.addPost(content)
+        communityRepository.addPost(content, languageCode)
             .onSuccess {
                 refreshTrigger.tryEmit(Unit)
                 sendEvent(CommunityUiEvent.AddSuccess)

@@ -9,7 +9,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface WaitingChallengeRepository {
     val waitingChallenges: Flow<List<SimpleWaitingChallenge>>
-    fun getTogetherChallenges(query: String, category: Category): Flow<PagingData<SimpleWaitingChallenge>>
+    fun getTogetherChallenges(
+        query: String,
+        languageCode: String,
+        category: Category,
+    ): Flow<PagingData<SimpleWaitingChallenge>>
     suspend fun getWaitingChallengeDetail(challengeId: Int, password: String): NetworkResult<DetailedWaitingChallenge>
     suspend fun deleteWaitingChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun startWaitingChallenge(challengeId: Int): NetworkResult<Unit>

@@ -16,6 +16,7 @@ import com.yjy.model.community.SimpleCommunityPostType
 class PostRemoteMediator(
     private val query: String,
     private val postType: SimpleCommunityPostType,
+    private val languageCode: String,
     private val communityDataSource: CommunityDataSource,
     private val communityPostDao: CommunityPostDao,
 ) : RemoteMediator<Int, CommunityPostEntity>() {
@@ -33,6 +34,7 @@ class PostRemoteMediator(
         val response = when (postType) {
             SimpleCommunityPostType.ALL -> communityDataSource.getPosts(
                 query = query,
+                languageCode = languageCode,
                 lastPostId = lastId,
                 limit = state.config.pageSize,
             )

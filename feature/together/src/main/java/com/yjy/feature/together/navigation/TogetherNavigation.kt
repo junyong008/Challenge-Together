@@ -11,6 +11,7 @@ import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.core.util.NavigationAnimation.slideInToLeft
 import com.yjy.common.core.util.NavigationAnimation.slideOutToRight
+import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.navigation.ServiceRoute
 import com.yjy.feature.together.DetailRoute
 import com.yjy.feature.together.ListRoute
@@ -30,6 +31,7 @@ private fun NavController.navigateToTogetherDetail(category: Category) {
 fun NavGraphBuilder.togetherNavGraph(
     navController: NavHostController,
     onWaitingChallengeClick: (challengeId: Int) -> Unit,
+    onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     navigation<ServiceRoute.MainTab.Together>(
         enterTransition = { fadeIn() },
@@ -56,6 +58,7 @@ fun NavGraphBuilder.togetherNavGraph(
                 category = category,
                 onBackClick = navController::popBackStack,
                 onWaitingChallengeClick = { onWaitingChallengeClick(it.id) },
+                onShowSnackbar = onShowSnackbar,
             )
         }
     }

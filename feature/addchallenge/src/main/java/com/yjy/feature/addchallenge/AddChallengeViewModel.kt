@@ -83,6 +83,7 @@ class AddChallengeViewModel @Inject constructor(
                 description = action.description,
                 startDateTime = action.startDateTime,
                 targetDays = action.targetDays,
+                languageCode = action.languageCode,
             )
 
             is AddChallengeUiAction.OnCreateWaitingRoom -> createWaitingRoom(
@@ -93,6 +94,7 @@ class AddChallengeViewModel @Inject constructor(
                 maxParticipants = action.maxParticipants,
                 enableRoomPassword = action.enableRoomPassword,
                 roomPassword = action.roomPassword,
+                languageCode = action.languageCode,
             )
         }
     }
@@ -176,6 +178,7 @@ class AddChallengeViewModel @Inject constructor(
         description: String,
         startDateTime: LocalDateTime,
         targetDays: TargetDays,
+        languageCode: String,
     ) {
         viewModelScope.launch {
             _uiState.update { it.copy(isAddingChallenge = true) }
@@ -195,6 +198,7 @@ class AddChallengeViewModel @Inject constructor(
                     description = description.ifBlank { title },
                     targetDays = if (mode == Mode.FREE) TargetDays.Infinite else targetDays,
                     startDateTime = adjustedStartDateTime,
+                    languageCode = languageCode,
                 ),
                 onSuccess = { AddChallengeUiEvent.ChallengeStarted(it) },
                 onNetworkError = { AddChallengeUiEvent.AddFailure.NetworkError },
@@ -214,6 +218,7 @@ class AddChallengeViewModel @Inject constructor(
         maxParticipants: Int,
         enableRoomPassword: Boolean,
         roomPassword: String,
+        languageCode: String,
     ) {
         viewModelScope.launch {
             _uiState.update { it.copy(isAddingChallenge = true) }
@@ -226,6 +231,7 @@ class AddChallengeViewModel @Inject constructor(
                     targetDays = targetDays,
                     maxParticipants = maxParticipants,
                     roomPassword = if (enableRoomPassword) roomPassword else "",
+                    languageCode = languageCode,
                 ),
                 onSuccess = { AddChallengeUiEvent.WaitingChallengeCreated(it) },
                 onNetworkError = { AddChallengeUiEvent.AddFailure.NetworkError },

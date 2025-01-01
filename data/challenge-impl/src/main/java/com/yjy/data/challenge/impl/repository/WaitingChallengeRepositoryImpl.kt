@@ -42,6 +42,7 @@ internal class WaitingChallengeRepositoryImpl @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     override fun getTogetherChallenges(
         query: String,
+        languageCode: String,
         category: Category,
     ): Flow<PagingData<SimpleWaitingChallenge>> {
         val pager = Pager(
@@ -53,6 +54,7 @@ internal class WaitingChallengeRepositoryImpl @Inject constructor(
             ),
             remoteMediator = TogetherChallengeRemoteMediator(
                 query = query,
+                languageCode = languageCode,
                 category = category,
                 togetherChallengeDao = togetherChallengeDao,
                 waitingChallengeDataSource = waitingChallengeDataSource,

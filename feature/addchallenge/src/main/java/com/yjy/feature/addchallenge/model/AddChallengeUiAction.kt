@@ -30,6 +30,7 @@ sealed interface AddChallengeUiAction {
         val description: String,
         val startDateTime: LocalDateTime,
         val targetDays: TargetDays,
+        val languageCode: String,
     ) : AddChallengeUiAction
 
     data class OnCreateWaitingRoom(
@@ -40,5 +41,6 @@ sealed interface AddChallengeUiAction {
         val maxParticipants: Int,
         val enableRoomPassword: Boolean,
         val roomPassword: String,
+        val languageCode: String,
     ) : AddChallengeUiAction
 }

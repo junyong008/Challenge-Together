@@ -9,4 +9,7 @@
     <string name="feature_together_password_title">Password</string>
     <string name="feature_together_password_description">Please enter the entry password.</string>
     <string name="feature_together_password_placeholder">Enter password</string>
+    <string name="feature_together_global">Other Language Challenges</string>
+    <string name="feature_together_global_challenges_on">Global challenges have been enabled.</string>
+    <string name="feature_together_global_challenges_off">Global challenges have been disabled.</string>
 </resources>
