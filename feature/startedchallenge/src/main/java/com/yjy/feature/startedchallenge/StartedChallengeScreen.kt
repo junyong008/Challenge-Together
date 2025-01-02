@@ -937,7 +937,7 @@ private fun ResetButton(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = stringResource(id = R.string.feature_startedchallenge_reset),
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                     )
                 }
