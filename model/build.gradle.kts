@@ -4,7 +4,8 @@ plugins {
 
 android {
     namespace = "com.yjy.model"
-}
 
-dependencies {
+    defaultConfig {
+        consumerProguardFiles("consumer-proguard-rules.pro")
+    }
 }

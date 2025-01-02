@@ -24,7 +24,13 @@ android {
         }
         release {
             isDebuggable = false
+            isMinifyEnabled = true
             manifestPlaceholders["appName"] = "@string/app_name"
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 

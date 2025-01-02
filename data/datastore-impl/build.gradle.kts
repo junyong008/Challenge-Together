@@ -8,6 +8,10 @@ plugins {
 
 android {
     namespace = "com.yjy.data.datastore_impl"
+
+    defaultConfig {
+        consumerProguardFiles("consumer-proguard-rules.pro")
+    }
 }
 
 dependencies {

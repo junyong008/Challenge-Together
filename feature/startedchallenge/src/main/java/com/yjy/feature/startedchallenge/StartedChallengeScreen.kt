@@ -592,19 +592,69 @@ private fun ChallengeInfo(
     }
 }
 
-private const val QUOTE_COUNT = 53
 private const val QUOTE_ANIMATION_DURATION = 300
 
 @Composable
 private fun Quote() {
-    val totalQuotes = QUOTE_COUNT
-    val quotes = (1..totalQuotes).map { index ->
-        stringResource(
-            id = R.string::class.java.getDeclaredField(
-                "feature_startedchallenge_quote_$index",
-            ).getInt(null),
+    val quotesResIds = remember {
+        listOf(
+            R.string.feature_startedchallenge_quote_1,
+            R.string.feature_startedchallenge_quote_2,
+            R.string.feature_startedchallenge_quote_3,
+            R.string.feature_startedchallenge_quote_4,
+            R.string.feature_startedchallenge_quote_5,
+            R.string.feature_startedchallenge_quote_6,
+            R.string.feature_startedchallenge_quote_7,
+            R.string.feature_startedchallenge_quote_8,
+            R.string.feature_startedchallenge_quote_9,
+            R.string.feature_startedchallenge_quote_10,
+            R.string.feature_startedchallenge_quote_11,
+            R.string.feature_startedchallenge_quote_12,
+            R.string.feature_startedchallenge_quote_13,
+            R.string.feature_startedchallenge_quote_14,
+            R.string.feature_startedchallenge_quote_15,
+            R.string.feature_startedchallenge_quote_16,
+            R.string.feature_startedchallenge_quote_17,
+            R.string.feature_startedchallenge_quote_18,
+            R.string.feature_startedchallenge_quote_19,
+            R.string.feature_startedchallenge_quote_20,
+            R.string.feature_startedchallenge_quote_21,
+            R.string.feature_startedchallenge_quote_22,
+            R.string.feature_startedchallenge_quote_23,
+            R.string.feature_startedchallenge_quote_24,
+            R.string.feature_startedchallenge_quote_25,
+            R.string.feature_startedchallenge_quote_26,
+            R.string.feature_startedchallenge_quote_27,
+            R.string.feature_startedchallenge_quote_28,
+            R.string.feature_startedchallenge_quote_29,
+            R.string.feature_startedchallenge_quote_30,
+            R.string.feature_startedchallenge_quote_31,
+            R.string.feature_startedchallenge_quote_32,
+            R.string.feature_startedchallenge_quote_33,
+            R.string.feature_startedchallenge_quote_34,
+            R.string.feature_startedchallenge_quote_35,
+            R.string.feature_startedchallenge_quote_36,
+            R.string.feature_startedchallenge_quote_37,
+            R.string.feature_startedchallenge_quote_38,
+            R.string.feature_startedchallenge_quote_39,
+            R.string.feature_startedchallenge_quote_40,
+            R.string.feature_startedchallenge_quote_41,
+            R.string.feature_startedchallenge_quote_42,
+            R.string.feature_startedchallenge_quote_43,
+            R.string.feature_startedchallenge_quote_44,
+            R.string.feature_startedchallenge_quote_45,
+            R.string.feature_startedchallenge_quote_46,
+            R.string.feature_startedchallenge_quote_47,
+            R.string.feature_startedchallenge_quote_48,
+            R.string.feature_startedchallenge_quote_49,
+            R.string.feature_startedchallenge_quote_50,
+            R.string.feature_startedchallenge_quote_51,
+            R.string.feature_startedchallenge_quote_52,
+            R.string.feature_startedchallenge_quote_53,
         )
     }
+
+    val quotes = quotesResIds.map { resId -> stringResource(id = resId) }
 
     var currentQuoteIndex by remember {
         mutableIntStateOf(quotes.indices.random())

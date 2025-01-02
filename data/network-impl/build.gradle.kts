@@ -14,6 +14,10 @@ android {
     buildFeatures {
         buildConfig = true
     }
+
+    defaultConfig {
+        consumerProguardFiles("consumer-proguard-rules.pro")
+    }
 }
 
 secrets {

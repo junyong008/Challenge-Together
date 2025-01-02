@@ -7,6 +7,10 @@ plugins {
 
 android {
     namespace = "com.yjy.data.network_api"
+
+    defaultConfig {
+        consumerProguardFiles("consumer-proguard-rules.pro")
+    }
 }
 
 dependencies {
