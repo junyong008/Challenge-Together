@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">게시판</string>
+    <string name="feature_challengeboard_content_placeholder">내용을 입력해주세요…</string>
+    <string name="feature_challengeboard_send">전송</string>
+    <string name="feature_challengeboard_no_posts_title">게시글이 없습니다</string>
+    <string name="feature_challengeboard_no_posts_description">도전 과정에 대한 기록이나 메모를 남겨보세요.</string>
+    <string name="feature_challengeboard_scroll_to_bottom">아래로 스크롤하기</string>
+    <string name="feature_challengeboard_menu_copy">복사</string>
+    <string name="feature_challengeboard_menu_report">신고</string>
+    <string name="feature_challengeboard_menu_delete">삭제</string>
+    <string name="feature_challengeboard_delete_success">삭제되었습니다.</string>
+    <string name="feature_challengeboard_delete_failed">삭제에 실패했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_challengeboard_report_success">신고가 접수되었습니다.</string>
+    <string name="feature_challengeboard_report_failed">접수에 실패했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_challengeboard_report_already_reported">이미 신고가 접수된 게시글입니다.</string>
+    <string name="feature_challengeboard_toggle_notification">알림 상태 전환</string>
+    <string name="feature_challengeboard_notification_enabled">알림이 설정되었습니다.</string>
+    <string name="feature_challengeboard_notification_disabled">알림이 해제되었습니다.</string>
+</resources>

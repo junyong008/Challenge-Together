@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">닉네임 변경하기</string>
+    <string name="feature_changename_description">닉네임은 일주일에 한 번 변경할 수 있어요.</string>
+    <string name="feature_changename_action">변경하기</string>
+    <string name="feature_changenam_confirm_info">닉네임을 변경할까요?\n닉네임은 일주일에 한 번 변경할 수 있어요.</string>
+    <string name="feature_changename_info_graphic">닉네임 그래픽 사진</string>
+    <string name="feature_changename_success">닉네임이 변경되었습니다.</string>
+    <string name="feature_changename_nickname_already_taken">이미 사용 중인 닉네임입니다.</string>
+    <string name="feature_changename_error">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_changename_check_network_connection">인터넷 연결 상태를 확인해 주세요.</string>
+    <string name="feature_changename_length_indicator">닉네임은 %1$d자에서 %2$d자 사이여야 합니다</string>
+    <string name="feature_changename_korean_constraint">한글 닉네임은 자음 또는 모음만으로 구성될 수 없습니다</string>
+    <string name="feature_changename_duplicate_name">현재 닉네임과 동일합니다</string>
+    <string name="feature_changename_next_change_notice">다음 변경은 %1$s 이후에 가능합니다</string>
+</resources>

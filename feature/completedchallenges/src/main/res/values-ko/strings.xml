@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_completechallenges_title">성공한 도전</string>
+    <string name="feature_completechallenges_search">검색하기…</string>
+    <string name="feature_completechallenges_empty_title">아직 성공한 도전이 없습니다</string>
+    <string name="feature_completechallenges_empty_description">아직 완료한 도전이 없습니다.\n새로운 도전을 시작하고 여기서 성과를 확인해보세요!</string>
+    <string name="feature_completechallenges_search_empty_title">검색된 도전이 없습니다</string>
+    <string name="feature_completechallenges_search_empty_description">검색 결과가 없습니다.\n다른 검색어로 다시 시도해보세요!</string>
+</resources>

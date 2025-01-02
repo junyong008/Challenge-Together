@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_core_time_day">일</string>
+    <string name="common_core_time_hour">시간</string>
+    <string name="common_core_time_minute">분</string>
+    <string name="common_core_time_second">초</string>
+    <string name="common_core_time_seconds_ago">%d초 전</string>
+    <string name="common_core_time_minutes_ago">%d분 전</string>
+    <string name="common_core_time_hours_ago">%d시간 전</string>
+    <string name="common_core_time_days_ago">%d일 전</string>
+</resources>

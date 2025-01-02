@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_setting_all">전체 알림</string>
+    <string name="feature_notification_setting_challenge">도전 관련 알림</string>
+    <string name="feature_notification_setting_community">커뮤니티 관련 알림</string>
+    <string name="feature_notification_setting_goal_achieved">완료한 도전 알림</string>
+    <string name="feature_notification_setting_goal_achieved_detail">진행 중인 도전 성공 시 알림 전송</string>
+    <string name="feature_notification_setting_waiting_room_participants">대기방 참가자 알림</string>
+    <string name="feature_notification_setting_waiting_room_participants_detail">참여 중인 대기방에 참가자가 입장하거나 퇴장하면 알림 전송</string>
+    <string name="feature_notification_setting_waiting_room_updates">대기방 변경사항 알림</string>
+    <string name="feature_notification_setting_waiting_room_updates_detail">참여 중인 대기방이 시작하거나 삭제되면 알림 전송</string>
+    <string name="feature_notification_setting_challenge_room_progress">도전방 변경사항 알림</string>
+    <string name="feature_notification_setting_challenge_room_progress_detail">참여 중인 도전방의 다른 참가자가 리셋하거나 포기하면 알림 전송</string>
+    <string name="feature_notification_setting_challenge_board">도전방 게시판 알림</string>
+    <string name="feature_notification_setting_challenge_board_detail">참여 중인 도전방의 게시판에 글 추가 시 알림</string>
+    <string name="feature_notification_setting_comment">댓글 알림</string>
+    <string name="feature_notification_setting_comment_detail">내 게시글에 댓글 추가 시 알림 전송</string>
+    <string name="feature_notification_setting_reply">답글 알림</string>
+    <string name="feature_notification_setting_reply_detail">내 댓글에 답글 추가 시 알림 전송</string>
+    <string name="feature_notification_setting_permission_denied_title">알림 권한이 없습니다</string>
+    <string name="feature_notification_setting_permission_denied_description">알림이 비활성화되어 있습니다.\n업데이트 소식을 받으려면 기기 설정에서 알림을 켜주세요.</string>
+    <string name="feature_notification_setting_settings">설정</string>
+</resources>

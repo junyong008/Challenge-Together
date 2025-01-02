@@ -28,7 +28,6 @@
     <string name="feature_addchallenge_target_day_string">%1$d Days</string>
     <string name="feature_addchallenge_unlimited">Unlimited</string>
     <string name="feature_addchallenge_start_date">Start Date</string>
-    <string name="feature_addchallenge_earliest_success_date">Earliest Success Date</string>
     <string name="feature_addchallenge_together">Together</string>
     <string name="feature_addchallenge_start_immediately">Start Now</string>
     <string name="feature_addchallenge_max_participants">Max Participants</string>

@@ -70,7 +70,7 @@
     <string name="common_designsystem_notification_participant_reset">\"%1$s\" Participant reset</string>
     <string name="common_designsystem_notification_user_reset">\"%1$s\" has reset.</string>
     <string name="common_designsystem_notification_participant_give_up">\"%1$s\" Participant gave up</string>
-    <string name="common_designsystem_notification_user_give_up">%1$s has given up.</string>
+    <string name="common_designsystem_notification_user_give_up">\"%1$s\" has given up.</string>
     <string name="common_designsystem_notification_challengeboard_post_added">New post in \"%1$s\" challenge board</string>
     <string name="common_designsystem_notification_participant_force_remove">\"%1$s\" Participant forced out</string>
     <string name="common_designsystem_notification_user_force_remove">\"%1$s\" has been forcibly removed due to prolonged inactivity.</string>

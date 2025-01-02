@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_premium_title">프리미엄 전환</string>
+    <string name="feature_premium_description">프리미엄 계정을 통해 다양한 혜택을 누려보세요.\n한 번의 구매로 이용권이 영구적으로 계정에 유지됩니다.</string>
+    <string name="feature_premium_no_ads">모든 광고 차단</string>
+    <string name="feature_premium_unlock_widgets">모든 위젯 잠금 해제</string>
+    <string name="feature_premium_app_lock">앱 접속 비밀번호 기능 제공</string>
+    <string name="feature_premium_active">적용됨</string>
+    <string name="feature_premium_invalid_now">준비 중</string>
+    <string name="feature_premium_info_graphic">프리미엄 그래픽 이미지</string>
+    <string name="feature_premium_purchase_complete">구매가 완료되었습니다.</string>
+    <string name="feature_premium_error_occurred">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
+</resources>

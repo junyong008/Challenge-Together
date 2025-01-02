@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_waitingchallenge_number">%1$d번 방</string>
+    <string name="feature_waitingchallenge_private">[비밀방]</string>
+    <string name="feature_waitingchallenge_target_day">목표일</string>
+    <string name="feature_waitingchallenge_target_day_goal_days">%1$s 일</string>
+    <string name="feature_waitingchallenge_target_day_unlimited">무제한</string>
+    <string name="feature_waitingchallenge_menu_delete">삭제</string>
+    <string name="feature_waitingchallenge_menu_refresh">새로고침</string>
+    <string name="feature_waitingchallenge_menu_share">공유</string>
+    <string name="feature_waitingchallenge_menu_share_message">\"%1$s\" 도전에 함께해보세요!\n현재 %2$d명이 참여 중입니다.</string>
+    <string name="feature_waitingchallenge_delete">삭제</string>
+    <string name="feature_waitingchallenge_delete_prompt">대기방을 삭제하시겠습니까?</string>
+    <string name="feature_waitingchallenge_start">시작하기</string>
+    <string name="feature_waitingchallenge_start_prompt">도전을 시작하시겠습니까?</string>
+    <string name="feature_waitingchallenge_join">참여하기</string>
+    <string name="feature_waitingchallenge_leave">나가기</string>
+    <string name="feature_waitingchallenge_board">게시판</string>
+    <string name="feature_waitingchallenge_menu">메뉴</string>
+    <string name="feature_waitingchallenge_board_description">도전에 관한 이야기를 나눠보세요.</string>
+    <string name="feature_waitingchallenge_password_incorrect">비밀번호가 일치하지 않습니다.</string>
+    <string name="feature_waitingchallenge_not_found">대기방이 존재하지 않습니다.</string>
+    <string name="feature_waitingchallenge_already_started">이미 시작된 대기방입니다.</string>
+    <string name="feature_waitingchallenge_error">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_waitingchallenge_check_network_connection">인터넷 연결 상태를 확인해 주세요.</string>
+    <string name="feature_waitingchallenge_delete_successful">삭제되었습니다.</string>
+    <string name="feature_waitingchallenge_start_successful">시작되었습니다.</string>
+    <string name="feature_waitingchallenge_participant_full">참가 인원이 마감되었습니다.</string>
+    <string name="feature_waitingchallenge_password_copied">비밀번호가 클립보드에 복사되었습니다.</string>
+    <string name="feature_waitingchallenge_created_by">\"%1$s\"에 의해 생성됨</string>
+    <string name="feature_waitingchallenge_participants_count">참가자 %1$d / %2$d</string>
+</resources>

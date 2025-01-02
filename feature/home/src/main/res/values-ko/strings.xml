@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_navigation_title">메인</string>
+    <string name="feature_home_medal_description">현재 등급</string>
+    <string name="feature_home_complete_challenge_description">완료한 도전</string>
+    <string name="feature_home_notification_description">알림 목록</string>
+    <string name="feature_home_remain_time_for_next_tier">다음 등급까지 남은 시간: %d일</string>
+    <string name="feature_home_current_highest_record">현재 최고 기록</string>
+    <string name="feature_home_my_challenges">나의 도전</string>
+    <string name="feature_home_joined_challenges">참여중인 대기방</string>
+    <string name="feature_home_sort_challenge_content_description">도전 정렬하기</string>
+    <string name="feature_home_congratulations">축하해요!</string>
+    <string name="feature_home_challenge_success">%1$s\n도전을 성공하셨습니다.</string>
+    <string name="feature_home_congratulations_image_description">축하 이미지</string>
+    <string name="feature_home_promoted">승급</string>
+    <string name="feature_home_promoted_description">%1$s 등급으로 승급하셨습니다.</string>
+    <string name="feature_home_promoted_confirm">확인</string>
+    <string name="feature_home_no_active_challenge_mode">진행 중인 도전 모드 없음</string>
+    <string name="feature_home_highest_tier">최상위 등급</string>
+    <string name="feature_home_no_active_challenge">도전이 없습니다</string>
+    <string name="feature_home_start_new_challenge_prompt">우측 하단의 추가 버튼을 눌러 새로운 도전을 시작해보세요.</string>
+    <string name="feature_home_sort">정렬</string>
+    <string name="feature_home_title">챌린지 투게더</string>
+</resources>

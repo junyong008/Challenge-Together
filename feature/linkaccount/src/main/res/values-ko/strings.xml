@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_linkaccount_title">계정 연동하기</string>
+    <string name="feature_linkaccount_description">빠른 로그인과 데이터 보존을 위해 계정을 연동해 보세요.</string>
+    <string name="feature_linkaccount_kakao">카카오로 연동하기</string>
+    <string name="feature_linkaccount_google">구글로 연동하기</string>
+    <string name="feature_linkaccount_naver">네이버로 연동하기</string>
+    <string name="feature_linkaccount_already_exists">이미 가입된 SNS 계정입니다.</string>
+    <string name="feature_linkaccount_already_linked">이미 연동되었습니다.</string>
+    <string name="feature_linkaccount_success">계정이 연동되었습니다.</string>
+    <string name="feature_linkaccount_check_network_connection">인터넷 연결 상태를 확인해 주세요.</string>
+    <string name="feature_linkaccount_error">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_linkaccount_info_graphic">계정 연동 그래픽 이미지</string>
+</resources>

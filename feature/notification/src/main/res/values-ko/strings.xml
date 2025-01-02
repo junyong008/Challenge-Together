@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_title">알림</string>
+    <string name="feature_notification_more">메뉴</string>
+    <string name="feature_notification_delete">삭제</string>
+    <string name="feature_notification_delete_all">모두 삭제하기</string>
+    <string name="feature_notification_setting">설정</string>
+    <string name="feature_notification_empty_title">알림이 없습니다</string>
+    <string name="feature_notification_empty_description">현재 알림이 없습니다.\n새로운 알림이 오면 여기에 표시됩니다!</string>
+    <string name="feature_notification_challenge_category">도전 카테고리 알림</string>
+    <string name="feature_notification_community_category">커뮤니티 카테고리 알림</string>
+    <string name="feature_notification_delete_success">삭제되었습니다.</string>
+    <string name="feature_notification_delete_failed">삭제에 실패했습니다.\n잠시 후 다시 시도해 주세요.</string>
+</resources>

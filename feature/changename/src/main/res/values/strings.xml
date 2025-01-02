@@ -10,6 +10,6 @@
     <string name="feature_changename_check_network_connection">Please check your network connection.</string>
     <string name="feature_changename_length_indicator">Nickname must be between %1$d and %2$d characters long</string>
     <string name="feature_changename_korean_constraint">Korean nicknames cannot contain only consonants or vowels</string>
-    <string name="feature_changename_duplicate_name">The nickname is identical to the current one.</string>
-    <string name="feature_changename_next_change_notice">You can change it again after %1$s.</string>
+    <string name="feature_changename_duplicate_name">The nickname is identical to the current one</string>
+    <string name="feature_changename_next_change_notice">You can change it again after %1$s</string>
 </resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_editchallenge_edit">수정하기</string>
+    <string name="feature_editchallenge_edit_failed">수정에 실패했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_editchallenge_edit_successful">수정되었습니다.</string>
+    <string name="feature_editchallenge_edit_category_title">카테고리 수정하기</string>
+    <string name="feature_editchallenge_edit_category_description">변경하고자 하는 카테고리를 선택해 주세요.</string>
+    <string name="feature_editchallenge_title">제목</string>
+    <string name="feature_editchallenge_title_placeholder">제목을 입력해 주세요.</string>
+    <string name="feature_editchallenge_description_optional">설명 (선택)</string>
+    <string name="feature_editchallenge_description_placeholder">설명을 입력해 주세요.</string>
+    <string name="feature_editchallenge_edit_title">도전에 대한 설명 수정하기</string>
+    <string name="feature_editchallenge_edit_description">도전의 세부 사항을 입력해 주세요.\n도전의 목적과 다짐을 작성해 두면 도움이 될 거에요.</string>
+    <string name="feature_editchallenge_edit_target_day_title">목표일 수정하기</string>
+    <string name="feature_editchallenge_edit_target_day_description">도전을 며칠 동안 지속할지 설정해 주세요.\n지정된 목표일 동안 리셋하지 않으면 성공이에요.</string>
+    <string name="feature_editchallenge_record_exceeded_notice">기록 초과 안내</string>
+    <string name="feature_editchallenge_record_exceeded_description">목표를 %1$s일 초과 달성했습니다.\n도전이 즉시 완료됩니다.</string>
+    <string name="feature_editchallenge_complete">완료하기</string>
+</resources>

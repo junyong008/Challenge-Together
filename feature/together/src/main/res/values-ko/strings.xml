@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_together_title">같이하기</string>
+    <string name="feature_together_description">다양한 사람들과 함께 도전을 시작해 보세요.</string>
+    <string name="feature_together_search_placeholder">검색하기…</string>
+    <string name="feature_together_empty_title">도전이 없습니다</string>
+    <string name="feature_together_empty_description">현재 참여 가능한 도전이 없습니다.\n새로운 도전을 만들고 다른 사람들을 초대해보세요!</string>
+    <string name="feature_together_search_empty_title">검색된 도전이 없습니다</string>
+    <string name="feature_together_search_empty_description">검색 결과가 없습니다.\n다른 검색어로 다시 시도해보세요!</string>
+    <string name="feature_together_global">다른 언어 도전</string>
+    <string name="feature_together_global_challenges_on">모든 국가의 도전이 표시됩니다.</string>
+    <string name="feature_together_global_challenges_off">한국 도전만 표시됩니다.</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">회원가입</string>
+    <string name="feature_signup_description">로그인에 사용할 이메일와 비밀번호를 입력해 주세요.\n이메일은 추후 비밀번호 찾기에 사용할 수 있어요.</string>
+    <string name="feature_signup_input_email_place_holder">이메일</string>
+    <string name="feature_signup_email_format_indicator">이메일 형식이어야 합니다</string>
+    <string name="feature_signup_password_length_indicator">비밀번호는 %1$d자 이상이어야 합니다</string>
+    <string name="feature_signup_password_number_indicator">비밀번호에는 숫자가 최소 1개 이상 포함되어야 합니다</string>
+    <string name="feature_signup_input_password_place_holder">비밀번호</string>
+    <string name="feature_signup_email_already_registered">이미 가입된 이메일입니다.</string>
+    <string name="feature_signup_error">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_signup_set_nickname_title">나만의 닉네임 정하기</string>
+    <string name="feature_signup_set_nickname_description">다른 사용자들과 함께할 나만의 닉네임을 만들어보세요</string>
+    <string name="feature_signup_smile_image_description">이메일 결정 그래픽 이미지</string>
+    <string name="feature_signup_nickname_place_holder">닉네임을 입력해주세요</string>
+    <string name="feature_signup_start">시작하기</string>
+    <string name="feature_signup_nickname_length_indicator">닉네임은 %1$d자에서 %2$d자 사이여야 합니다</string>
+    <string name="feature_signup_nickname_korean_constraint">한글 닉네임은 자음 또는 모음만으로 구성될 수 없습니다</string>
+    <string name="feature_signup_privacy_policy_agreement">시작하기 버튼을 클릭하면, <b>개인정보 처리방침</b>에 동의하게 됩니다.</string>
+    <string name="feature_signup_privacy_policy">개인정보 처리방침</string>
+    <string name="feature_signup_nickname_already_taken">이미 사용 중인 닉네임입니다.</string>
+    <string name="feature_signup_check_network_connection">인터넷 연결 상태를 확인해 주세요.</string>
+    <string name="feature_signup_complete">회원가입이 완료되었습니다.</string>
+</resources>

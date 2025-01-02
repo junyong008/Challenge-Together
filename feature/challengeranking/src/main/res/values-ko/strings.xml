@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeranking_title">랭킹</string>
+    <string name="feature_challengeranking_tip_title">Tips</string>
+    <string name="feature_challengeranking_tip_long_absence">7일 이상 접속하지 않은 사용자는 다른 참가자들이 강제 퇴장시킬 수 있습니다.</string>
+    <string name="feature_challengeranking_tip_alone">도전에 참가자가 혼자만 남을 경우, 랭킹이 제거되며 도전 내용을 수정할 수 있습니다.</string>
+    <string name="feature_challengeranking_force_remove_title">강제퇴장</string>
+    <string name="feature_challengeranking_force_remove_description">장기간 미 접속자로 강제 퇴장이 가능해요.\n해당 사용자를 강제 퇴장시킬까요?</string>
+    <string name="feature_challengeranking_remove">내보내기</string>
+    <string name="feature_challengeranking_success">성공</string>
+    <string name="feature_challengeranking_first_place_description">랭킹 1위를 나타내는 이미지</string>
+    <string name="feature_challengeranking_second_place_description">랭킹 2위를 나타내는 이미지</string>
+    <string name="feature_challengeranking_third_place_description">랭킹 3위를 나타내는 이미지</string>
+    <string name="feature_challengeranking_user_reconnected">해당 사용자가 방금 다시 접속했습니다.</string>
+    <string name="feature_challengeranking_check_network_connection">인터넷 연결 상태를 확인해 주세요.</string>
+    <string name="feature_challengeranking_force_remove_success">해당 사용자를 내보냈습니다.</string>
+    <string name="feature_challengeranking_force_remove_failed">내보내기에 실패했습니다.\n잠시 후 다시 시도해 주세요.</string>
+</resources>

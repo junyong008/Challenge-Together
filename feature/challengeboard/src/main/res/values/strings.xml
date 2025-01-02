@@ -4,7 +4,6 @@
     <string name="feature_challengeboard_send">Send</string>
     <string name="feature_challengeboard_no_posts_title">No Posts Yet</string>
     <string name="feature_challengeboard_no_posts_description">Leave records or notes about your challenge.</string>
-    <string name="feature_challengeboard_post_add_failed">Failed to add the post.</string>
     <string name="feature_challengeboard_scroll_to_bottom">Scroll to Bottom</string>
     <string name="feature_challengeboard_menu_copy">Copy</string>
     <string name="feature_challengeboard_menu_report">Report</string>
