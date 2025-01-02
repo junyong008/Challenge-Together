@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -121,11 +120,14 @@ internal fun DetailScreen(
     val isIdle = waitingChallenges.loadState.isIdle
     val isEmpty = waitingChallenges.itemCount == 0
 
-    val lazyListState = rememberLazyListState()
-    val scrolled by remember {
+    val listState = remember(isGlobalActive) {
+        LazyListState()
+    }
+
+    val scrolled by remember(isGlobalActive) {
         derivedStateOf {
-            lazyListState.firstVisibleItemIndex > 0 ||
-                lazyListState.firstVisibleItemScrollOffset > 0
+            listState.firstVisibleItemIndex > 0 ||
+                listState.firstVisibleItemScrollOffset > 0
         }
     }
 
@@ -214,7 +216,7 @@ internal fun DetailScreen(
                         searchQuery = searchQuery,
                         waitingChallenges = waitingChallenges,
                         onChallengeClick = { onWaitingChallengeClick(it) },
-                        scrollState = lazyListState,
+                        scrollState = listState,
                     )
                 }
             }
