@@ -192,7 +192,7 @@ private fun AmPmToggle(
     contentColor: Color,
     modifier: Modifier = Modifier,
 ) {
-    val amPmTextStyle = MaterialTheme.typography.labelLarge
+    val amPmTextStyle = MaterialTheme.typography.bodyMedium
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
