@@ -38,7 +38,7 @@
     <string name="feature_community_post_not_found">게시글이 존재하지 않습니다.</string>
     <string name="feature_community_unknown_error">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
     <string name="feature_community_check_network_connection">인터넷 연결 상태를 확인해 주세요.</string>
-    <string name="feature_community_post_dot">" · "</string>
+    <string name="feature_community_post_dot"> · </string>
     <string name="feature_community_post_title">게시글</string>
     <string name="feature_community_post_bookmark">북마크</string>
     <string name="feature_community_post_share">공유</string>
