@@ -136,7 +136,7 @@ internal fun ListScreen(
     }
 
     val globalOnMessage = stringResource(id = R.string.feature_community_global_posts_on)
-    val globalOffMessage = stringResource(id = R.string.feature_community_global_posts_off)
+    val globalOffMessage = stringResource(id = R.string.feature_community_global_posts_off, displayLanguage)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {

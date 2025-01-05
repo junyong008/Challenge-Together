@@ -10,7 +10,7 @@
     <string name="feature_community_menu">메뉴</string>
     <string name="feature_community_bookmarks">북마크 목록</string>
     <string name="feature_community_my_posts">작성한 글</string>
-    <string name="feature_community_global_posts_off">한국 게시글만 표시됩니다.</string>
+    <string name="feature_community_global_posts_off">%1$s 게시글만 표시됩니다.</string>
     <string name="feature_community_commented_posts">댓글단 글</string>
     <string name="feature_community_global_posts_on">모든 국가의 게시글이 표시됩니다.</string>
     <string name="feature_community_empty_title">게시글이 없습니다</string>
@@ -59,7 +59,7 @@
     <string name="feature_community_post_empty_comments">아직 댓글이 존재하지 않습니다.\n가장 먼저 댓글을 달아보세요!</string>
     <string name="feature_community_post_deleted_successfully">삭제되었습니다.</string>
     <string name="feature_community_post_reported_successfully">신고가 접수되었습니다.</string>
-    <string name="feature_community_post_already_reported">이미 신고가 접수된 게시글입니다.</string>
+    <string name="feature_community_post_already_reported">이미 신고가 접수되었습니다.</string>
     <string name="feature_community_post_bookmarked">북마크에 추가되었습니다.</string>
     <string name="feature_community_post_un_bookmarked">북마크에서 제거되었습니다.</string>
     <string name="feature_community_post_toggle_notification">알림 켜기/끄기</string>

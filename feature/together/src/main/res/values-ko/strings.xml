@@ -9,5 +9,5 @@
     <string name="feature_together_search_empty_description">검색 결과가 없습니다.\n다른 검색어로 다시 시도해보세요!</string>
     <string name="feature_together_global">다른 언어 도전</string>
     <string name="feature_together_global_challenges_on">모든 국가의 도전이 표시됩니다.</string>
-    <string name="feature_together_global_challenges_off">한국 도전만 표시됩니다.</string>
+    <string name="feature_together_global_challenges_off">%1$s 도전만 표시됩니다.</string>
 </resources>

@@ -9,8 +9,8 @@
     <string name="feature_community_menu">Menu</string>
     <string name="feature_community_bookmarks">Bookmarks</string>
     <string name="feature_community_my_posts">My Posts</string>
-    <string name="feature_community_global_posts_on">Global posts have been enabled.</string>
-    <string name="feature_community_global_posts_off">Global posts have been disabled.</string>
+    <string name="feature_community_global_posts_on">Posts from all countries will be displayed.</string>
+    <string name="feature_community_global_posts_off">Only %1$s posts will be displayed.</string>
     <string name="feature_community_commented_posts">Commented Posts</string>
     <string name="feature_community_empty_title">No Posts Yet</string>
     <string name="feature_community_empty_description">There are no posts written in \"%1$s\" yet.\nTap the globe icon to see other languages.</string>
