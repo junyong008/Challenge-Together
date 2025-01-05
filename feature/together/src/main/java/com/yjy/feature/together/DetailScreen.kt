@@ -112,7 +112,9 @@ internal fun DetailScreen(
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val context = LocalContext.current
-    val languageCode = context.resources.configuration.locales[0].language
+    val locale = context.resources.configuration.locales[0]
+    val languageCode = locale.language
+    val displayLanguage = locale.displayLanguage
     var shouldShowSearchTextField by rememberSaveable { mutableStateOf(false) }
 
     val isLoading = waitingChallenges.loadState.refresh is LoadState.Loading
@@ -120,11 +122,11 @@ internal fun DetailScreen(
     val isIdle = waitingChallenges.loadState.isIdle
     val isEmpty = waitingChallenges.itemCount == 0
 
-    val listState = remember(isGlobalActive) {
+    val listState = rememberSaveable(isGlobalActive, saver = LazyListState.Saver) {
         LazyListState()
     }
 
-    val scrolled by remember(isGlobalActive) {
+    val scrolled by remember {
         derivedStateOf {
             listState.firstVisibleItemIndex > 0 ||
                 listState.firstVisibleItemScrollOffset > 0
@@ -132,7 +134,7 @@ internal fun DetailScreen(
     }
 
     val globalOnMessage = stringResource(id = R.string.feature_together_global_challenges_on)
-    val globalOffMessage = stringResource(id = R.string.feature_together_global_challenges_off)
+    val globalOffMessage = stringResource(id = R.string.feature_together_global_challenges_off, displayLanguage)
 
     ObserveAsEvents(flow = uiEvent) {
         when (it) {
