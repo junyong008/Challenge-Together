@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_auth_update">อัปเดต</string>
+    <string name="navigation_auth_update_description">มีเวอร์ชันใหม่ของแอปพร้อมใช้งาน\nกรุณาอัปเดตผ่าน Play Store</string>
+</resources>

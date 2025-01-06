@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_waitingchallenge_number">เลขที่ %1$d</string>
+    <string name="feature_waitingchallenge_private">[ส่วนตัว]</string>
+    <string name="feature_waitingchallenge_target_day">วันที่ตั้งเป้าหมาย</string>
+    <string name="feature_waitingchallenge_target_day_goal_days">%1$s วัน</string>
+    <string name="feature_waitingchallenge_target_day_unlimited">ไม่จำกัด</string>
+    <string name="feature_waitingchallenge_menu_delete">ลบ</string>
+    <string name="feature_waitingchallenge_menu_refresh">รีเฟรช</string>
+    <string name="feature_waitingchallenge_menu_share">แชร์</string>
+    <string name="feature_waitingchallenge_menu_share_message">มาร่วมท้าทาย \"%1$s\" กันเถอะ!\nขณะนี้มีผู้เข้าร่วม %2$d คน</string>
+    <string name="feature_waitingchallenge_delete">ลบ</string>
+    <string name="feature_waitingchallenge_delete_prompt">คุณต้องการลบความท้าทายไหม?</string>
+    <string name="feature_waitingchallenge_start">เริ่ม</string>
+    <string name="feature_waitingchallenge_start_prompt">คุณต้องการเริ่มความท้าทายไหม?</string>
+    <string name="feature_waitingchallenge_join">เข้าร่วม</string>
+    <string name="feature_waitingchallenge_leave">ออก</string>
+    <string name="feature_waitingchallenge_board">บอร์ด</string>
+    <string name="feature_waitingchallenge_menu">เมนู</string>
+    <string name="feature_waitingchallenge_board_description">แบ่งปันความคิดเกี่ยวกับความท้าทาย</string>
+    <string name="feature_waitingchallenge_password_incorrect">รหัสผ่านไม่ถูกต้อง</string>
+    <string name="feature_waitingchallenge_not_found">ไม่พบความท้าทาย</string>
+    <string name="feature_waitingchallenge_already_started">ความท้าทายเริ่มต้นแล้ว</string>
+    <string name="feature_waitingchallenge_error">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งภายหลัง</string>
+    <string name="feature_waitingchallenge_check_network_connection">กรุณาตรวจสอบการเชื่อมต่อเครือข่ายของคุณ</string>
+    <string name="feature_waitingchallenge_delete_successful">ลบความท้าทายเรียบร้อยแล้ว</string>
+    <string name="feature_waitingchallenge_start_successful">เริ่มความท้าทายเรียบร้อยแล้ว</string>
+    <string name="feature_waitingchallenge_participant_full">เต็มจำนวนผู้เข้าร่วมแล้ว</string>
+    <string name="feature_waitingchallenge_password_copied">คัดลอกรหัสผ่านไปยังคลิปบอร์ดแล้ว</string>
+    <string name="feature_waitingchallenge_created_by">สร้างโดย \"%1$s\"</string>
+    <string name="feature_waitingchallenge_participants_count">ผู้เข้าร่วม %1$d / %2$d</string>
+</resources>

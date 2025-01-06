@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_core_time_day">วัน</string>
+    <string name="common_core_time_hour">ชั่วโมง</string>
+    <string name="common_core_time_minute">นาที</string>
+    <string name="common_core_time_second">วินาที</string>
+    <string name="common_core_time_seconds_ago">%d วินาทีที่แล้ว</string>
+    <string name="common_core_time_minutes_ago">%d นาทีที่แล้ว</string>
+    <string name="common_core_time_hours_ago">%d ชั่วโมงที่แล้ว</string>
+    <string name="common_core_time_days_ago">%d วันที่แล้ว</string>
+</resources>

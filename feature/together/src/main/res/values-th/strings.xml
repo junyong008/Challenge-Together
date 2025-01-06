@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_together_title">ด้วยกัน</string>
+    <string name="feature_together_description">เริ่มความท้าทายกับผู้คนที่หลากหลาย</string>
+    <string name="feature_together_search_placeholder">ค้นหา…</string>
+    <string name="feature_together_empty_title">ไม่พบความท้าทาย</string>
+    <string name="feature_together_empty_description">ยังไม่มีความท้าทายในขณะนี้\nสร้างความท้าทายใหม่และเชิญผู้อื่นเข้าร่วม!</string>
+    <string name="feature_together_search_empty_title">ไม่พบความท้าทาย</string>
+    <string name="feature_together_search_empty_description">ไม่มีความท้าทายที่ตรงกับการค้นหาของคุณ\nลองใช้คำค้นหาหรือการกรองที่แตกต่างกัน!</string>
+    <string name="feature_together_global">ความท้าทายในภาษาอื่น</string>
+    <string name="feature_together_global_challenges_on">จะแสดงความท้าทายจากทุกประเทศ</string>
+    <string name="feature_together_global_challenges_off">จะแสดงเฉพาะความท้าทาย %1$s เท่านั้น</string>
+</resources>

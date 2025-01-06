@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_service_session_expired">เซสชันของคุณหมดอายุแล้ว\nกรุณาเข้าสู่ระบบใหม่อีกครั้ง.</string>
+    <string name="navigation_service_add_new_challenge">เพิ่มความท้าทายใหม่</string>
+    <string name="navigation_service_add_new_community_post">เพิ่มโพสต์ชุมชนใหม่</string>
+    <string name="navigation_service_check_network_connection">กรุณาตรวจสอบการเชื่อมต่อเครือข่ายของคุณ.</string>
+    <string name="navigation_service_update">อัปเดต</string>
+    <string name="navigation_service_update_description">มีเวอร์ชันใหม่ของแอปพร้อมใช้งาน\nกรุณาอัปเดตผ่าน Play Store.</string>
+</resources>

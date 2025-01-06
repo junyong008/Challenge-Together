@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_title">การแจ้งเตือน</string>
+    <string name="feature_notification_more">เพิ่มเติม</string>
+    <string name="feature_notification_delete">ลบ</string>
+    <string name="feature_notification_delete_all">ลบทั้งหมด</string>
+    <string name="feature_notification_setting">การตั้งค่า</string>
+    <string name="feature_notification_empty_title">ยังไม่มีการแจ้งเตือน</string>
+    <string name="feature_notification_empty_description">ขณะนี้ยังไม่มีการแจ้งเตือน\nคุณจะเห็นการอัปเดตและการแจ้งเตือนที่นี่เมื่อมีความเคลื่อนไหว!</string>
+    <string name="feature_notification_challenge_category">การแจ้งเตือนหมวดท้าทาย</string>
+    <string name="feature_notification_community_category">การแจ้งเตือนหมวดชุมชน</string>
+    <string name="feature_notification_delete_success">ลบเรียบร้อยแล้ว</string>
+    <string name="feature_notification_delete_failed">การลบล้มเหลว กรุณาลองใหม่อีกครั้งในภายหลัง</string>
+</resources>

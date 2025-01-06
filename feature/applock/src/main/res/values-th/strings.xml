@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_applock_title">ล็อคแอพ</string>
+    <string name="feature_applock_password">รหัสผ่าน</string>
+    <string name="feature_applock_enter_password">กรุณาใส่รหัสผ่านของคุณ</string>
+    <string name="feature_applock_reenter_password">กรุณาใส่รหัสผ่านของคุณอีกครั้ง</string>
+    <string name="feature_applock_password_mismatch">รหัสผ่านไม่ตรงกัน</string>
+    <string name="feature_applock_password_set_success">รหัสผ่านถูกตั้งค่าแล้ว</string>
+    <string name="feature_applock_change_password">เปลี่ยนรหัสผ่าน</string>
+    <string name="feature_applock_biometric_authentication">การยืนยันตัวตนทางชีวภาพ</string>
+    <string name="feature_applock_biometric_cancel">ยกเลิก</string>
+    <string name="feature_applock_hide_widget_content">ซ่อนเนื้อหาวิดเจ็ต</string>
+    <string name="feature_applock_hide_notification_content">ซ่อนเนื้อหาการแจ้งเตือน</string>
+    <string name="feature_applock_close">ปิด</string>
+    <string name="feature_applock_backspace">ลบ</string>
+</resources>

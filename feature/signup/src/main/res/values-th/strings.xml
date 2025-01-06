@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">ลงทะเบียน</string>
+    <string name="feature_signup_description">กรุณาใส่อีเมลและรหัสผ่านที่คุณจะใช้ในการเข้าสู่ระบบ\nคุณสามารถใช้อีเมลเพื่อการกู้คืนรหัสผ่านในภายหลังได้</string>
+    <string name="feature_signup_input_email_place_holder">อีเมล</string>
+    <string name="feature_signup_email_format_indicator">อีเมลต้องเป็นรูปแบบที่ถูกต้อง</string>
+    <string name="feature_signup_password_length_indicator">รหัสผ่านต้องมีความยาวอย่างน้อย %1$d ตัวอักษร</string>
+    <string name="feature_signup_password_number_indicator">รหัสผ่านต้องมีตัวเลขอย่างน้อยหนึ่งตัว</string>
+    <string name="feature_signup_input_password_place_holder">รหัสผ่าน</string>
+    <string name="feature_signup_email_already_registered">อีเมลนี้ได้ลงทะเบียนไว้แล้ว</string>
+    <string name="feature_signup_error">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งภายหลัง</string>
+    <string name="feature_signup_set_nickname_title">กำหนดชื่อเล่นของคุณเอง</string>
+    <string name="feature_signup_set_nickname_description">ชื่อเล่นของคุณจะแสดงให้ผู้ใช้งานคนอื่นเห็นในแอป</string>
+    <string name="feature_signup_smile_image_description">ภาพรอยยิ้ม</string>
+    <string name="feature_signup_nickname_place_holder">กรุณาใส่ชื่อเล่นของคุณ</string>
+    <string name="feature_signup_start">เริ่มต้น</string>
+    <string name="feature_signup_nickname_length_indicator">ชื่อเล่นต้องมีความยาวระหว่าง %1$d ถึง %2$d ตัวอักษร</string>
+    <string name="feature_signup_nickname_korean_constraint">ชื่อเล่นภาษาเกาหลีไม่สามารถประกอบด้วยพยัญชนะหรือสระล้วนได้</string>
+    <string name="feature_signup_privacy_policy_agreement">การคลิกที่ปุ่มเริ่มต้นแสดงว่าคุณยอมรับ <b>นโยบายความเป็นส่วนตัว</b> แล้ว</string>
+    <string name="feature_signup_privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="feature_signup_nickname_already_taken">ชื่อเล่นนี้ถูกใช้ไปแล้ว</string>
+    <string name="feature_signup_check_network_connection">กรุณาตรวจสอบการเชื่อมต่อเครือข่ายของคุณ</string>
+    <string name="feature_signup_complete">การลงทะเบียนเสร็จสมบูรณ์</string>
+</resources>

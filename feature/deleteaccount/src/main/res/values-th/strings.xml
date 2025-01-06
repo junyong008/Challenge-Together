@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_deleteaccount_title">ลบบัญชี</string>
+    <string name="feature_deleteaccount_warning_title">โปรดรอ! โปรดพิจารณาสิ่งต่อไปนี้ก่อนลบบัญชีของคุณ</string>
+    <string name="feature_deleteaccount_warning_challenges">ข้อมูลทั้งหมดที่เกี่ยวข้องกับความท้าทายจะถูกลบ</string>
+    <string name="feature_deleteaccount_warning_community">โพสต์และความคิดเห็นในชุมชนจะถูกระบุว่า "สมาชิกที่ถูกลบ"</string>
+    <string name="feature_deleteaccount_warning_irreversible">ข้อมูลทั้งหมดจะถูกลบอย่างถาวรและไม่สามารถกู้คืนได้</string>
+    <string name="feature_deleteaccount_info_graphic">ลบกราฟิกข้อมูล</string>
+    <string name="feature_deleteaccount_delete">ลบ</string>
+    <string name="feature_deleteaccount_confirmation">ลบบัญชี?</string>
+    <string name="feature_deleteaccount_irreversible_notice">เมื่อถูกลบแล้ว บัญชีของคุณไม่สามารถกู้คืนได้</string>
+    <string name="feature_deleteaccount_success">บัญชีของคุณถูกลบเรียบร้อยแล้ว</string>
+    <string name="feature_deleteaccount_error">เกิดข้อผิดพลาด โปรดลองอีกครั้งในภายหลัง</string>
+</resources>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_setting_all">การแจ้งเตือนทั้งหมด</string>
+    <string name="feature_notification_setting_challenge">การแจ้งเตือนความท้าทาย</string>
+    <string name="feature_notification_setting_community">การแจ้งเตือนชุมชน</string>
+    <string name="feature_notification_setting_goal_achieved">การแจ้งเตือนการบรรลุเป้าหมาย</string>
+    <string name="feature_notification_setting_goal_achieved_detail">ส่งการแจ้งเตือนเมื่อบรรลุเป้าหมายความท้าทาย</string>
+    <string name="feature_notification_setting_waiting_room_participants">การแจ้งเตือนผู้เข้าร่วมห้องรอ</string>
+    <string name="feature_notification_setting_waiting_room_participants_detail">แจ้งเตือนเมื่อผู้เข้าร่วมเข้าหรือออกจากห้องรอที่คุณสร้างขึ้น</string>
+    <string name="feature_notification_setting_waiting_room_updates">การแจ้งเตือนการอัพเดตห้องรอ</string>
+    <string name="feature_notification_setting_waiting_room_updates_detail">แจ้งเตือนเกี่ยวกับการอัพเดตห้องรอที่คุณอยู่ เช่น เริ่มหรือยกเลิก</string>
+    <string name="feature_notification_setting_challenge_room_progress">การแจ้งเตือนความคืบหน้าห้องท้าทาย</string>
+    <string name="feature_notification_setting_challenge_room_progress_detail">แจ้งเตือนเมื่อผู้เข้าร่วมท่านอื่นในห้องท้าทายรีเซ็ตหรือยอมแพ้</string>
+    <string name="feature_notification_setting_challenge_board">การแจ้งเตือนกระดานความท้าทาย</string>
+    <string name="feature_notification_setting_challenge_board_detail">แจ้งเตือนเมื่อมีการเพิ่มโพสต์บนกระดานความท้าทายที่คุณเข้าร่วม</string>
+    <string name="feature_notification_setting_comment">การแจ้งเตือนความคิดเห็น</string>
+    <string name="feature_notification_setting_comment_detail">แจ้งเตือนเมื่อมีคนแสดงความคิดเห็นในโพสต์ของคุณ</string>
+    <string name="feature_notification_setting_reply">การแจ้งเตือนตอบกลับ</string>
+    <string name="feature_notification_setting_reply_detail">แจ้งเตือนเมื่อมีคนตอบกลับความคิดเห็นของคุณ</string>
+    <string name="feature_notification_setting_permission_denied_title">ปฏิเสธการอนุญาต</string>
+    <string name="feature_notification_setting_permission_denied_description">ขณะนี้การแจ้งเตือนถูกปิดใช้งาน\nกรุณาเปิดใช้งานในตั้งค่าอุปกรณ์ของคุณเพื่อรับการอัพเดต</string>
+    <string name="feature_notification_setting_settings">การตั้งค่า</string>
+</resources>

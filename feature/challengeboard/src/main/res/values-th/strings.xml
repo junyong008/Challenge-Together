@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">บอร์ด</string>
+    <string name="feature_challengeboard_content_placeholder">ใส่เนื้อหา…</string>
+    <string name="feature_challengeboard_send">ส่ง</string>
+    <string name="feature_challengeboard_no_posts_title">ยังไม่มีโพสต์</string>
+    <string name="feature_challengeboard_no_posts_description">ฝากบันทึกหรือโน้ตเกี่ยวกับความท้าทายของคุณ</string>
+    <string name="feature_challengeboard_scroll_to_bottom">เลื่อนลงล่าง</string>
+    <string name="feature_challengeboard_menu_copy">คัดลอก</string>
+    <string name="feature_challengeboard_menu_report">รายงาน</string>
+    <string name="feature_challengeboard_menu_delete">ลบ</string>
+    <string name="feature_challengeboard_delete_success">ลบสำเร็จ</string>
+    <string name="feature_challengeboard_delete_failed">ลบไม่สำเร็จ กรุณาลองใหม่ภายหลัง</string>
+    <string name="feature_challengeboard_report_success">รายงานสำเร็จ</string>
+    <string name="feature_challengeboard_report_failed">รายงานไม่สำเร็จ กรุณาลองใหม่ภายหลัง</string>
+    <string name="feature_challengeboard_report_already_reported">โพสต์นี้ได้รับการรายงานแล้ว</string>
+    <string name="feature_challengeboard_toggle_notification">สลับการแจ้งเตือน</string>
+    <string name="feature_challengeboard_notification_enabled">เปิดการแจ้งเตือน</string>
+    <string name="feature_challengeboard_notification_disabled">ปิดการแจ้งเตือน</string>
+</resources>

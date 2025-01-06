@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeranking_title">การจัดอันดับ</string>
+    <string name="feature_challengeranking_tip_title">เคล็ดลับ</string>
+    <string name="feature_challengeranking_tip_long_absence">ผู้ใช้ที่ไม่เข้าร่วมกิจกรรมเป็นเวลา 7 วันสามารถถูกลบโดยผู้เข้าร่วมคนอื่นได้</string>
+    <string name="feature_challengeranking_tip_alone">หากคุณอยู่คนเดียวในการท้า อันดับจะหายไป และการแก้ไขการท้าจะเป็นไปได้</string>
+    <string name="feature_challengeranking_force_remove_title">บังคับลบ</string>
+    <string name="feature_challengeranking_force_remove_description">ผู้ใช้ที่ไม่ได้ใช้งานสามารถถูกบังคับให้ออก\nคุณต้องการลบผู้ใช้นี้หรือไม่?</string>
+    <string name="feature_challengeranking_remove">ลบ</string>
+    <string name="feature_challengeranking_success">สำเร็จ</string>
+    <string name="feature_challengeranking_first_place_description">ภาพที่แสดงถึงอันดับ 1 ในการจัดอันดับ</string>
+    <string name="feature_challengeranking_second_place_description">ภาพที่แสดงถึงอันดับ 2 ในการจัดอันดับ</string>
+    <string name="feature_challengeranking_third_place_description">ภาพที่แสดงถึงอันดับ 3 ในการจัดอันดับ</string>
+    <string name="feature_challengeranking_force_remove_success">ผู้ใช้ถูกลบเรียบร้อยแล้ว</string>
+    <string name="feature_challengeranking_user_reconnected">ผู้ใช้เพิ่งกลับมาเข้าร่วมใหม่</string>
+    <string name="feature_challengeranking_check_network_connection">โปรดตรวจสอบการเชื่อมต่อเครือข่ายของคุณ</string>
+    <string name="feature_challengeranking_force_remove_failed">ลบผู้ใช้ไม่สำเร็จ โปรดลองอีกครั้งภายหลัง</string>
+</resources>

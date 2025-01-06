@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_addchallenge_title_set_mode">เลือกประเภทของความท้าทาย</string>
+    <string name="feature_addchallenge_description_set_mode">หากคุณเลือกวันที่เริ่มต้นผ่านโหมดฟรี\nความท้าทายนี้จะไม่กระทบกับสถิติสูงสุดหรือการจัดอันดับของคุณ</string>
+    <string name="feature_addchallenge_title_set_category">คุณกำลังจะพยายามทำความท้าทายแบบไหน?</string>
+    <string name="feature_addchallenge_description_set_category">กรุณาเลือกหมวดหมู่ที่คุณต้องการ</string>
+    <string name="feature_addchallenge_title_set_title">เขียนรายละเอียดของความท้าทาย</string>
+    <string name="feature_addchallenge_description_set_title">กรอกรายละเอียดของความท้าทาย\nการเขียนเป้าหมายและการตัดสินใจของคุณลงไปจะช่วยได้</string>
+    <string name="feature_addchallenge_title_set_target_day">กำหนดวันที่เป้าหมายสำหรับความท้าทาย</string>
+    <string name="feature_addchallenge_description_set_target_day">กำหนดจำนวนวันที่ความท้าทายจะใช้เวลา\nหากคุณไม่รีเซ็ตในช่วงเวลาที่กำหนด คุณจะประสบความสำเร็จ</string>
+    <string name="feature_addchallenge_title_set_start_date">เลือกวันที่เริ่มต้นของความท้าทาย</string>
+    <string name="feature_addchallenge_description_set_start_date">เลือกเมื่อไหร่ที่ความท้าทายเริ่มต้น\nวันที่เริ่มต้นไม่สามารถอยู่ในอนาคตได้</string>
+    <string name="feature_addchallenge_title_confirm">ทุกอย่างพร้อมแล้ว!</string>
+    <string name="feature_addchallenge_description_confirm">การเตรียมการสำหรับความท้าทายเสร็จสมบูรณ์แล้ว\nคลิกปุ่ม "เริ่ม" เพื่อเริ่มความท้าทายในทันที</string>
+    <string name="feature_addchallenge_title_set_together">ทำร่วมกัน</string>
+    <string name="feature_addchallenge_description_set_together">เราจะสร้างห้องรอเพื่อให้ผู้อื่นสามารถเข้าร่วมความท้าทายของคุณได้</string>
+
+    <string name="feature_addchallenge_mode_challenge">โหมดความท้าทาย</string>
+    <string name="feature_addchallenge_mode_free">โหมดฟรี</string>
+    <string name="feature_addchallenge_mode_challenge_description">คุณไม่สามารถตั้งค่าวันที่เริ่มต้นในอดีตได้ แต่มันจะนำมาคำนวณในสถิติและการจัดอันดับของคุณ</string>
+    <string name="feature_addchallenge_mode_free_description">คุณสามารถตั้งค่าวันที่เริ่มต้นในอดีตได้ แต่มันจะไม่ถูกคำนวณในสถิติหรือการจัดอันดับของคุณ</string>
+    <string name="feature_addchallenge_title">หัวข้อ</string>
+    <string name="feature_addchallenge_title_placeholder">หัวข้อของความท้าทาย</string>
+    <string name="feature_addchallenge_description_optional">รายละเอียด (ตัวเลือก)</string>
+    <string name="feature_addchallenge_description_placeholder">รายละเอียดของความท้าทาย</string>
+    <string name="feature_addchallenge_invalid_start_date">วันที่เริ่มต้นไม่สามารถอยู่ในอนาคตได้</string>
+    <string name="feature_addchallenge_category_card_title">หมวดหมู่</string>
+    <string name="feature_addchallenge_target_day_card_title">วันเป้าหมาย</string>
+    <string name="feature_addchallenge_target_day_string">%1$d วัน</string>
+    <string name="feature_addchallenge_unlimited">ไม่จำกัด</string>
+    <string name="feature_addchallenge_start_date">วันที่เริ่มต้น</string>
+    <string name="feature_addchallenge_together">ทำร่วมกัน</string>
+    <string name="feature_addchallenge_start_immediately">เริ่มตอนนี้</string>
+    <string name="feature_addchallenge_max_participants">จำนวนผู้เข้าร่วมสูงสุด</string>
+    <string name="feature_addchallenge_room_password">รหัสผ่านเข้าห้อง</string>
+    <string name="feature_addchallenge_people">คน</string>
+    <string name="feature_addchallenge_room_password_icon">ไอคอนรหัสผ่านห้อง</string>
+    <string name="feature_addchallenge_room_password_placeholder">รหัสผ่านห้อง</string>
+    <string name="feature_addchallenge_create_waiting_room">สร้างห้องรอ</string>
+
+    <string name="feature_addchallenge_unknown_error">เกิดข้อผิดพลาด โปรดลองใหม่อีกครั้งในภายหลัง</string>
+    <string name="feature_addchallenge_check_network_connection">กรุณาตรวจสอบการเชื่อมต่อเครือข่ายของคุณ</string>
+    <string name="feature_addchallenge_challenge_added">เพิ่มความท้าทายแล้ว</string>
+    <string name="feature_addchallenge_waiting_room_created">ห้องรอได้ถูกสร้างแล้ว</string>
+
+    <string name="feature_addchallenge_dialog_start">เริ่ม</string>
+    <string name="feature_addchallenge_dialog_start_title">เริ่มความท้าทาย</string>
+    <string name="feature_addchallenge_dialog_start_description">คุณต้องการเริ่มความท้าทายหรือไม่?</string>
+
+    <string name="feature_addchallenge_dialog_create">สร้าง</string>
+    <string name="feature_addchallenge_dialog_create_room_title">สร้างห้องรอ</string>
+    <string name="feature_addchallenge_dialog_create_room_description">คุณต้องการสร้างห้องรอหรือไม่?</string>
+</resources>

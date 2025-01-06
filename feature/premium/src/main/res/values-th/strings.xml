@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_premium_title">อัปเกรดเป็นพรีเมียม</string>
+    <string name="feature_premium_description">เพลิดเพลินไปกับสิทธิประโยชน์มากมายด้วยบัญชีพรีเมียม\nการซื้อเพียงครั้งเดียวทำให้คุณได้รับสิทธิ์นี้ผูกกับบัญชีของคุณอย่างถาวร</string>
+    <string name="feature_premium_no_ads">ลบโฆษณาทั้งหมดอย่างถาวร</string>
+    <string name="feature_premium_unlock_widgets">ปลดล็อกฟีเจอร์วิดเจ็ตทั้งหมด</string>
+    <string name="feature_premium_app_lock">ฟีเจอร์การตั้งรหัสผ่านสำหรับการเข้าถึงแอป</string>
+    <string name="feature_premium_active">กำลังใช้งาน</string>
+    <string name="feature_premium_invalid_now">เร็วๆ นี้</string>
+    <string name="feature_premium_info_graphic">ข้อมูลกราฟิกพรีเมียม</string>
+    <string name="feature_premium_purchase_complete">การซื้อเสร็จสมบูรณ์</string>
+    <string name="feature_premium_error_occurred">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งในภายหลัง</string>
+</resources>
