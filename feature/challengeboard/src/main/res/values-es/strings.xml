@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">Tablero</string>
+    <string name="feature_challengeboard_content_placeholder">Ingresa contenido…</string>
+    <string name="feature_challengeboard_send">Enviar</string>
+    <string name="feature_challengeboard_no_posts_title">No hay publicaciones aún</string>
+    <string name="feature_challengeboard_no_posts_description">Deja registros o notas sobre tu desafío.</string>
+    <string name="feature_challengeboard_scroll_to_bottom">Desplazarse hacia abajo</string>
+    <string name="feature_challengeboard_menu_copy">Copiar</string>
+    <string name="feature_challengeboard_menu_report">Reportar</string>
+    <string name="feature_challengeboard_menu_delete">Eliminar</string>
+    <string name="feature_challengeboard_delete_success">Eliminado con éxito.</string>
+    <string name="feature_challengeboard_delete_failed">Error al eliminar. Por favor, intenta de nuevo más tarde.</string>
+    <string name="feature_challengeboard_report_success">Reportado con éxito.</string>
+    <string name="feature_challengeboard_report_failed">Error al reportar. Por favor, intenta de nuevo más tarde.</string>
+    <string name="feature_challengeboard_report_already_reported">Esta publicación ya ha sido reportada.</string>
+    <string name="feature_challengeboard_toggle_notification">Alternar Notificación</string>
+    <string name="feature_challengeboard_notification_enabled">Notificaciones habilitadas.</string>
+    <string name="feature_challengeboard_notification_disabled">Notificaciones deshabilitadas.</string>
+</resources>

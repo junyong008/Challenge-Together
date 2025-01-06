@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">Restablecer historial</string>
+    <string name="feature_resetrecord_record">Registro</string>
+    <string name="feature_resetrecord_content">Contenido</string>
+    <string name="feature_resetrecord_no_reset_records">No hay registros de restablecimiento aún.</string>
+    <string name="feature_resetrecord_encouragement">¡Sigue así y sigue desafiándote!</string>
+    <string name="feature_resetrecord_day_suffix">D</string>
+</resources>

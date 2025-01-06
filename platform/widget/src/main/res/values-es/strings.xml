@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_widget_challenge_list_widget_name">Lista de Desafíos</string>
+    <string name="platform_widget_challenge_tall_widget_name">Tarjeta de Desafío</string>
+    <string name="platform_widget_challenge_wide_widget_name">Tarjeta de Desafío</string>
+    <string name="platform_widget_challenge_simple_widget_name">Tarjeta de Desafío Simple</string>
+    <string name="platform_widget_no_challenge">Sin Desafío</string>
+    <string name="platform_widget_no_challenges">Sin Desafíos</string>
+    <string name="platform_widget_no_challenges_description">No hay desafíos disponibles.\n¡Abre la aplicación para agregar tu primer desafío y comenzar tu viaje!</string>
+    <string name="platform_widget_time_d">D</string>
+    <string name="platform_widget_time_day">d</string>
+    <string name="platform_widget_time_hour">h</string>
+    <string name="platform_widget_progress_description">Progreso</string>
+    <string name="platform_widget_category_icon_description">Ícono de Categoría</string>
+    <string name="platform_widget_settings">Configuración del Widget</string>
+    <string name="platform_widget_opacity">Opacidad</string>
+    <string name="platform_widget_cancel">Cancelar</string>
+    <string name="platform_widget_confirm">Confirmar</string>
+    <string name="platform_widget_select">Seleccionar</string>
+    <string name="platform_widget_hidden_due_to_app_lock">Oculto debido a la configuración de bloqueo de la aplicación</string>
+</resources>

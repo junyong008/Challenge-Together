@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_core_time_day">días</string>
+    <string name="common_core_time_hour">horas</string>
+    <string name="common_core_time_minute">minutos</string>
+    <string name="common_core_time_second">segundos</string>
+    <string name="common_core_time_seconds_ago">%d segundos hace</string>
+    <string name="common_core_time_minutes_ago">%d minutos hace</string>
+    <string name="common_core_time_hours_ago">%d horas hace</string>
+    <string name="common_core_time_days_ago">%d días hace</string>
+</resources>

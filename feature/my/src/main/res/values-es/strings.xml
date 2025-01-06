@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_my_navigation_title">Mi</string>
+    <string name="feature_my_medal_description">Nivel Actual</string>
+    <string name="feature_my_no_active_challenge_mode">No hay modo de desafío activo</string>
+    <string name="feature_my_highest_tier">Nivel Más Alto</string>
+    <string name="feature_my_remain_time_for_next_tier">Tiempo restante para el siguiente nivel: %d Días</string>
+    <string name="feature_my_best_record">Mejor Registro</string>
+    <string name="feature_my_attempt_count">Intentos</string>
+    <string name="feature_my_success_count">Éxitos</string>
+    <string name="feature_my_reset_count">Reinicios</string>
+    <string name="feature_my_settings">Configuraciones</string>
+    <string name="feature_my_account">Cuenta</string>
+    <string name="feature_my_app_info">Información de la Aplicación</string>
+    <string name="feature_my_notification_settings">Configuraciones de Notificación</string>
+    <string name="feature_my_app_lock_settings">Configuraciones de Bloqueo de Aplicación</string>
+    <string name="feature_my_account_linking">Vinculación de Cuenta</string>
+    <string name="feature_my_account_premium">Actualización a Premium</string>
+    <string name="feature_my_linked_with_kakao">Vinculado con Kakao</string>
+    <string name="feature_my_linked_with_google">Vinculado con Google</string>
+    <string name="feature_my_linked_with_naver">Vinculado con Naver</string>
+    <string name="feature_my_linked_with">Vinculado con</string>
+    <string name="feature_my_nickname_change">Cambiar Apodo</string>
+    <string name="feature_my_password_change">Cambiar Contraseña</string>
+    <string name="feature_my_logout">Cerrar Sesión</string>
+    <string name="feature_my_logout_confirmation">¿Está seguro de que desea cerrar sesión?</string>
+    <string name="feature_my_logout_success">Has cerrado sesión.</string>
+    <string name="feature_my_delete_account">Eliminar Cuenta</string>
+    <string name="feature_my_contact_support">Consulta 1:1</string>
+    <string name="feature_my_privacy_policy">Política de Privacidad</string>
+    <string name="feature_my_open_source_license">Licencias de Código Abierto</string>
+    <string name="feature_my_app_version">Versión de la Aplicación</string>
+    <string name="feature_my_email_inquiry_title">Consulta para Desafío Juntos</string>
+    <string name="feature_my_email_inquiry_content">Contenido:</string>
+    <string name="feature_my_email_app_not_found">No se encontró ninguna aplicación de correo electrónico.</string>
+    <string name="feature_my_email_send_failed">No se pudo enviar el correo electrónico.</string>
+</resources>

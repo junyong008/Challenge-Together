@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_deleteaccount_title">Eliminar cuenta</string>
+    <string name="feature_deleteaccount_warning_title">¡Espera! Por favor, revisa lo siguiente antes de eliminar tu cuenta.</string>
+    <string name="feature_deleteaccount_warning_challenges">Todos los datos relacionados con los desafíos asociados a ti serán eliminados.</string>
+    <string name="feature_deleteaccount_warning_community">Las publicaciones y comentarios en la comunidad serán etiquetados como "Miembro eliminado".</string>
+    <string name="feature_deleteaccount_warning_irreversible">Todos los datos serán eliminados permanentemente y no podrán ser recuperados.</string>
+    <string name="feature_deleteaccount_info_graphic">Gráfico de información de eliminación</string>
+    <string name="feature_deleteaccount_delete">Eliminar</string>
+    <string name="feature_deleteaccount_confirmation">¿Eliminar cuenta?</string>
+    <string name="feature_deleteaccount_irreversible_notice">Una vez eliminada, tu cuenta no podrá ser restaurada.</string>
+    <string name="feature_deleteaccount_success">Tu cuenta ha sido eliminada exitosamente.</string>
+    <string name="feature_deleteaccount_error">Ocurrió un error. Por favor, intenta nuevamente más tarde.</string>
+</resources>

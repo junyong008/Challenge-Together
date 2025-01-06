@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeranking_title">Ranking</string>
+    <string name="feature_challengeranking_tip_title">Consejos</string>
+    <string name="feature_challengeranking_tip_long_absence">Los usuarios inactivos durante 7 días pueden ser expulsados forzosamente por otros participantes.</string>
+    <string name="feature_challengeranking_tip_alone">Si quedas solo en el desafío, el ranking desaparecerá y se podrán hacer ediciones del desafío.</string>
+    <string name="feature_challengeranking_force_remove_title">Expulsar Forzosamente</string>
+    <string name="feature_challengeranking_force_remove_description">Los usuarios inactivos pueden ser expulsados forzosamente.\n¿Te gustaría expulsar a este usuario?</string>
+    <string name="feature_challengeranking_remove">Eliminar</string>
+    <string name="feature_challengeranking_success">Éxito</string>
+    <string name="feature_challengeranking_first_place_description">Imagen que representa el 1er lugar en el ranking</string>
+    <string name="feature_challengeranking_second_place_description">Imagen que representa el 2º lugar en el ranking</string>
+    <string name="feature_challengeranking_third_place_description">Imagen que representa el 3er lugar en el ranking</string>
+    <string name="feature_challengeranking_force_remove_success">El usuario ha sido eliminado exitosamente.</string>
+    <string name="feature_challengeranking_user_reconnected">El usuario se ha reconectado.</string>
+    <string name="feature_challengeranking_check_network_connection">Por favor, verifica tu conexión a la red.</string>
+    <string name="feature_challengeranking_force_remove_failed">Falló al eliminar al usuario. Por favor, inténtalo de nuevo más tarde.</string>
+</resources>
