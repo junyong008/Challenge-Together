@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_together_title">一緒に</string>
+    <string name="feature_together_description">多様な人々と一緒にチャレンジを始めましょう。</string>
+    <string name="feature_together_search_placeholder">検索...</string>
+    <string name="feature_together_empty_title">チャレンジが見つかりません</string>
+    <string name="feature_together_empty_description">現在利用可能なチャレンジがありません。\n新しいチャレンジを作成して他の人を招待しましょう！</string>
+    <string name="feature_together_search_empty_title">チャレンジが見つかりません</string>
+    <string name="feature_together_search_empty_description">検索に一致するチャレンジがありません。\n別のキーワードやフィルターを試してみてください！</string>
+    <string name="feature_together_global">他の言語のチャレンジ</string>
+    <string name="feature_together_global_challenges_on">すべての国のチャレンジが表示されます。</string>
+    <string name="feature_together_global_challenges_off">のみ%1$sチャレンジが表示されます。</string>
+</resources>

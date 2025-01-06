@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_navigation_title">ホーム</string>
+    <string name="feature_home_title">一緒にチャレンジ</string>
+    <string name="feature_home_medal_description">現在のティア</string>
+    <string name="feature_home_complete_challenge_description">チャレンジを完了</string>
+    <string name="feature_home_notification_description">通知</string>
+    <string name="feature_home_remain_time_for_next_tier">次のティアまでの残り時間: %d日</string>
+    <string name="feature_home_current_highest_record">現在の最高記録</string>
+    <string name="feature_home_my_challenges">私のチャレンジ</string>
+    <string name="feature_home_joined_challenges">参加中のチャレンジ</string>
+    <string name="feature_home_sort_challenge_content_description">チャレンジをソート</string>
+    <string name="feature_home_congratulations">おめでとうございます！</string>
+    <string name="feature_home_challenge_success">%1$s\nチャレンジを正常に完了しました。</string>
+    <string name="feature_home_congratulations_image_description">おめでとうの画像</string>
+    <string name="feature_home_promoted">昇格しました</string>
+    <string name="feature_home_promoted_description">%1$sに昇格しました。</string>
+    <string name="feature_home_promoted_confirm">確認</string>
+    <string name="feature_home_no_active_challenge_mode">アクティブなチャレンジモードなし</string>
+    <string name="feature_home_highest_tier">最高ティア</string>
+    <string name="feature_home_no_active_challenge">チャレンジなし</string>
+    <string name="feature_home_start_new_challenge_prompt">右下の追加ボタンをタップして、新しいチャレンジを開始してください。</string>
+    <string name="feature_home_sort">ソート順</string>
+</resources>

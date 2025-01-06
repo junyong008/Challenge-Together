@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_waitingchallenge_number">番号 %1$d</string>
+    <string name="feature_waitingchallenge_private">[非公開]</string>
+    <string name="feature_waitingchallenge_target_day">目標日</string>
+    <string name="feature_waitingchallenge_target_day_goal_days">%1$s 日</string>
+    <string name="feature_waitingchallenge_target_day_unlimited">無制限</string>
+    <string name="feature_waitingchallenge_menu_delete">削除</string>
+    <string name="feature_waitingchallenge_menu_refresh">更新</string>
+    <string name="feature_waitingchallenge_menu_share">共有</string>
+    <string name="feature_waitingchallenge_menu_share_message">「%1$s」のチャレンジに一緒に参加しましょう！\n現在、%2$d人が参加しています。</string>
+    <string name="feature_waitingchallenge_delete">削除</string>
+    <string name="feature_waitingchallenge_delete_prompt">チャレンジを削除しますか？</string>
+    <string name="feature_waitingchallenge_start">開始</string>
+    <string name="feature_waitingchallenge_start_prompt">チャレンジを開始しますか？</string>
+    <string name="feature_waitingchallenge_join">参加</string>
+    <string name="feature_waitingchallenge_leave">退出</string>
+    <string name="feature_waitingchallenge_board">掲示板</string>
+    <string name="feature_waitingchallenge_menu">メニュー</string>
+    <string name="feature_waitingchallenge_board_description">チャレンジについての考えを共有してください。</string>
+    <string name="feature_waitingchallenge_password_incorrect">パスワードが一致しません。</string>
+    <string name="feature_waitingchallenge_not_found">チャレンジが存在しません。</string>
+    <string name="feature_waitingchallenge_already_started">チャレンジはすでに始まっています。</string>
+    <string name="feature_waitingchallenge_error">エラーが発生しました。後でもう一度お試しください。</string>
+    <string name="feature_waitingchallenge_check_network_connection">ネットワーク接続を確認してください。</string>
+    <string name="feature_waitingchallenge_delete_successful">チャレンジが削除されました。</string>
+    <string name="feature_waitingchallenge_start_successful">チャレンジが開始されました。</string>
+    <string name="feature_waitingchallenge_participant_full">チャレンジは満員です。</string>
+    <string name="feature_waitingchallenge_password_copied">パスワードがクリップボードにコピーされました。</string>
+    <string name="feature_waitingchallenge_created_by">「%1$s」によって作成されました</string>
+    <string name="feature_waitingchallenge_participants_count">参加者 %1$d / %2$d</string>
+</resources>

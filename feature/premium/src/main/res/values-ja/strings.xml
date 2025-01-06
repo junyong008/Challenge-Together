@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_premium_title">プレミアムアップグレード</string>
+    <string name="feature_premium_description">プレミアムアカウントで様々な特典をお楽しみください。\n一度購入すると、特典がアカウントに永久に紐づけられます。</string>
+    <string name="feature_premium_no_ads">すべての広告を永久に削除</string>
+    <string name="feature_premium_unlock_widgets">すべてのウィジェット機能を解除</string>
+    <string name="feature_premium_app_lock">アプリアクセスのパスワード機能</string>
+    <string name="feature_premium_active">アクティブ</string>
+    <string name="feature_premium_invalid_now">近日公開</string>
+    <string name="feature_premium_info_graphic">プレミアム情報グラフィック</string>
+    <string name="feature_premium_purchase_complete">購入完了</string>
+    <string name="feature_premium_error_occurred">エラーが発生しました。後でもう一度お試しください。</string>
+</resources>

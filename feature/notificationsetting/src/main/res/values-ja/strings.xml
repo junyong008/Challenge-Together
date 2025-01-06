@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_setting_all">すべての通知</string>
+    <string name="feature_notification_setting_challenge">チャレンジ通知</string>
+    <string name="feature_notification_setting_community">コミュニティ通知</string>
+    <string name="feature_notification_setting_goal_achieved">目標達成通知</string>
+    <string name="feature_notification_setting_goal_achieved_detail">チャレンジ目標が達成されたときに通知します。</string>
+    <string name="feature_notification_setting_waiting_room_participants">待合室参加者通知</string>
+    <string name="feature_notification_setting_waiting_room_participants_detail">自分が作成した待合室に参加者が入室または退室したときに通知します。</string>
+    <string name="feature_notification_setting_waiting_room_updates">待合室更新通知</string>
+    <string name="feature_notification_setting_waiting_room_updates_detail">自分が参加している待合室の開始や削除などの更新について通知します。</string>
+    <string name="feature_notification_setting_challenge_room_progress">チャレンジルーム進行通知</string>
+    <string name="feature_notification_setting_challenge_room_progress_detail">チャレンジルーム内の他の参加者がリセットまたはギブアップしたときに通知します。</string>
+    <string name="feature_notification_setting_challenge_board">チャレンジボード通知</string>
+    <string name="feature_notification_setting_challenge_board_detail">参加しているチャレンジボードに投稿が追加されたときに通知します。</string>
+    <string name="feature_notification_setting_comment">コメント通知</string>
+    <string name="feature_notification_setting_comment_detail">自分の投稿にコメントがあったときに通知します。</string>
+    <string name="feature_notification_setting_reply">返信通知</string>
+    <string name="feature_notification_setting_reply_detail">自分のコメントに返信があったときに通知します。</string>
+    <string name="feature_notification_setting_permission_denied_title">許可が拒否されました</string>
+    <string name="feature_notification_setting_permission_denied_description">通知が現在無効になっています。\n最新情報を受け取るには、デバイスの設定で通知を有効にしてください。</string>
+    <string name="feature_notification_setting_settings">設定</string>
+</resources>

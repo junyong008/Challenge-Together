@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_my_navigation_title">マイ</string>
+    <string name="feature_my_medal_description">現在のティア</string>
+    <string name="feature_my_no_active_challenge_mode">アクティブなチャレンジモードなし</string>
+    <string name="feature_my_highest_tier">最高ティア</string>
+    <string name="feature_my_remain_time_for_next_tier">次のティアまでの残り時間: %d日</string>
+    <string name="feature_my_best_record">最高記録</string>
+    <string name="feature_my_attempt_count">挑戦回数</string>
+    <string name="feature_my_success_count">成功回数</string>
+    <string name="feature_my_reset_count">リセット回数</string>
+    <string name="feature_my_settings">設定</string>
+    <string name="feature_my_account">アカウント</string>
+    <string name="feature_my_app_info">アプリ情報</string>
+    <string name="feature_my_notification_settings">通知設定</string>
+    <string name="feature_my_app_lock_settings">アプリロック設定</string>
+    <string name="feature_my_account_linking">アカウント連携</string>
+    <string name="feature_my_account_premium">プレミアムアップグレード</string>
+    <string name="feature_my_linked_with_kakao">Kakaoと連携済み</string>
+    <string name="feature_my_linked_with_google">Googleと連携済み</string>
+    <string name="feature_my_linked_with_naver">Naverと連携済み</string>
+    <string name="feature_my_linked_with">連携済みアカウント</string>
+    <string name="feature_my_nickname_change">ニックネーム変更</string>
+    <string name="feature_my_password_change">パスワード変更</string>
+    <string name="feature_my_logout">ログアウト</string>
+    <string name="feature_my_logout_confirmation">ログアウトしてもよろしいですか？</string>
+    <string name="feature_my_logout_success">ログアウトしました。</string>
+    <string name="feature_my_delete_account">アカウント削除</string>
+    <string name="feature_my_contact_support">1:1お問い合わせ</string>
+    <string name="feature_my_privacy_policy">プライバシーポリシー</string>
+    <string name="feature_my_open_source_license">オープンソースライセンス</string>
+    <string name="feature_my_app_version">アプリバージョン</string>
+    <string name="feature_my_email_inquiry_title">チャレンジトゥギャザーお問い合わせ</string>
+    <string name="feature_my_email_inquiry_content">内容: </string>
+    <string name="feature_my_email_app_not_found">メールアプリが見つかりません。</string>
+    <string name="feature_my_email_send_failed">メールを送信できません。</string>
+</resources>

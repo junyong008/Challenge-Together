@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_title">通知</string>
+    <string name="feature_notification_more">もっと見る</string>
+    <string name="feature_notification_delete">削除</string>
+    <string name="feature_notification_delete_all">すべて削除</string>
+    <string name="feature_notification_setting">設定</string>
+    <string name="feature_notification_empty_title">通知はまだありません</string>
+    <string name="feature_notification_empty_description">現在通知はありません。\n更新やお知らせがここに表示されます！</string>
+    <string name="feature_notification_challenge_category">チャレンジカテゴリー通知</string>
+    <string name="feature_notification_community_category">コミュニティカテゴリー通知</string>
+    <string name="feature_notification_delete_success">正常に削除されました。</string>
+    <string name="feature_notification_delete_failed">削除に失敗しました。後でもう一度お試しください。</string>
+</resources>

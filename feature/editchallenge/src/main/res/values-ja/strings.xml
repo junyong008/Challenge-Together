@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_editchallenge_edit">編集</string>
+    <string name="feature_editchallenge_edit_failed">編集に失敗しました。後でもう一度やり直してください。</string>
+    <string name="feature_editchallenge_edit_successful">編集が成功しました。</string>
+    <string name="feature_editchallenge_edit_category_title">カテゴリを編集</string>
+    <string name="feature_editchallenge_edit_category_description">変更したいカテゴリを選択してください。</string>
+    <string name="feature_editchallenge_title">タイトル</string>
+    <string name="feature_editchallenge_title_placeholder">挑戦のタイトル</string>
+    <string name="feature_editchallenge_description_optional">説明（任意）</string>
+    <string name="feature_editchallenge_description_placeholder">挑戦の説明</string>
+    <string name="feature_editchallenge_edit_title">挑戦の説明を編集</string>
+    <string name="feature_editchallenge_edit_description">挑戦の詳細を入力してください。\n目標や決意を記入すると役に立ちます。</string>
+    <string name="feature_editchallenge_edit_target_day_title">挑戦の目標日を編集</string>
+    <string name="feature_editchallenge_edit_target_day_description">挑戦が何日続くか設定してください。\n目標期間中にリセットしなければ成功です。</string>
+    <string name="feature_editchallenge_record_exceeded_notice">記録超過</string>
+    <string name="feature_editchallenge_record_exceeded_description">現在の記録が%1$s日を超えました。\n挑戦が即座に完了します。</string>
+    <string name="feature_editchallenge_complete">完了</string>
+</resources>

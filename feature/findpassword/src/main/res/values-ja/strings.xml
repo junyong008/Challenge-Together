@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_findpassword_title">パスワードを見つける</string>
+    <string name="feature_findpassword_description">登録されたメールアドレスを入力してください。\n入力されたメールアドレスに確認コードが送信されます。</string>
+    <string name="feature_findpassword_input_email_place_holder">メール</string>
+    <string name="feature_findpassword_send_verify_code">確認コードを送信</string>
+    <string name="feature_findpassword_invalid_email_format">正しいメール形式を入力してください。</string>
+    <string name="feature_findpassword_unknown_error">エラーが発生しました。後でもう一度お試しください。</string>
+    <string name="feature_findpassword_check_network_connection">ネットワーク接続を確認してください。</string>
+    <string name="feature_findpassword_email_not_registered">このメールは登録されていません。</string>
+    <string name="feature_findpassword_invalid_email">メールアドレスが無効です。</string>
+    <string name="feature_findpassword_code_sent">確認コードが送信されました。</string>
+    <string name="feature_findpassword_enter_code">確認コードを入力してください</string>
+    <string name="feature_findpassword_minutes_seconds">%1$d分 %2$d秒</string>
+    <string name="feature_findpassword_verification_success">確認に成功しました。</string>
+    <string name="feature_findpassword_code_mismatch">確認コードが一致しません。</string>
+    <string name="feature_findpassword_timeout">入力時間が過ぎました。</string>
+</resources>

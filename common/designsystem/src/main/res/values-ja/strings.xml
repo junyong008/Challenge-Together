@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_designsystem_app_bar_back">戻る</string>
+    <string name="common_designsystem_app_bar_continue">続行</string>
+    <string name="common_designsystem_clear_content_description">コンテンツをクリア</string>
+    <string name="common_designsystem_input_password_show_content_description">パスワードを表示</string>
+    <string name="common_designsystem_input_password_hide_content_description">パスワードを非表示</string>
+    <string name="common_designsystem_dialog_confirm">確認</string>
+    <string name="common_designsystem_dialog_cancel">キャンセル</string>
+    <string name="common_designsystem_dialog_year_month_picker_title">年と月を選択</string>
+    <string name="common_designsystem_dialog_year_month_picker_description">移動したい年と月を入力してください</string>
+    <string name="common_designsystem_dialog_enter_year">年</string>
+    <string name="common_designsystem_dialog_enter_month">月</string>
+    <string name="common_designsystem_bottom_sheet_close">閉じる</string>
+    <string name="common_designsystem_calendar_next_month">来月</string>
+    <string name="common_designsystem_calendar_previous_month">前月</string>
+    <string name="common_designsystem_calendar_expand_week_mode">週モードを展開</string>
+    <string name="common_designsystem_calendar_year_month">%1$d年%2$s</string>
+    <string name="common_designsystem_time_picker_increase_hour">時間を増やす</string>
+    <string name="common_designsystem_time_picker_increase_minute">分を増やす</string>
+    <string name="common_designsystem_time_picker_decrease_hour">時間を減らす</string>
+    <string name="common_designsystem_time_picker_decrease_minute">分を減らす</string>
+    <string name="common_designsystem_time_picker_am">午前</string>
+    <string name="common_designsystem_time_picker_pm">午後</string>
+    <string name="common_designsystem_dialog_report_title">報告</string>
+    <string name="common_designsystem_dialog_report_description">報告の理由を選択してください。</string>
+    <string name="common_designsystem_dialog_password_title">パスワード</string>
+    <string name="common_designsystem_dialog_password_description">エントリーパスワードを入力してください。</string>
+    <string name="common_designsystem_dialog_password_placeholder">パスワードを入力</string>
+    <string name="common_designsystem_dialog_system_maintenance_title">システムメンテナンスのお知らせ</string>
+    <string name="common_designsystem_dialog_system_maintenance_description">より良いサービスを提供するため、システムメンテナンスを行っています。\nメンテナンス期間中はサービスが一時的に利用不可になります。ご理解いただきありがとうございます。</string>
+    <string name="common_designsystem_dialog_expected_completion">予想完了時間</string>
+    <string name="common_designsystem_dialog_exit">終了</string>
+    <string name="common_designsystem_dialog_service_restriction_title">サービス制限</string>
+    <string name="common_designsystem_dialog_service_restriction_description">運営原則の違反により、サービスへのアクセスが制限されています。</string>
+    <string name="common_designsystem_dialog_restriction_reason">理由</string>
+    <string name="common_designsystem_dialog_restriction_period">制限期間</string>
+    <string name="common_designsystem_dialog_until">%1$sまで</string>
+    <string name="common_designsystem_dialog_premium_feature_title">プレミアム機能</string>
+    <string name="common_designsystem_dialog_premium_feature_message">この機能はプレミアムアカウント専用です。</string>
+    <string name="common_designsystem_dialog_go_to_premium">探索する</string>
+
+    <string name="common_designsystem_tier_unspecified">指定されていない層</string>
+    <string name="common_designsystem_tier_iron_description">鉄層</string>
+    <string name="common_designsystem_tier_bronze_description">銅層</string>
+    <string name="common_designsystem_tier_silver_description">銀層</string>
+    <string name="common_designsystem_tier_gold_description">金層</string>
+    <string name="common_designsystem_tier_platinum_description">プラチナ層</string>
+    <string name="common_designsystem_tier_diamond_description">ダイヤモンド層</string>
+    <string name="common_designsystem_tier_master_description">マスター層</string>
+    <string name="common_designsystem_tier_legend_description">伝説層</string>
+
+    <string name="common_designsystem_category_all">すべて</string>
+    <string name="common_designsystem_category_quit_smoking">禁煙</string>
+    <string name="common_designsystem_category_quit_drinking">禁酒</string>
+    <string name="common_designsystem_category_quit_porn">ポルノをやめる</string>
+    <string name="common_designsystem_category_quit_gaming">ゲームをやめる</string>
+    <string name="common_designsystem_category_quit_youtube">YouTubeをやめる</string>
+    <string name="common_designsystem_category_quit_sns">ソーシャルメディアをやめる</string>
+    <string name="common_designsystem_category_quit_gluten">グルテンをやめる</string>
+    <string name="common_designsystem_category_quit_gambling">ギャンブルをやめる</string>
+    <string name="common_designsystem_category_quit_drugs">薬物をやめる</string>
+    <string name="common_designsystem_category_quit_caffeine">カフェインをやめる</string>
+    <string name="common_designsystem_category_quit_eating_out">外食をやめる</string>
+    <string name="common_designsystem_category_quit_shopping">買い物をやめる</string>
+    <string name="common_designsystem_category_quit_swearing">悪口をやめる</string>
+    <string name="common_designsystem_category_quit_smartphone">スマートフォンをやめる</string>
+
+    <string name="common_designsystem_notification_challenge_completed">チャレンジ完了</string>
+    <string name="common_designsystem_notification_user_challenge_completed">「%1$s」チャレンジを完了しました!</string>
+    <string name="common_designsystem_notification_participant_reset">「%1$s」参加者がリセットしました</string>
+    <string name="common_designsystem_notification_user_reset">「%1$s」がリセットしました。</string>
+    <string name="common_designsystem_notification_participant_give_up">「%1$s」参加者があきらめました</string>
+    <string name="common_designsystem_notification_user_give_up">「%1$s」があきらめました。</string>
+    <string name="common_designsystem_notification_challengeboard_post_added">「%1$s」チャレンジボードに新しい投稿があります</string>
+    <string name="common_designsystem_notification_participant_force_remove">「%1$s」参加者が強制的に削除されました</string>
+    <string name="common_designsystem_notification_user_force_remove">「%1$s」は長期間の不活性により強制的に削除されました。</string>
+    <string name="common_designsystem_notification_challenge_deleted">チャレンジが削除されました</string>
+    <string name="common_designsystem_notification_challenge_deleted_detail">「%1$s」チャレンジはホストによって削除されました。</string>
+    <string name="common_designsystem_notification_challenge_started">チャレンジ開始</string>
+    <string name="common_designsystem_notification_challenge_started_detail">「%1$s」チャレンジはホストによって開始されました。</string>
+    <string name="common_designsystem_notification_participant_joined">「%1$s」参加者が参加しました</string>
+    <string name="common_designsystem_notification_participant_joined_detail">「%1$s」がチャレンジに参加しました。</string>
+    <string name="common_designsystem_notification_participant_left">「%1$s」参加者が退出しました</string>
+    <string name="common_designsystem_notification_participant_left_detail">「%1$s」がチャレンジを退出しました。</string>
+    <string name="common_designsystem_notification_user_commented">「%1$s」がコメントしました</string>
+    <string name="common_designsystem_notification_user_commented_detail">コメント: 「%1$s」</string>
+    <string name="common_designsystem_notification_user_replied">「%1$s」がコメントに返信しました</string>
+    <string name="common_designsystem_notification_user_replied_detail">返信: 「%1$s」</string>
+    <string name="common_designsystem_notification_hidden_title">新しい通知</string>
+    <string name="common_designsystem_notification_hidden_body">アプリロックの設定により非表示</string>
+
+    <string name="common_designsystem_sort_order_latest">最新</string>
+    <string name="common_designsystem_sort_order_oldest">最古</string>
+    <string name="common_designsystem_sort_order_title">タイトル</string>
+    <string name="common_designsystem_sort_order_highest_record">最高記録</string>
+    <string name="common_designsystem_sort_order_lowest_record">最低記録</string>
+
+    <string name="common_designsystem_report_reason_commercial_content">商業コンテンツ</string>
+    <string name="common_designsystem_report_reason_inappropriate_content">成人または不適切なコンテンツ</string>
+    <string name="common_designsystem_report_reason_disturbing_behavior">迷惑行為</string>
+    <string name="common_designsystem_report_reason_defamation">名誉毀損または中傷</string>
+    <string name="common_designsystem_report_reason_incorrect_info">不正確な情報</string>
+
+    <string name="common_designsystem_user_withdrawn">(退会済み)</string>
+    <string name="common_designsystem_user_deleted">(削除済み)</string>
+</resources>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">サインアップ</string>
+    <string name="feature_signup_description">ログインに使用するメールアドレスとパスワードを入力してください。\nメールアドレスは後でパスワードを回復するために使用できます。</string>
+    <string name="feature_signup_input_email_place_holder">メールアドレス</string>
+    <string name="feature_signup_email_format_indicator">メールアドレスは有効な形式である必要があります</string>
+    <string name="feature_signup_password_length_indicator">パスワードは少なくとも%1$d文字である必要があります</string>
+    <string name="feature_signup_password_number_indicator">パスワードには少なくとも1つの数字が含まれている必要があります</string>
+    <string name="feature_signup_input_password_place_holder">パスワード</string>
+    <string name="feature_signup_email_already_registered">このメールアドレスは既に登録されています。</string>
+    <string name="feature_signup_error">エラーが発生しました。後でもう一度お試しください。</string>
+    <string name="feature_signup_set_nickname_title">ニックネームを設定</string>
+    <string name="feature_signup_set_nickname_description">あなたのニックネームはアプリ内で他のユーザーに表示されます。</string>
+    <string name="feature_signup_smile_image_description">スマイル画像</string>
+    <string name="feature_signup_nickname_place_holder">ニックネームを入力してください</string>
+    <string name="feature_signup_start">スタート</string>
+    <string name="feature_signup_nickname_length_indicator">ニックネームは%1$d文字から%2$d文字の間でなければなりません</string>
+    <string name="feature_signup_nickname_korean_constraint">韓国語のニックネームは子音や母音のみを含めることはできません</string>
+    <string name="feature_signup_privacy_policy_agreement">スタートボタンをクリックすると、<b>プライバシーポリシー</b>に同意したことになります。</string>
+    <string name="feature_signup_privacy_policy">プライバシーポリシー</string>
+    <string name="feature_signup_nickname_already_taken">このニックネームは既に使用されています。</string>
+    <string name="feature_signup_check_network_connection">ネットワーク接続を確認してください。</string>
+    <string name="feature_signup_complete">登録が完了しました。</string>
+</resources>

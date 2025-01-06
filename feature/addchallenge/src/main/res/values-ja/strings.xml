@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_addchallenge_title_set_mode">チャレンジの種類を選択してください</string>
+    <string name="feature_addchallenge_description_set_mode">フリーモードで開始日を選択すると、\nこのチャレンジは最高記録やランキングに影響しません。</string>
+    <string name="feature_addchallenge_title_set_category">どのチャレンジに挑戦しますか？</string>
+    <string name="feature_addchallenge_description_set_category">希望するカテゴリを選択してください。</string>
+    <string name="feature_addchallenge_title_set_title">チャレンジの説明を書いてください</string>
+    <string name="feature_addchallenge_description_set_title">チャレンジの詳細を入力してください。\n目標や決意を書き留めると役立ちます。</string>
+    <string name="feature_addchallenge_title_set_target_day">チャレンジの目標日を設定してください</string>
+    <string name="feature_addchallenge_description_set_target_day">チャレンジの期間を設定してください。\n目標期間内にリセットしなければ成功です。</string>
+    <string name="feature_addchallenge_title_set_start_date">チャレンジの開始日を選択してください</string>
+    <string name="feature_addchallenge_description_set_start_date">チャレンジが始まった日を選択してください。\n開始日は未来の日付にはできません。</string>
+    <string name="feature_addchallenge_title_confirm">すべて準備完了!</string>
+    <string name="feature_addchallenge_description_confirm">チャレンジの準備がすべて完了しました。\n「開始」ボタンをクリックしてチャレンジをすぐに始めましょう。</string>
+    <string name="feature_addchallenge_title_set_together">一緒に</string>
+    <string name="feature_addchallenge_description_set_together">他の人があなたのチャレンジに参加できる待機室を作成します。</string>
+
+    <string name="feature_addchallenge_mode_challenge">チャレンジモード</string>
+    <string name="feature_addchallenge_mode_free">フリーモード</string>
+    <string name="feature_addchallenge_mode_challenge_description">過去の開始日は設定できませんが、記録やランキングに反映されます。</string>
+    <string name="feature_addchallenge_mode_free_description">過去の開始日を設定できますが、記録やランキングに反映されません。</string>
+    <string name="feature_addchallenge_title">タイトル</string>
+    <string name="feature_addchallenge_title_placeholder">チャレンジタイトル</string>
+    <string name="feature_addchallenge_description_optional">説明（オプション）</string>
+    <string name="feature_addchallenge_description_placeholder">チャレンジの説明</string>
+    <string name="feature_addchallenge_invalid_start_date">開始日は未来の日付にはできません。</string>
+    <string name="feature_addchallenge_category_card_title">カテゴリー</string>
+    <string name="feature_addchallenge_target_day_card_title">目標日</string>
+    <string name="feature_addchallenge_target_day_string">%1$d 日間</string>
+    <string name="feature_addchallenge_unlimited">無制限</string>
+    <string name="feature_addchallenge_start_date">開始日</string>
+    <string name="feature_addchallenge_together">一緒に</string>
+    <string name="feature_addchallenge_start_immediately">今すぐ開始</string>
+    <string name="feature_addchallenge_max_participants">最大参加人数</string>
+    <string name="feature_addchallenge_room_password">入室パスワード</string>
+    <string name="feature_addchallenge_people">人</string>
+    <string name="feature_addchallenge_room_password_icon">部屋のパスワードアイコン</string>
+    <string name="feature_addchallenge_room_password_placeholder">部屋のパスワード</string>
+    <string name="feature_addchallenge_create_waiting_room">待機室を作成</string>
+
+    <string name="feature_addchallenge_unknown_error">エラーが発生しました。後でもう一度お試しください。</string>
+    <string name="feature_addchallenge_check_network_connection">ネットワーク接続を確認してください。</string>
+    <string name="feature_addchallenge_challenge_added">チャレンジが追加されました。</string>
+    <string name="feature_addchallenge_waiting_room_created">待機室が作成されました。</string>
+
+    <string name="feature_addchallenge_dialog_start">開始</string>
+    <string name="feature_addchallenge_dialog_start_title">チャレンジを開始</string>
+    <string name="feature_addchallenge_dialog_start_description">チャレンジを開始しますか？</string>
+
+    <string name="feature_addchallenge_dialog_create">作成</string>
+    <string name="feature_addchallenge_dialog_create_room_title">待機室を作成する</string>
+    <string name="feature_addchallenge_dialog_create_room_description">待機室を作成しますか？</string>
+</resources>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_intro_start">開始</string>
+    <string name="feature_intro_start_with">開始方法</string>
+    <string name="feature_intro_start_email">メールで開始</string>
+    <string name="feature_intro_start_guest">ゲストとして開始</string>
+    <string name="feature_intro_start_guest_warning">注意</string>
+    <string name="feature_intro_start_guest_warning_detail">ゲストとしてログインすると、アプリが削除されたりデバイスが変更された場合にデータが失われる可能性があります。</string>
+    <string name="feature_intro_life_changing_challenges">人生を変えるチャレンジ</string>
+    <string name="feature_intro_features">リセットログ、ウィジェット、カレンダー、グラフ、ランキングなど、さまざまな機能を提供します。</string>
+    <string name="feature_intro_challenge_together">一緒にチャレンジ</string>
+    <string name="feature_intro_challenge_together_detail">リアルタイムのランキングで競争し、共にチャレンジすることで達成感を得ましょう。</string>
+    <string name="feature_intro_community">コミュニティ</string>
+    <string name="feature_intro_community_detail">コミュニティで経験を共有し、お気に入りの引用をブックマークして保存しましょう。</string>
+    <string name="feature_intro_divider_text">または</string>
+    <string name="feature_intro_kakao_content_description">Kakaoでサインイン</string>
+    <string name="feature_intro_google_content_description">Googleでサインイン</string>
+    <string name="feature_intro_naver_content_description">Naverでサインイン</string>
+    <string name="feature_intro_login_success">ログイン成功</string>
+    <string name="feature_intro_unknown_error">エラーが発生しました。後でもう一度お試しください。</string>
+</resources>

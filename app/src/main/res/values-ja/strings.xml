@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">チャレンジ トゥゲザー</string>
+    <string name="app_name_debug">デバッグ チャレンジ トゥゲザー</string>
+    <string name="splash_content_description">スプラッシュ画像</string>
+</resources>
