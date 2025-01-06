@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changepassword_title">Đổi mật khẩu</string>
+    <string name="feature_changepassword_description">Vui lòng làm theo các quy tắc dưới đây khi tạo mật khẩu của bạn.</string>
+    <string name="feature_changepassword_lock_image_description">Hình ảnh biểu tượng khóa</string>
+    <string name="feature_changepassword_input_password_place_holder">Mật khẩu mới</string>
+    <string name="feature_changepassword_password_length_indicator">Mật khẩu phải dài ít nhất %1$d ký tự</string>
+    <string name="feature_changepassword_password_number_indicator">Mật khẩu phải chứa ít nhất một số</string>
+    <string name="feature_changepassword_confirm">Xác nhận</string>
+    <string name="feature_changepassword_change">Thay đổi</string>
+    <string name="feature_changepassword_confirm_info">Bạn có muốn đổi mật khẩu không?</string>
+    <string name="feature_changepassword_back">Quay lại</string>
+    <string name="feature_changepassword_cancel_prompt">Bạn có muốn hủy bỏ việc đổi mật khẩu không?</string>
+    <string name="feature_changepassword_success">Mật khẩu của bạn đã được đổi.</string>
+    <string name="feature_changepassword_error">Đã xảy ra lỗi. Vui lòng thử lại sau.</string>
+    <string name="feature_changepassword_check_network_connection">Vui lòng kiểm tra kết nối mạng của bạn.</string>
+</resources>

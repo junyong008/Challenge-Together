@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_editchallenge_edit">Chỉnh sửa</string>
+    <string name="feature_editchallenge_edit_failed">Chỉnh sửa thất bại. Vui lòng thử lại sau.</string>
+    <string name="feature_editchallenge_edit_successful">Chỉnh sửa thành công.</string>
+    <string name="feature_editchallenge_edit_category_title">Chỉnh sửa Danh mục</string>
+    <string name="feature_editchallenge_edit_category_description">Vui lòng chọn danh mục bạn muốn thay đổi.</string>
+    <string name="feature_editchallenge_title">Tiêu đề</string>
+    <string name="feature_editchallenge_title_placeholder">Tiêu đề thử thách</string>
+    <string name="feature_editchallenge_description_optional">Mô tả (Tùy chọn)</string>
+    <string name="feature_editchallenge_description_placeholder">Mô tả thử thách</string>
+    <string name="feature_editchallenge_edit_title">Chỉnh sửa mô tả của thử thách</string>
+    <string name="feature_editchallenge_edit_description">Nhập chi tiết của thử thách.\nViết ra mục tiêu và quyết tâm của bạn sẽ giúp ích cho bạn.</string>
+    <string name="feature_editchallenge_edit_target_day_title">Chỉnh sửa ngày mục tiêu cho thử thách</string>
+    <string name="feature_editchallenge_edit_target_day_description">Đặt số ngày thử thách sẽ diễn ra.\nNếu bạn không thiết lập lại trong thời gian mục tiêu, bạn sẽ thành công.</string>
+    <string name="feature_editchallenge_record_exceeded_notice">Vượt quá Kỷ lục</string>
+    <string name="feature_editchallenge_record_exceeded_description">Kỷ lục hiện tại của bạn đã vượt qua %1$s ngày.\nThử thách sẽ được hoàn thành ngay lập tức.</string>
+    <string name="feature_editchallenge_complete">Hoàn tất</string>
+</resources>

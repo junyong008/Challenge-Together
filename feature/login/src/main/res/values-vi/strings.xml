@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_login_title_description">Bước đầu dễ dàng nhất để thay đổi bản thân,</string>
+    <string name="feature_login_title">Thử Thách Cùng Nhau</string>
+    <string name="feature_login_input_email_content_description">Nhập Email</string>
+    <string name="feature_login_input_email_place_holder">Email</string>
+    <string name="feature_login_input_password_content_description">Nhập Mật khẩu</string>
+    <string name="feature_login_input_password_place_holder">Mật khẩu</string>
+    <string name="feature_login_button_text">ĐĂNG NHẬP</string>
+    <string name="feature_login_find_password">Tìm Mật khẩu</string>
+    <string name="feature_login_sign_up">Đăng Ký</string>
+    <string name="feature_login_login_success">Đăng nhập thành công</string>
+    <string name="feature_login_user_not_found">ID hoặc mật khẩu không đúng.</string>
+    <string name="feature_login_invalid_email_format">Vui lòng nhập đúng định dạng email.</string>
+    <string name="feature_login_unknown_error">Đã xảy ra lỗi. Vui lòng thử lại sau.</string>
+    <string name="feature_login_check_network_connection">Vui lòng kiểm tra kết nối mạng của bạn.</string>
+</resources>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ui_error_body_title">Không thể tải màn hình</string>
+    <string name="common_ui_error_description">Đã xảy ra lỗi.\nVui lòng thử lại sau.</string>
+    <string name="common_ui_error_retry">Thử lại</string>
+    <string name="common_ui_started_challenge_card_timer_description">Biểu tượng hẹn giờ</string>
+    <string name="common_ui_started_challenge_card_check_description">Biểu tượng hoàn tất</string>
+    <string name="common_ui_waiting_challenge_number">Số %1$d</string>
+    <string name="common_ui_waiting_challenge_private">[Riêng tư]</string>
+    <string name="common_ui_waiting_challenge_participant_number_format">%1$s / %2$s</string>
+    <string name="common_ui_waiting_challenge_calendar_description">Biểu tượng lịch</string>
+    <string name="common_ui_waiting_challenge_goal_days">%1$s Ngày</string>
+    <string name="common_ui_waiting_challenge_unlimited">Không giới hạn</string>
+    <string name="common_ui_waiting_challenge_icon_of_person">Biểu tượng người</string>
+    <string name="common_ui_manual_time_warning">Thời gian hệ thống được đặt thủ công</string>
+    <string name="common_ui_manual_time_warning_icon">Biểu tượng đồng hồ</string>
+    <string name="common_ui_category_list_all">Thử thách của tôi</string>
+    <string name="common_ui_target_day">Ngày mục tiêu</string>
+    <string name="common_ui_target_day_unlimited">Không giới hạn</string>
+    <string name="common_ui_target_day_days">Ngày</string>
+</resources>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_service_session_expired">Phiên của bạn đã hết hạn.\nVui lòng đăng nhập lại.</string>
+    <string name="navigation_service_add_new_challenge">Thêm Thử thách mới</string>
+    <string name="navigation_service_add_new_community_post">Thêm Bài đăng Cộng đồng mới</string>
+    <string name="navigation_service_check_network_connection">Vui lòng kiểm tra kết nối mạng của bạn.</string>
+    <string name="navigation_service_update">Cập nhật</string>
+    <string name="navigation_service_update_description">Một phiên bản mới của ứng dụng đã có sẵn.\nVui lòng cập nhật qua Play Store.</string>
+</resources>

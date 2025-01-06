@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeranking_title">Xếp hạng</string>
+    <string name="feature_challengeranking_tip_title">Mẹo</string>
+    <string name="feature_challengeranking_tip_long_absence">Người dùng không hoạt động trong 7 ngày có thể bị các thí sinh khác loại bỏ một cách cưỡng bức.</string>
+    <string name="feature_challengeranking_tip_alone">Nếu bạn còn lại một mình trong thử thách, bảng xếp hạng sẽ biến mất và bạn có thể chỉnh sửa thử thách.</string>
+    <string name="feature_challengeranking_force_remove_title">Loại bỏ cưỡng bức</string>
+    <string name="feature_challengeranking_force_remove_description">Người dùng không hoạt động có thể bị loại bỏ một cách cưỡng bức.\nBạn có muốn loại bỏ người dùng này không?</string>
+    <string name="feature_challengeranking_remove">Loại bỏ</string>
+    <string name="feature_challengeranking_success">Thành công</string>
+    <string name="feature_challengeranking_first_place_description">Hình ảnh đại diện cho vị trí đầu tiên trong bảng xếp hạng</string>
+    <string name="feature_challengeranking_second_place_description">Hình ảnh đại diện cho vị trí thứ hai trong bảng xếp hạng</string>
+    <string name="feature_challengeranking_third_place_description">Hình ảnh đại diện cho vị trí thứ ba trong bảng xếp hạng</string>
+    <string name="feature_challengeranking_force_remove_success">Người dùng đã được loại bỏ thành công.</string>
+    <string name="feature_challengeranking_user_reconnected">Người dùng vừa kết nối lại.</string>
+    <string name="feature_challengeranking_check_network_connection">Vui lòng kiểm tra kết nối mạng của bạn.</string>
+    <string name="feature_challengeranking_force_remove_failed">Không thể loại bỏ người dùng. Vui lòng thử lại sau.</string>
+</resources>

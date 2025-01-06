@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_setting_all">Tất cả thông báo</string>
+    <string name="feature_notification_setting_challenge">Thông báo thách thức</string>
+    <string name="feature_notification_setting_community">Thông báo cộng đồng</string>
+    <string name="feature_notification_setting_goal_achieved">Thông báo đạt được mục tiêu</string>
+    <string name="feature_notification_setting_goal_achieved_detail">Gửi thông báo khi một mục tiêu thách thức được hoàn thành.</string>
+    <string name="feature_notification_setting_waiting_room_participants">Thông báo người tham gia phòng chờ</string>
+    <string name="feature_notification_setting_waiting_room_participants_detail">Thông báo khi có người tham gia hoặc rời phòng chờ bạn đã tạo.</string>
+    <string name="feature_notification_setting_waiting_room_updates">Thông báo cập nhật phòng chờ</string>
+    <string name="feature_notification_setting_waiting_room_updates_detail">Thông báo về cập nhật cho phòng chờ bạn đang tham gia, chẳng hạn như bắt đầu hoặc hủy phòng.</string>
+    <string name="feature_notification_setting_challenge_room_progress">Thông báo tiến trình phòng thách thức</string>
+    <string name="feature_notification_setting_challenge_room_progress_detail">Thông báo khi những người khác trong phòng thách thức đặt lại hoặc từ bỏ.</string>
+    <string name="feature_notification_setting_challenge_board">Thông báo bảng thách thức</string>
+    <string name="feature_notification_setting_challenge_board_detail">Thông báo khi có bài viết được thêm vào bảng thách thức mà bạn tham gia.</string>
+    <string name="feature_notification_setting_comment">Thông báo bình luận</string>
+    <string name="feature_notification_setting_comment_detail">Thông báo khi có người bình luận trên bài viết của bạn.</string>
+    <string name="feature_notification_setting_reply">Thông báo trả lời</string>
+    <string name="feature_notification_setting_reply_detail">Thông báo khi có người trả lời bình luận của bạn.</string>
+    <string name="feature_notification_setting_permission_denied_title">Quyền bị từ chối</string>
+    <string name="feature_notification_setting_permission_denied_description">Thông báo hiện đang bị tắt.\nVui lòng bật lên trong cài đặt thiết bị của bạn để nhận cập nhật.</string>
+    <string name="feature_notification_setting_settings">Cài đặt</string>
+</resources>

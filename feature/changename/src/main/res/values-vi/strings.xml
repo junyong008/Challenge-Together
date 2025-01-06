@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">Đổi biệt danh</string>
+    <string name="feature_changename_description">Bạn có thể đổi biệt danh của mình một lần mỗi tuần.</string>
+    <string name="feature_changename_action">Thay đổi</string>
+    <string name="feature_changenam_confirm_info">Bạn có muốn đổi biệt danh của mình không?\nBạn có thể đổi biệt danh của mình một lần mỗi tuần.</string>
+    <string name="feature_changename_info_graphic">Hình ảnh thông tin biệt danh</string>
+    <string name="feature_changename_success">Biệt danh của bạn đã được thay đổi.</string>
+    <string name="feature_changename_nickname_already_taken">Biệt danh này đã được sử dụng.</string>
+    <string name="feature_changename_error">Đã xảy ra lỗi. Vui lòng thử lại sau.</string>
+    <string name="feature_changename_check_network_connection">Vui lòng kiểm tra kết nối mạng của bạn.</string>
+    <string name="feature_changename_length_indicator">Biệt danh phải có độ dài từ %1$d đến %2$d ký tự</string>
+    <string name="feature_changename_korean_constraint">Biệt danh bằng tiếng Hàn không thể chỉ chứa phụ âm hoặc nguyên âm</string>
+    <string name="feature_changename_duplicate_name">Biệt danh giống với biệt danh hiện tại</string>
+    <string name="feature_changename_next_change_notice">Bạn có thể đổi lần tiếp theo sau %1$s</string>
+</resources>

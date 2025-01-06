@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_together_title">Cùng nhau</string>
+    <string name="feature_together_description">Bắt đầu một thử thách với những người đa dạng.</string>
+    <string name="feature_together_search_placeholder">Tìm kiếm…</string>
+    <string name="feature_together_empty_title">Không tìm thấy thử thách</string>
+    <string name="feature_together_empty_description">Hiện tại không có thử thách nào.\nTạo thử thách mới và mời người khác tham gia!</string>
+    <string name="feature_together_search_empty_title">Không tìm thấy thử thách</string>
+    <string name="feature_together_search_empty_description">Không có thử thách nào khớp với tìm kiếm của bạn.\nHãy thử sử dụng các từ khóa hoặc bộ lọc khác!</string>
+    <string name="feature_together_global">Thử thách ngôn ngữ khác</string>
+    <string name="feature_together_global_challenges_on">Thử thách từ tất cả các quốc gia sẽ được hiển thị.</string>
+    <string name="feature_together_global_challenges_off">Chỉ thử thách %1$s sẽ được hiển thị.</string>
+</resources>

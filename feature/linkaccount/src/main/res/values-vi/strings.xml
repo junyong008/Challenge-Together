@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_linkaccount_title">Liên kết tài khoản</string>
+    <string name="feature_linkaccount_description">Liên kết tài khoản của bạn để đăng nhập nhanh chóng và bảo quản dữ liệu.</string>
+    <string name="feature_linkaccount_kakao">Liên kết với Kakao</string>
+    <string name="feature_linkaccount_google">Liên kết với Google</string>
+    <string name="feature_linkaccount_naver">Liên kết với Naver</string>
+    <string name="feature_linkaccount_already_exists">Tài khoản này đã được đăng ký.</string>
+    <string name="feature_linkaccount_already_linked">Tài khoản của bạn đã được liên kết.</string>
+    <string name="feature_linkaccount_success">Liên kết thành công.</string>
+    <string name="feature_linkaccount_check_network_connection">Vui lòng kiểm tra kết nối mạng.</string>
+    <string name="feature_linkaccount_error">Đã xảy ra lỗi. Vui lòng thử lại sau.</string>
+    <string name="feature_linkaccount_info_graphic">Thông tin đồ họa liên kết</string>
+</resources>

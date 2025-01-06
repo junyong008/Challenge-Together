@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_widget_challenge_list_widget_name">Danh sách Thử thách</string>
+    <string name="platform_widget_challenge_tall_widget_name">Thẻ Thử thách</string>
+    <string name="platform_widget_challenge_wide_widget_name">Thẻ Thử thách</string>
+    <string name="platform_widget_challenge_simple_widget_name">Thẻ Thử thách Đơn giản</string>
+    <string name="platform_widget_no_challenge">Không có Thử thách</string>
+    <string name="platform_widget_no_challenges">Không có Thử thách</string>
+    <string name="platform_widget_no_challenges_description">Không có thử thách nào có sẵn.\nMở ứng dụng để thêm thử thách đầu tiên của bạn và bắt đầu hành trình của mình!</string>
+    <string name="platform_widget_time_d">N</string>
+    <string name="platform_widget_time_day">n</string>
+    <string name="platform_widget_time_hour">g</string>
+    <string name="platform_widget_progress_description">Tiến trình</string>
+    <string name="platform_widget_category_icon_description">Biểu tượng Danh mục</string>
+    <string name="platform_widget_settings">Cài đặt Tiện ích</string>
+    <string name="platform_widget_opacity">Độ mờ</string>
+    <string name="platform_widget_cancel">Hủy</string>
+    <string name="platform_widget_confirm">Xác nhận</string>
+    <string name="platform_widget_select">Chọn</string>
+    <string name="platform_widget_hidden_due_to_app_lock">Ẩn do cài đặt Khóa ứng dụng</string>
+</resources>

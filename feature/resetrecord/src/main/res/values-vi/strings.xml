@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">Đặt lại lịch sử</string>
+    <string name="feature_resetrecord_record">Bản ghi</string>
+    <string name="feature_resetrecord_content">Nội dung</string>
+    <string name="feature_resetrecord_no_reset_records">Chưa có bản ghi đặt lại nào.</string>
+    <string name="feature_resetrecord_encouragement">Hãy tiếp tục và thử thách bản thân!</string>
+    <string name="feature_resetrecord_day_suffix">Ngày</string>
+</resources>

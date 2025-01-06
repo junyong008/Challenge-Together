@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_findpassword_title">Tìm mật khẩu</string>
+    <string name="feature_findpassword_description">Vui lòng nhập địa chỉ email đã đăng ký của bạn.\nMột mã xác minh sẽ được gửi đến địa chỉ email bạn đã nhập.</string>
+    <string name="feature_findpassword_input_email_place_holder">Email</string>
+    <string name="feature_findpassword_send_verify_code">Gửi mã xác minh</string>
+    <string name="feature_findpassword_invalid_email_format">Vui lòng nhập một định dạng email đúng.</string>
+    <string name="feature_findpassword_unknown_error">Đã xảy ra lỗi. Vui lòng thử lại sau.</string>
+    <string name="feature_findpassword_check_network_connection">Vui lòng kiểm tra kết nối mạng của bạn.</string>
+    <string name="feature_findpassword_email_not_registered">Email này chưa được đăng ký.</string>
+    <string name="feature_findpassword_invalid_email">Địa chỉ email không hợp lệ.</string>
+    <string name="feature_findpassword_code_sent">Mã xác minh đã được gửi.</string>
+    <string name="feature_findpassword_enter_code">Nhập mã xác minh</string>
+    <string name="feature_findpassword_minutes_seconds">%1$dm %2$ds</string>
+    <string name="feature_findpassword_verification_success">Xác minh thành công.</string>
+    <string name="feature_findpassword_code_mismatch">Mã xác minh không khớp.</string>
+    <string name="feature_findpassword_timeout">Thời gian nhập đã hết.</string>
+</resources>

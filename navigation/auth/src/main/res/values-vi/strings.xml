@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_auth_update">Cập nhật</string>
+    <string name="navigation_auth_update_description">Một phiên bản mới của ứng dụng có sẵn.\nVui lòng cập nhật qua Cửa hàng Play.</string>
+</resources>

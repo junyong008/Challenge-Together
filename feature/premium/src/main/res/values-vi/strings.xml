@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_premium_title">Nâng cấp Premium</string>
+    <string name="feature_premium_description">Thưởng thức nhiều lợi ích với tài khoản cao cấp.\nMột lần mua sẽ giữ lợi ích này gắn với tài khoản của bạn mãi mãi.</string>
+    <string name="feature_premium_no_ads">Xóa bỏ tất cả quảng cáo vĩnh viễn</string>
+    <string name="feature_premium_unlock_widgets">Mở khóa tất cả tính năng Widget</string>
+    <string name="feature_premium_app_lock">Tính năng mật khẩu truy cập ứng dụng</string>
+    <string name="feature_premium_active">Đã kích hoạt</string>
+    <string name="feature_premium_invalid_now">Sắp ra mắt</string>
+    <string name="feature_premium_info_graphic">Thông tin đồ họa Premium</string>
+    <string name="feature_premium_purchase_complete">Hoàn tất mua hàng</string>
+    <string name="feature_premium_error_occurred">Đã xảy ra lỗi. Vui lòng thử lại sau.</string>
+</resources>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_applock_title">Khóa Ứng dụng</string>
+    <string name="feature_applock_password">Mật khẩu</string>
+    <string name="feature_applock_enter_password">Vui lòng nhập mật khẩu của bạn</string>
+    <string name="feature_applock_reenter_password">Vui lòng nhập lại mật khẩu của bạn</string>
+    <string name="feature_applock_password_mismatch">Mật khẩu không khớp.</string>
+    <string name="feature_applock_password_set_success">Mật khẩu đã được thiết lập.</string>
+    <string name="feature_applock_change_password">Thay đổi Mật khẩu</string>
+    <string name="feature_applock_biometric_authentication">Xác thực Sinh trắc học</string>
+    <string name="feature_applock_biometric_cancel">Hủy bỏ</string>
+    <string name="feature_applock_hide_widget_content">Ẩn Nội dung Widget</string>
+    <string name="feature_applock_hide_notification_content">Ẩn Nội dung Thông báo</string>
+    <string name="feature_applock_close">Đóng</string>
+    <string name="feature_applock_backspace">Xóa lùi</string>
+</resources>
