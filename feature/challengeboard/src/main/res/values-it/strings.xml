@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">Bacheca</string>
+    <string name="feature_challengeboard_content_placeholder">Inserisci contenuto…</string>
+    <string name="feature_challengeboard_send">Invia</string>
+    <string name="feature_challengeboard_no_posts_title">Nessun post</string>
+    <string name="feature_challengeboard_no_posts_description">Lascia record o note sulla tua sfida.</string>
+    <string name="feature_challengeboard_scroll_to_bottom">Scorri in fondo</string>
+    <string name="feature_challengeboard_menu_copy">Copia</string>
+    <string name="feature_challengeboard_menu_report">Segnala</string>
+    <string name="feature_challengeboard_menu_delete">Elimina</string>
+    <string name="feature_challengeboard_delete_success">Eliminato con successo.</string>
+    <string name="feature_challengeboard_delete_failed">Eliminazione non riuscita. Riprova più tardi.</string>
+    <string name="feature_challengeboard_report_success">Segnalato con successo.</string>
+    <string name="feature_challengeboard_report_failed">Segnalazione non riuscita. Riprova più tardi.</string>
+    <string name="feature_challengeboard_report_already_reported">Questo post è già stato segnalato.</string>
+    <string name="feature_challengeboard_toggle_notification">Attiva/Disattiva notifiche</string>
+    <string name="feature_challengeboard_notification_enabled">Notifiche attivate.</string>
+    <string name="feature_challengeboard_notification_disabled">Notifiche disattivate.</string>
+</resources>

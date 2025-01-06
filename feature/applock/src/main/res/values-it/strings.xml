@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_applock_title">Blocco App</string>
+    <string name="feature_applock_password">Password</string>
+    <string name="feature_applock_enter_password">Per favore, inserisci la tua password</string>
+    <string name="feature_applock_reenter_password">Per favore, inserisci di nuovo la tua password</string>
+    <string name="feature_applock_password_mismatch">Le password non corrispondono.</string>
+    <string name="feature_applock_password_set_success">La password è stata impostata.</string>
+    <string name="feature_applock_change_password">Cambia Password</string>
+    <string name="feature_applock_biometric_authentication">Autenticazione Biometrica</string>
+    <string name="feature_applock_biometric_cancel">Annulla</string>
+    <string name="feature_applock_hide_widget_content">Nascondi contenuto del widget</string>
+    <string name="feature_applock_hide_notification_content">Nascondi contenuto delle notifiche</string>
+    <string name="feature_applock_close">Chiudi</string>
+    <string name="feature_applock_backspace">Cancella</string>
+</resources>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_widget_challenge_list_widget_name">Elenco Sfide</string>
+    <string name="platform_widget_challenge_tall_widget_name">Carta Sfida</string>
+    <string name="platform_widget_challenge_wide_widget_name">Carta Sfida</string>
+    <string name="platform_widget_challenge_simple_widget_name">Carta Sfida Semplice</string>
+    <string name="platform_widget_no_challenge">Nessuna Sfida</string>
+    <string name="platform_widget_no_challenges">Nessuna Sfida</string>
+    <string name="platform_widget_no_challenges_description">Nessuna sfida disponibile.\nApri l\'app per aggiungere la tua prima sfida e inizia il tuo percorso!</string>
+    <string name="platform_widget_time_d">G</string>
+    <string name="platform_widget_time_day">g</string>
+    <string name="platform_widget_time_hour">o</string>
+    <string name="platform_widget_progress_description">Progresso</string>
+    <string name="platform_widget_category_icon_description">Icona Categoria</string>
+    <string name="platform_widget_settings">Impostazioni Widget</string>
+    <string name="platform_widget_opacity">Opacità</string>
+    <string name="platform_widget_cancel">Annulla</string>
+    <string name="platform_widget_confirm">Conferma</string>
+    <string name="platform_widget_select">Seleziona</string>
+    <string name="platform_widget_hidden_due_to_app_lock">Nascosto a causa delle impostazioni di Blocco App</string>
+</resources>

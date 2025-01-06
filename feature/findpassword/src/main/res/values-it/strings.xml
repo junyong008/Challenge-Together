@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_findpassword_title">Trova Password</string>
+    <string name="feature_findpassword_description">Per favore inserisci il tuo indirizzo email registrato.\nUn codice di verifica verrà inviato all\'indirizzo email che hai inserito.</string>
+    <string name="feature_findpassword_input_email_place_holder">Email</string>
+    <string name="feature_findpassword_send_verify_code">Invia Codice di Verifica</string>
+    <string name="feature_findpassword_invalid_email_format">Per favore inserisci un formato email corretto.</string>
+    <string name="feature_findpassword_unknown_error">Si è verificato un errore. Per favore riprova più tardi.</string>
+    <string name="feature_findpassword_check_network_connection">Per favore controlla la tua connessione di rete.</string>
+    <string name="feature_findpassword_email_not_registered">Questa email non è registrata.</string>
+    <string name="feature_findpassword_invalid_email">L\'indirizzo email non è valido.</string>
+    <string name="feature_findpassword_code_sent">Il codice di verifica è stato inviato.</string>
+    <string name="feature_findpassword_enter_code">Inserisci Codice di Verifica</string>
+    <string name="feature_findpassword_minutes_seconds">%1$dm %2$ds</string>
+    <string name="feature_findpassword_verification_success">Verifica riuscita.</string>
+    <string name="feature_findpassword_code_mismatch">Il codice di verifica non corrisponde.</string>
+    <string name="feature_findpassword_timeout">Il tempo di inserimento è scaduto.</string>
+</resources>

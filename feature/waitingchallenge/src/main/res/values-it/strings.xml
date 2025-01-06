@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_waitingchallenge_number">N. %1$d</string>
+    <string name="feature_waitingchallenge_private">[Privato]</string>
+    <string name="feature_waitingchallenge_target_day">Giorno Obiettivo</string>
+    <string name="feature_waitingchallenge_target_day_goal_days">%1$s Giorni</string>
+    <string name="feature_waitingchallenge_target_day_unlimited">Illimitato</string>
+    <string name="feature_waitingchallenge_menu_delete">Elimina</string>
+    <string name="feature_waitingchallenge_menu_refresh">Aggiorna</string>
+    <string name="feature_waitingchallenge_menu_share">Condividi</string>
+    <string name="feature_waitingchallenge_menu_share_message">Affrontiamo insieme la sfida "%1$s"!\nAttualmente, %2$d persone stanno partecipando.</string>
+    <string name="feature_waitingchallenge_delete">Elimina</string>
+    <string name="feature_waitingchallenge_delete_prompt">Vuoi eliminare la sfida?</string>
+    <string name="feature_waitingchallenge_start">Inizia</string>
+    <string name="feature_waitingchallenge_start_prompt">Vuoi iniziare la sfida?</string>
+    <string name="feature_waitingchallenge_join">Partecipa</string>
+    <string name="feature_waitingchallenge_leave">Lascia</string>
+    <string name="feature_waitingchallenge_board">Bacheca</string>
+    <string name="feature_waitingchallenge_menu">Menu</string>
+    <string name="feature_waitingchallenge_board_description">Condividi i tuoi pensieri sulla sfida.</string>
+    <string name="feature_waitingchallenge_password_incorrect">La password non corrisponde.</string>
+    <string name="feature_waitingchallenge_not_found">La sfida non esiste.</string>
+    <string name="feature_waitingchallenge_already_started">La sfida è già iniziata.</string>
+    <string name="feature_waitingchallenge_error">Si è verificato un errore. Riprova più tardi.</string>
+    <string name="feature_waitingchallenge_check_network_connection">Controlla la tua connessione di rete.</string>
+    <string name="feature_waitingchallenge_delete_successful">La sfida è stata eliminata.</string>
+    <string name="feature_waitingchallenge_start_successful">La sfida è stata avviata.</string>
+    <string name="feature_waitingchallenge_participant_full">La sfida è piena.</string>
+    <string name="feature_waitingchallenge_password_copied">Password copiata negli appunti.</string>
+    <string name="feature_waitingchallenge_created_by">Creato da "%1$s"</string>
+    <string name="feature_waitingchallenge_participants_count">Partecipanti %1$d / %2$d</string>
+</resources>

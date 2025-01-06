@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">Iscriviti</string>
+    <string name="feature_signup_description">Inserisci l\'email e la password che utilizzerai per accedere.\nL\'email può essere utilizzata in seguito per recuperare la password.</string>
+    <string name="feature_signup_input_email_place_holder">Email</string>
+    <string name="feature_signup_email_format_indicator">L\'email deve essere in formato valido</string>
+    <string name="feature_signup_password_length_indicator">La password deve essere lunga almeno %1$d caratteri</string>
+    <string name="feature_signup_password_number_indicator">La password deve contenere almeno un numero</string>
+    <string name="feature_signup_input_password_place_holder">Password</string>
+    <string name="feature_signup_email_already_registered">Questa email è già registrata.</string>
+    <string name="feature_signup_error">Si è verificato un errore. Riprova più tardi.</string>
+    <string name="feature_signup_set_nickname_title">Imposta il tuo nickname</string>
+    <string name="feature_signup_set_nickname_description">Il tuo nickname è visibile agli altri utenti dell\'app.</string>
+    <string name="feature_signup_smile_image_description">Immagine del sorriso</string>
+    <string name="feature_signup_nickname_place_holder">Inserisci il tuo nickname</string>
+    <string name="feature_signup_start">INIZIA</string>
+    <string name="feature_signup_nickname_length_indicator">Il nickname deve essere lungo tra %1$d e %2$d caratteri</string>
+    <string name="feature_signup_nickname_korean_constraint">I nickname coreani non possono contenere solo consonanti o vocali</string>
+    <string name="feature_signup_privacy_policy_agreement">Cliccando sul pulsante inizia, accetti la <b>Informativa sulla Privacy</b>.</string>
+    <string name="feature_signup_privacy_policy">Informativa sulla Privacy</string>
+    <string name="feature_signup_nickname_already_taken">Questo nickname è già in uso.</string>
+    <string name="feature_signup_check_network_connection">Controlla la tua connessione di rete.</string>
+    <string name="feature_signup_complete">La registrazione è completa.</string>
+</resources>

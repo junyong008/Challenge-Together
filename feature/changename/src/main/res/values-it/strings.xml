@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">Cambia Nickname</string>
+    <string name="feature_changename_description">Puoi cambiare il tuo nickname una volta alla settimana.</string>
+    <string name="feature_changename_action">Cambia</string>
+    <string name="feature_changenam_confirm_info">Vuoi cambiare il tuo Nickname?\nPuoi cambiare il tuo nickname una volta alla settimana.</string>
+    <string name="feature_changename_info_graphic">Grafico Informazioni Nickname</string>
+    <string name="feature_changename_success">Il tuo Nickname è stato cambiato.</string>
+    <string name="feature_changename_nickname_already_taken">Questo nickname è già in uso.</string>
+    <string name="feature_changename_error">Si è verificato un errore. Per favore riprova più tardi.</string>
+    <string name="feature_changename_check_network_connection">Per favore controlla la tua connessione di rete.</string>
+    <string name="feature_changename_length_indicator">Il nickname deve essere compreso tra %1$d e %2$d caratteri</string>
+    <string name="feature_changename_korean_constraint">I nickname coreani non possono contenere solo consonanti o vocali</string>
+    <string name="feature_changename_duplicate_name">Il nickname è identico a quello attuale</string>
+    <string name="feature_changename_next_change_notice">Puoi cambiarlo di nuovo dopo %1$s</string>
+</resources>
