@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_designsystem_app_bar_back">वापस</string>
+    <string name="common_designsystem_app_bar_continue">जारी रखें</string>
+    <string name="common_designsystem_clear_content_description">विषयसूची साफ करें</string>
+    <string name="common_designsystem_input_password_show_content_description">पासवर्ड दिखाएँ</string>
+    <string name="common_designsystem_input_password_hide_content_description">पासवर्ड छिपाएँ</string>
+    <string name="common_designsystem_dialog_confirm">पुष्टि करें</string>
+    <string name="common_designsystem_dialog_cancel">रद्द करें</string>
+    <string name="common_designsystem_dialog_year_month_picker_title">वर्ष और माह चुनें</string>
+    <string name="common_designsystem_dialog_year_month_picker_description">कृपया वह वर्ष और माह दर्ज करें जिसके लिए आप जाना चाहते हैं</string>
+    <string name="common_designsystem_dialog_enter_year">वर्ष</string>
+    <string name="common_designsystem_dialog_enter_month">माह</string>
+    <string name="common_designsystem_bottom_sheet_close">बंद करें</string>
+    <string name="common_designsystem_calendar_next_month">अगले माह</string>
+    <string name="common_designsystem_calendar_previous_month">पिछले माह</string>
+    <string name="common_designsystem_calendar_expand_week_mode">सप्ताह मोड बढ़ाएँ</string>
+    <string name="common_designsystem_calendar_year_month">%2$s %1$d</string>
+    <string name="common_designsystem_time_picker_increase_hour">घंटा बढ़ाएं</string>
+    <string name="common_designsystem_time_picker_increase_minute">मिनट बढ़ाएं</string>
+    <string name="common_designsystem_time_picker_decrease_hour">घंटा घटाएं</string>
+    <string name="common_designsystem_time_picker_decrease_minute">मिनट घटाएं</string>
+    <string name="common_designsystem_time_picker_am">पूर्वाह्न</string>
+    <string name="common_designsystem_time_picker_pm">अपराह्न</string>
+    <string name="common_designsystem_dialog_report_title">रिपोर्ट</string>
+    <string name="common_designsystem_dialog_report_description">कृपया रिपोर्टिंग के लिए एक कारण चुनें।</string>
+    <string name="common_designsystem_dialog_password_title">पासवर्ड</string>
+    <string name="common_designsystem_dialog_password_description">कृपया एंट्री पासवर्ड दर्ज करें।</string>
+    <string name="common_designsystem_dialog_password_placeholder">पासवर्ड दर्ज करें</string>
+    <string name="common_designsystem_dialog_system_maintenance_title">सिस्टम रखरखाव सूचना</string>
+    <string name="common_designsystem_dialog_system_maintenance_description">हम वर्तमान में बेहतर सेवा प्रदान करने के लिए सिस्टम रखरखाव कर रहे हैं।\nरखरखाव अवधि के दौरान सेवा अस्थायी रूप से अनुपलब्ध रहेगी। आपके समझदारी के लिए धन्यवाद।</string>
+    <string name="common_designsystem_dialog_expected_completion">अपेक्षित समाप्ति समय</string>
+    <string name="common_designsystem_dialog_exit">बाहर निकलें</string>
+    <string name="common_designsystem_dialog_service_restriction_title">सेवा प्रतिबंध</string>
+    <string name="common_designsystem_dialog_service_restriction_description">हमारे संचालन सिद्धांतों का उल्लंघन करने के कारण आपकी सेवा में पहुँच प्रतिबंधित कर दी गई है।</string>
+    <string name="common_designsystem_dialog_restriction_reason">कारण</string>
+    <string name="common_designsystem_dialog_restriction_period">प्रतिबंध अवधि</string>
+    <string name="common_designsystem_dialog_until">%1$s तक</string>
+    <string name="common_designsystem_dialog_premium_feature_title">प्रीमियम फीचर</string>
+    <string name="common_designsystem_dialog_premium_feature_message">यह फीचर केवल प्रीमियम खातों के लिए उपलब्ध है।</string>
+    <string name="common_designsystem_dialog_go_to_premium">खोजें</string>
+
+    <string name="common_designsystem_tier_unspecified">निर्दिष्ट नहीं किया गया स्तर</string>
+    <string name="common_designsystem_tier_iron_description">आयरन स्तर</string>
+    <string name="common_designsystem_tier_bronze_description">कांस्य स्तर</string>
+    <string name="common_designsystem_tier_silver_description">चाँदी स्तर</string>
+    <string name="common_designsystem_tier_gold_description">सोना स्तर</string>
+    <string name="common_designsystem_tier_platinum_description">प्लैटिनम स्तर</string>
+    <string name="common_designsystem_tier_diamond_description">हीरा स्तर</string>
+    <string name="common_designsystem_tier_master_description">मास्टर स्तर</string>
+    <string name="common_designsystem_tier_legend_description">लेजेंड स्तर</string>
+
+    <string name="common_designsystem_category_all">सभी</string>
+    <string name="common_designsystem_category_quit_smoking">धूम्रपान छोड़ें</string>
+    <string name="common_designsystem_category_quit_drinking">शराब छोड़ें</string>
+    <string name="common_designsystem_category_quit_porn">पोर्नोग्राफी छोड़ें</string>
+    <string name="common_designsystem_category_quit_gaming">गेमिंग छोड़ें</string>
+    <string name="common_designsystem_category_quit_youtube">यूट्यूब छोड़ें</string>
+    <string name="common_designsystem_category_quit_sns">सोशल मीडिया छोड़ें</string>
+    <string name="common_designsystem_category_quit_gluten">ग्लूटेन छोड़ें</string>
+    <string name="common_designsystem_category_quit_gambling">जुआ छोड़ें</string>
+    <string name="common_designsystem_category_quit_drugs">ड्रग्स छोड़ें</string>
+    <string name="common_designsystem_category_quit_caffeine">कैफीन छोड़ें</string>
+    <string name="common_designsystem_category_quit_eating_out">बाहर खाना छोड़ें</string>
+    <string name="common_designsystem_category_quit_shopping">खरीदारी छोड़ें</string>
+    <string name="common_designsystem_category_quit_swearing">गाली देना छोड़ें</string>
+    <string name="common_designsystem_category_quit_smartphone">स्मार्टफोन छोड़ें</string>
+
+    <string name="common_designsystem_notification_challenge_completed">चुनौती सफल</string>
+    <string name="common_designsystem_notification_user_challenge_completed">\"%1$s\" चुनौती सफल रही!</string>
+    <string name="common_designsystem_notification_participant_reset">\"%1$s\" प्रतिभागी रीसेट</string>
+    <string name="common_designsystem_notification_user_reset">\"%1$s\" ने रीसेट किया।</string>
+    <string name="common_designsystem_notification_participant_give_up">\"%1$s\" प्रतिभागी ने हार मान ली</string>
+    <string name="common_designsystem_notification_user_give_up">\"%1$s\" ने हार मान ली।</string>
+    <string name="common_designsystem_notification_challengeboard_post_added">\"%1$s\" चुनौती बोर्ड में नया पोस्ट</string>
+    <string name="common_designsystem_notification_participant_force_remove">\"%1$s\" प्रतिभागी को मजबूरन हटाया गया</string>
+    <string name="common_designsystem_notification_user_force_remove">\"%1$s\" को लंबे समय तक निष्क्रियता के कारण मजबूरन हटा दिया गया।</string>
+    <string name="common_designsystem_notification_challenge_deleted">चुनौती हटाई गई</string>
+    <string name="common_designsystem_notification_challenge_deleted_detail">\"%1$s\" चुनौती को होस्ट द्वारा हटा दिया गया है।</string>
+    <string name="common_designsystem_notification_challenge_started">चुनौती शुरू की गई</string>
+    <string name="common_designsystem_notification_challenge_started_detail">\"%1$s\" चुनौती को होस्ट द्वारा शुरू किया गया है।</string>
+    <string name="common_designsystem_notification_participant_joined">\"%1$s\" प्रतिभागी शामिल हुआ</string>
+    <string name="common_designsystem_notification_participant_joined_detail">\"%1$s\" ने चुनौती में शामिल हो गए।</string>
+    <string name="common_designsystem_notification_participant_left">\"%1$s\" प्रतिभागी बाहर गया</string>
+    <string name="common_designsystem_notification_participant_left_detail">\"%1$s\" चुनौती से बाहर गया।</string>
+    <string name="common_designsystem_notification_user_commented">\"%1$s\" ने टिप्पणी की</string>
+    <string name="common_designsystem_notification_user_commented_detail">टिप्पणी: \"%1$s\"</string>
+    <string name="common_designsystem_notification_user_replied">\"%1$s\" ने एक टिप्पणी का उत्तर दिया</string>
+    <string name="common_designsystem_notification_user_replied_detail">उत्तर: \"%1$s\"</string>
+    <string name="common_designsystem_notification_hidden_title">नई सूचना</string>
+    <string name="common_designsystem_notification_hidden_body">ऐप लॉक सेटिंग के कारण छिपा हुआ</string>
+
+    <string name="common_designsystem_sort_order_latest">नवीनतम</string>
+    <string name="common_designsystem_sort_order_oldest">सबसे पुराना</string>
+    <string name="common_designsystem_sort_order_title">शीर्षक</string>
+    <string name="common_designsystem_sort_order_highest_record">उच्चतम रिकॉर्ड</string>
+    <string name="common_designsystem_sort_order_lowest_record">न्यूनतम रिकॉर्ड</string>
+
+    <string name="common_designsystem_report_reason_commercial_content">व्यावसायिक सामग्री</string>
+    <string name="common_designsystem_report_reason_inappropriate_content">वयस्क या अनुपयुक्त सामग्री</string>
+    <string name="common_designsystem_report_reason_disturbing_behavior">अवरोध उत्पन्न करने वाला व्यवहार</string>
+    <string name="common_designsystem_report_reason_defamation">मानहानि या अपमान</string>
+    <string name="common_designsystem_report_reason_incorrect_info">गलत जानकारी</string>
+
+    <string name="common_designsystem_user_withdrawn">(वापस लिया गया)</string>
+    <string name="common_designsystem_user_deleted">(हटाया गया)</string>
+</resources>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_service_session_expired">आपका सत्र समाप्त हो गया है।\nकृपया फिर से लॉगिन करें।</string>
+    <string name="navigation_service_add_new_challenge">एक नया चुनौती जोड़ें</string>
+    <string name="navigation_service_add_new_community_post">एक नया सामुदायिक पोस्ट जोड़ें</string>
+    <string name="navigation_service_check_network_connection">कृपया अपना नेटवर्क कनेक्शन जांचें।</string>
+    <string name="navigation_service_update">अपडेट करें</string>
+    <string name="navigation_service_update_description">ऐप का एक नया संस्करण उपलब्ध है।\nकृपया प्ले स्टोर के माध्यम से अपडेट करें।</string>
+</resources>

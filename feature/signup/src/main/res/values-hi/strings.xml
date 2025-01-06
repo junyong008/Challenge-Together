@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">साइन अप करें</string>
+    <string name="feature_signup_description">कृपया वह ईमेल और पासवर्ड दर्ज करें जिसका आप लॉगिन के लिए उपयोग करेंगे।\nयह ईमेल बाद में आपके पासवर्ड को रिकवर करने के लिए उपयोग किया जा सकता है।</string>
+    <string name="feature_signup_input_email_place_holder">ईमेल</string>
+    <string name="feature_signup_email_format_indicator">ईमेल मान्य प्रारूप में होना चाहिए</string>
+    <string name="feature_signup_password_length_indicator">पासवर्ड कम से कम %1$d अक्षरों का होना चाहिए</string>
+    <string name="feature_signup_password_number_indicator">पासवर्ड में कम से कम एक नंबर होना चाहिए</string>
+    <string name="feature_signup_input_password_place_holder">पासवर्ड</string>
+    <string name="feature_signup_email_already_registered">यह ईमेल पहले से पंजीकृत है।</string>
+    <string name="feature_signup_error">एक त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="feature_signup_set_nickname_title">अपना खुद का उपनाम सेट करें</string>
+    <string name="feature_signup_set_nickname_description">आपका उपनाम ऐप में अन्य उपयोगकर्ताओं को दिखाई देगा।</string>
+    <string name="feature_signup_smile_image_description">मुस्कान छवि</string>
+    <string name="feature_signup_nickname_place_holder">अपना उपनाम दर्ज करें</string>
+    <string name="feature_signup_start">शुरू करें</string>
+    <string name="feature_signup_nickname_length_indicator">उपनाम %1$d और %2$d अक्षरों के बीच होना चाहिए</string>
+    <string name="feature_signup_nickname_korean_constraint">कोरियाई उपनाम केवल व्यंजन या स्वरों पर आधारित नहीं हो सकते</string>
+    <string name="feature_signup_privacy_policy_agreement">शुरू करें बटन पर क्लिक करके, आप <b>गोपनीयता नीति</b> से सहमत हैं।</string>
+    <string name="feature_signup_privacy_policy">गोपनीयता नीति</string>
+    <string name="feature_signup_nickname_already_taken">यह उपनाम पहले से ही लिया गया है।</string>
+    <string name="feature_signup_check_network_connection">कृपया अपना नेटवर्क कनेक्शन जांचें।</string>
+    <string name="feature_signup_complete">पंजीकरण पूरा हो गया है।</string>
+</resources>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changepassword_title">पासवर्ड बदलें</string>
+    <string name="feature_changepassword_description">कृपया अपने पासवर्ड बनाते समय नीचे दिए गए नियमों का पालन करें।</string>
+    <string name="feature_changepassword_lock_image_description">लॉक आइकन चित्र</string>
+    <string name="feature_changepassword_input_password_place_holder">नया पासवर्ड</string>
+    <string name="feature_changepassword_password_length_indicator">पासवर्ड की लंबाई कम से कम %1$d अक्षर होनी चाहिए</string>
+    <string name="feature_changepassword_password_number_indicator">पासवर्ड में कम से कम एक संख्या होना अनिवार्य है</string>
+    <string name="feature_changepassword_confirm">पुष्टि करें</string>
+    <string name="feature_changepassword_change">बदलें</string>
+    <string name="feature_changepassword_confirm_info">क्या आप अपना पासवर्ड बदलना चाहते हैं?</string>
+    <string name="feature_changepassword_back">पीछे</string>
+    <string name="feature_changepassword_cancel_prompt">क्या आप पासवर्ड परिवर्तन रद्द करना चाहते हैं?</string>
+    <string name="feature_changepassword_success">आपका पासवर्ड बदल दिया गया है।</string>
+    <string name="feature_changepassword_error">एक त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="feature_changepassword_check_network_connection">कृपया अपनी नेटवर्क कनेक्शन की जांच करें।</string>
+</resources>

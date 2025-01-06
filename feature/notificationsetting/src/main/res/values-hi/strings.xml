@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_setting_all">सभी सूचनाएँ</string>
+    <string name="feature_notification_setting_challenge">चुनौती सूचनाएँ</string>
+    <string name="feature_notification_setting_community">समुदाय सूचनाएँ</string>
+    <string name="feature_notification_setting_goal_achieved">लक्ष्य प्राप्ति सूचनाएँ</string>
+    <string name="feature_notification_setting_goal_achieved_detail">जब कोई चुनौती लक्ष्‍य हासिल किया जाए, तब सूचनाएँ भेजें।</string>
+    <string name="feature_notification_setting_waiting_room_participants">वेटिंग रूम प्रतिभागियों की सूचनाएँ</string>
+    <string name="feature_notification_setting_waiting_room_participants_detail">जब प्रतिभागी आपके द्वारा बनाए गए वेटिंग रूम में प्रवेश करते हैं या छोड़ते हैं, तो सूचित करें।</string>
+    <string name="feature_notification_setting_waiting_room_updates">वेटिंग रूम अपडेट सूचनाएँ</string>
+    <string name="feature_notification_setting_waiting_room_updates_detail">जिस वेटिंग रूम में आप हैं, उसके अपडेट्स के बारे में सूचित करें, जैसे कि शुरूआत या हटाना।</string>
+    <string name="feature_notification_setting_challenge_room_progress">चुनौती कक्ष प्रगति सूचनाएँ</string>
+    <string name="feature_notification_setting_challenge_room_progress_detail">जब चुनौती कक्ष में अन्य प्रतिभागी रीसेट या हार मानते हैं, तो सूचित करें।</string>
+    <string name="feature_notification_setting_challenge_board">चुनौती बोर्ड सूचनाएँ</string>
+    <string name="feature_notification_setting_challenge_board_detail">जब आप जिस चुनौती बोर्ड का हिस्सा हैं, उसमें कोई पोस्ट जोड़ी जाती है, तो सूचित करें।</string>
+    <string name="feature_notification_setting_comment">टिप्पणी सूचनाएँ</string>
+    <string name="feature_notification_setting_comment_detail">जब कोई आपके पोस्ट पर टिप्पणी करता है, तो सूचित करें।</string>
+    <string name="feature_notification_setting_reply">उत्तर सूचनाएँ</string>
+    <string name="feature_notification_setting_reply_detail">जब कोई आपके टिप्पणियों का उत्तर देता है, तो सूचित करें।</string>
+    <string name="feature_notification_setting_permission_denied_title">अनुमति अस्वीकृत</string>
+    <string name="feature_notification_setting_permission_denied_description">सूचनाएँ फिलहाल बंद हैं।\nकृपया अपने डिवाइस सेटिंग्स में इन्हें सक्षम करें ताकि आप अपडेट रह सकें।</string>
+    <string name="feature_notification_setting_settings">सेटिंग्स</string>
+</resources>

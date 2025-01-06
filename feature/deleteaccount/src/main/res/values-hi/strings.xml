@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_deleteaccount_title">खाता हटाएं</string>
+    <string name="feature_deleteaccount_warning_title">रुको! कृपया अपना खाता हटाने से पहले निम्नलिखित जानकारी की समीक्षा करें।</string>
+    <string name="feature_deleteaccount_warning_challenges">आपसे संबंधित सभी चुनौती से जुड़ी डेटा हटा दी जाएगी।</string>
+    <string name="feature_deleteaccount_warning_community">समुदाय में की गई पोस्ट और टिप्पणियाँ "हटाए गए सदस्य" के रूप में लेबल की जाएँगी।</string>
+    <string name="feature_deleteaccount_warning_irreversible">सभी डेटा स्थायी रूप से हटा दिया जाएगा और इसे पुनर्प्राप्त नहीं किया जा सकता है।</string>
+    <string name="feature_deleteaccount_info_graphic">खाता हटाने की सूचना ग्राफिक</string>
+    <string name="feature_deleteaccount_delete">हटाएं</string>
+    <string name="feature_deleteaccount_confirmation">क्या आप वास्तव में खाता हटाना चाहते हैं?</string>
+    <string name="feature_deleteaccount_irreversible_notice">एक बार हटाने पर, आपका खाता पुनर्स्थापित नहीं किया जा सकता।</string>
+    <string name="feature_deleteaccount_success">आपका खाता सफलतापूर्वक हटा दिया गया है।</string>
+    <string name="feature_deleteaccount_error">एक त्रुटि आ गई है। कृपया बाद में पुनः प्रयास करें।</string>
+</resources>

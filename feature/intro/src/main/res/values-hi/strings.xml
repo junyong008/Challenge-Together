@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_intro_start">शुरू करें</string>
+    <string name="feature_intro_start_with">के साथ शुरू करें</string>
+    <string name="feature_intro_start_email">ईमेल से शुरू करें</string>
+    <string name="feature_intro_start_guest">अतिथि के रूप में शुरू करें</string>
+    <string name="feature_intro_start_guest_warning">सावधानी</string>
+    <string name="feature_intro_start_guest_warning_detail">अतिथि के रूप में लॉगिन करना और खाते को लिंक न करना यदि उपकरण बदला जाए तो डेटा हानि का कारण बन सकता है।</string>
+    <string name="feature_intro_life_changing_challenges">जीवन को बदलने वाली चुनौतियाँ</string>
+    <string name="feature_intro_features">लॉग रीसेट करें, विजेट्स, कैलेंडर, ग्राफ़, रैंकिंग आदि।\nहम विभिन्न प्रकार की सुविधाएँ प्रदान करते हैं।</string>
+    <string name="feature_intro_challenge_together">साथ में चुनौती दें</string>
+    <string name="feature_intro_challenge_together_detail">वास्तविक समय की रैंकिंग में मुकाबला करें,\nऔर मिलकर चुनौती देकर सफलता का अनुभव करें।</string>
+    <string name="feature_intro_community">समुदाय</string>
+    <string name="feature_intro_community_detail">समुदाय में अपने अनुभव साझा करें,\nऔर अपने पसंदीदा उद्धरणों को बुकमार्क करें ताकि उन्हें संजो सकें।</string>
+    <string name="feature_intro_divider_text">या</string>
+    <string name="feature_intro_kakao_content_description">Kakao के साथ साइन इन करें</string>
+    <string name="feature_intro_google_content_description">Google के साथ साइन इन करें</string>
+    <string name="feature_intro_naver_content_description">Naver के साथ साइन इन करें</string>
+    <string name="feature_intro_login_success">लॉगिन सफल हुआ</string>
+    <string name="feature_intro_unknown_error">एक त्रु´ट हुई है। कृपया थोड़ी देर बाद फिर से प्रयास करें।</string>
+</resources>

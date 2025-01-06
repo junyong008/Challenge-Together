@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeranking_title">रैंकिंग</string>
+    <string name="feature_challengeranking_tip_title">टिप्स</string>
+    <string name="feature_challengeranking_tip_long_absence">7 दिनों तक निष्क्रिय उपयोगकर्ताओं को अन्य प्रतिभागियों द्वारा मजबूरन हटाया जा सकता है।</string>
+    <string name="feature_challengeranking_tip_alone">यदि आप चुनौती में अकेले रहते हैं, तो रैंकिंग गायब हो जाएगी, और चुनौती संपादन उपलब्ध हो जाएंगे।</string>
+    <string name="feature_challengeranking_force_remove_title">मजबूरन हटाना</string>
+    <string name="feature_challengeranking_force_remove_description">निष्क्रिय उपयोगकर्ताओं को मजबूरन हटाया जा सकता है।\nक्या आप इस उपयोगकर्ता को हटाना चाहेंगे?</string>
+    <string name="feature_challengeranking_remove">हटाएं</string>
+    <string name="feature_challengeranking_success">सफलता</string>
+    <string name="feature_challengeranking_first_place_description">रैंकिंग में 1st स्थान का प्रतिनिधित्व करने वाली छवि</string>
+    <string name="feature_challengeranking_second_place_description">रैंकिंग में 2nd स्थान का प्रतिनिधित्व करने वाली छवि</string>
+    <string name="feature_challengeranking_third_place_description">रैंकिंग में 3rd स्थान का प्रतिनिधित्व करने वाली छवि</string>
+    <string name="feature_challengeranking_force_remove_success">उपयोगकर्ता को सफलतापूर्वक हटा दिया गया है।</string>
+    <string name="feature_challengeranking_user_reconnected">उपयोगकर्ता अभी फिर से जुड़ा है।</string>
+    <string name="feature_challengeranking_check_network_connection">कृपया अपना नेटवर्क कनेक्शन जांचें।</string>
+    <string name="feature_challengeranking_force_remove_failed">उपयोगकर्ता को हटाने में विफल। कृपया बाद में फिर से प्रयास करें।</string>
+</resources>

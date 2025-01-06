@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">उपनाम बदलें</string>
+    <string name="feature_changename_description">आप अपना उपनाम सप्ताह में एक बार बदल सकते हैं।</string>
+    <string name="feature_changename_action">बदलें</string>
+    <string name="feature_changenam_confirm_info">क्या आप अपना उपनाम बदलना चाहते हैं?\nआप अपना उपनाम सप्ताह में एक बार बदल सकते हैं।</string>
+    <string name="feature_changename_info_graphic">उपनाम जानकारी ग्राफ़िक</string>
+    <string name="feature_changename_success">आपका उपनाम बदल दिया गया है।</string>
+    <string name="feature_changename_nickname_already_taken">यह उपनाम पहले से ही लिया गया है।</string>
+    <string name="feature_changename_error">एक त्रुटि हुई है। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="feature_changename_check_network_connection">कृपया अपने नेटवर्क कनेक्शन की जांच करें।</string>
+    <string name="feature_changename_length_indicator">उपनाम %1$d से %2$d अक्षरों के बीच होना चाहिए।</string>
+    <string name="feature_changename_korean_constraint">कोरियाई उपनाम केवल व्यंजन या स्वर के रूप में नहीं हो सकते।</string>
+    <string name="feature_changename_duplicate_name">उपनाम वर्तमान वाले के समान है।</string>
+    <string name="feature_changename_next_change_notice">आप इसे %1$s के बाद पुनः बदल सकते हैं।</string>
+</resources>

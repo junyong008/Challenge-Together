@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_findpassword_title">पासवर्ड खोजें</string>
+    <string name="feature_findpassword_description">कृपया अपना पंजीकृत ईमेल पता दर्ज करें।\nआपके द्वारा दर्ज किए गए ईमेल पते पर एक सत्यापन कोड भेजा जाएगा।</string>
+    <string name="feature_findpassword_input_email_place_holder">ईमेल</string>
+    <string name="feature_findpassword_send_verify_code">सत्यापन कोड भेजें</string>
+    <string name="feature_findpassword_invalid_email_format">कृपया सही ईमेल प्रारूप दर्ज करें।</string>
+    <string name="feature_findpassword_unknown_error">एक त्रुटि हुई। कृपया बाद में फिर से प्रयास करें।</string>
+    <string name="feature_findpassword_check_network_connection">कृपया अपने नेटवर्क कनेक्शन की जांच करें।</string>
+    <string name="feature_findpassword_email_not_registered">यह ईमेल पंजीकृत नहीं है।</string>
+    <string name="feature_findpassword_invalid_email">ईमेल पता अमान्य है।</string>
+    <string name="feature_findpassword_code_sent">सत्यापन कोड भेजा गया है।</string>
+    <string name="feature_findpassword_enter_code">सत्यापन कोड दर्ज करें</string>
+    <string name="feature_findpassword_minutes_seconds">%1$d मिनट %2$d सेकंड</string>
+    <string name="feature_findpassword_verification_success">सत्यापन सफल हुआ।</string>
+    <string name="feature_findpassword_code_mismatch">सत्यापन कोड मेल नहीं खाता।</string>
+    <string name="feature_findpassword_timeout">इनपुट का समय समाप्त हो गया है।</string>
+</resources>

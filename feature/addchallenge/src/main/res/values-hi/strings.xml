@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_addchallenge_title_set_mode">चुनौती के प्रकार का चयन करें</string>
+    <string name="feature_addchallenge_description_set_mode">यदि आप मुफ्त मोड के माध्यम से प्रारंभ तिथि चुनते हैं,\nतो यह चुनौती आपके उच्चतम रिकॉर्ड या रैंकिंग पर प्रभाव नहीं डालेगी।</string>
+    <string name="feature_addchallenge_title_set_category">आप किस चुनौती का प्रयास करने जा रहे हैं?</string>
+    <string name="feature_addchallenge_description_set_category">कृपया वह श्रेणी चुनें जो आप चाहते हैं।</string>
+    <string name="feature_addchallenge_title_set_title">चुनौती का विवरण लिखें</string>
+    <string name="feature_addchallenge_description_set_title">चुनौती का विवरण दर्ज करें।\nअपने लक्ष्यों और संकल्पों को लिखने से आपको मदद मिलेगी।</string>
+    <string name="feature_addchallenge_title_set_target_day">चुनौती के लिए लक्ष्य दिन निर्धारित करें</string>
+    <string name="feature_addchallenge_description_set_target_day">निर्धारित करें कि चुनौती कितने दिनों तक चलेगी।\nयदि आप लक्ष्य अवधि के दौरान रीसेट नहीं करते हैं, तो आप सफल होते हैं।</string>
+    <string name="feature_addchallenge_title_set_start_date">चुनौती की प्रारंभ तिथि चुनें</string>
+    <string name="feature_addchallenge_description_set_start_date">चुनौती कब शुरू हुई, इसे चुनें।\nप्रारंभ तिथि भविष्य में नहीं हो सकती।</string>
+    <string name="feature_addchallenge_title_confirm">सब कुछ तैयार है!</string>
+    <string name="feature_addchallenge_description_confirm">चुनौती की सभी तैयारियां पूरी हो गई हैं।\nचुनौती तुरंत शुरू करने के लिए "शुरू करें" बटन पर क्लिक करें।</string>
+    <string name="feature_addchallenge_title_set_together">साथ में</string>
+    <string name="feature_addchallenge_description_set_together">हम एक प्रतीक्षा कक्ष बनाएंगे ताकि अन्य लोग आपकी चुनौती में शामिल हो सकें।</string>
+
+    <string name="feature_addchallenge_mode_challenge">चुनौती मोड</string>
+    <string name="feature_addchallenge_mode_free">मुफ्त मोड</string>
+    <string name="feature_addchallenge_mode_challenge_description">आप अतीत की प्रारंभ तिथि सेट नहीं कर सकते, लेकिन यह आपके रिकॉर्ड और रैंकिंग में गिनती होगी।</string>
+    <string name="feature_addchallenge_mode_free_description">आप अतीत की प्रारंभ तिथि सेट कर सकते हैं, लेकिन यह आपके रिकॉर्ड या रैंकिंग में गिनती नहीं होगी।</string>
+    <string name="feature_addchallenge_title">शीर्षक</string>
+    <string name="feature_addchallenge_title_placeholder">चुनौती का शीर्षक</string>
+    <string name="feature_addchallenge_description_optional">विवरण (वैकल्पिक)</string>
+    <string name="feature_addchallenge_description_placeholder">चुनौती का विवरण</string>
+    <string name="feature_addchallenge_invalid_start_date">प्रारंभ तिथि भविष्य में नहीं हो सकती।</string>
+    <string name="feature_addchallenge_category_card_title">श्रेणी</string>
+    <string name="feature_addchallenge_target_day_card_title">लक्ष्य दिन</string>
+    <string name="feature_addchallenge_target_day_string">%1$d दिन</string>
+    <string name="feature_addchallenge_unlimited">अनलिमिटेड</string>
+    <string name="feature_addchallenge_start_date">प्रारंभ तिथि</string>
+    <string name="feature_addchallenge_together">साथ में</string>
+    <string name="feature_addchallenge_start_immediately">अभी शुरू करें</string>
+    <string name="feature_addchallenge_max_participants">अधिकतम प्रतिभागी</string>
+    <string name="feature_addchallenge_room_password">प्रवेश पासवर्ड</string>
+    <string name="feature_addchallenge_people">लोग</string>
+    <string name="feature_addchallenge_room_password_icon">कमरे का पासवर्ड आइकन</string>
+    <string name="feature_addchallenge_room_password_placeholder">कमरे का पासवर्ड</string>
+    <string name="feature_addchallenge_create_waiting_room">प्रतीक्षा कक्ष बनाएं</string>
+
+    <string name="feature_addchallenge_unknown_error">एक त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="feature_addchallenge_check_network_connection">कृपया अपने नेटवर्क कनेक्शन की जांच करें।</string>
+    <string name="feature_addchallenge_challenge_added">चुनौती जोड़ दी गई है।</string>
+    <string name="feature_addchallenge_waiting_room_created">प्रतीक्षा कक्ष बना दिया गया है।</string>
+
+    <string name="feature_addchallenge_dialog_start">शुरू करें</string>
+    <string name="feature_addchallenge_dialog_start_title">चुनौती शुरू करें</string>
+    <string name="feature_addchallenge_dialog_start_description">क्या आप चुनौती शुरू करना चाहते हैं?</string>
+
+    <string name="feature_addchallenge_dialog_create">बनाएँ</string>
+    <string name="feature_addchallenge_dialog_create_room_title">प्रतीक्षा कक्ष बनाएँ</string>
+    <string name="feature_addchallenge_dialog_create_room_description">क्या आप प्रतीक्षा कक्ष बनाना चाहते हैं?</string>
+</resources>

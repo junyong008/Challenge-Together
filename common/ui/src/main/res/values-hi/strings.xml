@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ui_error_body_title">स्क्रीन लोड करने में विफल</string>
+    <string name="common_ui_error_description">एक त्रुटि हुई है।\nकृपया कुछ समय बाद पुनः प्रयास करें।</string>
+    <string name="common_ui_error_retry">पुनः प्रयास करें</string>
+    <string name="common_ui_started_challenge_card_timer_description">घड़ी का आइकन</string>
+    <string name="common_ui_started_challenge_card_check_description">पूर्ण आइकन</string>
+    <string name="common_ui_waiting_challenge_number">नं. %1$d</string>
+    <string name="common_ui_waiting_challenge_private">[निजी]</string>
+    <string name="common_ui_waiting_challenge_participant_number_format">%1$s / %2$s</string>
+    <string name="common_ui_waiting_challenge_calendar_description">कैलेंडर का आइकन</string>
+    <string name="common_ui_waiting_challenge_goal_days">%1$s दिन</string>
+    <string name="common_ui_waiting_challenge_unlimited">अनलिमिटेड</string>
+    <string name="common_ui_waiting_challenge_icon_of_person">व्यक्ति का आइकन</string>
+    <string name="common_ui_manual_time_warning">सिस्टम का समय मैन्युअल रूप से सेट किया गया है</string>
+    <string name="common_ui_manual_time_warning_icon">घड़ी का आइकन</string>
+    <string name="common_ui_category_list_all">मेरी चुनौती</string>
+    <string name="common_ui_target_day">लक्ष्य दिवस</string>
+    <string name="common_ui_target_day_unlimited">अनलिमिटेड</string>
+    <string name="common_ui_target_day_days">दिन</string>
+</resources>

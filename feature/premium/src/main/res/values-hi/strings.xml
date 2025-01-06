@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_premium_title">प्रीमियम उन्नयन</string>
+    <string name="feature_premium_description">प्रीमियम खाते के साथ विभिन्न लाभों का आनंद लें।\nएक बार का खरीदारी आपके खाते से लाभ को स्थायी रूप से जोड़ती है।</string>
+    <string name="feature_premium_no_ads">सभी विज्ञापनों को स्थायी रूप से हटाएं</string>
+    <string name="feature_premium_unlock_widgets">सभी विगेट सुविधाएँ अनलॉक करें</string>
+    <string name="feature_premium_app_lock">ऐप एक्सेस पासवर्ड विशेषता</string>
+    <string name="feature_premium_active">सक्रिय</string>
+    <string name="feature_premium_invalid_now">जल्द आ रहा है</string>
+    <string name="feature_premium_info_graphic">प्रीमियम जानकारी ग्राफिक</string>
+    <string name="feature_premium_purchase_complete">खरीदारी पूरी हो गई</string>
+    <string name="feature_premium_error_occurred">एक त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।</string>
+</resources>
