@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_applock_title">App-Sperre</string>
+    <string name="feature_applock_password">Passwort</string>
+    <string name="feature_applock_enter_password">Bitte geben Sie Ihr Passwort ein</string>
+    <string name="feature_applock_reenter_password">Bitte geben Sie Ihr Passwort erneut ein</string>
+    <string name="feature_applock_password_mismatch">Passwörter stimmen nicht überein.</string>
+    <string name="feature_applock_password_set_success">Passwort wurde festgelegt.</string>
+    <string name="feature_applock_change_password">Passwort ändern</string>
+    <string name="feature_applock_biometric_authentication">Biometrische Authentifizierung</string>
+    <string name="feature_applock_biometric_cancel">Abbrechen</string>
+    <string name="feature_applock_hide_widget_content">Widget-Inhalt verbergen</string>
+    <string name="feature_applock_hide_notification_content">Benachrichtigungsinhalt verbergen</string>
+    <string name="feature_applock_close">Schließen</string>
+    <string name="feature_applock_backspace">Rücktaste</string>
+</resources>

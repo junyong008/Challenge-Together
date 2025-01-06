@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_setting_all">Alle Benachrichtigungen</string>
+    <string name="feature_notification_setting_challenge">Herausforderungsbenachrichtigungen</string>
+    <string name="feature_notification_setting_community">Gemeinschaftsbenachrichtigungen</string>
+    <string name="feature_notification_setting_goal_achieved">Zielerreichungs-Benachrichtigungen</string>
+    <string name="feature_notification_setting_goal_achieved_detail">Benachrichtigungen senden, wenn ein Ziel bei einer Herausforderung erreicht wird.</string>
+    <string name="feature_notification_setting_waiting_room_participants">Teilnehmer-Benachrichtigungen für Warteraum</string>
+    <string name="feature_notification_setting_waiting_room_participants_detail">Benachrichtigen, wenn Teilnehmer den von Ihnen erstellten Warteraum betreten oder verlassen.</string>
+    <string name="feature_notification_setting_waiting_room_updates">Aktualisierungsbenachrichtigungen für Warteraum</string>
+    <string name="feature_notification_setting_waiting_room_updates_detail">Benachrichtigen über Aktualisierungen eines Warteraums, in dem Sie sich befinden, wie Start oder Löschung.</string>
+    <string name="feature_notification_setting_challenge_room_progress">Herausforderungsraum-Fortschrittsbenachrichtigungen</string>
+    <string name="feature_notification_setting_challenge_room_progress_detail">Benachrichtigen, wenn andere Teilnehmer in einem Herausforderungsraum zurücksetzen oder aufgeben.</string>
+    <string name="feature_notification_setting_challenge_board">Herausforderungstafel-Benachrichtigungen</string>
+    <string name="feature_notification_setting_challenge_board_detail">Benachrichtigen, wenn ein Beitrag zur Herausforderungstafel hinzugefügt wird, an der Sie beteiligt sind.</string>
+    <string name="feature_notification_setting_comment">Kommentarbenachrichtigungen</string>
+    <string name="feature_notification_setting_comment_detail">Benachrichtigen, wenn jemand auf Ihre Beiträge kommentiert.</string>
+    <string name="feature_notification_setting_reply">Antwortbenachrichtigungen</string>
+    <string name="feature_notification_setting_reply_detail">Benachrichtigen, wenn jemand auf Ihre Kommentare antwortet.</string>
+    <string name="feature_notification_setting_permission_denied_title">Berechtigung verweigert</string>
+    <string name="feature_notification_setting_permission_denied_description">Benachrichtigungen sind derzeit deaktiviert.\nBitte aktivieren Sie diese in Ihren Geräteeinstellungen, um auf dem Laufenden zu bleiben.</string>
+    <string name="feature_notification_setting_settings">Einstellungen</string>
+</resources>

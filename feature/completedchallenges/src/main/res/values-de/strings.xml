@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_completechallenges_title">Abgeschlossene Herausforderungen</string>
+    <string name="feature_completechallenges_search">Suchen…</string>
+    <string name="feature_completechallenges_empty_title">Noch keine abgeschlossenen Herausforderungen</string>
+    <string name="feature_completechallenges_empty_description">Sie haben noch keine Herausforderungen abgeschlossen.\nStarten Sie eine neue Herausforderung und sehen Sie hier Ihre Erfolge!</string>
+    <string name="feature_completechallenges_search_empty_title">Keine Herausforderungen gefunden</string>
+    <string name="feature_completechallenges_search_empty_description">Wir konnten keine Herausforderungen finden, die Ihrer Suche entsprechen.\nVersuchen Sie es mit anderen Schlüsselwörtern oder passen Sie Ihre Suchkriterien an!</string>
+</resources>

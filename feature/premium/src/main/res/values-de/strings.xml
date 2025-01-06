@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_premium_title">Premium-Upgrade</string>
+    <string name="feature_premium_description">Genießen Sie verschiedene Vorteile mit einem Premium-Konto.\nEin einmaliger Kauf bindet die Vorteile dauerhaft an Ihr Konto.</string>
+    <string name="feature_premium_no_ads">Alle Anzeigen dauerhaft entfernen</string>
+    <string name="feature_premium_unlock_widgets">Alle Widget-Funktionen freischalten</string>
+    <string name="feature_premium_app_lock">App-Zugriffspassword-Funktion</string>
+    <string name="feature_premium_active">Aktiv</string>
+    <string name="feature_premium_invalid_now">Bald verfügbar</string>
+    <string name="feature_premium_info_graphic">Premium-Informationsgrafik</string>
+    <string name="feature_premium_purchase_complete">Kauf abgeschlossen</string>
+    <string name="feature_premium_error_occurred">Ein Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal.</string>
+</resources>

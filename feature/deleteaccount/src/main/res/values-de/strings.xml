@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_deleteaccount_title">Konto löschen</string>
+    <string name="feature_deleteaccount_warning_title">Warten! Bitte überprüfen Sie Folgendes, bevor Sie Ihr Konto löschen.</string>
+    <string name="feature_deleteaccount_warning_challenges">Alle mit Ihnen verbundenen Herausforderungsdaten werden entfernt.</string>
+    <string name="feature_deleteaccount_warning_community">Beiträge und Kommentare in der Community werden als "Gelöschtes Mitglied" gekennzeichnet.</string>
+    <string name="feature_deleteaccount_warning_irreversible">Alle Daten werden dauerhaft gelöscht und können nicht wiederhergestellt werden.</string>
+    <string name="feature_deleteaccount_info_graphic">Löschen-Informationsgrafik</string>
+    <string name="feature_deleteaccount_delete">Löschen</string>
+    <string name="feature_deleteaccount_confirmation">Konto löschen?</string>
+    <string name="feature_deleteaccount_irreversible_notice">Einmal gelöscht, kann Ihr Konto nicht wiederhergestellt werden.</string>
+    <string name="feature_deleteaccount_success">Ihr Konto wurde erfolgreich gelöscht.</string>
+    <string name="feature_deleteaccount_error">Ein Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal.</string>
+</resources>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changepassword_title">Passwort ändern</string>
+    <string name="feature_changepassword_description">Bitte folgen Sie den untenstehenden Regeln, wenn Sie Ihr Passwort erstellen.</string>
+    <string name="feature_changepassword_lock_image_description">Schlosssymbol-Bild</string>
+    <string name="feature_changepassword_input_password_place_holder">Neues Passwort</string>
+    <string name="feature_changepassword_password_length_indicator">Das Passwort muss mindestens %1$d Zeichen lang sein</string>
+    <string name="feature_changepassword_password_number_indicator">Das Passwort muss mindestens eine Zahl enthalten</string>
+    <string name="feature_changepassword_confirm">Bestätigen</string>
+    <string name="feature_changepassword_change">Ändern</string>
+    <string name="feature_changepassword_confirm_info">Möchten Sie Ihr Passwort ändern?</string>
+    <string name="feature_changepassword_back">Zurück</string>
+    <string name="feature_changepassword_cancel_prompt">Möchten Sie die Passwortänderung abbrechen?</string>
+    <string name="feature_changepassword_success">Ihr Passwort wurde geändert.</string>
+    <string name="feature_changepassword_error">Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.</string>
+    <string name="feature_changepassword_check_network_connection">Bitte überprüfen Sie Ihre Netzwerkverbindung.</string>
+</resources>

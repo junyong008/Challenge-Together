@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_navigation_title">Startseite</string>
+    <string name="feature_home_title">GEMEINSAM HERAUSFORDERN</string>
+    <string name="feature_home_medal_description">Aktuelle Stufe</string>
+    <string name="feature_home_complete_challenge_description">Herausforderungen abschließen</string>
+    <string name="feature_home_notification_description">Benachrichtigungen</string>
+    <string name="feature_home_remain_time_for_next_tier">Verbleibende Zeit bis zur nächsten Stufe: %d Tage</string>
+    <string name="feature_home_current_highest_record">Aktueller Bestwert</string>
+    <string name="feature_home_my_challenges">Meine Herausforderungen</string>
+    <string name="feature_home_joined_challenges">Beigetretene Herausforderungen</string>
+    <string name="feature_home_sort_challenge_content_description">Herausforderung sortieren</string>
+    <string name="feature_home_congratulations">Herzlichen Glückwunsch!</string>
+    <string name="feature_home_challenge_success">%1$s\nSie haben die Herausforderung erfolgreich abgeschlossen.</string>
+    <string name="feature_home_congratulations_image_description">Bild der Gratulation</string>
+    <string name="feature_home_promoted">BEFÖRDERT</string>
+    <string name="feature_home_promoted_description">Sie wurden zur %1$s befördert.</string>
+    <string name="feature_home_promoted_confirm">Bestätigen</string>
+    <string name="feature_home_no_active_challenge_mode">Kein aktiver Herausforderungsmodus</string>
+    <string name="feature_home_highest_tier">Höchste Stufe</string>
+    <string name="feature_home_no_active_challenge">Keine Herausforderungen</string>
+    <string name="feature_home_start_new_challenge_prompt">Tippen Sie auf die Schaltfläche unten rechts, um eine neue Herausforderung zu starten.</string>
+    <string name="feature_home_sort">Sortieren nach</string>
+</resources>

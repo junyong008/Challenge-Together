@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">Registrieren</string>
+    <string name="feature_signup_description">Bitte geben Sie die E-Mail-Adresse und das Passwort ein, das Sie zum Einloggen verwenden werden.\nDie E-Mail kann später zur Wiederherstellung Ihres Passworts verwendet werden.</string>
+    <string name="feature_signup_input_email_place_holder">E-Mail</string>
+    <string name="feature_signup_email_format_indicator">Die E-Mail muss ein gültiges Format haben</string>
+    <string name="feature_signup_password_length_indicator">Das Passwort muss mindestens %1$d Zeichen lang sein</string>
+    <string name="feature_signup_password_number_indicator">Das Passwort muss mindestens eine Zahl enthalten</string>
+    <string name="feature_signup_input_password_place_holder">Passwort</string>
+    <string name="feature_signup_email_already_registered">Diese E-Mail ist bereits registriert.</string>
+    <string name="feature_signup_error">Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.</string>
+    <string name="feature_signup_set_nickname_title">Wählen Sie Ihren eigenen Spitznamen</string>
+    <string name="feature_signup_set_nickname_description">Ihr Spitzname ist für andere Nutzer in der App sichtbar.</string>
+    <string name="feature_signup_smile_image_description">Lächeln Bild</string>
+    <string name="feature_signup_nickname_place_holder">Geben Sie Ihren Spitznamen ein</string>
+    <string name="feature_signup_start">START</string>
+    <string name="feature_signup_nickname_length_indicator">Der Spitzname muss zwischen %1$d und %2$d Zeichen lang sein</string>
+    <string name="feature_signup_nickname_korean_constraint">Koreanische Spitznamen dürfen nicht nur Konsonanten oder Vokale enthalten</string>
+    <string name="feature_signup_privacy_policy_agreement">Durch Klicken auf die Start-Schaltfläche stimmen Sie der <b>Datenschutzrichtlinie</b> zu.</string>
+    <string name="feature_signup_privacy_policy">Datenschutzrichtlinie</string>
+    <string name="feature_signup_nickname_already_taken">Dieser Spitzname ist bereits vergeben.</string>
+    <string name="feature_signup_check_network_connection">Bitte überprüfen Sie Ihre Netzwerkverbindung.</string>
+    <string name="feature_signup_complete">Die Registrierung ist abgeschlossen.</string>
+</resources>

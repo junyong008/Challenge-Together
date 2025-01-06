@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_intro_start">Start</string>
+    <string name="feature_intro_start_with">Starten mit</string>
+    <string name="feature_intro_start_email">E-Mail</string>
+    <string name="feature_intro_start_guest">Gast</string>
+    <string name="feature_intro_start_guest_warning">Vorsicht</string>
+    <string name="feature_intro_start_guest_warning_detail">Wenn Sie sich als Gast anmelden, können Daten verloren gehen, wenn die App gelöscht oder das Gerät gewechselt wird.</string>
+    <string name="feature_intro_life_changing_challenges">Lebensverändernde Herausforderungen</string>
+    <string name="feature_intro_features">Protokolle zurücksetzen, Widgets, Kalender, Grafiken, Rankings usw.\nWir bieten eine Vielzahl von Funktionen an.</string>
+    <string name="feature_intro_challenge_together">Gemeinsam Herausfordern</string>
+    <string name="feature_intro_challenge_together_detail">Konkurrenz in Echtzeit-Rankings,\nund ein Gefühl der Erfüllung erleben, indem Sie gemeinsam herausfordern.</string>
+    <string name="feature_intro_community">Gemeinschaft</string>
+    <string name="feature_intro_community_detail">Teilen Sie Ihre Erfahrungen in der Gemeinschaft\nund speichern Sie Ihre Lieblingszitate durch Lesezeichen.</string>
+    <string name="feature_intro_divider_text">oder</string>
+    <string name="feature_intro_kakao_content_description">Mit Kakao anmelden</string>
+    <string name="feature_intro_google_content_description">Mit Google anmelden</string>
+    <string name="feature_intro_naver_content_description">Mit Naver anmelden</string>
+    <string name="feature_intro_login_success">Anmeldung erfolgreich</string>
+    <string name="feature_intro_unknown_error">Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.</string>
+</resources>
