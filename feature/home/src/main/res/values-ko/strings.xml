@@ -13,7 +13,7 @@
     <string name="feature_home_challenge_success">%1$s\n도전을 성공하셨습니다.</string>
     <string name="feature_home_congratulations_image_description">축하 이미지</string>
     <string name="feature_home_promoted">승급</string>
-    <string name="feature_home_promoted_description">%1$s 등급으로 승급하셨습니다.</string>
+    <string name="feature_home_promoted_description">%1$s으로 승급하셨습니다.</string>
     <string name="feature_home_promoted_confirm">확인</string>
     <string name="feature_home_no_active_challenge_mode">진행 중인 도전 모드 없음</string>
     <string name="feature_home_highest_tier">최상위 등급</string>
