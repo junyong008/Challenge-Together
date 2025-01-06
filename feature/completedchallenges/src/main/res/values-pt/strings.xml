@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_completechallenges_title">Desafios Completos</string>
+    <string name="feature_completechallenges_search">Pesquisar…</string>
+    <string name="feature_completechallenges_empty_title">Ainda Não Há Desafios Completos</string>
+    <string name="feature_completechallenges_empty_description">Você ainda não completou nenhum desafio.\nComece um novo desafio e veja suas realizações aqui!</string>
+    <string name="feature_completechallenges_search_empty_title">Nenhum Desafio Encontrado</string>
+    <string name="feature_completechallenges_search_empty_description">Não conseguimos encontrar nenhum desafio correspondente à sua pesquisa.\nTente diferentes palavras-chave ou ajuste os critérios da sua pesquisa!</string>
+</resources>

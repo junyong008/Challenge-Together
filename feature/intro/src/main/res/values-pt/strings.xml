@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_intro_start">Iniciar</string>
+    <string name="feature_intro_start_with">Iniciar com</string>
+    <string name="feature_intro_start_email">Email</string>
+    <string name="feature_intro_start_guest">Convidado</string>
+    <string name="feature_intro_start_guest_warning">Cuidado</string>
+    <string name="feature_intro_start_guest_warning_detail">Entrar como convidado pode resultar em perda de dados se o aplicativo for excluído ou o dispositivo for trocado.</string>
+    <string name="feature_intro_life_changing_challenges">Desafios Que Mudam a Vida</string>
+    <string name="feature_intro_features">Redefina registros, widgets, calendários, gráficos, classificações, etc.\nOferecemos uma variedade de recursos.</string>
+    <string name="feature_intro_challenge_together">Desafio em Conjunto</string>
+    <string name="feature_intro_challenge_together_detail">Compita em classificações em tempo real,\ne alcance um senso de realização desafiando junto.</string>
+    <string name="feature_intro_community">Comunidade</string>
+    <string name="feature_intro_community_detail">Compartilhe suas experiências na comunidade,\ne marque suas citações favoritas para mantê-las.</string>
+    <string name="feature_intro_divider_text">ou</string>
+    <string name="feature_intro_kakao_content_description">Entrar com Kakao</string>
+    <string name="feature_intro_google_content_description">Entrar com Google</string>
+    <string name="feature_intro_naver_content_description">Entrar com Naver</string>
+    <string name="feature_intro_login_success">Login bem-sucedido</string>
+    <string name="feature_intro_unknown_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
+</resources>

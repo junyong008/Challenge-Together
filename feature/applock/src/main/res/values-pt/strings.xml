@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_applock_title">Bloqueio de Aplicativo</string>
+    <string name="feature_applock_password">Senha</string>
+    <string name="feature_applock_enter_password">Por favor, insira sua senha</string>
+    <string name="feature_applock_reenter_password">Por favor, insira sua senha novamente</string>
+    <string name="feature_applock_password_mismatch">As senhas não coincidem.</string>
+    <string name="feature_applock_password_set_success">Senha foi definida.</string>
+    <string name="feature_applock_change_password">Mudar Senha</string>
+    <string name="feature_applock_biometric_authentication">Autenticação Biométrica</string>
+    <string name="feature_applock_biometric_cancel">Cancelar</string>
+    <string name="feature_applock_hide_widget_content">Ocultar Conteúdo do Widget</string>
+    <string name="feature_applock_hide_notification_content">Ocultar Conteúdo da Notificação</string>
+    <string name="feature_applock_close">Fechar</string>
+    <string name="feature_applock_backspace">Apagar</string>
+</resources>

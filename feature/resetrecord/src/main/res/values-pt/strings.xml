@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">Redefinir Histórico</string>
+    <string name="feature_resetrecord_record">Registro</string>
+    <string name="feature_resetrecord_content">Conteúdo</string>
+    <string name="feature_resetrecord_no_reset_records">Ainda não há registros de redefinição.</string>
+    <string name="feature_resetrecord_encouragement">Continue assim e desafie-se sempre!</string>
+    <string name="feature_resetrecord_day_suffix">D</string>
+</resources>

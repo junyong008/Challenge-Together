@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_addchallenge_title_set_mode">Selecione o tipo de desafio</string>
+    <string name="feature_addchallenge_description_set_mode">Se você escolher a data de início no modo livre,\neste desafio não afetará seus maiores registros ou ranking.</string>
+    <string name="feature_addchallenge_title_set_category">Qual desafio você vai tentar?</string>
+    <string name="feature_addchallenge_description_set_category">Por favor, selecione a categoria que deseja.</string>
+    <string name="feature_addchallenge_title_set_title">Escreva uma descrição do desafio</string>
+    <string name="feature_addchallenge_description_set_title">Insira os detalhes do desafio.\nEscrever seus objetivos e resoluções irá ajudá-lo.</string>
+    <string name="feature_addchallenge_title_set_target_day">Defina o dia alvo para o desafio</string>
+    <string name="feature_addchallenge_description_set_target_day">Defina quantos dias o desafio irá durar.\nSe você não redefinir durante o período alvo, você terá sucesso.</string>
+    <string name="feature_addchallenge_title_set_start_date">Selecione a data de início do desafio</string>
+    <string name="feature_addchallenge_description_set_start_date">Selecione quando o desafio começou.\nA data de início não pode ser no futuro.</string>
+    <string name="feature_addchallenge_title_confirm">Tudo está pronto!</string>
+    <string name="feature_addchallenge_description_confirm">Todas as preparações para o desafio estão completas.\nClique no botão "Iniciar" para começar o desafio imediatamente.</string>
+    <string name="feature_addchallenge_title_set_together">Juntos</string>
+    <string name="feature_addchallenge_description_set_together">Iremos criar uma sala de espera para que outros possam participar do seu desafio.</string>
+
+    <string name="feature_addchallenge_mode_challenge">Modo Desafio</string>
+    <string name="feature_addchallenge_mode_free">Modo Livre</string>
+    <string name="feature_addchallenge_mode_challenge_description">Você não pode definir uma data de início passada, mas ela contará para seu registro e classificação.</string>
+    <string name="feature_addchallenge_mode_free_description">Você pode definir uma data de início passada, mas ela não contará para seu registro ou classificação.</string>
+    <string name="feature_addchallenge_title">Título</string>
+    <string name="feature_addchallenge_title_placeholder">Título do desafio</string>
+    <string name="feature_addchallenge_description_optional">Descrição (Opcional)</string>
+    <string name="feature_addchallenge_description_placeholder">Descrição do desafio</string>
+    <string name="feature_addchallenge_invalid_start_date">A data de início não pode estar no futuro.</string>
+    <string name="feature_addchallenge_category_card_title">Categoria</string>
+    <string name="feature_addchallenge_target_day_card_title">Dia Alvo</string>
+    <string name="feature_addchallenge_target_day_string">%1$d Dias</string>
+    <string name="feature_addchallenge_unlimited">Ilimitado</string>
+    <string name="feature_addchallenge_start_date">Data de Início</string>
+    <string name="feature_addchallenge_together">Juntos</string>
+    <string name="feature_addchallenge_start_immediately">Iniciar Agora</string>
+    <string name="feature_addchallenge_max_participants">Máx Participantes</string>
+    <string name="feature_addchallenge_room_password">Senha de Entrada</string>
+    <string name="feature_addchallenge_people">pessoas</string>
+    <string name="feature_addchallenge_room_password_icon">Ícone da Senha da Sala</string>
+    <string name="feature_addchallenge_room_password_placeholder">Senha da Sala</string>
+    <string name="feature_addchallenge_create_waiting_room">Criar Sala de Espera</string>
+
+    <string name="feature_addchallenge_unknown_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
+    <string name="feature_addchallenge_check_network_connection">Por favor, verifique sua conexão de rede.</string>
+    <string name="feature_addchallenge_challenge_added">Desafio foi adicionado.</string>
+    <string name="feature_addchallenge_waiting_room_created">Sala de espera foi criada.</string>
+
+    <string name="feature_addchallenge_dialog_start">Iniciar</string>
+    <string name="feature_addchallenge_dialog_start_title">Iniciar Desafio</string>
+    <string name="feature_addchallenge_dialog_start_description">Você quer começar o desafio?</string>
+
+    <string name="feature_addchallenge_dialog_create">Criar</string>
+    <string name="feature_addchallenge_dialog_create_room_title">Criar Sala de Espera</string>
+    <string name="feature_addchallenge_dialog_create_room_description">Você quer criar uma sala de espera?</string>
+</resources>

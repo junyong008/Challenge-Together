@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_navigation_title">Início</string>
+    <string name="feature_home_title">DESAFIO JUNTOS</string>
+    <string name="feature_home_medal_description">Nível Atual</string>
+    <string name="feature_home_complete_challenge_description">Desafios Completos</string>
+    <string name="feature_home_notification_description">Notificações</string>
+    <string name="feature_home_remain_time_for_next_tier">Tempo restante para o próximo nível: %d Dias</string>
+    <string name="feature_home_current_highest_record">Melhor Registro Atual</string>
+    <string name="feature_home_my_challenges">Meus Desafios</string>
+    <string name="feature_home_joined_challenges">Desafios Participados</string>
+    <string name="feature_home_sort_challenge_content_description">Ordenar Desafio</string>
+    <string name="feature_home_congratulations">Parabéns!</string>
+    <string name="feature_home_challenge_success">%1$s\nVocê completou com sucesso o desafio.</string>
+    <string name="feature_home_congratulations_image_description">Imagem de Parabéns</string>
+    <string name="feature_home_promoted">PROMOVIDO</string>
+    <string name="feature_home_promoted_description">Você foi promovido para o %1$s.</string>
+    <string name="feature_home_promoted_confirm">Confirmar</string>
+    <string name="feature_home_no_active_challenge_mode">Nenhum modo de desafio ativo</string>
+    <string name="feature_home_highest_tier">Nível Mais Alto</string>
+    <string name="feature_home_no_active_challenge">Nenhum Desafio</string>
+    <string name="feature_home_start_new_challenge_prompt">Toque no botão de adicionar no canto inferior direito para iniciar um novo desafio.</string>
+    <string name="feature_home_sort">Ordenar Por</string>
+</resources>

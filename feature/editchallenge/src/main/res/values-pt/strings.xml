@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_editchallenge_edit">Editar</string>
+    <string name="feature_editchallenge_edit_failed">Falha ao editar. Por favor, tente novamente mais tarde.</string>
+    <string name="feature_editchallenge_edit_successful">Edição bem-sucedida.</string>
+    <string name="feature_editchallenge_edit_category_title">Editar Categoria</string>
+    <string name="feature_editchallenge_edit_category_description">Por favor, selecione a categoria para a qual deseja mudar.</string>
+    <string name="feature_editchallenge_title">Título</string>
+    <string name="feature_editchallenge_title_placeholder">Título do desafio</string>
+    <string name="feature_editchallenge_description_optional">Descrição (Opcional)</string>
+    <string name="feature_editchallenge_description_placeholder">Descrição do desafio</string>
+    <string name="feature_editchallenge_edit_title">Editar a descrição do desafio</string>
+    <string name="feature_editchallenge_edit_description">Indique os detalhes do desafio.\nEscrever suas metas e resoluções irá ajudá-lo.</string>
+    <string name="feature_editchallenge_edit_target_day_title">Editar o dia alvo para o desafio</string>
+    <string name="feature_editchallenge_edit_target_day_description">Defina quantos dias o desafio durará.\nSe não reiniciar durante o período definido, você terá sucesso.</string>
+    <string name="feature_editchallenge_record_exceeded_notice">Registro Excedido</string>
+    <string name="feature_editchallenge_record_exceeded_description">Seu registro atual excedeu %1$s dias.\nO desafio será concluído imediatamente.</string>
+    <string name="feature_editchallenge_complete">Completar</string>
+</resources>
