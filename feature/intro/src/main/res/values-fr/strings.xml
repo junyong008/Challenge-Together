@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_intro_start">Commencer</string>
+    <string name="feature_intro_start_with">Commencer avec</string>
+    <string name="feature_intro_start_email">Email</string>
+    <string name="feature_intro_start_guest">Invité</string>
+    <string name="feature_intro_start_guest_warning">Attention</string>
+    <string name="feature_intro_start_guest_warning_detail">Se connecter en tant qu\'invité peut entraîner une perte de données si l\'application est supprimée ou si l\'appareil est changé.</string>
+    <string name="feature_intro_life_changing_challenges">Défis qui changent la vie</string>
+    <string name="feature_intro_features">Réinitialisation des journaux, widgets, calendriers, graphiques, classements, etc.\nNous offrons une variété de fonctionnalités.</string>
+    <string name="feature_intro_challenge_together">Relèver ensemble</string>
+    <string name="feature_intro_challenge_together_detail">Concurrencer dans les classements en temps réel,\net ressentir un sentiment d\'accomplissement en relevant des défis ensemble.</string>
+    <string name="feature_intro_community">Communauté</string>
+    <string name="feature_intro_community_detail">Partagez vos expériences dans la communauté,\net mettez vos citations préférées en favori pour les conserver.</string>
+    <string name="feature_intro_divider_text">ou</string>
+    <string name="feature_intro_kakao_content_description">Se connecter avec Kakao</string>
+    <string name="feature_intro_google_content_description">Se connecter avec Google</string>
+    <string name="feature_intro_naver_content_description">Se connecter avec Naver</string>
+    <string name="feature_intro_login_success">Connexion réussie</string>
+    <string name="feature_intro_unknown_error">Une erreur est survenue. Veuillez réessayer plus tard.</string>
+</resources>

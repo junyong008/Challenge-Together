@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_waitingchallenge_number">N° %1$d</string>
+    <string name="feature_waitingchallenge_private">[Privé]</string>
+    <string name="feature_waitingchallenge_target_day">Jour Cible</string>
+    <string name="feature_waitingchallenge_target_day_goal_days">%1$s Jours</string>
+    <string name="feature_waitingchallenge_target_day_unlimited">Illimité</string>
+    <string name="feature_waitingchallenge_menu_delete">Supprimer</string>
+    <string name="feature_waitingchallenge_menu_refresh">Rafraîchir</string>
+    <string name="feature_waitingchallenge_menu_share">Partager</string>
+    <string name="feature_waitingchallenge_menu_share_message">Relevons ensemble le défi « %1$s » !\nActuellement, %2$d personnes participent.</string>
+    <string name="feature_waitingchallenge_delete">Supprimer</string>
+    <string name="feature_waitingchallenge_delete_prompt">Voulez-vous supprimer le défi?</string>
+    <string name="feature_waitingchallenge_start">Commencer</string>
+    <string name="feature_waitingchallenge_start_prompt">Voulez-vous commencer le défi?</string>
+    <string name="feature_waitingchallenge_join">Rejoindre</string>
+    <string name="feature_waitingchallenge_leave">Quitter</string>
+    <string name="feature_waitingchallenge_board">Tableau</string>
+    <string name="feature_waitingchallenge_menu">Menu</string>
+    <string name="feature_waitingchallenge_board_description">Partagez vos pensées sur le défi.</string>
+    <string name="feature_waitingchallenge_password_incorrect">Le mot de passe ne correspond pas.</string>
+    <string name="feature_waitingchallenge_not_found">Le défi n\'existe pas.</string>
+    <string name="feature_waitingchallenge_already_started">Le défi a déjà commencé.</string>
+    <string name="feature_waitingchallenge_error">Une erreur s\'est produite. Veuillez réessayer plus tard.</string>
+    <string name="feature_waitingchallenge_check_network_connection">Veuillez vérifier votre connexion réseau.</string>
+    <string name="feature_waitingchallenge_delete_successful">Le défi a été supprimé.</string>
+    <string name="feature_waitingchallenge_start_successful">Le défi a été démarré.</string>
+    <string name="feature_waitingchallenge_participant_full">Le défi est complet.</string>
+    <string name="feature_waitingchallenge_password_copied">Mot de passe copié dans le presse-papiers.</string>
+    <string name="feature_waitingchallenge_created_by">Créé par « %1$s »</string>
+    <string name="feature_waitingchallenge_participants_count">Participants %1$d / %2$d</string>
+</resources>

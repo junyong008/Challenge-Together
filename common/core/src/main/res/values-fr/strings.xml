@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_core_time_day">j</string>
+    <string name="common_core_time_hour">h</string>
+    <string name="common_core_time_minute">m</string>
+    <string name="common_core_time_second">s</string>
+    <string name="common_core_time_seconds_ago">il y a %d secondes</string>
+    <string name="common_core_time_minutes_ago">il y a %d minutes</string>
+    <string name="common_core_time_hours_ago">il y a %d heures</string>
+    <string name="common_core_time_days_ago">il y a %d jours</string>
+</resources>

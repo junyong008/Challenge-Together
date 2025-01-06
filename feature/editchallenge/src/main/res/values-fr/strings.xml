@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_editchallenge_edit">Modifier</string>
+    <string name="feature_editchallenge_edit_failed">Échec de la modification. Veuillez réessayer plus tard.</string>
+    <string name="feature_editchallenge_edit_successful">Modification réussie.</string>
+    <string name="feature_editchallenge_edit_category_title">Modifier la catégorie</string>
+    <string name="feature_editchallenge_edit_category_description">Veuillez sélectionner la catégorie à laquelle vous souhaitez changer.</string>
+    <string name="feature_editchallenge_title">Titre</string>
+    <string name="feature_editchallenge_title_placeholder">Titre du défi</string>
+    <string name="feature_editchallenge_description_optional">Description (Optionnelle)</string>
+    <string name="feature_editchallenge_description_placeholder">Description du défi</string>
+    <string name="feature_editchallenge_edit_title">Modifier la description du défi</string>
+    <string name="feature_editchallenge_edit_description">Entrez les détails du défi.\nÉcrire vos objectifs et résolutions vous aidera.</string>
+    <string name="feature_editchallenge_edit_target_day_title">Modifier le jour cible pour le défi</string>
+    <string name="feature_editchallenge_edit_target_day_description">Définissez combien de jours le défi durera.\nSi vous ne réinitialisez pas pendant la période cible, vous réussissez.</string>
+    <string name="feature_editchallenge_record_exceeded_notice">Avis de dépassement d\'enregistrement</string>
+    <string name="feature_editchallenge_record_exceeded_description">Votre record actuel a dépassé %1$s jours.\nle défi sera immédiatement complété.</string>
+    <string name="feature_editchallenge_complete">Compléter</string>
+</resources>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_applock_title">Verrouillage d\'application</string>
+    <string name="feature_applock_password">Mot de passe</string>
+    <string name="feature_applock_enter_password">Veuillez entrer votre mot de passe</string>
+    <string name="feature_applock_reenter_password">Veuillez entrer votre mot de passe à nouveau</string>
+    <string name="feature_applock_password_mismatch">Les mots de passe ne correspondent pas.</string>
+    <string name="feature_applock_password_set_success">Le mot de passe a été défini.</string>
+    <string name="feature_applock_change_password">Changer de mot de passe</string>
+    <string name="feature_applock_biometric_authentication">Authentification biométrique</string>
+    <string name="feature_applock_biometric_cancel">Annuler</string>
+    <string name="feature_applock_hide_widget_content">Masquer le contenu du widget</string>
+    <string name="feature_applock_hide_notification_content">Masquer le contenu des notifications</string>
+    <string name="feature_applock_close">Fermer</string>
+    <string name="feature_applock_backspace">Retour arrière</string>
+</resources>

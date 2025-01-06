@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_notifications_channel_challenge_name">Notifications de Défis</string>
+    <string name="platform_notifications_channel_community_name">Notifications de la Communauté</string>
+</resources>

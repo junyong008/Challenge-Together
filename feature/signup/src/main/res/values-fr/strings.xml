@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">S\'inscrire</string>
+    <string name="feature_signup_description">Veuillez entrer l\'email et le mot de passe que vous utiliserez pour vous connecter.\nL\'email peut être utilisé plus tard pour récupérer votre mot de passe.</string>
+    <string name="feature_signup_input_email_place_holder">E-mail</string>
+    <string name="feature_signup_email_format_indicator">L\'e-mail doit être au format valide</string>
+    <string name="feature_signup_password_length_indicator">Le mot de passe doit contenir au moins %1$d caractères</string>
+    <string name="feature_signup_password_number_indicator">Le mot de passe doit contenir au moins un chiffre</string>
+    <string name="feature_signup_input_password_place_holder">Mot de passe</string>
+    <string name="feature_signup_email_already_registered">Cet email est déjà enregistré.</string>
+    <string name="feature_signup_error">Une erreur est survenue. Veuillez réessayer plus tard.</string>
+    <string name="feature_signup_set_nickname_title">Choisissez Votre Propre Surnom</string>
+    <string name="feature_signup_set_nickname_description">Votre surnom est visible par les autres utilisateurs de l\'application.</string>
+    <string name="feature_signup_smile_image_description">Image de Sourire</string>
+    <string name="feature_signup_nickname_place_holder">Entrez votre surnom</string>
+    <string name="feature_signup_start">DÉMARRER</string>
+    <string name="feature_signup_nickname_length_indicator">Le surnom doit comporter entre %1$d et %2$d caractères</string>
+    <string name="feature_signup_nickname_korean_constraint">Les surnoms coréens ne peuvent pas contenir uniquement des consonnes ou des voyelles</string>
+    <string name="feature_signup_privacy_policy_agreement">En cliquant sur le bouton démarrer, vous acceptez la <b>politique de confidentialité</b>.</string>
+    <string name="feature_signup_privacy_policy">Politique de Confidentialité</string>
+    <string name="feature_signup_nickname_already_taken">Ce surnom est déjà pris.</string>
+    <string name="feature_signup_check_network_connection">Veuillez vérifier votre connexion réseau.</string>
+    <string name="feature_signup_complete">L\'enregistrement est terminé.</string>
+</resources>

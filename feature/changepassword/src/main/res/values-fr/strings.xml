@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changepassword_title">Changer le mot de passe</string>
+    <string name="feature_changepassword_description">Veuillez suivre les règles ci-dessous lors de la création de votre mot de passe.</string>
+    <string name="feature_changepassword_lock_image_description">Image de l\'icône de verrouillage</string>
+    <string name="feature_changepassword_input_password_place_holder">Nouveau mot de passe</string>
+    <string name="feature_changepassword_password_length_indicator">Le mot de passe doit comporter au moins %1$d caractères</string>
+    <string name="feature_changepassword_password_number_indicator">Le mot de passe doit contenir au moins un chiffre</string>
+    <string name="feature_changepassword_confirm">Confirmer</string>
+    <string name="feature_changepassword_change">Modifier</string>
+    <string name="feature_changepassword_confirm_info">Voulez-vous changer votre mot de passe?</string>
+    <string name="feature_changepassword_back">Retour</string>
+    <string name="feature_changepassword_cancel_prompt">Voulez-vous annuler le changement de mot de passe?</string>
+    <string name="feature_changepassword_success">Votre mot de passe a été changé.</string>
+    <string name="feature_changepassword_error">Une erreur s\'est produite. Veuillez réessayer plus tard.</string>
+    <string name="feature_changepassword_check_network_connection">Veuillez vérifier votre connexion réseau.</string>
+</resources>

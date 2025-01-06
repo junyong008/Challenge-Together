@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_auth_update">Mettre à jour</string>
+    <string name="navigation_auth_update_description">Une nouvelle version de l\'application est disponible.\nVeuillez mettre à jour via le Play Store.</string>
+</resources>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_completechallenges_title">Défis Terminés</string>
+    <string name="feature_completechallenges_search">Rechercher…</string>
+    <string name="feature_completechallenges_empty_title">Aucun Défi Terminé pour l\'instant</string>
+    <string name="feature_completechallenges_empty_description">Vous n\'avez encore terminé aucun défi.\nLancez un nouveau défi et voyez vos réalisations ici !</string>
+    <string name="feature_completechallenges_search_empty_title">Aucun Défi Trouvé</string>
+    <string name="feature_completechallenges_search_empty_description">Nous n\'avons trouvé aucun défi correspondant à votre recherche.\nEssayez d\'autres mots-clés ou ajustez vos critères de recherche !</string>
+</resources>
