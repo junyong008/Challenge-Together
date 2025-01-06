@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_title">通知</string>
+    <string name="feature_notification_more">更多</string>
+    <string name="feature_notification_delete">删除</string>
+    <string name="feature_notification_delete_all">删除全部</string>
+    <string name="feature_notification_setting">设置</string>
+    <string name="feature_notification_empty_title">暂无通知</string>
+    <string name="feature_notification_empty_description">目前没有通知。\n更新和警报将会在此显示!</string>
+    <string name="feature_notification_challenge_category">挑战类别通知</string>
+    <string name="feature_notification_community_category">社区类别通知</string>
+    <string name="feature_notification_delete_success">删除成功。</string>
+    <string name="feature_notification_delete_failed">删除失败。请稍后再试。</string>
+</resources>

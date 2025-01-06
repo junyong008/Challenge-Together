@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_deleteaccount_title">删除账户</string>
+    <string name="feature_deleteaccount_warning_title">等待！删除您的账户前请阅读以下内容。</string>
+    <string name="feature_deleteaccount_warning_challenges">所有与您相关的挑战数据将被移除。</string>
+    <string name="feature_deleteaccount_warning_community">社区中的帖子和评论将被标记为“已删除成员”。</string>
+    <string name="feature_deleteaccount_warning_irreversible">所有数据将被永久删除，无法恢复。</string>
+    <string name="feature_deleteaccount_info_graphic">删除信息图</string>
+    <string name="feature_deleteaccount_delete">删除</string>
+    <string name="feature_deleteaccount_confirmation">删除账户？</string>
+    <string name="feature_deleteaccount_irreversible_notice">账户删除后将无法恢复。</string>
+    <string name="feature_deleteaccount_success">您的账户已成功删除。</string>
+    <string name="feature_deleteaccount_error">发生错误。请稍后再试。</string>
+</resources>

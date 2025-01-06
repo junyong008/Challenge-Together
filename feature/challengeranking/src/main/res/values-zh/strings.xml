@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeranking_title">排名</string>
+    <string name="feature_challengeranking_tip_title">提示</string>
+    <string name="feature_challengeranking_tip_long_absence">非活跃用户超过7天可以被其他参与者强制移除。</string>
+    <string name="feature_challengeranking_tip_alone">如果您在挑战中独自一人，排名将消失，并且可以编辑挑战。</string>
+    <string name="feature_challengeranking_force_remove_title">强制移除</string>
+    <string name="feature_challengeranking_force_remove_description">可以强制移除非活跃用户。\n您想移除此用户吗？</string>
+    <string name="feature_challengeranking_remove">移除</string>
+    <string name="feature_challengeranking_success">成功</string>
+    <string name="feature_challengeranking_first_place_description">代表排名第一的图像</string>
+    <string name="feature_challengeranking_second_place_description">代表排名第二的图像</string>
+    <string name="feature_challengeranking_third_place_description">代表排名第三的图像</string>
+    <string name="feature_challengeranking_force_remove_success">用户已成功移除。</string>
+    <string name="feature_challengeranking_user_reconnected">用户刚刚重新连接。</string>
+    <string name="feature_challengeranking_check_network_connection">请检查您的网络连接。</string>
+    <string name="feature_challengeranking_force_remove_failed">移除用户失败，请稍后再试。</string>
+</resources>

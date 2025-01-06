@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_my_navigation_title">我的</string>
+    <string name="feature_my_medal_description">当前级别</string>
+    <string name="feature_my_no_active_challenge_mode">无活跃的挑战模式</string>
+    <string name="feature_my_highest_tier">最高级别</string>
+    <string name="feature_my_remain_time_for_next_tier">距离下一个级别的剩余时间：%d天</string>
+    <string name="feature_my_best_record">最佳记录</string>
+    <string name="feature_my_attempt_count">尝试次数</string>
+    <string name="feature_my_success_count">成功次数</string>
+    <string name="feature_my_reset_count">重置次数</string>
+    <string name="feature_my_settings">设置</string>
+    <string name="feature_my_account">账户</string>
+    <string name="feature_my_app_info">应用信息</string>
+    <string name="feature_my_notification_settings">通知设置</string>
+    <string name="feature_my_app_lock_settings">应用锁设置</string>
+    <string name="feature_my_account_linking">账户关联</string>
+    <string name="feature_my_account_premium">高级升级</string>
+    <string name="feature_my_linked_with_kakao">已关联Kakao</string>
+    <string name="feature_my_linked_with_google">已关联Google</string>
+    <string name="feature_my_linked_with_naver">已关联Naver</string>
+    <string name="feature_my_linked_with">关联账户</string>
+    <string name="feature_my_nickname_change">更改昵称</string>
+    <string name="feature_my_password_change">更改密码</string>
+    <string name="feature_my_logout">登出</string>
+    <string name="feature_my_logout_confirmation">您确定要登出吗？</string>
+    <string name="feature_my_logout_success">您已成功登出。</string>
+    <string name="feature_my_delete_account">删除账户</string>
+    <string name="feature_my_contact_support">1:1 咨询</string>
+    <string name="feature_my_privacy_policy">隐私政策</string>
+    <string name="feature_my_open_source_license">开源许可证</string>
+    <string name="feature_my_app_version">应用版本</string>
+    <string name="feature_my_email_inquiry_title">挑战一起咨询</string>
+    <string name="feature_my_email_inquiry_content">内容：</string>
+    <string name="feature_my_email_app_not_found">未找到电子邮件应用。</string>
+    <string name="feature_my_email_send_failed">无法发送电子邮件。</string>
+</resources>

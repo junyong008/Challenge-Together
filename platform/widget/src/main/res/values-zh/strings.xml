@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_widget_challenge_list_widget_name">挑战列表</string>
+    <string name="platform_widget_challenge_tall_widget_name">挑战卡</string>
+    <string name="platform_widget_challenge_wide_widget_name">挑战卡</string>
+    <string name="platform_widget_challenge_simple_widget_name">简单挑战卡</string>
+    <string name="platform_widget_no_challenge">没有挑战</string>
+    <string name="platform_widget_no_challenges">没有挑战</string>
+    <string name="platform_widget_no_challenges_description">当前没有可用挑战。\n打开应用程序添加您的第一个挑战并开始您的旅程！</string>
+    <string name="platform_widget_time_d">天</string>
+    <string name="platform_widget_time_day">天</string>
+    <string name="platform_widget_time_hour">小时</string>
+    <string name="platform_widget_progress_description">进度</string>
+    <string name="platform_widget_category_icon_description">类别图标</string>
+    <string name="platform_widget_settings">小部件设置</string>
+    <string name="platform_widget_opacity">不透明度</string>
+    <string name="platform_widget_cancel">取消</string>
+    <string name="platform_widget_confirm">确认</string>
+    <string name="platform_widget_select">选择</string>
+    <string name="platform_widget_hidden_due_to_app_lock">由于应用保护设置而隐藏</string>
+</resources>

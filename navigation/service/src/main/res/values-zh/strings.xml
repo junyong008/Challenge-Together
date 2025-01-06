@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_service_session_expired">您的会话已过期。\n请重新登录。</string>
+    <string name="navigation_service_add_new_challenge">添加新挑战</string>
+    <string name="navigation_service_add_new_community_post">添加新社区帖子</string>
+    <string name="navigation_service_check_network_connection">请检查您的网络连接。</string>
+    <string name="navigation_service_update">更新</string>
+    <string name="navigation_service_update_description">应用程序有新版本可用。\n请通过应用商店进行更新。</string>
+</resources>

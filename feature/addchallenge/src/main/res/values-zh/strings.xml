@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_addchallenge_title_set_mode">选择挑战类型</string>
+    <string name="feature_addchallenge_description_set_mode">如果通过自由模式选择开始日期，\n该挑战将不会影响您的最高记录或排名。</string>
+    <string name="feature_addchallenge_title_set_category">您准备尝试什么挑战？</string>
+    <string name="feature_addchallenge_description_set_category">请选择您想要的类别。</string>
+    <string name="feature_addchallenge_title_set_title">描述这个挑战</string>
+    <string name="feature_addchallenge_description_set_title">输入挑战的详细信息。\n写下您的目标和决心将对您有所帮助。</string>
+    <string name="feature_addchallenge_title_set_target_day">设置挑战的目标天数</string>
+    <string name="feature_addchallenge_description_set_target_day">设定挑战的持续天数。\n如果在目标期间没有重置，您就成功了。</string>
+    <string name="feature_addchallenge_title_set_start_date">选择挑战的开始日期</string>
+    <string name="feature_addchallenge_description_set_start_date">选择挑战何时开始。\n开始日期不能是未来的日期。</string>
+    <string name="feature_addchallenge_title_confirm">一切准备就绪！</string>
+    <string name="feature_addchallenge_description_confirm">挑战的所有准备工作已完成。\n点击“开始”按钮立即开始挑战。</string>
+    <string name="feature_addchallenge_title_set_together">一起</string>
+    <string name="feature_addchallenge_description_set_together">我们将创建一个等待室，让其他人可以加入您的挑战。</string>
+
+    <string name="feature_addchallenge_mode_challenge">挑战模式</string>
+    <string name="feature_addchallenge_mode_free">自由模式</string>
+    <string name="feature_addchallenge_mode_challenge_description">您不能设置过去的开始日期，但它会计入您的记录和排名。</string>
+    <string name="feature_addchallenge_mode_free_description">您可以设置过去的开始日期，但它不会计入您的记录或排名。</string>
+    <string name="feature_addchallenge_title">标题</string>
+    <string name="feature_addchallenge_title_placeholder">挑战标题</string>
+    <string name="feature_addchallenge_description_optional">描述（可选）</string>
+    <string name="feature_addchallenge_description_placeholder">挑战描述</string>
+    <string name="feature_addchallenge_invalid_start_date">开始日期不能是未来的日期。</string>
+    <string name="feature_addchallenge_category_card_title">类别</string>
+    <string name="feature_addchallenge_target_day_card_title">目标日</string>
+    <string name="feature_addchallenge_target_day_string">%1$d 天</string>
+    <string name="feature_addchallenge_unlimited">无限制</string>
+    <string name="feature_addchallenge_start_date">开始日期</string>
+    <string name="feature_addchallenge_together">一起</string>
+    <string name="feature_addchallenge_start_immediately">立即开始</string>
+    <string name="feature_addchallenge_max_participants">最大参与人数</string>
+    <string name="feature_addchallenge_room_password">进入密码</string>
+    <string name="feature_addchallenge_people">人</string>
+    <string name="feature_addchallenge_room_password_icon">房间密码图标</string>
+    <string name="feature_addchallenge_room_password_placeholder">房间密码</string>
+    <string name="feature_addchallenge_create_waiting_room">创建等待室</string>
+
+    <string name="feature_addchallenge_unknown_error">发生错误。请稍后再试。</string>
+    <string name="feature_addchallenge_check_network_connection">请检查您的网络连接。</string>
+    <string name="feature_addchallenge_challenge_added">挑战已被添加。</string>
+    <string name="feature_addchallenge_waiting_room_created">等待室已创建。</string>
+
+    <string name="feature_addchallenge_dialog_start">开始</string>
+    <string name="feature_addchallenge_dialog_start_title">开始挑战</string>
+    <string name="feature_addchallenge_dialog_start_description">您想开始挑战吗？</string>
+
+    <string name="feature_addchallenge_dialog_create">创建</string>
+    <string name="feature_addchallenge_dialog_create_room_title">创建等待室</string>
+    <string name="feature_addchallenge_dialog_create_room_description">您想创建一个等待室吗？</string>
+</resources>

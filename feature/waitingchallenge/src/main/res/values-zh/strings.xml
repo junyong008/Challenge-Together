@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_waitingchallenge_number">编号 %1$d</string>
+    <string name="feature_waitingchallenge_private">[私人]</string>
+    <string name="feature_waitingchallenge_target_day">目标日</string>
+    <string name="feature_waitingchallenge_target_day_goal_days">%1$s 天</string>
+    <string name="feature_waitingchallenge_target_day_unlimited">无限制</string>
+    <string name="feature_waitingchallenge_menu_delete">删除</string>
+    <string name="feature_waitingchallenge_menu_refresh">刷新</string>
+    <string name="feature_waitingchallenge_menu_share">分享</string>
+    <string name="feature_waitingchallenge_menu_share_message">让我们一起挑战“%1$s”！\n目前已有 %2$d 人参与。</string>
+    <string name="feature_waitingchallenge_delete">删除</string>
+    <string name="feature_waitingchallenge_delete_prompt">您想删除这个挑战吗？</string>
+    <string name="feature_waitingchallenge_start">开始</string>
+    <string name="feature_waitingchallenge_start_prompt">您想开始这个挑战吗？</string>
+    <string name="feature_waitingchallenge_join">加入</string>
+    <string name="feature_waitingchallenge_leave">离开</string>
+    <string name="feature_waitingchallenge_board">公告板</string>
+    <string name="feature_waitingchallenge_menu">菜单</string>
+    <string name="feature_waitingchallenge_board_description">分享您对挑战的想法。</string>
+    <string name="feature_waitingchallenge_password_incorrect">密码不匹配。</string>
+    <string name="feature_waitingchallenge_not_found">该挑战不存在。</string>
+    <string name="feature_waitingchallenge_already_started">该挑战已开始。</string>
+    <string name="feature_waitingchallenge_error">发生错误，请稍后再试。</string>
+    <string name="feature_waitingchallenge_check_network_connection">请检查您的网络连接。</string>
+    <string name="feature_waitingchallenge_delete_successful">挑战已删除。</string>
+    <string name="feature_waitingchallenge_start_successful">挑战已开始。</string>
+    <string name="feature_waitingchallenge_participant_full">挑战已满。</string>
+    <string name="feature_waitingchallenge_password_copied">密码已复制到剪贴板。</string>
+    <string name="feature_waitingchallenge_created_by">由“%1$s”创建</string>
+    <string name="feature_waitingchallenge_participants_count">参与者 %1$d / %2$d</string>
+</resources>

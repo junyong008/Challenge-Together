@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_intro_start">开始</string>
+    <string name="feature_intro_start_with">开始于</string>
+    <string name="feature_intro_start_email">通过电子邮件开始</string>
+    <string name="feature_intro_start_guest">通过游客身份开始</string>
+    <string name="feature_intro_start_guest_warning">注意</string>
+    <string name="feature_intro_start_guest_warning_detail">以游客身份登录可能会导致数据丢失，尤其是当应用被删除或设备被更改时。</string>
+    <string name="feature_intro_life_changing_challenges">改变人生的挑战</string>
+    <string name="feature_intro_features">重置记录、部件、日历、图表、排名等。\n我们提供多种功能。</string>
+    <string name="feature_intro_challenge_together">一起挑战</string>
+    <string name="feature_intro_challenge_together_detail">在实时排名中竞争，\n并通过一起挑战获得成就感。</string>
+    <string name="feature_intro_community">社区</string>
+    <string name="feature_intro_community_detail">在社区中分享你的经验，\n并收藏你喜欢的语录以保存。</string>
+    <string name="feature_intro_divider_text">或</string>
+    <string name="feature_intro_kakao_content_description">通过Kakao登录</string>
+    <string name="feature_intro_google_content_description">通过Google登录</string>
+    <string name="feature_intro_naver_content_description">通过Naver登录</string>
+    <string name="feature_intro_login_success">登录成功</string>
+    <string name="feature_intro_unknown_error">发生错误。请稍后再试。</string>
+</resources>

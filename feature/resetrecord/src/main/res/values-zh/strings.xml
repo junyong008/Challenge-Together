@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">重置历史</string>
+    <string name="feature_resetrecord_record">记录</string>
+    <string name="feature_resetrecord_content">内容</string>
+    <string name="feature_resetrecord_no_reset_records">暂无重置记录。</string>
+    <string name="feature_resetrecord_encouragement">继续努力，挑战自我！</string>
+    <string name="feature_resetrecord_day_suffix">天</string>
+</resources>

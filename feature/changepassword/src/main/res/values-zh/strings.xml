@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changepassword_title">更改密码</string>
+    <string name="feature_changepassword_description">创建密码时，请遵循以下规则。</string>
+    <string name="feature_changepassword_lock_image_description">锁图标图像</string>
+    <string name="feature_changepassword_input_password_place_holder">新密码</string>
+    <string name="feature_changepassword_password_length_indicator">密码必须至少 %1$d 个字符</string>
+    <string name="feature_changepassword_password_number_indicator">密码必须包含至少一个数字</string>
+    <string name="feature_changepassword_confirm">确认</string>
+    <string name="feature_changepassword_change">更改</string>
+    <string name="feature_changepassword_confirm_info">您要更改密码吗？</string>
+    <string name="feature_changepassword_back">返回</string>
+    <string name="feature_changepassword_cancel_prompt">您要取消更改密码吗？</string>
+    <string name="feature_changepassword_success">您的密码已更改。</string>
+    <string name="feature_changepassword_error">发生错误。请稍后再试。</string>
+    <string name="feature_changepassword_check_network_connection">请检查您的网络连接。</string>
+</resources>
