@@ -4,7 +4,7 @@
     <string name="feature_waitingchallenge_private">[Privado]</string>
     <string name="feature_waitingchallenge_target_day">Día objetivo</string>
     <string name="feature_waitingchallenge_target_day_goal_days">%1$s Días</string>
-    <string name="feature_waitingchallenge_target_day_unlimited">Sin límite</string>
+    <string name="feature_waitingchallenge_target_day_unlimited">Ilimitado</string>
     <string name="feature_waitingchallenge_menu_delete">Eliminar</string>
     <string name="feature_waitingchallenge_menu_refresh">Actualizar</string>
     <string name="feature_waitingchallenge_menu_share">Compartir</string>

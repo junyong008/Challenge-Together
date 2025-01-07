@@ -4,7 +4,7 @@
     <string name="feature_waitingchallenge_private">[गोपनीय]</string>
     <string name="feature_waitingchallenge_target_day">लक्ष्य दिन</string>
     <string name="feature_waitingchallenge_target_day_goal_days">%1$s दिन</string>
-    <string name="feature_waitingchallenge_target_day_unlimited">असीमित</string>
+    <string name="feature_waitingchallenge_target_day_unlimited">अनलिमिटेड</string>
     <string name="feature_waitingchallenge_menu_delete">हटाएँ</string>
     <string name="feature_waitingchallenge_menu_refresh">रेफ्रेश करें</string>
     <string name="feature_waitingchallenge_menu_share">साझा करें</string>

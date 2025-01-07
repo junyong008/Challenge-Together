@@ -27,7 +27,7 @@
     <string name="feature_addchallenge_category_card_title">类别</string>
     <string name="feature_addchallenge_target_day_card_title">目标日</string>
     <string name="feature_addchallenge_target_day_string">%1$d 天</string>
-    <string name="feature_addchallenge_unlimited">无限制</string>
+    <string name="feature_addchallenge_unlimited">无限</string>
     <string name="feature_addchallenge_start_date">开始日期</string>
     <string name="feature_addchallenge_together">一起</string>
     <string name="feature_addchallenge_start_immediately">立即开始</string>
