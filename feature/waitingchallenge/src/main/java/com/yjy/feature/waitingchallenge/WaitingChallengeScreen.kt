@@ -687,6 +687,12 @@ private fun MenuButton(
     }
 }
 
+private val QUOTE_PAIRS = listOf(
+    Pair("\"", "\""),
+    Pair("「", "」"),
+    Pair("«", "»"),
+)
+
 @Composable
 private fun AuthorSection(
     author: User,
@@ -696,15 +702,28 @@ private fun AuthorSection(
     val authorText = buildAnnotatedString {
         val fullText = stringResource(R.string.feature_waitingchallenge_created_by)
         val formattedText = fullText.format(authorName)
-        val startQuoteIndex = formattedText.indexOf("\"")
-        val endQuoteIndex = formattedText.lastIndexOf("\"") + 1
+
+        var startQuoteIndex = -1
+        var endQuoteIndex = -1
+
+        for (pair in QUOTE_PAIRS) {
+            val start = formattedText.indexOf(pair.first)
+            val end = formattedText.lastIndexOf(pair.second)
+            if (start >= 0 && end >= 0) {
+                startQuoteIndex = start
+                endQuoteIndex = end + pair.second.length
+                break
+            }
+        }
 
         append(formattedText)
-        addStyle(
-            style = SpanStyle(fontWeight = FontWeight.Bold),
-            start = startQuoteIndex,
-            end = endQuoteIndex,
-        )
+        if (startQuoteIndex in 0..<endQuoteIndex) {
+            addStyle(
+                style = SpanStyle(fontWeight = FontWeight.Bold),
+                start = startQuoteIndex,
+                end = endQuoteIndex,
+            )
+        }
     }
 
     Row(
