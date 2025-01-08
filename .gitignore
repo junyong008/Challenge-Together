@@ -8,4 +8,11 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Secrets Properties
 secrets.defaults.properties
+
+# Keystore files
+keystore.properties
+/release
+*.jks
