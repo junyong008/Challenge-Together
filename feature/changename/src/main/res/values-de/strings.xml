@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">Spitznamen ändern</string>
+    <string name="feature_changename_description">Sie können Ihren Spitznamen einmal pro Woche ändern.</string>
+    <string name="feature_changename_action">Ändern</string>
+    <string name="feature_changenam_confirm_info">Möchten Sie Ihren Spitznamen ändern?\nSie können Ihren Spitznamen einmal pro Woche ändern.</string>
+    <string name="feature_changename_info_graphic">Grafikinformation zum Spitznamen</string>
+    <string name="feature_changename_success">Ihr Spitzname wurde geändert.</string>
+    <string name="feature_changename_nickname_already_taken">Dieser Spitzname ist bereits vergeben.</string>
+    <string name="feature_changename_error">Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.</string>
+    <string name="feature_changename_check_network_connection">Bitte überprüfen Sie Ihre Netzwerkverbindung.</string>
+    <string name="feature_changename_length_indicator">Der Spitzname muss zwischen %1$d und %2$d Zeichen lang sein</string>
+    <string name="feature_changename_korean_constraint">Koreanische Spitznamen dürfen nicht nur aus Konsonanten oder Vokalen bestehen</string>
+    <string name="feature_changename_duplicate_name">Der Spitzname ist identisch mit dem aktuellen</string>
+    <string name="feature_changename_next_change_notice">Sie können ihn nach %1$s erneut ändern</string>
+</resources>

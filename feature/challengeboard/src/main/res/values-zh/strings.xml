@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">公告板</string>
+    <string name="feature_challengeboard_content_placeholder">输入内容…</string>
+    <string name="feature_challengeboard_send">发送</string>
+    <string name="feature_challengeboard_no_posts_title">暂时没有帖子</string>
+    <string name="feature_challengeboard_no_posts_description">留下关于您挑战的记录或笔记。</string>
+    <string name="feature_challengeboard_scroll_to_bottom">滚动到底部</string>
+    <string name="feature_challengeboard_menu_copy">复制</string>
+    <string name="feature_challengeboard_menu_report">举报</string>
+    <string name="feature_challengeboard_menu_delete">删除</string>
+    <string name="feature_challengeboard_delete_success">删除成功。</string>
+    <string name="feature_challengeboard_delete_failed">删除失败。请稍后再试。</string>
+    <string name="feature_challengeboard_report_success">举报成功。</string>
+    <string name="feature_challengeboard_report_failed">举报失败。请稍后再试。</string>
+    <string name="feature_challengeboard_report_already_reported">此帖子已被举报。</string>
+    <string name="feature_challengeboard_toggle_notification">切换通知</string>
+    <string name="feature_challengeboard_notification_enabled">通知已开启。</string>
+    <string name="feature_challengeboard_notification_disabled">通知已关闭。</string>
+</resources>

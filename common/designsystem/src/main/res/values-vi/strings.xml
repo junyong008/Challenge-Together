@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_designsystem_app_bar_back">Trở lại</string>
+    <string name="common_designsystem_app_bar_continue">Tiếp tục</string>
+    <string name="common_designsystem_clear_content_description">Xóa nội dung</string>
+    <string name="common_designsystem_input_password_show_content_description">Hiện mật khẩu</string>
+    <string name="common_designsystem_input_password_hide_content_description">Ẩn mật khẩu</string>
+    <string name="common_designsystem_dialog_confirm">Xác nhận</string>
+    <string name="common_designsystem_dialog_cancel">Hủy</string>
+    <string name="common_designsystem_dialog_year_month_picker_title">Chọn năm và tháng</string>
+    <string name="common_designsystem_dialog_year_month_picker_description">Vui lòng nhập năm và tháng bạn muốn điều hướng đến</string>
+    <string name="common_designsystem_dialog_enter_year">Năm</string>
+    <string name="common_designsystem_dialog_enter_month">Tháng</string>
+    <string name="common_designsystem_bottom_sheet_close">Đóng</string>
+    <string name="common_designsystem_calendar_next_month">Tháng sau</string>
+    <string name="common_designsystem_calendar_previous_month">Tháng trước</string>
+    <string name="common_designsystem_calendar_expand_week_mode">Mở rộng chế độ tuần</string>
+    <string name="common_designsystem_calendar_year_month">%2$s %1$d</string>
+    <string name="common_designsystem_time_picker_increase_hour">Tăng giờ</string>
+    <string name="common_designsystem_time_picker_increase_minute">Tăng phút</string>
+    <string name="common_designsystem_time_picker_decrease_hour">Giảm giờ</string>
+    <string name="common_designsystem_time_picker_decrease_minute">Giảm phút</string>
+    <string name="common_designsystem_time_picker_am">AM</string>
+    <string name="common_designsystem_time_picker_pm">PM</string>
+    <string name="common_designsystem_dialog_report_title">Báo cáo</string>
+    <string name="common_designsystem_dialog_report_description">Vui lòng chọn lý do báo cáo.</string>
+    <string name="common_designsystem_dialog_password_title">Mật khẩu</string>
+    <string name="common_designsystem_dialog_password_description">Vui lòng nhập mật khẩu vào.</string>
+    <string name="common_designsystem_dialog_password_placeholder">Nhập mật khẩu</string>
+    <string name="common_designsystem_dialog_system_maintenance_title">Thông báo bảo trì hệ thống</string>
+    <string name="common_designsystem_dialog_system_maintenance_description">Chúng tôi đang tiến hành bảo trì hệ thống để cung cấp dịch vụ tốt hơn.\nDịch vụ sẽ tạm thời không hoạt động trong thời gian bảo trì. Cảm ơn sự thông cảm của bạn.</string>
+    <string name="common_designsystem_dialog_expected_completion">Thời gian hoàn thành dự kiến</string>
+    <string name="common_designsystem_dialog_exit">Thoát</string>
+    <string name="common_designsystem_dialog_service_restriction_title">Hạn chế dịch vụ</string>
+    <string name="common_designsystem_dialog_service_restriction_description">Quyền truy cập của bạn vào dịch vụ đã bị hạn chế do vi phạm các nguyên tắc hoạt động của chúng tôi.</string>
+    <string name="common_designsystem_dialog_restriction_reason">Lý do</string>
+    <string name="common_designsystem_dialog_restriction_period">Thời hạn hạn chế</string>
+    <string name="common_designsystem_dialog_until">Đến %1$s</string>
+    <string name="common_designsystem_dialog_premium_feature_title">Tính năng cao cấp</string>
+    <string name="common_designsystem_dialog_premium_feature_message">Tính năng này chỉ có sẵn cho tài khoản cao cấp.</string>
+    <string name="common_designsystem_dialog_go_to_premium">Khám phá</string>
+
+    <string name="common_designsystem_tier_unspecified">hạng không xác định</string>
+    <string name="common_designsystem_tier_iron_description">hạng sắt</string>
+    <string name="common_designsystem_tier_bronze_description">hạng đồng</string>
+    <string name="common_designsystem_tier_silver_description">hạng bạc</string>
+    <string name="common_designsystem_tier_gold_description">hạng vàng</string>
+    <string name="common_designsystem_tier_platinum_description">hạng bạch kim</string>
+    <string name="common_designsystem_tier_diamond_description">hạng kim cương</string>
+    <string name="common_designsystem_tier_master_description">hạng cao cấp</string>
+    <string name="common_designsystem_tier_legend_description">hạng huyền thoại</string>
+
+    <string name="common_designsystem_category_all">Tất cả</string>
+    <string name="common_designsystem_category_quit_smoking">Bỏ hút thuốc</string>
+    <string name="common_designsystem_category_quit_drinking">Bỏ rượu</string>
+    <string name="common_designsystem_category_quit_porn">Bỏ khiêu dâm</string>
+    <string name="common_designsystem_category_quit_gaming">Bỏ chơi game</string>
+    <string name="common_designsystem_category_quit_youtube">Bỏ YouTube</string>
+    <string name="common_designsystem_category_quit_sns">Bỏ mạng xã hội</string>
+    <string name="common_designsystem_category_quit_gluten">Bỏ gluten</string>
+    <string name="common_designsystem_category_quit_gambling">Bỏ cờ bạc</string>
+    <string name="common_designsystem_category_quit_drugs">Bỏ thuốc</string>
+    <string name="common_designsystem_category_quit_caffeine">Bỏ caffeine</string>
+    <string name="common_designsystem_category_quit_eating_out">Bỏ ăn ngoài</string>
+    <string name="common_designsystem_category_quit_shopping">Bỏ mua sắm</string>
+    <string name="common_designsystem_category_quit_swearing">Bỏ chửi thề</string>
+    <string name="common_designsystem_category_quit_smartphone">Bỏ dùng smartphone</string>
+
+    <string name="common_designsystem_notification_challenge_completed">Hoàn thành thử thách</string>
+    <string name="common_designsystem_notification_user_challenge_completed">Đã hoàn thành thử thách \"%1$s\"!</string>
+    <string name="common_designsystem_notification_participant_reset">\"%1$s\" người tham gia đã đặt lại</string>
+    <string name="common_designsystem_notification_user_reset">\"%1$s\" đã đặt lại.</string>
+    <string name="common_designsystem_notification_participant_give_up">\"%1$s\" người tham gia đã bỏ cuộc</string>
+    <string name="common_designsystem_notification_user_give_up">\"%1$s\" đã bỏ cuộc.</string>
+    <string name="common_designsystem_notification_challengeboard_post_added">Bài viết mới trong bảng thử thách \"%1$s\"</string>
+    <string name="common_designsystem_notification_participant_force_remove">\"%1$s\" người tham gia bị buộc ra ngoài</string>
+    <string name="common_designsystem_notification_user_force_remove">\"%1$s\" đã bị loại bỏ khỏi hệ thống do không hoạt động trong thời gian dài.</string>
+    <string name="common_designsystem_notification_challenge_deleted">Thử thách đã bị xóa</string>
+    <string name="common_designsystem_notification_challenge_deleted_detail">Thử thách \"%1$s\" đã bị chủ xóa.</string>
+    <string name="common_designsystem_notification_challenge_started">Thử thách bắt đầu</string>
+    <string name="common_designsystem_notification_challenge_started_detail">Thử thách \"%1$s\" đã được chủ bắt đầu.</string>
+    <string name="common_designsystem_notification_participant_joined">\"%1$s\" người tham gia đã tham gia</string>
+    <string name="common_designsystem_notification_participant_joined_detail">\"%1$s\" đã tham gia thử thách.</string>
+    <string name="common_designsystem_notification_participant_left">\"%1$s\" người tham gia đã rời đi</string>
+    <string name="common_designsystem_notification_participant_left_detail">\"%1$s\" đã rời khỏi thử thách.</string>
+    <string name="common_designsystem_notification_user_commented">\"%1$s\" đã bình luận</string>
+    <string name="common_designsystem_notification_user_commented_detail">Bình luận: \"%1$s\"</string>
+    <string name="common_designsystem_notification_user_replied">\"%1$s\" đã trả lời một bình luận</string>
+    <string name="common_designsystem_notification_user_replied_detail">Trả lời: \"%1$s\"</string>
+    <string name="common_designsystem_notification_hidden_title">Thông báo mới</string>
+    <string name="common_designsystem_notification_hidden_body">Đã ẩn do cài đặt Khóa ứng dụng</string>
+
+    <string name="common_designsystem_sort_order_latest">Mới nhất</string>
+    <string name="common_designsystem_sort_order_oldest">Cũ nhất</string>
+    <string name="common_designsystem_sort_order_title">Tiêu đề</string>
+    <string name="common_designsystem_sort_order_highest_record">Kỷ lục cao nhất</string>
+    <string name="common_designsystem_sort_order_lowest_record">Kỷ lục thấp nhất</string>
+
+    <string name="common_designsystem_report_reason_commercial_content">Nội dung thương mại</string>
+    <string name="common_designsystem_report_reason_inappropriate_content">Nội dung người lớn hoặc không phù hợp</string>
+    <string name="common_designsystem_report_reason_disturbing_behavior">Hành vi gây rối</string>
+    <string name="common_designsystem_report_reason_defamation">Vu khống hoặc bôi nhọ danh tiếng</string>
+    <string name="common_designsystem_report_reason_incorrect_info">Thông tin sai lệch</string>
+
+    <string name="common_designsystem_user_withdrawn">(Đã rút lui)</string>
+    <string name="common_designsystem_user_deleted">(Đã xóa)</string>
+</resources>

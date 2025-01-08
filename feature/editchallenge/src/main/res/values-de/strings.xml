@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_editchallenge_edit">Bearbeiten</string>
+    <string name="feature_editchallenge_edit_failed">Bearbeitung fehlgeschlagen. Bitte versuchen Sie es später noch einmal.</string>
+    <string name="feature_editchallenge_edit_successful">Bearbeitung erfolgreich.</string>
+    <string name="feature_editchallenge_edit_category_title">Kategorie bearbeiten</string>
+    <string name="feature_editchallenge_edit_category_description">Bitte wählen Sie die Kategorie aus, die Sie ändern möchten.</string>
+    <string name="feature_editchallenge_title">Titel</string>
+    <string name="feature_editchallenge_title_placeholder">Herausforderungstitel</string>
+    <string name="feature_editchallenge_description_optional">Beschreibung (Optional)</string>
+    <string name="feature_editchallenge_description_placeholder">Herausforderungsbeschreibung</string>
+    <string name="feature_editchallenge_edit_title">Eine Beschreibung der Herausforderung bearbeiten</string>
+    <string name="feature_editchallenge_edit_description">Geben Sie die Details der Herausforderung ein.\nDas Aufschreiben Ihrer Ziele und Vorsätze wird Ihnen helfen.</string>
+    <string name="feature_editchallenge_edit_target_day_title">Zieltag für die Herausforderung bearbeiten</string>
+    <string name="feature_editchallenge_edit_target_day_description">Legen Sie fest, wie viele Tage die Herausforderung dauern wird.\nWenn Sie im Zielzeitraum nicht zurücksetzen, haben Sie Erfolg.</string>
+    <string name="feature_editchallenge_record_exceeded_notice">Rekord überschritten</string>
+    <string name="feature_editchallenge_record_exceeded_description">Ihr aktueller Rekord hat %1$s Tage überschritten.\nDie Herausforderung wird sofort abgeschlossen.</string>
+    <string name="feature_editchallenge_complete">Abschließen</string>
+</resources>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_navigation_title">首页</string>
+    <string name="feature_home_title">一起挑战</string>
+    <string name="feature_home_medal_description">当前等级</string>
+    <string name="feature_home_complete_challenge_description">完成的挑战</string>
+    <string name="feature_home_notification_description">通知</string>
+    <string name="feature_home_remain_time_for_next_tier">离下一级别剩余时间：%d 天</string>
+    <string name="feature_home_current_highest_record">当前最高记录</string>
+    <string name="feature_home_my_challenges">我的挑战</string>
+    <string name="feature_home_joined_challenges">加入的挑战</string>
+    <string name="feature_home_sort_challenge_content_description">挑战排序</string>
+    <string name="feature_home_congratulations">恭喜！</string>
+    <string name="feature_home_challenge_success">%1$s\n您已成功完成挑战。</string>
+    <string name="feature_home_congratulations_image_description">恭喜图像</string>
+    <string name="feature_home_promoted">晋升</string>
+    <string name="feature_home_promoted_description">您已晋升到 %1$s。</string>
+    <string name="feature_home_promoted_confirm">确认</string>
+    <string name="feature_home_no_active_challenge_mode">无活动挑战模式</string>
+    <string name="feature_home_highest_tier">最高等级</string>
+    <string name="feature_home_no_active_challenge">没有挑战</string>
+    <string name="feature_home_start_new_challenge_prompt">点击右下角的添加按钮开始一个新挑战。</string>
+    <string name="feature_home_sort">排序方式</string>
+</resources>

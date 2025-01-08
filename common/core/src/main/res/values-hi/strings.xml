@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_core_time_day">दिन</string>
+    <string name="common_core_time_hour">घंटा</string>
+    <string name="common_core_time_minute">मिनट</string>
+    <string name="common_core_time_second">सेकंड</string>
+    <string name="common_core_time_seconds_ago">%d सेकंड पहले</string>
+    <string name="common_core_time_minutes_ago">%d मिनट पहले</string>
+    <string name="common_core_time_hours_ago">%d घंटे पहले</string>
+    <string name="common_core_time_days_ago">%d दिन पहले</string>
+</resources>

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_designsystem_app_bar_back">Indietro</string>
+    <string name="common_designsystem_app_bar_continue">Continua</string>
+    <string name="common_designsystem_clear_content_description">Cancella Contenuti</string>
+    <string name="common_designsystem_input_password_show_content_description">Mostra Password</string>
+    <string name="common_designsystem_input_password_hide_content_description">Nascondi Password</string>
+    <string name="common_designsystem_dialog_confirm">Conferma</string>
+    <string name="common_designsystem_dialog_cancel">Annulla</string>
+    <string name="common_designsystem_dialog_year_month_picker_title">Seleziona Anno e Mese</string>
+    <string name="common_designsystem_dialog_year_month_picker_description">Si prega di inserire l\'anno e il mese a cui desideri navigare</string>
+    <string name="common_designsystem_dialog_enter_year">Anno</string>
+    <string name="common_designsystem_dialog_enter_month">Mese</string>
+    <string name="common_designsystem_bottom_sheet_close">Chiudi</string>
+    <string name="common_designsystem_calendar_next_month">Mese Successivo</string>
+    <string name="common_designsystem_calendar_previous_month">Mese Precedente</string>
+    <string name="common_designsystem_calendar_expand_week_mode">Espandi Modalità Settimana</string>
+    <string name="common_designsystem_calendar_year_month">%2$s %1$d</string>
+    <string name="common_designsystem_time_picker_increase_hour">Aumenta Ora</string>
+    <string name="common_designsystem_time_picker_increase_minute">Aumenta Minuti</string>
+    <string name="common_designsystem_time_picker_decrease_hour">Diminuisci Ora</string>
+    <string name="common_designsystem_time_picker_decrease_minute">Diminuisci Minuti</string>
+    <string name="common_designsystem_time_picker_am">AM</string>
+    <string name="common_designsystem_time_picker_pm">PM</string>
+    <string name="common_designsystem_dialog_report_title">Segnala</string>
+    <string name="common_designsystem_dialog_report_description">Si prega di selezionare un motivo per la segnalazione.</string>
+    <string name="common_designsystem_dialog_password_title">Password</string>
+    <string name="common_designsystem_dialog_password_description">Si prega di inserire la password d\'ingresso.</string>
+    <string name="common_designsystem_dialog_password_placeholder">Inserisci password</string>
+    <string name="common_designsystem_dialog_system_maintenance_title">Avviso Manutenzione Sistema</string>
+    <string name="common_designsystem_dialog_system_maintenance_description">Stiamo attualmente eseguendo manutenzione al sistema per fornire un servizio migliore.\nIl servizio non sarà disponibile temporaneamente durante il periodo di manutenzione. Grazie per la vostra comprensione.</string>
+    <string name="common_designsystem_dialog_expected_completion">Orario di Completamento Previsto</string>
+    <string name="common_designsystem_dialog_exit">Esci</string>
+    <string name="common_designsystem_dialog_service_restriction_title">Restrizione del Servizio</string>
+    <string name="common_designsystem_dialog_service_restriction_description">Il tuo accesso al servizio è stato limitato a causa di una violazione dei nostri principi operativi.</string>
+    <string name="common_designsystem_dialog_restriction_reason">Motivo</string>
+    <string name="common_designsystem_dialog_restriction_period">Periodo di Restrizione</string>
+    <string name="common_designsystem_dialog_until">Fino al %1$s</string>
+    <string name="common_designsystem_dialog_premium_feature_title">Funzione Premium</string>
+    <string name="common_designsystem_dialog_premium_feature_message">Questa funzione è disponibile esclusivamente per gli account premium.</string>
+    <string name="common_designsystem_dialog_go_to_premium">Esplora</string>
+
+    <string name="common_designsystem_tier_unspecified">livello non specificato</string>
+    <string name="common_designsystem_tier_iron_description">livello ferro</string>
+    <string name="common_designsystem_tier_bronze_description">livello bronzo</string>
+    <string name="common_designsystem_tier_silver_description">livello argento</string>
+    <string name="common_designsystem_tier_gold_description">livello oro</string>
+    <string name="common_designsystem_tier_platinum_description">livello platino</string>
+    <string name="common_designsystem_tier_diamond_description">livello diamante</string>
+    <string name="common_designsystem_tier_master_description">livello maestro</string>
+    <string name="common_designsystem_tier_legend_description">livello leggenda</string>
+
+    <string name="common_designsystem_category_all">Tutti</string>
+    <string name="common_designsystem_category_quit_smoking">Smettere di Fumare</string>
+    <string name="common_designsystem_category_quit_drinking">Smettere di Bere</string>
+    <string name="common_designsystem_category_quit_porn">Smettere di Guardare Porno</string>
+    <string name="common_designsystem_category_quit_gaming">Smettere di Giocare</string>
+    <string name="common_designsystem_category_quit_youtube">Smettere di Guardare YouTube</string>
+    <string name="common_designsystem_category_quit_sns">Smettere di Usare Social Media</string>
+    <string name="common_designsystem_category_quit_gluten">Smettere di Consumare Glutine</string>
+    <string name="common_designsystem_category_quit_gambling">Smettere di Giocare d\'Azzardo</string>
+    <string name="common_designsystem_category_quit_drugs">Smettere di Usare Droghe</string>
+    <string name="common_designsystem_category_quit_caffeine">Smettere di Consumare Caffeina</string>
+    <string name="common_designsystem_category_quit_eating_out">Smettere di Mangiare Fuori</string>
+    <string name="common_designsystem_category_quit_shopping">Smettere di Fare Shopping</string>
+    <string name="common_designsystem_category_quit_swearing">Smettere di Bestemmiare</string>
+    <string name="common_designsystem_category_quit_smartphone">Smettere di Usare Smartphone</string>
+
+    <string name="common_designsystem_notification_challenge_completed">Sfida Completata</string>
+    <string name="common_designsystem_notification_user_challenge_completed">Sfida completata: \"%1$s\"!</string>
+    <string name="common_designsystem_notification_participant_reset">Partecipante \"%1$s\" resettato</string>
+    <string name="common_designsystem_notification_user_reset">\"%1$s\" è stato resettato.</string>
+    <string name="common_designsystem_notification_participant_give_up">Partecipante \"%1$s\" ha rinunciato</string>
+    <string name="common_designsystem_notification_user_give_up">\"%1$s\" si è arreso.</string>
+    <string name="common_designsystem_notification_challengeboard_post_added">Nuovo post nel forum sfida \"%1$s\"</string>
+    <string name="common_designsystem_notification_participant_force_remove">Partecipante \"%1$s\" rimosso forzatamente</string>
+    <string name="common_designsystem_notification_user_force_remove">\"%1$s\" è stato rimosso forzatamente per inattività prolungata.</string>
+    <string name="common_designsystem_notification_challenge_deleted">Sfida eliminata</string>
+    <string name="common_designsystem_notification_challenge_deleted_detail">La sfida \"%1$s\" è stata eliminata dall\'host.</string>
+    <string name="common_designsystem_notification_challenge_started">Sfida iniziata</string>
+    <string name="common_designsystem_notification_challenge_started_detail">La sfida \"%1$s\" è stata avviata dall\'host.</string>
+    <string name="common_designsystem_notification_participant_joined">Partecipante \"%1$s\" Unito</string>
+    <string name="common_designsystem_notification_participant_joined_detail">\"%1$s\" si è unito alla sfida.</string>
+    <string name="common_designsystem_notification_participant_left">Partecipante \"%1$s\" Usciuto</string>
+    <string name="common_designsystem_notification_participant_left_detail">\"%1$s\" ha abbandonato la sfida.</string>
+    <string name="common_designsystem_notification_user_commented">\"%1$s\" ha commentato</string>
+    <string name="common_designsystem_notification_user_commented_detail">Commento: \"%1$s\"</string>
+    <string name="common_designsystem_notification_user_replied">\"%1$s\" ha risposto a un commento</string>
+    <string name="common_designsystem_notification_user_replied_detail">Risposta: \"%1$s\"</string>
+    <string name="common_designsystem_notification_hidden_title">Nuova notifica</string>
+    <string name="common_designsystem_notification_hidden_body">Nascosta a causa delle impostazioni di Blocco App</string>
+
+    <string name="common_designsystem_sort_order_latest">Più Recenti</string>
+    <string name="common_designsystem_sort_order_oldest">Meno Recenti</string>
+    <string name="common_designsystem_sort_order_title">Titolo</string>
+    <string name="common_designsystem_sort_order_highest_record">Punteggio Più Alto</string>
+    <string name="common_designsystem_sort_order_lowest_record">Punteggio Più Basso</string>
+
+    <string name="common_designsystem_report_reason_commercial_content">Contenuto commerciale</string>
+    <string name="common_designsystem_report_reason_inappropriate_content">Contenuto per adulti o inappropriato</string>
+    <string name="common_designsystem_report_reason_disturbing_behavior">Comportamento dirompente</string>
+    <string name="common_designsystem_report_reason_defamation">Diffamazione o calunnia</string>
+    <string name="common_designsystem_report_reason_incorrect_info">Informazioni errate</string>
+
+    <string name="common_designsystem_user_withdrawn">(Ritirato)</string>
+    <string name="common_designsystem_user_deleted">(Cancellato)</string>
+</resources>

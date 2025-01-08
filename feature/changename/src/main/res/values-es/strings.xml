@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">Cambiar Apodo</string>
+    <string name="feature_changename_description">Puedes cambiar tu apodo una vez a la semana.</string>
+    <string name="feature_changename_action">Cambiar</string>
+    <string name="feature_changenam_confirm_info">¿Quieres cambiar tu apodo?\nPuedes cambiar tu apodo una vez a la semana.</string>
+    <string name="feature_changename_info_graphic">Gráfica de Información del Apodo</string>
+    <string name="feature_changename_success">Tu apodo ha sido cambiado.</string>
+    <string name="feature_changename_nickname_already_taken">Este apodo ya está en uso.</string>
+    <string name="feature_changename_error">Ocurrió un error. Por favor, intenta de nuevo más tarde.</string>
+    <string name="feature_changename_check_network_connection">Por favor, verifica tu conexión de red.</string>
+    <string name="feature_changename_length_indicator">El apodo debe tener entre %1$d y %2$d caracteres</string>
+    <string name="feature_changename_korean_constraint">Los apodos coreanos no pueden contener solo consonantes o vocales</string>
+    <string name="feature_changename_duplicate_name">El apodo es idéntico al actual</string>
+    <string name="feature_changename_next_change_notice">Puedes cambiarlo de nuevo después de %1$s</string>
+</resources>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_completechallenges_title">ความท้าทายที่สำเร็จแล้ว</string>
+    <string name="feature_completechallenges_search">ค้นหา…</string>
+    <string name="feature_completechallenges_empty_title">ยังไม่มีความท้าทายที่สำเร็จ</string>
+    <string name="feature_completechallenges_empty_description">คุณยังไม่ได้ทำความท้าทายใดๆ สำเร็จ\nเริ่มความท้าทายใหม่และดูผลงานของคุณที่นี่!</string>
+    <string name="feature_completechallenges_search_empty_title">ไม่พบความท้าทายใด</string>
+    <string name="feature_completechallenges_search_empty_description">เราไม่พบความท้าทายที่ตรงกับการค้นหาของคุณ\nลองใช้คำค้นหาอื่นหรือปรับเกณฑ์การค้นหาของคุณ!</string>
+</resources>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">बोर्ड</string>
+    <string name="feature_challengeboard_content_placeholder">सामग्री दर्ज करें…</string>
+    <string name="feature_challengeboard_send">भेजें</string>
+    <string name="feature_challengeboard_no_posts_title">अभी तक कोई पोस्ट नहीं</string>
+    <string name="feature_challengeboard_no_posts_description">अपने चुनौती के बारे में रिकॉर्ड या नोट छोड़ें।</string>
+    <string name="feature_challengeboard_scroll_to_bottom">नीचे स्क्रॉल करें</string>
+    <string name="feature_challengeboard_menu_copy">कॉपी करें</string>
+    <string name="feature_challengeboard_menu_report">रिपोर्ट करें</string>
+    <string name="feature_challengeboard_menu_delete">हटाएं</string>
+    <string name="feature_challengeboard_delete_success">सफलता से हटाया गया।</string>
+    <string name="feature_challengeboard_delete_failed">हटाने में विफल। कृपया बाद में फिर से प्रयास करें।</string>
+    <string name="feature_challengeboard_report_success">सफलता से रिपोर्ट किया गया।</string>
+    <string name="feature_challengeboard_report_failed">रिपोर्ट में विफल। कृपया बाद में फिर से प्रयास करें।</string>
+    <string name="feature_challengeboard_report_already_reported">इस पोस्ट की पहले ही रिपोर्ट की जा चुकी है।</string>
+    <string name="feature_challengeboard_toggle_notification">सूचना टॉगल करें</string>
+    <string name="feature_challengeboard_notification_enabled">सूचनाएं सक्षम की गई हैं।</string>
+    <string name="feature_challengeboard_notification_disabled">सूचनाएं अक्षम की गई हैं।</string>
+</resources>

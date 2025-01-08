@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_intro_start">เริ่มต้น</string>
+    <string name="feature_intro_start_with">เริ่มต้นด้วย</string>
+    <string name="feature_intro_start_email">อีเมล</string>
+    <string name="feature_intro_start_guest">เข้าสู่ระบบในฐานะแขก</string>
+    <string name="feature_intro_start_guest_warning">คำเตือน</string>
+    <string name="feature_intro_start_guest_warning_detail">การเข้าสู่ระบบในฐานะแขกอาจทำให้ข้อมูลสูญหายหากไม่มีการเชื่อมโยงบัญชี และแอปถูกลบหรืออุปกรณ์ถูกเปลี่ยน</string>
+    <string name="feature_intro_life_changing_challenges">ความท้าทายที่เปลี่ยนชีวิต</string>
+    <string name="feature_intro_features">รีเซ็ตบันทึก วิดเจ็ต ปฏิทิน กราฟ การจัดอันดับ ฯลฯ เรามีฟีเจอร์ให้เลือกมากมาย</string>
+    <string name="feature_intro_challenge_together">ท้าทายไปด้วยกัน</string>
+    <string name="feature_intro_challenge_together_detail">แข่งขันในระดับการจัดอันดับแบบเรียลไทม์ และได้รับความรู้สึกแห่งความสำเร็จโดยการท้าทายไปด้วยกัน</string>
+    <string name="feature_intro_community">ชุมชน</string>
+    <string name="feature_intro_community_detail">แบ่งปันประสบการณ์ในชุมชน และบุ๊คมาร์คคำคมที่ชื่นชอบเพื่อเก็บรักษา</string>
+    <string name="feature_intro_divider_text">หรือ</string>
+    <string name="feature_intro_kakao_content_description">ลงชื่อเข้าใช้ด้วย Kakao</string>
+    <string name="feature_intro_google_content_description">ลงชื่อเข้าใช้ด้วย Google</string>
+    <string name="feature_intro_naver_content_description">ลงชื่อเข้าใช้ด้วย Naver</string>
+    <string name="feature_intro_login_success">เข้าสู่ระบบสำเร็จ</string>
+    <string name="feature_intro_unknown_error">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งในภายหลัง</string>
+</resources>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">ニックネームを変更</string>
+    <string name="feature_changename_description">ニックネームは週に一度変更できます。</string>
+    <string name="feature_changename_action">変更</string>
+    <string name="feature_changenam_confirm_info">ニックネームを変更しますか？\nニックネームは週に一度変更できます。</string>
+    <string name="feature_changename_info_graphic">ニックネーム情報のグラフィック</string>
+    <string name="feature_changename_success">ニックネームが変更されました。</string>
+    <string name="feature_changename_nickname_already_taken">このニックネームは既に使用されています。</string>
+    <string name="feature_changename_error">エラーが発生しました。後でもう一度お試しください。</string>
+    <string name="feature_changename_check_network_connection">ネットワーク接続を確認してください。</string>
+    <string name="feature_changename_length_indicator">ニックネームは%1$d文字から%2$d文字以内でなければなりません。</string>
+    <string name="feature_changename_korean_constraint">韓国語のニックネームは子音または母音だけで構成することはできません。</string>
+    <string name="feature_changename_duplicate_name">現在のものと同じニックネームです。</string>
+    <string name="feature_changename_next_change_notice">次に変更できるのは%1$s以降です。</string>
+</resources>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_my_navigation_title">Il mio</string>
+    <string name="feature_my_medal_description">Livello attuale</string>
+    <string name="feature_my_no_active_challenge_mode">Nessuna modalità sfida attiva</string>
+    <string name="feature_my_highest_tier">Livello più alto</string>
+    <string name="feature_my_remain_time_for_next_tier">Tempo rimanente per il prossimo livello: %d giorni</string>
+    <string name="feature_my_best_record">Miglior risultato</string>
+    <string name="feature_my_attempt_count">Tentativi</string>
+    <string name="feature_my_success_count">Successi</string>
+    <string name="feature_my_reset_count">Reset</string>
+    <string name="feature_my_settings">Impostazioni</string>
+    <string name="feature_my_account">Account</string>
+    <string name="feature_my_app_info">Informazioni sull\'app</string>
+    <string name="feature_my_notification_settings">Impostazioni delle notifiche</string>
+    <string name="feature_my_app_lock_settings">Impostazioni blocco app</string>
+    <string name="feature_my_account_linking">Collegamento account</string>
+    <string name="feature_my_account_premium">Aggiornamento a Premium</string>
+    <string name="feature_my_linked_with_kakao">Collegato con Kakao</string>
+    <string name="feature_my_linked_with_google">Collegato con Google</string>
+    <string name="feature_my_linked_with_naver">Collegato con Naver</string>
+    <string name="feature_my_linked_with">Collegato con</string>
+    <string name="feature_my_nickname_change">Cambia nickname</string>
+    <string name="feature_my_password_change">Cambia password</string>
+    <string name="feature_my_logout">Disconnetti</string>
+    <string name="feature_my_logout_confirmation">Sei sicuro di voler disconnetterti?</string>
+    <string name="feature_my_logout_success">Sei stato disconnesso.</string>
+    <string name="feature_my_delete_account">Elimina account</string>
+    <string name="feature_my_contact_support">Richiesta 1:1</string>
+    <string name="feature_my_privacy_policy">Informativa sulla privacy</string>
+    <string name="feature_my_open_source_license">Licenze open source</string>
+    <string name="feature_my_app_version">Versione app</string>
+    <string name="feature_my_email_inquiry_title">Richiesta Challenge Together</string>
+    <string name="feature_my_email_inquiry_content">Contenuto: </string>
+    <string name="feature_my_email_app_not_found">Nessuna app di posta trovata.</string>
+    <string name="feature_my_email_send_failed">Impossibile inviare email.</string>
+</resources>

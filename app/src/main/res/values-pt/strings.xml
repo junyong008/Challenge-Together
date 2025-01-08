@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Desafiar Juntos</string>
+    <string name="app_name_debug">Debug Desafiar Juntos</string>
+    <string name="splash_content_description">Imagem de Abertura</string>
+</resources>

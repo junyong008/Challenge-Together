@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_my_navigation_title">ของฉัน</string>
+    <string name="feature_my_medal_description">ระดับปัจจุบัน</string>
+    <string name="feature_my_no_active_challenge_mode">ไม่มีโหมดท้าทายที่ใช้งานอยู่</string>
+    <string name="feature_my_highest_tier">ระดับสูงสุด</string>
+    <string name="feature_my_remain_time_for_next_tier">เวลาที่เหลือจนถึงระดับถัดไป: %d วัน</string>
+    <string name="feature_my_best_record">บันทึกดีที่สุด</string>
+    <string name="feature_my_attempt_count">จำนวนครั้งที่พยายาม</string>
+    <string name="feature_my_success_count">ความสำเร็จ</string>
+    <string name="feature_my_reset_count">การรีเซ็ต</string>
+    <string name="feature_my_settings">การตั้งค่า</string>
+    <string name="feature_my_account">บัญชีผู้ใช้</string>
+    <string name="feature_my_app_info">ข้อมูลแอป</string>
+    <string name="feature_my_notification_settings">การตั้งค่าการแจ้งเตือน</string>
+    <string name="feature_my_app_lock_settings">การตั้งค่าล็อคแอป</string>
+    <string name="feature_my_account_linking">การเชื่อมโยงบัญชีผู้ใช้</string>
+    <string name="feature_my_account_premium">การอัปเกรดเป็นพรีเมียม</string>
+    <string name="feature_my_linked_with_kakao">เชื่อมโยงกับ Kakao</string>
+    <string name="feature_my_linked_with_google">เชื่อมโยงกับ Google</string>
+    <string name="feature_my_linked_with_naver">เชื่อมโยงกับ Naver</string>
+    <string name="feature_my_linked_with">เชื่อมโยงกับ</string>
+    <string name="feature_my_nickname_change">เปลี่ยนชื่อเล่น</string>
+    <string name="feature_my_password_change">เปลี่ยนรหัสผ่าน</string>
+    <string name="feature_my_logout">ออกจากระบบ</string>
+    <string name="feature_my_logout_confirmation">คุณแน่ใจหรือว่าต้องการออกจากระบบ?</string>
+    <string name="feature_my_logout_success">คุณได้ออกจากระบบแล้ว</string>
+    <string name="feature_my_delete_account">ลบบัญชีผู้ใช้</string>
+    <string name="feature_my_contact_support">สอบถาม 1:1</string>
+    <string name="feature_my_privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="feature_my_open_source_license">ใบอนุญาตโอเพนซอร์ส</string>
+    <string name="feature_my_app_version">เวอร์ชันแอป</string>
+    <string name="feature_my_email_inquiry_title">การสอบถามเกี่ยวกับ Challenge Together</string>
+    <string name="feature_my_email_inquiry_content">เนื้อหา: </string>
+    <string name="feature_my_email_app_not_found">ไม่พบแอปอีเมล</string>
+    <string name="feature_my_email_send_failed">ไม่สามารถส่งอีเมลได้</string>
+</resources>

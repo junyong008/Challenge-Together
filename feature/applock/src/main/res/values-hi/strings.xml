@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_applock_title">ऐप लॉक</string>
+    <string name="feature_applock_password">पासवर्ड</string>
+    <string name="feature_applock_enter_password">कृपया अपना पासवर्ड दर्ज करें</string>
+    <string name="feature_applock_reenter_password">कृपया अपना पासवर्ड फिर से दर्ज करें</string>
+    <string name="feature_applock_password_mismatch">पासवर्ड मेल नहीं खा रहे हैं।</string>
+    <string name="feature_applock_password_set_success">पासवर्ड सेट कर दिया गया है।</string>
+    <string name="feature_applock_change_password">पासवर्ड बदलें</string>
+    <string name="feature_applock_biometric_authentication">जैविक प्रमाणीकरण</string>
+    <string name="feature_applock_biometric_cancel">रद्द करें</string>
+    <string name="feature_applock_hide_widget_content">विजेट सामग्री छिपाएँ</string>
+    <string name="feature_applock_hide_notification_content">अधिसूचना सामग्री छिपाएँ</string>
+    <string name="feature_applock_close">बंद करें</string>
+    <string name="feature_applock_backspace">बैकस्पेस</string>
+</resources>

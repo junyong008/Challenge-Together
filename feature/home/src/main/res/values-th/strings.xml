@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_navigation_title">หน้าหลัก</string>
+    <string name="feature_home_title">ท้าแข่งด้วยกัน</string>
+    <string name="feature_home_medal_description">ระดับปัจจุบัน</string>
+    <string name="feature_home_complete_challenge_description">ทำภารกิจให้สำเร็จ</string>
+    <string name="feature_home_notification_description">การแจ้งเตือน</string>
+    <string name="feature_home_remain_time_for_next_tier">เวลาที่เหลือสำหรับระดับถัดไป: %d วัน</string>
+    <string name="feature_home_current_highest_record">สถิติที่ดีที่สุดในปัจจุบัน</string>
+    <string name="feature_home_my_challenges">ภารกิจของฉัน</string>
+    <string name="feature_home_joined_challenges">ภารกิจที่เข้าร่วม</string>
+    <string name="feature_home_sort_challenge_content_description">เรียงลำดับภารกิจ</string>
+    <string name="feature_home_congratulations">ขอแสดงความยินดี!</string>
+    <string name="feature_home_challenge_success">%1$s\nคุณทำภารกิจสำเร็จเรียบร้อยแล้ว</string>
+    <string name="feature_home_congratulations_image_description">รูปภาพแสดงความยินดี</string>
+    <string name="feature_home_promoted">เลื่อนระดับ</string>
+    <string name="feature_home_promoted_description">คุณได้เลื่อนระดับไปยัง %1$s</string>
+    <string name="feature_home_promoted_confirm">ยืนยัน</string>
+    <string name="feature_home_no_active_challenge_mode">ไม่มีโหมดภารกิจที่ใช้งานอยู่</string>
+    <string name="feature_home_highest_tier">ระดับสูงสุด</string>
+    <string name="feature_home_no_active_challenge">ไม่มีภารกิจ</string>
+    <string name="feature_home_start_new_challenge_prompt">แตะปุ่มเพิ่มที่มุมขวาล่างเพื่อเริ่มภารกิจใหม่</string>
+    <string name="feature_home_sort">เรียงลำดับโดย</string>
+</resources>

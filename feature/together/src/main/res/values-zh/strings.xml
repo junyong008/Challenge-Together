@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_together_title">一起</string>
+    <string name="feature_together_description">与各种各样的人一起开始挑战。</string>
+    <string name="feature_together_search_placeholder">搜索…</string>
+    <string name="feature_together_empty_title">未找到挑战</string>
+    <string name="feature_together_empty_description">目前没有可用的挑战。\n创建一个新的挑战并邀请他人加入！</string>
+    <string name="feature_together_search_empty_title">未找到挑战</string>
+    <string name="feature_together_search_empty_description">没有与您的搜索匹配的挑战。\n尝试使用不同的关键词或过滤器！</string>
+    <string name="feature_together_global">其他语言挑战</string>
+    <string name="feature_together_global_challenges_on">将显示来自所有国家的挑战。</string>
+    <string name="feature_together_global_challenges_off">将仅显示%1$s挑战。</string>
+</resources>

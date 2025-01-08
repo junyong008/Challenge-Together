@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_premium_title">Mise à niveau Premium</string>
+    <string name="feature_premium_description">Profitez de divers avantages avec un compte premium.\nUn achat unique garde les avantages liés à votre compte de manière permanente.</string>
+    <string name="feature_premium_no_ads">Supprimer définitivement toutes les publicités</string>
+    <string name="feature_premium_unlock_widgets">Déverrouiller toutes les fonctionnalités des widgets</string>
+    <string name="feature_premium_app_lock">Fonctionnalité de mot de passe pour accéder à l\'application</string>
+    <string name="feature_premium_active">Actif</string>
+    <string name="feature_premium_invalid_now">Bientôt disponible</string>
+    <string name="feature_premium_info_graphic">Graphique d\'information Premium</string>
+    <string name="feature_premium_purchase_complete">Achat terminé</string>
+    <string name="feature_premium_error_occurred">Une erreur est survenue. Veuillez réessayer plus tard.</string>
+</resources>

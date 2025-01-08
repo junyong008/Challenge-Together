@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_waitingchallenge_number">No. %1$d</string>
+    <string name="feature_waitingchallenge_private">[Privado]</string>
+    <string name="feature_waitingchallenge_target_day">Día objetivo</string>
+    <string name="feature_waitingchallenge_target_day_goal_days">%1$s Días</string>
+    <string name="feature_waitingchallenge_target_day_unlimited">Ilimitado</string>
+    <string name="feature_waitingchallenge_menu_delete">Eliminar</string>
+    <string name="feature_waitingchallenge_menu_refresh">Actualizar</string>
+    <string name="feature_waitingchallenge_menu_share">Compartir</string>
+    <string name="feature_waitingchallenge_menu_share_message">¡Tomemos el desafío \"%1$s\" juntos!\nActualmente, %2$d personas están participando.</string>
+    <string name="feature_waitingchallenge_delete">Eliminar</string>
+    <string name="feature_waitingchallenge_delete_prompt">¿Te gustaría eliminar el desafío?</string>
+    <string name="feature_waitingchallenge_start">Empezar</string>
+    <string name="feature_waitingchallenge_start_prompt">¿Te gustaría comenzar el desafío?</string>
+    <string name="feature_waitingchallenge_join">Unirse</string>
+    <string name="feature_waitingchallenge_leave">Salir</string>
+    <string name="feature_waitingchallenge_board">Tablero</string>
+    <string name="feature_waitingchallenge_menu">Menú</string>
+    <string name="feature_waitingchallenge_board_description">Comparte tus pensamientos sobre el desafío.</string>
+    <string name="feature_waitingchallenge_password_incorrect">La contraseña no coincide.</string>
+    <string name="feature_waitingchallenge_not_found">El desafío no existe.</string>
+    <string name="feature_waitingchallenge_already_started">El desafío ya ha comenzado.</string>
+    <string name="feature_waitingchallenge_error">Ocurrió un error. Por favor, inténtalo de nuevo más tarde.</string>
+    <string name="feature_waitingchallenge_check_network_connection">Por favor, verifica tu conexión de red.</string>
+    <string name="feature_waitingchallenge_delete_successful">El desafío ha sido eliminado.</string>
+    <string name="feature_waitingchallenge_start_successful">El desafío ha comenzado.</string>
+    <string name="feature_waitingchallenge_participant_full">El desafío está completo.</string>
+    <string name="feature_waitingchallenge_password_copied">Contraseña copiada al portapapeles.</string>
+    <string name="feature_waitingchallenge_created_by">Creado por \"%1$s\"</string>
+    <string name="feature_waitingchallenge_participants_count">Participantes %1$d / %2$d</string>
+</resources>

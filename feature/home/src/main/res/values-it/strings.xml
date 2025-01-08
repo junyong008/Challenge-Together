@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_navigation_title">Home</string>
+    <string name="feature_home_title">SFIDA INSIEME</string>
+    <string name="feature_home_medal_description">Livello attuale</string>
+    <string name="feature_home_complete_challenge_description">Sfide Completate</string>
+    <string name="feature_home_notification_description">Notifiche</string>
+    <string name="feature_home_remain_time_for_next_tier">Tempo rimanente per il prossimo livello: %d giorni</string>
+    <string name="feature_home_current_highest_record">Miglior Record Corrente</string>
+    <string name="feature_home_my_challenges">Le Mie Sfide</string>
+    <string name="feature_home_joined_challenges">Sfide Partecipate</string>
+    <string name="feature_home_sort_challenge_content_description">Ordina Sfida</string>
+    <string name="feature_home_congratulations">Congratulazioni!</string>
+    <string name="feature_home_challenge_success">%1$s\nHai completato con successo la sfida.</string>
+    <string name="feature_home_congratulations_image_description">Immagine di Congratulazioni</string>
+    <string name="feature_home_promoted">PROMOSSO</string>
+    <string name="feature_home_promoted_description">Sei stato promosso a %1$s.</string>
+    <string name="feature_home_promoted_confirm">Conferma</string>
+    <string name="feature_home_no_active_challenge_mode">Nessuna modalità sfida attiva</string>
+    <string name="feature_home_highest_tier">Livello più Alto</string>
+    <string name="feature_home_no_active_challenge">Nessuna Sfida</string>
+    <string name="feature_home_start_new_challenge_prompt">Tocca il pulsante aggiungi in basso a destra per iniziare una nuova sfida.</string>
+    <string name="feature_home_sort">Ordina per</string>
+</resources>

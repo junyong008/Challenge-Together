@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_deleteaccount_title">Supprimer le compte</string>
+    <string name="feature_deleteaccount_warning_title">Attention ! Veuillez revoir ce qui suit avant de supprimer votre compte.</string>
+    <string name="feature_deleteaccount_warning_challenges">Toutes les données relatives aux défis associées à vous seront supprimées.</string>
+    <string name="feature_deleteaccount_warning_community">Les messages et commentaires dans la communauté seront étiquetés comme "Membre supprimé".</string>
+    <string name="feature_deleteaccount_warning_irreversible">Toutes les données seront définitivement supprimées et ne pourront pas être récupérées.</string>
+    <string name="feature_deleteaccount_info_graphic">Supprimer le graphique d\'information</string>
+    <string name="feature_deleteaccount_delete">Supprimer</string>
+    <string name="feature_deleteaccount_confirmation">Supprimer le compte ?</string>
+    <string name="feature_deleteaccount_irreversible_notice">Une fois supprimé, votre compte ne pourra pas être restauré.</string>
+    <string name="feature_deleteaccount_success">Votre compte a été supprimé avec succès.</string>
+    <string name="feature_deleteaccount_error">Une erreur est survenue. Veuillez réessayer plus tard.</string>
+</resources>

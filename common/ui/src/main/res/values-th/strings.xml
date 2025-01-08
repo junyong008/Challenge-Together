@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ui_error_body_title">ไม่สามารถโหลดหน้าจอได้</string>
+    <string name="common_ui_error_description">เกิดข้อผิดพลาด\nกรุณาลองใหม่อีกครั้งภายหลัง</string>
+    <string name="common_ui_error_retry">ลองอีกครั้ง</string>
+    <string name="common_ui_started_challenge_card_timer_description">ไอคอนตัวจับเวลา</string>
+    <string name="common_ui_started_challenge_card_check_description">ไอคอนเสร็จสมบูรณ์</string>
+    <string name="common_ui_waiting_challenge_number">หมายเลข %1$d</string>
+    <string name="common_ui_waiting_challenge_private">[ส่วนตัว]</string>
+    <string name="common_ui_waiting_challenge_participant_number_format">%1$s / %2$s</string>
+    <string name="common_ui_waiting_challenge_calendar_description">ไอคอนปฏิทิน</string>
+    <string name="common_ui_waiting_challenge_goal_days">%1$s วัน</string>
+    <string name="common_ui_waiting_challenge_unlimited">ไม่จำกัด</string>
+    <string name="common_ui_waiting_challenge_icon_of_person">ไอคอนคน</string>
+    <string name="common_ui_manual_time_warning">ตั้งเวลาในระบบด้วยตัวเอง</string>
+    <string name="common_ui_manual_time_warning_icon">ไอคอนนาฬิกา</string>
+    <string name="common_ui_category_list_all">ความท้าทายของฉัน</string>
+    <string name="common_ui_target_day">วันเป้าหมาย</string>
+    <string name="common_ui_target_day_unlimited">ไม่จำกัด</string>
+    <string name="common_ui_target_day_days">วัน</string>
+</resources>

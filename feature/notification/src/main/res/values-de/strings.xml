@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_title">Benachrichtigungen</string>
+    <string name="feature_notification_more">Mehr</string>
+    <string name="feature_notification_delete">Löschen</string>
+    <string name="feature_notification_delete_all">Alle löschen</string>
+    <string name="feature_notification_setting">Einstellung</string>
+    <string name="feature_notification_empty_title">Noch keine Benachrichtigungen</string>
+    <string name="feature_notification_empty_description">Es gibt momentan keine Benachrichtigungen.\nHier werden Aktualisierungen und Warnungen angezeigt, sobald sie eintreten!</string>
+    <string name="feature_notification_challenge_category">Benachrichtigungen zur Kategorie \'Herausforderung\'</string>
+    <string name="feature_notification_community_category">Benachrichtigungen zur Kategorie \'Gemeinschaft\'</string>
+    <string name="feature_notification_delete_success">Erfolgreich gelöscht.</string>
+    <string name="feature_notification_delete_failed">Löschen fehlgeschlagen. Bitte versuchen Sie es später noch einmal.</string>
+</resources>

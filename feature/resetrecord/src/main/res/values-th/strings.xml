@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">รีเซ็ตประวัติ</string>
+    <string name="feature_resetrecord_record">บันทึก</string>
+    <string name="feature_resetrecord_content">เนื้อหา</string>
+    <string name="feature_resetrecord_no_reset_records">ยังไม่มีบันทึกการรีเซ็ต</string>
+    <string name="feature_resetrecord_encouragement">ทำต่อไปและท้าทายตัวเอง!</string>
+    <string name="feature_resetrecord_day_suffix">วัน</string>
+</resources>

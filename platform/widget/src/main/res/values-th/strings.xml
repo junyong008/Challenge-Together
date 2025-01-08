@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_widget_challenge_list_widget_name">รายการความท้าทาย</string>
+    <string name="platform_widget_challenge_tall_widget_name">บัตรความท้าทาย</string>
+    <string name="platform_widget_challenge_wide_widget_name">บัตรความท้าทาย</string>
+    <string name="platform_widget_challenge_simple_widget_name">บัตรความท้าทายธรรมดา</string>
+    <string name="platform_widget_no_challenge">ไม่มีความท้าทาย</string>
+    <string name="platform_widget_no_challenges">ไม่มีความท้าทาย</string>
+    <string name="platform_widget_no_challenges_description">ยังไม่มีความท้าทาย\nเปิดแอปเพื่อเริ่มความท้าทายแรกและเริ่มการผจญภัยของคุณ!</string>
+    <string name="platform_widget_time_d">วัน</string>
+    <string name="platform_widget_time_day">ว</string>
+    <string name="platform_widget_time_hour">ชั่วโมง</string>
+    <string name="platform_widget_progress_description">ความคืบหน้า</string>
+    <string name="platform_widget_category_icon_description">ไอคอนหมวดหมู่</string>
+    <string name="platform_widget_settings">การตั้งค่า Widget</string>
+    <string name="platform_widget_opacity">ความทึบแสง</string>
+    <string name="platform_widget_cancel">ยกเลิก</string>
+    <string name="platform_widget_confirm">ยืนยัน</string>
+    <string name="platform_widget_select">เลือก</string>
+    <string name="platform_widget_hidden_due_to_app_lock">ถูกซ่อนเนื่องจากการตั้งค่าล็อกแอป</string>
+</resources>

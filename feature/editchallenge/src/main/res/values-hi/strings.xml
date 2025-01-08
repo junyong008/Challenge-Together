@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_editchallenge_edit">संपादित करें</string>
+    <string name="feature_editchallenge_edit_failed">संपादन में विफल। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="feature_editchallenge_edit_successful">संपादन सफल।</string>
+    <string name="feature_editchallenge_edit_category_title">श्रेणी संपादित करें</string>
+    <string name="feature_editchallenge_edit_category_description">कृपया उस श्रेणी का चयन करें जिसे आप बदलना चाहते हैं।</string>
+    <string name="feature_editchallenge_title">शीर्षक</string>
+    <string name="feature_editchallenge_title_placeholder">चुनौती का शीर्षक</string>
+    <string name="feature_editchallenge_description_optional">विवरण (वैकल्पिक)</string>
+    <string name="feature_editchallenge_description_placeholder">चुनौती का विवरण</string>
+    <string name="feature_editchallenge_edit_title">चुनौती के विवरण को संपादित करें</string>
+    <string name="feature_editchallenge_edit_description">चुनौती के विवरण दर्ज करें।\nअपने लक्ष्यों और संकल्पों को लिखने से आपको मदद मिलेगी।</string>
+    <string name="feature_editchallenge_edit_target_day_title">चुनौती के लिए लक्षित दिन संपादित करें</string>
+    <string name="feature_editchallenge_edit_target_day_description">निर्धारित करें कि चुनौती कितने दिनों तक चलेगी।\nयदि आप लक्ष्य अवधि के दौरान रिसेट नहीं करते हैं, तो आप सफल होंगे।</string>
+    <string name="feature_editchallenge_record_exceeded_notice">रिकॉर्ड पार किया गया</string>
+    <string name="feature_editchallenge_record_exceeded_description">आपका वर्तमान रिकॉर्ड %1$s दिनों को पार कर गया है।\nचुनौती तत्काल पूर्ण हो जाएगी।</string>
+    <string name="feature_editchallenge_complete">पूर्ण करें</string>
+</resources>

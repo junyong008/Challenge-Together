@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_navigation_title">होम</string>
+    <string name="feature_home_title">चुनौती मिलकर</string>
+    <string name="feature_home_medal_description">वर्तमान स्तर</string>
+    <string name="feature_home_complete_challenge_description">चुनौतियाँ पूरी करें</string>
+    <string name="feature_home_notification_description">सूचनाएँ</string>
+    <string name="feature_home_remain_time_for_next_tier">अगले स्तर के लिए शेष समय: %d दिन</string>
+    <string name="feature_home_current_highest_record">वर्तमान सर्वोत्तम रिकॉर्ड</string>
+    <string name="feature_home_my_challenges">मेरी चुनौतियाँ</string>
+    <string name="feature_home_joined_challenges">शामिल की हुई चुनौतियाँ</string>
+    <string name="feature_home_sort_challenge_content_description">चुनौती छाँटें</string>
+    <string name="feature_home_congratulations">बधाई हो!</string>
+    <string name="feature_home_challenge_success">%1$s\nआपने चुनौती सफलतापूर्वक पूरी की है।</string>
+    <string name="feature_home_congratulations_image_description">बधाई की छवि</string>
+    <string name="feature_home_promoted">उन्नति</string>
+    <string name="feature_home_promoted_description">आपको %1$s पर प्रोमोट किया गया है।</string>
+    <string name="feature_home_promoted_confirm">पुष्टि करें</string>
+    <string name="feature_home_no_active_challenge_mode">कोई सक्रिय चुनौती मोड नहीं</string>
+    <string name="feature_home_highest_tier">उच्चतम स्तर</string>
+    <string name="feature_home_no_active_challenge">कोई चुनौती नहीं है</string>
+    <string name="feature_home_start_new_challenge_prompt">नई चुनौती शुरू करने के लिए दाईं नीचे के जोड़ें बटन पर टैप करें।</string>
+    <string name="feature_home_sort">छाँटें</string>
+</resources>

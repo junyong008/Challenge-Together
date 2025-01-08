@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_my_navigation_title">Của tôi</string>
+    <string name="feature_my_medal_description">Hạng hiện tại</string>
+    <string name="feature_my_no_active_challenge_mode">Không có chế độ thách đấu nào đang hoạt động</string>
+    <string name="feature_my_highest_tier">Hạng cao nhất</string>
+    <string name="feature_my_remain_time_for_next_tier">Thời gian còn lại cho hạng tiếp theo: %d Ngày</string>
+    <string name="feature_my_best_record">Kỷ lục tốt nhất</string>
+    <string name="feature_my_attempt_count">Lần thử</string>
+    <string name="feature_my_success_count">Thành công</string>
+    <string name="feature_my_reset_count">Số lần đặt lại</string>
+    <string name="feature_my_settings">Cài đặt</string>
+    <string name="feature_my_account">Tài khoản</string>
+    <string name="feature_my_app_info">Thông tin ứng dụng</string>
+    <string name="feature_my_notification_settings">Cài đặt thông báo</string>
+    <string name="feature_my_app_lock_settings">Cài đặt khóa ứng dụng</string>
+    <string name="feature_my_account_linking">Liên kết tài khoản</string>
+    <string name="feature_my_account_premium">Nâng cấp Premium</string>
+    <string name="feature_my_linked_with_kakao">Liên kết với Kakao</string>
+    <string name="feature_my_linked_with_google">Liên kết với Google</string>
+    <string name="feature_my_linked_with_naver">Liên kết với Naver</string>
+    <string name="feature_my_linked_with">Liên kết với</string>
+    <string name="feature_my_nickname_change">Đổi biệt danh</string>
+    <string name="feature_my_password_change">Đổi mật khẩu</string>
+    <string name="feature_my_logout">Đăng xuất</string>
+    <string name="feature_my_logout_confirmation">Bạn có chắc chắn muốn đăng xuất không?</string>
+    <string name="feature_my_logout_success">Bạn đã đăng xuất.</string>
+    <string name="feature_my_delete_account">Xóa tài khoản</string>
+    <string name="feature_my_contact_support">Yêu cầu hỗ trợ 1:1</string>
+    <string name="feature_my_privacy_policy">Chính sách bảo mật</string>
+    <string name="feature_my_open_source_license">Giấy phép mã nguồn mở</string>
+    <string name="feature_my_app_version">Phiên bản ứng dụng</string>
+    <string name="feature_my_email_inquiry_title">Yêu cầu thách đấu cùng nhau</string>
+    <string name="feature_my_email_inquiry_content">Nội dung: </string>
+    <string name="feature_my_email_app_not_found">Không tìm thấy ứng dụng email.</string>
+    <string name="feature_my_email_send_failed">Không thể gửi email.</string>
+</resources>

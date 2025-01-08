@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_widget_challenge_list_widget_name">Liste des Défis</string>
+    <string name="platform_widget_challenge_tall_widget_name">Carte de Défi</string>
+    <string name="platform_widget_challenge_wide_widget_name">Carte de Défi</string>
+    <string name="platform_widget_challenge_simple_widget_name">Carte de Défi Simple</string>
+    <string name="platform_widget_no_challenge">Aucun Défi</string>
+    <string name="platform_widget_no_challenges">Aucun Défi</string>
+    <string name="platform_widget_no_challenges_description">Aucun défi disponible.\nOuvrez l\'application pour ajouter votre premier défi et commencer votre aventure !</string>
+    <string name="platform_widget_time_d">J</string>
+    <string name="platform_widget_time_day">j</string>
+    <string name="platform_widget_time_hour">h</string>
+    <string name="platform_widget_progress_description">Progrès</string>
+    <string name="platform_widget_category_icon_description">Icône de Catégorie</string>
+    <string name="platform_widget_settings">Paramètres du Widget</string>
+    <string name="platform_widget_opacity">Opacité</string>
+    <string name="platform_widget_cancel">Annuler</string>
+    <string name="platform_widget_confirm">Confirmer</string>
+    <string name="platform_widget_select">Sélectionner</string>
+    <string name="platform_widget_hidden_due_to_app_lock">Masqué en raison des paramètres de verrouillage de l\'application</string>
+</resources>

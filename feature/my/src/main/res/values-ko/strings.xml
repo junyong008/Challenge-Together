@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_my_navigation_title">내 정보</string>
+    <string name="feature_my_medal_description">현재 등급</string>
+    <string name="feature_my_no_active_challenge_mode">진행 중인 도전 모드 없음</string>
+    <string name="feature_my_highest_tier">최상위 등급</string>
+    <string name="feature_my_remain_time_for_next_tier">다음 등급까지 남은 시간: %d일</string>
+    <string name="feature_my_best_record">역대 최고 기록</string>
+    <string name="feature_my_attempt_count">도전 횟수</string>
+    <string name="feature_my_success_count">성공 횟수</string>
+    <string name="feature_my_reset_count">리셋 횟수</string>
+    <string name="feature_my_settings">설정</string>
+    <string name="feature_my_account">계정</string>
+    <string name="feature_my_app_info">앱 정보</string>
+    <string name="feature_my_notification_settings">알림 설정</string>
+    <string name="feature_my_app_lock_settings">앱 잠금 설정</string>
+    <string name="feature_my_account_linking">계정 연동</string>
+    <string name="feature_my_account_premium">프리미엄 전환</string>
+    <string name="feature_my_linked_with_kakao">카카오로 연동됨</string>
+    <string name="feature_my_linked_with_google">구글로 연동됨</string>
+    <string name="feature_my_linked_with_naver">네이버로 연동됨</string>
+    <string name="feature_my_linked_with">연동 계정</string>
+    <string name="feature_my_nickname_change">닉네임 변경</string>
+    <string name="feature_my_password_change">비밀번호 변경</string>
+    <string name="feature_my_logout">로그아웃</string>
+    <string name="feature_my_logout_confirmation">로그아웃하시겠습니까?</string>
+    <string name="feature_my_logout_success">로그아웃되었습니다.</string>
+    <string name="feature_my_delete_account">계정 삭제하기</string>
+    <string name="feature_my_contact_support">1:1 문의</string>
+    <string name="feature_my_privacy_policy">개인정보 처리방침</string>
+    <string name="feature_my_open_source_license">오픈소스 라이선스</string>
+    <string name="feature_my_app_version">앱 버전</string>
+    <string name="feature_my_email_inquiry_title">챌린지 투게더 문의</string>
+    <string name="feature_my_email_inquiry_content">내용:</string>
+    <string name="feature_my_email_app_not_found">이메일 앱이 없습니다.</string>
+    <string name="feature_my_email_send_failed">이메일을 전송할 수 없습니다.</string>
+</resources>

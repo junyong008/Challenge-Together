@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_intro_start">Inizia</string>
+    <string name="feature_intro_start_with">Inizia con</string>
+    <string name="feature_intro_start_email">Email</string>
+    <string name="feature_intro_start_guest">Ospite</string>
+    <string name="feature_intro_start_guest_warning">Attenzione</string>
+    <string name="feature_intro_start_guest_warning_detail">Effettuare l\'accesso come ospite può comportare la perdita di dati se l\'app viene eliminata o il dispositivo viene cambiato.</string>
+    <string name="feature_intro_life_changing_challenges">Sfide che cambiano la vita</string>
+    <string name="feature_intro_features">Resetta registri, widget, calendari, grafici, classifiche, ecc.\nOffriamo una varietà di funzioni.</string>
+    <string name="feature_intro_challenge_together">Sfida insieme</string>
+    <string name="feature_intro_challenge_together_detail">Competi nelle classifiche in tempo reale,\ne raggiungi un senso di realizzazione sfidando insieme.</string>
+    <string name="feature_intro_community">Community</string>
+    <string name="feature_intro_community_detail">Condividi le tue esperienze nella community\ne aggiungi ai preferiti le tue citazioni preferite per conservarle.</string>
+    <string name="feature_intro_divider_text">oppure</string>
+    <string name="feature_intro_kakao_content_description">Accedi con Kakao</string>
+    <string name="feature_intro_google_content_description">Accedi con Google</string>
+    <string name="feature_intro_naver_content_description">Accedi con Naver</string>
+    <string name="feature_intro_login_success">Accesso eseguito con successo</string>
+    <string name="feature_intro_unknown_error">Si è verificato un errore. Riprova più tardi.</string>
+</resources>

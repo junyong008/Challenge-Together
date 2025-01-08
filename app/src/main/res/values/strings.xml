@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Challenge Together</string>
+    <string name="app_name_debug">Debug Challenge Together</string>
+    <string name="splash_content_description">Splash Image</string>
+</resources>

@@ -1,0 +1,41 @@
+complexity:
+  LongParameterList:
+    active: false
+  LongMethod:
+    threshold: 100
+    ignoreAnnotated: [ 'Composable' ]
+  ComplexCondition:
+    threshold: 7
+  CyclomaticComplexMethod:
+    ignoreAnnotated: [ 'Composable' ]
+    ignoreSimpleWhenEntries: true
+  TooManyFunctions:
+    active: false
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: false
+
+formatting:
+  Filename:
+    active: false
+
+style:
+  MagicNumber:
+    ignorePropertyDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+    ignoreEnums: true
+    ignoreAnnotated: ['Preview', 'DevicePreviews', 'ComponentPreviews']
+    excludes: ['**/*PreviewParameterProvider.kt', '**/test/**', '**/androidTest/**']
+  UnusedPrivateMember:
+    ignoreAnnotated: [ 'preview' ]
+  ReturnCount:
+    active: false
+
+naming:
+  TopLevelPropertyNaming:
+    constantPattern: '[A-Z][A-Za-z0-9_]*'
+  FunctionNaming:
+    ignoreAnnotated: [ 'Composable' ]
+  MatchingDeclarationName:
+    active: false

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_setting_all">所有通知</string>
+    <string name="feature_notification_setting_challenge">挑战通知</string>
+    <string name="feature_notification_setting_community">社区通知</string>
+    <string name="feature_notification_setting_goal_achieved">目标达成通知</string>
+    <string name="feature_notification_setting_goal_achieved_detail">挑战目标达成时发送通知。</string>
+    <string name="feature_notification_setting_waiting_room_participants">候车室参与者通知</string>
+    <string name="feature_notification_setting_waiting_room_participants_detail">当有参与者进入或离开您创建的候车室时通知。</string>
+    <string name="feature_notification_setting_waiting_room_updates">候车室更新通知</string>
+    <string name="feature_notification_setting_waiting_room_updates_detail">关于候车室的更新通知，例如开始或删除。</string>
+    <string name="feature_notification_setting_challenge_room_progress">挑战房间进度通知</string>
+    <string name="feature_notification_setting_challenge_room_progress_detail">当挑战房间中的其他参与者重置或放弃时通知。</string>
+    <string name="feature_notification_setting_challenge_board">挑战公告板通知</string>
+    <string name="feature_notification_setting_challenge_board_detail">当您所在的挑战公告板新增帖子时通知。</string>
+    <string name="feature_notification_setting_comment">评论通知</string>
+    <string name="feature_notification_setting_comment_detail">当有人评论您的帖子时通知。</string>
+    <string name="feature_notification_setting_reply">回复通知</string>
+    <string name="feature_notification_setting_reply_detail">当有人回复您的评论时通知。</string>
+    <string name="feature_notification_setting_permission_denied_title">权限被拒绝</string>
+    <string name="feature_notification_setting_permission_denied_description">通知当前已禁用。\n请在您的设备设置中启用通知以保持更新。</string>
+    <string name="feature_notification_setting_settings">设置</string>
+</resources>

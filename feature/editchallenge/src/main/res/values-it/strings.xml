@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_editchallenge_edit">Modifica</string>
+    <string name="feature_editchallenge_edit_failed">Modifica non riuscita.\nPer favore riprova più tardi.</string>
+    <string name="feature_editchallenge_edit_successful">Modifica riuscita.</string>
+    <string name="feature_editchallenge_edit_category_title">Modifica Categoria</string>
+    <string name="feature_editchallenge_edit_category_description">Seleziona la categoria a cui vuoi passare.</string>
+    <string name="feature_editchallenge_title">Titolo</string>
+    <string name="feature_editchallenge_title_placeholder">Titolo della sfida</string>
+    <string name="feature_editchallenge_description_optional">Descrizione (Opzionale)</string>
+    <string name="feature_editchallenge_description_placeholder">Descrizione della sfida</string>
+    <string name="feature_editchallenge_edit_title">Modifica una descrizione della sfida</string>
+    <string name="feature_editchallenge_edit_description">Inserisci i dettagli della sfida.\nScrivere i tuoi obiettivi e risoluzioni ti aiuterà.</string>
+    <string name="feature_editchallenge_edit_target_day_title">Modifica il giorno target per la sfida</string>
+    <string name="feature_editchallenge_edit_target_day_description">Imposta quanti giorni durerà la sfida.\nSe non resetti durante il periodo target, avrai successo.</string>
+    <string name="feature_editchallenge_record_exceeded_notice">Record Superato</string>
+    <string name="feature_editchallenge_record_exceeded_description">Il tuo record attuale ha superato %1$s giorni.\nLa sfida sarà completata immediatamente.</string>
+    <string name="feature_editchallenge_complete">Completa</string>
+</resources>

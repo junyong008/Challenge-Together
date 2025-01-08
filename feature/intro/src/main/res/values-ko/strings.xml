@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_intro_start">시작하기</string>
+    <string name="feature_intro_start_with">시작하기</string>
+    <string name="feature_intro_start_email">이메일로 시작하기</string>
+    <string name="feature_intro_start_guest">비회원으로 시작하기</string>
+    <string name="feature_intro_start_guest_warning">주의</string>
+    <string name="feature_intro_start_guest_warning_detail">비회원으로 로그인 후 계정 연동을 하지 않고 기기 변경 시 데이터가 사라질 수 있습니다.</string>
+    <string name="feature_intro_life_changing_challenges">인생을 바꾸는 도전</string>
+    <string name="feature_intro_features">리셋 기록, 위젯, 달력, 그래프, 랭킹 등\n여러 다양한 기능을 제공해요.</string>
+    <string name="feature_intro_challenge_together">같이 도전하기</string>
+    <string name="feature_intro_challenge_together_detail">실시간 랭킹을 보면서 경쟁하고,\n다 같이 도전하며 성취감을 얻어보세요.</string>
+    <string name="feature_intro_community">커뮤니티</string>
+    <string name="feature_intro_community_detail">커뮤니티에서 경험을 공유하며 소통하고,\n원하는 글귀를 북마크해 소장해 보세요.</string>
+    <string name="feature_intro_divider_text">or</string>
+    <string name="feature_intro_kakao_content_description">카카오로 시작하기</string>
+    <string name="feature_intro_google_content_description">구글로 시작하기</string>
+    <string name="feature_intro_naver_content_description">네이버로 시작하기</string>
+    <string name="feature_intro_login_success">로그인되었습니다.</string>
+    <string name="feature_intro_unknown_error">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
+</resources>

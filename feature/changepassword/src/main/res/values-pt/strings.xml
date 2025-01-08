@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changepassword_title">Alterar Senha</string>
+    <string name="feature_changepassword_description">Por favor, siga as regras abaixo ao criar sua senha.</string>
+    <string name="feature_changepassword_lock_image_description">Imagem do Ícone de Cadeado</string>
+    <string name="feature_changepassword_input_password_place_holder">Nova Senha</string>
+    <string name="feature_changepassword_password_length_indicator">A senha deve ter pelo menos %1$d caracteres</string>
+    <string name="feature_changepassword_password_number_indicator">A senha deve conter pelo menos um número</string>
+    <string name="feature_changepassword_confirm">Confirmar</string>
+    <string name="feature_changepassword_change">Alterar</string>
+    <string name="feature_changepassword_confirm_info">Você deseja alterar sua senha?</string>
+    <string name="feature_changepassword_back">Voltar</string>
+    <string name="feature_changepassword_cancel_prompt">Você deseja cancelar a alteração da senha?</string>
+    <string name="feature_changepassword_success">Sua senha foi alterada.</string>
+    <string name="feature_changepassword_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
+    <string name="feature_changepassword_check_network_connection">Por favor, verifique sua conexão de rede.</string>
+</resources>

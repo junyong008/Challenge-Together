@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_my_navigation_title">मेरा</string>
+    <string name="feature_my_medal_description">वर्तमान स्तर</string>
+    <string name="feature_my_no_active_challenge_mode">कोई सक्रिय चुनौती मोड नहीं</string>
+    <string name="feature_my_highest_tier">सर्वोच्च स्तर</string>
+    <string name="feature_my_remain_time_for_next_tier">अगले स्तर के लिए शेष समय: %d दिन</string>
+    <string name="feature_my_best_record">सर्वश्रेष्ठ रिकॉर्ड</string>
+    <string name="feature_my_attempt_count">कोशिशें</string>
+    <string name="feature_my_success_count">सफलताएँ</string>
+    <string name="feature_my_reset_count">रीसेट्स</string>
+    <string name="feature_my_settings">सेटिंग्स</string>
+    <string name="feature_my_account">खाता</string>
+    <string name="feature_my_app_info">ऐप जानकारी</string>
+    <string name="feature_my_notification_settings">सूचना सेटिंग्स</string>
+    <string name="feature_my_app_lock_settings">ऐप लॉक सेटिंग्स</string>
+    <string name="feature_my_account_linking">खाता लिंक करना</string>
+    <string name="feature_my_account_premium">प्रीमियम उन्नयन</string>
+    <string name="feature_my_linked_with_kakao">काकाओ से लिंक किया गया</string>
+    <string name="feature_my_linked_with_google">गूगल से लिंक किया गया</string>
+    <string name="feature_my_linked_with_naver">नेवर से लिंक किया गया</string>
+    <string name="feature_my_linked_with">से लिंक किया गया</string>
+    <string name="feature_my_nickname_change">उपाधी बदलें</string>
+    <string name="feature_my_password_change">पासवर्ड बदलें</string>
+    <string name="feature_my_logout">लॉग आउट</string>
+    <string name="feature_my_logout_confirmation">क्या आप सुनिश्चित हैं कि आप लॉग आउट करना चाहते हैं?</string>
+    <string name="feature_my_logout_success">आप लॉग आउट हो गए हैं।</string>
+    <string name="feature_my_delete_account">खाता हटाएँ</string>
+    <string name="feature_my_contact_support">1:1 पूछताछ</string>
+    <string name="feature_my_privacy_policy">गोपनीयता नीति</string>
+    <string name="feature_my_open_source_license">ओपन सोर्स लाइसेंस</string>
+    <string name="feature_my_app_version">ऐप संस्करण</string>
+    <string name="feature_my_email_inquiry_title">चुनौती साथ मिलकर पूछताछ</string>
+    <string name="feature_my_email_inquiry_content">सामग्री: </string>
+    <string name="feature_my_email_app_not_found">कोई ईमेल एप्लिकेशन नहीं मिला।</string>
+    <string name="feature_my_email_send_failed">ईमेल भेजने में असमर्थ।</string>
+</resources>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeranking_title">Rangliste</string>
+    <string name="feature_challengeranking_tip_title">Tipps</string>
+    <string name="feature_challengeranking_tip_long_absence">Benutzer, die 7 Tage inaktiv sind, können von anderen Teilnehmern zwangsweise entfernt werden.</string>
+    <string name="feature_challengeranking_tip_alone">Wenn Sie alleine in der Herausforderung bleiben, verschwindet die Rangliste und Bearbeitungen der Herausforderung werden möglich.</string>
+    <string name="feature_challengeranking_force_remove_title">Zwangsentfernung</string>
+    <string name="feature_challengeranking_force_remove_description">Inaktive Benutzer können zwangsweise entfernt werden.\nMöchten Sie diesen Benutzer entfernen?</string>
+    <string name="feature_challengeranking_remove">Entfernen</string>
+    <string name="feature_challengeranking_success">Erfolg</string>
+    <string name="feature_challengeranking_first_place_description">Bild, das den 1. Platz in der Rangliste darstellt</string>
+    <string name="feature_challengeranking_second_place_description">Bild, das den 2. Platz in der Rangliste darstellt</string>
+    <string name="feature_challengeranking_third_place_description">Bild, das den 3. Platz in der Rangliste darstellt</string>
+    <string name="feature_challengeranking_force_remove_success">Der Benutzer wurde erfolgreich entfernt.</string>
+    <string name="feature_challengeranking_user_reconnected">Der Benutzer hat sich gerade wieder verbunden.</string>
+    <string name="feature_challengeranking_check_network_connection">Bitte überprüfen Sie Ihre Netzwerkverbindung.</string>
+    <string name="feature_challengeranking_force_remove_failed">Fehler beim Entfernen des Benutzers. Bitte versuchen Sie es später erneut.</string>
+</resources>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_title">Thông báo</string>
+    <string name="feature_notification_more">Thêm</string>
+    <string name="feature_notification_delete">Xóa</string>
+    <string name="feature_notification_delete_all">Xóa tất cả</string>
+    <string name="feature_notification_setting">Cài đặt</string>
+    <string name="feature_notification_empty_title">Chưa có thông báo</string>
+    <string name="feature_notification_empty_description">Hiện tại không có thông báo.\nBạn sẽ thấy các cập nhật và cảnh báo ở đây khi chúng xuất hiện!</string>
+    <string name="feature_notification_challenge_category">Thông báo danh mục Thử thách</string>
+    <string name="feature_notification_community_category">Thông báo danh mục Cộng đồng</string>
+    <string name="feature_notification_delete_success">Xóa thành công.</string>
+    <string name="feature_notification_delete_failed">Xóa thất bại. Vui lòng thử lại sau.</string>
+</resources>

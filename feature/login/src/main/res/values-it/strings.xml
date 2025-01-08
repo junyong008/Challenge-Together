@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_login_title_description">Il primo passo più facile per cambiare me stesso,</string>
+    <string name="feature_login_title">Sfida Insieme</string>
+    <string name="feature_login_input_email_content_description">Inserisci Email</string>
+    <string name="feature_login_input_email_place_holder">Email</string>
+    <string name="feature_login_input_password_content_description">Inserisci Password</string>
+    <string name="feature_login_input_password_place_holder">Password</string>
+    <string name="feature_login_button_text">ACCEDI</string>
+    <string name="feature_login_find_password">Trova Password</string>
+    <string name="feature_login_sign_up">Iscriviti</string>
+    <string name="feature_login_login_success">Accesso riuscito</string>
+    <string name="feature_login_user_not_found">L\'ID o la password non è corretto.</string>
+    <string name="feature_login_invalid_email_format">Per favore inserisci un formato email corretto.</string>
+    <string name="feature_login_unknown_error">Si è verificato un errore. Si prega di riprovare più tardi.</string>
+    <string name="feature_login_check_network_connection">Si prega di controllare la connessione di rete.</string>
+</resources>

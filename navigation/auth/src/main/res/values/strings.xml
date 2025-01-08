@@ -1,0 +1,4 @@
+<resources>
+    <string name="navigation_auth_update">Update</string>
+    <string name="navigation_auth_update_description">A new version of the app is available.\nPlease update through the Play Store.</string>
+</resources>

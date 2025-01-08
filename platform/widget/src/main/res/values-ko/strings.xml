@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_widget_challenge_list_widget_name">도전 목록</string>
+    <string name="platform_widget_challenge_tall_widget_name">도전 카드</string>
+    <string name="platform_widget_challenge_wide_widget_name">도전 카드</string>
+    <string name="platform_widget_challenge_simple_widget_name">도전 카드</string>
+    <string name="platform_widget_no_challenge">도전이 없습니다</string>
+    <string name="platform_widget_no_challenges">도전이 없습니다</string>
+    <string name="platform_widget_no_challenges_description">아직 진행중인 도전이 없습니다.\n앱에서 도전을 만들고 새로운 여정을 시작해보세요!</string>
+    <string name="platform_widget_time_d">일</string>
+    <string name="platform_widget_time_day">일</string>
+    <string name="platform_widget_time_hour">시간</string>
+    <string name="platform_widget_progress_description">진행률</string>
+    <string name="platform_widget_category_icon_description">카테고리 아이콘</string>
+    <string name="platform_widget_settings">위젯 설정</string>
+    <string name="platform_widget_opacity">불투명도</string>
+    <string name="platform_widget_cancel">취소</string>
+    <string name="platform_widget_confirm">확인</string>
+    <string name="platform_widget_select">선택</string>
+    <string name="platform_widget_hidden_due_to_app_lock">앱 잠금 설정으로 인해 숨겨짐</string>
+</resources>

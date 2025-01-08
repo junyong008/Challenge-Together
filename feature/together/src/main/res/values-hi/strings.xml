@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_together_title">साथ में</string>
+    <string name="feature_together_description">विभिन्न लोगों के साथ एक चुनौती की शुरुआत करें।</string>
+    <string name="feature_together_search_placeholder">खोजें…</string>
+    <string name="feature_together_empty_title">कोई चुनौतियाँ नहीं मिलीं</string>
+    <string name="feature_together_empty_description">इस समय कोई उपलब्ध चुनौतियाँ नहीं हैं।\nएक नई चुनौती बनाएं और दूसरों को आमंत्रित करें!</string>
+    <string name="feature_together_search_empty_title">कोई चुनौतियाँ नहीं मिलीं</string>
+    <string name="feature_together_search_empty_description">आपकी खोज से मिलती-जुलती कोई चुनौतियाँ नहीं हैं।\nविभिन्न कीवर्ड या फ़िल्टर का उपयोग करने का प्रयास करें!</string>
+    <string name="feature_together_global">अन्य भाषा चुनौतियाँ</string>
+    <string name="feature_together_global_challenges_on">सभी देशों की चुनौतियाँ दिखाई जाएंगी।</string>
+    <string name="feature_together_global_challenges_off">केवल %1$s चुनौतियाँ दिखाई जाएंगी।</string>
+</resources>

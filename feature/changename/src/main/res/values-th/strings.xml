@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">เปลี่ยนชื่อเล่น</string>
+    <string name="feature_changename_description">คุณสามารถเปลี่ยนชื่อเล่นได้สัปดาห์ละครั้ง</string>
+    <string name="feature_changename_action">เปลี่ยน</string>
+    <string name="feature_changenam_confirm_info">คุณต้องการเปลี่ยนชื่อเล่นหรือไม่?\nคุณสามารถเปลี่ยนชื่อเล่นได้สัปดาห์ละครั้ง</string>
+    <string name="feature_changename_info_graphic">กราฟิกข้อมูลชื่อเล่น</string>
+    <string name="feature_changename_success">ชื่อเล่นของคุณถูกเปลี่ยนแล้ว</string>
+    <string name="feature_changename_nickname_already_taken">ชื่อเล่นนี้ถูกใช้ไปแล้ว</string>
+    <string name="feature_changename_error">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งภายหลัง</string>
+    <string name="feature_changename_check_network_connection">กรุณาตรวจสอบการเชื่อมต่อเครือข่ายของคุณ</string>
+    <string name="feature_changename_length_indicator">ชื่อเล่นต้องมีความยาวระหว่าง %1$d และ %2$d ตัวอักษร</string>
+    <string name="feature_changename_korean_constraint">ชื่อเล่นภาษาเกาหลีไม่สามารถประกอบด้วยพยัญชนะหรือสระล้วนได้</string>
+    <string name="feature_changename_duplicate_name">ชื่อเล่นนี้เหมือนกับชื่อเดิม</string>
+    <string name="feature_changename_next_change_notice">คุณสามารถเปลี่ยนอีกครั้งได้หลังจาก %1$s</string>
+</resources>

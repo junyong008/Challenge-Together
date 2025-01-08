@@ -1,0 +1,23 @@
+<resources>
+    <string name="feature_home_navigation_title">Home</string>
+    <string name="feature_home_title">CHALLENGE TOGETHER</string>
+    <string name="feature_home_medal_description">Current Tier</string>
+    <string name="feature_home_complete_challenge_description">Complete Challenges</string>
+    <string name="feature_home_notification_description">Notifications</string>
+    <string name="feature_home_remain_time_for_next_tier">Remaining time for next tier: %d Days</string>
+    <string name="feature_home_current_highest_record">Current Best Record</string>
+    <string name="feature_home_my_challenges">My Challenges</string>
+    <string name="feature_home_joined_challenges">Joined Challenges</string>
+    <string name="feature_home_sort_challenge_content_description">Sort Challenge</string>
+    <string name="feature_home_congratulations">Congratulations!</string>
+    <string name="feature_home_challenge_success">%1$s\nYou have successfully completed the challenge.</string>
+    <string name="feature_home_congratulations_image_description">Image of Congratulations</string>
+    <string name="feature_home_promoted">PROMOTED</string>
+    <string name="feature_home_promoted_description">You have been promoted to the %1$s.</string>
+    <string name="feature_home_promoted_confirm">Confirm</string>
+    <string name="feature_home_no_active_challenge_mode">No active challenge mode</string>
+    <string name="feature_home_highest_tier">Highest Tier</string>
+    <string name="feature_home_no_active_challenge">No Challenges</string>
+    <string name="feature_home_start_new_challenge_prompt">Tap the add button at the bottom right to start a new challenge.</string>
+    <string name="feature_home_sort">Sort By</string>
+</resources>

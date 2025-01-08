@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">Quadro</string>
+    <string name="feature_challengeboard_content_placeholder">Insira o conteúdo…</string>
+    <string name="feature_challengeboard_send">Enviar</string>
+    <string name="feature_challengeboard_no_posts_title">Ainda sem posts</string>
+    <string name="feature_challengeboard_no_posts_description">Deixe registros ou notas sobre seu desafio.</string>
+    <string name="feature_challengeboard_scroll_to_bottom">Rolar até o final</string>
+    <string name="feature_challengeboard_menu_copy">Copiar</string>
+    <string name="feature_challengeboard_menu_report">Reportar</string>
+    <string name="feature_challengeboard_menu_delete">Excluir</string>
+    <string name="feature_challengeboard_delete_success">Excluído com sucesso.</string>
+    <string name="feature_challengeboard_delete_failed">Falha na exclusão. Por favor, tente novamente mais tarde.</string>
+    <string name="feature_challengeboard_report_success">Reportado com sucesso.</string>
+    <string name="feature_challengeboard_report_failed">Falha no relatório. Por favor, tente novamente mais tarde.</string>
+    <string name="feature_challengeboard_report_already_reported">Este post já foi reportado.</string>
+    <string name="feature_challengeboard_toggle_notification">Alternar notificação</string>
+    <string name="feature_challengeboard_notification_enabled">Notificações ativadas.</string>
+    <string name="feature_challengeboard_notification_disabled">Notificações desativadas.</string>
+</resources>

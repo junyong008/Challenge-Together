@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_deleteaccount_title">계정 삭제하기</string>
+    <string name="feature_deleteaccount_warning_title">잠깐! 계정을 삭제하기 전에 아래 정보를 확인해 주세요.</string>
+    <string name="feature_deleteaccount_warning_challenges">모든 도전에서 나와 관련된 정보들이 사라져요.</string>
+    <string name="feature_deleteaccount_warning_community">커뮤니티에 작성한 게시글이나 댓글은 (탈퇴 회원)으로 변경돼요.</string>
+    <string name="feature_deleteaccount_warning_irreversible">모든 정보는 즉시 파기되며, 복구할 수 없어요.</string>
+    <string name="feature_deleteaccount_info_graphic">계정 삭제 그래픽 이미지</string>
+    <string name="feature_deleteaccount_delete">삭제하기</string>
+    <string name="feature_deleteaccount_confirmation">정말 계정을 삭제하시겠습니까?</string>
+    <string name="feature_deleteaccount_irreversible_notice">삭제 이후엔 복구할 수 없어요.</string>
+    <string name="feature_deleteaccount_success">계정이 삭제되었습니다.</string>
+    <string name="feature_deleteaccount_error">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
+</resources>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">ボード</string>
+    <string name="feature_challengeboard_content_placeholder">内容を入力してください…</string>
+    <string name="feature_challengeboard_send">送信</string>
+    <string name="feature_challengeboard_no_posts_title">投稿がありません</string>
+    <string name="feature_challengeboard_no_posts_description">チャレンジについての記録やメモを残しましょう。</string>
+    <string name="feature_challengeboard_scroll_to_bottom">一番下までスクロール</string>
+    <string name="feature_challengeboard_menu_copy">コピー</string>
+    <string name="feature_challengeboard_menu_report">報告</string>
+    <string name="feature_challengeboard_menu_delete">削除</string>
+    <string name="feature_challengeboard_delete_success">正常に削除されました。</string>
+    <string name="feature_challengeboard_delete_failed">削除に失敗しました。後でもう一度お試しください。</string>
+    <string name="feature_challengeboard_report_success">正常に報告されました。</string>
+    <string name="feature_challengeboard_report_failed">報告に失敗しました。後でもう一度お試しください。</string>
+    <string name="feature_challengeboard_report_already_reported">この投稿はすでに報告されています。</string>
+    <string name="feature_challengeboard_toggle_notification">通知の切り替え</string>
+    <string name="feature_challengeboard_notification_enabled">通知が有効になりました。</string>
+    <string name="feature_challengeboard_notification_disabled">通知が無効になりました。</string>
+</resources>

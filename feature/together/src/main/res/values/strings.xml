@@ -1,0 +1,12 @@
+<resources>
+    <string name="feature_together_title">Together</string>
+    <string name="feature_together_description">Start a challenge with diverse people.</string>
+    <string name="feature_together_search_placeholder">Search…</string>
+    <string name="feature_together_empty_title">No Challenges Found</string>
+    <string name="feature_together_empty_description">There are no challenges available right now.\nCreate a new challenge and invite others to join!</string>
+    <string name="feature_together_search_empty_title">No Challenges Found</string>
+    <string name="feature_together_search_empty_description">No challenges match your search.\nTry using different keywords or filters!</string>
+    <string name="feature_together_global">Other Language Challenges</string>
+    <string name="feature_together_global_challenges_on">Challenges from all countries will be displayed.</string>
+    <string name="feature_together_global_challenges_off">Only %1$s challenges will be displayed.</string>
+</resources>

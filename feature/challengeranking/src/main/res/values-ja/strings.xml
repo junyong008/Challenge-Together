@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeranking_title">ランキング</string>
+    <string name="feature_challengeranking_tip_title">ヒント</string>
+    <string name="feature_challengeranking_tip_long_absence">7日間非アクティブなユーザーは他の参加者によって強制的に削除されることがあります。</string>
+    <string name="feature_challengeranking_tip_alone">チャレンジで一人だけ孤立すると、ランキングは消え、チャレンジの編集が可能になります。</string>
+    <string name="feature_challengeranking_force_remove_title">強制削除</string>
+    <string name="feature_challengeranking_force_remove_description">非アクティブなユーザーを強制的に削除できます。\nこのユーザーを削除しますか？</string>
+    <string name="feature_challengeranking_remove">削除</string>
+    <string name="feature_challengeranking_success">成功</string>
+    <string name="feature_challengeranking_first_place_description">ランキング1位を表す画像</string>
+    <string name="feature_challengeranking_second_place_description">ランキング2位を表す画像</string>
+    <string name="feature_challengeranking_third_place_description">ランキング3位を表す画像</string>
+    <string name="feature_challengeranking_force_remove_success">ユーザーは正常に削除されました。</string>
+    <string name="feature_challengeranking_user_reconnected">ユーザーが再接続しました。</string>
+    <string name="feature_challengeranking_check_network_connection">ネットワーク接続を確認してください。</string>
+    <string name="feature_challengeranking_force_remove_failed">ユーザーの削除に失敗しました。後でもう一度お試しください。</string>
+</resources>

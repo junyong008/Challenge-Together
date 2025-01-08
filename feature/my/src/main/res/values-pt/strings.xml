@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_my_navigation_title">Meu</string>
+    <string name="feature_my_medal_description">Nível Atual</string>
+    <string name="feature_my_no_active_challenge_mode">Nenhum modo de desafio ativo</string>
+    <string name="feature_my_highest_tier">Nível Mais Alto</string>
+    <string name="feature_my_remain_time_for_next_tier">Tempo restante para o próximo nível: %d Dias</string>
+    <string name="feature_my_best_record">Melhor Recorde</string>
+    <string name="feature_my_attempt_count">Tentativas</string>
+    <string name="feature_my_success_count">Sucessos</string>
+    <string name="feature_my_reset_count">Reinicializações</string>
+    <string name="feature_my_settings">Configurações</string>
+    <string name="feature_my_account">Conta</string>
+    <string name="feature_my_app_info">Informações do Aplicativo</string>
+    <string name="feature_my_notification_settings">Configurações de Notificação</string>
+    <string name="feature_my_app_lock_settings">Configurações de Bloqueio de Aplicativo</string>
+    <string name="feature_my_account_linking">Vinculação de Conta</string>
+    <string name="feature_my_account_premium">Upgrade para Premium</string>
+    <string name="feature_my_linked_with_kakao">Vinculado com Kakao</string>
+    <string name="feature_my_linked_with_google">Vinculado com Google</string>
+    <string name="feature_my_linked_with_naver">Vinculado com Naver</string>
+    <string name="feature_my_linked_with">Vinculado com</string>
+    <string name="feature_my_nickname_change">Alterar Apelido</string>
+    <string name="feature_my_password_change">Alterar Senha</string>
+    <string name="feature_my_logout">Sair</string>
+    <string name="feature_my_logout_confirmation">Tem certeza de que deseja sair?</string>
+    <string name="feature_my_logout_success">Você foi desconectado.</string>
+    <string name="feature_my_delete_account">Excluir Conta</string>
+    <string name="feature_my_contact_support">Consulta 1:1</string>
+    <string name="feature_my_privacy_policy">Política de Privacidade</string>
+    <string name="feature_my_open_source_license">Licenças de Código Aberto</string>
+    <string name="feature_my_app_version">Versão do Aplicativo</string>
+    <string name="feature_my_email_inquiry_title">Consulta do Challenge Together</string>
+    <string name="feature_my_email_inquiry_content">Conteúdo: </string>
+    <string name="feature_my_email_app_not_found">Nenhum aplicativo de e-mail encontrado.</string>
+    <string name="feature_my_email_send_failed">Não foi possível enviar o e-mail.</string>
+</resources>

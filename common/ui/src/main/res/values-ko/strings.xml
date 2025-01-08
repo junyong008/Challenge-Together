@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ui_error_body_title">화면을 불러올 수 없습니다</string>
+    <string name="common_ui_error_description">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="common_ui_error_retry">재시도</string>
+    <string name="common_ui_started_challenge_card_timer_description">타이머 아이콘</string>
+    <string name="common_ui_started_challenge_card_check_description">완료 아이콘</string>
+    <string name="common_ui_waiting_challenge_number">%1$d번 방</string>
+    <string name="common_ui_waiting_challenge_private">[비밀방]</string>
+    <string name="common_ui_waiting_challenge_participant_number_format">%1$s / %2$s</string>
+    <string name="common_ui_waiting_challenge_calendar_description">달력 아이콘</string>
+    <string name="common_ui_waiting_challenge_goal_days">%1$s 일</string>
+    <string name="common_ui_waiting_challenge_unlimited">무제한</string>
+    <string name="common_ui_waiting_challenge_icon_of_person">사람 아이콘</string>
+    <string name="common_ui_manual_time_warning">시간이 수동으로 설정되어 있습니다</string>
+    <string name="common_ui_manual_time_warning_icon">시계 아이콘</string>
+    <string name="common_ui_category_list_all">나의 도전</string>
+    <string name="common_ui_target_day">목표일</string>
+    <string name="common_ui_target_day_unlimited">무제한</string>
+    <string name="common_ui_target_day_days">일</string>
+</resources>

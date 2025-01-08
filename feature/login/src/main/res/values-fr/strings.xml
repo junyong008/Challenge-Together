@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_login_title_description">Le premier pas le plus facile pour me changer,</string>
+    <string name="feature_login_title">Défi Ensemble</string>
+    <string name="feature_login_input_email_content_description">Saisir l\'Email</string>
+    <string name="feature_login_input_email_place_holder">Email</string>
+    <string name="feature_login_input_password_content_description">Saisir le Mot de Passe</string>
+    <string name="feature_login_input_password_place_holder">Mot de Passe</string>
+    <string name="feature_login_button_text">CONNEXION</string>
+    <string name="feature_login_find_password">Trouver le Mot de Passe</string>
+    <string name="feature_login_sign_up">S\'inscrire</string>
+    <string name="feature_login_login_success">Connexion réussie</string>
+    <string name="feature_login_user_not_found">L\'identifiant ou le mot de passe est incorrect.</string>
+    <string name="feature_login_invalid_email_format">Veuillez entrer un format d\'email correct.</string>
+    <string name="feature_login_unknown_error">Une erreur s\'est produite. Veuillez réessayer plus tard.</string>
+    <string name="feature_login_check_network_connection">Veuillez vérifier votre connexion réseau.</string>
+</resources>

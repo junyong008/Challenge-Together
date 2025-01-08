@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_widget_challenge_list_widget_name">チャレンジ一覧</string>
+    <string name="platform_widget_challenge_tall_widget_name">チャレンジカード</string>
+    <string name="platform_widget_challenge_wide_widget_name">チャレンジカード</string>
+    <string name="platform_widget_challenge_simple_widget_name">シンプルチャレンジカード</string>
+    <string name="platform_widget_no_challenge">チャレンジなし</string>
+    <string name="platform_widget_no_challenges">チャレンジなし</string>
+    <string name="platform_widget_no_challenges_description">利用可能なチャレンジはありません。\nアプリを開いて最初のチャレンジを追加し、旅を始めましょう！</string>
+    <string name="platform_widget_time_d">日</string>
+    <string name="platform_widget_time_day">日</string>
+    <string name="platform_widget_time_hour">時間</string>
+    <string name="platform_widget_progress_description">進捗</string>
+    <string name="platform_widget_category_icon_description">カテゴリアイコン</string>
+    <string name="platform_widget_settings">ウィジェット設定</string>
+    <string name="platform_widget_opacity">不透明度</string>
+    <string name="platform_widget_cancel">キャンセル</string>
+    <string name="platform_widget_confirm">確認</string>
+    <string name="platform_widget_select">選択</string>
+    <string name="platform_widget_hidden_due_to_app_lock">アプリ・ロック設定により非表示</string>
+</resources>

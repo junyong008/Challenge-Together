@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">Mudar Apelido</string>
+    <string name="feature_changename_description">Você pode mudar seu apelido uma vez por semana.</string>
+    <string name="feature_changename_action">Mudar</string>
+    <string name="feature_changenam_confirm_info">Deseja mudar seu Apelido?\nVocê pode mudar seu apelido uma vez por semana.</string>
+    <string name="feature_changename_info_graphic">Gráfico de Informações do Apelido</string>
+    <string name="feature_changename_success">Seu Apelido foi alterado.</string>
+    <string name="feature_changename_nickname_already_taken">Este apelido já está em uso.</string>
+    <string name="feature_changename_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
+    <string name="feature_changename_check_network_connection">Por favor, verifique sua conexão de rede.</string>
+    <string name="feature_changename_length_indicator">O apelido deve ter entre %1$d e %2$d caracteres de comprimento</string>
+    <string name="feature_changename_korean_constraint">Apelidos coreanos não podem conter apenas consoantes ou vogais</string>
+    <string name="feature_changename_duplicate_name">O apelido é idêntico ao atual</string>
+    <string name="feature_changename_next_change_notice">Você pode alterá-lo novamente após %1$s</string>
+</resources>

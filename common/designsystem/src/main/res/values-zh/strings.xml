@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_designsystem_app_bar_back">返回</string>
+    <string name="common_designsystem_app_bar_continue">继续</string>
+    <string name="common_designsystem_clear_content_description">清除内容</string>
+    <string name="common_designsystem_input_password_show_content_description">显示密码</string>
+    <string name="common_designsystem_input_password_hide_content_description">隐藏密码</string>
+    <string name="common_designsystem_dialog_confirm">确认</string>
+    <string name="common_designsystem_dialog_cancel">取消</string>
+    <string name="common_designsystem_dialog_year_month_picker_title">选择年份和月份</string>
+    <string name="common_designsystem_dialog_year_month_picker_description">请输入您希望导航到的年份和月份</string>
+    <string name="common_designsystem_dialog_enter_year">年</string>
+    <string name="common_designsystem_dialog_enter_month">月</string>
+    <string name="common_designsystem_bottom_sheet_close">关闭</string>
+    <string name="common_designsystem_calendar_next_month">下一个月</string>
+    <string name="common_designsystem_calendar_previous_month">上一个月</string>
+    <string name="common_designsystem_calendar_expand_week_mode">展开周模式</string>
+    <string name="common_designsystem_calendar_year_month">%2$s %1$d</string>
+    <string name="common_designsystem_time_picker_increase_hour">增加小时</string>
+    <string name="common_designsystem_time_picker_increase_minute">增加分钟</string>
+    <string name="common_designsystem_time_picker_decrease_hour">减少小时</string>
+    <string name="common_designsystem_time_picker_decrease_minute">减少分钟</string>
+    <string name="common_designsystem_time_picker_am">上午</string>
+    <string name="common_designsystem_time_picker_pm">下午</string>
+    <string name="common_designsystem_dialog_report_title">举报</string>
+    <string name="common_designsystem_dialog_report_description">请选择举报原因。</string>
+    <string name="common_designsystem_dialog_password_title">密码</string>
+    <string name="common_designsystem_dialog_password_description">请输入入口密码。</string>
+    <string name="common_designsystem_dialog_password_placeholder">输入密码</string>
+    <string name="common_designsystem_dialog_system_maintenance_title">系统维护通知</string>
+    <string name="common_designsystem_dialog_system_maintenance_description">我们正在进行系统维护以提供更好的服务。\n在维护期间服务将暂时不可用。感谢您的理解。</string>
+    <string name="common_designsystem_dialog_expected_completion">预计完成时间</string>
+    <string name="common_designsystem_dialog_exit">退出</string>
+    <string name="common_designsystem_dialog_service_restriction_title">服务限制</string>
+    <string name="common_designsystem_dialog_service_restriction_description">由于违反我们的运营原则，您对服务的访问已被限制。</string>
+    <string name="common_designsystem_dialog_restriction_reason">原因</string>
+    <string name="common_designsystem_dialog_restriction_period">限制期限</string>
+    <string name="common_designsystem_dialog_until">直到 %1$s</string>
+    <string name="common_designsystem_dialog_premium_feature_title">高级功能</string>
+    <string name="common_designsystem_dialog_premium_feature_message">此功能仅限高级账户使用。</string>
+    <string name="common_designsystem_dialog_go_to_premium">探索</string>
+
+    <string name="common_designsystem_tier_unspecified">未指定等级</string>
+    <string name="common_designsystem_tier_iron_description">铁等级</string>
+    <string name="common_designsystem_tier_bronze_description">铜等级</string>
+    <string name="common_designsystem_tier_silver_description">银等级</string>
+    <string name="common_designsystem_tier_gold_description">金等级</string>
+    <string name="common_designsystem_tier_platinum_description">铂金等级</string>
+    <string name="common_designsystem_tier_diamond_description">钻石等级</string>
+    <string name="common_designsystem_tier_master_description">大师等级</string>
+    <string name="common_designsystem_tier_legend_description">传奇等级</string>
+
+    <string name="common_designsystem_category_all">全部</string>
+    <string name="common_designsystem_category_quit_smoking">戒烟</string>
+    <string name="common_designsystem_category_quit_drinking">戒酒</string>
+    <string name="common_designsystem_category_quit_porn">戒色情</string>
+    <string name="common_designsystem_category_quit_gaming">戒游戏</string>
+    <string name="common_designsystem_category_quit_youtube">戒YouTube</string>
+    <string name="common_designsystem_category_quit_sns">戒社交媒体</string>
+    <string name="common_designsystem_category_quit_gluten">戒麸质</string>
+    <string name="common_designsystem_category_quit_gambling">戒赌</string>
+    <string name="common_designsystem_category_quit_drugs">戒毒</string>
+    <string name="common_designsystem_category_quit_caffeine">戒咖啡因</string>
+    <string name="common_designsystem_category_quit_eating_out">戒外食</string>
+    <string name="common_designsystem_category_quit_shopping">戒购物</string>
+    <string name="common_designsystem_category_quit_swearing">戒骂人</string>
+    <string name="common_designsystem_category_quit_smartphone">戒智能手机</string>
+
+    <string name="common_designsystem_notification_challenge_completed">挑战完成</string>
+    <string name="common_designsystem_notification_user_challenge_completed">完成了“%1$s”挑战！</string>
+    <string name="common_designsystem_notification_participant_reset">“%1$s” 参与者重置</string>
+    <string name="common_designsystem_notification_user_reset">“%1$s” 已重置。</string>
+    <string name="common_designsystem_notification_participant_give_up">“%1$s” 参与者放弃</string>
+    <string name="common_designsystem_notification_user_give_up">“%1$s” 已放弃。</string>
+    <string name="common_designsystem_notification_challengeboard_post_added">“%1$s” 挑战板中新增帖子</string>
+    <string name="common_designsystem_notification_participant_force_remove">“%1$s” 参与者被强行移除</string>
+    <string name="common_designsystem_notification_user_force_remove">“%1$s” 因长期不活动被强制移除。</string>
+    <string name="common_designsystem_notification_challenge_deleted">挑战已删除</string>
+    <string name="common_designsystem_notification_challenge_deleted_detail">“%1$s” 挑战已被主持人删除。</string>
+    <string name="common_designsystem_notification_challenge_started">挑战已开始</string>
+    <string name="common_designsystem_notification_challenge_started_detail">“%1$s” 挑战已由主持人开始。</string>
+    <string name="common_designsystem_notification_participant_joined">“%1$s” 参与者加入</string>
+    <string name="common_designsystem_notification_participant_joined_detail">“%1$s” 已加入挑战。</string>
+    <string name="common_designsystem_notification_participant_left">“%1$s” 参与者退出</string>
+    <string name="common_designsystem_notification_participant_left_detail">“%1$s” 已退出挑战。</string>
+    <string name="common_designsystem_notification_user_commented">“%1$s” 发表了评论</string>
+    <string name="common_designsystem_notification_user_commented_detail">评论：“%1$s”</string>
+    <string name="common_designsystem_notification_user_replied">“%1$s” 回复了评论</string>
+    <string name="common_designsystem_notification_user_replied_detail">回复：“%1$s”</string>
+    <string name="common_designsystem_notification_hidden_title">新通知</string>
+    <string name="common_designsystem_notification_hidden_body">由于应用锁设置而隐藏</string>
+
+    <string name="common_designsystem_sort_order_latest">最新</string>
+    <string name="common_designsystem_sort_order_oldest">最旧</string>
+    <string name="common_designsystem_sort_order_title">按标题</string>
+    <string name="common_designsystem_sort_order_highest_record">最高记录</string>
+    <string name="common_designsystem_sort_order_lowest_record">最低记录</string>
+
+    <string name="common_designsystem_report_reason_commercial_content">商业内容</string>
+    <string name="common_designsystem_report_reason_inappropriate_content">成人或不当内容</string>
+    <string name="common_designsystem_report_reason_disturbing_behavior">扰乱行为</string>
+    <string name="common_designsystem_report_reason_defamation">诽谤或中伤</string>
+    <string name="common_designsystem_report_reason_incorrect_info">错误信息</string>
+
+    <string name="common_designsystem_user_withdrawn">（退出）</string>
+    <string name="common_designsystem_user_deleted">（已删除）</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_service_session_expired">세션이 만료되었습니다.\n다시 로그인해 주세요.</string>
+    <string name="navigation_service_add_new_challenge">새 도전 추가하기</string>
+    <string name="navigation_service_add_new_community_post">새 커뮤니티 게시글 추가하기</string>
+    <string name="navigation_service_check_network_connection">인터넷 연결 상태를 확인해 주세요.</string>
+    <string name="navigation_service_update">업데이트</string>
+    <string name="navigation_service_update_description">필수 업데이트가 있습니다.\n플레이 스토어에서 업데이트를 진행해 주세요.</string>
+</resources>

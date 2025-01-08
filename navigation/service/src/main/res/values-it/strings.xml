@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_service_session_expired">La tua sessione è scaduta.\nPer favore, accedi di nuovo.</string>
+    <string name="navigation_service_add_new_challenge">Aggiungi una nuova Sfida</string>
+    <string name="navigation_service_add_new_community_post">Aggiungi un nuovo Post nella Community</string>
+    <string name="navigation_service_check_network_connection">Per favore, controlla la tua connessione di rete.</string>
+    <string name="navigation_service_update">Aggiorna</string>
+    <string name="navigation_service_update_description">È disponibile una nuova versione dell\'app.\nPer favore, aggiorna tramite il Play Store.</string>
+</resources>

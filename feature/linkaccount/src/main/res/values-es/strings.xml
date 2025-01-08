@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_linkaccount_title">Vincular Cuenta</string>
+    <string name="feature_linkaccount_description">Vincula tu cuenta para un inicio de sesión rápido y la preservación de datos.</string>
+    <string name="feature_linkaccount_kakao">Vincular con Kakao</string>
+    <string name="feature_linkaccount_google">Vincular con Google</string>
+    <string name="feature_linkaccount_naver">Vincular con Naver</string>
+    <string name="feature_linkaccount_already_exists">Esta cuenta ya está registrada.</string>
+    <string name="feature_linkaccount_already_linked">Tu cuenta ya está vinculada.</string>
+    <string name="feature_linkaccount_success">Vinculado con éxito.</string>
+    <string name="feature_linkaccount_check_network_connection">Por favor, verifica tu conexión de red.</string>
+    <string name="feature_linkaccount_error">Ocurrió un error. Por favor, intenta de nuevo más tarde.</string>
+    <string name="feature_linkaccount_info_graphic">Gráfico de Información de Vinculación</string>
+</resources>

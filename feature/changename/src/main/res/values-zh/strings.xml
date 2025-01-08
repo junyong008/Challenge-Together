@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">修改昵称</string>
+    <string name="feature_changename_description">您可以每周更改一次昵称。</string>
+    <string name="feature_changename_action">更改</string>
+    <string name="feature_changenam_confirm_info">您想更改昵称吗？\n您可以每周更改一次昵称。</string>
+    <string name="feature_changename_info_graphic">昵称信息图</string>
+    <string name="feature_changename_success">您的昵称已更改。</string>
+    <string name="feature_changename_nickname_already_taken">该昵称已被占用。</string>
+    <string name="feature_changename_error">发生错误。请稍后再试。</string>
+    <string name="feature_changename_check_network_connection">请检查您的网络连接。</string>
+    <string name="feature_changename_length_indicator">昵称长度必须在 %1$d 到 %2$d 个字符之间</string>
+    <string name="feature_changename_korean_constraint">韩语昵称不能仅包含辅音或元音</string>
+    <string name="feature_changename_duplicate_name">昵称与当前昵称相同</string>
+    <string name="feature_changename_next_change_notice">您可以在 %1$s 之后再次更改</string>
+</resources>

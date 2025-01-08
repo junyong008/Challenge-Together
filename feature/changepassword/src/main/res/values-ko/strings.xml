@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changepassword_title">비밀번호 변경하기</string>
+    <string name="feature_changepassword_description">비밀번호 생성 시 아래의 규칙을 따라주세요.</string>
+    <string name="feature_changepassword_lock_image_description">자물쇠 이미지</string>
+    <string name="feature_changepassword_input_password_place_holder">변경할 비밀번호를 입력해 주세요…</string>
+    <string name="feature_changepassword_password_length_indicator">비밀번호는 %1$d자 이상이어야 합니다</string>
+    <string name="feature_changepassword_password_number_indicator">비밀번호에는 숫자가 최소 1개 이상 포함되어야 합니다</string>
+    <string name="feature_changepassword_confirm">확인</string>
+    <string name="feature_changepassword_change">변경하기</string>
+    <string name="feature_changepassword_confirm_info">비밀번호를 변경하시겠습니까?</string>
+    <string name="feature_changepassword_back">뒤로가기</string>
+    <string name="feature_changepassword_cancel_prompt">비밀번호 변경을 취소하시겠습니까?</string>
+    <string name="feature_changepassword_success">비밀번호가 변경되었습니다.</string>
+    <string name="feature_changepassword_error">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_changepassword_check_network_connection">인터넷 연결 상태를 확인해 주세요.</string>
+</resources>

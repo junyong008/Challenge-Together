@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_completechallenges_title">Thử thách đã hoàn thành</string>
+    <string name="feature_completechallenges_search">Tìm kiếm…</string>
+    <string name="feature_completechallenges_empty_title">Chưa có thử thách nào hoàn thành</string>
+    <string name="feature_completechallenges_empty_description">Bạn chưa hoàn thành thử thách nào.\nHãy bắt đầu một thử thách mới và xem thành tích của bạn ở đây!</string>
+    <string name="feature_completechallenges_search_empty_title">Không tìm thấy thử thách nào</string>
+    <string name="feature_completechallenges_search_empty_description">Chúng tôi không tìm thấy thử thách nào phù hợp với tìm kiếm của bạn.\nThử các từ khóa khác hoặc điều chỉnh tiêu chí tìm kiếm của bạn!</string>
+</resources>

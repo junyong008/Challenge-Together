@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_completechallenges_title">पूर्ण हुई चुनौतियाँ</string>
+    <string name="feature_completechallenges_search">खोजें…</string>
+    <string name="feature_completechallenges_empty_title">अभी तक कोई पूर्ण हुई चुनौतियाँ नहीं हैं</string>
+    <string name="feature_completechallenges_empty_description">आपने अभी तक कोई चुनौती पूरी नहीं की है।\nएक नई चुनौती शुरू करें और यहाँ अपने उपलब्धियों को देखें!</string>
+    <string name="feature_completechallenges_search_empty_title">कोई चुनौती नहीं मिली</string>
+    <string name="feature_completechallenges_search_empty_description">हम आपकी खोज से मेल खाने वाली कोई चुनौती नहीं पा सके।\nविभिन्न कीवर्ड का प्रयास करें या अपने खोज मानदंड को समायोजित करें!</string>
+</resources>

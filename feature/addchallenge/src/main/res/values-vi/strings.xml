@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_addchallenge_title_set_mode">Chọn loại thử thách</string>
+    <string name="feature_addchallenge_description_set_mode">Nếu bạn chọn ngày bắt đầu qua chế độ tự do,\nthử thách này sẽ không ảnh hưởng đến kỷ lục cao nhất hoặc xếp hạng của bạn.</string>
+    <string name="feature_addchallenge_title_set_category">Bạn sẽ thực hiện thử thách nào?</string>
+    <string name="feature_addchallenge_description_set_category">Vui lòng chọn danh mục bạn muốn.</string>
+    <string name="feature_addchallenge_title_set_title">Viết mô tả về thử thách</string>
+    <string name="feature_addchallenge_description_set_title">Nhập chi tiết về thử thách.\nViết ra các mục tiêu và nghị định của bạn sẽ giúp bạn.</string>
+    <string name="feature_addchallenge_title_set_target_day">Đặt ngày mục tiêu cho thử thách</string>
+    <string name="feature_addchallenge_description_set_target_day">Đặt số ngày thử thách sẽ kéo dài.\nNếu bạn không thiết lập lại trong khoảng thời gian mục tiêu, bạn thành công.</string>
+    <string name="feature_addchallenge_title_set_start_date">Chọn ngày bắt đầu thử thách</string>
+    <string name="feature_addchallenge_description_set_start_date">Chọn khi nào thử thách bắt đầu.\nNgày bắt đầu không thể là trong tương lai.</string>
+    <string name="feature_addchallenge_title_confirm">Mọi thứ đã sẵn sàng!</string>
+    <string name="feature_addchallenge_description_confirm">Tất cả các chuẩn bị cho thử thách đã hoàn thành.\nNhấp vào nút "Bắt đầu" để bắt đầu thử thách ngay lập tức.</string>
+    <string name="feature_addchallenge_title_set_together">Cùng nhau</string>
+    <string name="feature_addchallenge_description_set_together">Chúng tôi sẽ tạo một phòng chờ để người khác có thể tham gia thử thách của bạn.</string>
+
+    <string name="feature_addchallenge_mode_challenge">Chế độ Thử thách</string>
+    <string name="feature_addchallenge_mode_free">Chế độ Tự do</string>
+    <string name="feature_addchallenge_mode_challenge_description">Bạn không thể đặt ngày bắt đầu trong quá khứ, nhưng nó sẽ tính vào kỷ lục và xếp hạng của bạn.</string>
+    <string name="feature_addchallenge_mode_free_description">Bạn có thể đặt ngày bắt đầu trong quá khứ, nhưng nó sẽ không tính vào kỷ lục hoặc xếp hạng của bạn.</string>
+    <string name="feature_addchallenge_title">Tiêu đề</string>
+    <string name="feature_addchallenge_title_placeholder">Tiêu đề thử thách</string>
+    <string name="feature_addchallenge_description_optional">Mô tả (Tùy chọn)</string>
+    <string name="feature_addchallenge_description_placeholder">Mô tả thử thách</string>
+    <string name="feature_addchallenge_invalid_start_date">Ngày bắt đầu không thể là trong tương lai.</string>
+    <string name="feature_addchallenge_category_card_title">Danh mục</string>
+    <string name="feature_addchallenge_target_day_card_title">Ngày mục tiêu</string>
+    <string name="feature_addchallenge_target_day_string">%1$d Ngày</string>
+    <string name="feature_addchallenge_unlimited">Không giới hạn</string>
+    <string name="feature_addchallenge_start_date">Ngày Bắt đầu</string>
+    <string name="feature_addchallenge_together">Cùng nhau</string>
+    <string name="feature_addchallenge_start_immediately">Bắt đầu ngay</string>
+    <string name="feature_addchallenge_max_participants">Số người tham gia tối đa</string>
+    <string name="feature_addchallenge_room_password">Mật khẩu vào phòng</string>
+    <string name="feature_addchallenge_people">người</string>
+    <string name="feature_addchallenge_room_password_icon">Biểu tượng Mật khẩu Phòng</string>
+    <string name="feature_addchallenge_room_password_placeholder">Mật khẩu phòng</string>
+    <string name="feature_addchallenge_create_waiting_room">Tạo Phòng Chờ</string>
+
+    <string name="feature_addchallenge_unknown_error">Đã xảy ra lỗi. Vui lòng thử lại sau.</string>
+    <string name="feature_addchallenge_check_network_connection">Vui lòng kiểm tra kết nối mạng của bạn.</string>
+    <string name="feature_addchallenge_challenge_added">Thử thách đã được thêm.</string>
+    <string name="feature_addchallenge_waiting_room_created">Phòng chờ đã được tạo.</string>
+
+    <string name="feature_addchallenge_dialog_start">Bắt đầu</string>
+    <string name="feature_addchallenge_dialog_start_title">Bắt đầu Thử thách</string>
+    <string name="feature_addchallenge_dialog_start_description">Bạn có muốn bắt đầu thử thách không?</string>
+
+    <string name="feature_addchallenge_dialog_create">Tạo</string>
+    <string name="feature_addchallenge_dialog_create_room_title">Tạo Phòng Chờ</string>
+    <string name="feature_addchallenge_dialog_create_room_description">Bạn có muốn tạo một phòng chờ không?</string>
+</resources>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changepassword_title">เปลี่ยนรหัสผ่าน</string>
+    <string name="feature_changepassword_description">กรุณาปฏิบัติตามกฎด้านล่างเมื่อสร้างรหัสผ่านของคุณ</string>
+    <string name="feature_changepassword_lock_image_description">ภาพไอคอนล็อก</string>
+    <string name="feature_changepassword_input_password_place_holder">รหัสผ่านใหม่</string>
+    <string name="feature_changepassword_password_length_indicator">รหัสผ่านต้องมีความยาวอย่างน้อย %1$d ตัวอักษร</string>
+    <string name="feature_changepassword_password_number_indicator">รหัสผ่านต้องมีตัวเลขอย่างน้อยหนึ่งตัว</string>
+    <string name="feature_changepassword_confirm">ยืนยัน</string>
+    <string name="feature_changepassword_change">เปลี่ยน</string>
+    <string name="feature_changepassword_confirm_info">คุณต้องการเปลี่ยนรหัสผ่านหรือไม่?</string>
+    <string name="feature_changepassword_back">กลับ</string>
+    <string name="feature_changepassword_cancel_prompt">คุณต้องการยกเลิกการเปลี่ยนรหัสผ่านหรือไม่?</string>
+    <string name="feature_changepassword_success">รหัสผ่านของคุณได้รับการเปลี่ยนเรียบร้อยแล้ว</string>
+    <string name="feature_changepassword_error">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งในภายหลัง</string>
+    <string name="feature_changepassword_check_network_connection">กรุณาตรวจสอบการเชื่อมต่อเครือข่าย</string>
+</resources>

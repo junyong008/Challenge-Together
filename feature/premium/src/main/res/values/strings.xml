@@ -1,0 +1,12 @@
+<resources>
+    <string name="feature_premium_title">Premium Upgrade</string>
+    <string name="feature_premium_description">Enjoy various benefits with a premium account.\nA one-time purchase keeps the benefits permanently tied to your account.</string>
+    <string name="feature_premium_no_ads">Permanently Remove All Ads</string>
+    <string name="feature_premium_unlock_widgets">Unlock All Widget Features</string>
+    <string name="feature_premium_app_lock">App Access Password Feature</string>
+    <string name="feature_premium_active">Active</string>
+    <string name="feature_premium_invalid_now">Coming Soon</string>
+    <string name="feature_premium_info_graphic">Premium Information Graphic</string>
+    <string name="feature_premium_purchase_complete">Purchase Complete</string>
+    <string name="feature_premium_error_occurred">An error occurred. Please try again later.</string>
+</resources>

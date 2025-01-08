@@ -1,0 +1,19 @@
+<resources>
+    <string name="feature_challengeboard_title">Board</string>
+    <string name="feature_challengeboard_content_placeholder">Enter content…</string>
+    <string name="feature_challengeboard_send">Send</string>
+    <string name="feature_challengeboard_no_posts_title">No Posts Yet</string>
+    <string name="feature_challengeboard_no_posts_description">Leave records or notes about your challenge.</string>
+    <string name="feature_challengeboard_scroll_to_bottom">Scroll to Bottom</string>
+    <string name="feature_challengeboard_menu_copy">Copy</string>
+    <string name="feature_challengeboard_menu_report">Report</string>
+    <string name="feature_challengeboard_menu_delete">Delete</string>
+    <string name="feature_challengeboard_delete_success">Deleted successfully.</string>
+    <string name="feature_challengeboard_delete_failed">Delete failed. Please try again later.</string>
+    <string name="feature_challengeboard_report_success">Reported successfully.</string>
+    <string name="feature_challengeboard_report_failed">Report failed. Please try again later.</string>
+    <string name="feature_challengeboard_report_already_reported">This post has already been reported.</string>
+    <string name="feature_challengeboard_toggle_notification">Toggle Notification</string>
+    <string name="feature_challengeboard_notification_enabled">Notifications enabled.</string>
+    <string name="feature_challengeboard_notification_disabled">Notifications disabled.</string>
+</resources>

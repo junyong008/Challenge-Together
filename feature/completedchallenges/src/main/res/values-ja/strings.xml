@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_completechallenges_title">完了したチャレンジ</string>
+    <string name="feature_completechallenges_search">検索…</string>
+    <string name="feature_completechallenges_empty_title">まだ完了したチャレンジはありません</string>
+    <string name="feature_completechallenges_empty_description">まだチャレンジを完了していません。\n新しいチャレンジを始めて、ここで成果を確認しましょう！</string>
+    <string name="feature_completechallenges_search_empty_title">チャレンジが見つかりません</string>
+    <string name="feature_completechallenges_search_empty_description">検索に一致するチャレンジが見つかりませんでした。\n異なるキーワードを試すか、検索条件を調整してください！</string>
+</resources>

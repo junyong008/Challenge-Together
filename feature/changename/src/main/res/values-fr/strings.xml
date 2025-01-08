@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changename_title">Changer de pseudo</string>
+    <string name="feature_changename_description">Vous pouvez changer votre pseudo une fois par semaine.</string>
+    <string name="feature_changename_action">Changer</string>
+    <string name="feature_changenam_confirm_info">Voulez-vous changer votre pseudo ?\nVous pouvez changer votre pseudo une fois par semaine.</string>
+    <string name="feature_changename_info_graphic">Graphique d\'informations sur le pseudo</string>
+    <string name="feature_changename_success">Votre pseudo a été modifié.</string>
+    <string name="feature_changename_nickname_already_taken">Ce pseudo est déjà pris.</string>
+    <string name="feature_changename_error">Une erreur est survenue. Veuillez réessayer plus tard.</string>
+    <string name="feature_changename_check_network_connection">Veuillez vérifier votre connexion réseau.</string>
+    <string name="feature_changename_length_indicator">Le pseudo doit comporter entre %1$d et %2$d caractères</string>
+    <string name="feature_changename_korean_constraint">Les pseudos en coréen ne peuvent pas contenir uniquement des consonnes ou des voyelles</string>
+    <string name="feature_changename_duplicate_name">Le pseudo est identique à l\'actuel</string>
+    <string name="feature_changename_next_change_notice">Vous pourrez le changer à nouveau après %1$s</string>
+</resources>

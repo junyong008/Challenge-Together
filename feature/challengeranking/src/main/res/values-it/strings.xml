@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeranking_title">Classifica</string>
+    <string name="feature_challengeranking_tip_title">Consigli</string>
+    <string name="feature_challengeranking_tip_long_absence">Gli utenti inattivi per 7 giorni possono essere rimossi forzatamente da altri partecipanti.</string>
+    <string name="feature_challengeranking_tip_alone">Se rimani solo nella sfida, la classifica scomparirà e le modifiche alla sfida diventeranno disponibili.</string>
+    <string name="feature_challengeranking_force_remove_title">Rimozione forzata</string>
+    <string name="feature_challengeranking_force_remove_description">Gli utenti inattivi possono essere rimossi forzatamente.\nVuoi rimuovere questo utente?</string>
+    <string name="feature_challengeranking_remove">Rimuovi</string>
+    <string name="feature_challengeranking_success">Successo</string>
+    <string name="feature_challengeranking_first_place_description">Immagine che rappresenta il 1° posto nella classifica</string>
+    <string name="feature_challengeranking_second_place_description">Immagine che rappresenta il 2° posto nella classifica</string>
+    <string name="feature_challengeranking_third_place_description">Immagine che rappresenta il 3° posto nella classifica</string>
+    <string name="feature_challengeranking_force_remove_success">L\'utente è stato rimosso con successo.</string>
+    <string name="feature_challengeranking_user_reconnected">L\'utente si è appena riconnesso.</string>
+    <string name="feature_challengeranking_check_network_connection">Si prega di controllare la connessione di rete.</string>
+    <string name="feature_challengeranking_force_remove_failed">Impossibile rimuovere l\'utente. Si prega di riprovare più tardi.</string>
+</resources>

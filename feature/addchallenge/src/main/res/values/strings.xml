@@ -1,0 +1,52 @@
+<resources>
+    <string name="feature_addchallenge_title_set_mode">Select the type of challenge</string>
+    <string name="feature_addchallenge_description_set_mode">If you choose the start date via free mode,\nthis challenge will not affect your highest records or ranking.</string>
+    <string name="feature_addchallenge_title_set_category">What challenge are you going to attempt?</string>
+    <string name="feature_addchallenge_description_set_category">Please select the category you want.</string>
+    <string name="feature_addchallenge_title_set_title">Write a description of the challenge</string>
+    <string name="feature_addchallenge_description_set_title">Enter the details of the challenge.\nWriting down your goals and resolutions will help you.</string>
+    <string name="feature_addchallenge_title_set_target_day">Set the target day for the challenge</string>
+    <string name="feature_addchallenge_description_set_target_day">Set how many days the challenge will last.\nIf you don\'t reset during the target period, you succeed.</string>
+    <string name="feature_addchallenge_title_set_start_date">Select the start date of the challenge</string>
+    <string name="feature_addchallenge_description_set_start_date">Select when the challenge started.\nThe start date cannot be in the future.</string>
+    <string name="feature_addchallenge_title_confirm">Everything is ready!</string>
+    <string name="feature_addchallenge_description_confirm">All preparations for the challenge are complete.\nClick the \"Start\" button to begin the challenge immediately.</string>
+    <string name="feature_addchallenge_title_set_together">Together</string>
+    <string name="feature_addchallenge_description_set_together">We\'ll create a waiting room so others can join your challenge.</string>
+
+    <string name="feature_addchallenge_mode_challenge">Challenge Mode</string>
+    <string name="feature_addchallenge_mode_free">Free Mode</string>
+    <string name="feature_addchallenge_mode_challenge_description">You can\'t set a past start date, but it will count toward your record and ranking.</string>
+    <string name="feature_addchallenge_mode_free_description">You can set a past start date, but it won\'t count toward your record or ranking.</string>
+    <string name="feature_addchallenge_title">Title</string>
+    <string name="feature_addchallenge_title_placeholder">Challenge title</string>
+    <string name="feature_addchallenge_description_optional">Description (Optional)</string>
+    <string name="feature_addchallenge_description_placeholder">Challenge description</string>
+    <string name="feature_addchallenge_invalid_start_date">The start date cannot be in the future.</string>
+    <string name="feature_addchallenge_category_card_title">Category</string>
+    <string name="feature_addchallenge_target_day_card_title">Target Day</string>
+    <string name="feature_addchallenge_target_day_string">%1$d Days</string>
+    <string name="feature_addchallenge_unlimited">Unlimited</string>
+    <string name="feature_addchallenge_start_date">Start Date</string>
+    <string name="feature_addchallenge_together">Together</string>
+    <string name="feature_addchallenge_start_immediately">Start Now</string>
+    <string name="feature_addchallenge_max_participants">Max Participants</string>
+    <string name="feature_addchallenge_room_password">Entry Password</string>
+    <string name="feature_addchallenge_people">ppl</string>
+    <string name="feature_addchallenge_room_password_icon">Room Password Icon</string>
+    <string name="feature_addchallenge_room_password_placeholder">Room Password</string>
+    <string name="feature_addchallenge_create_waiting_room">Create Waiting Room</string>
+
+    <string name="feature_addchallenge_unknown_error">An error occurred. Please try again later.</string>
+    <string name="feature_addchallenge_check_network_connection">Please check your network connection.</string>
+    <string name="feature_addchallenge_challenge_added">Challenge has been added.</string>
+    <string name="feature_addchallenge_waiting_room_created">Waiting room has been created.</string>
+
+    <string name="feature_addchallenge_dialog_start">Start</string>
+    <string name="feature_addchallenge_dialog_start_title">Start Challenge</string>
+    <string name="feature_addchallenge_dialog_start_description">Do you want to start the challenge?</string>
+
+    <string name="feature_addchallenge_dialog_create">Create</string>
+    <string name="feature_addchallenge_dialog_create_room_title">Create Waiting Room</string>
+    <string name="feature_addchallenge_dialog_create_room_description">Do you want to create a waiting room?</string>
+</resources>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_findpassword_title">ค้นหารหัสผ่าน</string>
+    <string name="feature_findpassword_description">กรุณาใส่อีเมลที่คุณสมัครไว้\nรหัสยืนยันจะถูกส่งไปยังอีเมลที่คุณกรอกไว้</string>
+    <string name="feature_findpassword_input_email_place_holder">อีเมล</string>
+    <string name="feature_findpassword_send_verify_code">ส่งรหัสยืนยัน</string>
+    <string name="feature_findpassword_invalid_email_format">กรุณาใส่รูปแบบอีเมลที่ถูกต้อง</string>
+    <string name="feature_findpassword_unknown_error">เกิดข้อผิดพลาด กรุณาลองใหม่ภายหลัง</string>
+    <string name="feature_findpassword_check_network_connection">กรุณาตรวจสอบการเชื่อมต่อเครือข่ายของคุณ</string>
+    <string name="feature_findpassword_email_not_registered">อีเมลนี้ยังไม่ได้ลงทะเบียน</string>
+    <string name="feature_findpassword_invalid_email">อีเมลไม่ถูกต้อง</string>
+    <string name="feature_findpassword_code_sent">รหัสยืนยันได้ถูกส่งไปแล้ว</string>
+    <string name="feature_findpassword_enter_code">กรอกรหัสยืนยัน</string>
+    <string name="feature_findpassword_minutes_seconds">%1$dm %2$ds</string>
+    <string name="feature_findpassword_verification_success">การยืนยันเสร็จสมบูรณ์</string>
+    <string name="feature_findpassword_code_mismatch">รหัสยืนยันไม่ตรงกัน</string>
+    <string name="feature_findpassword_timeout">หมดเวลาการป้อนข้อมูล</string>
+</resources>

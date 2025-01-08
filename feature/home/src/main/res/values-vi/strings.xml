@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_home_navigation_title">Trang Chủ</string>
+    <string name="feature_home_title">THỬ THÁCH CÙNG NHAU</string>
+    <string name="feature_home_medal_description">Hạng Hiện Tại</string>
+    <string name="feature_home_complete_challenge_description">Hoàn Thành Thử Thách</string>
+    <string name="feature_home_notification_description">Thông Báo</string>
+    <string name="feature_home_remain_time_for_next_tier">Thời gian còn lại cho hạng tiếp theo: %d Ngày</string>
+    <string name="feature_home_current_highest_record">Kỷ Lục Tốt Nhất Hiện Tại</string>
+    <string name="feature_home_my_challenges">Thử Thách Của Tôi</string>
+    <string name="feature_home_joined_challenges">Thử Thách Đã Tham Gia</string>
+    <string name="feature_home_sort_challenge_content_description">Sắp Xếp Thử Thách</string>
+    <string name="feature_home_congratulations">Chúc Mừng!</string>
+    <string name="feature_home_challenge_success">%1$s\nBạn đã hoàn thành thử thách thành công.</string>
+    <string name="feature_home_congratulations_image_description">Hình Ảnh Chúc Mừng</string>
+    <string name="feature_home_promoted">THĂNG CẤP</string>
+    <string name="feature_home_promoted_description">Bạn đã được thăng cấp lên %1$s.</string>
+    <string name="feature_home_promoted_confirm">Xác Nhận</string>
+    <string name="feature_home_no_active_challenge_mode">Không có chế độ thử thách hoạt động</string>
+    <string name="feature_home_highest_tier">Hạng Cao Nhất</string>
+    <string name="feature_home_no_active_challenge">Không Có Thử Thách</string>
+    <string name="feature_home_start_new_challenge_prompt">Nhấn nút thêm ở góc dưới bên phải để bắt đầu một thử thách mới.</string>
+    <string name="feature_home_sort">Sắp Xếp Theo</string>
+</resources>

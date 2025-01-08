@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ui_error_body_title">Bildschirm konnte nicht geladen werden</string>
+    <string name="common_ui_error_description">Ein Fehler ist aufgetreten.\nBitte versuchen Sie es später erneut.</string>
+    <string name="common_ui_error_retry">Erneut versuchen</string>
+    <string name="common_ui_started_challenge_card_timer_description">Symbol des Timers</string>
+    <string name="common_ui_started_challenge_card_check_description">Symbol der Vollständigkeit</string>
+    <string name="common_ui_waiting_challenge_number">Nr. %1$d</string>
+    <string name="common_ui_waiting_challenge_private">[Privat]</string>
+    <string name="common_ui_waiting_challenge_participant_number_format">%1$s / %2$s</string>
+    <string name="common_ui_waiting_challenge_calendar_description">Kalendersymbol</string>
+    <string name="common_ui_waiting_challenge_goal_days">%1$s Tage</string>
+    <string name="common_ui_waiting_challenge_unlimited">Unbegrenzt</string>
+    <string name="common_ui_waiting_challenge_icon_of_person">Symbol der Person</string>
+    <string name="common_ui_manual_time_warning">Systemzeit ist manuell eingestellt</string>
+    <string name="common_ui_manual_time_warning_icon">Symbole der Uhr</string>
+    <string name="common_ui_category_list_all">Meine Herausforderung</string>
+    <string name="common_ui_target_day">Zielt Tag</string>
+    <string name="common_ui_target_day_unlimited">Unbegrenzt</string>
+    <string name="common_ui_target_day_days">Tage</string>
+</resources>

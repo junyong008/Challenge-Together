@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">Verlauf zurücksetzen</string>
+    <string name="feature_resetrecord_record">Aufzeichnung</string>
+    <string name="feature_resetrecord_content">Inhalt</string>
+    <string name="feature_resetrecord_no_reset_records">Noch keine zurückgesetzten Aufzeichnungen.</string>
+    <string name="feature_resetrecord_encouragement">Mach weiter so und fordere dich selbst heraus!</string>
+    <string name="feature_resetrecord_day_suffix">T</string>
+</resources>

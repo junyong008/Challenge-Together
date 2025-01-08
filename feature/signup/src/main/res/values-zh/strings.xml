@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">注册</string>
+    <string name="feature_signup_description">请输入您将用于登录的电子邮件和密码。\n此电子邮件可以在以后找回密码时使用。</string>
+    <string name="feature_signup_input_email_place_holder">电子邮件</string>
+    <string name="feature_signup_email_format_indicator">电子邮件格式必须有效</string>
+    <string name="feature_signup_password_length_indicator">密码长度必须至少为 %1$d 个字符</string>
+    <string name="feature_signup_password_number_indicator">密码必须包含至少一个数字</string>
+    <string name="feature_signup_input_password_place_holder">密码</string>
+    <string name="feature_signup_email_already_registered">该电子邮件已注册。</string>
+    <string name="feature_signup_error">发生错误。请稍后再试。</string>
+    <string name="feature_signup_set_nickname_title">设置您的昵称</string>
+    <string name="feature_signup_set_nickname_description">您的昵称对应用中的其他用户可见。</string>
+    <string name="feature_signup_smile_image_description">微笑图片</string>
+    <string name="feature_signup_nickname_place_holder">输入您的昵称</string>
+    <string name="feature_signup_start">开始</string>
+    <string name="feature_signup_nickname_length_indicator">昵称长度必须在 %1$d 到 %2$d 个字符之间</string>
+    <string name="feature_signup_nickname_korean_constraint">韩文昵称不能仅包含辅音或元音</string>
+    <string name="feature_signup_privacy_policy_agreement">点击开始按钮即表示您同意<b>隐私政策</b>。</string>
+    <string name="feature_signup_privacy_policy">隐私政策</string>
+    <string name="feature_signup_nickname_already_taken">该昵称已被使用。</string>
+    <string name="feature_signup_check_network_connection">请检查您的网络连接。</string>
+    <string name="feature_signup_complete">注册完成。</string>
+</resources>

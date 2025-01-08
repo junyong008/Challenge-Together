@@ -1,0 +1,13 @@
+<resources>
+    <string name="feature_notification_title">Notifications</string>
+    <string name="feature_notification_more">More</string>
+    <string name="feature_notification_delete">Delete</string>
+    <string name="feature_notification_delete_all">Delete All</string>
+    <string name="feature_notification_setting">Setting</string>
+    <string name="feature_notification_empty_title">No Notifications Yet</string>
+    <string name="feature_notification_empty_description">There are no notifications at the moment.\nYou\'ll see updates and alerts here as they happen!</string>
+    <string name="feature_notification_challenge_category">Challenge Category Notifications</string>
+    <string name="feature_notification_community_category">Community Category Notifications</string>
+    <string name="feature_notification_delete_success">Deleted successfully.</string>
+    <string name="feature_notification_delete_failed">Delete failed. Please try again later.</string>
+</resources>

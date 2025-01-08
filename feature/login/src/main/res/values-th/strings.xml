@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_login_title_description">ก้าวแรกที่ง่ายที่สุดในการเปลี่ยนตัวเอง,</string>
+    <string name="feature_login_title">ท้าทายไปด้วยกัน</string>
+    <string name="feature_login_input_email_content_description">ใส่อีเมล</string>
+    <string name="feature_login_input_email_place_holder">อีเมล</string>
+    <string name="feature_login_input_password_content_description">ใส่รหัสผ่าน</string>
+    <string name="feature_login_input_password_place_holder">รหัสผ่าน</string>
+    <string name="feature_login_button_text">เข้าสู่ระบบ</string>
+    <string name="feature_login_find_password">ค้นหารหัสผ่าน</string>
+    <string name="feature_login_sign_up">สมัครสมาชิก</string>
+    <string name="feature_login_login_success">เข้าสู่ระบบสำเร็จ</string>
+    <string name="feature_login_user_not_found">ID หรือรหัสผ่านไม่ถูกต้อง</string>
+    <string name="feature_login_invalid_email_format">กรุณาใส่อีเมลในรูปแบบที่ถูกต้อง</string>
+    <string name="feature_login_unknown_error">เกิดข้อผิดพลาด กรุณาลองใหม่ภายหลัง</string>
+    <string name="feature_login_check_network_connection">กรุณาตรวจสอบการเชื่อมต่อเครือข่ายของคุณ</string>
+</resources>

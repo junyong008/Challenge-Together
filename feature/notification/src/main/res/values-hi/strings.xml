@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_title">सूचनाएँ</string>
+    <string name="feature_notification_more">अधिक</string>
+    <string name="feature_notification_delete">हटाएँ</string>
+    <string name="feature_notification_delete_all">सभी हटाएँ</string>
+    <string name="feature_notification_setting">सेटिंग</string>
+    <string name="feature_notification_empty_title">अभी कोई सूचनाएँ नहीं हैं</string>
+    <string name="feature_notification_empty_description">इस समय कोई सूचनाएँ नहीं हैं।\nजैसे ही अपडेट और अलर्ट होंगे, आप यहाँ देखेंगे!</string>
+    <string name="feature_notification_challenge_category">चुनौती श्रेणी सूचनाएँ</string>
+    <string name="feature_notification_community_category">समुदाय श्रेणी सूचनाएँ</string>
+    <string name="feature_notification_delete_success">सफलतापूर्वक हटाया गया।</string>
+    <string name="feature_notification_delete_failed">हटाने में विफल रहा। कृपया बाद में पुन: प्रयास करें।</string>
+</resources>

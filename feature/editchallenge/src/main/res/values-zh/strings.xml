@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_editchallenge_edit">编辑</string>
+    <string name="feature_editchallenge_edit_failed">编辑失败。请稍后重试。</string>
+    <string name="feature_editchallenge_edit_successful">编辑成功。</string>
+    <string name="feature_editchallenge_edit_category_title">编辑类别</string>
+    <string name="feature_editchallenge_edit_category_description">请选择您想更改到的类别。</string>
+    <string name="feature_editchallenge_title">标题</string>
+    <string name="feature_editchallenge_title_placeholder">挑战标题</string>
+    <string name="feature_editchallenge_description_optional">描述（可选）</string>
+    <string name="feature_editchallenge_description_placeholder">挑战描述</string>
+    <string name="feature_editchallenge_edit_title">编辑挑战的描述</string>
+    <string name="feature_editchallenge_edit_description">输入挑战的细节。\n写下你的目标和决心会对你有所帮助。</string>
+    <string name="feature_editchallenge_edit_target_day_title">编辑挑战的目标天数</string>
+    <string name="feature_editchallenge_edit_target_day_description">设置挑战将持续多少天。\n如果在目标期间不重置，您将成功。</string>
+    <string name="feature_editchallenge_record_exceeded_notice">记录超出</string>
+    <string name="feature_editchallenge_record_exceeded_description">您当前的记录已超过 %1$s 天。\n挑战将立即完成。</string>
+    <string name="feature_editchallenge_complete">完成</string>
+</resources>

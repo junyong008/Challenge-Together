@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_linkaccount_title">Konto verknüpfen</string>
+    <string name="feature_linkaccount_description">Verknüpfen Sie Ihr Konto für schnellen Login und Datenaufbewahrung.</string>
+    <string name="feature_linkaccount_kakao">Mit Kakao verknüpfen</string>
+    <string name="feature_linkaccount_google">Mit Google verknüpfen</string>
+    <string name="feature_linkaccount_naver">Mit Naver verknüpfen</string>
+    <string name="feature_linkaccount_already_exists">Dieses Konto ist bereits registriert.</string>
+    <string name="feature_linkaccount_already_linked">Ihr Konto ist bereits verknüpft.</string>
+    <string name="feature_linkaccount_success">Erfolgreich verknüpft.</string>
+    <string name="feature_linkaccount_check_network_connection">Bitte überprüfen Sie Ihre Netzwerkverbindung.</string>
+    <string name="feature_linkaccount_error">Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.</string>
+    <string name="feature_linkaccount_info_graphic">Verknüpfungs-Informationsgrafik</string>
+</resources>

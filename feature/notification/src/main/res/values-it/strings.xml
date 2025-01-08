@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_title">Notifiche</string>
+    <string name="feature_notification_more">Altro</string>
+    <string name="feature_notification_delete">Elimina</string>
+    <string name="feature_notification_delete_all">Elimina Tutto</string>
+    <string name="feature_notification_setting">Impostazioni</string>
+    <string name="feature_notification_empty_title">Nessuna Notifica</string>
+    <string name="feature_notification_empty_description">Al momento non ci sono notifiche.\nVedrai aggiornamenti e avvisi qui non appena accadranno!</string>
+    <string name="feature_notification_challenge_category">Notifiche Categoria Sfida</string>
+    <string name="feature_notification_community_category">Notifiche Categoria Comunità</string>
+    <string name="feature_notification_delete_success">Eliminato con successo.</string>
+    <string name="feature_notification_delete_failed">Eliminazione fallita. Per favore, riprova più tardi.</string>
+</resources>

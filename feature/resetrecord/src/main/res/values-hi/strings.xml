@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">इतिहास रीसेट करें</string>
+    <string name="feature_resetrecord_record">रिकॉर्ड</string>
+    <string name="feature_resetrecord_content">सामग्री</string>
+    <string name="feature_resetrecord_no_reset_records">अभी तक कोई रीसेट रिकॉर्ड नहीं हैं।</string>
+    <string name="feature_resetrecord_encouragement">जारी रखें और खुद को चुनौती देते रहें!</string>
+    <string name="feature_resetrecord_day_suffix">दिन</string>
+</resources>

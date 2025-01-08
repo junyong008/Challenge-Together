@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_linkaccount_title">アカウント連携</string>
+    <string name="feature_linkaccount_description">迅速なログインとデータ保持のためにアカウントを連携してください。</string>
+    <string name="feature_linkaccount_kakao">カカオで連携</string>
+    <string name="feature_linkaccount_google">Googleで連携</string>
+    <string name="feature_linkaccount_naver">ネイバーで連携</string>
+    <string name="feature_linkaccount_already_exists">このアカウントは既に登録されています。</string>
+    <string name="feature_linkaccount_already_linked">アカウントは既に連携されています。</string>
+    <string name="feature_linkaccount_success">正常に連携されました。</string>
+    <string name="feature_linkaccount_check_network_connection">ネットワーク接続を確認してください。</string>
+    <string name="feature_linkaccount_error">エラーが発生しました。後ほど再試行してください。</string>
+    <string name="feature_linkaccount_info_graphic">リンク情報グラフィック</string>
+</resources>

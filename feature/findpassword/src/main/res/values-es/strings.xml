@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_findpassword_title">Encontrar Contraseña</string>
+    <string name="feature_findpassword_description">Por favor, ingrese su dirección de correo electrónico registrada.\nSe enviará un código de verificación a la dirección de correo electrónico que ingresó.</string>
+    <string name="feature_findpassword_input_email_place_holder">Correo Electrónico</string>
+    <string name="feature_findpassword_send_verify_code">Enviar Código de Verificación</string>
+    <string name="feature_findpassword_invalid_email_format">Por favor, ingrese un formato de correo electrónico correcto.</string>
+    <string name="feature_findpassword_unknown_error">Ocurrió un error. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="feature_findpassword_check_network_connection">Por favor, verifique su conexión a la red.</string>
+    <string name="feature_findpassword_email_not_registered">Este correo electrónico no está registrado.</string>
+    <string name="feature_findpassword_invalid_email">La dirección de correo electrónico no es válida.</string>
+    <string name="feature_findpassword_code_sent">El código de verificación ha sido enviado.</string>
+    <string name="feature_findpassword_enter_code">Ingresar Código de Verificación</string>
+    <string name="feature_findpassword_minutes_seconds">%1$d min %2$d seg</string>
+    <string name="feature_findpassword_verification_success">Verificación exitosa.</string>
+    <string name="feature_findpassword_code_mismatch">El código de verificación no coincide.</string>
+    <string name="feature_findpassword_timeout">El tiempo de entrada ha expirado.</string>
+</resources>

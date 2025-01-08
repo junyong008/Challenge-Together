@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_deleteaccount_title">Xóa Tài Khoản</string>
+    <string name="feature_deleteaccount_warning_title">Chờ đã! Vui lòng xem lại các thông tin sau trước khi xóa tài khoản của bạn.</string>
+    <string name="feature_deleteaccount_warning_challenges">Tất cả dữ liệu liên quan đến thách thức liên quan đến bạn sẽ bị xóa.</string>
+    <string name="feature_deleteaccount_warning_community">Bài viết và bình luận trong cộng đồng sẽ được gắn nhãn "Thành Viên Đã Xóa".</string>
+    <string name="feature_deleteaccount_warning_irreversible">Tất cả dữ liệu sẽ bị xóa vĩnh viễn và không thể khôi phục.</string>
+    <string name="feature_deleteaccount_info_graphic">Xóa Thông Tin Đồ Họa</string>
+    <string name="feature_deleteaccount_delete">Xóa</string>
+    <string name="feature_deleteaccount_confirmation">Xóa Tài Khoản?</string>
+    <string name="feature_deleteaccount_irreversible_notice">Sau khi xóa, tài khoản của bạn không thể được khôi phục.</string>
+    <string name="feature_deleteaccount_success">Tài khoản của bạn đã được xóa thành công.</string>
+    <string name="feature_deleteaccount_error">Đã có lỗi xảy ra. Vui lòng thử lại sau.</string>
+</resources>

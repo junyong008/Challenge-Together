@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_completechallenges_title">已完成的挑战</string>
+    <string name="feature_completechallenges_search">搜索…</string>
+    <string name="feature_completechallenges_empty_title">尚未完成任何挑战</string>
+    <string name="feature_completechallenges_empty_description">你还没有完成任何挑战。\n开始一个新的挑战，在这里查看你的成就！</string>
+    <string name="feature_completechallenges_search_empty_title">没有找到挑战</string>
+    <string name="feature_completechallenges_search_empty_description">我们找不到与你搜索匹配的挑战。\n尝试不同的关键词或调整搜索条件！</string>
+</resources>

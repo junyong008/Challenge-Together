@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_deleteaccount_title">Excluir Conta</string>
+    <string name="feature_deleteaccount_warning_title">Atenção! Por favor, revise o seguinte antes de excluir sua conta.</string>
+    <string name="feature_deleteaccount_warning_challenges">Todos os dados relacionados a desafios associados a você serão removidos.</string>
+    <string name="feature_deleteaccount_warning_community">Postagens e comentários na comunidade serão rotulados como "Membro Excluído".</string>
+    <string name="feature_deleteaccount_warning_irreversible">Todos os dados serão permanentemente excluídos e não poderão ser recuperados.</string>
+    <string name="feature_deleteaccount_info_graphic">Excluir Gráfico Informativo</string>
+    <string name="feature_deleteaccount_delete">Excluir</string>
+    <string name="feature_deleteaccount_confirmation">Excluir Conta?</string>
+    <string name="feature_deleteaccount_irreversible_notice">Uma vez excluída, sua conta não poderá ser restaurada.</string>
+    <string name="feature_deleteaccount_success">Sua conta foi excluída com sucesso.</string>
+    <string name="feature_deleteaccount_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
+</resources>

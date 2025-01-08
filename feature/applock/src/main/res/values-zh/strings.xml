@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_applock_title">应用锁</string>
+    <string name="feature_applock_password">密码</string>
+    <string name="feature_applock_enter_password">请输入您的密码</string>
+    <string name="feature_applock_reenter_password">请再次输入您的密码</string>
+    <string name="feature_applock_password_mismatch">密码不匹配。</string>
+    <string name="feature_applock_password_set_success">密码已设定。</string>
+    <string name="feature_applock_change_password">更改密码</string>
+    <string name="feature_applock_biometric_authentication">生物识别认证</string>
+    <string name="feature_applock_biometric_cancel">取消</string>
+    <string name="feature_applock_hide_widget_content">隐藏小部件内容</string>
+    <string name="feature_applock_hide_notification_content">隐藏通知内容</string>
+    <string name="feature_applock_close">关闭</string>
+    <string name="feature_applock_backspace">退格</string>
+</resources>

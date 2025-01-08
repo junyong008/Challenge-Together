@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_deleteaccount_title">アカウントを削除</string>
+    <string name="feature_deleteaccount_warning_title">お待ちください！アカウントを削除する前に、以下を確認してください。</string>
+    <string name="feature_deleteaccount_warning_challenges">あなたに関連するすべてのチャレンジ関連データが削除されます。</string>
+    <string name="feature_deleteaccount_warning_community">コミュニティ内の投稿やコメントは「削除されたメンバー」としてラベル付けされます。</string>
+    <string name="feature_deleteaccount_warning_irreversible">すべてのデータが永久に削除され、復旧することはできません。</string>
+    <string name="feature_deleteaccount_info_graphic">情報グラフィックを削除</string>
+    <string name="feature_deleteaccount_delete">削除</string>
+    <string name="feature_deleteaccount_confirmation">アカウントを削除しますか？</string>
+    <string name="feature_deleteaccount_irreversible_notice">削除後、アカウントは復元できません。</string>
+    <string name="feature_deleteaccount_success">アカウントが正常に削除されました。</string>
+    <string name="feature_deleteaccount_error">エラーが発生しました。後でもう一度お試しください。</string>
+</resources>

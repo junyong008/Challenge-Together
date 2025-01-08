@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_intro_start">Bắt đầu</string>
+    <string name="feature_intro_start_with">Bắt đầu với</string>
+    <string name="feature_intro_start_email">Email</string>
+    <string name="feature_intro_start_guest">Khách</string>
+    <string name="feature_intro_start_guest_warning">Cảnh báo</string>
+    <string name="feature_intro_start_guest_warning_detail">Đăng nhập với tư cách khách có thể dẫn đến mất dữ liệu nếu ứng dụng bị xóa hoặc thiết bị được thay đổi.</string>
+    <string name="feature_intro_life_changing_challenges">Thách thức thay đổi cuộc sống</string>
+    <string name="feature_intro_features">Đặt lại nhật ký, tiện ích, lịch, biểu đồ, bảng xếp hạng, v.v.\nChúng tôi cung cấp nhiều tính năng đa dạng.</string>
+    <string name="feature_intro_challenge_together">Thách thức cùng nhau</string>
+    <string name="feature_intro_challenge_together_detail">Cạnh tranh trong bảng xếp hạng thời gian thực,\nvà đạt được cảm giác thành tựu bằng cách thách thức cùng nhau.</string>
+    <string name="feature_intro_community">Cộng đồng</string>
+    <string name="feature_intro_community_detail">Chia sẻ trải nghiệm của bạn trong cộng đồng,\nvà đánh dấu câu trích dẫn yêu thích để giữ chúng.</string>
+    <string name="feature_intro_divider_text">hoặc</string>
+    <string name="feature_intro_kakao_content_description">Đăng nhập bằng Kakao</string>
+    <string name="feature_intro_google_content_description">Đăng nhập bằng Google</string>
+    <string name="feature_intro_naver_content_description">Đăng nhập bằng Naver</string>
+    <string name="feature_intro_login_success">Đăng nhập thành công</string>
+    <string name="feature_intro_unknown_error">Đã xảy ra lỗi. Vui lòng thử lại sau.</string>
+</resources>

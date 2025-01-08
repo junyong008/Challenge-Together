@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changepassword_title">パスワードを変更</string>
+    <string name="feature_changepassword_description">パスワードを作成する際は、以下のルールに従ってください。</string>
+    <string name="feature_changepassword_lock_image_description">ロックアイコン画像</string>
+    <string name="feature_changepassword_input_password_place_holder">新しいパスワード</string>
+    <string name="feature_changepassword_password_length_indicator">パスワードは少なくとも%1$d文字以上でなければなりません</string>
+    <string name="feature_changepassword_password_number_indicator">パスワードには少なくとも一つの数字を含める必要があります</string>
+    <string name="feature_changepassword_confirm">確認</string>
+    <string name="feature_changepassword_change">変更</string>
+    <string name="feature_changepassword_confirm_info">パスワードを変更しますか？</string>
+    <string name="feature_changepassword_back">戻る</string>
+    <string name="feature_changepassword_cancel_prompt">パスワード変更をキャンセルしますか？</string>
+    <string name="feature_changepassword_success">パスワードが変更されました。</string>
+    <string name="feature_changepassword_error">エラーが発生しました。後でもう一度お試しください。</string>
+    <string name="feature_changepassword_check_network_connection">ネットワーク接続を確認してください。</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_applock_title">앱 잠금</string>
+    <string name="feature_applock_password">비밀번호</string>
+    <string name="feature_applock_enter_password">비밀번호를 입력해 주세요</string>
+    <string name="feature_applock_reenter_password">비밀번호를 한 번 더 입력해 주세요</string>
+    <string name="feature_applock_password_mismatch">비밀번호가 일치하지 않습니다.</string>
+    <string name="feature_applock_password_set_success">비밀번호가 설정되었습니다.</string>
+    <string name="feature_applock_change_password">비밀번호 변경</string>
+    <string name="feature_applock_biometric_authentication">생체 인증</string>
+    <string name="feature_applock_biometric_cancel">취소</string>
+    <string name="feature_applock_hide_widget_content">위젯 내용 가리기</string>
+    <string name="feature_applock_hide_notification_content">알림 내용 가리기</string>
+    <string name="feature_applock_close">닫기</string>
+    <string name="feature_applock_backspace">지우기</string>
+</resources>

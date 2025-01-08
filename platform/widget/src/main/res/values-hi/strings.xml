@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="platform_widget_challenge_list_widget_name">चुनौती सूची</string>
+    <string name="platform_widget_challenge_tall_widget_name">चुनौती कार्ड</string>
+    <string name="platform_widget_challenge_wide_widget_name">चुनौती कार्ड</string>
+    <string name="platform_widget_challenge_simple_widget_name">सादा चुनौती कार्ड</string>
+    <string name="platform_widget_no_challenge">कोई चुनौती नहीं</string>
+    <string name="platform_widget_no_challenges">कोई चुनौतियाँ नहीं</string>
+    <string name="platform_widget_no_challenges_description">कोई चुनौतियाँ उपलब्ध नहीं हैं।\nऐप खोलें और अपनी पहली चुनौती जोड़ें और अपनी यात्रा शुरू करें!</string>
+    <string name="platform_widget_time_d">दिन</string>
+    <string name="platform_widget_time_day">दिन</string>
+    <string name="platform_widget_time_hour">घंटा</string>
+    <string name="platform_widget_progress_description">प्रगति</string>
+    <string name="platform_widget_category_icon_description">श्रेणी आइकन</string>
+    <string name="platform_widget_settings">विजेट सेटिंग्स</string>
+    <string name="platform_widget_opacity">असंगति</string>
+    <string name="platform_widget_cancel">रद्द करें</string>
+    <string name="platform_widget_confirm">पुष्टि करें</string>
+    <string name="platform_widget_select">चुनें</string>
+    <string name="platform_widget_hidden_due_to_app_lock">ऐप लॉक सेटिंग के कारण छिपा हुआ</string>
+</resources>

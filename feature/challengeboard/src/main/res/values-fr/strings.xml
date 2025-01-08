@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">Tableau</string>
+    <string name="feature_challengeboard_content_placeholder">Entrez le contenu…</string>
+    <string name="feature_challengeboard_send">Envoyer</string>
+    <string name="feature_challengeboard_no_posts_title">Pas encore de messages</string>
+    <string name="feature_challengeboard_no_posts_description">Laissez des enregistrements ou des notes sur votre défi.</string>
+    <string name="feature_challengeboard_scroll_to_bottom">Défiler vers le bas</string>
+    <string name="feature_challengeboard_menu_copy">Copier</string>
+    <string name="feature_challengeboard_menu_report">Signaler</string>
+    <string name="feature_challengeboard_menu_delete">Supprimer</string>
+    <string name="feature_challengeboard_delete_success">Supprimé avec succès.</string>
+    <string name="feature_challengeboard_delete_failed">Échec de la suppression. Veuillez réessayer plus tard.</string>
+    <string name="feature_challengeboard_report_success">Signalé avec succès.</string>
+    <string name="feature_challengeboard_report_failed">Échec de la signalisation. Veuillez réessayer plus tard.</string>
+    <string name="feature_challengeboard_report_already_reported">Ce message a déjà été signalé.</string>
+    <string name="feature_challengeboard_toggle_notification">Activer/désactiver la notification</string>
+    <string name="feature_challengeboard_notification_enabled">Notifications activées.</string>
+    <string name="feature_challengeboard_notification_disabled">Notifications désactivées.</string>
+</resources>

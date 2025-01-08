@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_title">Notificações</string>
+    <string name="feature_notification_more">Mais</string>
+    <string name="feature_notification_delete">Excluir</string>
+    <string name="feature_notification_delete_all">Excluir Tudo</string>
+    <string name="feature_notification_setting">Configurações</string>
+    <string name="feature_notification_empty_title">Sem Notificações Ainda</string>
+    <string name="feature_notification_empty_description">Não há notificações no momento.\nVocê verá atualizações e alertas aqui à medida que acontecerem!</string>
+    <string name="feature_notification_challenge_category">Notificações de Categoria de Desafio</string>
+    <string name="feature_notification_community_category">Notificações de Categoria da Comunidade</string>
+    <string name="feature_notification_delete_success">Excluído com sucesso.</string>
+    <string name="feature_notification_delete_failed">Falha ao excluir. Por favor, tente novamente mais tarde.</string>
+</resources>

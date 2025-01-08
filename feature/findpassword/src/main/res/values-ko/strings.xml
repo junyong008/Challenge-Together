@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_findpassword_title">비밀번호 찾기</string>
+    <string name="feature_findpassword_description">가입하신 이메일 주소를 입력해 주세요.\n입력하신 이메일 주소로 6자리 인증 번호가 전송될 거예요.</string>
+    <string name="feature_findpassword_input_email_place_holder">이메일을 입력해주세요…</string>
+    <string name="feature_findpassword_send_verify_code">인증번호 전송</string>
+    <string name="feature_findpassword_invalid_email_format">이메일 형식이 올바르지 않습니다.</string>
+    <string name="feature_findpassword_unknown_error">오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_findpassword_check_network_connection">인터넷 연결 상태를 확인해 주세요.</string>
+    <string name="feature_findpassword_email_not_registered">가입되지 않은 이메일입니다.</string>
+    <string name="feature_findpassword_invalid_email">유효하지 않은 이메일입니다.</string>
+    <string name="feature_findpassword_code_sent">인증번호가 전송되었습니다.</string>
+    <string name="feature_findpassword_enter_code">인증번호 입력</string>
+    <string name="feature_findpassword_minutes_seconds">%1$d분 %2$d초</string>
+    <string name="feature_findpassword_verification_success">인증되었습니다.</string>
+    <string name="feature_findpassword_code_mismatch">인증번호가 일치하지 않습니다.</string>
+    <string name="feature_findpassword_timeout">입력 시간을 초과하였습니다.</string>
+</resources>

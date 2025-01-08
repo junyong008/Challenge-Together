@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_notification_setting_all">Todas las Notificaciones</string>
+    <string name="feature_notification_setting_challenge">Notificaciones de Desafío</string>
+    <string name="feature_notification_setting_community">Notificaciones de Comunidad</string>
+    <string name="feature_notification_setting_goal_achieved">Notificaciones de Logro de Objetivo</string>
+    <string name="feature_notification_setting_goal_achieved_detail">Enviar notificaciones cuando se logre un objetivo del desafío.</string>
+    <string name="feature_notification_setting_waiting_room_participants">Notificaciones de Participantes en la Sala de Espera</string>
+    <string name="feature_notification_setting_waiting_room_participants_detail">Notificar cuando los participantes entren o salgan de la sala de espera que creaste.</string>
+    <string name="feature_notification_setting_waiting_room_updates">Notificaciones de Actualizaciones de la Sala de Espera</string>
+    <string name="feature_notification_setting_waiting_room_updates_detail">Notificar sobre actualizaciones en una sala de espera en la que estás, como inicios o eliminaciones.</string>
+    <string name="feature_notification_setting_challenge_room_progress">Notificaciones de Progreso en la Sala de Desafío</string>
+    <string name="feature_notification_setting_challenge_room_progress_detail">Notificar cuando otros participantes en una sala de desafío reinicien o se rindan.</string>
+    <string name="feature_notification_setting_challenge_board">Notificaciones del Tablero de Desafíos</string>
+    <string name="feature_notification_setting_challenge_board_detail">Notificar cuando se agregue una publicación al tablero de desafíos del que formas parte.</string>
+    <string name="feature_notification_setting_comment">Notificaciones de Comentarios</string>
+    <string name="feature_notification_setting_comment_detail">Notificar cuando alguien comente en tus publicaciones.</string>
+    <string name="feature_notification_setting_reply">Notificaciones de Respuestas</string>
+    <string name="feature_notification_setting_reply_detail">Notificar cuando alguien responda a tus comentarios.</string>
+    <string name="feature_notification_setting_permission_denied_title">Permiso Denegado</string>
+    <string name="feature_notification_setting_permission_denied_description">Las notificaciones están actualmente desactivadas.\nPor favor, actívalas en la configuración de tu dispositivo para mantenerte actualizado.</string>
+    <string name="feature_notification_setting_settings">Configuraciones</string>
+</resources>

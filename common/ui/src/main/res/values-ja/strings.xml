@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ui_error_body_title">画面を読み込むことができませんでした</string>
+    <string name="common_ui_error_description">エラーが発生しました。\n後でもう一度お試しください。</string>
+    <string name="common_ui_error_retry">再試行</string>
+    <string name="common_ui_started_challenge_card_timer_description">タイマーのアイコン</string>
+    <string name="common_ui_started_challenge_card_check_description">完了のアイコン</string>
+    <string name="common_ui_waiting_challenge_number">番号 %1$d</string>
+    <string name="common_ui_waiting_challenge_private">[非公開]</string>
+    <string name="common_ui_waiting_challenge_participant_number_format">%1$s / %2$s</string>
+    <string name="common_ui_waiting_challenge_calendar_description">カレンダーのアイコン</string>
+    <string name="common_ui_waiting_challenge_goal_days">%1$s 日間</string>
+    <string name="common_ui_waiting_challenge_unlimited">無制限</string>
+    <string name="common_ui_waiting_challenge_icon_of_person">人物のアイコン</string>
+    <string name="common_ui_manual_time_warning">システム時間が手動で設定されています</string>
+    <string name="common_ui_manual_time_warning_icon">時計のアイコン</string>
+    <string name="common_ui_category_list_all">私のチャレンジ</string>
+    <string name="common_ui_target_day">目標日</string>
+    <string name="common_ui_target_day_unlimited">無制限</string>
+    <string name="common_ui_target_day_days">日間</string>
+</resources>

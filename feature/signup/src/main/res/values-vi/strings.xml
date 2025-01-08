@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">Đăng ký</string>
+    <string name="feature_signup_description">Vui lòng nhập email và mật khẩu bạn sẽ sử dụng để đăng nhập.\nEmail có thể được sử dụng sau để khôi phục mật khẩu của bạn.</string>
+    <string name="feature_signup_input_email_place_holder">Email</string>
+    <string name="feature_signup_email_format_indicator">Email phải có định dạng hợp lệ</string>
+    <string name="feature_signup_password_length_indicator">Mật khẩu phải dài ít nhất %1$d ký tự</string>
+    <string name="feature_signup_password_number_indicator">Mật khẩu phải chứa ít nhất một chữ số</string>
+    <string name="feature_signup_input_password_place_holder">Mật khẩu</string>
+    <string name="feature_signup_email_already_registered">Email này đã được đăng ký.</string>
+    <string name="feature_signup_error">Có lỗi xảy ra. Vui lòng thử lại sau.</string>
+    <string name="feature_signup_set_nickname_title">Đặt biệt danh của bạn</string>
+    <string name="feature_signup_set_nickname_description">Biệt danh của bạn sẽ hiển thị cho người dùng khác trong ứng dụng.</string>
+    <string name="feature_signup_smile_image_description">Hình ảnh cười</string>
+    <string name="feature_signup_nickname_place_holder">Nhập biệt danh của bạn</string>
+    <string name="feature_signup_start">BẮT ĐẦU</string>
+    <string name="feature_signup_nickname_length_indicator">Biệt danh phải dài từ %1$d đến %2$d ký tự</string>
+    <string name="feature_signup_nickname_korean_constraint">Biệt danh tiếng Hàn không thể chỉ chứa phụ âm hoặc nguyên âm</string>
+    <string name="feature_signup_privacy_policy_agreement">Bằng cách nhấp vào nút bắt đầu, bạn đồng ý với <b>Chính sách bảo mật</b>.</string>
+    <string name="feature_signup_privacy_policy">Chính sách bảo mật</string>
+    <string name="feature_signup_nickname_already_taken">Biệt danh này đã được sử dụng.</string>
+    <string name="feature_signup_check_network_connection">Vui lòng kiểm tra kết nối mạng của bạn.</string>
+    <string name="feature_signup_complete">Đăng ký hoàn tất.</string>
+</resources>

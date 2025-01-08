@@ -1,0 +1,17 @@
+<resources>
+    <string name="feature_findpassword_title">Find Password</string>
+    <string name="feature_findpassword_description">Please enter your registered email address.\nA verification code will be sent to the email address you entered.</string>
+    <string name="feature_findpassword_input_email_place_holder">Email</string>
+    <string name="feature_findpassword_send_verify_code">Send Verify Code</string>
+    <string name="feature_findpassword_invalid_email_format">Please enter a correct email format.</string>
+    <string name="feature_findpassword_unknown_error">An error occurred. Please try again later.</string>
+    <string name="feature_findpassword_check_network_connection">Please check your network connection.</string>
+    <string name="feature_findpassword_email_not_registered">This email is not registered.</string>
+    <string name="feature_findpassword_invalid_email">The email address is invalid.</string>
+    <string name="feature_findpassword_code_sent">The verification code has been sent.</string>
+    <string name="feature_findpassword_enter_code">Enter Verification Code</string>
+    <string name="feature_findpassword_minutes_seconds">%1$dm %2$ds</string>
+    <string name="feature_findpassword_verification_success">Verification successful.</string>
+    <string name="feature_findpassword_code_mismatch">The verification code does not match.</string>
+    <string name="feature_findpassword_timeout">The input time has expired.</string>
+</resources>

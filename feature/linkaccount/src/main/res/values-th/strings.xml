@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_linkaccount_title">เชื่อมต่อบัญชี</string>
+    <string name="feature_linkaccount_description">เชื่อมต่อบัญชีของคุณเพื่อเข้าสู่ระบบอย่างรวดเร็วและรักษาข้อมูล</string>
+    <string name="feature_linkaccount_kakao">เชื่อมต่อกับ Kakao</string>
+    <string name="feature_linkaccount_google">เชื่อมต่อกับ Google</string>
+    <string name="feature_linkaccount_naver">เชื่อมต่อกับ Naver</string>
+    <string name="feature_linkaccount_already_exists">บัญชีนี้มีการลงทะเบียนแล้ว</string>
+    <string name="feature_linkaccount_already_linked">บัญชีของคุณเชื่อมต่อแล้ว</string>
+    <string name="feature_linkaccount_success">เชื่อมต่อสำเร็จ</string>
+    <string name="feature_linkaccount_check_network_connection">โปรดตรวจสอบการเชื่อมต่อเครือข่ายของคุณ</string>
+    <string name="feature_linkaccount_error">เกิดข้อผิดพลาด โปรดลองใหม่อีกครั้งในภายหลัง</string>
+    <string name="feature_linkaccount_info_graphic">เชื่อมต่อข้อมูลกราฟิก</string>
+</resources>

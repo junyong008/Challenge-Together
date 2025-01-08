@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_linkaccount_title">खाता लिंक करें</string>
+    <string name="feature_linkaccount_description">त्वरित लॉगिन और डेटा संरक्षण के लिए अपना खाता लिंक करें।</string>
+    <string name="feature_linkaccount_kakao">कakao के साथ लिंक करें</string>
+    <string name="feature_linkaccount_google">गूगल के साथ लिंक करें</string>
+    <string name="feature_linkaccount_naver">नेवर के साथ लिंक करें</string>
+    <string name="feature_linkaccount_already_exists">यह खाता पहले से पंजीकृत है।</string>
+    <string name="feature_linkaccount_already_linked">आपका खाता पहले से लिंक है।</string>
+    <string name="feature_linkaccount_success">सफलता से लिंक किया गया।</string>
+    <string name="feature_linkaccount_check_network_connection">कृपया अपना नेटवर्क कनेक्शन जांचें।</string>
+    <string name="feature_linkaccount_error">एक त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="feature_linkaccount_info_graphic">खाता लिंक जानकारी ग्राफ़िक</string>
+</resources>

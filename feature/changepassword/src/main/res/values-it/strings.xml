@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_changepassword_title">Cambia Password</string>
+    <string name="feature_changepassword_description">Si prega di seguire le regole di seguito quando si crea la password.</string>
+    <string name="feature_changepassword_lock_image_description">Immagine Icona Lucchetto</string>
+    <string name="feature_changepassword_input_password_place_holder">Nuova Password</string>
+    <string name="feature_changepassword_password_length_indicator">La password deve essere lunga almeno %1$d caratteri</string>
+    <string name="feature_changepassword_password_number_indicator">La password deve contenere almeno un numero</string>
+    <string name="feature_changepassword_confirm">Conferma</string>
+    <string name="feature_changepassword_change">Cambia</string>
+    <string name="feature_changepassword_confirm_info">Vuoi cambiare la tua password?</string>
+    <string name="feature_changepassword_back">Indietro</string>
+    <string name="feature_changepassword_cancel_prompt">Vuoi annullare il cambio password?</string>
+    <string name="feature_changepassword_success">La tua password è stata cambiata.</string>
+    <string name="feature_changepassword_error">Si è verificato un errore. Si prega di riprovare più tardi.</string>
+    <string name="feature_changepassword_check_network_connection">Si prega di controllare la connessione di rete.</string>
+</resources>

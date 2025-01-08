@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">Inscrever-se</string>
+    <string name="feature_signup_description">Por favor, insira o email e a senha que você usará para fazer login.\nO email pode ser usado posteriormente para recuperar sua senha.</string>
+    <string name="feature_signup_input_email_place_holder">Email</string>
+    <string name="feature_signup_email_format_indicator">O email deve estar em formato válido</string>
+    <string name="feature_signup_password_length_indicator">A senha deve ter pelo menos %1$d caracteres</string>
+    <string name="feature_signup_password_number_indicator">A senha deve conter pelo menos um número</string>
+    <string name="feature_signup_input_password_place_holder">Senha</string>
+    <string name="feature_signup_email_already_registered">Este email já está registrado.</string>
+    <string name="feature_signup_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
+    <string name="feature_signup_set_nickname_title">Escolha Seu Próprio Apelido</string>
+    <string name="feature_signup_set_nickname_description">Seu apelido é visível para outros usuários no app.</string>
+    <string name="feature_signup_smile_image_description">Imagem de Sorriso</string>
+    <string name="feature_signup_nickname_place_holder">Digite seu apelido</string>
+    <string name="feature_signup_start">COMEÇAR</string>
+    <string name="feature_signup_nickname_length_indicator">O apelido deve ter entre %1$d e %2$d caracteres</string>
+    <string name="feature_signup_nickname_korean_constraint">Apelidos coreanos não podem conter apenas consoantes ou vogais</string>
+    <string name="feature_signup_privacy_policy_agreement">Ao clicar no botão iniciar, você concorda com a <b>Política de Privacidade</b>.</string>
+    <string name="feature_signup_privacy_policy">Política de Privacidade</string>
+    <string name="feature_signup_nickname_already_taken">Este apelido já está em uso.</string>
+    <string name="feature_signup_check_network_connection">Por favor, verifique sua conexão de rede.</string>
+    <string name="feature_signup_complete">Registro completo.</string>
+</resources>

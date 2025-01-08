@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">리셋 기록</string>
+    <string name="feature_resetrecord_record">기록</string>
+    <string name="feature_resetrecord_content">내용</string>
+    <string name="feature_resetrecord_no_reset_records">리셋 기록이 없습니다</string>
+    <string name="feature_resetrecord_encouragement">계속 도전하면서 성장해보세요!</string>
+    <string name="feature_resetrecord_day_suffix">일</string>
+</resources>

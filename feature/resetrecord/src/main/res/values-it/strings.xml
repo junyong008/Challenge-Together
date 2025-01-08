@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">Ripristina Cronologia</string>
+    <string name="feature_resetrecord_record">Record</string>
+    <string name="feature_resetrecord_content">Contenuto</string>
+    <string name="feature_resetrecord_no_reset_records">Ancora nessun record di ripristino.</string>
+    <string name="feature_resetrecord_encouragement">Continua così e continua a sfidare te stesso!</string>
+    <string name="feature_resetrecord_day_suffix">G</string>
+</resources>

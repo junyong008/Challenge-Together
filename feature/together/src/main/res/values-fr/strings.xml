@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_together_title">Ensemble</string>
+    <string name="feature_together_description">Commencez un défi avec des personnes diverses.</string>
+    <string name="feature_together_search_placeholder">Rechercher…</string>
+    <string name="feature_together_empty_title">Aucun Défi Trouvé</string>
+    <string name="feature_together_empty_description">Aucun défi n\'est disponible pour le moment.\nCréez un nouveau défi et invitez d\'autres personnes à rejoindre!</string>
+    <string name="feature_together_search_empty_title">Aucun Défi Trouvé</string>
+    <string name="feature_together_search_empty_description">Aucun défi ne correspond à votre recherche.\nEssayez d\'utiliser d\'autres mots-clés ou filtres!</string>
+    <string name="feature_together_global">Défis dans d\'autres langues</string>
+    <string name="feature_together_global_challenges_on">Les défis de tous les pays seront affichés.</string>
+    <string name="feature_together_global_challenges_off">Seuls les défis %1$s seront affichés.</string>
+</resources>

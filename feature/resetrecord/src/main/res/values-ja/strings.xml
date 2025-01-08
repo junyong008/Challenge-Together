@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">履歴をリセット</string>
+    <string name="feature_resetrecord_record">記録</string>
+    <string name="feature_resetrecord_content">内容</string>
+    <string name="feature_resetrecord_no_reset_records">まだリセット記録はありません。</string>
+    <string name="feature_resetrecord_encouragement">その調子で自分に挑戦し続けてください！</string>
+    <string name="feature_resetrecord_day_suffix">日</string>
+</resources>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_resetrecord_title">Réinitialiser l\'historique</string>
+    <string name="feature_resetrecord_record">Enregistrer</string>
+    <string name="feature_resetrecord_content">Contenu</string>
+    <string name="feature_resetrecord_no_reset_records">Pas encore d\'enregistrements de réinitialisation.</string>
+    <string name="feature_resetrecord_encouragement">Continuez et continuez à vous défier !</string>
+    <string name="feature_resetrecord_day_suffix">J</string>
+</resources>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_applock_title">アプリロック</string>
+    <string name="feature_applock_password">パスワード</string>
+    <string name="feature_applock_enter_password">パスワードを入力してください</string>
+    <string name="feature_applock_reenter_password">もう一度パスワードを入力してください</string>
+    <string name="feature_applock_password_mismatch">パスワードが一致しません。</string>
+    <string name="feature_applock_password_set_success">パスワードが設定されました。</string>
+    <string name="feature_applock_change_password">パスワードの変更</string>
+    <string name="feature_applock_biometric_authentication">生体認証</string>
+    <string name="feature_applock_biometric_cancel">キャンセル</string>
+    <string name="feature_applock_hide_widget_content">ウィジェットコンテンツを非表示</string>
+    <string name="feature_applock_hide_notification_content">通知コンテンツを非表示</string>
+    <string name="feature_applock_close">閉じる</string>
+    <string name="feature_applock_backspace">バックスペース</string>
+</resources>

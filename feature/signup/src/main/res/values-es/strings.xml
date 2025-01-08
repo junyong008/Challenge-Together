@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_signup_title">Registrarse</string>
+    <string name="feature_signup_description">Por favor ingresa el correo electrónico y la contraseña que utilizarás para iniciar sesión.\nEl correo electrónico se puede usar más adelante para recuperar tu contraseña.</string>
+    <string name="feature_signup_input_email_place_holder">Correo Electrónico</string>
+    <string name="feature_signup_email_format_indicator">El correo electrónico debe estar en un formato válido</string>
+    <string name="feature_signup_password_length_indicator">La contraseña debe tener al menos %1$d caracteres</string>
+    <string name="feature_signup_password_number_indicator">La contraseña debe contener al menos un número</string>
+    <string name="feature_signup_input_password_place_holder">Contraseña</string>
+    <string name="feature_signup_email_already_registered">Este correo electrónico ya está registrado.</string>
+    <string name="feature_signup_error">Ocurrió un error. Por favor intenta nuevamente más tarde.</string>
+    <string name="feature_signup_set_nickname_title">Establece Tu Propio Apodo</string>
+    <string name="feature_signup_set_nickname_description">Tu apodo es visible para otros usuarios en la aplicación.</string>
+    <string name="feature_signup_smile_image_description">Imagen de Sonrisa</string>
+    <string name="feature_signup_nickname_place_holder">Ingresa tu apodo</string>
+    <string name="feature_signup_start">EMPEZAR</string>
+    <string name="feature_signup_nickname_length_indicator">El apodo debe tener entre %1$d y %2$d caracteres</string>
+    <string name="feature_signup_nickname_korean_constraint">Los apodos en coreano no pueden contener solo consonantes o vocales</string>
+    <string name="feature_signup_privacy_policy_agreement">Al hacer clic en el botón de empezar, aceptas la <b>Política de Privacidad</b>.</string>
+    <string name="feature_signup_privacy_policy">Política de Privacidad</string>
+    <string name="feature_signup_nickname_already_taken">Este apodo ya está en uso.</string>
+    <string name="feature_signup_check_network_connection">Por favor, verifica tu conexión a la red.</string>
+    <string name="feature_signup_complete">La inscripción está completa.</string>
+</resources>

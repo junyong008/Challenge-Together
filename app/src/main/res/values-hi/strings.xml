@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">चुनौती साथ में</string>
+    <string name="app_name_debug">डीबग चुनौती साथ में</string>
+    <string name="splash_content_description">स्प्लैश इमेज</string>
+</resources>

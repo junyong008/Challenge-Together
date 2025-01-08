@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_my_navigation_title">Mein</string>
+    <string name="feature_my_medal_description">Aktuelle Stufe</string>
+    <string name="feature_my_no_active_challenge_mode">Kein aktiver Herausforderungsmodus</string>
+    <string name="feature_my_highest_tier">Höchste Stufe</string>
+    <string name="feature_my_remain_time_for_next_tier">Verbleibende Zeit bis zur nächsten Stufe: %d Tage</string>
+    <string name="feature_my_best_record">Bester Rekord</string>
+    <string name="feature_my_attempt_count">Versuche</string>
+    <string name="feature_my_success_count">Erfolge</string>
+    <string name="feature_my_reset_count">Zurücksetzungen</string>
+    <string name="feature_my_settings">Einstellungen</string>
+    <string name="feature_my_account">Konto</string>
+    <string name="feature_my_app_info">App-Informationen</string>
+    <string name="feature_my_notification_settings">Benachrichtigungseinstellungen</string>
+    <string name="feature_my_app_lock_settings">App-Sperr-Einstellungen</string>
+    <string name="feature_my_account_linking">Kontoverknüpfung</string>
+    <string name="feature_my_account_premium">Premium-Upgrade</string>
+    <string name="feature_my_linked_with_kakao">Mit Kakao verknüpft</string>
+    <string name="feature_my_linked_with_google">Mit Google verknüpft</string>
+    <string name="feature_my_linked_with_naver">Mit Naver verknüpft</string>
+    <string name="feature_my_linked_with">Verknüpft mit</string>
+    <string name="feature_my_nickname_change">Spitznamen ändern</string>
+    <string name="feature_my_password_change">Passwort ändern</string>
+    <string name="feature_my_logout">Abmelden</string>
+    <string name="feature_my_logout_confirmation">Möchten Sie sich wirklich abmelden?</string>
+    <string name="feature_my_logout_success">Sie wurden abgemeldet.</string>
+    <string name="feature_my_delete_account">Konto löschen</string>
+    <string name="feature_my_contact_support">1:1 Anfrage</string>
+    <string name="feature_my_privacy_policy">Datenschutzrichtlinie</string>
+    <string name="feature_my_open_source_license">Open-Source-Lizenzen</string>
+    <string name="feature_my_app_version">App-Version</string>
+    <string name="feature_my_email_inquiry_title">Challenge Together Anfrage</string>
+    <string name="feature_my_email_inquiry_content">Inhalt: </string>
+    <string name="feature_my_email_app_not_found">Keine E-Mail-App gefunden.</string>
+    <string name="feature_my_email_send_failed">E-Mail konnte nicht gesendet werden.</string>
+</resources>

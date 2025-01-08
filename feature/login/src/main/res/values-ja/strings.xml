@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_login_title_description">自分を変える最も簡単な第一歩、</string>
+    <string name="feature_login_title">一緒にチャレンジ</string>
+    <string name="feature_login_input_email_content_description">メールアドレスを入力</string>
+    <string name="feature_login_input_email_place_holder">メールアドレス</string>
+    <string name="feature_login_input_password_content_description">パスワードを入力</string>
+    <string name="feature_login_input_password_place_holder">パスワード</string>
+    <string name="feature_login_button_text">ログイン</string>
+    <string name="feature_login_find_password">パスワードを探す</string>
+    <string name="feature_login_sign_up">登録する</string>
+    <string name="feature_login_login_success">ログイン成功</string>
+    <string name="feature_login_user_not_found">IDまたはパスワードが間違っています。</string>
+    <string name="feature_login_invalid_email_format">正しいメールアドレス形式を入力してください。</string>
+    <string name="feature_login_unknown_error">エラーが発生しました。後でもう一度お試しください。</string>
+    <string name="feature_login_check_network_connection">ネットワーク接続を確認してください。</string>
+</resources>

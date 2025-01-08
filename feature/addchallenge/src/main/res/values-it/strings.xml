@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_addchallenge_title_set_mode">Seleziona il tipo di sfida</string>
+    <string name="feature_addchallenge_description_set_mode">Se scegli la data di inizio in modalità libera,\nquesta sfida non influirà sui tuoi record più alti o sul tuo ranking.</string>
+    <string name="feature_addchallenge_title_set_category">Quale sfida vuoi affrontare?</string>
+    <string name="feature_addchallenge_description_set_category">Per favore seleziona la categoria desiderata.</string>
+    <string name="feature_addchallenge_title_set_title">Scrivi una descrizione della sfida</string>
+    <string name="feature_addchallenge_description_set_title">Inserisci i dettagli della sfida.\nScrivere i tuoi obiettivi e le tue risoluzioni ti aiuterà.</string>
+    <string name="feature_addchallenge_title_set_target_day">Imposta il giorno obiettivo per la sfida</string>
+    <string name="feature_addchallenge_description_set_target_day">Imposta per quanti giorni durerà la sfida.\nSe non si resetta durante il periodo obiettivo, si ha successo.</string>
+    <string name="feature_addchallenge_title_set_start_date">Seleziona la data di inizio della sfida</string>
+    <string name="feature_addchallenge_description_set_start_date">Seleziona quando è iniziata la sfida.\nLa data di inizio non può essere futura.</string>
+    <string name="feature_addchallenge_title_confirm">Tutto è pronto!</string>
+    <string name="feature_addchallenge_description_confirm">Tutti i preparativi per la sfida sono completi.\nClicca sul pulsante "Inizia" per avviare la sfida immediatamente.</string>
+    <string name="feature_addchallenge_title_set_together">Insieme</string>
+    <string name="feature_addchallenge_description_set_together">Creeremo una sala d\'attesa affinché altri possano unirsi alla tua sfida.</string>
+
+    <string name="feature_addchallenge_mode_challenge">Modalità Sfida</string>
+    <string name="feature_addchallenge_mode_free">Modalità Libera</string>
+    <string name="feature_addchallenge_mode_challenge_description">Non puoi impostare una data di inizio passata, ma verrà conteggiata nei tuoi record e nel ranking.</string>
+    <string name="feature_addchallenge_mode_free_description">Puoi impostare una data di inizio passata, ma non verrà conteggiata nei tuoi record o nel ranking.</string>
+    <string name="feature_addchallenge_title">Titolo</string>
+    <string name="feature_addchallenge_title_placeholder">Titolo della sfida</string>
+    <string name="feature_addchallenge_description_optional">Descrizione (opzionale)</string>
+    <string name="feature_addchallenge_description_placeholder">Descrizione della sfida</string>
+    <string name="feature_addchallenge_invalid_start_date">La data di inizio non può essere nel futuro.</string>
+    <string name="feature_addchallenge_category_card_title">Categoria</string>
+    <string name="feature_addchallenge_target_day_card_title">Giorno Obiettivo</string>
+    <string name="feature_addchallenge_target_day_string">%1$d Giorni</string>
+    <string name="feature_addchallenge_unlimited">Illimitato</string>
+    <string name="feature_addchallenge_start_date">Data di Inizio</string>
+    <string name="feature_addchallenge_together">Insieme</string>
+    <string name="feature_addchallenge_start_immediately">Inizia Ora</string>
+    <string name="feature_addchallenge_max_participants">Partecipanti Massimi</string>
+    <string name="feature_addchallenge_room_password">Password di Ingresso</string>
+    <string name="feature_addchallenge_people">persone</string>
+    <string name="feature_addchallenge_room_password_icon">Icona Password Stanza</string>
+    <string name="feature_addchallenge_room_password_placeholder">Password Stanza</string>
+    <string name="feature_addchallenge_create_waiting_room">Crea Sala d\'Attesa</string>
+
+    <string name="feature_addchallenge_unknown_error">Si è verificato un errore. Riprova più tardi.</string>
+    <string name="feature_addchallenge_check_network_connection">Si prega di controllare la connessione di rete.</string>
+    <string name="feature_addchallenge_challenge_added">La sfida è stata aggiunta.</string>
+    <string name="feature_addchallenge_waiting_room_created">La sala d\'attesa è stata creata.</string>
+
+    <string name="feature_addchallenge_dialog_start">Inizio</string>
+    <string name="feature_addchallenge_dialog_start_title">Inizia Sfida</string>
+    <string name="feature_addchallenge_dialog_start_description">Vuoi iniziare la sfida?</string>
+
+    <string name="feature_addchallenge_dialog_create">Crea</string>
+    <string name="feature_addchallenge_dialog_create_room_title">Crea Sala d\'Attesa</string>
+    <string name="feature_addchallenge_dialog_create_room_description">Vuoi creare una sala d\'attesa?</string>
+</resources>

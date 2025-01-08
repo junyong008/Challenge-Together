@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_linkaccount_title">Lier le compte</string>
+    <string name="feature_linkaccount_description">Liez votre compte pour une connexion rapide et la préservation des données.</string>
+    <string name="feature_linkaccount_kakao">Se connecter avec Kakao</string>
+    <string name="feature_linkaccount_google">Se connecter avec Google</string>
+    <string name="feature_linkaccount_naver">Se connecter avec Naver</string>
+    <string name="feature_linkaccount_already_exists">Ce compte est déjà enregistré.</string>
+    <string name="feature_linkaccount_already_linked">Votre compte est déjà lié.</string>
+    <string name="feature_linkaccount_success">Lié avec succès.</string>
+    <string name="feature_linkaccount_check_network_connection">Veuillez vérifier votre connexion réseau.</string>
+    <string name="feature_linkaccount_error">Une erreur s\'est produite. Veuillez réessayer plus tard.</string>
+    <string name="feature_linkaccount_info_graphic">Graphique d\'information de liaison</string>
+</resources>

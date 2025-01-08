@@ -1,0 +1,36 @@
+<resources>
+    <string name="feature_my_navigation_title">My</string>
+    <string name="feature_my_medal_description">Current Tier</string>
+    <string name="feature_my_no_active_challenge_mode">No active challenge mode</string>
+    <string name="feature_my_highest_tier">Highest Tier</string>
+    <string name="feature_my_remain_time_for_next_tier">Remaining time for next tier: %d Days</string>
+    <string name="feature_my_best_record">Best Record</string>
+    <string name="feature_my_attempt_count">Attempts</string>
+    <string name="feature_my_success_count">Successes</string>
+    <string name="feature_my_reset_count">Resets</string>
+    <string name="feature_my_settings">Settings</string>
+    <string name="feature_my_account">Account</string>
+    <string name="feature_my_app_info">App Info</string>
+    <string name="feature_my_notification_settings">Notification Settings</string>
+    <string name="feature_my_app_lock_settings">App Lock Settings</string>
+    <string name="feature_my_account_linking">Account Linking</string>
+    <string name="feature_my_account_premium">Premium Upgrade</string>
+    <string name="feature_my_linked_with_kakao">Linked with Kakao</string>
+    <string name="feature_my_linked_with_google">Linked with Google</string>
+    <string name="feature_my_linked_with_naver">Linked with Naver</string>
+    <string name="feature_my_linked_with">Linked with</string>
+    <string name="feature_my_nickname_change">Change Nickname</string>
+    <string name="feature_my_password_change">Change Password</string>
+    <string name="feature_my_logout">Logout</string>
+    <string name="feature_my_logout_confirmation">Are you sure you want to log out?</string>
+    <string name="feature_my_logout_success">You have been logged out.</string>
+    <string name="feature_my_delete_account">Delete Account</string>
+    <string name="feature_my_contact_support">1:1 Inquiry</string>
+    <string name="feature_my_privacy_policy">Privacy Policy</string>
+    <string name="feature_my_open_source_license">Open Source Licenses</string>
+    <string name="feature_my_app_version">App Version</string>
+    <string name="feature_my_email_inquiry_title">Challenge Together Inquiry</string>
+    <string name="feature_my_email_inquiry_content">Content: </string>
+    <string name="feature_my_email_app_not_found">No email app found.</string>
+    <string name="feature_my_email_send_failed">Unable to send email.</string>
+</resources>

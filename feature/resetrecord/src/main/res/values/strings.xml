@@ -1,0 +1,8 @@
+<resources>
+    <string name="feature_resetrecord_title">Reset History</string>
+    <string name="feature_resetrecord_record">Record</string>
+    <string name="feature_resetrecord_content">Content</string>
+    <string name="feature_resetrecord_no_reset_records">No reset records yet.</string>
+    <string name="feature_resetrecord_encouragement">Keep it up and keep challenging yourself!</string>
+    <string name="feature_resetrecord_day_suffix">D</string>
+</resources>

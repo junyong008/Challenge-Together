@@ -1,0 +1,104 @@
+package com.yjy.common.designsystem.icon
+
+import com.yjy.common.designsystem.R
+
+object ChallengeTogetherIcons {
+    val Add = R.drawable.ic_add
+    val ArrowDown = R.drawable.ic_arrow_down
+    val ArrowLeft = R.drawable.ic_arrow_left
+    val ArrowRight = R.drawable.ic_arrow_right
+    val ArrowUp = R.drawable.ic_arrow_up
+    val Back = R.drawable.ic_back
+    val Backspace = R.drawable.ic_backspace
+    val Bell = R.drawable.ic_bell
+    val BookmarkOff = R.drawable.ic_bookmark_off
+    val BookmarkOn = R.drawable.ic_bookmark_on
+    val Cancel = R.drawable.ic_cancel
+    val Check = R.drawable.ic_check
+    val CheckOnly = R.drawable.ic_check_only
+    val Close = R.drawable.ic_close
+    val Comment = R.drawable.ic_comment
+    val Community = R.drawable.ic_community
+    val CompleteChallenge = R.drawable.ic_complete_challenge
+    val Edit = R.drawable.ic_edit
+    val EditLined = R.drawable.ic_edit_lined
+    val Email = R.drawable.ic_email
+    val FingerPrint = R.drawable.ic_fingerprint
+    val Guest = R.drawable.ic_guest
+    val Hide = R.drawable.ic_hide
+    val Home = R.drawable.ic_home
+    val Infinite = R.drawable.ic_infinite
+    val Key = R.drawable.ic_key
+    val Language = R.drawable.ic_language
+    val LikeOff = R.drawable.ic_like_off
+    val LikeOn = R.drawable.ic_like_on
+    val Link = R.drawable.ic_link
+    val Lock = R.drawable.ic_lock
+    val LockFilled = R.drawable.ic_lock_filled
+    val Logout = R.drawable.ic_logout
+    val MoreHorizontal = R.drawable.ic_more_horiz
+    val MoreVertical = R.drawable.ic_more_vert
+    val My = R.drawable.ic_my
+    val NotificationChallenge = R.drawable.ic_noti_challenge
+    val NotificationCommunity = R.drawable.ic_noti_community
+    val NotificationOff = R.drawable.ic_notification_off
+    val NotificationOn = R.drawable.ic_notification_on
+    val Person = R.drawable.ic_person
+    val Policy = R.drawable.ic_policy
+    val Premium = R.drawable.ic_premium
+    val QuoteLeft = R.drawable.ic_quote_left
+    val QuoteRight = R.drawable.ic_quote_right
+    val Refresh = R.drawable.ic_refresh
+    val Reply = R.drawable.ic_reply
+    val Search = R.drawable.ic_search
+    val SearchOff = R.drawable.ic_search_off
+    val Send = R.drawable.ic_send
+    val Sort = R.drawable.ic_sort
+    val Source = R.drawable.ic_source
+    val Support = R.drawable.ic_support
+    val Timer = R.drawable.ic_timer
+    val Together = R.drawable.ic_together
+    val Trash = R.drawable.ic_trash
+    val Trophy = R.drawable.ic_trophy
+    val TrophyOff = R.drawable.ic_trophy_off
+    val UnCheck = R.drawable.ic_uncheck
+    val Visibility = R.drawable.ic_visibility
+    val VisibilityOff = R.drawable.ic_visibility_off
+
+    val All = R.drawable.ic_category
+    val QuitSmoking = R.drawable.ic_quit_smoking
+    val QuitDrinking = R.drawable.ic_quit_drinking
+    val QuitPorn = R.drawable.ic_quit_porn
+    val QuitGaming = R.drawable.ic_quit_gaming
+    val QuitYoutube = R.drawable.ic_quit_youtube
+    val QuitSns = R.drawable.ic_quit_sns
+    val QuitGluten = R.drawable.ic_quit_gluten
+    val QuitGambling = R.drawable.ic_quit_gambling
+    val QuitDrugs = R.drawable.ic_quit_drugs
+    val QuitCaffeine = R.drawable.ic_quit_caffeine
+    val QuitEatingOut = R.drawable.ic_quit_eating_out
+    val QuitShopping = R.drawable.ic_quit_shopping
+    val QuitSwearing = R.drawable.ic_quit_swearing
+    val QuitSmartphone = R.drawable.ic_quit_smartphone
+
+    val Google = R.drawable.ic_google
+    val Kakao = R.drawable.ic_kakao
+    val Naver = R.drawable.ic_naver
+
+    val IronRibbon = R.drawable.ic_medal_iron
+    val BronzeRibbon = R.drawable.ic_medal_bronze
+    val SilverRibbon = R.drawable.ic_medal_silver
+    val GoldRibbon = R.drawable.ic_medal_gold
+    val PlatinumRibbon = R.drawable.ic_medal_platinum
+    val DiamondRibbon = R.drawable.ic_medal_diamond
+    val MasterRibbon = R.drawable.ic_medal_master
+    val LegendRibbon = R.drawable.ic_medal_legend
+    val IronMedal = R.drawable.ic_circle_medal_iron
+    val BronzeMedal = R.drawable.ic_circle_medal_bronze
+    val SilverMedal = R.drawable.ic_circle_medal_silver
+    val GoldMedal = R.drawable.ic_circle_medal_gold
+    val PlatinumMedal = R.drawable.ic_circle_medal_platinum
+    val DiamondMedal = R.drawable.ic_circle_medal_diamond
+    val MasterMedal = R.drawable.ic_circle_medal_master
+    val LegendMedal = R.drawable.ic_circle_medal_legend
+}

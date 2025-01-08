@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_service_session_expired">セッションが期限切れです。\nもう一度ログインしてください。</string>
+    <string name="navigation_service_add_new_challenge">新しいチャレンジを追加</string>
+    <string name="navigation_service_add_new_community_post">新しいコミュニティ投稿を追加</string>
+    <string name="navigation_service_check_network_connection">ネットワーク接続を確認してください。</string>
+    <string name="navigation_service_update">更新</string>
+    <string name="navigation_service_update_description">新しいバージョンのアプリが利用可能です。\nPlayストアを通じて更新してください。</string>
+</resources>

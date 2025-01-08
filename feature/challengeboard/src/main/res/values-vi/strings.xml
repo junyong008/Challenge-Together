@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">Bảng</string>
+    <string name="feature_challengeboard_content_placeholder">Nhập nội dung…</string>
+    <string name="feature_challengeboard_send">Gửi</string>
+    <string name="feature_challengeboard_no_posts_title">Chưa có bài đăng</string>
+    <string name="feature_challengeboard_no_posts_description">Ghi lại hoặc ghi chú về thách thức của bạn.</string>
+    <string name="feature_challengeboard_scroll_to_bottom">Cuộn xuống cuối</string>
+    <string name="feature_challengeboard_menu_copy">Sao chép</string>
+    <string name="feature_challengeboard_menu_report">Báo cáo</string>
+    <string name="feature_challengeboard_menu_delete">Xóa</string>
+    <string name="feature_challengeboard_delete_success">Xóa thành công.</string>
+    <string name="feature_challengeboard_delete_failed">Xóa không thành công. Vui lòng thử lại sau.</string>
+    <string name="feature_challengeboard_report_success">Báo cáo thành công.</string>
+    <string name="feature_challengeboard_report_failed">Báo cáo không thành công. Vui lòng thử lại sau.</string>
+    <string name="feature_challengeboard_report_already_reported">Bài đăng này đã được báo cáo.</string>
+    <string name="feature_challengeboard_toggle_notification">Chuyển đổi thông báo</string>
+    <string name="feature_challengeboard_notification_enabled">Thông báo đã được bật.</string>
+    <string name="feature_challengeboard_notification_disabled">Thông báo đã bị tắt.</string>
+</resources>

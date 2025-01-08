@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_challengeboard_title">Tafel</string>
+    <string name="feature_challengeboard_content_placeholder">Inhalt eingeben…</string>
+    <string name="feature_challengeboard_send">Senden</string>
+    <string name="feature_challengeboard_no_posts_title">Noch keine Beiträge</string>
+    <string name="feature_challengeboard_no_posts_description">Hinterlassen Sie Aufzeichnungen oder Notizen zu Ihrer Herausforderung.</string>
+    <string name="feature_challengeboard_scroll_to_bottom">Zum Ende scrollen</string>
+    <string name="feature_challengeboard_menu_copy">Kopieren</string>
+    <string name="feature_challengeboard_menu_report">Melden</string>
+    <string name="feature_challengeboard_menu_delete">Löschen</string>
+    <string name="feature_challengeboard_delete_success">Erfolgreich gelöscht.</string>
+    <string name="feature_challengeboard_delete_failed">Löschen fehlgeschlagen. Bitte versuche es später erneut.</string>
+    <string name="feature_challengeboard_report_success">Erfolgreich gemeldet.</string>
+    <string name="feature_challengeboard_report_failed">Melden fehlgeschlagen. Bitte versuche es später erneut.</string>
+    <string name="feature_challengeboard_report_already_reported">Dieser Beitrag wurde bereits gemeldet.</string>
+    <string name="feature_challengeboard_toggle_notification">Benachrichtigung umschalten</string>
+    <string name="feature_challengeboard_notification_enabled">Benachrichtigungen aktiviert.</string>
+    <string name="feature_challengeboard_notification_disabled">Benachrichtigungen deaktiviert.</string>
+</resources>

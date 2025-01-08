@@ -1,0 +1,20 @@
+<resources>
+    <string name="common_ui_error_body_title">Failed to load the screen</string>
+    <string name="common_ui_error_description">An error occurred.\nPlease try again later.</string>
+    <string name="common_ui_error_retry">Retry</string>
+    <string name="common_ui_started_challenge_card_timer_description">Icon of timer</string>
+    <string name="common_ui_started_challenge_card_check_description">Icon of complete</string>
+    <string name="common_ui_waiting_challenge_number">No. %1$d</string>
+    <string name="common_ui_waiting_challenge_private">[Private]</string>
+    <string name="common_ui_waiting_challenge_participant_number_format">%1$s / %2$s</string>
+    <string name="common_ui_waiting_challenge_calendar_description">Icon of calendar</string>
+    <string name="common_ui_waiting_challenge_goal_days">%1$s Days</string>
+    <string name="common_ui_waiting_challenge_unlimited">Unlimited</string>
+    <string name="common_ui_waiting_challenge_icon_of_person">Icon of person</string>
+    <string name="common_ui_manual_time_warning">System time is set manually</string>
+    <string name="common_ui_manual_time_warning_icon">Icon of clock</string>
+    <string name="common_ui_category_list_all">My Challenge</string>
+    <string name="common_ui_target_day">Target Day</string>
+    <string name="common_ui_target_day_unlimited">Unlimited</string>
+    <string name="common_ui_target_day_days">Days</string>
+</resources>

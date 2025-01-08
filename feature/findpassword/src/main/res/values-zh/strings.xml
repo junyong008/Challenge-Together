@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_findpassword_title">找回密码</string>
+    <string name="feature_findpassword_description">请输入您注册的电子邮件地址。\n验证码将发送至您输入的电子邮件地址。</string>
+    <string name="feature_findpassword_input_email_place_holder">电子邮件</string>
+    <string name="feature_findpassword_send_verify_code">发送验证码</string>
+    <string name="feature_findpassword_invalid_email_format">请输入正确的电子邮件格式。</string>
+    <string name="feature_findpassword_unknown_error">发生错误。请稍后再试。</string>
+    <string name="feature_findpassword_check_network_connection">请检查您的网络连接。</string>
+    <string name="feature_findpassword_email_not_registered">该电子邮件未注册。</string>
+    <string name="feature_findpassword_invalid_email">电子邮件地址无效。</string>
+    <string name="feature_findpassword_code_sent">验证码已发送。</string>
+    <string name="feature_findpassword_enter_code">输入验证码</string>
+    <string name="feature_findpassword_minutes_seconds">%1$dm %2$ds</string>
+    <string name="feature_findpassword_verification_success">验证成功。</string>
+    <string name="feature_findpassword_code_mismatch">验证码不匹配。</string>
+    <string name="feature_findpassword_timeout">输入时间已过期。</string>
+</resources>

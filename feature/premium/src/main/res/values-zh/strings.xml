@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_premium_title">高级升级</string>
+    <string name="feature_premium_description">通过高级账户享受各种福利。\n一次性购买让福利永久绑定到您的账户。</string>
+    <string name="feature_premium_no_ads">永久移除所有广告</string>
+    <string name="feature_premium_unlock_widgets">解锁所有小部件功能</string>
+    <string name="feature_premium_app_lock">应用程序访问密码功能</string>
+    <string name="feature_premium_active">已激活</string>
+    <string name="feature_premium_invalid_now">即将推出</string>
+    <string name="feature_premium_info_graphic">高级信息图</string>
+    <string name="feature_premium_purchase_complete">购买完成</string>
+    <string name="feature_premium_error_occurred">发生错误。请稍后再试。</string>
+</resources>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_linkaccount_title">Collega account</string>
+    <string name="feature_linkaccount_description">Collega il tuo account per un accesso rapido e la conservazione dei dati.</string>
+    <string name="feature_linkaccount_kakao">Collega con Kakao</string>
+    <string name="feature_linkaccount_google">Collega con Google</string>
+    <string name="feature_linkaccount_naver">Collega con Naver</string>
+    <string name="feature_linkaccount_already_exists">Questo account è già registrato.</string>
+    <string name="feature_linkaccount_already_linked">Il tuo account è già collegato.</string>
+    <string name="feature_linkaccount_success">Collegamento riuscito.</string>
+    <string name="feature_linkaccount_check_network_connection">Si prega di controllare la connessione di rete.</string>
+    <string name="feature_linkaccount_error">Si è verificato un errore. Per favore riprova più tardi.</string>
+    <string name="feature_linkaccount_info_graphic">Grafico delle informazioni sul collegamento</string>
+</resources>

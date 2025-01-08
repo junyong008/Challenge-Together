@@ -1,0 +1,13 @@
+<resources>
+    <string name="feature_linkaccount_title">Link Account</string>
+    <string name="feature_linkaccount_description">Link your account for quick login and data preservation.</string>
+    <string name="feature_linkaccount_kakao">Link with Kakao</string>
+    <string name="feature_linkaccount_google">Link with Google</string>
+    <string name="feature_linkaccount_naver">Link with Naver</string>
+    <string name="feature_linkaccount_already_exists">This account is already registered.</string>
+    <string name="feature_linkaccount_already_linked">Your account is already linked.</string>
+    <string name="feature_linkaccount_success">Successfully linked.</string>
+    <string name="feature_linkaccount_check_network_connection">Please check your network connection.</string>
+    <string name="feature_linkaccount_error">An error occurred. Please try again later.</string>
+    <string name="feature_linkaccount_info_graphic">Link Information Graphic</string>
+</resources>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_core_time_day">天</string>
+    <string name="common_core_time_hour">小时</string>
+    <string name="common_core_time_minute">分钟</string>
+    <string name="common_core_time_second">秒</string>
+    <string name="common_core_time_seconds_ago">%d秒前</string>
+    <string name="common_core_time_minutes_ago">%d分钟前</string>
+    <string name="common_core_time_hours_ago">%d小时前</string>
+    <string name="common_core_time_days_ago">%d天前</string>
+</resources>
