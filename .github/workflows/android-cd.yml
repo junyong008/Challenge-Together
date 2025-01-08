@@ -5,8 +5,6 @@ env:
   GRADLE_BUILD_ACTION_CACHE_DEBUG_ENABLED: true
 
 on:
-  push:
-    branches: [ "release" ]
   pull_request:
     branches: [ "release" ]
 
@@ -43,12 +41,11 @@ jobs:
       - name: Extract Version Name
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            # PR인 경우
-            echo "version=$(echo '${{ github.event.pull_request.title }}' | grep -oP 'release v\K[0-9]+\.[0-9]+\.[0-9]+')" >> $GITHUB_OUTPUT
+            VERSION=$(echo '${{ github.event.pull_request.title }}' | grep -oP 'release v\K[0-9]+\.[0-9]+\.[0-9]+')
           else
-            # Push인 경우
-            echo "version=$(echo '${{ github.event.head_commit.message }}' | grep -oP 'release v\K[0-9]+\.[0-9]+\.[0-9]+')" >> $GITHUB_OUTPUT
+            VERSION=$(echo '${{ github.event.head_commit.message }}' | grep -oP 'release v\K[0-9]+\.[0-9]+\.[0-9]+')
           fi
+          echo "version=v${VERSION}" >> $GITHUB_OUTPUT
         id: extract_version
 
       - name: Build Release APK
@@ -76,4 +73,5 @@ jobs:
         with:
           appId: ${{secrets.FIREBASE_APP_ID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: testers
           file: app/build/outputs/apk/release/app-release.apk

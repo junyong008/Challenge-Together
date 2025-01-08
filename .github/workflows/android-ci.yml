@@ -5,8 +5,6 @@ env:
   GRADLE_BUILD_ACTION_CACHE_DEBUG_ENABLED: true
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
