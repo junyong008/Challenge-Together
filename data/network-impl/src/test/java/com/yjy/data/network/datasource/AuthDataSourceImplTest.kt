@@ -104,6 +104,7 @@ class AuthDataSourceTest {
                 kakaoId = "",
                 googleId = "",
                 naverId = "",
+                guestId = "",
             ),
         )
 

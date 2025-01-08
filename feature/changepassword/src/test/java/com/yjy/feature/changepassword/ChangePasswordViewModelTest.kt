@@ -2,9 +2,11 @@ package com.yjy.feature.changepassword
 
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.auth.api.AuthRepository
+import com.yjy.domain.LogoutUseCase
 import com.yjy.feature.changepassword.model.ChangePasswordUiAction
 import com.yjy.feature.changepassword.model.ChangePasswordUiEvent
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -21,6 +23,7 @@ class ChangePasswordViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
 
+    private lateinit var logoutUseCase: LogoutUseCase
     private lateinit var authRepository: AuthRepository
     private lateinit var viewModel: ChangePasswordViewModel
 
@@ -29,8 +32,9 @@ class ChangePasswordViewModelTest {
         Dispatchers.setMain(testDispatcher)
 
         authRepository = mockk(relaxed = true)
+        logoutUseCase = mockk(relaxed = true)
 
-        viewModel = ChangePasswordViewModel(authRepository)
+        viewModel = ChangePasswordViewModel(logoutUseCase, authRepository)
     }
 
     @After
@@ -49,6 +53,7 @@ class ChangePasswordViewModelTest {
 
         // Then
         val event = viewModel.uiEvent.first()
+        coVerify { logoutUseCase() }
         assertEquals(expected = ChangePasswordUiEvent.ChangeSuccess, actual = event)
     }
 

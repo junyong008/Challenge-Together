@@ -2,6 +2,7 @@ package com.yjy.feature.addchallenge
 
 import com.yjy.common.network.NetworkResult
 import com.yjy.data.challenge.api.ChallengeRepository
+import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.feature.addchallenge.model.AddChallengeUiAction
 import com.yjy.feature.addchallenge.model.AddChallengeUiEvent
 import com.yjy.model.challenge.core.Category
@@ -28,13 +29,16 @@ class AddChallengeViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var challengeRepository: ChallengeRepository
+    private lateinit var startedChallengeRepository: StartedChallengeRepository
     private lateinit var viewModel: AddChallengeViewModel
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         challengeRepository = mockk(relaxed = true)
-        viewModel = AddChallengeViewModel(challengeRepository)
+        startedChallengeRepository = mockk(relaxed = true)
+
+        viewModel = AddChallengeViewModel(challengeRepository, startedChallengeRepository)
     }
 
     @After
@@ -75,6 +79,7 @@ class AddChallengeViewModelTest {
                 description = description,
                 targetDays = TargetDays.Infinite,
                 startDateTime = startDateTime,
+                languageCode = "ko",
             )
         } returns NetworkResult.Success(challengeId)
 
@@ -87,6 +92,7 @@ class AddChallengeViewModelTest {
                 description = description,
                 startDateTime = startDateTime,
                 targetDays = targetDays,
+                languageCode = "ko",
             ),
         )
         advanceUntilIdle()
@@ -99,6 +105,7 @@ class AddChallengeViewModelTest {
                 description = description,
                 targetDays = TargetDays.Infinite,
                 startDateTime = startDateTime,
+                languageCode = "ko",
             )
         }
         val event = viewModel.uiEvent.first()
@@ -123,6 +130,7 @@ class AddChallengeViewModelTest {
                 description = description,
                 targetDays = targetDays,
                 startDateTime = null,
+                languageCode = "ko",
             )
         } returns NetworkResult.Success(challengeId)
 
@@ -135,6 +143,7 @@ class AddChallengeViewModelTest {
                 description = description,
                 startDateTime = startDateTime,
                 targetDays = targetDays,
+                languageCode = "ko",
             ),
         )
         advanceUntilIdle()
@@ -147,6 +156,7 @@ class AddChallengeViewModelTest {
                 description = description,
                 targetDays = targetDays,
                 startDateTime = null,
+                languageCode = "ko",
             )
         }
         val event = viewModel.uiEvent.first()
@@ -172,6 +182,7 @@ class AddChallengeViewModelTest {
                 targetDays = targetDays,
                 maxParticipants = maxParticipants,
                 roomPassword = roomPassword,
+                languageCode = "ko",
             )
         } returns NetworkResult.Success(challengeId)
 
@@ -185,6 +196,7 @@ class AddChallengeViewModelTest {
                 maxParticipants = maxParticipants,
                 enableRoomPassword = true,
                 roomPassword = roomPassword,
+                languageCode = "ko",
             ),
         )
         advanceUntilIdle()
@@ -198,6 +210,7 @@ class AddChallengeViewModelTest {
                 targetDays = targetDays,
                 maxParticipants = maxParticipants,
                 roomPassword = roomPassword,
+                languageCode = "ko",
             )
         }
         val event = viewModel.uiEvent.first()

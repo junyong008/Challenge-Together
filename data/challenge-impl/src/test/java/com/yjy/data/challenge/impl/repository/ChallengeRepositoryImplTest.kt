@@ -77,7 +77,7 @@ class ChallengeRepositoryImplTest {
         // Then
         coVerify { challengeDataSource.getMyChallenges() }
         coVerify { challengePreferencesDataSource.addCompletedChallengeTitles(expectedNewTitles) }
-        assertEquals(NetworkResult.Success(expectedNewTitles), result)
+        assertEquals(NetworkResult.Success(Unit), result)
     }
 
     @Test
@@ -102,6 +102,7 @@ class ChallengeRepositoryImplTest {
                     startDateTime = "2023-10-13 10:00:00",
                     maxParticipants = "10",
                     password = roomPassword,
+                    languageCode = "ko",
                 ),
             )
         } returns NetworkResult.Success(AddChallengeResponse(expectedChallengeId))
@@ -115,6 +116,7 @@ class ChallengeRepositoryImplTest {
             startDateTime = startDateTime,
             maxParticipants = maxParticipants,
             roomPassword = roomPassword,
+            languageCode = "ko",
         )
 
         // Then
@@ -128,6 +130,7 @@ class ChallengeRepositoryImplTest {
                     startDateTime = "2023-10-13 10:00:00",
                     maxParticipants = "10",
                     password = roomPassword,
+                    languageCode = "ko",
                 ),
             )
         }
@@ -152,6 +155,6 @@ class ChallengeRepositoryImplTest {
         // Then
         coVerify { challengeDataSource.getMyChallenges() }
         coVerify { challengePreferencesDataSource.addCompletedChallengeTitles(expectedNewTitles) }
-        assertEquals(NetworkResult.Success(expectedNewTitles), result)
+        assertEquals(NetworkResult.Success(Unit), result)
     }
 }

@@ -74,9 +74,10 @@ class AuthRepositoryImplTest {
         val kakaoId = ""
         val googleId = ""
         val naverId = ""
+        val guestId = ""
         val hashedPassword = "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"
         coEvery {
-            authDataSource.signUp(SignUpRequest(nickname, email, hashedPassword, kakaoId, googleId, naverId))
+            authDataSource.signUp(SignUpRequest(nickname, email, hashedPassword, kakaoId, googleId, naverId, guestId))
         } returns NetworkResult.Success(Unit)
         coEvery { sessionDataSource.setLoggedIn(any()) } returns Unit
 
@@ -84,7 +85,11 @@ class AuthRepositoryImplTest {
         val result = authRepository.signUp(nickname, email, password, kakaoId, googleId, naverId)
 
         // Then
-        coVerify { authDataSource.signUp(SignUpRequest(nickname, email, hashedPassword, kakaoId, googleId, naverId)) }
+        coVerify {
+            authDataSource.signUp(
+                signUpRequest = SignUpRequest(nickname, email, hashedPassword, kakaoId, googleId, naverId, guestId),
+            )
+        }
         coVerify { sessionDataSource.setLoggedIn(true) }
         assertEquals(NetworkResult.Success(Unit), result)
     }

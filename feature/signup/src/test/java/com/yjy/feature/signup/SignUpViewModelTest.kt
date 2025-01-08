@@ -35,7 +35,6 @@ class SignUpViewModelTest {
 
         viewModel = SignUpViewModel(
             authRepository = authRepository,
-            mockk(relaxed = true),
         )
     }
 
@@ -58,6 +57,10 @@ class SignUpViewModelTest {
                 nickname = nickname,
                 email = email,
                 password = password,
+                kakaoId = "",
+                googleId = "",
+                naverId = "",
+                guestId = "",
             ),
         )
 
@@ -283,6 +286,10 @@ class SignUpViewModelTest {
                 nickname = nickname,
                 email = email,
                 password = password,
+                kakaoId = "",
+                googleId = "",
+                naverId = "",
+                guestId = "",
             ),
         )
 
@@ -310,6 +317,10 @@ class SignUpViewModelTest {
                 nickname = nickname,
                 email = email,
                 password = password,
+                kakaoId = "",
+                googleId = "",
+                naverId = "",
+                guestId = "",
             ),
         )
 
