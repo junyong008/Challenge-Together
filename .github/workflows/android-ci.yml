@@ -36,6 +36,9 @@ jobs:
         with:
           gradle-home-cache-cleanup: true
 
+      - name: Generate keystore.properties
+        run: echo '${{ secrets.KEYSTORE_PROPERTIES }}' >> ./keystore.properties
+
       - name: Generate secrets.properties
         run: echo '${{ secrets.SECRETS_PROPERTIES }}' >> ./secrets.defaults.properties
 
