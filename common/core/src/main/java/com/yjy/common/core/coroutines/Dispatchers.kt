@@ -10,3 +10,7 @@ annotation class IoDispatcher
 @Qualifier
 @Retention(RUNTIME)
 annotation class DefaultDispatcher
+
+@Qualifier
+@Retention(RUNTIME)
+annotation class MainScope
