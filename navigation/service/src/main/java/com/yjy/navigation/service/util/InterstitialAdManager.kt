@@ -11,7 +11,11 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.yjy.common.core.BuildConfig.ADMOB_INTERSTITIAL_ID_CHALLENGE_CREATE
 import com.yjy.common.core.BuildConfig.ADMOB_INTERSTITIAL_ID_CHALLENGE_DELETE
 import com.yjy.common.core.BuildConfig.ADMOB_INTERSTITIAL_ID_CHALLENGE_RESET
+import com.yjy.common.core.coroutines.MainScope
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,6 +28,7 @@ enum class AdType(val adUnitId: String) {
 @Singleton
 class InterstitialAdManager @Inject constructor(
     @ApplicationContext private val appContext: Context,
+    @MainScope private val scope: CoroutineScope,
 ) {
     private val adMap = mutableMapOf<AdType, InterstitialAd?>()
 
@@ -32,20 +37,27 @@ class InterstitialAdManager @Inject constructor(
     }
 
     private fun loadAd(adType: AdType) {
-        InterstitialAd.load(
-            appContext,
-            adType.adUnitId,
-            AdRequest.Builder().build(),
-            object : InterstitialAdLoadCallback() {
-                override fun onAdLoaded(ad: InterstitialAd) {
-                    adMap[adType] = ad
-                }
+        scope.launch {
+            try {
+                InterstitialAd.load(
+                    appContext,
+                    adType.adUnitId,
+                    AdRequest.Builder().build(),
+                    object : InterstitialAdLoadCallback() {
+                        override fun onAdLoaded(ad: InterstitialAd) {
+                            adMap[adType] = ad
+                        }
 
-                override fun onAdFailedToLoad(error: LoadAdError) {
-                    adMap[adType] = null
-                }
-            },
-        )
+                        override fun onAdFailedToLoad(error: LoadAdError) {
+                            adMap[adType] = null
+                        }
+                    },
+                )
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to load ad")
+                adMap[adType] = null
+            }
+        }
     }
 
     fun show(activity: Activity, adType: AdType) {
@@ -55,17 +67,38 @@ class InterstitialAdManager @Inject constructor(
             return
         }
 
-        ad.fullScreenContentCallback = object : FullScreenContentCallback() {
-            override fun onAdDismissedFullScreenContent() {
-                adMap[adType] = null
-                loadAd(adType)
-            }
+        try {
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    scope.launch {
+                        adMap[adType] = null
+                        loadAd(adType)
+                    }
+                }
 
-            override fun onAdFailedToShowFullScreenContent(error: AdError) {
-                adMap[adType] = null
-                loadAd(adType)
+                override fun onAdFailedToShowFullScreenContent(error: AdError) {
+                    scope.launch {
+                        adMap[adType] = null
+                        loadAd(adType)
+                    }
+                }
+            }
+            ad.show(activity)
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to show ad")
+            loadAd(adType)
+        }
+    }
+
+    fun cleanupAds() {
+        scope.launch {
+            adMap.values.forEach { ad ->
+                try {
+                    ad?.fullScreenContentCallback = null
+                } catch (e: Exception) {
+                    Timber.e(e, "Failed to cleanup ads")
+                }
             }
         }
-        ad.show(activity)
     }
 }
