@@ -112,8 +112,8 @@ class ChangeNameViewModel @Inject constructor(
     }
 
     private fun String.hasInValidCharacters(): Boolean {
-        val specialCharPattern = ".*[\\p{P}\\p{S}\\p{C}].*"
-        return this.matches(specialCharPattern.toRegex())
+        val invalidCharPattern = ".*[\\p{P}\\p{S}\\p{C}\\s].*"
+        return this.matches(invalidCharPattern.toRegex())
     }
 
     private fun String.hasConsonantOrVowel(): Boolean {
