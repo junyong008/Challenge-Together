@@ -222,17 +222,18 @@ fun PrivacyPolicyText(
         append(privacyAgreement)
 
         val startIndex = privacyAgreement.indexOf(privacyText)
-        val endIndex = startIndex + privacyText.length
-
-        addStyle(
-            style = SpanStyle(
-                color = CustomColorProvider.colorScheme.brand,
-                fontWeight = FontWeight.Bold,
-                textDecoration = TextDecoration.Underline,
-            ),
-            start = startIndex,
-            end = endIndex,
-        )
+        if (startIndex >= 0) {
+            val endIndex = startIndex + privacyText.length
+            addStyle(
+                style = SpanStyle(
+                    color = CustomColorProvider.colorScheme.brand,
+                    fontWeight = FontWeight.Bold,
+                    textDecoration = TextDecoration.Underline,
+                ),
+                start = startIndex,
+                end = endIndex,
+            )
+        }
     }
 
     ClickableText(
