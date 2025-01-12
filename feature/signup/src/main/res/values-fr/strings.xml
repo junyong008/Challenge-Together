@@ -16,7 +16,7 @@
     <string name="feature_signup_start">DÉMARRER</string>
     <string name="feature_signup_nickname_length_indicator">Le surnom doit comporter entre %1$d et %2$d caractères</string>
     <string name="feature_signup_nickname_korean_constraint">Les surnoms coréens ne peuvent pas contenir uniquement des consonnes ou des voyelles</string>
-    <string name="feature_signup_privacy_policy_agreement">En cliquant sur le bouton démarrer, vous acceptez la <b>politique de confidentialité</b>.</string>
+    <string name="feature_signup_privacy_policy_agreement">En cliquant sur le bouton démarrer, vous acceptez la <b>Politique de Confidentialité</b>.</string>
     <string name="feature_signup_privacy_policy">Politique de Confidentialité</string>
     <string name="feature_signup_nickname_already_taken">Ce surnom est déjà pris.</string>
     <string name="feature_signup_check_network_connection">Veuillez vérifier votre connexion réseau.</string>

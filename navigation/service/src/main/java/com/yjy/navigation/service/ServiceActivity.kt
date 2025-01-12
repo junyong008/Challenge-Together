@@ -69,6 +69,16 @@ class ServiceActivity : AppCompatActivity() {
         }
     }
 
+    override fun onPause() {
+        adManager.cleanupAds()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        adManager.cleanupAds()
+        super.onDestroy()
+    }
+
     private fun setupDeepLinkHandling() {
         AppsFlyerLib.getInstance().subscribeForDeepLink { deepLinkResult ->
             if (deepLinkResult.status == DeepLinkResult.Status.FOUND) {
