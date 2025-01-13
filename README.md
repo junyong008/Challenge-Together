@@ -1,14 +1,4 @@
-<p align='center'>
-    <img src="https://capsule-render.vercel.app/api?type=venom&color=0:F78F52,100:F3B238&height=300&section=header&text=CHALLENGE%20TOGETHER&fontSize=50&fontColor=ffffff&animation=fadeIn&fontAlignY=50"/>
-    <img alt="AndroidStudio Version" src="https://img.shields.io/badge/Android_Studio-Ladybug_2024.2.1-E53935?style=flat">  
-    <img alt="Kotlin Version" src="https://img.shields.io/badge/Kotlin-2.0.20-purple?style=flat">
-    <img alt="Java Version" src="https://img.shields.io/badge/Java-17-blue?style=flat">
-    <img alt="minSdk Version" src="https://img.shields.io/badge/minSdk-24-green?style=flat">
-    <img alt="targetSdk Version" src="https://img.shields.io/badge/targetSdk-34-green?style=flat">
-</p>
-<br>
-
-## 개요
+# 챌린지 투게더
 * 1인 프로젝트 [기획, 디자인, 프론트엔드, 백엔드]
 * 플레이스토어 12개 언어 출시 [[🇰🇷](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=ko) [🇺🇸](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=en) [🇯🇵](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=ja) [🇨🇳](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=zh) [🇮🇳](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=hi) [🇪🇸](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=es) [🇩🇪](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=de) [🇻🇳](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=vi) [🇫🇷](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=fr) [🇮🇹](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=it) [🇹🇭](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=th) [🇵🇹](https://play.google.com/store/apps/details?id=com.yjy.challengetogether&hl=pt)]
 * 나쁜 습관, 중독들로부터 벗어나기 위한 다양한 기능을 제공하는 안드로이드 어플리케이션
