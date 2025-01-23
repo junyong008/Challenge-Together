@@ -25,7 +25,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -134,10 +133,6 @@ internal fun ConfirmScreen(
         }
     }
 
-    LaunchedEffect(Unit) {
-        if (uiState.mode == null) onBackClick()
-    }
-
     Scaffold(
         bottomBar = {
             ChallengeTogetherBottomAppBar(
@@ -158,7 +153,7 @@ internal fun ConfirmScreen(
                     shouldShowAddConfirmDialog = false
                     processAction(
                         AddChallengeUiAction.OnStartChallenge(
-                            mode = uiState.mode!!,
+                            mode = uiState.mode,
                             category = uiState.category,
                             title = uiState.title,
                             description = uiState.description,
@@ -186,7 +181,7 @@ internal fun ConfirmScreen(
             Spacer(modifier = Modifier.height(50.dp))
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 TitleSection(
-                    mode = uiState.mode!!,
+                    mode = uiState.mode,
                     title = uiState.title,
                     description = uiState.description,
                 )
