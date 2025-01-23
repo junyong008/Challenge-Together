@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="platform_widget_challenge_list_widget_name">チャレンジ一覧</string>
+    <string name="platform_widget_challenge_list_widget_name">チャレンジ一覧 [無料]</string>
     <string name="platform_widget_challenge_tall_widget_name">チャレンジカード</string>
     <string name="platform_widget_challenge_wide_widget_name">チャレンジカード</string>
     <string name="platform_widget_challenge_simple_widget_name">シンプルチャレンジカード</string>

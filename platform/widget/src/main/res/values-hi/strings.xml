@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="platform_widget_challenge_list_widget_name">चुनौती सूची</string>
+    <string name="platform_widget_challenge_list_widget_name">चुनौती सूची [मुफ़्त]</string>
     <string name="platform_widget_challenge_tall_widget_name">चुनौती कार्ड</string>
     <string name="platform_widget_challenge_wide_widget_name">चुनौती कार्ड</string>
     <string name="platform_widget_challenge_simple_widget_name">सादा चुनौती कार्ड</string>

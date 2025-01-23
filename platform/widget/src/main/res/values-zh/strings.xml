@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="platform_widget_challenge_list_widget_name">挑战列表</string>
+    <string name="platform_widget_challenge_list_widget_name">挑战列表 [免费]</string>
     <string name="platform_widget_challenge_tall_widget_name">挑战卡</string>
     <string name="platform_widget_challenge_wide_widget_name">挑战卡</string>
     <string name="platform_widget_challenge_simple_widget_name">简单挑战卡</string>

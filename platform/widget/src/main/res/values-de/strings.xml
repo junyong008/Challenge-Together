@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="platform_widget_challenge_list_widget_name">Herausforderungsliste</string>
+    <string name="platform_widget_challenge_list_widget_name">Herausforderungsliste [Kostenlos]</string>
     <string name="platform_widget_challenge_tall_widget_name">Herausforderungskarte</string>
     <string name="platform_widget_challenge_wide_widget_name">Herausforderungskarte</string>
     <string name="platform_widget_challenge_simple_widget_name">Einfache Herausforderungskarte</string>
