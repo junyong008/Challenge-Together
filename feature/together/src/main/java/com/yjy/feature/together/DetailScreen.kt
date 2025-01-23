@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -122,14 +123,17 @@ internal fun DetailScreen(
     val isIdle = waitingChallenges.loadState.isIdle
     val isEmpty = waitingChallenges.itemCount == 0
 
-    val listState = rememberSaveable(isGlobalActive, saver = LazyListState.Saver) {
-        LazyListState()
+    val listState = rememberLazyListState()
+
+    val scrolled by remember(listState) {
+        derivedStateOf {
+            listState.firstVisibleItemIndex > 0 || listState.firstVisibleItemScrollOffset > 0
+        }
     }
 
-    val scrolled by remember {
-        derivedStateOf {
-            listState.firstVisibleItemIndex > 0 ||
-                listState.firstVisibleItemScrollOffset > 0
+    LaunchedEffect(isGlobalActive, waitingChallenges.loadState.refresh) {
+        if (waitingChallenges.loadState.refresh is LoadState.NotLoading) {
+            listState.scrollToItem(0)
         }
     }
 
