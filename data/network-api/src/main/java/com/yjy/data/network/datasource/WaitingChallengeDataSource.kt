@@ -20,4 +20,5 @@ interface WaitingChallengeDataSource {
         challengeId: Int,
         password: String,
     ): NetworkResult<GetWaitingChallengeDetailResponse>
+    suspend fun forceRemoveAuthorFromWaitingChallenge(challengeId: Int): NetworkResult<Unit>
 }

@@ -11,21 +11,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -122,17 +118,6 @@ internal fun DetailScreen(
     val isIdle = waitingChallenges.loadState.isIdle
     val isEmpty = waitingChallenges.itemCount == 0
 
-    val listState = rememberSaveable(isGlobalActive, saver = LazyListState.Saver) {
-        LazyListState()
-    }
-
-    val scrolled by remember {
-        derivedStateOf {
-            listState.firstVisibleItemIndex > 0 ||
-                listState.firstVisibleItemScrollOffset > 0
-        }
-    }
-
     val globalOnMessage = stringResource(id = R.string.feature_together_global_challenges_on)
     val globalOffMessage = stringResource(id = R.string.feature_together_global_challenges_off, displayLanguage)
 
@@ -176,12 +161,6 @@ internal fun DetailScreen(
                     placeholderText = stringResource(id = R.string.feature_together_search_placeholder),
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                 )
-                if (scrolled) {
-                    HorizontalDivider(
-                        thickness = 1.dp,
-                        color = CustomColorProvider.colorScheme.divider,
-                    )
-                }
             }
         },
         containerColor = CustomColorProvider.colorScheme.background,
@@ -218,7 +197,6 @@ internal fun DetailScreen(
                         searchQuery = searchQuery,
                         waitingChallenges = waitingChallenges,
                         onChallengeClick = { onWaitingChallengeClick(it) },
-                        scrollState = listState,
                     )
                 }
             }
@@ -280,7 +258,6 @@ private fun SearchButton(
 @Composable
 private fun WaitingChallengesBody(
     searchQuery: String,
-    scrollState: LazyListState,
     waitingChallenges: LazyPagingItems<SimpleWaitingChallenge>,
     onChallengeClick: (SimpleWaitingChallenge) -> Unit,
     modifier: Modifier = Modifier,
@@ -292,7 +269,6 @@ private fun WaitingChallengesBody(
 
     Box(modifier = modifier.pullRefresh(pullRefreshState)) {
         LazyColumn(
-            state = scrollState,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = modifier.fillMaxSize(),
         ) {

@@ -29,4 +29,9 @@
     <string name="feature_waitingchallenge_password_copied">Mot de passe copié dans le presse-papiers.</string>
     <string name="feature_waitingchallenge_created_by">Créé par « %1$s »</string>
     <string name="feature_waitingchallenge_participants_count">Participants %1$d / %2$d</string>
+    <string name="feature_waitingchallenge_force_remove_title">Élimination forcée</string>
+    <string name="feature_waitingchallenge_force_remove_description">Les utilisateurs inactifs peuvent être éliminés de force.\nSouhaitez-vous supprimer cet utilisateur ?</string>
+    <string name="feature_waitingchallenge_remove">Supprimer</string>
+    <string name="feature_waitingchallenge_force_remove_success">L\'utilisateur a été supprimé avec succès.</string>
+    <string name="feature_waitingchallenge_user_reconnected">L\'utilisateur vient de se reconnecter.</string>
 </resources>

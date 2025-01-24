@@ -192,6 +192,11 @@ internal interface ChallengeTogetherService {
     ): NetworkResult<List<GetChallengeRankingResponse>>
 
     // Challenge - Waiting
+    @POST("service/challenge/force-remove-author")
+    suspend fun forceRemoveAuthorFromWaitingChallenge(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
     @DELETE("service/challenge/delete/waiting")
     suspend fun deleteWaitingChallenge(
         @Query("challengeId") challengeId: Int,

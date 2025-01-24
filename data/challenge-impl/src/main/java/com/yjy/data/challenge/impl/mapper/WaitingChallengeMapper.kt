@@ -38,6 +38,7 @@ internal fun GetWaitingChallengeDetailResponse.toDetailedWaitingChallengeModel()
     },
     maxParticipantCounts = maxParticipantCount,
     isAuthor = isAuthor,
+    isAuthorInActive = isAuthorInActive,
     isParticipated = isParticipated,
 )
 

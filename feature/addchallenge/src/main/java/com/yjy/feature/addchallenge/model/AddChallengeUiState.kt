@@ -8,7 +8,7 @@ import com.yjy.model.challenge.core.TargetDays
 import java.time.LocalDateTime
 
 data class AddChallengeUiState(
-    val mode: Mode? = null,
+    val mode: Mode = Mode.CHALLENGE,
     val category: Category = Category.ALL,
     val title: String = "",
     val description: String = "",

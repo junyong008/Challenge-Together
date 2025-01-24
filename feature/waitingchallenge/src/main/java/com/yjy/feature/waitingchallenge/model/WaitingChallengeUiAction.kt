@@ -9,4 +9,5 @@ sealed interface WaitingChallengeUiAction {
     data class OnStartClick(val challengeId: Int) : WaitingChallengeUiAction
     data class OnJoinClick(val challengeId: Int) : WaitingChallengeUiAction
     data class OnLeaveClick(val challengeId: Int) : WaitingChallengeUiAction
+    data class OnAuthorForceRemoveClick(val challengeId: Int) : WaitingChallengeUiAction
 }

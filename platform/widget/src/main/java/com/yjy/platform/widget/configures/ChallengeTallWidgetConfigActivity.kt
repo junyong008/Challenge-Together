@@ -73,6 +73,11 @@ class ChallengeTallWidgetConfigActivity : ComponentActivity() {
             },
         )
 
+        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+            finish()
+            return
+        }
+
         setContent {
             val isDarkTheme = isSystemInDarkTheme()
 
