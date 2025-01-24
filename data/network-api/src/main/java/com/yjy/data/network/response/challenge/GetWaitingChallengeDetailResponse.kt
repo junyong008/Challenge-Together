@@ -28,4 +28,6 @@ data class GetWaitingChallengeDetailResponse(
     val isAuthor: Boolean,
     @SerialName("ISPARTICIPATED")
     val isParticipated: Boolean,
+    @SerialName("ISINACTIVE")
+    val isAuthorInActive: Boolean,
 )

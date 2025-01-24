@@ -43,4 +43,7 @@ internal class WaitingChallengeDataSourceImpl @Inject constructor(
         challengeId = challengeId,
         password = password,
     )
+
+    override suspend fun forceRemoveAuthorFromWaitingChallenge(challengeId: Int): NetworkResult<Unit> =
+        challengeTogetherService.forceRemoveAuthorFromWaitingChallenge(challengeId)
 }

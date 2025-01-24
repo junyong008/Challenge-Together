@@ -29,4 +29,9 @@
     <string name="feature_waitingchallenge_password_copied">คัดลอกรหัสผ่านไปยังคลิปบอร์ดแล้ว</string>
     <string name="feature_waitingchallenge_created_by">สร้างโดย \"%1$s\"</string>
     <string name="feature_waitingchallenge_participants_count">ผู้เข้าร่วม %1$d / %2$d</string>
+    <string name="feature_waitingchallenge_force_remove_title">บังคับลบ</string>
+    <string name="feature_waitingchallenge_force_remove_description">ผู้ใช้ที่ไม่ได้ใช้งานสามารถถูกบังคับให้ออก\nคุณต้องการลบผู้ใช้นี้หรือไม่?</string>
+    <string name="feature_waitingchallenge_remove">ลบ</string>
+    <string name="feature_waitingchallenge_force_remove_success">ผู้ใช้ถูกลบเรียบร้อยแล้ว</string>
+    <string name="feature_waitingchallenge_user_reconnected">ผู้ใช้เพิ่งกลับมาเข้าร่วมใหม่</string>
 </resources>

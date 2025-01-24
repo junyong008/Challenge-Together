@@ -29,4 +29,9 @@
     <string name="feature_waitingchallenge_password_copied">パスワードがクリップボードにコピーされました。</string>
     <string name="feature_waitingchallenge_created_by">「%1$s」によって作成されました</string>
     <string name="feature_waitingchallenge_participants_count">参加者 %1$d / %2$d</string>
+    <string name="feature_waitingchallenge_force_remove_title">強制削除</string>
+    <string name="feature_waitingchallenge_force_remove_description">非アクティブなユーザーを強制的に削除できます。\nこのユーザーを削除しますか？</string>
+    <string name="feature_waitingchallenge_remove">削除</string>
+    <string name="feature_waitingchallenge_force_remove_success">ユーザーは正常に削除されました。</string>
+    <string name="feature_waitingchallenge_user_reconnected">ユーザーが再接続しました。</string>
 </resources>

@@ -24,4 +24,11 @@ sealed interface WaitingChallengeUiEvent {
     sealed class LeaveFailure : WaitingChallengeUiEvent {
         data object Unknown : LeaveFailure()
     }
+
+    data object ForceRemoveSuccess : WaitingChallengeUiEvent
+
+    sealed class ForceRemoveFailed : WaitingChallengeUiEvent {
+        data object UserReConnected : ForceRemoveFailed()
+        data object UnknownError : ForceRemoveFailed()
+    }
 }

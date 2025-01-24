@@ -4,7 +4,7 @@
     <string name="feature_challengeranking_tip_long_absence">Users inactive for 7 days can be forcibly removed by other participants.</string>
     <string name="feature_challengeranking_tip_alone">If you remain alone in the challenge, the ranking will disappear, and challenge edits will become available.</string>
     <string name="feature_challengeranking_force_remove_title">Force Remove</string>
-    <string name="feature_challengeranking_force_remove_description">Inactive users can be forcibly removed.\nWould you like to remove this user?</string>
+    <string name="feature_challengeranking_force_remove_description">Inactive users can be forcibly removed. Would you like to remove this user?</string>
     <string name="feature_challengeranking_remove">Remove</string>
     <string name="feature_challengeranking_success">Success</string>
     <string name="feature_challengeranking_first_place_description">Image representing the 1st place in the ranking</string>
