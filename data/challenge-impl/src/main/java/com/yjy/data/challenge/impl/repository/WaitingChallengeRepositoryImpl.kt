@@ -108,6 +108,9 @@ internal class WaitingChallengeRepositoryImpl @Inject constructor(
     override suspend fun leaveWaitingChallenge(challengeId: Int): NetworkResult<Unit> =
         waitingChallengeDataSource.leaveWaitingChallenge(challengeId)
 
+    override suspend fun forceRemoveAuthor(challengeId: Int): NetworkResult<Unit> =
+        waitingChallengeDataSource.forceRemoveAuthorFromWaitingChallenge(challengeId)
+
     private companion object {
         const val PAGING_PAGE_SIZE = 30
         const val PAGING_INITIAL_LOAD_SIZE = 50

@@ -135,6 +135,8 @@ internal fun WaitingChallengeScreen(
     val startSuccessMessage = stringResource(id = R.string.feature_waitingchallenge_start_successful)
     val challengeFullMessage = stringResource(id = R.string.feature_waitingchallenge_participant_full)
     val commonErrorMessage = stringResource(id = R.string.feature_waitingchallenge_error)
+    val forceRemoveSuccessMessage = stringResource(id = R.string.feature_waitingchallenge_force_remove_success)
+    val forceRemoveUserReconnectedMessage = stringResource(id = R.string.feature_waitingchallenge_user_reconnected)
     val errorMessages = mapOf(
         WaitingChallengeUiEvent.LoadFailure.NotFound to stringResource(
             id = R.string.feature_waitingchallenge_not_found,
@@ -173,6 +175,15 @@ internal fun WaitingChallengeScreen(
                 onChallengeStart(event.challengeId)
             }
 
+            WaitingChallengeUiEvent.ForceRemoveSuccess ->
+                onShowSnackbar(SnackbarType.SUCCESS, forceRemoveSuccessMessage)
+
+            WaitingChallengeUiEvent.ForceRemoveFailed.UserReConnected ->
+                onShowSnackbar(SnackbarType.ERROR, forceRemoveUserReconnectedMessage)
+
+            WaitingChallengeUiEvent.ForceRemoveFailed.UnknownError ->
+                onShowSnackbar(SnackbarType.ERROR, commonErrorMessage)
+
             WaitingChallengeUiEvent.PasswordInputCanceled -> onBackClick()
             WaitingChallengeUiEvent.PasswordCopied -> onShowSnackbar(SnackbarType.MESSAGE, passwordCopiedMessage)
             WaitingChallengeUiEvent.DeleteFailure -> onShowSnackbar(SnackbarType.ERROR, commonErrorMessage)
@@ -187,6 +198,7 @@ internal fun WaitingChallengeScreen(
     var shouldShowMenuBottomSheet by rememberSaveable { mutableStateOf(false) }
     var shouldShowDeleteConfirmDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowStartConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    var shouldShowAuthorForceRemoveDialog by rememberSaveable { mutableStateOf(false) }
 
     if (uiState.shouldShowPasswordDialog) {
         PasswordDialog(
@@ -254,6 +266,20 @@ internal fun WaitingChallengeScreen(
             )
         }
 
+        if (shouldShowAuthorForceRemoveDialog) {
+            ChallengeTogetherDialog(
+                title = stringResource(id = R.string.feature_waitingchallenge_force_remove_title),
+                description = stringResource(id = R.string.feature_waitingchallenge_force_remove_description),
+                positiveTextRes = R.string.feature_waitingchallenge_remove,
+                positiveTextColor = CustomColorProvider.colorScheme.red,
+                onClickPositive = {
+                    processAction(WaitingChallengeUiAction.OnAuthorForceRemoveClick(challenge.id))
+                    shouldShowAuthorForceRemoveDialog = false
+                },
+                onClickNegative = { shouldShowAuthorForceRemoveDialog = false },
+            )
+        }
+
         if (shouldShowStartConfirmDialog) {
             ChallengeTogetherDialog(
                 title = stringResource(id = R.string.feature_waitingchallenge_start),
@@ -274,6 +300,7 @@ internal fun WaitingChallengeScreen(
                 challenge = challenge,
                 onBackClick = onBackClick,
                 onMenuClick = { shouldShowMenuBottomSheet = true },
+                onAuthorClick = { shouldShowAuthorForceRemoveDialog = true },
                 onBoardClick = onBoardClick,
                 processAction = processAction,
             )
@@ -369,6 +396,7 @@ private fun ChallengeBody(
     challenge: DetailedWaitingChallenge,
     onBackClick: () -> Unit,
     onMenuClick: () -> Unit,
+    onAuthorClick: () -> Unit,
     onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit,
     processAction: (WaitingChallengeUiAction) -> Unit,
     modifier: Modifier = Modifier,
@@ -427,6 +455,7 @@ private fun ChallengeBody(
                     challenge = challenge,
                     onMenuClick = onMenuClick,
                     onBoardClick = onBoardClick,
+                    onAuthorClick = onAuthorClick,
                 )
             }
         }
@@ -437,6 +466,7 @@ private fun ChallengeBody(
 private fun ChallengeContent(
     challenge: DetailedWaitingChallenge,
     onMenuClick: () -> Unit,
+    onAuthorClick: () -> Unit,
     onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -451,6 +481,8 @@ private fun ChallengeContent(
         Spacer(modifier = Modifier.height(8.dp))
         AuthorSection(
             author = challenge.author,
+            canForceRemoveAuthor = challenge.isAuthorInActive && challenge.isParticipated,
+            onAuthorClick = onAuthorClick,
             modifier = Modifier.padding(horizontal = 16.dp),
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -696,6 +728,8 @@ private val QUOTE_PAIRS = listOf(
 @Composable
 private fun AuthorSection(
     author: User,
+    canForceRemoveAuthor: Boolean,
+    onAuthorClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val authorName = author.name
@@ -731,12 +765,21 @@ private fun AuthorSection(
         modifier = modifier,
     ) {
         UserProfile(tier = author.tier)
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(
-            text = authorText,
-            style = MaterialTheme.typography.labelMedium,
-            color = CustomColorProvider.colorScheme.onBackgroundMuted,
-        )
+        if (canForceRemoveAuthor) {
+            ClickableText(
+                text = authorText,
+                style = MaterialTheme.typography.labelMedium,
+                color = CustomColorProvider.colorScheme.red,
+                onClick = onAuthorClick,
+            )
+        } else {
+            Text(
+                text = authorText,
+                style = MaterialTheme.typography.labelMedium,
+                color = CustomColorProvider.colorScheme.onBackgroundMuted,
+                modifier = Modifier.padding(8.dp),
+            )
+        }
     }
 }
 
@@ -822,6 +865,7 @@ fun WaitingChallengeScreenPreview() {
                         ),
                         maxParticipantCounts = 5,
                         isAuthor = false,
+                        isAuthorInActive = true,
                         isParticipated = true,
                     ),
                 ),

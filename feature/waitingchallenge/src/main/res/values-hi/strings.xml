@@ -29,4 +29,9 @@
     <string name="feature_waitingchallenge_password_copied">पासवर्ड क्लिपबोर्ड पर कॉपी किया गया।</string>
     <string name="feature_waitingchallenge_created_by">\"%1$s\" द्वारा बनाई गई</string>
     <string name="feature_waitingchallenge_participants_count">भागीदार %1$d / %2$d</string>
+    <string name="feature_waitingchallenge_force_remove_title">मजबूरन हटाना</string>
+    <string name="feature_waitingchallenge_force_remove_description">निष्क्रिय उपयोगकर्ताओं को मजबूरन हटाया जा सकता है।\nक्या आप इस उपयोगकर्ता को हटाना चाहेंगे?</string>
+    <string name="feature_waitingchallenge_remove">हटाएं</string>
+    <string name="feature_waitingchallenge_force_remove_success">उपयोगकर्ता को सफलतापूर्वक हटा दिया गया है।</string>
+    <string name="feature_waitingchallenge_user_reconnected">उपयोगकर्ता अभी फिर से जुड़ा है।</string>
 </resources>

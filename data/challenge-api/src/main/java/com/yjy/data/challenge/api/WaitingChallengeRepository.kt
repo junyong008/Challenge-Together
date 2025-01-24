@@ -19,4 +19,5 @@ interface WaitingChallengeRepository {
     suspend fun startWaitingChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun joinWaitingChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun leaveWaitingChallenge(challengeId: Int): NetworkResult<Unit>
+    suspend fun forceRemoveAuthor(challengeId: Int): NetworkResult<Unit>
 }

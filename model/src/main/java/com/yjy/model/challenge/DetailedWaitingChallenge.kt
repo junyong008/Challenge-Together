@@ -16,5 +16,6 @@ data class DetailedWaitingChallenge(
     val participants: List<User>,
     val maxParticipantCounts: Int,
     val isAuthor: Boolean,
+    val isAuthorInActive: Boolean,
     val isParticipated: Boolean,
 ) : Challenge()

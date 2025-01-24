@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yjy.common.core.extensions.restartableStateIn
+import com.yjy.common.network.HttpStatusCodes
 import com.yjy.common.network.HttpStatusCodes.CONFLICT
 import com.yjy.common.network.HttpStatusCodes.FORBIDDEN
 import com.yjy.common.network.HttpStatusCodes.NOT_FOUND
@@ -108,6 +109,7 @@ class WaitingChallengeViewModel @Inject constructor(
             is WaitingChallengeUiAction.OnStartClick -> startChallenge(action.challengeId)
             is WaitingChallengeUiAction.OnJoinClick -> joinChallenge(action.challengeId)
             is WaitingChallengeUiAction.OnLeaveClick -> leaveChallenge(action.challengeId)
+            is WaitingChallengeUiAction.OnAuthorForceRemoveClick -> forceRemoveAuthor(action.challengeId)
         }
     }
 
@@ -168,5 +170,28 @@ class WaitingChallengeViewModel @Inject constructor(
             .onFailure { sendEvent(WaitingChallengeUiEvent.LeaveFailure.Unknown) }
         challengeDetail.restart()
         _uiState.update { it.copy(isActionProcessing = false) }
+    }
+
+    private fun forceRemoveAuthor(challengeId: Int) = viewModelScope.launch {
+        val event = handleNetworkResult(
+            result = waitingChallengeRepository.forceRemoveAuthor(challengeId),
+            onSuccess = {
+                challengeDetail.restart()
+                WaitingChallengeUiEvent.ForceRemoveSuccess
+            },
+            onHttpError = { code ->
+                when (code) {
+                    HttpStatusCodes.BAD_REQUEST -> {
+                        challengeDetail.restart()
+                        WaitingChallengeUiEvent.ForceRemoveFailed.UserReConnected
+                    }
+
+                    else -> WaitingChallengeUiEvent.ForceRemoveFailed.UnknownError
+                }
+            },
+            onNetworkError = { WaitingChallengeUiEvent.ForceRemoveFailed.UnknownError },
+            onUnknownError = { WaitingChallengeUiEvent.ForceRemoveFailed.UnknownError },
+        )
+        sendEvent(event)
     }
 }
