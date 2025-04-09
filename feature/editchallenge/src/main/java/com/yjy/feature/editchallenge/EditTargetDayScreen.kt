@@ -156,8 +156,8 @@ internal fun EditTargetDayScreen(
                 .padding(horizontal = 32.dp),
         ) {
             TitleWithDescription(
-                titleRes = R.string.feature_editchallenge_edit_category_title,
-                descriptionRes = R.string.feature_editchallenge_edit_category_description,
+                titleRes = R.string.feature_editchallenge_edit_target_day_title,
+                descriptionRes = R.string.feature_editchallenge_edit_target_day_description,
             )
             Spacer(modifier = Modifier.height(100.dp))
             TargetDay(
