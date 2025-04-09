@@ -138,12 +138,14 @@ class ChallengeWideWidgetConfigActivity : ComponentActivity() {
 
         LaunchedEffect(challenges) {
             if (challenges.isEmpty() || selectedChallenge == null) {
-                val glanceId = GlanceAppWidgetManager(context).getGlanceIdBy(appWidgetId)
-                val prefs = getAppWidgetState(
-                    context,
-                    PreferencesGlanceStateDefinition,
-                    glanceId,
-                )
+                val glanceId = try {
+                    GlanceAppWidgetManager(context).getGlanceIdBy(appWidgetId)
+                } catch (e: Exception) {
+                    onFinish(RESULT_CANCELED)
+                    return@LaunchedEffect
+                }
+
+                val prefs = getAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId)
                 val selectedChallengeId = prefs[intPreferencesKey(ChallengeWideWidget.CHALLENGE_ID_KEY)]
 
                 selectedChallenge = challenges.find { it.id == selectedChallengeId }

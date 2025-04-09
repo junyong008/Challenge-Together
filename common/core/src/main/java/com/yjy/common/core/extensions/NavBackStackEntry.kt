@@ -11,9 +11,23 @@ import androidx.navigation.NavHostController
 inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
     navController: NavHostController,
 ): T {
-    val navGraphRoute = destination.parent?.route ?: return hiltViewModel()
-    val parentEntry = remember(this) {
-        navController.getBackStackEntry(navGraphRoute)
+    val parentRoute = destination.parent?.route
+    val parentEntry = remember(this, parentRoute) { safeGetBackStackEntry(navController, parentRoute) }
+    return if (parentEntry != null) {
+        hiltViewModel(parentEntry)
+    } else {
+        hiltViewModel()
     }
-    return hiltViewModel(parentEntry)
+}
+
+fun safeGetBackStackEntry(
+    navController: NavHostController,
+    route: String?
+): NavBackStackEntry? {
+    if (route == null) return null
+    return try {
+        navController.getBackStackEntry(route)
+    } catch (e: IllegalArgumentException) {
+        null
+    }
 }

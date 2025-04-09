@@ -213,7 +213,13 @@ private fun TargetDaySwitch(
                         indication = null,
                     ) { onSwitchChange(true) }
                     .onGloballyPositioned { coordinates ->
-                        leftWidth = with(density) { coordinates.size.width.toDp().value.toInt() }
+                        leftWidth = with(density) {
+                            coordinates.size.width.toDp().value
+                                .takeIf { it.isFinite() }
+                                ?.toInt()
+                                ?.coerceAtLeast(0)
+                                ?: 0
+                        }
                     }
                     .padding(vertical = 8.dp, horizontal = 16.dp),
                 contentAlignment = Alignment.Center,
@@ -237,7 +243,13 @@ private fun TargetDaySwitch(
                         indication = null,
                     ) { onSwitchChange(false) }
                     .onGloballyPositioned { coordinates ->
-                        rightWidth = with(density) { coordinates.size.width.toDp().value.toInt() }
+                        rightWidth = with(density) {
+                            coordinates.size.width.toDp().value
+                                .takeIf { it.isFinite() }
+                                ?.toInt()
+                                ?.coerceAtLeast(0)
+                                ?: 0
+                        }
                     }
                     .padding(vertical = 8.dp, horizontal = 16.dp),
                 contentAlignment = Alignment.Center,

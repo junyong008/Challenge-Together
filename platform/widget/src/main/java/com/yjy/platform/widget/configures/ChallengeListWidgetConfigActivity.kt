@@ -97,13 +97,14 @@ class ChallengeListWidgetConfigActivity : ComponentActivity() {
         val challenges by viewModel.challenges.collectAsStateWithLifecycle()
 
         LaunchedEffect(Unit) {
-            val glanceId = GlanceAppWidgetManager(context).getGlanceIdBy(appWidgetId)
-            val prefs = getAppWidgetState(
-                context,
-                PreferencesGlanceStateDefinition,
-                glanceId,
-            )
+            val glanceId = try {
+                GlanceAppWidgetManager(context).getGlanceIdBy(appWidgetId)
+            } catch (e: Exception) {
+                onFinish()
+                return@LaunchedEffect
+            }
 
+            val prefs = getAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId)
             backgroundAlpha = prefs[floatPreferencesKey(ChallengeListWidget.BACKGROUND_ALPHA_KEY)] ?: 1f
         }
 

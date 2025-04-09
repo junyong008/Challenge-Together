@@ -34,7 +34,7 @@ fun RoundedLinearProgressBar(
     animated: Boolean = true,
     gap: Dp = 4.dp,
 ) {
-    val targetProgress = progress().coerceIn(0f, 1f)
+    val targetProgress = progress().takeIf { it.isFinite() }?.coerceIn(0f, 1f) ?: 0f
     val progressValue = if (animated) {
         val animatedProgress by animateFloatAsState(
             targetValue = targetProgress,
@@ -85,7 +85,7 @@ fun RoundedGradientProgressBar(
     animated: Boolean = true,
     gap: Dp = 0.dp,
 ) {
-    val targetProgress = progress().coerceIn(0f, 1f)
+    val targetProgress = progress().takeIf { it.isFinite() }?.coerceIn(0f, 1f) ?: 0f
     val progressValue = if (animated) {
         val animatedProgress by animateFloatAsState(
             targetValue = targetProgress,
