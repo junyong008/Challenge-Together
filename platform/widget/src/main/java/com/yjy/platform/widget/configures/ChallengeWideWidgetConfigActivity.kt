@@ -53,6 +53,7 @@ import com.yjy.platform.widget.util.DeepLinkUtils
 import com.yjy.platform.widget.widgets.ChallengeWideWidget
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ChallengeWideWidgetConfigActivity : ComponentActivity() {
@@ -141,6 +142,7 @@ class ChallengeWideWidgetConfigActivity : ComponentActivity() {
                 val glanceId = try {
                     GlanceAppWidgetManager(context).getGlanceIdBy(appWidgetId)
                 } catch (e: Exception) {
+                    Timber.e(e, "Failed to get GlanceId")
                     onFinish(RESULT_CANCELED)
                     return@LaunchedEffect
                 }

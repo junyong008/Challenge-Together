@@ -43,6 +43,7 @@ import com.yjy.platform.widget.configures.screen.SettingScreen
 import com.yjy.platform.widget.widgets.ChallengeListWidget
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ChallengeListWidgetConfigActivity : ComponentActivity() {
@@ -100,6 +101,7 @@ class ChallengeListWidgetConfigActivity : ComponentActivity() {
             val glanceId = try {
                 GlanceAppWidgetManager(context).getGlanceIdBy(appWidgetId)
             } catch (e: Exception) {
+                Timber.e(e, "Failed to get GlanceId")
                 onFinish()
                 return@LaunchedEffect
             }

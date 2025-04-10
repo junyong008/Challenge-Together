@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import timber.log.Timber
 
 @Composable
 inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
@@ -22,12 +23,13 @@ inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
 
 fun safeGetBackStackEntry(
     navController: NavHostController,
-    route: String?
+    route: String?,
 ): NavBackStackEntry? {
     if (route == null) return null
     return try {
         navController.getBackStackEntry(route)
     } catch (e: IllegalArgumentException) {
+        Timber.e(e, "BackStackEntry not found for route: $route")
         null
     }
 }
