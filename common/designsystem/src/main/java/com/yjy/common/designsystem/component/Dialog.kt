@@ -114,7 +114,7 @@ fun PremiumDialog(
                 textAlign = TextAlign.Center,
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         ClickableText(
             text = stringResource(id = R.string.common_designsystem_dialog_cancel),
             onClick = onDismiss,
