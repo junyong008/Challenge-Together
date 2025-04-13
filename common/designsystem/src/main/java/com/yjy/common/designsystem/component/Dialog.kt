@@ -89,14 +89,42 @@ fun ChallengeTogetherDialog(
 fun PremiumDialog(
     onExploreClick: () -> Unit,
     onDismiss: () -> Unit,
+    title: String = stringResource(id = R.string.common_designsystem_dialog_premium_feature_title),
+    description: String = stringResource(id = R.string.common_designsystem_dialog_premium_feature_message),
 ) {
-    ChallengeTogetherDialog(
-        title = stringResource(id = R.string.common_designsystem_dialog_premium_feature_title),
-        description = stringResource(id = R.string.common_designsystem_dialog_premium_feature_message),
-        onClickPositive = onExploreClick,
-        onClickNegative = onDismiss,
-        positiveTextRes = R.string.common_designsystem_dialog_go_to_premium,
-    )
+    BaseDialog(
+        onDismissRequest = onDismiss,
+        title = title,
+        description = description,
+    ) {
+        Spacer(modifier = Modifier.height(16.dp))
+        StableImage(
+            drawableResId = R.drawable.image_fire,
+            descriptionResId = R.string.common_designsystem_dialog_premium_feature_title,
+            modifier = Modifier.size(130.dp),
+        )
+        Spacer(modifier = Modifier.height(32.dp))
+        ChallengeTogetherButton(
+            onClick = onExploreClick,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(
+                text = stringResource(id = R.string.common_designsystem_dialog_go_to_premium),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        ClickableText(
+            text = stringResource(id = R.string.common_designsystem_dialog_cancel),
+            onClick = onDismiss,
+            color = CustomColorProvider.colorScheme.onSurfaceMuted,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            textDecoration = TextDecoration.None,
+        )
+    }
 }
 
 @Composable
@@ -491,6 +519,19 @@ fun ChallengeTogetherDialogPreview() {
                 description = "Description",
                 onClickPositive = {},
                 onClickNegative = {},
+            )
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun PremiumDialogPreview() {
+    ChallengeTogetherTheme {
+        ChallengeTogetherBackground {
+            PremiumDialog(
+                onExploreClick = {},
+                onDismiss = {},
             )
         }
     }

@@ -5,4 +5,6 @@
     <string name="navigation_service_check_network_connection">Please check your network connection.</string>
     <string name="navigation_service_update">Update</string>
     <string name="navigation_service_update_description">A new version of the app is available.\nPlease update through the Play Store.</string>
+    <string name="navigation_service_premium_dialog_title">Remove Ads</string>
+    <string name="navigation_service_premium_dialog_description">Enjoy an ad-free experience by unlocking this premium feature permanently.</string>
 </resources>

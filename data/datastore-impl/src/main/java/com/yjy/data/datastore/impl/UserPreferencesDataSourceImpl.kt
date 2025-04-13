@@ -24,6 +24,11 @@ internal class UserPreferencesDataSourceImpl @Inject constructor(
             preferences[KEY_IS_PREMIUM] ?: false
         }
 
+    override val premiumDialogLastShown: Flow<Long> = dataStore.data
+        .map { preferences ->
+            preferences[KEY_PREMIUM_DIALOG_LAST_SHOWN] ?: 0L
+        }
+
     override suspend fun setTimeDiff(diff: Long) {
         dataStore.storeValue(KEY_TIME_DIFF, diff)
     }
@@ -38,9 +43,14 @@ internal class UserPreferencesDataSourceImpl @Inject constructor(
         dataStore.storeValue(KEY_FCM_TOKEN, token)
     }
 
+    override suspend fun setPremiumDialogLastShown(timestamp: Long) {
+        dataStore.storeValue(KEY_PREMIUM_DIALOG_LAST_SHOWN, timestamp)
+    }
+
     companion object {
         private val KEY_TIME_DIFF = longPreferencesKey("time_diff")
         private val KEY_IS_PREMIUM = booleanPreferencesKey("is_premium")
         private val KEY_FCM_TOKEN = stringPreferencesKey("fcm_token")
+        private val KEY_PREMIUM_DIALOG_LAST_SHOWN = longPreferencesKey("premium_dialog_last_shown")
     }
 }

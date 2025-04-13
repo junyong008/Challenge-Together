@@ -12,6 +12,7 @@ interface UserRepository {
     val isPremium: Flow<Boolean>
     val remoteAppVersion: Flow<Version>
     val maintenanceEndTime: Flow<LocalDateTime?>
+    val premiumDialogLastShown: Flow<Long>
     suspend fun syncTime(): NetworkResult<Unit>
     suspend fun getUserName(): NetworkResult<String>
     suspend fun getAccountType(): NetworkResult<AccountType>
@@ -23,4 +24,5 @@ interface UserRepository {
     suspend fun registerFcmToken()
     suspend fun checkPremium()
     suspend fun clearLocalData()
+    suspend fun markPremiumDialogShown()
 }

@@ -6,4 +6,6 @@
     <string name="navigation_service_check_network_connection">Vui lòng kiểm tra kết nối mạng của bạn.</string>
     <string name="navigation_service_update">Cập nhật</string>
     <string name="navigation_service_update_description">Một phiên bản mới của ứng dụng đã có sẵn.\nVui lòng cập nhật qua Play Store.</string>
+    <string name="navigation_service_premium_dialog_title">Xóa quảng cáo</string>
+    <string name="navigation_service_premium_dialog_description">Trải nghiệm không quảng cáo với tính năng cao cấp này.</string>
 </resources>
