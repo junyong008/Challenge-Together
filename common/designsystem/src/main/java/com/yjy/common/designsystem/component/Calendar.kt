@@ -63,7 +63,6 @@ private const val DEFAULT_MAX_YEAR = 2100
 private const val DEFAULT_MAX_MONTH = 12
 private const val DEFAULT_MAX_DAY = 31
 private val WEEK_HEIGHT_DP = 40.dp
-private val WEEK_MODE_HEIGHT_DP = 50.dp
 private const val DAYS_IN_WEEK = 7
 private const val WEEK_DIVISOR_ROUND_UP = 6
 
