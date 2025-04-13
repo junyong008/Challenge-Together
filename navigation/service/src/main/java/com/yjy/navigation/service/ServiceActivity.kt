@@ -28,7 +28,6 @@ import com.yjy.common.navigation.Navigator
 import com.yjy.navigation.service.util.InterstitialAdManager
 import com.yjy.platform.widget.util.DeepLinkUtils
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -80,10 +79,7 @@ class ServiceActivity : AppCompatActivity() {
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     },
                     onShowAd = { adType ->
-                        adsManager.showAd(adType) {
-                            shouldShowPremiumDialog = true
-                            Timber.d("TTTTTTT ${shouldShowPremiumDialog}")
-                        }
+                        adsManager.showAd(adType)
                     },
                     onFinishApp = { finish() },
                 )

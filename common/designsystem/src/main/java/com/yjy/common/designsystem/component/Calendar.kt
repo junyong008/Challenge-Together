@@ -62,6 +62,11 @@ private const val DEFAULT_MIN_DAY = 1
 private const val DEFAULT_MAX_YEAR = 2100
 private const val DEFAULT_MAX_MONTH = 12
 private const val DEFAULT_MAX_DAY = 31
+private val WEEK_HEIGHT_DP = 40.dp
+private val WEEK_SPACING_DP = 3.dp
+private val WEEK_MODE_HEIGHT_DP = 50.dp
+private const val DAYS_IN_WEEK = 7
+private const val WEEK_DIVISOR_ROUND_UP = 6
 
 /**
  * [Calendar]
@@ -153,9 +158,28 @@ fun Calendar(
         }
     }
 
-    // 주 모드 전환 시 높이 변화에 따른 애니메이션 효과 적용.
+    // 보여지는 페이지에 따른 년도와 월 계산.
+    val displayedYearMonth = remember(pagerState.currentPage) {
+        val monthsSinceInitial = monthsBetween(YearMonth.now(), initialYearMonth)
+        val midPoint = Int.MAX_VALUE / 2
+        val monthsToAdd = pagerState.currentPage - (midPoint + monthsSinceInitial)
+
+        initialYearMonth.plusMonths(monthsToAdd.toLong())
+    }
+
+    // 주의 개수에 따라 동적으로 높이 계산
+    val weeksCount = if (weekMode) {
+        1
+    } else {
+        val daysInMonth = displayedYearMonth.lengthOfMonth()
+        val firstDayIndex = displayedYearMonth.atDay(1).dayOfWeek.value % DAYS_IN_WEEK
+        val totalDaysToShow = daysInMonth + firstDayIndex
+        (totalDaysToShow + WEEK_DIVISOR_ROUND_UP) / DAYS_IN_WEEK // 주의 개수 (올림)
+    }
+
+    val calculatedHeight = (weeksCount * WEEK_HEIGHT_DP.value + (weeksCount - 1) * WEEK_SPACING_DP.value).dp
     val calendarHeight by animateDpAsState(
-        targetValue = if (weekMode) 50.dp else 195.dp,
+        targetValue = if (weekMode) WEEK_MODE_HEIGHT_DP else calculatedHeight,
         animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow),
         label = "WeekMode Animation",
     )
@@ -167,15 +191,6 @@ fun Calendar(
             .background(calendarColors.containerColor),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // 보여지는 페이지에 따른 년도와 월 계산.
-        val displayedYearMonth = remember(pagerState.currentPage) {
-            val monthsSinceInitial = monthsBetween(YearMonth.now(), initialYearMonth)
-            val midPoint = Int.MAX_VALUE / 2
-            val monthsToAdd = pagerState.currentPage - (midPoint + monthsSinceInitial)
-
-            initialYearMonth.plusMonths(monthsToAdd.toLong())
-        }
-
         // 선택 가능한 최대 날짜, 최소 날짜에 따라 헤더의 좌우 버튼 비 활성화 유무 결정
         val canMoveToPreviousMonth = displayedYearMonth.isAfter(YearMonth.from(minDate))
         val canMoveToNextMonth = displayedYearMonth.isBefore(YearMonth.from(maxDate))

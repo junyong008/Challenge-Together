@@ -33,6 +33,7 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override val timeDiff: Flow<Long> = userPreferencesDataSource.timeDiff
     override val isPremium: Flow<Boolean> = userPreferencesDataSource.isPremium
+    override val premiumDialogLastShown: Flow<Long> = userPreferencesDataSource.premiumDialogLastShown
 
     override val remoteAppVersion: Flow<Version> =
         userDataSource.getRemoteAppVersion().map { Version(it) }
@@ -98,6 +99,10 @@ internal class UserRepositoryImpl @Inject constructor(
     override suspend fun clearLocalData() {
         userPreferencesDataSource.setFcmToken(null)
         userPreferencesDataSource.setIsPremium(false)
+    }
+
+    override suspend fun markPremiumDialogShown() {
+        userPreferencesDataSource.setPremiumDialogLastShown(System.currentTimeMillis())
     }
 
     private fun hashIdentifier(identifier: String): String {

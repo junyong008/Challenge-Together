@@ -6,4 +6,6 @@
     <string name="navigation_service_check_network_connection">กรุณาตรวจสอบการเชื่อมต่อเครือข่ายของคุณ.</string>
     <string name="navigation_service_update">อัปเดต</string>
     <string name="navigation_service_update_description">มีเวอร์ชันใหม่ของแอปพร้อมใช้งาน\nกรุณาอัปเดตผ่าน Play Store.</string>
+    <string name="navigation_service_premium_dialog_title">ลบโฆษณา</string>
+    <string name="navigation_service_premium_dialog_description">ปลดล็อกคุณสมบัติพรีเมียมนี้เพื่อประสบการณ์ที่ไม่มีโฆษณา</string>
 </resources>

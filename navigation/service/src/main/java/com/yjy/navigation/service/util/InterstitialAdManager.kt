@@ -41,16 +41,17 @@ class InterstitialAdManager(private val activity: Activity) {
                     Timber.d("Interstitial ad loaded for $adType")
                     adMap[adType] = ad
                 }
+
                 override fun onAdFailedToLoad(error: LoadAdError) {
                     super.onAdFailedToLoad(error)
                     Timber.e("Interstitial ad failed to load for $adType: ${error.message}")
                     adMap[adType] = null
                 }
-            }
+            },
         )
     }
 
-    fun showAd(adType: AdType, onAdClosed: () -> Unit) {
+    fun showAd(adType: AdType) {
         val ad = adMap[adType]
         Timber.d("Attempting to show ad for $adType")
 
@@ -68,14 +69,12 @@ class InterstitialAdManager(private val activity: Activity) {
             override fun onAdDismissedFullScreenContent() {
                 Timber.d("Interstitial ad dismissed for $adType")
                 adMap[adType] = null
-                onAdClosed.invoke()
                 loadAd(adType)
             }
 
             override fun onAdFailedToShowFullScreenContent(error: AdError) {
                 Timber.e("Interstitial ad failed to show for $adType: ${error.message}")
                 adMap[adType] = null
-                onAdClosed.invoke()
                 loadAd(adType)
             }
 
@@ -94,7 +93,6 @@ class InterstitialAdManager(private val activity: Activity) {
                 ad.show(activity)
             } catch (e: Exception) {
                 Timber.e(e, "Exception while showing interstitial ad for $adType")
-                onAdClosed.invoke()
             }
         }
     }

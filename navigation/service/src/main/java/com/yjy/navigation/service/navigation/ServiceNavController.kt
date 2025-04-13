@@ -16,6 +16,7 @@ import com.yjy.feature.community.navigation.navigateToAddCommunityPost
 import com.yjy.feature.community.navigation.navigateToCommunity
 import com.yjy.feature.home.navigation.navigateToHome
 import com.yjy.feature.my.navigation.navigateToMy
+import com.yjy.feature.premium.navigation.navigateToPremium
 import com.yjy.feature.together.navigation.navigateToTogether
 
 @Composable
@@ -65,6 +66,10 @@ internal class ServiceNavController(
 
     fun navigateToAddCommunityPost() {
         navController.navigateToAddCommunityPost()
+    }
+
+    fun navigateToPremium() {
+        navController.navigateToPremium()
     }
 
     fun navigateToAppLockPinValidation() {
