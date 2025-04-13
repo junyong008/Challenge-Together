@@ -300,7 +300,11 @@ private fun AppInfoSection(
             titleResId = R.string.feature_my_privacy_policy,
             iconResId = ChallengeTogetherIcons.Policy,
             onClick = {
-                uriHandler.openUri(PRIVACY_POLICY)
+                try {
+                    uriHandler.openUri(PRIVACY_POLICY)
+                } catch (e: Exception) {
+                    Timber.e(e, "Failed to open privacy policy.")
+                }
             },
         )
         Spacer(modifier = Modifier.height(8.dp))

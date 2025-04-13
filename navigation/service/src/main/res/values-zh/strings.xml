@@ -6,4 +6,6 @@
     <string name="navigation_service_check_network_connection">请检查您的网络连接。</string>
     <string name="navigation_service_update">更新</string>
     <string name="navigation_service_update_description">应用程序有新版本可用。\n请通过应用商店进行更新。</string>
+    <string name="navigation_service_premium_dialog_title">去除广告</string>
+    <string name="navigation_service_premium_dialog_description">解锁此高级功能，永久享受无广告体验。</string>
 </resources>

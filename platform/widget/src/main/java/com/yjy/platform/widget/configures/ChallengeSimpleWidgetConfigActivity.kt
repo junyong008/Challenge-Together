@@ -54,6 +54,7 @@ import com.yjy.platform.widget.widgets.ChallengeSimpleWidget
 import com.yjy.platform.widget.widgets.ChallengeWideWidget
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ChallengeSimpleWidgetConfigActivity : ComponentActivity() {
@@ -140,12 +141,15 @@ class ChallengeSimpleWidgetConfigActivity : ComponentActivity() {
 
         LaunchedEffect(challenges) {
             if (challenges.isEmpty() || selectedChallenge == null) {
-                val glanceId = GlanceAppWidgetManager(context).getGlanceIdBy(appWidgetId)
-                val prefs = getAppWidgetState(
-                    context,
-                    PreferencesGlanceStateDefinition,
-                    glanceId,
-                )
+                val glanceId = try {
+                    GlanceAppWidgetManager(context).getGlanceIdBy(appWidgetId)
+                } catch (e: Exception) {
+                    Timber.e(e, "Failed to get GlanceId")
+                    onFinish(RESULT_CANCELED)
+                    return@LaunchedEffect
+                }
+
+                val prefs = getAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId)
                 val selectedChallengeId = prefs[intPreferencesKey(ChallengeSimpleWidget.CHALLENGE_ID_KEY)]
 
                 selectedChallenge = challenges.find { it.id == selectedChallengeId }

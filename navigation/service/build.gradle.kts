@@ -29,6 +29,7 @@ dependencies {
 
         projects.data.authApi,
         projects.data.userApi,
+        projects.data.challengeApi,
 
         projects.domain,
 
@@ -71,4 +72,5 @@ dependencies {
 
     runtimeOnly(projects.data.authImpl)
     runtimeOnly(projects.data.userImpl)
+    runtimeOnly(projects.data.challengeImpl)
 }

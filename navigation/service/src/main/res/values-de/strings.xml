@@ -6,4 +6,6 @@
     <string name="navigation_service_check_network_connection">Bitte überprüfen Sie Ihre Netzwerkverbindung.</string>
     <string name="navigation_service_update">Aktualisieren</string>
     <string name="navigation_service_update_description">Eine neue Version der App ist verfügbar.\nBitte aktualisieren Sie über den Play Store.</string>
+    <string name="navigation_service_premium_dialog_title">Werbung entfernen</string>
+    <string name="navigation_service_premium_dialog_description">Genieße ein werbefreies Erlebnis mit dieser Premium-Funktion.</string>
 </resources>

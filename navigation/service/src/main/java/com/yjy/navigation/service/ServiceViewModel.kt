@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.yjy.common.network.onSuccess
 import com.yjy.data.auth.api.AppLockRepository
 import com.yjy.data.auth.api.AuthRepository
+import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.data.user.api.UserRepository
 import com.yjy.domain.LogoutUseCase
 import com.yjy.model.common.Ban
@@ -28,6 +29,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ServiceViewModel @Inject constructor(
     private val userRepository: UserRepository,
+    startedChallengeRepository: StartedChallengeRepository,
     authRepository: AuthRepository,
     appLockRepository: AppLockRepository,
     logoutUseCase: LogoutUseCase,
@@ -38,6 +40,20 @@ class ServiceViewModel @Inject constructor(
 
     private val _banStatus = MutableStateFlow<Ban?>(null)
     val banStatus: StateFlow<Ban?> = _banStatus.asStateFlow()
+
+    val shouldShowPremiumDialog: StateFlow<Boolean> = combine(
+        userRepository.premiumDialogLastShown,
+        startedChallengeRepository.startedChallenges,
+    ) { lastShown, startedChallenges ->
+        val now = System.currentTimeMillis()
+        val diffDays = (now - lastShown) / MILLIS_IN_A_DAY
+
+        diffDays >= PREMIUM_DIALOG_INTERVAL_DAYS && startedChallenges.isNotEmpty()
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = false,
+    )
 
     val isPremium = userRepository.isPremium
         .stateIn(
@@ -118,5 +134,14 @@ class ServiceViewModel @Inject constructor(
             userRepository.checkBan(identifier)
                 .onSuccess { _banStatus.value = it }
         }
+    }
+
+    fun markPremiumDialogShown() {
+        viewModelScope.launch { userRepository.markPremiumDialogShown() }
+    }
+
+    companion object {
+        private const val PREMIUM_DIALOG_INTERVAL_DAYS = 7L
+        private const val MILLIS_IN_A_DAY = 24 * 60 * 60 * 1000
     }
 }

@@ -663,7 +663,7 @@ private fun Quote() {
     var alpha by remember { mutableFloatStateOf(1f) }
 
     val alphaAnimation by animateFloatAsState(
-        targetValue = alpha,
+        targetValue = if (alpha.isFinite()) alpha else 1f,
         animationSpec = tween(QUOTE_ANIMATION_DURATION),
         label = "Quote Alpha Animation",
         finishedListener = {

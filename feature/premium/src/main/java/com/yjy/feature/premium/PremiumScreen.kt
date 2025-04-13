@@ -112,7 +112,8 @@ internal fun PremiumScreen(
                     .padding(32.dp),
                 containerColor = CustomColorProvider.colorScheme.brandDim,
             ) {
-                if (productUiState.isLoading() || isPurchasing) {
+                val productPrice = productUiState.getProductOrNull()?.price
+                if (productUiState.isLoading() || isPurchasing || productPrice == null) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
                         color = CustomColorProvider.colorScheme.brand,
@@ -122,8 +123,7 @@ internal fun PremiumScreen(
                         text = if (isPremium) {
                             stringResource(id = R.string.feature_premium_active)
                         } else {
-                            productUiState.getProductOrNull()?.price
-                                ?: stringResource(id = R.string.feature_premium_invalid_now)
+                            productPrice
                         },
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,

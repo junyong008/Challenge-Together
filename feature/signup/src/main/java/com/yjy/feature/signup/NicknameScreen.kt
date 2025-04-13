@@ -47,6 +47,7 @@ import com.yjy.feature.signup.model.SignUpUiEvent
 import com.yjy.feature.signup.model.SignUpUiState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import timber.log.Timber
 
 @Composable
 internal fun NicknameRoute(
@@ -241,7 +242,13 @@ fun PrivacyPolicyText(
         textAlign = TextAlign.Center,
         textDecoration = TextDecoration.None,
         color = CustomColorProvider.colorScheme.onBackgroundMuted,
-        onClick = { uriHandler.openUri(PRIVACY_POLICY) },
+        onClick = {
+            try {
+                uriHandler.openUri(PRIVACY_POLICY)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to open privacy policy.")
+            }
+        },
         modifier = modifier,
     )
 }

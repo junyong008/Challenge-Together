@@ -53,6 +53,7 @@ import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherDialog
 import com.yjy.common.designsystem.component.CustomSnackbarHost
 import com.yjy.common.designsystem.component.MaintenanceDialog
+import com.yjy.common.designsystem.component.PremiumDialog
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
@@ -94,6 +95,7 @@ internal fun ServiceScreen(
     val isManualTime by viewModel.isManualTime.collectAsStateWithLifecycle()
     val remoteAppVersion by viewModel.remoteAppVersion.collectAsStateWithLifecycle()
     val maintenanceEndTime by viewModel.maintenanceEndTime.collectAsStateWithLifecycle()
+    val shouldShowPremiumDialog by viewModel.shouldShowPremiumDialog.collectAsStateWithLifecycle()
     val isSessionExpired by viewModel.isSessionExpired.collectAsStateWithLifecycle()
     val sessionExpiredMessage = stringResource(id = R.string.navigation_service_session_expired)
 
@@ -155,6 +157,18 @@ internal fun ServiceScreen(
         MaintenanceDialog(
             expectedCompletionTime = formatLocalDateTime(maintenanceEndTime!!),
             onDismiss = onFinishApp,
+        )
+    }
+
+    if (shouldShowPremiumDialog) {
+        PremiumDialog(
+            title = stringResource(id = R.string.navigation_service_premium_dialog_title),
+            description = stringResource(id = R.string.navigation_service_premium_dialog_description),
+            onExploreClick = {
+                viewModel.markPremiumDialogShown()
+                navigator.navigateToPremium()
+            },
+            onDismiss = { viewModel.markPremiumDialogShown() },
         )
     }
 

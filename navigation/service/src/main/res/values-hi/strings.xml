@@ -6,4 +6,6 @@
     <string name="navigation_service_check_network_connection">कृपया अपना नेटवर्क कनेक्शन जांचें।</string>
     <string name="navigation_service_update">अपडेट करें</string>
     <string name="navigation_service_update_description">ऐप का एक नया संस्करण उपलब्ध है।\nकृपया प्ले स्टोर के माध्यम से अपडेट करें।</string>
+    <string name="navigation_service_premium_dialog_title">विज्ञापन हटाएं</string>
+    <string name="navigation_service_premium_dialog_description">इस प्रीमियम फ़ीचर को अनलॉक करके विज्ञापन-मुक्त अनुभव का आनंद लें।</string>
 </resources>

@@ -969,8 +969,9 @@ private fun TierUpAnimatedText(
         label = "AnimatedText Alpha Animation",
     )
 
+    val safeOffsetY = if (offsetY.value.isFinite()) offsetY else 0.dp
     val offset by animateDpAsState(
-        targetValue = if (visible) 0.dp else offsetY,
+        targetValue = if (visible) 0.dp else safeOffsetY,
         animationSpec = tween(
             durationMillis = 500,
             easing = FastOutSlowInEasing,

@@ -6,4 +6,6 @@
     <string name="navigation_service_check_network_connection">ネットワーク接続を確認してください。</string>
     <string name="navigation_service_update">更新</string>
     <string name="navigation_service_update_description">新しいバージョンのアプリが利用可能です。\nPlayストアを通じて更新してください。</string>
+    <string name="navigation_service_premium_dialog_title">広告を削除</string>
+    <string name="navigation_service_premium_dialog_description">このプレミアム機能を解除して、広告なしの体験をお楽しみください。</string>
 </resources>
