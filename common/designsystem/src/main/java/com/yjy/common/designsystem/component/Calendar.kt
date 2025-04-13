@@ -63,7 +63,6 @@ private const val DEFAULT_MAX_YEAR = 2100
 private const val DEFAULT_MAX_MONTH = 12
 private const val DEFAULT_MAX_DAY = 31
 private val WEEK_HEIGHT_DP = 40.dp
-private val WEEK_SPACING_DP = 3.dp
 private val WEEK_MODE_HEIGHT_DP = 50.dp
 private const val DAYS_IN_WEEK = 7
 private const val WEEK_DIVISOR_ROUND_UP = 6
@@ -174,10 +173,10 @@ fun Calendar(
         val daysInMonth = displayedYearMonth.lengthOfMonth()
         val firstDayIndex = displayedYearMonth.atDay(1).dayOfWeek.value % DAYS_IN_WEEK
         val totalDaysToShow = daysInMonth + firstDayIndex
-        (totalDaysToShow + WEEK_DIVISOR_ROUND_UP) / DAYS_IN_WEEK // 주의 개수 (올림)
+        (totalDaysToShow + WEEK_DIVISOR_ROUND_UP) / DAYS_IN_WEEK
     }
 
-    val calculatedHeight = (weeksCount * WEEK_HEIGHT_DP.value + (weeksCount - 1) * WEEK_SPACING_DP.value).dp
+    val calculatedHeight = (weeksCount * WEEK_HEIGHT_DP.value).dp
     val calendarHeight by animateDpAsState(
         targetValue = if (weekMode) WEEK_MODE_HEIGHT_DP else calculatedHeight,
         animationSpec = spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow),
