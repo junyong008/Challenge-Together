@@ -44,11 +44,12 @@ class ServiceViewModel @Inject constructor(
     val shouldShowPremiumDialog: StateFlow<Boolean> = combine(
         userRepository.premiumDialogLastShown,
         startedChallengeRepository.startedChallenges,
-    ) { lastShown, startedChallenges ->
+        userRepository.isPremium,
+    ) { lastShown, startedChallenges, isPremium ->
         val now = System.currentTimeMillis()
         val diffDays = (now - lastShown) / MILLIS_IN_A_DAY
 
-        diffDays >= PREMIUM_DIALOG_INTERVAL_DAYS && startedChallenges.isNotEmpty()
+        diffDays >= PREMIUM_DIALOG_INTERVAL_DAYS && startedChallenges.isNotEmpty() && !isPremium
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
