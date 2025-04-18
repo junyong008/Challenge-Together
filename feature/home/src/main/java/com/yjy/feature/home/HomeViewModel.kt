@@ -2,7 +2,6 @@ package com.yjy.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.core.extensions.restartableStateIn
 import com.yjy.common.network.fold
@@ -159,10 +158,6 @@ class HomeViewModel @Inject constructor(
         userRepository.getUserName()
             .onSuccess { emit(UserNameUiState.Success(it)) }
             .onFailure { emit(UserNameUiState.Error) }
-    }.onEach {
-        if (it is UserNameUiState.Success) {
-            FirebaseCrashlytics.getInstance().setCustomKey("user-name", it.name)
-        }
     }.restartableStateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),

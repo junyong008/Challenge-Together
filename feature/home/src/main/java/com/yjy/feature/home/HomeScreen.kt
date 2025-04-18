@@ -65,6 +65,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.component.BaseBottomSheet
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
@@ -168,6 +169,8 @@ internal fun HomeScreen(
     onNotificationClick: () -> Unit = {},
 ) {
     val context = LocalContext.current
+    val crashlytics = FirebaseCrashlytics.getInstance()
+
     val lazyListState = rememberLazyListState()
     val scrolled by remember {
         derivedStateOf {
@@ -199,6 +202,12 @@ internal fun HomeScreen(
         categories = uiState.categories,
         sortOrder = sortOrder,
     )
+
+    LaunchedEffect(userNameUiState) {
+        if (userNameUiState is UserNameUiState.Success) {
+            crashlytics.setCustomKey("user-name", userNameUiState.name)
+        }
+    }
 
     LaunchedEffect(startedChallenges, sortOrder) {
         WidgetManager.updateAllWidgets(context)
