@@ -1,10 +1,13 @@
 package com.yjy.navigation.service.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
 import com.yjy.common.designsystem.component.SnackbarType
@@ -58,6 +61,21 @@ internal fun ServiceNavHost(
     modifier: Modifier = Modifier,
     startDestination: ServiceRoute = ServiceRoute.MainTab.Home,
 ) {
+    val crashlytics = FirebaseCrashlytics.getInstance()
+
+    DisposableEffect(navController) {
+        val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
+            val route = destination.route ?: "unknown_route"
+            crashlytics.log("Navigated to $route")
+            crashlytics.setCustomKey("last_screen", route)
+        }
+        navController.addOnDestinationChangedListener(listener)
+
+        onDispose {
+            navController.removeOnDestinationChangedListener(listener)
+        }
+    }
+
     NavHost(
         navController = navController,
         startDestination = startDestination,

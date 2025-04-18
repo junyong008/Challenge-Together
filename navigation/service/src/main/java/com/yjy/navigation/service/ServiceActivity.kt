@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.core.net.toUri
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.deeplink.DeepLinkResult
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.yjy.common.core.constants.DeepLinkConfig
 import com.yjy.common.core.constants.DeepLinkPath
 import com.yjy.common.core.constants.DeepLinkType
@@ -80,6 +81,7 @@ class ServiceActivity : AppCompatActivity() {
                     },
                     onShowAd = { adType ->
                         adsManager.showAd(adType)
+                        FirebaseCrashlytics.getInstance().log("onShowAd: $adType")
                     },
                     onFinishApp = { finish() },
                 )
