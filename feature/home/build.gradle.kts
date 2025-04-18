@@ -2,6 +2,7 @@
 
 plugins {
     alias(libs.plugins.custom.android.feature)
+    alias(libs.plugins.custom.android.firebase)
 }
 
 android {

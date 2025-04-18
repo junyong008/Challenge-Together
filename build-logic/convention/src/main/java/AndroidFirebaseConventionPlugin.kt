@@ -7,5 +7,6 @@ internal class AndroidFirebaseConventionPlugin : BuildLogicConventionPlugin({
     dependencies {
         implementation(platform(libs.firebase.bom))
         implementation(libs.firebase.database)
+        implementation(libs.firebase.crashlytics)
     }
 })

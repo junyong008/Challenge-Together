@@ -306,7 +306,9 @@ internal fun ResetRecordChart(
         }
 
         // 스케일 텍스트들의 최대 너비 계산
-        val adjustedValueRange = maxValue - minValue
+        val adjustedValueRange = (maxValue - minValue).let { range ->
+            if (range <= 0f) 1f else range
+        }
         var maxScaleTextWidth = 0f
 
         for (i in 0..GRID_LINE_COUNT) {
