@@ -456,109 +456,111 @@ internal fun ResetRecordChart(
         }
 
         // 선택된 포인트의 수직 점선을 애니메이션된 위치에 그리기
-        selectedIndex?.let {
-            val verticalPathEffect = PathEffect.dashPathEffect(
-                floatArrayOf(
-                    ResetRecordChartDefaults.SELECTION_DASH_SIZE,
-                    ResetRecordChartDefaults.SELECTION_DASH_INTERVAL,
-                ),
-                0f,
-            )
+        selectedIndex
+            ?.takeIf { it in daysData.indices }
+            ?.let {
+                val verticalPathEffect = PathEffect.dashPathEffect(
+                    floatArrayOf(
+                        ResetRecordChartDefaults.SELECTION_DASH_SIZE,
+                        ResetRecordChartDefaults.SELECTION_DASH_INTERVAL,
+                    ),
+                    0f,
+                )
 
-            drawLine(
-                color = lineColor.copy(alpha = SELECTION_LINE_ALPHA),
-                start = Offset(selectedPoint.x, 0f),
-                end = Offset(selectedPoint.x, height),
-                strokeWidth = SELECTION_LINE_STROKE_WIDTH.dp.toPx(),
-                pathEffect = verticalPathEffect,
-            )
+                drawLine(
+                    color = lineColor.copy(alpha = SELECTION_LINE_ALPHA),
+                    start = Offset(selectedPoint.x, 0f),
+                    end = Offset(selectedPoint.x, height),
+                    strokeWidth = SELECTION_LINE_STROKE_WIDTH.dp.toPx(),
+                    pathEffect = verticalPathEffect,
+                )
 
-            // 상단 값 표시 박스
-            val value = daysData[it]
-            val text = "%.1f %s".format(value, valueSuffix)
+                // 상단 값 표시 박스
+                val value = daysData[it]
+                val text = "%.1f %s".format(value, valueSuffix)
 
-            val textBounds = Rect()
-            valueTextPaint.getTextBounds(text, 0, text.length, textBounds)
+                val textBounds = Rect()
+                valueTextPaint.getTextBounds(text, 0, text.length, textBounds)
 
-            val rectPadding = valueBoxPadding.toPx()
-            val rectWidth = textBounds.width() + rectPadding * 2
-            val rectHeight = textBounds.height() + rectPadding * 2
+                val rectPadding = valueBoxPadding.toPx()
+                val rectWidth = textBounds.width() + rectPadding * 2
+                val rectHeight = textBounds.height() + rectPadding * 2
 
-            val rectTop = -rectHeight - VALUE_BOX_TOP_PADDING.dp.toPx()
-            val rectLeft = selectedPoint.x - rectWidth / 2
+                val rectTop = -rectHeight - VALUE_BOX_TOP_PADDING.dp.toPx()
+                val rectLeft = selectedPoint.x - rectWidth / 2
 
-            drawRoundRect(
-                color = valueBoxBackgroundColor,
-                topLeft = Offset(rectLeft, rectTop),
-                size = Size(rectWidth, rectHeight),
-                cornerRadius = CornerRadius(VALUE_BOX_CORNER_RADIUS.dp.toPx()),
-            )
+                drawRoundRect(
+                    color = valueBoxBackgroundColor,
+                    topLeft = Offset(rectLeft, rectTop),
+                    size = Size(rectWidth, rectHeight),
+                    cornerRadius = CornerRadius(VALUE_BOX_CORNER_RADIUS.dp.toPx()),
+                )
 
-            drawContext.canvas.nativeCanvas.drawText(
-                text,
-                selectedPoint.x,
-                rectTop + rectHeight - rectPadding,
-                valueTextPaint,
-            )
+                drawContext.canvas.nativeCanvas.drawText(
+                    text,
+                    selectedPoint.x,
+                    rectTop + rectHeight - rectPadding,
+                    valueTextPaint,
+                )
 
-            // 도넛 뒤의 리플 효과
-            drawCircle(
-                color = lineColor.copy(alpha = rippleAlpha),
-                radius = endPointRadius.toPx() * rippleScale,
-                center = selectedPoint,
-                style = Stroke(width = lineWidth.toPx() / 2),
-            )
+                // 도넛 뒤의 리플 효과
+                drawCircle(
+                    color = lineColor.copy(alpha = rippleAlpha),
+                    radius = endPointRadius.toPx() * rippleScale,
+                    center = selectedPoint,
+                    style = Stroke(width = lineWidth.toPx() / 2),
+                )
 
-            // 도넛 모양
-            drawCircle(
-                color = donutBackgroundColor,
-                radius = endPointRadius.toPx(),
-                center = selectedPoint,
-            )
+                // 도넛 모양
+                drawCircle(
+                    color = donutBackgroundColor,
+                    radius = endPointRadius.toPx(),
+                    center = selectedPoint,
+                )
 
-            drawCircle(
-                color = lineColor,
-                radius = endPointRadius.toPx(),
-                center = selectedPoint,
-                style = Stroke(width = lineWidth.toPx()),
-            )
+                drawCircle(
+                    color = lineColor,
+                    radius = endPointRadius.toPx(),
+                    center = selectedPoint,
+                    style = Stroke(width = lineWidth.toPx()),
+                )
 
-            // 하단 날짜 박스
-            val selectedDate = data[it]
-            val dateText = if (selectedDate.year == currentYear) {
-                selectedDate.format(normalDateFormatter)
-            } else {
-                selectedDate.format(selectedDateFormatter)
+                // 하단 날짜 박스
+                val selectedDate = data[it]
+                val dateText = if (selectedDate.year == currentYear) {
+                    selectedDate.format(normalDateFormatter)
+                } else {
+                    selectedDate.format(selectedDateFormatter)
+                }
+
+                val dateTextBounds = Rect()
+                dateTextPaint.getTextBounds(dateText, 0, dateText.length, dateTextBounds)
+
+                val dateRectPadding = dateBoxPadding.toPx()
+                val dateRectWidth = dateTextBounds.width() + dateRectPadding * 2
+                val dateRectHeight = dateTextBounds.height() + dateRectPadding * 2
+                val dateRectLeft = selectedPoint.x - dateRectWidth / 2
+                val dateRectTop = dateY - dateTextBounds.height() - dateRectPadding
+
+                drawRoundRect(
+                    color = dateBoxBackgroundColor,
+                    topLeft = Offset(dateRectLeft, dateRectTop),
+                    size = Size(dateRectWidth, dateRectHeight),
+                    cornerRadius = CornerRadius(DATE_BOX_CORNER_RADIUS.dp.toPx()),
+                )
+
+                drawContext.canvas.nativeCanvas.drawText(
+                    dateText,
+                    selectedPoint.x,
+                    dateY,
+                    Paint().apply {
+                        textSize = dateTextStyle.fontSize.toPx()
+                        textAlign = Paint.Align.CENTER
+                        color = dateBoxTextColor.toArgb()
+                        typeface = dateTextPaint.typeface
+                    },
+                )
             }
-
-            val dateTextBounds = Rect()
-            dateTextPaint.getTextBounds(dateText, 0, dateText.length, dateTextBounds)
-
-            val dateRectPadding = dateBoxPadding.toPx()
-            val dateRectWidth = dateTextBounds.width() + dateRectPadding * 2
-            val dateRectHeight = dateTextBounds.height() + dateRectPadding * 2
-            val dateRectLeft = selectedPoint.x - dateRectWidth / 2
-            val dateRectTop = dateY - dateTextBounds.height() - dateRectPadding
-
-            drawRoundRect(
-                color = dateBoxBackgroundColor,
-                topLeft = Offset(dateRectLeft, dateRectTop),
-                size = Size(dateRectWidth, dateRectHeight),
-                cornerRadius = CornerRadius(DATE_BOX_CORNER_RADIUS.dp.toPx()),
-            )
-
-            drawContext.canvas.nativeCanvas.drawText(
-                dateText,
-                selectedPoint.x,
-                dateY,
-                Paint().apply {
-                    textSize = dateTextStyle.fontSize.toPx()
-                    textAlign = Paint.Align.CENTER
-                    color = dateBoxTextColor.toArgb()
-                    typeface = dateTextPaint.typeface
-                },
-            )
-        }
     }
 }
 

@@ -152,7 +152,7 @@ private fun ResetRecordBody(
 
     LaunchedEffect(currentVisibleIndex) {
         if (!isDraggingChart) {
-            selectedIndex = currentVisibleIndex
+            selectedIndex = currentVisibleIndex.coerceIn(0, listData.lastIndex)
         }
     }
 
@@ -184,7 +184,7 @@ private fun ResetRecordBody(
                 .fillMaxWidth()
                 .background(CustomColorProvider.colorScheme.surface)
                 .padding(start = 12.dp, end = 18.dp, top = 48.dp, bottom = 20.dp),
-            selectedIndex = resetRecords.size - 1 - selectedIndex,
+            selectedIndex = (resetRecords.size - 1 - selectedIndex).coerceIn(0, chartData.lastIndex),
             onDateSelected = { newChartIndex ->
                 val newListIndex = listData.size - 1 - newChartIndex
                 selectedIndex = newListIndex
