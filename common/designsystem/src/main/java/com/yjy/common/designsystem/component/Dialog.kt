@@ -364,6 +364,58 @@ private fun ReportItem(
 }
 
 @Composable
+fun CalendarDialog(
+    onDismissRequest: () -> Unit,
+    onConfirm: (Int, Int) -> Unit,
+    minDate: LocalDate = LocalDate.of(DEFAULT_MIN_YEAR, DEFAULT_MIN_MONTH, DEFAULT_MIN_DAY),
+    maxDate: LocalDate = LocalDate.of(DEFAULT_MAX_YEAR, DEFAULT_MAX_MONTH, DEFAULT_MAX_DAY),
+) {
+    BaseDialog(
+        onDismissRequest = onDismissRequest,
+        title = stringResource(id = R.string.common_designsystem_dialog_calendar_title),
+        description = stringResource(id = R.string.common_designsystem_dialog_calendar_description),
+    ) {
+        Calendar(
+            selectionMode = SelectionMode.SingleDate(LocalDate.now()),
+            onDateSelected = {},
+            maxDate = LocalDate.now(),
+            showAdjacentMonthsDays = false,
+            enableWeekModeOnDataSelected = true,
+            calendarColors = CalendarColors(
+                containerColor = CustomColorProvider.colorScheme.background,
+                contentColor = CustomColorProvider.colorScheme.onBackground,
+                weekDayColor = CustomColorProvider.colorScheme.onBackgroundMuted,
+                selectedBackgroundColor = CustomColorProvider.colorScheme.brand,
+                selectedTextColor = CustomColorProvider.colorScheme.onBrand,
+                rangeBackgroundColor = CustomColorProvider.colorScheme.brandBright,
+                rangeTextColor = CustomColorProvider.colorScheme.onBrandBright,
+                disabledColor = CustomColorProvider.colorScheme.disable,
+                dividerColor = CustomColorProvider.colorScheme.divider,
+            ),
+        )
+        Spacer(modifier = Modifier.size(8.dp))
+        TimePicker(
+            hour = 12,
+            minute = 30,
+            isAm = true,
+            onTimeChanged = { hour, minute, isAm ->
+
+            },
+            containerColor = CustomColorProvider.colorScheme.background,
+            contentColor = CustomColorProvider.colorScheme.onBackground,
+            textBackground = CustomColorProvider.colorScheme.surface,
+            textColor = CustomColorProvider.colorScheme.onSurface,
+        )
+        Spacer(modifier = Modifier.size(16.dp))
+        DialogButtonRow(
+            positiveTextRes = R.string.common_designsystem_dialog_calendar_edit,
+            onClickNegative = onDismissRequest,
+            onClickPositive = { },
+        )
+    }
+}
+
+@Composable
 fun YearMonthPickerDialog(
     initialYear: Int,
     initialMonth: Int,
@@ -558,6 +610,19 @@ fun ReportDialogPreview() {
             ReportDialog(
                 onClickReport = {},
                 onClickNegative = {},
+            )
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun CalendarDialogPreview() {
+    ChallengeTogetherTheme {
+        ChallengeTogetherBackground {
+            CalendarDialog(
+                onDismissRequest = {},
+                onConfirm = { _, _ -> },
             )
         }
     }
