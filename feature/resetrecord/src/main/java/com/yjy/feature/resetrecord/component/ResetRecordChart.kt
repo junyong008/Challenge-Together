@@ -96,7 +96,7 @@ private object ResetRecordChartDefaults {
     const val CENTER_ALIGNMENT_DIVISOR = 4f
 
     // Corner Radius
-    const val VALUE_BOX_CORNER_RADIUS = 8
+    const val VALUE_BOX_CORNER_RADIUS = 50
     const val DATE_BOX_CORNER_RADIUS = 4
 
     // Ripple
@@ -312,8 +312,8 @@ internal fun ResetRecordChart(
         var maxScaleTextWidth = 0f
 
         for (i in 0..GRID_LINE_COUNT) {
-            val value = maxValue - (adjustedValueRange * i / GRID_LINE_COUNT)
-            val scaleText = "%.0f %s".format(value, valueSuffix)
+            val value = (maxValue - (adjustedValueRange * i / GRID_LINE_COUNT)).coerceAtLeast(0f)
+            val scaleText = "%.1f %s".format(value, valueSuffix)
             val textBounds = Rect()
             scaleTextPaint.getTextBounds(scaleText, 0, scaleText.length, textBounds)
             maxScaleTextWidth = maxOf(maxScaleTextWidth, textBounds.width().toFloat())
@@ -365,7 +365,7 @@ internal fun ResetRecordChart(
             val y = height * i / GRID_LINE_COUNT
 
             // 수치 텍스트 그리기
-            val value = maxValue - (adjustedValueRange * i / GRID_LINE_COUNT)
+            val value = (maxValue - (adjustedValueRange * i / GRID_LINE_COUNT)).coerceAtLeast(0f)
             val scaleText = "%.1f %s".format(value, valueSuffix)
 
             drawContext.canvas.nativeCanvas.drawText(
@@ -477,7 +477,7 @@ internal fun ResetRecordChart(
 
                 // 상단 값 표시 박스
                 val value = daysData[it]
-                val text = "%.1f %s".format(value, valueSuffix)
+                val text = "%.1f".format(value)
 
                 val textBounds = Rect()
                 valueTextPaint.getTextBounds(text, 0, text.length, textBounds)

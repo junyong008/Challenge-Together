@@ -61,6 +61,7 @@ import com.yjy.common.ui.ErrorBody
 import com.yjy.common.ui.preview.ResetRecordPreviewParameterProvider
 import com.yjy.feature.resetrecord.component.ResetRecordChart
 import com.yjy.feature.resetrecord.model.ResetRecordsUiState
+import com.yjy.feature.resetrecord.model.getOrNull
 import com.yjy.model.challenge.ResetRecord
 import kotlinx.coroutines.launch
 
@@ -95,11 +96,13 @@ internal fun ResetRecordScreen(
                 onNavigationClick = onBackClick,
                 titleRes = R.string.feature_resetrecord_title,
                 rightContent = {
-                    ModeChangeButton(
-                        onClick = { isCalendarMode = !isCalendarMode },
-                        modifier = Modifier.padding(end = 4.dp),
-                        isCalendarMode = isCalendarMode,
-                    )
+                    if (resetRecordsUiState.getOrNull()?.isNotEmpty() == true) {
+                        ModeChangeButton(
+                            onClick = { isCalendarMode = !isCalendarMode },
+                            modifier = Modifier.padding(end = 4.dp),
+                            isCalendarMode = isCalendarMode,
+                        )
+                    }
                 },
             )
         },
