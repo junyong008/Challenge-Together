@@ -25,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +42,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.yjy.common.core.constants.TimeConst.HOURS_PER_HALF_DAY
+import com.yjy.common.core.constants.TimeConst.MIDNIGHT_HOUR
+import com.yjy.common.core.constants.TimeConst.NOON_HOUR
+import com.yjy.common.core.util.to12HourFormat
 import com.yjy.common.designsystem.R
 import com.yjy.common.designsystem.ThemePreviews
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
@@ -49,6 +54,7 @@ import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.model.common.ReportReason
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.YearMonth
 
 private const val DEFAULT_MIN_YEAR = 1900
@@ -365,20 +371,32 @@ private fun ReportItem(
 
 @Composable
 fun CalendarDialog(
+    initialDateTime: LocalDateTime,
+    outRangeText: String,
     onDismissRequest: () -> Unit,
-    onConfirm: (Int, Int) -> Unit,
-    minDate: LocalDate = LocalDate.of(DEFAULT_MIN_YEAR, DEFAULT_MIN_MONTH, DEFAULT_MIN_DAY),
-    maxDate: LocalDate = LocalDate.of(DEFAULT_MAX_YEAR, DEFAULT_MAX_MONTH, DEFAULT_MAX_DAY),
+    onConfirmEdit: (LocalDateTime) -> Unit,
+    minDateTime: LocalDateTime,
+    maxDateTime: LocalDateTime,
 ) {
+    var selectedDateTime by rememberSaveable { mutableStateOf(initialDateTime) }
+    var isOutRanged by remember { mutableStateOf(false) }
+    val selectedDate = selectedDateTime.toLocalDate()
+    val (hour, minute, isAm) = selectedDateTime.to12HourFormat()
+
     BaseDialog(
         onDismissRequest = onDismissRequest,
         title = stringResource(id = R.string.common_designsystem_dialog_calendar_title),
         description = stringResource(id = R.string.common_designsystem_dialog_calendar_description),
     ) {
         Calendar(
-            selectionMode = SelectionMode.SingleDate(LocalDate.now()),
-            onDateSelected = {},
-            maxDate = LocalDate.now(),
+            selectionMode = SelectionMode.SingleDate(selectedDate),
+            onDateSelected = {
+                val newDateTime = LocalDateTime.of(it, selectedDateTime.toLocalTime())
+                isOutRanged = newDateTime > maxDateTime || newDateTime < minDateTime
+                if (!isOutRanged) selectedDateTime = newDateTime
+            },
+            minDate = minDateTime.toLocalDate(),
+            maxDate = maxDateTime.toLocalDate(),
             showAdjacentMonthsDays = false,
             enableWeekModeOnDataSelected = true,
             calendarColors = CalendarColors(
@@ -395,22 +413,31 @@ fun CalendarDialog(
         )
         Spacer(modifier = Modifier.size(8.dp))
         TimePicker(
-            hour = 12,
-            minute = 30,
-            isAm = true,
-            onTimeChanged = { hour, minute, isAm ->
-
+            hour = hour,
+            minute = minute,
+            isAm = isAm,
+            onTimeChanged = { newHour, newMinute, newAmPm ->
+                val hour24Format = convertTo24HourFormat(newHour, newAmPm)
+                val newDateTime = selectedDate.atTime(hour24Format, newMinute)
+                isOutRanged = newDateTime > maxDateTime || newDateTime < minDateTime
+                if (!isOutRanged) selectedDateTime = newDateTime
             },
             containerColor = CustomColorProvider.colorScheme.background,
             contentColor = CustomColorProvider.colorScheme.onBackground,
             textBackground = CustomColorProvider.colorScheme.surface,
             textColor = CustomColorProvider.colorScheme.onSurface,
         )
+        if (isOutRanged) {
+            ErrorIndicator(
+                text = outRangeText,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
         Spacer(modifier = Modifier.size(16.dp))
         DialogButtonRow(
             positiveTextRes = R.string.common_designsystem_dialog_calendar_edit,
             onClickNegative = onDismissRequest,
-            onClickPositive = { },
+            onClickPositive = { onConfirmEdit(selectedDateTime) },
         )
     }
 }
@@ -561,6 +588,13 @@ private fun DialogButtonRow(
     }
 }
 
+private fun convertTo24HourFormat(hour: Int, isAm: Boolean): Int = when {
+    hour == HOURS_PER_HALF_DAY && isAm -> MIDNIGHT_HOUR
+    hour == HOURS_PER_HALF_DAY && !isAm -> NOON_HOUR
+    isAm -> hour
+    else -> hour + HOURS_PER_HALF_DAY
+}
+
 @ThemePreviews
 @Composable
 fun ChallengeTogetherDialogPreview() {
@@ -621,8 +655,12 @@ fun CalendarDialogPreview() {
     ChallengeTogetherTheme {
         ChallengeTogetherBackground {
             CalendarDialog(
+                initialDateTime = LocalDateTime.now(),
+                outRangeText = "Out Of Range",
                 onDismissRequest = {},
-                onConfirm = { _, _ -> },
+                onConfirmEdit = {},
+                minDateTime = LocalDateTime.now().minusDays(10),
+                maxDateTime = LocalDateTime.now(),
             )
         }
     }

@@ -9,6 +9,9 @@
     <string name="common_designsystem_dialog_cancel">Annulla</string>
     <string name="common_designsystem_dialog_year_month_picker_title">Seleziona Anno e Mese</string>
     <string name="common_designsystem_dialog_year_month_picker_description">Si prega di inserire l\'anno e il mese a cui desideri navigare</string>
+    <string name="common_designsystem_dialog_calendar_title">Modifica ora di reset</string>
+    <string name="common_designsystem_dialog_calendar_description">Seleziona la data e l\'ora del reset.</string>
+    <string name="common_designsystem_dialog_calendar_edit">Modifica</string>
     <string name="common_designsystem_dialog_enter_year">Anno</string>
     <string name="common_designsystem_dialog_enter_month">Mese</string>
     <string name="common_designsystem_bottom_sheet_close">Chiudi</string>

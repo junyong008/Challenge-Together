@@ -21,6 +21,7 @@ object ChallengeTogetherIcons {
     val Community = R.drawable.ic_community
     val CompleteChallenge = R.drawable.ic_complete_challenge
     val Edit = R.drawable.ic_edit
+    val EditCalendar = R.drawable.ic_edit_calendar
     val EditLined = R.drawable.ic_edit_lined
     val Email = R.drawable.ic_email
     val FingerPrint = R.drawable.ic_fingerprint

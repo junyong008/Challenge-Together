@@ -33,6 +33,9 @@
     <string name="feature_startedchallenge_reset_timer_prompt">Reimpostare il timer?</string>
     <string name="feature_startedchallenge_emotion_record_prompt">Registra i tuoi sentimenti attuali e costruisci progressivamente i tuoi record!</string>
     <string name="feature_startedchallenge_record_input_placeholder">Inserisci il contenuto del record (Opzionale)</string>
+    <string name="feature_startedchallenge_reset_time">Ora di reset</string>
+    <string name="feature_startedchallenge_edit_reset_time">Modifica ora di reset</string>
+    <string name="feature_startedchallenge_invalid_reset_date">L\'ora di reset non può essere precedente al reset precedente né successiva all\'ora attuale.</string>
     <string name="feature_startedchallenge_reset_button">Reimposta</string>
     <string name="feature_startedchallenge_cancel_button">Annulla</string>
     <string name="feature_startedchallenge_reset_failed">Reset non riuscito. Riprova più tardi.</string>

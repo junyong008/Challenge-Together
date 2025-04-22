@@ -13,6 +13,7 @@ import com.yjy.common.network.onSuccess
 import com.yjy.data.challenge.api.ChallengePreferencesRepository
 import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.domain.GetStartedChallengeDetailUseCase
+import com.yjy.domain.ResetStartedChallengeUseCase
 import com.yjy.feature.startedchallenge.model.ChallengeDetailUiState
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiAction
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiEvent
@@ -31,6 +32,7 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,6 +40,7 @@ class StartedChallengeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getStartedChallengeDetail: GetStartedChallengeDetailUseCase,
     challengePreferencesRepository: ChallengePreferencesRepository,
+    private val resetStartedChallengeUseCase: ResetStartedChallengeUseCase,
     private val startedChallengeRepository: StartedChallengeRepository,
 ) : ViewModel() {
 
@@ -90,7 +93,7 @@ class StartedChallengeViewModel @Inject constructor(
 
     fun processAction(action: StartedChallengeUiAction) {
         when (action) {
-            is StartedChallengeUiAction.OnResetClick -> resetRecord(action.challengeId, action.memo)
+            is StartedChallengeUiAction.OnResetClick -> resetRecord(action.challengeId, action.resetDateTime, action.memo)
             is StartedChallengeUiAction.OnDeleteChallengeClick -> deleteChallenge(action.challengeId)
         }
     }
@@ -104,10 +107,10 @@ class StartedChallengeViewModel @Inject constructor(
         _uiState.update { it.copy(isDeleting = false) }
     }
 
-    private fun resetRecord(challengeId: Int, memo: String) = viewModelScope.launch {
+    private fun resetRecord(challengeId: Int, resetDateTime: LocalDateTime, memo: String) = viewModelScope.launch {
         _uiState.update { it.copy(isResetting = true) }
 
-        startedChallengeRepository.resetStartedChallenge(challengeId, memo)
+        resetStartedChallengeUseCase(challengeId, resetDateTime, memo)
             .onSuccess {
                 sendEvent(StartedChallengeUiEvent.ResetSuccess)
                 challengeDetail.restart()

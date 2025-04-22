@@ -8,6 +8,7 @@ import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.data.challenge.impl.mapper.toDetailedStartedChallengeModel
 import com.yjy.data.challenge.impl.mapper.toEntity
 import com.yjy.data.challenge.impl.mapper.toModel
+import com.yjy.data.challenge.impl.mapper.toRequestString
 import com.yjy.data.challenge.impl.mapper.toSimpleStartedChallengeModel
 import com.yjy.data.challenge.impl.util.TimeManager
 import com.yjy.data.database.dao.ChallengeDao
@@ -56,10 +57,11 @@ internal class StartedChallengeRepositoryImpl @Inject constructor(
                 .map { it.toSimpleStartedChallengeModel() }
         }
 
-    override suspend fun resetStartedChallenge(challengeId: Int, memo: String): NetworkResult<Unit> =
+    override suspend fun resetStartedChallenge(challengeId: Int, resetDateTime: LocalDateTime, memo: String): NetworkResult<Unit> =
         startedChallengeDataSource.resetStartedChallenge(
             request = ResetChallengeRequest(
                 challengeId = challengeId,
+                resetDateTime = resetDateTime.toRequestString(),
                 resetMemo = memo,
             ),
         )

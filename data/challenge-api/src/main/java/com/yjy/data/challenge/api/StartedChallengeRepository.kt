@@ -6,11 +6,12 @@ import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDateTime
 
 interface StartedChallengeRepository {
     val startedChallenges: Flow<List<SimpleStartedChallenge>>
     val completedChallenges: Flow<List<SimpleStartedChallenge>>
-    suspend fun resetStartedChallenge(challengeId: Int, memo: String): NetworkResult<Unit>
+    suspend fun resetStartedChallenge(challengeId: Int, resetDateTime: LocalDateTime, memo: String): NetworkResult<Unit>
     suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit>
     suspend fun forceRemoveStartedChallengeMember(memberId: Int): NetworkResult<Unit>
     suspend fun getStartedChallengeDetail(challengeId: Int): Flow<NetworkResult<DetailedStartedChallenge>>

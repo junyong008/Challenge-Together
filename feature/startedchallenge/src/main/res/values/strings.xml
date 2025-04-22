@@ -32,6 +32,9 @@
     <string name="feature_startedchallenge_reset_timer_prompt">Reset the timer?</string>
     <string name="feature_startedchallenge_emotion_record_prompt">Record your current feelings and gradually build up your records!</string>
     <string name="feature_startedchallenge_record_input_placeholder">Enter record content (Optional)</string>
+    <string name="feature_startedchallenge_reset_time">Time</string>
+    <string name="feature_startedchallenge_edit_reset_time">Edit Reset Time</string>
+    <string name="feature_startedchallenge_invalid_reset_date">The reset date cannot be in the past or the future</string>
     <string name="feature_startedchallenge_reset_button">Reset</string>
     <string name="feature_startedchallenge_cancel_button">Cancel</string>
     <string name="feature_startedchallenge_reset_failed">Reset failed. Please try again later.</string>
