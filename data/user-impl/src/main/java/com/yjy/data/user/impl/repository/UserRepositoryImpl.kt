@@ -101,8 +101,8 @@ internal class UserRepositoryImpl @Inject constructor(
         userPreferencesDataSource.setIsPremium(false)
     }
 
-    override suspend fun markPremiumDialogShown() {
-        userPreferencesDataSource.setPremiumDialogLastShown(System.currentTimeMillis())
+    override suspend fun setPremiumDialogLastShown(timeStamp: Long) {
+        userPreferencesDataSource.setPremiumDialogLastShown(timeStamp)
     }
 
     private fun hashIdentifier(identifier: String): String {

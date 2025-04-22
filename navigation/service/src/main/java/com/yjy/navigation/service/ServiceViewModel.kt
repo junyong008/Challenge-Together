@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -29,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ServiceViewModel @Inject constructor(
     private val userRepository: UserRepository,
-    startedChallengeRepository: StartedChallengeRepository,
+    private val startedChallengeRepository: StartedChallengeRepository,
     authRepository: AuthRepository,
     appLockRepository: AppLockRepository,
     logoutUseCase: LogoutUseCase,
@@ -40,21 +41,6 @@ class ServiceViewModel @Inject constructor(
 
     private val _banStatus = MutableStateFlow<Ban?>(null)
     val banStatus: StateFlow<Ban?> = _banStatus.asStateFlow()
-
-    val shouldShowPremiumDialog: StateFlow<Boolean> = combine(
-        userRepository.premiumDialogLastShown,
-        startedChallengeRepository.startedChallenges,
-        userRepository.isPremium,
-    ) { lastShown, startedChallenges, isPremium ->
-        val now = System.currentTimeMillis()
-        val diffDays = (now - lastShown) / MILLIS_IN_A_DAY
-
-        diffDays >= PREMIUM_DIALOG_INTERVAL_DAYS && startedChallenges.isNotEmpty() && !isPremium
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = false,
-    )
 
     val isPremium = userRepository.isPremium
         .stateIn(
@@ -137,12 +123,32 @@ class ServiceViewModel @Inject constructor(
         }
     }
 
+    suspend fun shouldShowPremiumDialog(): Boolean {
+        val lastShownTime = userRepository.premiumDialogLastShown.first()
+        val startedChallenges = startedChallengeRepository.startedChallenges.first()
+        val isPremium = userRepository.isPremium.first()
+
+        val now = System.currentTimeMillis()
+        val diffDays = (now - lastShownTime) / MILLIS_IN_A_DAY
+
+        if (lastShownTime == 0L) {
+            val delayUntilFirstDialogDays = PREMIUM_DIALOG_INTERVAL_DAYS - FIRST_PREMIUM_DIALOG_DELAY_DAYS
+            val delayInMillis = delayUntilFirstDialogDays * MILLIS_IN_A_DAY
+            val initialShownTime = now - delayInMillis
+            userRepository.setPremiumDialogLastShown(initialShownTime)
+            return false
+        }
+
+        return diffDays >= PREMIUM_DIALOG_INTERVAL_DAYS && startedChallenges.isNotEmpty() && !isPremium
+    }
+
     fun markPremiumDialogShown() {
-        viewModelScope.launch { userRepository.markPremiumDialogShown() }
+        viewModelScope.launch { userRepository.setPremiumDialogLastShown(System.currentTimeMillis()) }
     }
 
     companion object {
         private const val PREMIUM_DIALOG_INTERVAL_DAYS = 7L
+        private const val FIRST_PREMIUM_DIALOG_DELAY_DAYS = 1L
         private const val MILLIS_IN_A_DAY = 24 * 60 * 60 * 1000
     }
 }

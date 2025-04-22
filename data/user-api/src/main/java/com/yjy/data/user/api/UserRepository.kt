@@ -24,5 +24,5 @@ interface UserRepository {
     suspend fun registerFcmToken()
     suspend fun checkPremium()
     suspend fun clearLocalData()
-    suspend fun markPremiumDialogShown()
+    suspend fun setPremiumDialogLastShown(timeStamp: Long)
 }
