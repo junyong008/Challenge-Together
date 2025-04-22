@@ -9,6 +9,9 @@
     <string name="common_designsystem_dialog_cancel">ยกเลิก</string>
     <string name="common_designsystem_dialog_year_month_picker_title">เลือกปีและเดือน</string>
     <string name="common_designsystem_dialog_year_month_picker_description">กรุณาใส่ปีและเดือนที่คุณต้องการนําทางไป</string>
+    <string name="common_designsystem_dialog_calendar_title">แก้ไขเวลาการรีเซ็ต</string>
+    <string name="common_designsystem_dialog_calendar_description">กรุณาเลือกวันที่และเวลาของการรีเซ็ต</string>
+    <string name="common_designsystem_dialog_calendar_edit">แก้ไข</string>
     <string name="common_designsystem_dialog_enter_year">ปี</string>
     <string name="common_designsystem_dialog_enter_month">เดือน</string>
     <string name="common_designsystem_bottom_sheet_close">ปิด</string>

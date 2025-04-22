@@ -33,6 +33,9 @@
     <string name="feature_startedchallenge_reset_timer_prompt">タイマーをリセットしますか？</string>
     <string name="feature_startedchallenge_emotion_record_prompt">現在の気持ちを記録し、徐々に記録を積み重ねていきましょう！</string>
     <string name="feature_startedchallenge_record_input_placeholder">記録する内容を入力してください（オプション）</string>
+    <string name="feature_startedchallenge_reset_time">リセット時刻</string>
+    <string name="feature_startedchallenge_edit_reset_time">リセット時刻の編集</string>
+    <string name="feature_startedchallenge_invalid_reset_date">リセット時刻は、前回のリセットより前でも、現在時刻より後でも設定できません。</string>
     <string name="feature_startedchallenge_reset_button">リセット</string>
     <string name="feature_startedchallenge_cancel_button">キャンセル</string>
     <string name="feature_startedchallenge_reset_failed">リセットに失敗しました。後でもう一度試してください。</string>

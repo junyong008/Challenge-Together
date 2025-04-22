@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 data class ResetChallengeRequest(
     @SerialName("challengeId")
     val challengeId: Int,
+    @SerialName("resetDateTime")
+    val resetDateTime: String,
     @SerialName("resetMemo")
     val resetMemo: String,
 )

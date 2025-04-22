@@ -9,6 +9,9 @@
     <string name="common_designsystem_dialog_cancel">취소</string>
     <string name="common_designsystem_dialog_year_month_picker_title">연도 및 월 선택</string>
     <string name="common_designsystem_dialog_year_month_picker_description">이동하고자 하는 연도와 월을 입력해 주세요.</string>
+    <string name="common_designsystem_dialog_calendar_title">리셋 시각 수정</string>
+    <string name="common_designsystem_dialog_calendar_description">리셋한 날짜와 시간을 선택해 주세요.</string>
+    <string name="common_designsystem_dialog_calendar_edit">수정하기</string>
     <string name="common_designsystem_dialog_enter_year">연도</string>
     <string name="common_designsystem_dialog_enter_month">월</string>
     <string name="common_designsystem_bottom_sheet_close">닫기</string>
