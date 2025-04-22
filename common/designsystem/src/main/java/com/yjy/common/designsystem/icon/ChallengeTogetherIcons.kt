@@ -14,6 +14,7 @@ object ChallengeTogetherIcons {
     val BookmarkOff = R.drawable.ic_bookmark_off
     val BookmarkOn = R.drawable.ic_bookmark_on
     val Cancel = R.drawable.ic_cancel
+    val Chart = R.drawable.ic_chart
     val Check = R.drawable.ic_check
     val CheckOnly = R.drawable.ic_check_only
     val Close = R.drawable.ic_close

@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -49,6 +50,7 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.time.temporal.ChronoUnit
@@ -87,8 +89,10 @@ fun Calendar(
     onDateSelected: (LocalDate) -> Unit = {},
     showAdjacentMonthsDays: Boolean = false,
     enableWeekModeOnDataSelected: Boolean = false,
+    highlightedDateTimes: List<LocalDateTime> = emptyList(),
     minDate: LocalDate = LocalDate.of(DEFAULT_MIN_YEAR, DEFAULT_MIN_MONTH, DEFAULT_MIN_DAY),
     maxDate: LocalDate = LocalDate.of(DEFAULT_MAX_YEAR, DEFAULT_MAX_MONTH, DEFAULT_MAX_DAY),
+    shape: Shape = MaterialTheme.shapes.medium,
     calendarColors: CalendarColors = CalendarColors(
         containerColor = CustomColorProvider.colorScheme.surface,
         contentColor = CustomColorProvider.colorScheme.onSurface,
@@ -186,7 +190,7 @@ fun Calendar(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.medium)
+            .clip(shape)
             .background(calendarColors.containerColor),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -267,6 +271,7 @@ fun Calendar(
                     minDate = minDate,
                     maxDate = maxDate,
                     calendarColors = calendarColors,
+                    highlightedDateTimes = highlightedDateTimes,
                 )
             }
         }
@@ -406,6 +411,7 @@ fun CalendarDays(
     minDate: LocalDate,
     maxDate: LocalDate,
     calendarColors: CalendarColors,
+    highlightedDateTimes: List<LocalDateTime>,
     modifier: Modifier = Modifier,
 ) {
     val firstDayOfMonth = currentYearMonth.atDay(1)
@@ -453,6 +459,7 @@ fun CalendarDays(
                             onClick = { if (isEnabled) onDateSelected(dayData.date) },
                             isEnabled = isEnabled,
                             calendarColors = calendarColors,
+                            highlightedDateTimes = highlightedDateTimes,
                             modifier = Modifier.weight(1f),
                         )
                     } else {
@@ -472,6 +479,7 @@ fun CalendarDay(
     onClick: () -> Unit,
     isEnabled: Boolean,
     calendarColors: CalendarColors,
+    highlightedDateTimes: List<LocalDateTime>,
     modifier: Modifier = Modifier,
 ) {
     val isSelected = when (selectionMode) {
@@ -492,8 +500,11 @@ fun CalendarDay(
         }
     }
 
+    val isHighlighted = highlightedDateTimes.any { it.toLocalDate() == date } && !isSelected && !isInRange
+
     val backgroundColor = when {
         isInRange -> calendarColors.rangeBackgroundColor
+        isHighlighted -> calendarColors.rangeBackgroundColor
         else -> Color.Transparent
     }
 
@@ -522,6 +533,7 @@ fun CalendarDay(
     val textColor = when {
         !isEnabled -> calendarColors.disabledColor
         isSelected -> calendarColors.selectedTextColor
+        isHighlighted -> calendarColors.rangeTextColor
         isInRange && isAdjacentMonth -> calendarColors.rangeTextColor.copy(alpha = 0.3f)
         isInRange -> calendarColors.rangeTextColor
         isAdjacentMonth -> calendarColors.contentColor.copy(alpha = 0.3f)
