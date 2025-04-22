@@ -1,9 +1,12 @@
 package com.yjy.feature.resetrecord
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -23,6 +26,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -38,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -160,6 +165,7 @@ private fun ModeChangeButton(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ResetRecordBody(
     isCalendarMode: Boolean,
@@ -179,6 +185,7 @@ private fun ResetRecordBody(
 
     var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
     var shouldSnap by rememberSaveable { mutableStateOf(false) }
+    var listHeight by remember { mutableIntStateOf(0) }
     var itemHeight by remember { mutableIntStateOf(0) }
     var isDraggingChart by remember { mutableStateOf(false) }
 
@@ -218,6 +225,14 @@ private fun ResetRecordBody(
 
     val itemHeightModifier = Modifier.onGloballyPositioned { coordinates ->
         itemHeight = coordinates.size.height
+    }
+
+    val listHeightModifier = Modifier.onGloballyPositioned {
+        listHeight = it.size.height
+    }
+
+    val bottomPadding = remember(listHeight, itemHeight) {
+        (listHeight - itemHeight).coerceAtLeast(0)
     }
 
     Column(modifier = modifier.fillMaxSize()) {
@@ -266,23 +281,27 @@ private fun ResetRecordBody(
             )
         }
         Spacer(modifier = Modifier.height(32.dp))
-        LazyColumn(
-            state = listState,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(horizontal = 16.dp),
+        CompositionLocalProvider(
+            LocalOverscrollConfiguration provides null,
         ) {
-            items(
-                items = listData,
-                key = { it.id },
-            ) { record ->
-                RecordItem(
-                    record = record,
-                    isSelected = listData.indexOf(record) == selectedIndex,
-                    modifier = itemHeightModifier,
-                )
-            }
-            item {
-                Spacer(modifier = Modifier.height(32.dp))
+            LazyColumn(
+                state = listState,
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .then(listHeightModifier),
+                contentPadding = PaddingValues(bottom = with(LocalDensity.current) { bottomPadding.toDp() }),
+            ) {
+                items(
+                    items = listData,
+                    key = { it.id },
+                ) { record ->
+                    RecordItem(
+                        record = record,
+                        isSelected = listData.indexOf(record) == selectedIndex,
+                        modifier = itemHeightModifier,
+                    )
+                }
             }
         }
     }
@@ -297,11 +316,7 @@ private fun RecordItem(
     Column(modifier = modifier) {
         Text(
             text = formatLocalDateTime(record.resetDateTime),
-            style = if (isSelected) {
-                MaterialTheme.typography.bodyMedium
-            } else {
-                MaterialTheme.typography.labelMedium
-            },
+            style = MaterialTheme.typography.labelMedium,
             color = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
         Spacer(modifier = Modifier.height(8.dp))
