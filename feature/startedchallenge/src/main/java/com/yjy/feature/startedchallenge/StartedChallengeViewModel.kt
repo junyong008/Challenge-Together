@@ -93,7 +93,9 @@ class StartedChallengeViewModel @Inject constructor(
 
     fun processAction(action: StartedChallengeUiAction) {
         when (action) {
-            is StartedChallengeUiAction.OnResetClick -> resetRecord(action.challengeId, action.resetDateTime, action.memo)
+            is StartedChallengeUiAction.OnResetClick ->
+                resetRecord(action.challengeId, action.resetDateTime, action.memo)
+
             is StartedChallengeUiAction.OnDeleteChallengeClick -> deleteChallenge(action.challengeId)
         }
     }

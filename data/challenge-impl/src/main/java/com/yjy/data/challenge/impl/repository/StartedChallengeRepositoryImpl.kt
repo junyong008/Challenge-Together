@@ -57,7 +57,11 @@ internal class StartedChallengeRepositoryImpl @Inject constructor(
                 .map { it.toSimpleStartedChallengeModel() }
         }
 
-    override suspend fun resetStartedChallenge(challengeId: Int, resetDateTime: LocalDateTime, memo: String): NetworkResult<Unit> =
+    override suspend fun resetStartedChallenge(
+        challengeId: Int,
+        resetDateTime: LocalDateTime,
+        memo: String,
+    ): NetworkResult<Unit> =
         startedChallengeDataSource.resetStartedChallenge(
             request = ResetChallengeRequest(
                 challengeId = challengeId,

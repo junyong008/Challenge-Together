@@ -249,11 +249,13 @@ internal fun StartedChallengeScreen(
                 resetDateTime = resetDateTime,
                 onResetClick = { memo ->
                     shouldShowResetBottomSheet = false
-                    processAction(StartedChallengeUiAction.OnResetClick(
-                        challengeId = challenge.id,
-                        resetDateTime = resetDateTime,
-                        memo = memo,
-                    ))
+                    processAction(
+                        StartedChallengeUiAction.OnResetClick(
+                            challengeId = challenge.id,
+                            resetDateTime = resetDateTime,
+                            memo = memo,
+                        ),
+                    )
                 },
                 onEditTimeClick = {
                     shouldShowCalendarDialog = true

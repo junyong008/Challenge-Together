@@ -392,8 +392,13 @@ fun CalendarDialog(
             selectionMode = SelectionMode.SingleDate(selectedDate),
             onDateSelected = {
                 val newDateTime = LocalDateTime.of(it, selectedDateTime.toLocalTime())
-                isOutRanged = newDateTime > maxDateTime || newDateTime < minDateTime
-                if (!isOutRanged) selectedDateTime = newDateTime
+                isOutRanged = newDateTime > maxDateTime || newDateTime <= minDateTime
+                selectedDateTime = when {
+                    isSameUpToMinute(minDateTime, maxDateTime) -> initialDateTime
+                    newDateTime > maxDateTime -> maxDateTime
+                    newDateTime <= minDateTime -> minDateTime.plusMinutes(1).withSecond(0)
+                    else -> newDateTime
+                }
             },
             minDate = minDateTime.toLocalDate(),
             maxDate = maxDateTime.toLocalDate(),
@@ -419,8 +424,13 @@ fun CalendarDialog(
             onTimeChanged = { newHour, newMinute, newAmPm ->
                 val hour24Format = convertTo24HourFormat(newHour, newAmPm)
                 val newDateTime = selectedDate.atTime(hour24Format, newMinute)
-                isOutRanged = newDateTime > maxDateTime || newDateTime < minDateTime
-                if (!isOutRanged) selectedDateTime = newDateTime
+                isOutRanged = newDateTime > maxDateTime || newDateTime <= minDateTime
+                selectedDateTime = when {
+                    isSameUpToMinute(minDateTime, maxDateTime) -> initialDateTime
+                    newDateTime > maxDateTime -> maxDateTime
+                    newDateTime <= minDateTime -> minDateTime.plusMinutes(1).withSecond(0)
+                    else -> newDateTime
+                }
             },
             containerColor = CustomColorProvider.colorScheme.background,
             contentColor = CustomColorProvider.colorScheme.onBackground,
@@ -595,6 +605,10 @@ private fun convertTo24HourFormat(hour: Int, isAm: Boolean): Int = when {
     else -> hour + HOURS_PER_HALF_DAY
 }
 
+private fun isSameUpToMinute(dt1: LocalDateTime, dt2: LocalDateTime): Boolean {
+    return dt1.withSecond(0).withNano(0) == dt2.withSecond(0).withNano(0)
+}
+
 @ThemePreviews
 @Composable
 fun ChallengeTogetherDialogPreview() {
@@ -659,7 +673,7 @@ fun CalendarDialogPreview() {
                 outRangeText = "Out Of Range",
                 onDismissRequest = {},
                 onConfirmEdit = {},
-                minDateTime = LocalDateTime.now().minusDays(10),
+                minDateTime = LocalDateTime.now(),
                 maxDateTime = LocalDateTime.now(),
             )
         }

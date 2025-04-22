@@ -121,8 +121,8 @@ private fun ResetRecordBody(
     resetRecords: List<ResetRecord>,
     modifier: Modifier = Modifier,
 ) {
-    val chartData = resetRecords.sortedBy { it.resetDateTime }
-    val listData = resetRecords.sortedByDescending { it.resetDateTime }
+    val chartData = resetRecords.sortedBy { it.id }
+    val listData = resetRecords.sortedByDescending { it.id }
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
