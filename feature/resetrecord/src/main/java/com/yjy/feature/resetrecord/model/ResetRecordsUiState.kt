@@ -7,3 +7,11 @@ sealed interface ResetRecordsUiState {
     data object Loading : ResetRecordsUiState
     data object Error : ResetRecordsUiState
 }
+
+fun ResetRecordsUiState.getOrNull(): List<ResetRecord>? {
+    return if (this is ResetRecordsUiState.Success) {
+        resetRecords
+    } else {
+        null
+    }
+}

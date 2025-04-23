@@ -392,7 +392,6 @@ fun CalendarDialog(
             selectionMode = SelectionMode.SingleDate(selectedDate),
             onDateSelected = {
                 val newDateTime = LocalDateTime.of(it, selectedDateTime.toLocalTime())
-                isOutRanged = newDateTime > maxDateTime || newDateTime <= minDateTime
                 selectedDateTime = when {
                     isSameUpToMinute(minDateTime, maxDateTime) -> initialDateTime
                     newDateTime > maxDateTime -> maxDateTime

@@ -152,6 +152,29 @@ fun Calendar(
         }
     }
 
+    // 선택된 날짜가 변경 됐을 때 해당 날짜가 다른 달에 있으면 달력 이동.
+    LaunchedEffect(selectionMode) {
+        val changedDate = when (selectionMode) {
+            is SelectionMode.SingleDate -> selectionMode.selectedDate
+            is SelectionMode.DateRange -> return@LaunchedEffect
+        }
+
+        if (changedDate != null) {
+            val selectedYearMonth = YearMonth.from(changedDate)
+            val monthsSinceInitial = monthsBetween(YearMonth.now(), initialYearMonth)
+            val midPoint = Int.MAX_VALUE / 2
+            val monthsToAdd = pagerState.currentPage - (midPoint + monthsSinceInitial)
+            val currentDisplayedYearMonth = initialYearMonth.plusMonths(monthsToAdd.toLong())
+
+            if (selectedYearMonth != currentDisplayedYearMonth) {
+                val targetPage = midPoint + monthsBetween(YearMonth.now(), selectedYearMonth)
+                coroutineScope.launch {
+                    pagerState.animateScrollToPage(targetPage)
+                }
+            }
+        }
+    }
+
     // 첫 번째 요일을 기준으로 요일 리스트를 생성.
     val daysOfWeek = remember {
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
