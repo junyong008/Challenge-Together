@@ -65,4 +65,6 @@
     <string name="feature_community_post_toggle_notification">सूचना टॉगल करें</string>
     <string name="feature_community_post_notification_enabled">सूचनाएँ चालू हैं।</string>
     <string name="feature_community_post_notification_disabled">सूचनाएँ बंद कर दी गई हैं।</string>
+    <string name="feature_community_post_waiting_room_title">%1$d कमरा</string>
+    <string name="feature_community_post_waiting_room_subtitle">पोस्ट में संलग्न प्रतीक्षालय</string>
 </resources>

@@ -65,4 +65,6 @@
     <string name="feature_community_post_toggle_notification">Bật/Tắt Thông báo</string>
     <string name="feature_community_post_notification_enabled">Thông báo đã được bật.</string>
     <string name="feature_community_post_notification_disabled">Thông báo đã được tắt.</string>
+    <string name="feature_community_post_waiting_room_title">Phòng %1$d</string>
+    <string name="feature_community_post_waiting_room_subtitle">Phòng chờ được đính kèm trong bài viết</string>
 </resources>

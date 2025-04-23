@@ -62,6 +62,7 @@ private fun NavController.navigateToCommented() {
 
 fun NavGraphBuilder.communityNavGraph(
     navController: NavHostController,
+    onLinkedChallengeClick: (challengeId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     navigation<ServiceRoute.Community>(
@@ -124,6 +125,7 @@ fun NavGraphBuilder.communityNavGraph(
             PostRoute(
                 onBackClick = navController::popBackStack,
                 onEditPostClick = navController::navigateToEditPost,
+                onLinkedChallengeClick = onLinkedChallengeClick,
                 onShowSnackbar = onShowSnackbar,
             )
         }

@@ -65,4 +65,6 @@
     <string name="feature_community_post_toggle_notification">切换通知</string>
     <string name="feature_community_post_notification_enabled">通知已启用。</string>
     <string name="feature_community_post_notification_disabled">通知已禁用。</string>
+    <string name="feature_community_post_waiting_room_title">%1$d号房</string>
+    <string name="feature_community_post_waiting_room_subtitle">附在帖子中的等待房间</string>
 </resources>

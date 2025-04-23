@@ -98,6 +98,7 @@ internal fun ServiceNavHost(
         )
         communityNavGraph(
             navController = navController,
+            onLinkedChallengeClick = navController::navigateToWaitingChallenge,
             onShowSnackbar = onShowSnackbar,
         )
         myScreen(

@@ -53,6 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.constants.ChallengeConst.MAX_ROOM_PASSWORD_LENGTH
@@ -494,7 +495,10 @@ private fun ChallengeContent(
         Row {
             SelectableText(
                 text = challenge.description,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.labelMedium.copy(
+                    lineHeight = 20.sp,
+                    letterSpacing = 0.1.sp,
+                ),
                 color = CustomColorProvider.colorScheme.onBackground,
                 modifier = Modifier
                     .heightIn(min = 200.dp)

@@ -57,6 +57,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
@@ -715,7 +716,10 @@ private fun MyMessage(
                     color = CustomColorProvider.colorScheme.onSurface.copy(
                         alpha = if (post.isSynced) 1f else 0.3f,
                     ),
-                    style = MaterialTheme.typography.labelMedium,
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        lineHeight = 20.sp,
+                        letterSpacing = 0.1.sp,
+                    ),
                 )
             }
         }
@@ -790,7 +794,10 @@ private fun OthersMessage(
                         Text(
                             text = post.content,
                             color = CustomColorProvider.colorScheme.onSurface,
-                            style = MaterialTheme.typography.labelMedium,
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                lineHeight = 20.sp,
+                                letterSpacing = 0.1.sp,
+                            ),
                         )
                     }
 
