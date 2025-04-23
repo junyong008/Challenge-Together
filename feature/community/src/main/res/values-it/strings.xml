@@ -65,4 +65,6 @@
     <string name="feature_community_post_toggle_notification">Attiva/Disattiva Notifica</string>
     <string name="feature_community_post_notification_enabled">Notifiche abilitate.</string>
     <string name="feature_community_post_notification_disabled">Notifiche disabilitate.</string>
+    <string name="feature_community_post_waiting_room_title">Stanza %1$d</string>
+    <string name="feature_community_post_waiting_room_subtitle">Stanza d\'attesa allegata al post</string>
 </resources>

@@ -55,10 +55,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.constants.DeepLinkConfig
 import com.yjy.common.core.constants.DeepLinkType
+import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.core.util.toDisplayTimeFormat
 import com.yjy.common.designsystem.component.BaseBottomSheet
@@ -101,6 +103,7 @@ private const val KEYBOARD_CLOSE_DELAY = 200L
 internal fun PostRoute(
     onBackClick: () -> Unit,
     onEditPostClick: (postId: Int, content: String) -> Unit,
+    onLinkedChallengeClick: (challengeId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CommunityPostViewModel = hiltViewModel(),
@@ -118,6 +121,7 @@ internal fun PostRoute(
         processAction = viewModel::processAction,
         onBackClick = onBackClick,
         onEditPostClick = onEditPostClick,
+        onLinkedChallengeClick = onLinkedChallengeClick,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -132,6 +136,7 @@ internal fun PostScreen(
     processAction: (CommunityPostUiAction) -> Unit = {},
     onBackClick: () -> Unit = {},
     onEditPostClick: (postId: Int, content: String) -> Unit = { _, _ -> },
+    onLinkedChallengeClick: (challengeId: Int) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val context = LocalContext.current
@@ -284,6 +289,7 @@ internal fun PostScreen(
             val postInfo = postDetail.postDetailOrNull() ?: return@Scaffold
             val post = postInfo.post
             val comments = postInfo.comments
+            val linkedChallengeIds = extractChallengeIdListFrom(post.content)
 
             if (shouldShowPostMenu) {
                 PostMenuBottomSheet(
@@ -419,13 +425,16 @@ internal fun PostScreen(
                 SelectableText(
                     text = post.content,
                     color = CustomColorProvider.colorScheme.onBackground,
-                    style = MaterialTheme.typography.labelMedium,
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        lineHeight = 20.sp,
+                        letterSpacing = 0.1.sp,
+                    ),
                     modifier = Modifier
-                        .heightIn(min = 200.dp)
+                        .heightIn(min = 160.dp)
                         .padding(16.dp)
                         .padding(start = 4.dp),
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(60.dp))
                 LikeButton(
                     isLiked = post.isLiked,
                     isLiking = uiState.isLikingPost,
@@ -433,6 +442,16 @@ internal fun PostScreen(
                     onClick = { processAction(CommunityPostUiAction.OnToggleLikeClick(post.postId)) },
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                 )
+                linkedChallengeIds.forEach {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    LinkButton(
+                        challengeId = it,
+                        onClick = { onLinkedChallengeClick(it) },
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(horizontal = 16.dp),
+                    )
+                }
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
                     text = stringResource(id = R.string.feature_community_post_comment_count, comments.size),
@@ -463,6 +482,50 @@ internal fun PostScreen(
                 Spacer(modifier = Modifier.height(32.dp))
             }
         }
+    }
+}
+
+private fun extractChallengeIdListFrom(input: String): List<Int> {
+    val regex = Regex("""https://challenge-together\.onelink\.me/[^?\s]+.*?[?&]type=waiting.*?[?&]id=(\d+)""")
+    return regex.findAll(input)
+        .mapNotNull { match ->
+            match.groupValues.getOrNull(1)?.toIntOrNull()
+        }.toList()
+}
+
+@Composable
+private fun LinkButton(
+    challengeId: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .clip(MaterialTheme.shapes.large)
+            .background(CustomColorProvider.colorScheme.surface)
+            .clickableSingle(onClick = onClick)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = stringResource(R.string.feature_community_post_waiting_room_title, challengeId),
+                style = MaterialTheme.typography.bodyMedium,
+                color = CustomColorProvider.colorScheme.onSurface,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = stringResource(R.string.feature_community_post_waiting_room_subtitle),
+                style = MaterialTheme.typography.labelSmall,
+                color = CustomColorProvider.colorScheme.onSurfaceMuted,
+            )
+        }
+        Spacer(modifier = Modifier.width(16.dp))
+        Icon(
+            imageVector = ImageVector.vectorResource(id = ChallengeTogetherIcons.ArrowRight),
+            contentDescription = stringResource(R.string.feature_community_post_waiting_room_title, challengeId),
+            tint = CustomColorProvider.colorScheme.onSurface,
+        )
     }
 }
 
@@ -654,7 +717,10 @@ fun CommentContent(
             } else {
                 CustomColorProvider.colorScheme.onSurface
             },
-            style = MaterialTheme.typography.labelSmall,
+            style = MaterialTheme.typography.labelSmall.copy(
+                lineHeight = 18.sp,
+                letterSpacing = 0.1.sp,
+            ),
             maxLines = if (isExpanded) Int.MAX_VALUE else LINE_FOR_COMMENT_EXPAND,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(horizontal = if (isReply) 40.dp else 56.dp),

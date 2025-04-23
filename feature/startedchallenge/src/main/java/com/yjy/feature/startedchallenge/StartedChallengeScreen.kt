@@ -14,6 +14,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -68,6 +70,7 @@ import com.yjy.common.core.util.formatLocalDateTime
 import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.component.BaseBottomSheet
 import com.yjy.common.designsystem.component.Calendar
+import com.yjy.common.designsystem.component.CalendarDialog
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
 import com.yjy.common.designsystem.component.ChallengeTogetherDialog
@@ -163,6 +166,9 @@ internal fun StartedChallengeScreen(
     var shouldShowResetBottomSheet by rememberSaveable { mutableStateOf(false) }
     var shouldShowMenuBottomSheet by remember { mutableStateOf(false) }
     var shouldShowDeleteConfirmDialog by remember { mutableStateOf(false) }
+    var shouldShowCalendarDialog by rememberSaveable { mutableStateOf(false) }
+
+    var resetDateTime by rememberSaveable { mutableStateOf(LocalDateTime.now()) }
 
     val density = LocalDensity.current
     val context = LocalContext.current
@@ -240,11 +246,35 @@ internal fun StartedChallengeScreen(
 
         if (shouldShowResetBottomSheet) {
             ResetBottomSheet(
+                resetDateTime = resetDateTime,
                 onResetClick = { memo ->
                     shouldShowResetBottomSheet = false
-                    processAction(StartedChallengeUiAction.OnResetClick(challenge.id, memo))
+                    processAction(
+                        StartedChallengeUiAction.OnResetClick(
+                            challengeId = challenge.id,
+                            resetDateTime = resetDateTime,
+                            memo = memo,
+                        ),
+                    )
+                },
+                onEditTimeClick = {
+                    shouldShowCalendarDialog = true
                 },
                 onDismiss = { shouldShowResetBottomSheet = false },
+            )
+        }
+
+        if (shouldShowCalendarDialog) {
+            CalendarDialog(
+                initialDateTime = resetDateTime,
+                outRangeText = stringResource(id = R.string.feature_startedchallenge_invalid_reset_date),
+                onDismissRequest = { shouldShowCalendarDialog = false },
+                onConfirmEdit = {
+                    resetDateTime = it
+                    shouldShowCalendarDialog = false
+                },
+                minDateTime = challenge.recentResetDateTime,
+                maxDateTime = LocalDateTime.now(),
             )
         }
 
@@ -318,7 +348,10 @@ internal fun StartedChallengeScreen(
                     ChallengeBody(
                         challenge = challenge,
                         isResetting = uiState.isResetting,
-                        onResetButtonClick = { shouldShowResetBottomSheet = true },
+                        onResetButtonClick = {
+                            resetDateTime = LocalDateTime.now()
+                            shouldShowResetBottomSheet = true
+                        },
                         onResetRecordClick = { onResetRecordClick(challenge.id) },
                         onBoardClick = { challengeId, isEditable ->
                             onBoardClick(challengeId, isEditable)
@@ -456,7 +489,9 @@ private fun MenuBottomSheet(
 
 @Composable
 private fun ResetBottomSheet(
+    resetDateTime: LocalDateTime,
     onResetClick: (String) -> Unit,
+    onEditTimeClick: () -> Unit,
     onDismiss: () -> Unit,
 ) {
     var recordText by rememberSaveable { mutableStateOf("") }
@@ -479,7 +514,48 @@ private fun ResetBottomSheet(
             style = MaterialTheme.typography.labelMedium,
             textAlign = TextAlign.Center,
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(28.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min)
+                .clip(MaterialTheme.shapes.medium)
+                .background(CustomColorProvider.colorScheme.background),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(id = R.string.feature_startedchallenge_reset_time),
+                style = MaterialTheme.typography.bodySmall,
+                color = CustomColorProvider.colorScheme.onBackgroundMuted,
+                modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
+            )
+            VerticalDivider(
+                thickness = 1.dp,
+                color = CustomColorProvider.colorScheme.divider,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp),
+            )
+            Text(
+                text = formatLocalDateTime(resetDateTime),
+                style = MaterialTheme.typography.bodySmall,
+                color = CustomColorProvider.colorScheme.onBackground,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(vertical = 8.dp),
+            )
+            Icon(
+                imageVector = ImageVector.vectorResource(ChallengeTogetherIcons.EditCalendar),
+                contentDescription = stringResource(R.string.feature_startedchallenge_edit_reset_time),
+                tint = CustomColorProvider.colorScheme.onSurface,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(CustomColorProvider.colorScheme.surface)
+                    .clickable(onClick = onEditTimeClick)
+                    .padding(8.dp)
+                    .size(20.dp),
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
         ChallengeTogetherTextField(
             value = recordText,
             onValueChange = {

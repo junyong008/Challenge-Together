@@ -65,4 +65,6 @@
     <string name="feature_community_post_toggle_notification">Alternar Notificación</string>
     <string name="feature_community_post_notification_enabled">Notificaciones habilitadas.</string>
     <string name="feature_community_post_notification_disabled">Notificaciones deshabilitadas.</string>
+    <string name="feature_community_post_waiting_room_title">Sala %1$d</string>
+    <string name="feature_community_post_waiting_room_subtitle">Sala de espera adjunta en la publicación</string>
 </resources>

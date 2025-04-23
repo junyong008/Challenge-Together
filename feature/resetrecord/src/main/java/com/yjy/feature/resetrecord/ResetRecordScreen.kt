@@ -1,8 +1,12 @@
 package com.yjy.feature.resetrecord
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -16,10 +20,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -32,8 +39,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -41,9 +52,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.util.formatLocalDateTime
 import com.yjy.common.core.util.formatTimeDuration
+import com.yjy.common.designsystem.component.Calendar
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.common.designsystem.component.LoadingWheel
+import com.yjy.common.designsystem.component.SelectionMode
+import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.DevicePreviews
@@ -52,6 +66,7 @@ import com.yjy.common.ui.ErrorBody
 import com.yjy.common.ui.preview.ResetRecordPreviewParameterProvider
 import com.yjy.feature.resetrecord.component.ResetRecordChart
 import com.yjy.feature.resetrecord.model.ResetRecordsUiState
+import com.yjy.feature.resetrecord.model.getOrNull
 import com.yjy.model.challenge.ResetRecord
 import kotlinx.coroutines.launch
 
@@ -78,11 +93,22 @@ internal fun ResetRecordScreen(
     retryOnError: () -> Unit = {},
     onBackClick: () -> Unit = {},
 ) {
+    var isCalendarMode by rememberSaveable { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             ChallengeTogetherTopAppBar(
                 onNavigationClick = onBackClick,
                 titleRes = R.string.feature_resetrecord_title,
+                rightContent = {
+                    if (resetRecordsUiState.getOrNull()?.isNotEmpty() == true) {
+                        ModeChangeButton(
+                            onClick = { isCalendarMode = !isCalendarMode },
+                            modifier = Modifier.padding(end = 4.dp),
+                            isCalendarMode = isCalendarMode,
+                        )
+                    }
+                },
             )
         },
         containerColor = CustomColorProvider.colorScheme.background,
@@ -107,6 +133,7 @@ internal fun ResetRecordScreen(
                     )
                 } else {
                     ResetRecordBody(
+                        isCalendarMode = isCalendarMode,
                         resetRecords = resetRecordsUiState.resetRecords,
                         modifier = Modifier.padding(padding),
                     )
@@ -117,12 +144,36 @@ internal fun ResetRecordScreen(
 }
 
 @Composable
+private fun ModeChangeButton(
+    onClick: () -> Unit,
+    isCalendarMode: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier,
+    ) {
+        Icon(
+            ImageVector.vectorResource(id = ChallengeTogetherIcons.Chart),
+            contentDescription = null,
+            tint = if (isCalendarMode) {
+                CustomColorProvider.colorScheme.onBackground
+            } else {
+                CustomColorProvider.colorScheme.onBackgroundMuted
+            },
+        )
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
 private fun ResetRecordBody(
+    isCalendarMode: Boolean,
     resetRecords: List<ResetRecord>,
     modifier: Modifier = Modifier,
 ) {
-    val chartData = resetRecords.sortedBy { it.resetDateTime }
-    val listData = resetRecords.sortedByDescending { it.resetDateTime }
+    val chartData = resetRecords.sortedBy { it.id }
+    val listData = resetRecords.sortedByDescending { it.id }
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -134,6 +185,7 @@ private fun ResetRecordBody(
 
     var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
     var shouldSnap by rememberSaveable { mutableStateOf(false) }
+    var listHeight by remember { mutableIntStateOf(0) }
     var itemHeight by remember { mutableIntStateOf(0) }
     var isDraggingChart by remember { mutableStateOf(false) }
 
@@ -152,7 +204,7 @@ private fun ResetRecordBody(
 
     LaunchedEffect(currentVisibleIndex) {
         if (!isDraggingChart) {
-            selectedIndex = currentVisibleIndex
+            selectedIndex = currentVisibleIndex.coerceIn(0, listData.lastIndex)
         }
     }
 
@@ -175,51 +227,81 @@ private fun ResetRecordBody(
         itemHeight = coordinates.size.height
     }
 
-    Column(modifier = modifier.fillMaxSize()) {
-        ResetRecordChart(
-            data = chartData.map { it.resetDateTime },
-            firstRecordInSeconds = chartData.first().recordInSeconds,
-            valueSuffix = stringResource(id = R.string.feature_resetrecord_day_suffix),
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(CustomColorProvider.colorScheme.surface)
-                .padding(start = 12.dp, end = 18.dp, top = 48.dp, bottom = 20.dp),
-            selectedIndex = resetRecords.size - 1 - selectedIndex,
-            onDateSelected = { newChartIndex ->
-                val newListIndex = listData.size - 1 - newChartIndex
-                selectedIndex = newListIndex
-                coroutineScope.launch {
-                    listState.scrollToItem(newListIndex)
-                }
-            },
-            onDragStart = { isDraggingChart = true },
-            onDragEnd = {
-                coroutineScope.launch {
-                    listState.animateScrollToItem(index = selectedIndex)
-                }.invokeOnCompletion {
-                    isDraggingChart = false
-                }
-            },
-        )
+    val listHeightModifier = Modifier.onGloballyPositioned {
+        listHeight = it.size.height
+    }
 
+    val bottomPadding = remember(listHeight, itemHeight) {
+        (listHeight - itemHeight).coerceAtLeast(0)
+    }
+
+    Column(modifier = modifier.fillMaxSize()) {
+        if (isCalendarMode) {
+            Calendar(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RectangleShape,
+                selectionMode = SelectionMode.SingleDate(listData[selectedIndex].resetDateTime.toLocalDate()),
+                onDateSelected = { selectedDate ->
+                    val matchedIndex = listData.indexOfFirst { it.resetDateTime.toLocalDate() == selectedDate }
+
+                    if (matchedIndex != -1) {
+                        selectedIndex = matchedIndex
+                        coroutineScope.launch {
+                            listState.scrollToItem(matchedIndex)
+                        }
+                    }
+                },
+                highlightedDateTimes = listData.map { it.resetDateTime },
+            )
+        } else {
+            ResetRecordChart(
+                data = chartData.map { it.resetDateTime },
+                firstRecordInSeconds = chartData.first().recordInSeconds,
+                valueSuffix = stringResource(id = R.string.feature_resetrecord_day_suffix),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(CustomColorProvider.colorScheme.surface)
+                    .padding(start = 12.dp, end = 18.dp, top = 48.dp, bottom = 20.dp),
+                selectedIndex = (resetRecords.size - 1 - selectedIndex).coerceIn(0, chartData.lastIndex),
+                onDateSelected = { newChartIndex ->
+                    val newListIndex = listData.size - 1 - newChartIndex
+                    selectedIndex = newListIndex
+                    coroutineScope.launch {
+                        listState.scrollToItem(newListIndex)
+                    }
+                },
+                onDragStart = { isDraggingChart = true },
+                onDragEnd = {
+                    coroutineScope.launch {
+                        listState.animateScrollToItem(index = selectedIndex)
+                    }.invokeOnCompletion {
+                        isDraggingChart = false
+                    }
+                },
+            )
+        }
         Spacer(modifier = Modifier.height(32.dp))
-        LazyColumn(
-            state = listState,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(horizontal = 16.dp),
+        CompositionLocalProvider(
+            LocalOverscrollConfiguration provides null,
         ) {
-            items(
-                items = listData,
-                key = { it.id },
-            ) { record ->
-                RecordItem(
-                    record = record,
-                    isSelected = listData.indexOf(record) == selectedIndex,
-                    modifier = itemHeightModifier,
-                )
-            }
-            item {
-                Spacer(modifier = Modifier.height(32.dp))
+            LazyColumn(
+                state = listState,
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .then(listHeightModifier),
+                contentPadding = PaddingValues(bottom = with(LocalDensity.current) { bottomPadding.toDp() }),
+            ) {
+                items(
+                    items = listData,
+                    key = { it.id },
+                ) { record ->
+                    RecordItem(
+                        record = record,
+                        isSelected = listData.indexOf(record) == selectedIndex,
+                        modifier = itemHeightModifier,
+                    )
+                }
             }
         }
     }
@@ -234,11 +316,7 @@ private fun RecordItem(
     Column(modifier = modifier) {
         Text(
             text = formatLocalDateTime(record.resetDateTime),
-            style = if (isSelected) {
-                MaterialTheme.typography.bodyMedium
-            } else {
-                MaterialTheme.typography.labelMedium
-            },
+            style = MaterialTheme.typography.labelMedium,
             color = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -246,11 +324,16 @@ private fun RecordItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(MaterialTheme.shapes.medium)
-                .background(
+                .background(CustomColorProvider.colorScheme.surface)
+                .then(
                     if (isSelected) {
-                        CustomColorProvider.colorScheme.brandBright.copy(alpha = 0.4f)
+                        Modifier.border(
+                            width = 1.dp,
+                            color = CustomColorProvider.colorScheme.brand,
+                            shape = MaterialTheme.shapes.medium,
+                        )
                     } else {
-                        CustomColorProvider.colorScheme.surface
+                        Modifier
                     },
                 )
                 .padding(16.dp),

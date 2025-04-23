@@ -64,4 +64,6 @@
     <string name="feature_community_post_toggle_notification">Toggle Notification</string>
     <string name="feature_community_post_notification_enabled">Notifications enabled.</string>
     <string name="feature_community_post_notification_disabled">Notifications disabled.</string>
+    <string name="feature_community_post_waiting_room_title">%1$d Room</string>
+    <string name="feature_community_post_waiting_room_subtitle">Waiting room attached in the post</string>
 </resources>

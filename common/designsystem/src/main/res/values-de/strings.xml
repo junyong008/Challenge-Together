@@ -9,6 +9,9 @@
     <string name="common_designsystem_dialog_cancel">Abbrechen</string>
     <string name="common_designsystem_dialog_year_month_picker_title">Jahr und Monat auswählen</string>
     <string name="common_designsystem_dialog_year_month_picker_description">Bitte geben Sie das Jahr und den Monat ein, zu dem Sie navigieren möchten</string>
+    <string name="common_designsystem_dialog_calendar_title">Reset-Zeit bearbeiten</string>
+    <string name="common_designsystem_dialog_calendar_description">Bitte wählen Sie das Datum und die Uhrzeit des Resets aus.</string>
+    <string name="common_designsystem_dialog_calendar_edit">Bearbeiten</string>
     <string name="common_designsystem_dialog_enter_year">Jahr</string>
     <string name="common_designsystem_dialog_enter_month">M</string>
     <string name="common_designsystem_bottom_sheet_close">Schließen</string>

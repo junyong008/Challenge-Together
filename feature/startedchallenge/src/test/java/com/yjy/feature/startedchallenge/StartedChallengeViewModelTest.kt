@@ -8,6 +8,7 @@ import com.yjy.common.network.NetworkResult
 import com.yjy.data.challenge.api.ChallengePreferencesRepository
 import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.domain.GetStartedChallengeDetailUseCase
+import com.yjy.domain.ResetStartedChallengeUseCase
 import com.yjy.feature.startedchallenge.model.ChallengeDetailUiState
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiAction
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiEvent
@@ -47,6 +48,7 @@ class StartedChallengeViewModelTest {
     private lateinit var challengePreferencesRepository: ChallengePreferencesRepository
     private lateinit var startedChallengeRepository: StartedChallengeRepository
     private lateinit var getStartedChallengeDetail: GetStartedChallengeDetailUseCase
+    private lateinit var resetStartedChallengeUseCase: ResetStartedChallengeUseCase
     private lateinit var savedStateHandle: SavedStateHandle
 
     private val timeChangedFlow = MutableSharedFlow<Unit>()
@@ -63,6 +65,7 @@ class StartedChallengeViewModelTest {
         challengePreferencesRepository = mockk(relaxed = true)
         startedChallengeRepository = mockk(relaxed = true)
         getStartedChallengeDetail = mockk()
+        resetStartedChallengeUseCase = mockk()
 
         coEvery { challengePreferencesRepository.timeChangedFlow } returns timeChangedFlow
 
@@ -71,6 +74,7 @@ class StartedChallengeViewModelTest {
             getStartedChallengeDetail = getStartedChallengeDetail,
             challengePreferencesRepository = challengePreferencesRepository,
             startedChallengeRepository = startedChallengeRepository,
+            resetStartedChallengeUseCase = resetStartedChallengeUseCase,
         )
     }
 
@@ -191,6 +195,7 @@ class StartedChallengeViewModelTest {
                 getStartedChallengeDetail = getStartedChallengeDetail,
                 challengePreferencesRepository = challengePreferencesRepository,
                 startedChallengeRepository = startedChallengeRepository,
+                resetStartedChallengeUseCase = resetStartedChallengeUseCase,
             )
 
             coEvery { getStartedChallengeDetail(testChallengeId) } returns flowOf(
@@ -245,6 +250,7 @@ class StartedChallengeViewModelTest {
     fun `reset challenge success should emit success event and restart detail flow`() = runTest {
         // Given
         val testMemo = "Test memo"
+        val testDateTime = LocalDateTime.now()
         val challengeDetail = createTestChallengeDetail()
         val changedChallenge = challengeDetail.copy(currentParticipantCounts = 1000)
 
@@ -257,7 +263,7 @@ class StartedChallengeViewModelTest {
             }
         }
         coEvery {
-            startedChallengeRepository.resetStartedChallenge(testChallengeId, testMemo)
+            resetStartedChallengeUseCase(testChallengeId, testDateTime, testMemo)
         } returns NetworkResult.Success(Unit)
 
         // When: 초기 로드
@@ -271,7 +277,7 @@ class StartedChallengeViewModelTest {
         )
 
         // When: 챌린지 리셋 모의
-        viewModel.processAction(StartedChallengeUiAction.OnResetClick(testChallengeId, testMemo))
+        viewModel.processAction(StartedChallengeUiAction.OnResetClick(testChallengeId, testDateTime, testMemo))
         advanceUntilIdle()
 
         // Then
@@ -290,6 +296,7 @@ class StartedChallengeViewModelTest {
     fun `reset challenge failure should emit failure event`() = runTest {
         // Given
         val testMemo = "Test memo"
+        val testDateTime = LocalDateTime.now()
         val challengeDetail = createTestChallengeDetail()
 
         coEvery { getStartedChallengeDetail(testChallengeId) } returns flowOf(
@@ -297,12 +304,12 @@ class StartedChallengeViewModelTest {
         )
 
         coEvery {
-            startedChallengeRepository.resetStartedChallenge(testChallengeId, testMemo)
+            resetStartedChallengeUseCase(testChallengeId, testDateTime, testMemo)
         } returns NetworkResult.Failure.NetworkError(Throwable())
 
         // When
         val job = launch { viewModel.challengeDetail.collect {} }
-        viewModel.processAction(StartedChallengeUiAction.OnResetClick(testChallengeId, testMemo))
+        viewModel.processAction(StartedChallengeUiAction.OnResetClick(testChallengeId, testDateTime, testMemo))
         advanceUntilIdle()
 
         // Then

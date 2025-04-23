@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -49,6 +50,7 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.time.temporal.ChronoUnit
@@ -87,8 +89,10 @@ fun Calendar(
     onDateSelected: (LocalDate) -> Unit = {},
     showAdjacentMonthsDays: Boolean = false,
     enableWeekModeOnDataSelected: Boolean = false,
+    highlightedDateTimes: List<LocalDateTime> = emptyList(),
     minDate: LocalDate = LocalDate.of(DEFAULT_MIN_YEAR, DEFAULT_MIN_MONTH, DEFAULT_MIN_DAY),
     maxDate: LocalDate = LocalDate.of(DEFAULT_MAX_YEAR, DEFAULT_MAX_MONTH, DEFAULT_MAX_DAY),
+    shape: Shape = MaterialTheme.shapes.medium,
     calendarColors: CalendarColors = CalendarColors(
         containerColor = CustomColorProvider.colorScheme.surface,
         contentColor = CustomColorProvider.colorScheme.onSurface,
@@ -148,6 +152,29 @@ fun Calendar(
         }
     }
 
+    // 선택된 날짜가 변경 됐을 때 해당 날짜가 다른 달에 있으면 달력 이동.
+    LaunchedEffect(selectionMode) {
+        val changedDate = when (selectionMode) {
+            is SelectionMode.SingleDate -> selectionMode.selectedDate
+            is SelectionMode.DateRange -> return@LaunchedEffect
+        }
+
+        if (changedDate != null) {
+            val selectedYearMonth = YearMonth.from(changedDate)
+            val monthsSinceInitial = monthsBetween(YearMonth.now(), initialYearMonth)
+            val midPoint = Int.MAX_VALUE / 2
+            val monthsToAdd = pagerState.currentPage - (midPoint + monthsSinceInitial)
+            val currentDisplayedYearMonth = initialYearMonth.plusMonths(monthsToAdd.toLong())
+
+            if (selectedYearMonth != currentDisplayedYearMonth) {
+                val targetPage = midPoint + monthsBetween(YearMonth.now(), selectedYearMonth)
+                coroutineScope.launch {
+                    pagerState.animateScrollToPage(targetPage)
+                }
+            }
+        }
+    }
+
     // 첫 번째 요일을 기준으로 요일 리스트를 생성.
     val daysOfWeek = remember {
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
@@ -186,7 +213,7 @@ fun Calendar(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.medium)
+            .clip(shape)
             .background(calendarColors.containerColor),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -267,6 +294,7 @@ fun Calendar(
                     minDate = minDate,
                     maxDate = maxDate,
                     calendarColors = calendarColors,
+                    highlightedDateTimes = highlightedDateTimes,
                 )
             }
         }
@@ -406,6 +434,7 @@ fun CalendarDays(
     minDate: LocalDate,
     maxDate: LocalDate,
     calendarColors: CalendarColors,
+    highlightedDateTimes: List<LocalDateTime>,
     modifier: Modifier = Modifier,
 ) {
     val firstDayOfMonth = currentYearMonth.atDay(1)
@@ -453,6 +482,7 @@ fun CalendarDays(
                             onClick = { if (isEnabled) onDateSelected(dayData.date) },
                             isEnabled = isEnabled,
                             calendarColors = calendarColors,
+                            highlightedDateTimes = highlightedDateTimes,
                             modifier = Modifier.weight(1f),
                         )
                     } else {
@@ -472,6 +502,7 @@ fun CalendarDay(
     onClick: () -> Unit,
     isEnabled: Boolean,
     calendarColors: CalendarColors,
+    highlightedDateTimes: List<LocalDateTime>,
     modifier: Modifier = Modifier,
 ) {
     val isSelected = when (selectionMode) {
@@ -492,8 +523,11 @@ fun CalendarDay(
         }
     }
 
+    val isHighlighted = highlightedDateTimes.any { it.toLocalDate() == date } && !isSelected && !isInRange
+
     val backgroundColor = when {
         isInRange -> calendarColors.rangeBackgroundColor
+        isHighlighted -> calendarColors.rangeBackgroundColor
         else -> Color.Transparent
     }
 
@@ -522,6 +556,7 @@ fun CalendarDay(
     val textColor = when {
         !isEnabled -> calendarColors.disabledColor
         isSelected -> calendarColors.selectedTextColor
+        isHighlighted -> calendarColors.rangeTextColor
         isInRange && isAdjacentMonth -> calendarColors.rangeTextColor.copy(alpha = 0.3f)
         isInRange -> calendarColors.rangeTextColor
         isAdjacentMonth -> calendarColors.contentColor.copy(alpha = 0.3f)

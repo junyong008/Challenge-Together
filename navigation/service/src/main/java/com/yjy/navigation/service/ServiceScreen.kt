@@ -23,8 +23,11 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -95,9 +98,10 @@ internal fun ServiceScreen(
     val isManualTime by viewModel.isManualTime.collectAsStateWithLifecycle()
     val remoteAppVersion by viewModel.remoteAppVersion.collectAsStateWithLifecycle()
     val maintenanceEndTime by viewModel.maintenanceEndTime.collectAsStateWithLifecycle()
-    val shouldShowPremiumDialog by viewModel.shouldShowPremiumDialog.collectAsStateWithLifecycle()
     val isSessionExpired by viewModel.isSessionExpired.collectAsStateWithLifecycle()
     val sessionExpiredMessage = stringResource(id = R.string.navigation_service_session_expired)
+
+    var shouldShowPremiumDialog by rememberSaveable { mutableStateOf(false) }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val showSnackbar: (SnackbarType, String) -> Unit = { type, message ->
@@ -135,6 +139,10 @@ internal fun ServiceScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        shouldShowPremiumDialog = viewModel.shouldShowPremiumDialog()
+    }
+
     if (banStatus != null) {
         BanDialog(
             banReason = stringResource(id = banStatus!!.reason.getDisplayNameResId()),
@@ -165,10 +173,14 @@ internal fun ServiceScreen(
             title = stringResource(id = R.string.navigation_service_premium_dialog_title),
             description = stringResource(id = R.string.navigation_service_premium_dialog_description),
             onExploreClick = {
+                shouldShowPremiumDialog = false
                 viewModel.markPremiumDialogShown()
                 navigator.navigateToPremium()
             },
-            onDismiss = { viewModel.markPremiumDialogShown() },
+            onDismiss = {
+                shouldShowPremiumDialog = false
+                viewModel.markPremiumDialogShown()
+            },
         )
     }
 

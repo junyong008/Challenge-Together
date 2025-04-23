@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.core.util.toDisplayTimeFormat
 import com.yjy.common.designsystem.ComponentPreviews
@@ -95,7 +96,10 @@ internal fun PostItem(
         Text(
             text = contentAnnotatedString,
             color = CustomColorProvider.colorScheme.onBackground,
-            style = MaterialTheme.typography.labelSmall,
+            style = MaterialTheme.typography.labelSmall.copy(
+                lineHeight = 18.sp,
+                letterSpacing = 0.1.sp,
+            ),
             maxLines = 5,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(horizontal = 4.dp),
