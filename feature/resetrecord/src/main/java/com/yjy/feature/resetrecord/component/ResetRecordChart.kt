@@ -221,9 +221,11 @@ internal fun ResetRecordChart(
 
     val actualMaxValue = daysData.maxOrNull() ?: 0f
     val actualMinValue = daysData.minOrNull() ?: 0f
-    val valueRange = actualMaxValue - actualMinValue
-    val paddingValue = valueRange * paddingPercent
+    val valueRange = (actualMaxValue - actualMinValue).let { range ->
+        if (range <= 0f) 1f else range
+    }
 
+    val paddingValue = valueRange * paddingPercent
     val maxValue = actualMaxValue + paddingValue
     val minValue = (actualMinValue - paddingValue).coerceAtLeast(0f)
 
