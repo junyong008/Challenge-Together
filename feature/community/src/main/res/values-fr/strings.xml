@@ -65,4 +65,6 @@
     <string name="feature_community_post_toggle_notification">Activer/Désactiver les Notifications</string>
     <string name="feature_community_post_notification_enabled">Notifications activées.</string>
     <string name="feature_community_post_notification_disabled">Notifications désactivées.</string>
+    <string name="feature_community_post_waiting_room_title">Salle %1$d</string>
+    <string name="feature_community_post_waiting_room_subtitle">Salle d\'attente jointe au message</string>
 </resources>

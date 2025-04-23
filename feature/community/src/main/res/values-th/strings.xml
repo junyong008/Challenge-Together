@@ -65,4 +65,6 @@
     <string name="feature_community_post_toggle_notification">สลับการแจ้งเตือน</string>
     <string name="feature_community_post_notification_enabled">เปิดการแจ้งเตือนแล้ว</string>
     <string name="feature_community_post_notification_disabled">ปิดการแจ้งเตือนแล้ว</string>
+    <string name="feature_community_post_waiting_room_title">ห้อง %1$d</string>
+    <string name="feature_community_post_waiting_room_subtitle">ห้องรอที่แนบมากับโพสต์</string>
 </resources>
