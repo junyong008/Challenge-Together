@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_home_navigation_title">Início</string>
-    <string name="feature_home_title">DESAFIO JUNTOS</string>
+    <string name="feature_home_title">CHALLY</string>
     <string name="feature_home_medal_description">Nível Atual</string>
     <string name="feature_home_complete_challenge_description">Desafios Completos</string>
     <string name="feature_home_notification_description">Notificações</string>

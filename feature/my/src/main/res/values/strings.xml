@@ -29,7 +29,7 @@
     <string name="feature_my_privacy_policy">Privacy Policy</string>
     <string name="feature_my_open_source_license">Open Source Licenses</string>
     <string name="feature_my_app_version">App Version</string>
-    <string name="feature_my_email_inquiry_title">Challenge Together Inquiry</string>
+    <string name="feature_my_email_inquiry_title">Chally Inquiry</string>
     <string name="feature_my_email_inquiry_content">Content: </string>
     <string name="feature_my_email_app_not_found">No email app found.</string>
     <string name="feature_my_email_send_failed">Unable to send email.</string>

@@ -30,7 +30,7 @@
     <string name="feature_my_privacy_policy">Informativa sulla privacy</string>
     <string name="feature_my_open_source_license">Licenze open source</string>
     <string name="feature_my_app_version">Versione app</string>
-    <string name="feature_my_email_inquiry_title">Richiesta Challenge Together</string>
+    <string name="feature_my_email_inquiry_title">Richiesta Chally</string>
     <string name="feature_my_email_inquiry_content">Contenuto: </string>
     <string name="feature_my_email_app_not_found">Nessuna app di posta trovata.</string>
     <string name="feature_my_email_send_failed">Impossibile inviare email.</string>

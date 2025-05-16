@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_login_title_description">Der einfachste erste Schritt, mich zu ändern,</string>
-    <string name="feature_login_title">Gemeinsam Herausfordern</string>
+    <string name="feature_login_title">Chally</string>
     <string name="feature_login_input_email_content_description">E-Mail eingeben</string>
     <string name="feature_login_input_email_place_holder">E-Mail</string>
     <string name="feature_login_input_password_content_description">Passwort eingeben</string>

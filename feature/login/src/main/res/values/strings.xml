@@ -1,6 +1,6 @@
 <resources>
     <string name="feature_login_title_description">The easiest first step to changing myself,</string>
-    <string name="feature_login_title">Challenge Together</string>
+    <string name="feature_login_title">Chally</string>
     <string name="feature_login_input_email_content_description">Input Email</string>
     <string name="feature_login_input_email_place_holder">Email</string>
     <string name="feature_login_input_password_content_description">Input Password</string>

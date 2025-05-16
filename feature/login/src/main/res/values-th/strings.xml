@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_login_title_description">ก้าวแรกที่ง่ายที่สุดในการเปลี่ยนตัวเอง,</string>
-    <string name="feature_login_title">ท้าทายไปด้วยกัน</string>
+    <string name="feature_login_title">Chally</string>
     <string name="feature_login_input_email_content_description">ใส่อีเมล</string>
     <string name="feature_login_input_email_place_holder">อีเมล</string>
     <string name="feature_login_input_password_content_description">ใส่รหัสผ่าน</string>

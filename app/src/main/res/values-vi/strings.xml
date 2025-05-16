@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Thách Thức Cùng Nhau</string>
-    <string name="app_name_debug">Gỡ Lỗi Thách Thức Cùng Nhau</string>
+    <string name="app_name">Chally</string>
+    <string name="app_name_debug">Debug Chally</string>
     <string name="splash_content_description">Hình Ảnh Mở Đầu</string>
 </resources>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_login_title_description">Le premier pas le plus facile pour me changer,</string>
-    <string name="feature_login_title">Défi Ensemble</string>
+    <string name="feature_login_title">Chally</string>
     <string name="feature_login_input_email_content_description">Saisir l\'Email</string>
     <string name="feature_login_input_email_place_holder">Email</string>
     <string name="feature_login_input_password_content_description">Saisir le Mot de Passe</string>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_login_title_description">अपने आप को बदलने का सबसे आसान पहला कदम,</string>
-    <string name="feature_login_title">एक साथ चुनौती</string>
+    <string name="feature_login_title">Chally</string>
     <string name="feature_login_input_email_content_description">ईमेल दर्ज करें</string>
     <string name="feature_login_input_email_place_holder">ईमेल</string>
     <string name="feature_login_input_password_content_description">पासवर्ड दर्ज करें</string>

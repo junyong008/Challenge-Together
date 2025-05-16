@@ -30,7 +30,7 @@
     <string name="feature_my_privacy_policy">นโยบายความเป็นส่วนตัว</string>
     <string name="feature_my_open_source_license">ใบอนุญาตโอเพนซอร์ส</string>
     <string name="feature_my_app_version">เวอร์ชันแอป</string>
-    <string name="feature_my_email_inquiry_title">การสอบถามเกี่ยวกับ Challenge Together</string>
+    <string name="feature_my_email_inquiry_title">การสอบถามเกี่ยวกับ Chally</string>
     <string name="feature_my_email_inquiry_content">เนื้อหา: </string>
     <string name="feature_my_email_app_not_found">ไม่พบแอปอีเมล</string>
     <string name="feature_my_email_send_failed">ไม่สามารถส่งอีเมลได้</string>

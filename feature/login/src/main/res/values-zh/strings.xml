@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_login_title_description">改变自己的最简单第一步，</string>
-    <string name="feature_login_title">一起挑战</string>
+    <string name="feature_login_title">Chally</string>
     <string name="feature_login_input_email_content_description">输入邮箱</string>
     <string name="feature_login_input_email_place_holder">邮箱</string>
     <string name="feature_login_input_password_content_description">输入密码</string>

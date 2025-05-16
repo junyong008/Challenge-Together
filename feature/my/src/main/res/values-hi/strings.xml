@@ -30,7 +30,7 @@
     <string name="feature_my_privacy_policy">गोपनीयता नीति</string>
     <string name="feature_my_open_source_license">ओपन सोर्स लाइसेंस</string>
     <string name="feature_my_app_version">ऐप संस्करण</string>
-    <string name="feature_my_email_inquiry_title">चुनौती साथ मिलकर पूछताछ</string>
+    <string name="feature_my_email_inquiry_title">Chally के बारे में पूछताछ</string>
     <string name="feature_my_email_inquiry_content">सामग्री: </string>
     <string name="feature_my_email_app_not_found">कोई ईमेल एप्लिकेशन नहीं मिला।</string>
     <string name="feature_my_email_send_failed">ईमेल भेजने में असमर्थ।</string>
