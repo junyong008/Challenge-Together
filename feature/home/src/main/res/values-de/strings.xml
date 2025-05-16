@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_home_navigation_title">Startseite</string>
-    <string name="feature_home_title">GEMEINSAM HERAUSFORDERN</string>
+    <string name="feature_home_title">CHALLY</string>
     <string name="feature_home_medal_description">Aktuelle Stufe</string>
     <string name="feature_home_complete_challenge_description">Herausforderungen abschließen</string>
     <string name="feature_home_notification_description">Benachrichtigungen</string>

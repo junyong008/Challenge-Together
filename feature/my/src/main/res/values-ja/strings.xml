@@ -30,7 +30,7 @@
     <string name="feature_my_privacy_policy">プライバシーポリシー</string>
     <string name="feature_my_open_source_license">オープンソースライセンス</string>
     <string name="feature_my_app_version">アプリバージョン</string>
-    <string name="feature_my_email_inquiry_title">チャレンジトゥギャザーお問い合わせ</string>
+    <string name="feature_my_email_inquiry_title">Challyに関するお問い合わせ</string>
     <string name="feature_my_email_inquiry_content">内容: </string>
     <string name="feature_my_email_app_not_found">メールアプリが見つかりません。</string>
     <string name="feature_my_email_send_failed">メールを送信できません。</string>

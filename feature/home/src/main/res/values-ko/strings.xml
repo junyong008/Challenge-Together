@@ -20,5 +20,5 @@
     <string name="feature_home_no_active_challenge">도전이 없습니다</string>
     <string name="feature_home_start_new_challenge_prompt">우측 하단의 추가 버튼을 눌러 새로운 도전을 시작해보세요.</string>
     <string name="feature_home_sort">정렬</string>
-    <string name="feature_home_title">챌린지 투게더</string>
+    <string name="feature_home_title">챌리</string>
 </resources>

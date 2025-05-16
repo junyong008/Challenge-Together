@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_home_navigation_title">Trang Chủ</string>
-    <string name="feature_home_title">THỬ THÁCH CÙNG NHAU</string>
+    <string name="feature_home_title">CHALLY</string>
     <string name="feature_home_medal_description">Hạng Hiện Tại</string>
     <string name="feature_home_complete_challenge_description">Hoàn Thành Thử Thách</string>
     <string name="feature_home_notification_description">Thông Báo</string>

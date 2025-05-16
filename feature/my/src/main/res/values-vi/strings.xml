@@ -30,7 +30,7 @@
     <string name="feature_my_privacy_policy">Chính sách bảo mật</string>
     <string name="feature_my_open_source_license">Giấy phép mã nguồn mở</string>
     <string name="feature_my_app_version">Phiên bản ứng dụng</string>
-    <string name="feature_my_email_inquiry_title">Yêu cầu thách đấu cùng nhau</string>
+    <string name="feature_my_email_inquiry_title">Yêu cầu Chally</string>
     <string name="feature_my_email_inquiry_content">Nội dung: </string>
     <string name="feature_my_email_app_not_found">Không tìm thấy ứng dụng email.</string>
     <string name="feature_my_email_send_failed">Không thể gửi email.</string>

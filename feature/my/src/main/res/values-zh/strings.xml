@@ -30,7 +30,7 @@
     <string name="feature_my_privacy_policy">隐私政策</string>
     <string name="feature_my_open_source_license">开源许可证</string>
     <string name="feature_my_app_version">应用版本</string>
-    <string name="feature_my_email_inquiry_title">挑战一起咨询</string>
+    <string name="feature_my_email_inquiry_title">关于 Chally 的咨询</string>
     <string name="feature_my_email_inquiry_content">内容：</string>
     <string name="feature_my_email_app_not_found">未找到电子邮件应用。</string>
     <string name="feature_my_email_send_failed">无法发送电子邮件。</string>

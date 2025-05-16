@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">챌린지 투게더</string>
-    <string name="app_name_debug">디버그 챌린지 투게더</string>
+    <string name="app_name">챌리</string>
+    <string name="app_name_debug">디버그 챌리</string>
     <string name="splash_content_description">스플래시 이미지</string>
 </resources>
