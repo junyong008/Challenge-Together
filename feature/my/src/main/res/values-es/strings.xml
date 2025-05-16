@@ -30,7 +30,7 @@
     <string name="feature_my_privacy_policy">Política de Privacidad</string>
     <string name="feature_my_open_source_license">Licencias de Código Abierto</string>
     <string name="feature_my_app_version">Versión de la Aplicación</string>
-    <string name="feature_my_email_inquiry_title">Consulta para Desafío Juntos</string>
+    <string name="feature_my_email_inquiry_title">Consulta para Chally</string>
     <string name="feature_my_email_inquiry_content">Contenido:</string>
     <string name="feature_my_email_app_not_found">No se encontró ninguna aplicación de correo electrónico.</string>
     <string name="feature_my_email_send_failed">No se pudo enviar el correo electrónico.</string>

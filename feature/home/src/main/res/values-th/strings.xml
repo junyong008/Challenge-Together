@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_home_navigation_title">หน้าหลัก</string>
-    <string name="feature_home_title">ท้าแข่งด้วยกัน</string>
+    <string name="feature_home_title">CHALLY</string>
     <string name="feature_home_medal_description">ระดับปัจจุบัน</string>
     <string name="feature_home_complete_challenge_description">ทำภารกิจให้สำเร็จ</string>
     <string name="feature_home_notification_description">การแจ้งเตือน</string>

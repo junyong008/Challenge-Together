@@ -30,7 +30,7 @@
     <string name="feature_my_privacy_policy">개인정보 처리방침</string>
     <string name="feature_my_open_source_license">오픈소스 라이선스</string>
     <string name="feature_my_app_version">앱 버전</string>
-    <string name="feature_my_email_inquiry_title">챌린지 투게더 문의</string>
+    <string name="feature_my_email_inquiry_title">챌리 문의</string>
     <string name="feature_my_email_inquiry_content">내용:</string>
     <string name="feature_my_email_app_not_found">이메일 앱이 없습니다.</string>
     <string name="feature_my_email_send_failed">이메일을 전송할 수 없습니다.</string>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_home_navigation_title">首页</string>
-    <string name="feature_home_title">一起挑战</string>
+    <string name="feature_home_title">CHALLY</string>
     <string name="feature_home_medal_description">当前等级</string>
     <string name="feature_home_complete_challenge_description">完成的挑战</string>
     <string name="feature_home_notification_description">通知</string>

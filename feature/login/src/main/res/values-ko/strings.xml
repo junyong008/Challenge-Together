@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_login_title_description">나를 바꾸는 가장 쉬운 첫걸음,</string>
-    <string name="feature_login_title">챌린지 투게더</string>
+    <string name="feature_login_title">챌리</string>
     <string name="feature_login_input_email_content_description">이메일 입력</string>
     <string name="feature_login_input_email_place_holder">이메일</string>
     <string name="feature_login_input_password_content_description">비밀번호 입력</string>

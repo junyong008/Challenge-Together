@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_home_navigation_title">ホーム</string>
-    <string name="feature_home_title">一緒にチャレンジ</string>
+    <string name="feature_home_title">CHALLY</string>
     <string name="feature_home_medal_description">現在のティア</string>
     <string name="feature_home_complete_challenge_description">チャレンジを完了</string>
     <string name="feature_home_notification_description">通知</string>

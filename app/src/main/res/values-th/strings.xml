@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ท้าทายไปด้วยกัน</string>
-    <string name="app_name_debug">ดีบักท้าทายไปด้วยกัน</string>
+    <string name="app_name">Chally</string>
+    <string name="app_name_debug">Debug Chally</string>
     <string name="splash_content_description">ภาพเริ่มต้น</string>
 </resources>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_home_navigation_title">होम</string>
-    <string name="feature_home_title">चुनौती मिलकर</string>
+    <string name="feature_home_title">CHALLY</string>
     <string name="feature_home_medal_description">वर्तमान स्तर</string>
     <string name="feature_home_complete_challenge_description">चुनौतियाँ पूरी करें</string>
     <string name="feature_home_notification_description">सूचनाएँ</string>
