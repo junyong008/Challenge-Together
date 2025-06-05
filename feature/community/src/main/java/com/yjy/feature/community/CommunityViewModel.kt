@@ -102,9 +102,13 @@ class CommunityViewModel @Inject constructor(
             .onFailure { emit(BannerUiState.Error) }
     }.restartableStateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
+        started = SharingStarted.WhileSubscribed(5000),
         initialValue = BannerUiState.Loading,
     )
+
+    fun reloadBanners() {
+        banners.restart()
+    }
 
     fun toggleGlobalMode() {
         _isGlobalActive.value = !_isGlobalActive.value

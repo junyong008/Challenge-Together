@@ -47,7 +47,15 @@ internal fun PostsBody(
 
     Box(modifier = modifier.pullRefresh(pullRefreshState)) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            banner?.let { item { Banner(it) } }
+            banner?.let {
+                item {
+                    Banner(it)
+                    HorizontalDivider(
+                        thickness = 1.dp,
+                        color = CustomColorProvider.colorScheme.divider,
+                    )
+                }
+            }
             items(
                 count = posts.itemCount,
                 key = posts.itemKey { it.postId },

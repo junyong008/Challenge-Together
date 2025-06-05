@@ -55,6 +55,8 @@ import com.yjy.feature.community.component.PostsBody
 import com.yjy.feature.community.model.BannerUiState
 import com.yjy.feature.community.model.CommunityUiEvent
 import com.yjy.feature.community.model.getBannerOrNull
+import com.yjy.feature.community.model.isError
+import com.yjy.feature.community.model.isLoading
 import com.yjy.model.community.SimpleCommunityPost
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -88,6 +90,7 @@ internal fun ListRoute(
         onBookmarkedClick = onBookmarkedClick,
         onAuthoredClick = onAuthoredClick,
         onCommentedClick = onCommentedClick,
+        onRefreshBanners = viewModel::reloadBanners,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -107,6 +110,7 @@ internal fun ListScreen(
     onBookmarkedClick: () -> Unit = {},
     onAuthoredClick: () -> Unit = {},
     onCommentedClick: () -> Unit = {},
+    onRefreshBanners: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val context = LocalContext.current
@@ -188,8 +192,13 @@ internal fun ListScreen(
             color = CustomColorProvider.colorScheme.divider,
         )
         when {
-            isLoading -> LoadingWheel()
-            isError -> ErrorBody(onClickRetry = { posts.refresh() })
+            isLoading || banners.isLoading() -> LoadingWheel()
+            isError || banners.isError() -> ErrorBody(
+                onClickRetry = {
+                    posts.refresh()
+                    onRefreshBanners()
+                },
+            )
             isIdle && isEmpty && searchQuery.isEmpty() -> {
                 EmptyBody(
                     title = stringResource(id = R.string.feature_community_empty_title),
