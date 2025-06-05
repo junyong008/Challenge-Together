@@ -32,6 +32,7 @@ import com.yjy.data.network.response.challenge.GetResetRecordResponse
 import com.yjy.data.network.response.challenge.GetStartedChallengeDetailResponse
 import com.yjy.data.network.response.challenge.GetWaitingChallengeDetailResponse
 import com.yjy.data.network.response.challenge.WaitingChallengeResponse
+import com.yjy.data.network.response.community.GetBannersResponse
 import com.yjy.data.network.response.community.GetPostResponse
 import com.yjy.data.network.response.community.GetPostsResponse
 import com.yjy.data.network.response.user.CheckBanResponse
@@ -310,6 +311,9 @@ internal interface ChallengeTogetherService {
         @Query("lastPostId") lastPostId: Int,
         @Query("limit") limit: Int,
     ): NetworkResult<List<GetPostsResponse>>
+
+    @GET("service/community/get/banners")
+    suspend fun getBanners(): NetworkResult<List<GetBannersResponse>>
 
     @GET("service/community/get/bookmarked")
     suspend fun getBookmarkedPosts(

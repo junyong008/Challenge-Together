@@ -21,6 +21,8 @@ dependencies {
 
         libs.androidx.paging.compose,
         libs.androidx.paging.ktx,
+        libs.coil.kt,
+        libs.coil.network,
     )
 
     runtimeOnly(projects.data.communityImpl)

@@ -6,6 +6,7 @@ import com.yjy.data.network.request.community.AddCommunityPostRequest
 import com.yjy.data.network.request.community.EditCommunityPostRequest
 import com.yjy.data.network.request.community.ReportCommunityCommentRequest
 import com.yjy.data.network.request.community.ReportCommunityPostRequest
+import com.yjy.data.network.response.community.GetBannersResponse
 import com.yjy.data.network.response.community.GetPostResponse
 import com.yjy.data.network.response.community.GetPostsResponse
 import com.yjy.data.network.service.ChallengeTogetherService
@@ -35,6 +36,9 @@ internal class CommunityDataSourceImpl @Inject constructor(
         lastPostId = lastPostId,
         limit = limit,
     )
+
+    override suspend fun getBanners(): NetworkResult<List<GetBannersResponse>> =
+        challengeTogetherService.getBanners()
 
     override suspend fun getBookmarkedPosts(
         lastPostId: Int,

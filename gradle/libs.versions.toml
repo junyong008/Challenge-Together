@@ -26,6 +26,7 @@ appcompat = "1.7.0"
 appsflyer = "6.16.0"
 billing = "7.1.1"
 biometric = "1.4.0-alpha02"
+coil = "3.2.0"
 coroutinesGuava = "1.9.0"
 desugar = "2.1.5"
 detekt = "1.23.6"
@@ -82,6 +83,8 @@ androidx-work-ktx = { group = "androidx.work", name = "work-runtime-ktx", versio
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "androidxWork" }
 appsflyer-sdk = { group = "com.appsflyer", name = "af-android-sdk", version.ref = "appsflyer" }
 billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billing" }
+coil-kt = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-network = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 google-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "googleAds" }
 google-identity = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleIdentity" }
 google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "googleOss" }
