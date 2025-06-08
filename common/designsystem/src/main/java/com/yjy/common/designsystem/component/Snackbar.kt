@@ -54,7 +54,7 @@ fun ChallengeTogetherSnackbar(
         modifier = Modifier
             .padding(16.dp)
             .clip(MaterialTheme.shapes.extraLarge)
-            .background(color = CustomColorProvider.colorScheme.snackbar.copy(alpha = 0.8f))
+            .background(color = CustomColorProvider.colorScheme.snackbar.copy(alpha = 0.95f))
             .fillMaxWidth(),
     ) {
         Row(
