@@ -6,4 +6,5 @@
     <string name="feature_resetrecord_no_reset_records">No hay registros de restablecimiento aún.</string>
     <string name="feature_resetrecord_encouragement">¡Sigue así y sigue desafiándote!</string>
     <string name="feature_resetrecord_day_suffix">D</string>
+    <string name="feature_resetrecord_last_date_label">Actual</string>
 </resources>

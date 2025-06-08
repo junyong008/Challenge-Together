@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -65,8 +65,9 @@ import com.yjy.common.ui.EmptyBody
 import com.yjy.common.ui.ErrorBody
 import com.yjy.common.ui.preview.ResetRecordPreviewParameterProvider
 import com.yjy.feature.resetrecord.component.ResetRecordChart
-import com.yjy.feature.resetrecord.model.ResetRecordsUiState
+import com.yjy.feature.resetrecord.model.ResetInfoUiState
 import com.yjy.feature.resetrecord.model.getOrNull
+import com.yjy.model.challenge.ResetInfo
 import com.yjy.model.challenge.ResetRecord
 import kotlinx.coroutines.launch
 
@@ -76,11 +77,11 @@ internal fun ResetRecordRoute(
     modifier: Modifier = Modifier,
     viewModel: ResetRecordViewModel = hiltViewModel(),
 ) {
-    val resetRecords by viewModel.resetRecords.collectAsStateWithLifecycle()
+    val resetInfo by viewModel.resetInfo.collectAsStateWithLifecycle()
 
     ResetRecordScreen(
         modifier = modifier,
-        resetRecordsUiState = resetRecords,
+        resetInfoUiState = resetInfo,
         retryOnError = viewModel::retryOnError,
         onBackClick = onBackClick,
     )
@@ -89,7 +90,7 @@ internal fun ResetRecordRoute(
 @Composable
 internal fun ResetRecordScreen(
     modifier: Modifier = Modifier,
-    resetRecordsUiState: ResetRecordsUiState = ResetRecordsUiState.Loading,
+    resetInfoUiState: ResetInfoUiState = ResetInfoUiState.Loading,
     retryOnError: () -> Unit = {},
     onBackClick: () -> Unit = {},
 ) {
@@ -101,7 +102,7 @@ internal fun ResetRecordScreen(
                 onNavigationClick = onBackClick,
                 titleRes = R.string.feature_resetrecord_title,
                 rightContent = {
-                    if (resetRecordsUiState.getOrNull()?.isNotEmpty() == true) {
+                    if (resetInfoUiState.getOrNull()?.resetRecords?.isNotEmpty() == true) {
                         ModeChangeButton(
                             onClick = { isCalendarMode = !isCalendarMode },
                             modifier = Modifier.padding(end = 4.dp),
@@ -115,9 +116,9 @@ internal fun ResetRecordScreen(
         modifier = modifier.consumeWindowInsets(WindowInsets.navigationBars),
     ) { padding ->
 
-        when (resetRecordsUiState) {
-            ResetRecordsUiState.Error -> ErrorBody(onClickRetry = retryOnError)
-            ResetRecordsUiState.Loading -> {
+        when (resetInfoUiState) {
+            ResetInfoUiState.Error -> ErrorBody(onClickRetry = retryOnError)
+            ResetInfoUiState.Loading -> {
                 LoadingWheel(
                     modifier = Modifier
                         .padding(padding)
@@ -125,8 +126,8 @@ internal fun ResetRecordScreen(
                 )
             }
 
-            is ResetRecordsUiState.Success -> {
-                if (resetRecordsUiState.resetRecords.isEmpty()) {
+            is ResetInfoUiState.Success -> {
+                if (resetInfoUiState.resetInfo.resetRecords.isEmpty()) {
                     EmptyBody(
                         title = stringResource(id = R.string.feature_resetrecord_no_reset_records),
                         description = stringResource(id = R.string.feature_resetrecord_encouragement),
@@ -134,7 +135,8 @@ internal fun ResetRecordScreen(
                 } else {
                     ResetRecordBody(
                         isCalendarMode = isCalendarMode,
-                        resetRecords = resetRecordsUiState.resetRecords,
+                        isCompleted = resetInfoUiState.resetInfo.isCompleted,
+                        resetRecords = resetInfoUiState.resetInfo.resetRecords,
                         modifier = Modifier.padding(padding),
                     )
                 }
@@ -169,6 +171,7 @@ private fun ModeChangeButton(
 @Composable
 private fun ResetRecordBody(
     isCalendarMode: Boolean,
+    isCompleted: Boolean,
     resetRecords: List<ResetRecord>,
     modifier: Modifier = Modifier,
 ) {
@@ -252,12 +255,15 @@ private fun ResetRecordBody(
                     }
                 },
                 highlightedDateTimes = listData.map { it.resetDateTime },
+                showTodayIndicator = !isCompleted,
             )
         } else {
             ResetRecordChart(
                 data = chartData.map { it.resetDateTime },
                 firstRecordInSeconds = chartData.first().recordInSeconds,
+                lastDateLabel = stringResource(id = R.string.feature_resetrecord_last_date_label),
                 valueSuffix = stringResource(id = R.string.feature_resetrecord_day_suffix),
+                treatLastAsNow = !isCompleted,
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(CustomColorProvider.colorScheme.surface)
@@ -292,13 +298,14 @@ private fun ResetRecordBody(
                     .then(listHeightModifier),
                 contentPadding = PaddingValues(bottom = with(LocalDensity.current) { bottomPadding.toDp() }),
             ) {
-                items(
+                itemsIndexed(
                     items = listData,
-                    key = { it.id },
-                ) { record ->
+                    key = { _, record -> record.id },
+                ) { index, record ->
                     RecordItem(
                         record = record,
-                        isSelected = listData.indexOf(record) == selectedIndex,
+                        isLast = index == 0 && !isCompleted,
+                        isSelected = index == selectedIndex,
                         modifier = itemHeightModifier,
                     )
                 }
@@ -310,9 +317,25 @@ private fun ResetRecordBody(
 @Composable
 private fun RecordItem(
     record: ResetRecord,
+    isLast: Boolean = false,
     isSelected: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
+    val borderModifier = when {
+        isSelected -> Modifier.border(
+            width = 1.dp,
+            color = CustomColorProvider.colorScheme.brand,
+            shape = MaterialTheme.shapes.medium,
+        )
+        else -> Modifier
+    }
+
+    val recordColor = if (isLast) {
+        CustomColorProvider.colorScheme.red
+    } else {
+        CustomColorProvider.colorScheme.onSurface
+    }
+
     Column(modifier = modifier) {
         Text(
             text = formatLocalDateTime(record.resetDateTime),
@@ -325,17 +348,7 @@ private fun RecordItem(
                 .fillMaxWidth()
                 .clip(MaterialTheme.shapes.medium)
                 .background(CustomColorProvider.colorScheme.surface)
-                .then(
-                    if (isSelected) {
-                        Modifier.border(
-                            width = 1.dp,
-                            color = CustomColorProvider.colorScheme.brand,
-                            shape = MaterialTheme.shapes.medium,
-                        )
-                    } else {
-                        Modifier
-                    },
-                )
+                .then(borderModifier)
                 .padding(16.dp),
         ) {
             Row(
@@ -353,7 +366,7 @@ private fun RecordItem(
                     text = formatTimeDuration(record.recordInSeconds),
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = CustomColorProvider.colorScheme.onSurface,
+                    color = recordColor,
                 )
             }
             if (record.content.isNotEmpty()) {
@@ -385,10 +398,15 @@ fun ResetRecordScreenPreview(
     @PreviewParameter(ResetRecordPreviewParameterProvider::class)
     resetRecords: List<ResetRecord>,
 ) {
+    val resetInfo = ResetInfo(
+        isCompleted = true,
+        resetRecords = resetRecords,
+    )
+
     ChallengeTogetherTheme {
         ChallengeTogetherBackground {
             ResetRecordScreen(
-                resetRecordsUiState = ResetRecordsUiState.Success(resetRecords),
+                resetInfoUiState = ResetInfoUiState.Success(resetInfo),
             )
         }
     }

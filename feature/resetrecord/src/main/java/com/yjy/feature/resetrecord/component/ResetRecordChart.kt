@@ -55,6 +55,11 @@ import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.DEFAULT_CA
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.DEFAULT_CANVAS_PADDING
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.GRID_LINE_COUNT
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.GRID_LINE_STROKE_WIDTH
+import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.LAST_DATE_DASH_GAP
+import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.LAST_DATE_DASH_LENGTH
+import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.LAST_DATE_DONUT_ALPHA
+import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.LAST_DATE_DONUT_STROKE_ALPHA
+import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.LAST_DATE_LINE_ALPHA
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.RIPPLE_EFFECT_DURATION
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.RIPPLE_EFFECT_INIT_ALPHA
 import com.yjy.feature.resetrecord.component.ResetRecordChartDefaults.RIPPLE_EFFECT_INIT_SCALE
@@ -105,6 +110,13 @@ private object ResetRecordChartDefaults {
     const val RIPPLE_EFFECT_TARGET_SCALE = 2f
     const val RIPPLE_EFFECT_INIT_ALPHA = 0.8f
     const val RIPPLE_EFFECT_TARGET_ALPHA = 0f
+
+    // LAST_DATE_DASH
+    const val LAST_DATE_LINE_ALPHA = 0.5f
+    const val LAST_DATE_DASH_LENGTH = 12f
+    const val LAST_DATE_DASH_GAP = 16f
+    const val LAST_DATE_DONUT_ALPHA = 0.4f
+    const val LAST_DATE_DONUT_STROKE_ALPHA = 0.5f
 }
 
 @Composable
@@ -117,6 +129,8 @@ internal fun ResetRecordChart(
     onDragStart: () -> Unit = {},
     onDragEnd: () -> Unit = {},
     valueSuffix: String = "",
+    lastDateLabel: String = "",
+    treatLastAsNow: Boolean = true,
     lineColor: Color = CustomColorProvider.colorScheme.brandDim,
     donutBackgroundColor: Color = CustomColorProvider.colorScheme.surface,
     valueBoxBackgroundColor: Color = CustomColorProvider.colorScheme.brand,
@@ -388,24 +402,22 @@ internal fun ResetRecordChart(
         }
 
         // 곡선 데이터 라인 그리기
-        val path = Path()
-        path.moveTo(points.first().x, points.first().y)
-
-        for (i in 1 until points.size) {
-            val previousPoint = points[i - 1]
-            val currentPoint = points[i]
-
-            val controlX1 = previousPoint.x + (currentPoint.x - previousPoint.x) / 2
-            val controlX2 = previousPoint.x + (currentPoint.x - previousPoint.x) / 2
-
-            path.cubicTo(
-                controlX1,
-                previousPoint.y,
-                controlX2,
-                currentPoint.y,
-                currentPoint.x,
-                currentPoint.y,
-            )
+        val solidLineEndIndex = if (treatLastAsNow && points.size >= 2) points.lastIndex - 1 else points.lastIndex
+        val path = Path().apply {
+            moveTo(points[0].x, points[0].y)
+            for (i in 1..solidLineEndIndex) {
+                val prev = points[i - 1]
+                val curr = points[i]
+                val controlX = (prev.x + curr.x) / 2
+                cubicTo(
+                    controlX,
+                    prev.y,
+                    controlX,
+                    curr.y,
+                    curr.x,
+                    curr.y,
+                )
+            }
         }
 
         drawPath(
@@ -417,6 +429,36 @@ internal fun ResetRecordChart(
                 join = StrokeJoin.Round,
             ),
         )
+
+        // 마지막 두 점을 곡선으로 점선 연결
+        if (treatLastAsNow && points.size >= 2) {
+            val prev = points[points.lastIndex - 1]
+            val last = points.last()
+            val controlX = (prev.x + last.x) / 2
+
+            val dashedPath = Path().apply {
+                moveTo(prev.x, prev.y)
+                cubicTo(
+                    controlX,
+                    prev.y,
+                    controlX,
+                    last.y,
+                    last.x,
+                    last.y,
+                )
+            }
+
+            drawPath(
+                path = dashedPath,
+                color = lineColor.copy(alpha = LAST_DATE_LINE_ALPHA),
+                style = Stroke(
+                    width = lineWidth.toPx(),
+                    pathEffect = PathEffect.dashPathEffect(floatArrayOf(LAST_DATE_DASH_LENGTH, LAST_DATE_DASH_GAP)),
+                    cap = StrokeCap.Round,
+                    join = StrokeJoin.Round,
+                ),
+            )
+        }
 
         // 날짜 텍스트 그리기
         val dateY = size.height - BOTTOM_TEXT_BASELINE_PADDING.dp.toPx()
@@ -447,9 +489,10 @@ internal fun ResetRecordChart(
 
         // 하단 날짜들 그리기
         points.forEachIndexed { index, point ->
-            if (index in dateDisplayIndexes && index != selectedIndex) {
+            val label = if (treatLastAsNow && index == data.lastIndex) lastDateLabel else dates[index]
+            if (index in dateDisplayIndexes) {
                 drawContext.canvas.nativeCanvas.drawText(
-                    dates[index],
+                    label,
                     point.x,
                     dateY,
                     dateTextPaint,
@@ -505,9 +548,14 @@ internal fun ResetRecordChart(
                     valueTextPaint,
                 )
 
+                // 마지막 항목(현재 시각)일 경우 도넛에도 투명도 적용
+                val isLastSelected = treatLastAsNow && selectedIndex == data.lastIndex
+                val rippleFinalAlpha = if (isLastSelected) rippleAlpha * LAST_DATE_DONUT_ALPHA else rippleAlpha
+                val donutStrokeAlpha = if (isLastSelected) LAST_DATE_DONUT_STROKE_ALPHA else 1f
+
                 // 도넛 뒤의 리플 효과
                 drawCircle(
-                    color = lineColor.copy(alpha = rippleAlpha),
+                    color = lineColor.copy(alpha = rippleFinalAlpha),
                     radius = endPointRadius.toPx() * rippleScale,
                     center = selectedPoint,
                     style = Stroke(width = lineWidth.toPx() / 2),
@@ -521,7 +569,7 @@ internal fun ResetRecordChart(
                 )
 
                 drawCircle(
-                    color = lineColor,
+                    color = lineColor.copy(alpha = donutStrokeAlpha),
                     radius = endPointRadius.toPx(),
                     center = selectedPoint,
                     style = Stroke(width = lineWidth.toPx()),
@@ -529,7 +577,9 @@ internal fun ResetRecordChart(
 
                 // 하단 날짜 박스
                 val selectedDate = data[it]
-                val dateText = if (selectedDate.year == currentYear) {
+                val dateText = if (treatLastAsNow && selectedIndex == data.lastIndex) {
+                    lastDateLabel
+                } else if (selectedDate.year == currentYear) {
                     selectedDate.format(normalDateFormatter)
                 } else {
                     selectedDate.format(selectedDateFormatter)
@@ -540,9 +590,9 @@ internal fun ResetRecordChart(
 
                 val dateRectPadding = dateBoxPadding.toPx()
                 val dateRectWidth = dateTextBounds.width() + dateRectPadding * 2
-                val dateRectHeight = dateTextBounds.height() + dateRectPadding * 2
+                val dateRectHeight = (dateTextBounds.bottom - dateTextBounds.top) + dateRectPadding * 2
                 val dateRectLeft = selectedPoint.x - dateRectWidth / 2
-                val dateRectTop = dateY - dateTextBounds.height() - dateRectPadding
+                val dateRectTop = dateY + dateTextBounds.top - dateRectPadding
 
                 drawRoundRect(
                     color = dateBoxBackgroundColor,

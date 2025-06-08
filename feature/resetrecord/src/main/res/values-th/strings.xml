@@ -6,4 +6,5 @@
     <string name="feature_resetrecord_no_reset_records">ยังไม่มีบันทึกการรีเซ็ต</string>
     <string name="feature_resetrecord_encouragement">ทำต่อไปและท้าทายตัวเอง!</string>
     <string name="feature_resetrecord_day_suffix">วัน</string>
+    <string name="feature_resetrecord_last_date_label">ปัจจุบัน</string>
 </resources>

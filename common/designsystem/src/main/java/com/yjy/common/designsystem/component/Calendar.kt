@@ -3,6 +3,7 @@ package com.yjy.common.designsystem.component
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,9 +33,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -68,6 +72,8 @@ private val WEEK_HEIGHT_DP = 40.dp
 private val WEEK_MODE_HEIGHT_DP = 50.dp
 private const val DAYS_IN_WEEK = 7
 private const val WEEK_DIVISOR_ROUND_UP = 6
+private const val TODAY_INDICATOR_DASH_LENGTH = 10f
+private const val TODAY_INDICATOR_DASH_GAP = 10f
 
 /**
  * [Calendar]
@@ -87,6 +93,7 @@ fun Calendar(
     modifier: Modifier = Modifier,
     selectionMode: SelectionMode = SelectionMode.SingleDate(),
     onDateSelected: (LocalDate) -> Unit = {},
+    showTodayIndicator: Boolean = false,
     showAdjacentMonthsDays: Boolean = false,
     enableWeekModeOnDataSelected: Boolean = false,
     highlightedDateTimes: List<LocalDateTime> = emptyList(),
@@ -103,6 +110,7 @@ fun Calendar(
         rangeTextColor = CustomColorProvider.colorScheme.onBrandBright,
         disabledColor = CustomColorProvider.colorScheme.disable,
         dividerColor = CustomColorProvider.colorScheme.divider,
+        todayIndicatorColor = CustomColorProvider.colorScheme.brandDim,
     ),
 ) {
     // 주간 모드를 활성화 할지 여부. 주간 모드는 선택된 날짜의 주만 표기하는 모드.
@@ -287,6 +295,7 @@ fun Calendar(
                             weekMode = true
                         }
                     },
+                    showTodayIndicator = showTodayIndicator,
                     showAdjacentMonthsDays = showAdjacentMonthsDays,
                     daysOfWeek = daysOfWeek,
                     isWeekMode = weekMode,
@@ -427,6 +436,7 @@ fun CalendarDays(
     currentYearMonth: YearMonth,
     selectionMode: SelectionMode,
     onDateSelected: (LocalDate) -> Unit,
+    showTodayIndicator: Boolean,
     showAdjacentMonthsDays: Boolean,
     daysOfWeek: List<DayOfWeek>,
     isWeekMode: Boolean?,
@@ -483,6 +493,7 @@ fun CalendarDays(
                             isEnabled = isEnabled,
                             calendarColors = calendarColors,
                             highlightedDateTimes = highlightedDateTimes,
+                            showTodayIndicator = showTodayIndicator,
                             modifier = Modifier.weight(1f),
                         )
                     } else {
@@ -503,8 +514,11 @@ fun CalendarDay(
     isEnabled: Boolean,
     calendarColors: CalendarColors,
     highlightedDateTimes: List<LocalDateTime>,
+    showTodayIndicator: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val isToday = showTodayIndicator && date == LocalDate.now()
+
     val isSelected = when (selectionMode) {
         is SelectionMode.SingleDate -> date == selectionMode.selectedDate
         is SelectionMode.DateRange -> date == selectionMode.endDate
@@ -526,6 +540,7 @@ fun CalendarDay(
     val isHighlighted = highlightedDateTimes.any { it.toLocalDate() == date } && !isSelected && !isInRange
 
     val backgroundColor = when {
+        isToday -> Color.Transparent
         isInRange -> calendarColors.rangeBackgroundColor
         isHighlighted -> calendarColors.rangeBackgroundColor
         else -> Color.Transparent
@@ -555,6 +570,7 @@ fun CalendarDay(
 
     val textColor = when {
         !isEnabled -> calendarColors.disabledColor
+        isToday -> calendarColors.contentColor
         isSelected -> calendarColors.selectedTextColor
         isHighlighted -> calendarColors.rangeTextColor
         isInRange && isAdjacentMonth -> calendarColors.rangeTextColor.copy(alpha = 0.3f)
@@ -575,14 +591,37 @@ fun CalendarDay(
             .clickable(enabled = isEnabled) { onClick() },
         contentAlignment = Alignment.Center,
     ) {
-        if (isSelected) {
+        Canvas(modifier = Modifier.matchParentSize()) {
+            if (isToday) {
+                val strokeWidth = 4.dp.toPx()
+                val cornerRadius = CornerRadius(50.dp.toPx())
+
+                drawRoundRect(
+                    color = calendarColors.todayIndicatorColor,
+                    style = Stroke(
+                        width = strokeWidth,
+                        pathEffect = if (isSelected) {
+                            null
+                        } else {
+                            PathEffect.dashPathEffect(
+                                floatArrayOf(TODAY_INDICATOR_DASH_LENGTH, TODAY_INDICATOR_DASH_GAP),
+                            )
+                        },
+                    ),
+                    cornerRadius = cornerRadius,
+                )
+            }
+        }
+
+        if (isSelected && !isToday) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(MaterialTheme.shapes.extraLarge)
-                    .background(color = calendarColors.selectedBackgroundColor),
+                    .background(calendarColors.selectedBackgroundColor),
             )
         }
+
         Text(
             text = date.dayOfMonth.toString(),
             color = textColor,
@@ -606,6 +645,7 @@ data class CalendarColors(
     val rangeTextColor: Color,
     val disabledColor: Color,
     val dividerColor: Color,
+    val todayIndicatorColor: Color,
 )
 
 data class CalendarDayData(

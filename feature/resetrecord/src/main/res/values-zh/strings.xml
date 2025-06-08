@@ -6,4 +6,5 @@
     <string name="feature_resetrecord_no_reset_records">暂无重置记录。</string>
     <string name="feature_resetrecord_encouragement">继续努力，挑战自我！</string>
     <string name="feature_resetrecord_day_suffix">天</string>
+    <string name="feature_resetrecord_last_date_label">当前</string>
 </resources>

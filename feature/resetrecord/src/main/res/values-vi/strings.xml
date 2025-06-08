@@ -6,4 +6,5 @@
     <string name="feature_resetrecord_no_reset_records">Chưa có bản ghi đặt lại nào.</string>
     <string name="feature_resetrecord_encouragement">Hãy tiếp tục và thử thách bản thân!</string>
     <string name="feature_resetrecord_day_suffix">Ngày</string>
+    <string name="feature_resetrecord_last_date_label">Hiện tại</string>
 </resources>
