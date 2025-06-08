@@ -279,7 +279,15 @@ class HomeViewModel @Inject constructor(
             )
         }
 
-        _uiState.update { it.copy(categories = categories) }
+        val selectedCategory = _uiState.value.selectedCategory
+        val finalSelected = if (selectedCategory in categories) selectedCategory else Category.ALL
+
+        _uiState.update {
+            it.copy(
+                categories = categories,
+                selectedCategory = finalSelected,
+            )
+        }
     }
 
     fun processAction(action: HomeUiAction) {
