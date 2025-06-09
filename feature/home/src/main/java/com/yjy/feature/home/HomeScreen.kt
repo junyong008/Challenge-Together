@@ -580,13 +580,16 @@ private fun StartedChallengesSection(
     Column(modifier = Modifier.fillMaxWidth()) {
         MyChallengeTitle(
             sortOrder = sortOrder,
+            shouldShowSortOrder = startedChallenges.size > 1,
             onSortOrderClick = onSortOrderClick,
         )
-        CategoryChipGroup(
-            categories = categories,
-            selectedCategory = selectedCategory,
-            onCategorySelected = onCategorySelected,
-        )
+        if (startedChallenges.distinctBy { it.category }.size > 1) {
+            CategoryChipGroup(
+                categories = categories,
+                selectedCategory = selectedCategory,
+                onCategorySelected = onCategorySelected,
+            )
+        }
         Spacer(modifier = Modifier.height(8.dp))
         StartedChallengesList(
             startedChallenges = startedChallenges.filter {
@@ -687,6 +690,7 @@ private fun WaitingChallengesList(
 @Composable
 private fun MyChallengeTitle(
     sortOrder: SortOrder,
+    shouldShowSortOrder: Boolean,
     onSortOrderClick: () -> Unit,
 ) {
     Row(
@@ -701,23 +705,25 @@ private fun MyChallengeTitle(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
         )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                ImageVector.vectorResource(id = ChallengeTogetherIcons.Sort),
-                contentDescription = stringResource(
-                    id = R.string.feature_home_sort_challenge_content_description,
-                ),
-                tint = CustomColorProvider.colorScheme.onBackgroundMuted,
-                modifier = Modifier.size(20.dp),
-            )
-            ClickableText(
-                text = stringResource(id = sortOrder.getDisplayNameResId()),
-                textAlign = TextAlign.End,
-                onClick = onSortOrderClick,
-                color = CustomColorProvider.colorScheme.onBackgroundMuted,
-            )
+        if (shouldShowSortOrder) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    ImageVector.vectorResource(id = ChallengeTogetherIcons.Sort),
+                    contentDescription = stringResource(
+                        id = R.string.feature_home_sort_challenge_content_description,
+                    ),
+                    tint = CustomColorProvider.colorScheme.onBackgroundMuted,
+                    modifier = Modifier.size(20.dp),
+                )
+                ClickableText(
+                    text = stringResource(id = sortOrder.getDisplayNameResId()),
+                    textAlign = TextAlign.End,
+                    onClick = onSortOrderClick,
+                    color = CustomColorProvider.colorScheme.onBackgroundMuted,
+                )
+            }
         }
     }
 }
@@ -730,7 +736,7 @@ private fun CategoryChipGroup(
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
     ) {
         items(categories) { category ->
             ChallengeTogetherChip(
