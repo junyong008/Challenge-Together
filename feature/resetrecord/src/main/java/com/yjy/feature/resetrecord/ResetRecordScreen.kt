@@ -1,6 +1,7 @@
 package com.yjy.feature.resetrecord
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
@@ -22,6 +23,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -301,7 +303,7 @@ private fun ResetRecordBody(
                     resetCount = recordsWithOutCurrent.size,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+                        .padding(top = 4.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
                 )
             }
         }
@@ -342,14 +344,20 @@ private fun Statistics(
     modifier: Modifier = Modifier,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
+    val cornerRadius by animateDpAsState(
+        targetValue = if (isExpanded) 12.dp else 50.dp,
+        label = "CornerRadiusAnimation",
+    )
+
+    val animatedShape = RoundedCornerShape(cornerRadius)
 
     Column(
         modifier = modifier
-            .clip(MaterialTheme.shapes.medium)
+            .clip(animatedShape)
             .border(
                 width = 1.dp,
                 color = CustomColorProvider.colorScheme.onSurfaceMuted.copy(alpha = 0.7f),
-                shape = MaterialTheme.shapes.medium,
+                shape = animatedShape,
             )
             .animateContentSize(),
     ) {
@@ -375,7 +383,7 @@ private fun Statistics(
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = stringResource(id = R.string.feature_resetrecord_statistics),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 color = CustomColorProvider.colorScheme.onSurfaceMuted.copy(alpha = 0.7f),
             )

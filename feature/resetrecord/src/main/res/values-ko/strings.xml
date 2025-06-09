@@ -7,7 +7,7 @@
     <string name="feature_resetrecord_encouragement">계속 도전하면서 성장해보세요!</string>
     <string name="feature_resetrecord_day_suffix">일</string>
     <string name="feature_resetrecord_last_date_label">현재</string>
-    <string name="feature_resetrecord_statistics">통계</string>
+    <string name="feature_resetrecord_statistics">통계 보기</string>
     <string name="feature_resetrecord_total_reset_count">리셋 횟수</string>
     <string name="feature_resetrecord_reset_count">%d번</string>
     <string name="feature_resetrecord_max_reset_duration">최대 리셋 시간</string>
