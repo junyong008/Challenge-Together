@@ -53,9 +53,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.yjy.common.core.util.formatDayHourDuration
 import com.yjy.common.core.util.formatLocalDateTime
 import com.yjy.common.core.util.formatTimeDuration
+import com.yjy.common.core.util.formatTopTwoTimeUnits
 import com.yjy.common.designsystem.component.Calendar
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
@@ -390,17 +390,17 @@ private fun Statistics(
                 Spacer(modifier = Modifier.height(16.dp))
                 StatisticRow(
                     label = stringResource(R.string.feature_resetrecord_max_reset_duration),
-                    value = formatDayHourDuration(maxResetRecord),
+                    value = formatTopTwoTimeUnits(maxResetRecord),
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 StatisticRow(
                     label = stringResource(R.string.feature_resetrecord_min_reset_duration),
-                    value = formatDayHourDuration(minResetRecord),
+                    value = formatTopTwoTimeUnits(minResetRecord),
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 StatisticRow(
                     label = stringResource(R.string.feature_resetrecord_avg_reset_duration),
-                    value = formatDayHourDuration(avgResetRecord),
+                    value = formatTopTwoTimeUnits(avgResetRecord),
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 StatisticRow(
