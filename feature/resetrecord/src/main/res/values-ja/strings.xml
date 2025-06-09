@@ -7,4 +7,10 @@
     <string name="feature_resetrecord_encouragement">その調子で自分に挑戦し続けてください！</string>
     <string name="feature_resetrecord_day_suffix">日</string>
     <string name="feature_resetrecord_last_date_label">現在</string>
+    <string name="feature_resetrecord_statistics">統計</string>
+    <string name="feature_resetrecord_max_reset_duration">最長</string>
+    <string name="feature_resetrecord_min_reset_duration">最短</string>
+    <string name="feature_resetrecord_avg_reset_duration">平均</string>
+    <string name="feature_resetrecord_total_reset_count">合計</string>
+    <string name="feature_resetrecord_reset_count">%d回</string>
 </resources>

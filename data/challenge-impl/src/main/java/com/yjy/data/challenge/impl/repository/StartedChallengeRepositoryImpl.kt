@@ -106,6 +106,7 @@ internal class StartedChallengeRepositoryImpl @Inject constructor(
                 resetDateTime = currentTime,
                 recordInSeconds = 0,
                 content = "",
+                isCurrent = true,
             )
 
             resetInfoResponse.map { result ->

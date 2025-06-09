@@ -15,4 +15,5 @@ internal fun ResetRecordResponse.toModel() = ResetRecord(
     resetDateTime = resetDateTime.toLocalDateTime(),
     recordInSeconds = recordInSeconds,
     content = content,
+    isCurrent = false,
 )

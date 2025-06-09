@@ -7,4 +7,10 @@
     <string name="feature_resetrecord_encouragement">Mach weiter so und fordere dich selbst heraus!</string>
     <string name="feature_resetrecord_day_suffix">T</string>
     <string name="feature_resetrecord_last_date_label">Aktuell</string>
+    <string name="feature_resetrecord_statistics">Statistik</string>
+    <string name="feature_resetrecord_max_reset_duration">Max.</string>
+    <string name="feature_resetrecord_min_reset_duration">Min.</string>
+    <string name="feature_resetrecord_avg_reset_duration">Ø</string>
+    <string name="feature_resetrecord_total_reset_count">Gesamt</string>
+    <string name="feature_resetrecord_reset_count">%d Mal</string>
 </resources>

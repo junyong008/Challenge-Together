@@ -1,9 +1,11 @@
 package com.yjy.feature.resetrecord
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -50,6 +53,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.yjy.common.core.util.formatDayHourDuration
 import com.yjy.common.core.util.formatLocalDateTime
 import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.component.Calendar
@@ -177,6 +181,7 @@ private fun ResetRecordBody(
 ) {
     val chartData = resetRecords.sortedBy { it.id }
     val listData = resetRecords.sortedByDescending { it.id }
+    val recordsWithOutCurrent = resetRecords.filterNot { it.isCurrent }
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -258,35 +263,49 @@ private fun ResetRecordBody(
                 showTodayIndicator = !isCompleted,
             )
         } else {
-            ResetRecordChart(
-                data = chartData.map { it.resetDateTime },
-                firstRecordInSeconds = chartData.first().recordInSeconds,
-                lastDateLabel = stringResource(id = R.string.feature_resetrecord_last_date_label),
-                valueSuffix = stringResource(id = R.string.feature_resetrecord_day_suffix),
-                treatLastAsNow = !isCompleted,
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(CustomColorProvider.colorScheme.surface)
-                    .padding(start = 12.dp, end = 18.dp, top = 48.dp, bottom = 20.dp),
-                selectedIndex = (resetRecords.size - 1 - selectedIndex).coerceIn(0, chartData.lastIndex),
-                onDateSelected = { newChartIndex ->
-                    val newListIndex = listData.size - 1 - newChartIndex
-                    selectedIndex = newListIndex
-                    coroutineScope.launch {
-                        listState.scrollToItem(newListIndex)
-                    }
-                },
-                onDragStart = { isDraggingChart = true },
-                onDragEnd = {
-                    coroutineScope.launch {
-                        listState.animateScrollToItem(index = selectedIndex)
-                    }.invokeOnCompletion {
-                        isDraggingChart = false
-                    }
-                },
-            )
+                    .background(CustomColorProvider.colorScheme.surface),
+            ) {
+                ResetRecordChart(
+                    data = chartData.map { it.resetDateTime },
+                    firstRecordInSeconds = chartData.first().recordInSeconds,
+                    lastDateLabel = stringResource(id = R.string.feature_resetrecord_last_date_label),
+                    valueSuffix = stringResource(id = R.string.feature_resetrecord_day_suffix),
+                    treatLastAsNow = !isCompleted,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 12.dp, end = 18.dp, top = 48.dp),
+                    selectedIndex = (resetRecords.size - 1 - selectedIndex).coerceIn(0, chartData.lastIndex),
+                    onDateSelected = { newChartIndex ->
+                        val newListIndex = listData.size - 1 - newChartIndex
+                        selectedIndex = newListIndex
+                        coroutineScope.launch {
+                            listState.scrollToItem(newListIndex)
+                        }
+                    },
+                    onDragStart = { isDraggingChart = true },
+                    onDragEnd = {
+                        coroutineScope.launch {
+                            listState.animateScrollToItem(index = selectedIndex)
+                        }.invokeOnCompletion {
+                            isDraggingChart = false
+                        }
+                    },
+                )
+                Statistics(
+                    maxResetRecord = recordsWithOutCurrent.maxOf { it.recordInSeconds },
+                    minResetRecord = recordsWithOutCurrent.minOf { it.recordInSeconds },
+                    avgResetRecord = recordsWithOutCurrent.map { it.recordInSeconds }.average().toLong(),
+                    resetCount = recordsWithOutCurrent.size,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+                )
+            }
         }
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         CompositionLocalProvider(
             LocalOverscrollConfiguration provides null,
         ) {
@@ -311,6 +330,105 @@ private fun ResetRecordBody(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun Statistics(
+    maxResetRecord: Long,
+    minResetRecord: Long,
+    avgResetRecord: Long,
+    resetCount: Int,
+    modifier: Modifier = Modifier,
+) {
+    var isExpanded by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = modifier
+            .clip(MaterialTheme.shapes.medium)
+            .border(
+                width = 1.dp,
+                color = CustomColorProvider.colorScheme.onSurfaceMuted.copy(alpha = 0.7f),
+                shape = MaterialTheme.shapes.medium,
+            )
+            .animateContentSize(),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { isExpanded = !isExpanded }
+                .padding(vertical = 8.dp, horizontal = 16.dp),
+        ) {
+            Icon(
+                ImageVector.vectorResource(
+                    id = if (isExpanded) {
+                        ChallengeTogetherIcons.ArrowUp
+                    } else {
+                        ChallengeTogetherIcons.ArrowDown
+                    },
+                ),
+                contentDescription = stringResource(id = R.string.feature_resetrecord_statistics),
+                tint = CustomColorProvider.colorScheme.onSurfaceMuted.copy(alpha = 0.7f),
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(
+                text = stringResource(id = R.string.feature_resetrecord_statistics),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                color = CustomColorProvider.colorScheme.onSurfaceMuted.copy(alpha = 0.7f),
+            )
+        }
+
+        if (isExpanded) {
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                HorizontalDivider(
+                    thickness = 1.dp,
+                    color = CustomColorProvider.colorScheme.divider,
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                StatisticRow(
+                    label = stringResource(R.string.feature_resetrecord_max_reset_duration),
+                    value = formatDayHourDuration(maxResetRecord),
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                StatisticRow(
+                    label = stringResource(R.string.feature_resetrecord_min_reset_duration),
+                    value = formatDayHourDuration(minResetRecord),
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                StatisticRow(
+                    label = stringResource(R.string.feature_resetrecord_avg_reset_duration),
+                    value = formatDayHourDuration(avgResetRecord),
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                StatisticRow(
+                    label = stringResource(R.string.feature_resetrecord_total_reset_count),
+                    value = stringResource(R.string.feature_resetrecord_reset_count, resetCount),
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+    }
+}
+
+@Composable
+fun StatisticRow(label: String, value: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall,
+            color = CustomColorProvider.colorScheme.onSurfaceMuted,
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.labelSmall,
+            color = CustomColorProvider.colorScheme.onSurface,
+        )
     }
 }
 

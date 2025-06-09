@@ -48,6 +48,29 @@ fun formatTimeDuration(seconds: Long): String {
 }
 
 @Composable
+fun formatDayHourDuration(seconds: Long): String {
+    if (seconds <= 0L) return "0${stringResource(id = R.string.common_core_time_second)}"
+
+    val days = seconds / SECONDS_PER_DAY
+    val hours = (seconds % SECONDS_PER_DAY) / SECONDS_PER_HOUR
+
+    var hasLargerUnit = false
+
+    val parts = mutableListOf<String>()
+
+    if (days > 0) {
+        parts.add("$days${stringResource(id = R.string.common_core_time_day)}")
+        hasLargerUnit = true
+    }
+
+    if (hasLargerUnit || hours > 0) {
+        parts.add("$hours${stringResource(id = R.string.common_core_time_hour)}")
+    }
+
+    return parts.joinToString(" ")
+}
+
+@Composable
 fun formatLargestTimeDuration(seconds: Long): String {
     if (seconds <= 0L) return "0${stringResource(R.string.common_core_time_second)}"
 
