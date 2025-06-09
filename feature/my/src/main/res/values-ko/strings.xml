@@ -14,6 +14,7 @@
     <string name="feature_my_app_info">앱 정보</string>
     <string name="feature_my_notification_settings">알림 설정</string>
     <string name="feature_my_app_lock_settings">앱 잠금 설정</string>
+    <string name="feature_my_theme_settings">테마 설정</string>
     <string name="feature_my_account_linking">계정 연동</string>
     <string name="feature_my_account_premium">프리미엄 전환</string>
     <string name="feature_my_linked_with_kakao">카카오로 연동됨</string>

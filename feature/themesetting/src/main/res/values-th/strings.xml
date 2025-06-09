@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_themesetting_title">ธีมของแอป</string>
+    <string name="feature_themesetting_system_theme">ธีมของระบบ</string>
+    <string name="feature_themesetting_dark_theme">ธีมมืด</string>
+    <string name="feature_themesetting_light_theme">ธีมสว่าง</string>
+</resources>

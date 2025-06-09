@@ -18,4 +18,8 @@
     <string name="platform_widget_confirm">確認</string>
     <string name="platform_widget_select">選択</string>
     <string name="platform_widget_hidden_due_to_app_lock">アプリ・ロック設定により非表示</string>
+    <string name="platform_widget_theme_setting">テーマ</string>
+    <string name="platform_widget_system_theme">システムのテーマ</string>
+    <string name="platform_widget_dark_theme">ダークテーマ</string>
+    <string name="platform_widget_light_theme">ライトテーマ</string>
 </resources>

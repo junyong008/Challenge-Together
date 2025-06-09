@@ -17,4 +17,8 @@
     <string name="platform_widget_confirm">Confirm</string>
     <string name="platform_widget_select">Select</string>
     <string name="platform_widget_hidden_due_to_app_lock">Hidden due to App Lock settings</string>
+    <string name="platform_widget_theme_setting">Theme</string>
+    <string name="platform_widget_system_theme">System Theme</string>
+    <string name="platform_widget_dark_theme">Dark Theme</string>
+    <string name="platform_widget_light_theme">Light Theme</string>
 </resources>

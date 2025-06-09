@@ -8,6 +8,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.navigation.Destination
 import com.yjy.common.navigation.Navigator
@@ -24,7 +27,13 @@ class AuthActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val isDarkTheme = isSystemInDarkTheme()
+            val viewModel: AuthViewModel = hiltViewModel()
+            val themeState by viewModel.themeState.collectAsStateWithLifecycle()
+            val isDarkTheme = when (themeState) {
+                true -> true
+                false -> false
+                null -> isSystemInDarkTheme()
+            }
 
             DisposableEffect(isDarkTheme) {
                 enableEdgeToEdge(
@@ -38,6 +47,7 @@ class AuthActivity : ComponentActivity() {
 
             ChallengeTogetherTheme(isDarkTheme = isDarkTheme) {
                 AuthScreen(
+                    viewModel = viewModel,
                     navigateToService = {
                         val intent = navigator.createIntent(Destination.Service)
                         startActivity(intent)

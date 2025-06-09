@@ -14,6 +14,7 @@
     <string name="feature_my_app_info">ऐप जानकारी</string>
     <string name="feature_my_notification_settings">सूचना सेटिंग्स</string>
     <string name="feature_my_app_lock_settings">ऐप लॉक सेटिंग्स</string>
+    <string name="feature_my_theme_settings">थीम सेटिंग्स</string>
     <string name="feature_my_account_linking">खाता लिंक करना</string>
     <string name="feature_my_account_premium">प्रीमियम उन्नयन</string>
     <string name="feature_my_linked_with_kakao">काकाओ से लिंक किया गया</string>

@@ -33,6 +33,7 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override val timeDiff: Flow<Long> = userPreferencesDataSource.timeDiff
     override val isPremium: Flow<Boolean> = userPreferencesDataSource.isPremium
+    override val isDarkTheme: Flow<Boolean?> = userPreferencesDataSource.darkThemePreference
     override val premiumDialogLastShown: Flow<Long> = userPreferencesDataSource.premiumDialogLastShown
 
     override val remoteAppVersion: Flow<Version> =
@@ -103,6 +104,10 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override suspend fun setPremiumDialogLastShown(timeStamp: Long) {
         userPreferencesDataSource.setPremiumDialogLastShown(timeStamp)
+    }
+
+    override suspend fun setDarkTheme(isDarkTheme: Boolean?) {
+        userPreferencesDataSource.setDarkThemePreference(isDarkTheme)
     }
 
     private fun hashIdentifier(identifier: String): String {

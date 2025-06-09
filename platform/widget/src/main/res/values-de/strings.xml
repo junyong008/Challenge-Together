@@ -18,4 +18,8 @@
     <string name="platform_widget_confirm">Bestätigen</string>
     <string name="platform_widget_select">Auswählen</string>
     <string name="platform_widget_hidden_due_to_app_lock">Aufgrund der App-Sperreinstellungen verborgen</string>
+    <string name="platform_widget_theme_setting">Design</string>
+    <string name="platform_widget_system_theme">Systemdesign</string>
+    <string name="platform_widget_dark_theme">Dunkles Design</string>
+    <string name="platform_widget_light_theme">Helles Design</string>
 </resources>

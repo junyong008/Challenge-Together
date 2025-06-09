@@ -60,7 +60,7 @@ fun formatTopTwoTimeUnits(seconds: Long): String {
         days to stringResource(id = R.string.common_core_time_day),
         hours to stringResource(id = R.string.common_core_time_hour),
         minutes to stringResource(id = R.string.common_core_time_minute),
-        secs to stringResource(id = R.string.common_core_time_second)
+        secs to stringResource(id = R.string.common_core_time_second),
     )
 
     val nonZeroParts = parts.filter { it.first > 0 }.take(2)

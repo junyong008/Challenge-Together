@@ -49,6 +49,13 @@ class ServiceViewModel @Inject constructor(
             initialValue = false,
         )
 
+    val themeState = userRepository.isDarkTheme
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null,
+        )
+
     val isOffline = networkMonitor.isOnline
         .onEach { isOnline ->
             if (isOnline) {

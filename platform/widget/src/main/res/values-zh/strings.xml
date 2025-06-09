@@ -18,4 +18,8 @@
     <string name="platform_widget_confirm">确认</string>
     <string name="platform_widget_select">选择</string>
     <string name="platform_widget_hidden_due_to_app_lock">由于应用保护设置而隐藏</string>
+    <string name="platform_widget_theme_setting">主题</string>
+    <string name="platform_widget_system_theme">系统主题</string>
+    <string name="platform_widget_dark_theme">深色主题</string>
+    <string name="platform_widget_light_theme">浅色主题</string>
 </resources>

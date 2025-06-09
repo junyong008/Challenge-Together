@@ -853,7 +853,7 @@ private fun SortItem(
             onClick = null,
             colors = RadioButtonDefaults.colors(
                 selectedColor = CustomColorProvider.colorScheme.brand,
-                unselectedColor = CustomColorProvider.colorScheme.onSurfaceMuted,
+                unselectedColor = CustomColorProvider.colorScheme.onBackgroundMuted,
             ),
         )
     }

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_themesetting_title">Giao diện ứng dụng</string>
+    <string name="feature_themesetting_system_theme">Giao diện hệ thống</string>
+    <string name="feature_themesetting_dark_theme">Giao diện tối</string>
+    <string name="feature_themesetting_light_theme">Giao diện sáng</string>
+</resources>

@@ -47,6 +47,7 @@ import com.yjy.model.challenge.SimpleStartedChallenge
 import com.yjy.platform.widget.R
 import com.yjy.platform.widget.components.GlanceCircularProgressBar
 import com.yjy.platform.widget.di.WidgetEntryPoint
+import com.yjy.platform.widget.model.ThemeType
 import com.yjy.platform.widget.theme.WidgetColorScheme
 import com.yjy.platform.widget.theme.WidgetRadius
 import com.yjy.platform.widget.theme.WidgetTypography
@@ -67,6 +68,7 @@ class ChallengeTallWidget : GlanceAppWidget() {
             val lastUpdate = prefs[longPreferencesKey(LAST_UPDATE_KEY)] ?: 0L
             val challengeId = prefs[intPreferencesKey(CHALLENGE_ID_KEY)]
             val backgroundAlpha = prefs[floatPreferencesKey(BACKGROUND_ALPHA_KEY)] ?: DEFAULT_BACKGROUND_ALPHA
+            val themeType = ThemeType.from(prefs[intPreferencesKey(THEME_TYPE_KEY)])
 
             val localContext = LocalContext.current
             var shouldHideContent by remember { mutableStateOf(false) }
@@ -88,7 +90,7 @@ class ChallengeTallWidget : GlanceAppWidget() {
             Box(
                 modifier = GlanceModifier
                     .fillMaxSize()
-                    .background(WidgetColorScheme.surface(alpha = backgroundAlpha))
+                    .background(WidgetColorScheme.surface(theme = themeType, alpha = backgroundAlpha))
                     .cornerRadius(WidgetRadius.large),
                 contentAlignment = Alignment.Center,
             ) {
@@ -104,13 +106,13 @@ class ChallengeTallWidget : GlanceAppWidget() {
                                     R.string.platform_widget_hidden_due_to_app_lock,
                                 ),
                                 contentScale = ContentScale.Fit,
-                                colorFilter = ColorFilter.tint(WidgetColorScheme.onSurface()),
+                                colorFilter = ColorFilter.tint(WidgetColorScheme.onSurface(theme = themeType)),
                             )
                             Spacer(modifier = GlanceModifier.height(8.dp))
                             Text(
                                 text = localContext.getString(R.string.platform_widget_hidden_due_to_app_lock),
                                 style = WidgetTypography.labelSmall.copy(
-                                    color = WidgetColorScheme.onSurfaceMuted(),
+                                    color = WidgetColorScheme.onSurfaceMuted(theme = themeType),
                                     textAlign = TextAlign.Center,
                                 ),
                             )
@@ -121,7 +123,7 @@ class ChallengeTallWidget : GlanceAppWidget() {
                         Text(
                             text = localContext.getString(R.string.platform_widget_no_challenge),
                             style = WidgetTypography.bodyLarge.copy(
-                                color = WidgetColorScheme.onSurface(),
+                                color = WidgetColorScheme.onSurface(theme = themeType),
                                 textAlign = TextAlign.Center,
                             ),
                         )
@@ -130,6 +132,7 @@ class ChallengeTallWidget : GlanceAppWidget() {
                     else -> {
                         ChallengeContent(
                             challenge = challenge!!,
+                            themeType = themeType,
                             backgroundAlpha = backgroundAlpha,
                             onClick = {
                                 actionRunCallback<WidgetClickAction>(
@@ -149,6 +152,7 @@ class ChallengeTallWidget : GlanceAppWidget() {
     @GlanceComposable
     private fun ChallengeContent(
         challenge: SimpleStartedChallenge,
+        themeType: ThemeType,
         backgroundAlpha: Float,
         onClick: () -> Action,
     ) {
@@ -163,9 +167,9 @@ class ChallengeTallWidget : GlanceAppWidget() {
             GlanceCircularProgressBar(
                 percentage = challenge.calculateProgressPercentage(),
                 iconProvider = ImageProvider(challenge.category.getIconResId()),
-                iconColor = WidgetColorScheme.onBackgroundMuted(),
-                progressColor = WidgetColorScheme.brand(),
-                backgroundColor = WidgetColorScheme.background(alpha = backgroundAlpha),
+                iconColor = WidgetColorScheme.onBackgroundMuted(theme = themeType),
+                progressColor = WidgetColorScheme.brand(theme = themeType),
+                backgroundColor = WidgetColorScheme.background(theme = themeType, alpha = backgroundAlpha),
                 size = 50,
                 thickness = 3f,
             )
@@ -173,7 +177,7 @@ class ChallengeTallWidget : GlanceAppWidget() {
             Text(
                 text = challenge.title,
                 style = WidgetTypography.bodySmall.copy(
-                    color = WidgetColorScheme.onSurfaceMuted(),
+                    color = WidgetColorScheme.onSurfaceMuted(theme = themeType),
                 ),
                 modifier = GlanceModifier.padding(vertical = 4.dp),
             )
@@ -183,7 +187,7 @@ class ChallengeTallWidget : GlanceAppWidget() {
                     context = context,
                 ),
                 style = WidgetTypography.bodyLarge.copy(
-                    color = WidgetColorScheme.onSurface(),
+                    color = WidgetColorScheme.onSurface(theme = themeType),
                 ),
             )
         }
@@ -191,6 +195,7 @@ class ChallengeTallWidget : GlanceAppWidget() {
 
     companion object {
         const val CHALLENGE_ID_KEY = "challengeId"
+        const val THEME_TYPE_KEY = "themeType"
         const val BACKGROUND_ALPHA_KEY = "backgroundAlpha"
         private const val LAST_UPDATE_KEY = "lastUpdate"
         private const val DEFAULT_BACKGROUND_ALPHA = 1f
@@ -213,6 +218,7 @@ class ChallengeTallWidget : GlanceAppWidget() {
         suspend fun updateWidgetConfig(
             context: Context,
             challengeId: Int,
+            themeType: Int,
             alpha: Float,
             appWidgetId: Int,
         ) {
@@ -221,6 +227,7 @@ class ChallengeTallWidget : GlanceAppWidget() {
 
                 updateAppWidgetState(context, glanceId) { prefs ->
                     prefs[floatPreferencesKey(BACKGROUND_ALPHA_KEY)] = alpha
+                    prefs[intPreferencesKey(THEME_TYPE_KEY)] = themeType
                     prefs[intPreferencesKey(CHALLENGE_ID_KEY)] = challengeId
                 }
                 ChallengeTallWidget().update(context, glanceId)

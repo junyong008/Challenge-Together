@@ -18,4 +18,8 @@
     <string name="platform_widget_confirm">Xác nhận</string>
     <string name="platform_widget_select">Chọn</string>
     <string name="platform_widget_hidden_due_to_app_lock">Ẩn do cài đặt Khóa ứng dụng</string>
+    <string name="platform_widget_theme_setting">Giao diện</string>
+    <string name="platform_widget_system_theme">Giao diện hệ thống</string>
+    <string name="platform_widget_dark_theme">Giao diện tối</string>
+    <string name="platform_widget_light_theme">Giao diện sáng</string>
 </resources>

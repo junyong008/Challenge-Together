@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_themesetting_title">Tema dell\'app</string>
+    <string name="feature_themesetting_system_theme">Tema di sistema</string>
+    <string name="feature_themesetting_dark_theme">Tema scuro</string>
+    <string name="feature_themesetting_light_theme">Tema chiaro</string>
+</resources>

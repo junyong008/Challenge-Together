@@ -14,6 +14,7 @@
     <string name="feature_my_app_info">アプリ情報</string>
     <string name="feature_my_notification_settings">通知設定</string>
     <string name="feature_my_app_lock_settings">アプリロック設定</string>
+    <string name="feature_my_theme_settings">テーマ設定</string>
     <string name="feature_my_account_linking">アカウント連携</string>
     <string name="feature_my_account_premium">プレミアムアップグレード</string>
     <string name="feature_my_linked_with_kakao">Kakaoと連携済み</string>

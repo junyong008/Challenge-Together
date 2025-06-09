@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_themesetting_title">应用主题</string>
+    <string name="feature_themesetting_system_theme">系统主题</string>
+    <string name="feature_themesetting_dark_theme">深色主题</string>
+    <string name="feature_themesetting_light_theme">浅色主题</string>
+</resources>

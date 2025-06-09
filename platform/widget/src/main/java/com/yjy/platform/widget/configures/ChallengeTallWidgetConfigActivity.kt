@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -49,9 +50,9 @@ import com.yjy.platform.widget.configures.preview.ChallengeTallWidgetPreview
 import com.yjy.platform.widget.configures.screen.ChallengeSelectScreen
 import com.yjy.platform.widget.configures.screen.HiddenScreen
 import com.yjy.platform.widget.configures.screen.SettingScreen
+import com.yjy.platform.widget.model.ThemeType
 import com.yjy.platform.widget.util.DeepLinkUtils
 import com.yjy.platform.widget.widgets.ChallengeTallWidget
-import com.yjy.platform.widget.widgets.ChallengeWideWidget
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -80,12 +81,19 @@ class ChallengeTallWidgetConfigActivity : ComponentActivity() {
         }
 
         setContent {
-            val isDarkTheme = isSystemInDarkTheme()
+            var themeType by remember { mutableIntStateOf(0) }
+            val isDarkTheme = when (themeType) {
+                ThemeType.LIGHT.value -> false
+                ThemeType.DARK.value -> true
+                else -> isSystemInDarkTheme()
+            }
 
             ChallengeTogetherTheme(isDarkTheme = isDarkTheme) {
                 ChallengeTogetherBackground {
                     ChallengeTallWidgetConfigContent(
                         appWidgetId = appWidgetId,
+                        themeType = themeType,
+                        onThemeTypeChange = { themeType = it.value },
                         onFinish = { result ->
                             setResult(
                                 result,
@@ -104,6 +112,8 @@ class ChallengeTallWidgetConfigActivity : ComponentActivity() {
     @Composable
     fun ChallengeTallWidgetConfigContent(
         appWidgetId: Int,
+        themeType: Int,
+        onThemeTypeChange: (ThemeType) -> Unit,
         onFinish: (result: Int) -> Unit,
         context: Context = LocalContext.current,
         viewModel: WidgetConfigViewModel = hiltViewModel(),
@@ -154,6 +164,7 @@ class ChallengeTallWidgetConfigActivity : ComponentActivity() {
 
                 selectedChallenge = challenges.find { it.id == selectedChallengeId }
                 backgroundAlpha = prefs[floatPreferencesKey(ChallengeTallWidget.BACKGROUND_ALPHA_KEY)] ?: 1f
+                onThemeTypeChange(ThemeType.from(prefs[intPreferencesKey(ChallengeTallWidget.THEME_TYPE_KEY)] ?: 0))
             }
         }
 
@@ -192,9 +203,10 @@ class ChallengeTallWidgetConfigActivity : ComponentActivity() {
                             if (isSettingScreen) {
                                 if (isPremium) {
                                     scope.launch {
-                                        ChallengeWideWidget.updateWidgetConfig(
+                                        ChallengeTallWidget.updateWidgetConfig(
                                             context = context,
                                             challengeId = selectedChallenge?.id ?: 0,
+                                            themeType = themeType,
                                             alpha = backgroundAlpha,
                                             appWidgetId = appWidgetId,
                                         )
@@ -223,6 +235,8 @@ class ChallengeTallWidgetConfigActivity : ComponentActivity() {
                 shouldHideWidgetContents -> HiddenScreen()
                 isSettingScreen -> {
                     SettingScreen(
+                        themeType = ThemeType.from(themeType),
+                        onThemeTypeChange = onThemeTypeChange,
                         backgroundAlpha = backgroundAlpha,
                         onBackgroundAlphaChange = { backgroundAlpha = it },
                         modifier = Modifier.padding(padding),
