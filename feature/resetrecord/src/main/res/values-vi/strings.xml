@@ -6,4 +6,11 @@
     <string name="feature_resetrecord_no_reset_records">Chưa có bản ghi đặt lại nào.</string>
     <string name="feature_resetrecord_encouragement">Hãy tiếp tục và thử thách bản thân!</string>
     <string name="feature_resetrecord_day_suffix">Ngày</string>
+    <string name="feature_resetrecord_last_date_label">Hiện tại</string>
+    <string name="feature_resetrecord_statistics">Thống kê</string>
+    <string name="feature_resetrecord_max_reset_duration">Dài nhất</string>
+    <string name="feature_resetrecord_min_reset_duration">Ngắn nhất</string>
+    <string name="feature_resetrecord_avg_reset_duration">Trung bình</string>
+    <string name="feature_resetrecord_total_reset_count">Tổng cộng</string>
+    <string name="feature_resetrecord_reset_count">%d lần</string>
 </resources>

@@ -25,6 +25,7 @@ import com.yjy.data.network.request.community.EditCommunityPostRequest
 import com.yjy.data.network.request.community.ReportCommunityCommentRequest
 import com.yjy.data.network.request.community.ReportCommunityPostRequest
 import com.yjy.model.common.ReportReason
+import com.yjy.model.community.Banner
 import com.yjy.model.community.DetailedCommunityPost
 import com.yjy.model.community.SimpleCommunityPost
 import com.yjy.model.community.SimpleCommunityPostType
@@ -126,6 +127,9 @@ internal class CommunityRepositoryImpl @Inject constructor(
             pagingData.map { it.toModel() }
         }
     }
+
+    override suspend fun getBanners(): NetworkResult<List<Banner>> =
+        communityDataSource.getBanners().map { it.map { response -> response.toModel() } }
 
     override suspend fun toggleBookmark(postId: Int): NetworkResult<Unit> =
         communityDataSource.toggleBookmark(postId = postId)

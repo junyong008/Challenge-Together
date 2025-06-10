@@ -31,8 +31,8 @@
 <br>
 
 ## 구현
-![graphic](https://github.com/user-attachments/assets/3acf4387-6490-498d-8521-78f2feac05c5)
-![preview](https://github.com/user-attachments/assets/7431dea9-6c95-4d13-80cb-5123e62bb5a6)
+![graphic](https://github.com/user-attachments/assets/3e879126-6cdb-4d38-b168-0bedcb2672df)
+![preview](https://github.com/user-attachments/assets/e50a21f2-a62f-4092-94b7-7956797c59a9)
 ![screenshot1](https://github.com/user-attachments/assets/3e17a494-488b-4635-b934-52697b50a4c2)
 ![screenshot2](https://github.com/user-attachments/assets/f55801e9-6a90-42ae-9f66-948440bf8cc8)
 ![screenshot3](https://github.com/user-attachments/assets/b8a569af-a6bd-44fe-9999-18f5807a2581)

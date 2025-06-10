@@ -1,9 +1,12 @@
 package com.yjy.feature.resetrecord
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,9 +19,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -52,6 +57,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.util.formatLocalDateTime
 import com.yjy.common.core.util.formatTimeDuration
+import com.yjy.common.core.util.formatTopTwoTimeUnits
 import com.yjy.common.designsystem.component.Calendar
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
@@ -65,8 +71,9 @@ import com.yjy.common.ui.EmptyBody
 import com.yjy.common.ui.ErrorBody
 import com.yjy.common.ui.preview.ResetRecordPreviewParameterProvider
 import com.yjy.feature.resetrecord.component.ResetRecordChart
-import com.yjy.feature.resetrecord.model.ResetRecordsUiState
+import com.yjy.feature.resetrecord.model.ResetInfoUiState
 import com.yjy.feature.resetrecord.model.getOrNull
+import com.yjy.model.challenge.ResetInfo
 import com.yjy.model.challenge.ResetRecord
 import kotlinx.coroutines.launch
 
@@ -76,11 +83,11 @@ internal fun ResetRecordRoute(
     modifier: Modifier = Modifier,
     viewModel: ResetRecordViewModel = hiltViewModel(),
 ) {
-    val resetRecords by viewModel.resetRecords.collectAsStateWithLifecycle()
+    val resetInfo by viewModel.resetInfo.collectAsStateWithLifecycle()
 
     ResetRecordScreen(
         modifier = modifier,
-        resetRecordsUiState = resetRecords,
+        resetInfoUiState = resetInfo,
         retryOnError = viewModel::retryOnError,
         onBackClick = onBackClick,
     )
@@ -89,7 +96,7 @@ internal fun ResetRecordRoute(
 @Composable
 internal fun ResetRecordScreen(
     modifier: Modifier = Modifier,
-    resetRecordsUiState: ResetRecordsUiState = ResetRecordsUiState.Loading,
+    resetInfoUiState: ResetInfoUiState = ResetInfoUiState.Loading,
     retryOnError: () -> Unit = {},
     onBackClick: () -> Unit = {},
 ) {
@@ -101,7 +108,7 @@ internal fun ResetRecordScreen(
                 onNavigationClick = onBackClick,
                 titleRes = R.string.feature_resetrecord_title,
                 rightContent = {
-                    if (resetRecordsUiState.getOrNull()?.isNotEmpty() == true) {
+                    if (resetInfoUiState.getOrNull()?.resetRecords?.isNotEmpty() == true) {
                         ModeChangeButton(
                             onClick = { isCalendarMode = !isCalendarMode },
                             modifier = Modifier.padding(end = 4.dp),
@@ -115,9 +122,9 @@ internal fun ResetRecordScreen(
         modifier = modifier.consumeWindowInsets(WindowInsets.navigationBars),
     ) { padding ->
 
-        when (resetRecordsUiState) {
-            ResetRecordsUiState.Error -> ErrorBody(onClickRetry = retryOnError)
-            ResetRecordsUiState.Loading -> {
+        when (resetInfoUiState) {
+            ResetInfoUiState.Error -> ErrorBody(onClickRetry = retryOnError)
+            ResetInfoUiState.Loading -> {
                 LoadingWheel(
                     modifier = Modifier
                         .padding(padding)
@@ -125,8 +132,8 @@ internal fun ResetRecordScreen(
                 )
             }
 
-            is ResetRecordsUiState.Success -> {
-                if (resetRecordsUiState.resetRecords.isEmpty()) {
+            is ResetInfoUiState.Success -> {
+                if (resetInfoUiState.resetInfo.resetRecords.isEmpty()) {
                     EmptyBody(
                         title = stringResource(id = R.string.feature_resetrecord_no_reset_records),
                         description = stringResource(id = R.string.feature_resetrecord_encouragement),
@@ -134,7 +141,8 @@ internal fun ResetRecordScreen(
                 } else {
                     ResetRecordBody(
                         isCalendarMode = isCalendarMode,
-                        resetRecords = resetRecordsUiState.resetRecords,
+                        isCompleted = resetInfoUiState.resetInfo.isCompleted,
+                        resetRecords = resetInfoUiState.resetInfo.resetRecords,
                         modifier = Modifier.padding(padding),
                     )
                 }
@@ -169,11 +177,13 @@ private fun ModeChangeButton(
 @Composable
 private fun ResetRecordBody(
     isCalendarMode: Boolean,
+    isCompleted: Boolean,
     resetRecords: List<ResetRecord>,
     modifier: Modifier = Modifier,
 ) {
     val chartData = resetRecords.sortedBy { it.id }
     val listData = resetRecords.sortedByDescending { it.id }
+    val recordsWithOutCurrent = resetRecords.filterNot { it.isCurrent }
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -252,35 +262,52 @@ private fun ResetRecordBody(
                     }
                 },
                 highlightedDateTimes = listData.map { it.resetDateTime },
+                showTodayIndicator = !isCompleted,
             )
         } else {
-            ResetRecordChart(
-                data = chartData.map { it.resetDateTime },
-                firstRecordInSeconds = chartData.first().recordInSeconds,
-                valueSuffix = stringResource(id = R.string.feature_resetrecord_day_suffix),
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(CustomColorProvider.colorScheme.surface)
-                    .padding(start = 12.dp, end = 18.dp, top = 48.dp, bottom = 20.dp),
-                selectedIndex = (resetRecords.size - 1 - selectedIndex).coerceIn(0, chartData.lastIndex),
-                onDateSelected = { newChartIndex ->
-                    val newListIndex = listData.size - 1 - newChartIndex
-                    selectedIndex = newListIndex
-                    coroutineScope.launch {
-                        listState.scrollToItem(newListIndex)
-                    }
-                },
-                onDragStart = { isDraggingChart = true },
-                onDragEnd = {
-                    coroutineScope.launch {
-                        listState.animateScrollToItem(index = selectedIndex)
-                    }.invokeOnCompletion {
-                        isDraggingChart = false
-                    }
-                },
-            )
+                    .background(CustomColorProvider.colorScheme.surface),
+            ) {
+                ResetRecordChart(
+                    data = chartData.map { it.resetDateTime },
+                    firstRecordInSeconds = chartData.first().recordInSeconds,
+                    lastDateLabel = stringResource(id = R.string.feature_resetrecord_last_date_label),
+                    valueSuffix = stringResource(id = R.string.feature_resetrecord_day_suffix),
+                    treatLastAsNow = !isCompleted,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 12.dp, end = 18.dp, top = 48.dp),
+                    selectedIndex = (resetRecords.size - 1 - selectedIndex).coerceIn(0, chartData.lastIndex),
+                    onDateSelected = { newChartIndex ->
+                        val newListIndex = listData.size - 1 - newChartIndex
+                        selectedIndex = newListIndex
+                        coroutineScope.launch {
+                            listState.scrollToItem(newListIndex)
+                        }
+                    },
+                    onDragStart = { isDraggingChart = true },
+                    onDragEnd = {
+                        coroutineScope.launch {
+                            listState.animateScrollToItem(index = selectedIndex)
+                        }.invokeOnCompletion {
+                            isDraggingChart = false
+                        }
+                    },
+                )
+                Statistics(
+                    maxResetRecord = recordsWithOutCurrent.maxOf { it.recordInSeconds },
+                    minResetRecord = recordsWithOutCurrent.minOf { it.recordInSeconds },
+                    avgResetRecord = recordsWithOutCurrent.map { it.recordInSeconds }.average().toLong(),
+                    resetCount = recordsWithOutCurrent.size,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 4.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
+                )
+            }
         }
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         CompositionLocalProvider(
             LocalOverscrollConfiguration provides null,
         ) {
@@ -292,13 +319,14 @@ private fun ResetRecordBody(
                     .then(listHeightModifier),
                 contentPadding = PaddingValues(bottom = with(LocalDensity.current) { bottomPadding.toDp() }),
             ) {
-                items(
+                itemsIndexed(
                     items = listData,
-                    key = { it.id },
-                ) { record ->
+                    key = { _, record -> record.id },
+                ) { index, record ->
                     RecordItem(
                         record = record,
-                        isSelected = listData.indexOf(record) == selectedIndex,
+                        isLast = index == 0 && !isCompleted,
+                        isSelected = index == selectedIndex,
                         modifier = itemHeightModifier,
                     )
                 }
@@ -308,11 +336,132 @@ private fun ResetRecordBody(
 }
 
 @Composable
+private fun Statistics(
+    maxResetRecord: Long,
+    minResetRecord: Long,
+    avgResetRecord: Long,
+    resetCount: Int,
+    modifier: Modifier = Modifier,
+) {
+    var isExpanded by remember { mutableStateOf(false) }
+    val cornerRadius by animateDpAsState(
+        targetValue = if (isExpanded) 12.dp else 50.dp,
+        label = "CornerRadiusAnimation",
+    )
+
+    val animatedShape = RoundedCornerShape(cornerRadius)
+
+    Column(
+        modifier = modifier
+            .clip(animatedShape)
+            .border(
+                width = 1.dp,
+                color = CustomColorProvider.colorScheme.onSurfaceMuted.copy(alpha = 0.7f),
+                shape = animatedShape,
+            )
+            .animateContentSize(),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { isExpanded = !isExpanded }
+                .padding(vertical = 8.dp, horizontal = 16.dp),
+        ) {
+            Icon(
+                ImageVector.vectorResource(
+                    id = if (isExpanded) {
+                        ChallengeTogetherIcons.ArrowUp
+                    } else {
+                        ChallengeTogetherIcons.ArrowDown
+                    },
+                ),
+                contentDescription = stringResource(id = R.string.feature_resetrecord_statistics),
+                tint = CustomColorProvider.colorScheme.onSurfaceMuted.copy(alpha = 0.7f),
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(
+                text = stringResource(id = R.string.feature_resetrecord_statistics),
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center,
+                color = CustomColorProvider.colorScheme.onSurfaceMuted.copy(alpha = 0.7f),
+            )
+        }
+
+        if (isExpanded) {
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                HorizontalDivider(
+                    thickness = 1.dp,
+                    color = CustomColorProvider.colorScheme.divider,
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                StatisticRow(
+                    label = stringResource(R.string.feature_resetrecord_max_reset_duration),
+                    value = formatTopTwoTimeUnits(maxResetRecord),
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                StatisticRow(
+                    label = stringResource(R.string.feature_resetrecord_min_reset_duration),
+                    value = formatTopTwoTimeUnits(minResetRecord),
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                StatisticRow(
+                    label = stringResource(R.string.feature_resetrecord_avg_reset_duration),
+                    value = formatTopTwoTimeUnits(avgResetRecord),
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                StatisticRow(
+                    label = stringResource(R.string.feature_resetrecord_total_reset_count),
+                    value = stringResource(R.string.feature_resetrecord_reset_count, resetCount),
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+    }
+}
+
+@Composable
+fun StatisticRow(label: String, value: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall,
+            color = CustomColorProvider.colorScheme.onSurfaceMuted,
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.labelSmall,
+            color = CustomColorProvider.colorScheme.onSurface,
+        )
+    }
+}
+
+@Composable
 private fun RecordItem(
     record: ResetRecord,
+    isLast: Boolean = false,
     isSelected: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
+    val borderModifier = when {
+        isSelected -> Modifier.border(
+            width = 1.dp,
+            color = CustomColorProvider.colorScheme.brand,
+            shape = MaterialTheme.shapes.medium,
+        )
+        else -> Modifier
+    }
+
+    val recordColor = if (isLast) {
+        CustomColorProvider.colorScheme.red
+    } else {
+        CustomColorProvider.colorScheme.onSurface
+    }
+
     Column(modifier = modifier) {
         Text(
             text = formatLocalDateTime(record.resetDateTime),
@@ -325,17 +474,7 @@ private fun RecordItem(
                 .fillMaxWidth()
                 .clip(MaterialTheme.shapes.medium)
                 .background(CustomColorProvider.colorScheme.surface)
-                .then(
-                    if (isSelected) {
-                        Modifier.border(
-                            width = 1.dp,
-                            color = CustomColorProvider.colorScheme.brand,
-                            shape = MaterialTheme.shapes.medium,
-                        )
-                    } else {
-                        Modifier
-                    },
-                )
+                .then(borderModifier)
                 .padding(16.dp),
         ) {
             Row(
@@ -353,7 +492,7 @@ private fun RecordItem(
                     text = formatTimeDuration(record.recordInSeconds),
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = CustomColorProvider.colorScheme.onSurface,
+                    color = recordColor,
                 )
             }
             if (record.content.isNotEmpty()) {
@@ -385,10 +524,15 @@ fun ResetRecordScreenPreview(
     @PreviewParameter(ResetRecordPreviewParameterProvider::class)
     resetRecords: List<ResetRecord>,
 ) {
+    val resetInfo = ResetInfo(
+        isCompleted = true,
+        resetRecords = resetRecords,
+    )
+
     ChallengeTogetherTheme {
         ChallengeTogetherBackground {
             ResetRecordScreen(
-                resetRecordsUiState = ResetRecordsUiState.Success(resetRecords),
+                resetInfoUiState = ResetInfoUiState.Success(resetInfo),
             )
         }
     }

@@ -18,4 +18,8 @@
     <string name="platform_widget_confirm">확인</string>
     <string name="platform_widget_select">선택</string>
     <string name="platform_widget_hidden_due_to_app_lock">앱 잠금 설정으로 인해 숨겨짐</string>
+    <string name="platform_widget_theme_setting">테마</string>
+    <string name="platform_widget_system_theme">시스템 테마</string>
+    <string name="platform_widget_dark_theme">다크 테마</string>
+    <string name="platform_widget_light_theme">라이트 테마</string>
 </resources>

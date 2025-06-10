@@ -17,6 +17,7 @@ import com.yjy.data.network.datasource.StartedChallengeDataSource
 import com.yjy.data.network.request.challenge.ResetChallengeRequest
 import com.yjy.model.challenge.ChallengeRank
 import com.yjy.model.challenge.DetailedStartedChallenge
+import com.yjy.model.challenge.ResetInfo
 import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
 import kotlinx.coroutines.flow.Flow
@@ -96,10 +97,29 @@ internal class StartedChallengeRepositoryImpl @Inject constructor(
         currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),
     )
 
-    override suspend fun getResetRecords(challengeId: Int): NetworkResult<List<ResetRecord>> =
-        startedChallengeDataSource.getResetRecords(challengeId).map { response ->
-            response.map { it.toModel() }
+    override suspend fun getResetInfo(challengeId: Int): Flow<NetworkResult<ResetInfo>> {
+        val resetInfoResponse = startedChallengeDataSource.getResetInfo(challengeId)
+
+        return tickerFlow.map { currentTime ->
+            val currentItem = ResetRecord(
+                id = Int.MAX_VALUE,
+                resetDateTime = currentTime,
+                recordInSeconds = 0,
+                content = "",
+                isCurrent = true,
+            )
+
+            resetInfoResponse.map { result ->
+                val resetInfo = result.toModel()
+                if (!resetInfo.isCompleted && resetInfo.resetRecords.isNotEmpty()) {
+                    val updatedRecords = (resetInfo.resetRecords + currentItem).sortedBy { it.id }
+                    resetInfo.copy(resetRecords = updatedRecords)
+                } else {
+                    resetInfo
+                }
+            }
         }
+    }
 
     override suspend fun getChallengeRanking(challengeId: Int): Flow<NetworkResult<List<ChallengeRank>>> =
         startedChallengeDataSource.getChallengeRanking(challengeId).fold(

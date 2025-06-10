@@ -3,6 +3,7 @@ package com.yjy.data.community.api
 import androidx.paging.PagingData
 import com.yjy.common.network.NetworkResult
 import com.yjy.model.common.ReportReason
+import com.yjy.model.community.Banner
 import com.yjy.model.community.DetailedCommunityPost
 import com.yjy.model.community.SimpleCommunityPost
 import com.yjy.model.community.SimpleCommunityPostType
@@ -18,6 +19,7 @@ interface CommunityRepository {
         languageCode: String,
         postType: SimpleCommunityPostType,
     ): Flow<PagingData<SimpleCommunityPost>>
+    suspend fun getBanners(): NetworkResult<List<Banner>>
     suspend fun toggleBookmark(postId: Int): NetworkResult<Unit>
     suspend fun toggleLike(postId: Int): NetworkResult<Unit>
     suspend fun deletePost(postId: Int): NetworkResult<Unit>

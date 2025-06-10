@@ -6,4 +6,11 @@
     <string name="feature_resetrecord_no_reset_records">अभी तक कोई रीसेट रिकॉर्ड नहीं हैं।</string>
     <string name="feature_resetrecord_encouragement">जारी रखें और खुद को चुनौती देते रहें!</string>
     <string name="feature_resetrecord_day_suffix">दिन</string>
+    <string name="feature_resetrecord_last_date_label">वर्तमान</string>
+    <string name="feature_resetrecord_statistics">आँकड़े</string>
+    <string name="feature_resetrecord_max_reset_duration">अधिकतम</string>
+    <string name="feature_resetrecord_min_reset_duration">न्यूनतम</string>
+    <string name="feature_resetrecord_avg_reset_duration">औसत</string>
+    <string name="feature_resetrecord_total_reset_count">कुल</string>
+    <string name="feature_resetrecord_reset_count">%d बार</string>
 </resources>

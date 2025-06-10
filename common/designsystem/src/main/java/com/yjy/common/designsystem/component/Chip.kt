@@ -46,7 +46,11 @@ fun ChallengeTogetherChip(
             } else {
                 CustomColorProvider.colorScheme.onChipBackground
             },
-            style = MaterialTheme.typography.labelSmall,
+            style = if (isSelected) {
+                MaterialTheme.typography.bodySmall
+            } else {
+                MaterialTheme.typography.labelSmall
+            },
         )
     }
 }

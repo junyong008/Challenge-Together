@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_themesetting_title">ऐप थीम</string>
+    <string name="feature_themesetting_system_theme">सिस्टम थीम</string>
+    <string name="feature_themesetting_dark_theme">डार्क थीम</string>
+    <string name="feature_themesetting_light_theme">लाइट थीम</string>
+</resources>

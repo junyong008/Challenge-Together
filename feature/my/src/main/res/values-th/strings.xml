@@ -14,6 +14,7 @@
     <string name="feature_my_app_info">ข้อมูลแอป</string>
     <string name="feature_my_notification_settings">การตั้งค่าการแจ้งเตือน</string>
     <string name="feature_my_app_lock_settings">การตั้งค่าล็อคแอป</string>
+    <string name="feature_my_theme_settings">การตั้งค่าธีม</string>
     <string name="feature_my_account_linking">การเชื่อมโยงบัญชีผู้ใช้</string>
     <string name="feature_my_account_premium">การอัปเกรดเป็นพรีเมียม</string>
     <string name="feature_my_linked_with_kakao">เชื่อมโยงกับ Kakao</string>

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_themesetting_title">アプリのテーマ</string>
+    <string name="feature_themesetting_system_theme">システムのテーマ</string>
+    <string name="feature_themesetting_dark_theme">ダークテーマ</string>
+    <string name="feature_themesetting_light_theme">ライトテーマ</string>
+</resources>

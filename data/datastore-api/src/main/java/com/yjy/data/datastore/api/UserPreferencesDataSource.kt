@@ -6,9 +6,11 @@ interface UserPreferencesDataSource {
     val timeDiff: Flow<Long>
     val isPremium: Flow<Boolean>
     val premiumDialogLastShown: Flow<Long>
+    val darkThemePreference: Flow<Boolean?>
     suspend fun setTimeDiff(diff: Long)
     suspend fun setIsPremium(isPremium: Boolean)
     suspend fun getFcmToken(): String?
     suspend fun setFcmToken(token: String?)
     suspend fun setPremiumDialogLastShown(timestamp: Long)
+    suspend fun setDarkThemePreference(value: Boolean?)
 }

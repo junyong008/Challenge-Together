@@ -825,22 +825,6 @@ private fun ModeInfo(mode: Mode) {
             style = MaterialTheme.typography.labelSmall,
             color = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
-        Spacer(modifier = Modifier.width(4.dp))
-        Icon(
-            ImageVector.vectorResource(
-                id = when (mode) {
-                    Mode.CHALLENGE -> ChallengeTogetherIcons.Trophy
-                    Mode.FREE -> ChallengeTogetherIcons.TrophyOff
-                },
-            ),
-            contentDescription = stringResource(
-                id = when (mode) {
-                    Mode.CHALLENGE -> R.string.feature_startedchallenge_challenge_mode
-                    Mode.FREE -> R.string.feature_startedchallenge_free_mode
-                },
-            ),
-            tint = CustomColorProvider.colorScheme.onBackgroundMuted,
-        )
     }
 }
 

@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -132,20 +131,12 @@ internal fun ChallengeRankingScreen(
     Scaffold(
         topBar = {
             Column(
-                modifier = Modifier
-                    .clip(
-                        MaterialTheme.shapes.medium.copy(
-                            topStart = CornerSize(0),
-                            topEnd = CornerSize(0),
-                        ),
-                    )
-                    .background(CustomColorProvider.colorScheme.surface),
+                modifier = Modifier.background(CustomColorProvider.colorScheme.surface),
             ) {
                 ChallengeTogetherTopAppBar(
                     onNavigationClick = onBackClick,
                     titleRes = R.string.feature_challengeranking_title,
                     backgroundColor = CustomColorProvider.colorScheme.surface,
-                    modifier = Modifier.padding(vertical = 16.dp),
                 )
                 challengeRanksUiState.challengeRanksOrNull()?.findMyRank()?.let { myRank ->
                     RankingHeader(myChallengeRank = myRank)
@@ -206,7 +197,7 @@ private fun RankingBody(
         item {
             Spacer(modifier = Modifier.height(16.dp))
             TipDescriptions()
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(100.dp))
         }
     }
 }

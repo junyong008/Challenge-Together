@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 interface UserRepository {
     val timeDiff: Flow<Long>
     val isPremium: Flow<Boolean>
+    val isDarkTheme: Flow<Boolean?>
     val remoteAppVersion: Flow<Version>
     val maintenanceEndTime: Flow<LocalDateTime?>
     val premiumDialogLastShown: Flow<Long>
@@ -25,4 +26,5 @@ interface UserRepository {
     suspend fun checkPremium()
     suspend fun clearLocalData()
     suspend fun setPremiumDialogLastShown(timeStamp: Long)
+    suspend fun setDarkTheme(isDarkTheme: Boolean?)
 }

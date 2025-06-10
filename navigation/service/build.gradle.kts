@@ -46,6 +46,7 @@ dependencies {
         projects.feature.community,
         projects.feature.my,
         projects.feature.applock,
+        projects.feature.themesetting,
         projects.feature.completedchallenges,
         projects.feature.notification,
         projects.feature.notificationsetting,

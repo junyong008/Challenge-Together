@@ -14,6 +14,7 @@
     <string name="feature_my_app_info">Infos sur l\'application</string>
     <string name="feature_my_notification_settings">Paramètres de Notification</string>
     <string name="feature_my_app_lock_settings">Paramètres de Verrouillage de l’Application</string>
+    <string name="feature_my_theme_settings">Paramètres du thème</string>
     <string name="feature_my_account_linking">Liaison de Compte</string>
     <string name="feature_my_account_premium">Mise à Niveau Premium</string>
     <string name="feature_my_linked_with_kakao">Connecté avec Kakao</string>

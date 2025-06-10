@@ -6,4 +6,11 @@
     <string name="feature_resetrecord_no_reset_records">暂无重置记录。</string>
     <string name="feature_resetrecord_encouragement">继续努力，挑战自我！</string>
     <string name="feature_resetrecord_day_suffix">天</string>
+    <string name="feature_resetrecord_last_date_label">当前</string>
+    <string name="feature_resetrecord_statistics">统计</string>
+    <string name="feature_resetrecord_max_reset_duration">最长</string>
+    <string name="feature_resetrecord_min_reset_duration">最短</string>
+    <string name="feature_resetrecord_avg_reset_duration">平均</string>
+    <string name="feature_resetrecord_total_reset_count">总计</string>
+    <string name="feature_resetrecord_reset_count">%d 次</string>
 </resources>

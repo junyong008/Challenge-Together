@@ -61,6 +61,9 @@ sealed interface ServiceRoute : Route {
     }
 
     @Serializable
+    data object ThemeSetting : ServiceRoute
+
+    @Serializable
     data object Notification : ServiceRoute
 
     @Serializable

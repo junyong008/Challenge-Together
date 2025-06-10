@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.yjy.common.core.extensions.restartableStateIn
 import com.yjy.common.network.onFailure
 import com.yjy.common.network.onSuccess
 import com.yjy.data.community.api.CommunityRepository
 import com.yjy.domain.GetCommunityPostsUseCase
+import com.yjy.feature.community.model.BannerUiState
 import com.yjy.feature.community.model.CommunityUiEvent
 import com.yjy.model.community.SimpleCommunityPostType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +21,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -92,6 +95,20 @@ class CommunityViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(),
             initialValue = PagingData.empty(),
         )
+
+    val banners = flow {
+        communityRepository.getBanners()
+            .onSuccess { emit(BannerUiState.Success(it)) }
+            .onFailure { emit(BannerUiState.Error) }
+    }.restartableStateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = BannerUiState.Loading,
+    )
+
+    fun reloadBanners() {
+        banners.restart()
+    }
 
     fun toggleGlobalMode() {
         _isGlobalActive.value = !_isGlobalActive.value

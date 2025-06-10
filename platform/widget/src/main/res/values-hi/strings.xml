@@ -18,4 +18,8 @@
     <string name="platform_widget_confirm">पुष्टि करें</string>
     <string name="platform_widget_select">चुनें</string>
     <string name="platform_widget_hidden_due_to_app_lock">ऐप लॉक सेटिंग के कारण छिपा हुआ</string>
+    <string name="platform_widget_theme_setting">थीम</string>
+    <string name="platform_widget_system_theme">सिस्टम थीम</string>
+    <string name="platform_widget_dark_theme">डार्क थीम</string>
+    <string name="platform_widget_light_theme">लाइट थीम</string>
 </resources>

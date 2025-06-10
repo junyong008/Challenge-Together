@@ -5,4 +5,11 @@
     <string name="feature_resetrecord_no_reset_records">No reset records yet.</string>
     <string name="feature_resetrecord_encouragement">Keep it up and keep challenging yourself!</string>
     <string name="feature_resetrecord_day_suffix">D</string>
+    <string name="feature_resetrecord_last_date_label">Now</string>
+    <string name="feature_resetrecord_statistics">Statistics</string>
+    <string name="feature_resetrecord_max_reset_duration">Max</string>
+    <string name="feature_resetrecord_min_reset_duration">Min</string>
+    <string name="feature_resetrecord_avg_reset_duration">Avg</string>
+    <string name="feature_resetrecord_total_reset_count">Total</string>
+    <string name="feature_resetrecord_reset_count">%d times</string>
 </resources>
