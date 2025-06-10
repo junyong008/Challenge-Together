@@ -20,7 +20,6 @@ fun NavController.navigateToMy(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.myScreen(
     onNotificationSettingClick: () -> Unit,
     onAppLockSettingClick: () -> Unit,
-    onThemeSettingClick: () -> Unit,
     onAccountLinkClick: () -> Unit,
     onPremiumClick: () -> Unit,
     onChangeNicknameClick: () -> Unit,
@@ -37,7 +36,6 @@ fun NavGraphBuilder.myScreen(
         MyRoute(
             onNotificationSettingClick = onNotificationSettingClick,
             onAppLockSettingClick = onAppLockSettingClick,
-            onThemeSettingClick = onThemeSettingClick,
             onAccountLinkClick = onAccountLinkClick,
             onPremiumClick = onPremiumClick,
             onChangeNicknameClick = onChangeNicknameClick,

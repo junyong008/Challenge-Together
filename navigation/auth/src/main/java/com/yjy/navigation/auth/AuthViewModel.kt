@@ -16,13 +16,6 @@ class AuthViewModel @Inject constructor(
     userRepository: UserRepository,
 ) : ViewModel() {
 
-    val themeState = userRepository.isDarkTheme
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null,
-        )
-
     val remoteAppVersion = userRepository.remoteAppVersion
         .stateIn(
             scope = viewModelScope,

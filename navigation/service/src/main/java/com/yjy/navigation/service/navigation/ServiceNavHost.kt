@@ -47,8 +47,6 @@ import com.yjy.feature.resetrecord.navigation.navigateToResetRecord
 import com.yjy.feature.resetrecord.navigation.resetRecordScreen
 import com.yjy.feature.startedchallenge.navigation.navigateToStartedChallenge
 import com.yjy.feature.startedchallenge.navigation.startedChallengeScreen
-import com.yjy.feature.themesetting.navigation.navigateToThemeSetting
-import com.yjy.feature.themesetting.navigation.themeSettingScreen
 import com.yjy.feature.together.navigation.togetherNavGraph
 import com.yjy.feature.waitingchallenge.navigation.navigateToWaitingChallenge
 import com.yjy.feature.waitingchallenge.navigation.waitingChallengeScreen
@@ -106,7 +104,6 @@ internal fun ServiceNavHost(
         myScreen(
             onNotificationSettingClick = navController::navigateToNotificationSetting,
             onAppLockSettingClick = navController::navigateToAppLockSetting,
-            onThemeSettingClick = navController::navigateToThemeSetting,
             onAccountLinkClick = navController::navigateToLinkAccount,
             onPremiumClick = navController::navigateToPremium,
             onChangeNicknameClick = navController::navigateToChangeName,
@@ -118,9 +115,6 @@ internal fun ServiceNavHost(
             navController = navController,
             onPremiumExploreClick = navController::navigateToPremium,
             onShowSnackbar = onShowSnackbar,
-        )
-        themeSettingScreen(
-            onBackClick = navController::popBackStack,
         )
         completedChallengesScreen(
             onBackClick = navController::popBackStack,
