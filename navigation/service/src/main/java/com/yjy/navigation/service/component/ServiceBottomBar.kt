@@ -105,7 +105,11 @@ private fun RowScope.ServiceBottomBarItem(
             } else {
                 CustomColorProvider.colorScheme.onSurfaceMuted
             },
-            style = MaterialTheme.typography.labelSmall,
+            style = if (selected) {
+                MaterialTheme.typography.headlineLarge
+            } else {
+                MaterialTheme.typography.headlineSmall
+            },
             textAlign = TextAlign.Center,
         )
     }

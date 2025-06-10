@@ -413,6 +413,7 @@ fun CalendarDialog(
                 rangeTextColor = CustomColorProvider.colorScheme.onBrandBright,
                 disabledColor = CustomColorProvider.colorScheme.disable,
                 dividerColor = CustomColorProvider.colorScheme.divider,
+                todayIndicatorColor = CustomColorProvider.colorScheme.brandDim,
             ),
         )
         Spacer(modifier = Modifier.size(8.dp))

@@ -91,7 +91,7 @@ fun ChallengeTogetherTopAppBar(
                     text = stringResource(id = it),
                     textAlign = TextAlign.Center,
                     color = contentColor,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleSmall,
                 )
             }
         }

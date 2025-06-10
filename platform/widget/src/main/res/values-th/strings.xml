@@ -18,4 +18,8 @@
     <string name="platform_widget_confirm">ยืนยัน</string>
     <string name="platform_widget_select">เลือก</string>
     <string name="platform_widget_hidden_due_to_app_lock">ถูกซ่อนเนื่องจากการตั้งค่าล็อกแอป</string>
+    <string name="platform_widget_theme_setting">ธีม</string>
+    <string name="platform_widget_system_theme">ธีมของระบบ</string>
+    <string name="platform_widget_dark_theme">ธีมมืด</string>
+    <string name="platform_widget_light_theme">ธีมสว่าง</string>
 </resources>

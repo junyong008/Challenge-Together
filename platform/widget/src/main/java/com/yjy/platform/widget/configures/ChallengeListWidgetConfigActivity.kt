@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -27,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.floatPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.getAppWidgetState
 import androidx.glance.state.PreferencesGlanceStateDefinition
@@ -40,6 +42,7 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.platform.widget.R
 import com.yjy.platform.widget.configures.preview.ChallengeListWidgetPreview
 import com.yjy.platform.widget.configures.screen.SettingScreen
+import com.yjy.platform.widget.model.ThemeType
 import com.yjy.platform.widget.widgets.ChallengeListWidget
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -69,11 +72,18 @@ class ChallengeListWidgetConfigActivity : ComponentActivity() {
         }
 
         setContent {
-            val isDarkTheme = isSystemInDarkTheme()
+            var themeType by remember { mutableIntStateOf(0) }
+            val isDarkTheme = when (themeType) {
+                ThemeType.LIGHT.value -> false
+                ThemeType.DARK.value -> true
+                else -> isSystemInDarkTheme()
+            }
 
             ChallengeTogetherTheme(isDarkTheme = isDarkTheme) {
                 ChallengeTogetherBackground {
                     ChallengeListWidgetConfigContent(
+                        themeType = themeType,
+                        onThemeTypeChange = { themeType = it.value },
                         appWidgetId = appWidgetId,
                         onFinish = {
                             finish()
@@ -87,6 +97,8 @@ class ChallengeListWidgetConfigActivity : ComponentActivity() {
     @Composable
     fun ChallengeListWidgetConfigContent(
         appWidgetId: Int,
+        themeType: Int,
+        onThemeTypeChange: (ThemeType) -> Unit,
         onFinish: () -> Unit,
         context: Context = LocalContext.current,
         viewModel: WidgetConfigViewModel = hiltViewModel(),
@@ -108,6 +120,7 @@ class ChallengeListWidgetConfigActivity : ComponentActivity() {
 
             val prefs = getAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId)
             backgroundAlpha = prefs[floatPreferencesKey(ChallengeListWidget.BACKGROUND_ALPHA_KEY)] ?: 1f
+            onThemeTypeChange(ThemeType.from(prefs[intPreferencesKey(ChallengeListWidget.THEME_TYPE_KEY)] ?: 0))
         }
 
         Scaffold(
@@ -139,6 +152,7 @@ class ChallengeListWidgetConfigActivity : ComponentActivity() {
                             scope.launch {
                                 ChallengeListWidget.updateWidgetConfig(
                                     context = context,
+                                    themeType = themeType,
                                     alpha = backgroundAlpha,
                                     appWidgetId = appWidgetId,
                                 )
@@ -156,7 +170,9 @@ class ChallengeListWidgetConfigActivity : ComponentActivity() {
             containerColor = CustomColorProvider.colorScheme.background,
         ) { padding ->
             SettingScreen(
+                themeType = ThemeType.from(themeType),
                 backgroundAlpha = backgroundAlpha,
+                onThemeTypeChange = onThemeTypeChange,
                 onBackgroundAlphaChange = { backgroundAlpha = it },
                 modifier = Modifier.padding(padding),
             ) {

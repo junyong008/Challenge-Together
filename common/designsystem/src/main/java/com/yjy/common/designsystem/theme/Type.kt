@@ -81,4 +81,14 @@ internal val ChallengeTogetherTypography = Typography(
         fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
     ),
+    headlineLarge = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 10.sp,
+    ),
+    headlineSmall = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 10.sp,
+    ),
 )

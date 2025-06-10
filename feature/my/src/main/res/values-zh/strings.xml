@@ -14,6 +14,7 @@
     <string name="feature_my_app_info">应用信息</string>
     <string name="feature_my_notification_settings">通知设置</string>
     <string name="feature_my_app_lock_settings">应用锁设置</string>
+    <string name="feature_my_theme_settings">主题设置</string>
     <string name="feature_my_account_linking">账户关联</string>
     <string name="feature_my_account_premium">高级升级</string>
     <string name="feature_my_linked_with_kakao">已关联Kakao</string>

@@ -88,6 +88,7 @@ import timber.log.Timber
 internal fun MyRoute(
     onNotificationSettingClick: () -> Unit,
     onAppLockSettingClick: () -> Unit,
+    onThemeSettingClick: () -> Unit,
     onAccountLinkClick: () -> Unit,
     onPremiumClick: () -> Unit,
     onChangeNicknameClick: () -> Unit,
@@ -114,6 +115,7 @@ internal fun MyRoute(
         processAction = viewModel::processAction,
         onNotificationSettingClick = onNotificationSettingClick,
         onAppLockSettingClick = onAppLockSettingClick,
+        onThemeSettingClick = onThemeSettingClick,
         onAccountLinkClick = onAccountLinkClick,
         onPremiumClick = onPremiumClick,
         onChangeNicknameClick = onChangeNicknameClick,
@@ -136,6 +138,7 @@ internal fun MyScreen(
     processAction: (MyUiAction) -> Unit = {},
     onNotificationSettingClick: () -> Unit = {},
     onAppLockSettingClick: () -> Unit = {},
+    onThemeSettingClick: () -> Unit = {},
     onAccountLinkClick: () -> Unit = {},
     onPremiumClick: () -> Unit = {},
     onChangeNicknameClick: () -> Unit = {},
@@ -221,6 +224,7 @@ internal fun MyScreen(
                     SettingSection(
                         onNotificationSettingClick = onNotificationSettingClick,
                         onAppLockSettingClick = onAppLockSettingClick,
+                        onThemeSettingClick = onThemeSettingClick,
                         modifier = Modifier.padding(horizontal = 24.dp),
                     )
                     AccountSection(
@@ -461,6 +465,7 @@ private fun AccountTypeCard(
 private fun SettingSection(
     onNotificationSettingClick: () -> Unit,
     onAppLockSettingClick: () -> Unit,
+    onThemeSettingClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
@@ -475,6 +480,12 @@ private fun SettingSection(
             titleResId = R.string.feature_my_notification_settings,
             iconResId = ChallengeTogetherIcons.Bell,
             onClick = onNotificationSettingClick,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        MyCard(
+            titleResId = R.string.feature_my_theme_settings,
+            iconResId = ChallengeTogetherIcons.Theme,
+            onClick = onThemeSettingClick,
         )
         Spacer(modifier = Modifier.height(8.dp))
         MyCard(

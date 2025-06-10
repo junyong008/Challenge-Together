@@ -14,6 +14,7 @@
     <string name="feature_my_app_info">Thông tin ứng dụng</string>
     <string name="feature_my_notification_settings">Cài đặt thông báo</string>
     <string name="feature_my_app_lock_settings">Cài đặt khóa ứng dụng</string>
+    <string name="feature_my_theme_settings">Cài đặt giao diện</string>
     <string name="feature_my_account_linking">Liên kết tài khoản</string>
     <string name="feature_my_account_premium">Nâng cấp Premium</string>
     <string name="feature_my_linked_with_kakao">Liên kết với Kakao</string>

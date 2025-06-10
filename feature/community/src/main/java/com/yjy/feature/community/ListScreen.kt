@@ -12,6 +12,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -43,7 +44,6 @@ import com.yjy.common.designsystem.component.ClickableText
 import com.yjy.common.designsystem.component.LoadingWheel
 import com.yjy.common.designsystem.component.SearchTextField
 import com.yjy.common.designsystem.component.SnackbarType
-import com.yjy.common.designsystem.component.TitleWithDescription
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
@@ -52,7 +52,11 @@ import com.yjy.common.ui.EmptyBody
 import com.yjy.common.ui.ErrorBody
 import com.yjy.common.ui.preview.CommunityPostPreviewParameterProvider
 import com.yjy.feature.community.component.PostsBody
+import com.yjy.feature.community.model.BannerUiState
 import com.yjy.feature.community.model.CommunityUiEvent
+import com.yjy.feature.community.model.getBannerOrNull
+import com.yjy.feature.community.model.isError
+import com.yjy.feature.community.model.isLoading
 import com.yjy.model.community.SimpleCommunityPost
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -68,6 +72,7 @@ internal fun ListRoute(
     viewModel: CommunityViewModel = hiltViewModel(),
 ) {
     val posts = viewModel.allPosts.collectAsLazyPagingItems()
+    val banners by viewModel.banners.collectAsStateWithLifecycle()
     val isGlobalActive by viewModel.isGlobalActive.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
 
@@ -76,6 +81,7 @@ internal fun ListRoute(
         searchQuery = searchQuery,
         isGlobalActive = isGlobalActive,
         posts = posts,
+        banners = banners,
         uiEvent = viewModel.uiEvent,
         updateSearchQuery = viewModel::updateSearchQuery,
         updateLanguageCode = viewModel::updateLanguageCode,
@@ -84,6 +90,7 @@ internal fun ListRoute(
         onBookmarkedClick = onBookmarkedClick,
         onAuthoredClick = onAuthoredClick,
         onCommentedClick = onCommentedClick,
+        onRefreshBanners = viewModel::reloadBanners,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -94,6 +101,7 @@ internal fun ListScreen(
     searchQuery: String = "",
     isGlobalActive: Boolean = false,
     posts: LazyPagingItems<SimpleCommunityPost>,
+    banners: BannerUiState = BannerUiState.Loading,
     uiEvent: Flow<CommunityUiEvent> = flowOf(),
     updateSearchQuery: (String) -> Unit = {},
     updateLanguageCode: (String) -> Unit = {},
@@ -102,6 +110,7 @@ internal fun ListScreen(
     onBookmarkedClick: () -> Unit = {},
     onAuthoredClick: () -> Unit = {},
     onCommentedClick: () -> Unit = {},
+    onRefreshBanners: () -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     val context = LocalContext.current
@@ -152,12 +161,13 @@ internal fun ListScreen(
 
     Column(modifier = modifier.fillMaxSize()) {
         Row(
-            modifier = Modifier.padding(start = 32.dp, top = 32.dp, bottom = 32.dp, end = 20.dp),
+            modifier = Modifier.padding(start = 32.dp, top = 16.dp, bottom = 16.dp, end = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            TitleWithDescription(
-                titleRes = R.string.feature_community_title,
-                descriptionRes = R.string.feature_community_description,
+            Text(
+                text = stringResource(id = R.string.feature_community_title),
+                style = MaterialTheme.typography.titleSmall,
+                color = CustomColorProvider.colorScheme.onBackground,
                 modifier = Modifier.weight(1f),
             )
             SearchButton(
@@ -182,8 +192,13 @@ internal fun ListScreen(
             color = CustomColorProvider.colorScheme.divider,
         )
         when {
-            isLoading -> LoadingWheel()
-            isError -> ErrorBody(onClickRetry = { posts.refresh() })
+            isLoading || banners.isLoading() -> LoadingWheel()
+            isError || banners.isError() -> ErrorBody(
+                onClickRetry = {
+                    posts.refresh()
+                    onRefreshBanners()
+                },
+            )
             isIdle && isEmpty && searchQuery.isEmpty() -> {
                 EmptyBody(
                     title = stringResource(id = R.string.feature_community_empty_title),
@@ -201,6 +216,7 @@ internal fun ListScreen(
             else -> {
                 PostsBody(
                     posts = posts,
+                    banner = banners.getBannerOrNull()?.find { it.language == languageCode },
                     onPostClick = { onPostClick(it.postId) },
                     searchQuery = searchQuery,
                 )

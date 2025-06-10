@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_themesetting_title">테마 설정</string>
+    <string name="feature_themesetting_system_theme">시스템 테마</string>
+    <string name="feature_themesetting_dark_theme">다크 테마</string>
+    <string name="feature_themesetting_light_theme">라이트 테마</string>
+</resources>

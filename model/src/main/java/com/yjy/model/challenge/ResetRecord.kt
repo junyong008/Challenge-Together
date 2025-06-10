@@ -7,4 +7,5 @@ data class ResetRecord(
     val resetDateTime: LocalDateTime,
     val recordInSeconds: Long,
     val content: String,
+    val isCurrent: Boolean,
 )

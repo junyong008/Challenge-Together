@@ -14,6 +14,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.core.net.toUri
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.deeplink.DeepLinkResult
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -46,8 +48,15 @@ class ServiceActivity : AppCompatActivity() {
         adsManager.loadAds()
 
         setContent {
-            val isDarkTheme = isSystemInDarkTheme()
+            val viewModel: ServiceViewModel = hiltViewModel()
+            val themeState by viewModel.themeState.collectAsStateWithLifecycle()
             var shouldShowPremiumDialog by rememberSaveable { mutableStateOf(false) }
+
+            val isDarkTheme = when (themeState) {
+                true -> true
+                false -> false
+                null -> isSystemInDarkTheme()
+            }
 
             DisposableEffect(isDarkTheme) {
                 enableEdgeToEdge(
@@ -71,6 +80,7 @@ class ServiceActivity : AppCompatActivity() {
                 }
 
                 ServiceScreen(
+                    viewModel = viewModel,
                     navigateToAuth = {
                         val intent = navigator.createIntent(Destination.Auth)
                         startActivity(intent)

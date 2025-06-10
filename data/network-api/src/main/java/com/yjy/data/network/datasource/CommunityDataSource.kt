@@ -6,6 +6,7 @@ import com.yjy.data.network.request.community.AddCommunityPostRequest
 import com.yjy.data.network.request.community.EditCommunityPostRequest
 import com.yjy.data.network.request.community.ReportCommunityCommentRequest
 import com.yjy.data.network.request.community.ReportCommunityPostRequest
+import com.yjy.data.network.response.community.GetBannersResponse
 import com.yjy.data.network.response.community.GetPostResponse
 import com.yjy.data.network.response.community.GetPostsResponse
 
@@ -19,6 +20,7 @@ interface CommunityDataSource {
         lastPostId: Int,
         limit: Int,
     ): NetworkResult<List<GetPostsResponse>>
+    suspend fun getBanners(): NetworkResult<List<GetBannersResponse>>
     suspend fun getBookmarkedPosts(lastPostId: Int, limit: Int): NetworkResult<List<GetPostsResponse>>
     suspend fun getAuthoredPosts(lastPostId: Int, limit: Int): NetworkResult<List<GetPostsResponse>>
     suspend fun getCommentedPosts(lastPostId: Int, limit: Int): NetworkResult<List<GetPostsResponse>>

@@ -58,6 +58,7 @@ object ChallengeTogetherIcons {
     val Sort = R.drawable.ic_sort
     val Source = R.drawable.ic_source
     val Support = R.drawable.ic_support
+    val Theme = R.drawable.ic_theme
     val Timer = R.drawable.ic_timer
     val Together = R.drawable.ic_together
     val Trash = R.drawable.ic_trash

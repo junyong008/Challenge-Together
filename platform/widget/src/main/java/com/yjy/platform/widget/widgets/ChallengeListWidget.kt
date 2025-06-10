@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.floatPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceComposable
@@ -52,6 +53,7 @@ import com.yjy.model.challenge.core.SortOrder
 import com.yjy.platform.widget.R
 import com.yjy.platform.widget.components.GlanceCircularProgressBar
 import com.yjy.platform.widget.di.WidgetEntryPoint
+import com.yjy.platform.widget.model.ThemeType
 import com.yjy.platform.widget.theme.WidgetColorScheme
 import com.yjy.platform.widget.theme.WidgetRadius
 import com.yjy.platform.widget.theme.WidgetTypography
@@ -71,6 +73,7 @@ class ChallengeListWidget : GlanceAppWidget() {
             val prefs = currentState<Preferences>()
             val lastUpdate = prefs[longPreferencesKey(LAST_UPDATE_KEY)] ?: 0L
             val backgroundAlpha = prefs[floatPreferencesKey(BACKGROUND_ALPHA_KEY)] ?: DEFAULT_BACKGROUND_ALPHA
+            val themeType = ThemeType.from(prefs[intPreferencesKey(THEME_TYPE_KEY)])
 
             val localContext = LocalContext.current
             var shouldHideContent by remember { mutableStateOf(false) }
@@ -93,7 +96,7 @@ class ChallengeListWidget : GlanceAppWidget() {
             Box(
                 modifier = GlanceModifier
                     .fillMaxSize()
-                    .background(WidgetColorScheme.surface(alpha = backgroundAlpha))
+                    .background(WidgetColorScheme.surface(theme = themeType, alpha = backgroundAlpha))
                     .cornerRadius(WidgetRadius.large)
                     .padding(8.dp),
                 contentAlignment = Alignment.Center,
@@ -110,13 +113,13 @@ class ChallengeListWidget : GlanceAppWidget() {
                                     R.string.platform_widget_hidden_due_to_app_lock,
                                 ),
                                 contentScale = ContentScale.Fit,
-                                colorFilter = ColorFilter.tint(WidgetColorScheme.onSurface()),
+                                colorFilter = ColorFilter.tint(WidgetColorScheme.onSurface(theme = themeType)),
                             )
                             Spacer(modifier = GlanceModifier.height(8.dp))
                             Text(
                                 text = localContext.getString(R.string.platform_widget_hidden_due_to_app_lock),
                                 style = WidgetTypography.labelSmall.copy(
-                                    color = WidgetColorScheme.onSurfaceMuted(),
+                                    color = WidgetColorScheme.onSurfaceMuted(theme = themeType),
                                     textAlign = TextAlign.Center,
                                 ),
                             )
@@ -127,7 +130,7 @@ class ChallengeListWidget : GlanceAppWidget() {
                         Text(
                             text = localContext.getString(R.string.platform_widget_no_challenges),
                             style = WidgetTypography.bodyLarge.copy(
-                                color = WidgetColorScheme.onSurface(),
+                                color = WidgetColorScheme.onSurface(theme = themeType),
                                 textAlign = TextAlign.Center,
                             ),
                         )
@@ -142,6 +145,7 @@ class ChallengeListWidget : GlanceAppWidget() {
                                 val challenge = challenges[index]
                                 ChallengeItem(
                                     challenge = challenge,
+                                    themeType = themeType,
                                     backgroundAlpha = backgroundAlpha,
                                     onClick = {
                                         actionRunCallback<WidgetClickAction>(
@@ -178,6 +182,7 @@ class ChallengeListWidget : GlanceAppWidget() {
     @GlanceComposable
     private fun ChallengeItem(
         challenge: SimpleStartedChallenge,
+        themeType: ThemeType,
         backgroundAlpha: Float,
         onClick: () -> Action,
     ) {
@@ -194,9 +199,9 @@ class ChallengeListWidget : GlanceAppWidget() {
             GlanceCircularProgressBar(
                 percentage = challenge.calculateProgressPercentage(),
                 iconProvider = ImageProvider(challenge.category.getIconResId()),
-                iconColor = WidgetColorScheme.onBackgroundMuted(),
-                progressColor = WidgetColorScheme.brand(),
-                backgroundColor = WidgetColorScheme.background(alpha = backgroundAlpha),
+                iconColor = WidgetColorScheme.onBackgroundMuted(theme = themeType),
+                progressColor = WidgetColorScheme.brand(theme = themeType),
+                backgroundColor = WidgetColorScheme.background(theme = themeType, alpha = backgroundAlpha),
                 size = 32,
                 thickness = 2.5f,
             )
@@ -204,7 +209,7 @@ class ChallengeListWidget : GlanceAppWidget() {
             Text(
                 text = challenge.title,
                 style = WidgetTypography.bodySmall.copy(
-                    color = WidgetColorScheme.onSurface(),
+                    color = WidgetColorScheme.onSurface(theme = themeType),
                 ),
                 modifier = GlanceModifier
                     .padding(bottom = 2.dp)
@@ -216,12 +221,12 @@ class ChallengeListWidget : GlanceAppWidget() {
                     context = context,
                 ),
                 style = WidgetTypography.bodySmall.copy(
-                    color = WidgetColorScheme.onBackground(),
+                    color = WidgetColorScheme.onBackground(theme = themeType),
                     textAlign = TextAlign.Center,
                 ),
                 modifier = GlanceModifier
                     .width(110.dp)
-                    .background(WidgetColorScheme.background())
+                    .background(WidgetColorScheme.background(theme = themeType))
                     .cornerRadius(WidgetRadius.full)
                     .padding(vertical = 8.dp, horizontal = 12.dp),
             )
@@ -229,6 +234,7 @@ class ChallengeListWidget : GlanceAppWidget() {
     }
 
     companion object {
+        const val THEME_TYPE_KEY = "themeType"
         const val BACKGROUND_ALPHA_KEY = "backgroundAlpha"
         private const val LAST_UPDATE_KEY = "lastUpdate"
         private const val DEFAULT_BACKGROUND_ALPHA = 1f
@@ -248,12 +254,18 @@ class ChallengeListWidget : GlanceAppWidget() {
             }
         }
 
-        suspend fun updateWidgetConfig(context: Context, alpha: Float, appWidgetId: Int) {
+        suspend fun updateWidgetConfig(
+            context: Context,
+            themeType: Int,
+            alpha: Float,
+            appWidgetId: Int,
+        ) {
             try {
                 val glanceId = GlanceAppWidgetManager(context).getGlanceIdBy(appWidgetId)
 
                 updateAppWidgetState(context, glanceId) { prefs ->
                     prefs[floatPreferencesKey(BACKGROUND_ALPHA_KEY)] = alpha
+                    prefs[intPreferencesKey(THEME_TYPE_KEY)] = themeType
                 }
                 ChallengeListWidget().update(context, glanceId)
             } catch (e: Exception) {

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GetResetRecordResponse(
+data class ResetRecordResponse(
     @SerialName("ROOMMEMRESET_IDX")
     val resetRecordId: Int,
     @SerialName("RESETDATE")

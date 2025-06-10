@@ -18,4 +18,8 @@
     <string name="platform_widget_confirm">Confirmar</string>
     <string name="platform_widget_select">Selecionar</string>
     <string name="platform_widget_hidden_due_to_app_lock">Oculto devido às configurações de bloqueio do aplicativo</string>
+    <string name="platform_widget_theme_setting">Tema</string>
+    <string name="platform_widget_system_theme">Tema do sistema</string>
+    <string name="platform_widget_dark_theme">Tema escuro</string>
+    <string name="platform_widget_light_theme">Tema claro</string>
 </resources>
