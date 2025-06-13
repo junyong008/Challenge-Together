@@ -4,6 +4,7 @@
     <string name="feature_challengeranking_tip_title">Consejos</string>
     <string name="feature_challengeranking_tip_long_absence">Los usuarios inactivos durante 7 días pueden ser expulsados forzosamente por otros participantes.</string>
     <string name="feature_challengeranking_tip_alone">Si quedas solo en el desafío, el ranking desaparecerá y se podrán hacer ediciones del desafío.</string>
+    <string name="feature_challengeranking_tip_progress_score">Las puntuaciones de progreso se actualizan cada vez que los participantes acceden a la pantalla de progreso.</string>
     <string name="feature_challengeranking_force_remove_title">Expulsar Forzosamente</string>
     <string name="feature_challengeranking_force_remove_description">Los usuarios inactivos pueden ser expulsados forzosamente.\n¿Te gustaría expulsar a este usuario?</string>
     <string name="feature_challengeranking_remove">Eliminar</string>
@@ -15,4 +16,7 @@
     <string name="feature_challengeranking_user_reconnected">El usuario se ha reconectado.</string>
     <string name="feature_challengeranking_check_network_connection">Por favor, verifica tu conexión a la red.</string>
     <string name="feature_challengeranking_force_remove_failed">Falló al eliminar al usuario. Por favor, inténtalo de nuevo más tarde.</string>
+    <string name="feature_challengeranking_score_format">%d puntos</string>
+    <string name="feature_challengeranking_switched_to_score_rank">Cambiado a clasificación por progreso.</string>
+    <string name="feature_challengeranking_switched_to_time_rank">Cambiado a clasificación por tiempo.</string>
 </resources>

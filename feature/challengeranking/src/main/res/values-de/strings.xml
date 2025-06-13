@@ -4,6 +4,7 @@
     <string name="feature_challengeranking_tip_title">Tipps</string>
     <string name="feature_challengeranking_tip_long_absence">Benutzer, die 7 Tage inaktiv sind, können von anderen Teilnehmern zwangsweise entfernt werden.</string>
     <string name="feature_challengeranking_tip_alone">Wenn Sie alleine in der Herausforderung bleiben, verschwindet die Rangliste und Bearbeitungen der Herausforderung werden möglich.</string>
+    <string name="feature_challengeranking_tip_progress_score">Die Fortschrittspunkte werden aktualisiert, sobald Teilnehmer den Fortschrittsbildschirm öffnen.</string>
     <string name="feature_challengeranking_force_remove_title">Zwangsentfernung</string>
     <string name="feature_challengeranking_force_remove_description">Inaktive Benutzer können zwangsweise entfernt werden.\nMöchten Sie diesen Benutzer entfernen?</string>
     <string name="feature_challengeranking_remove">Entfernen</string>
@@ -15,4 +16,7 @@
     <string name="feature_challengeranking_user_reconnected">Der Benutzer hat sich gerade wieder verbunden.</string>
     <string name="feature_challengeranking_check_network_connection">Bitte überprüfen Sie Ihre Netzwerkverbindung.</string>
     <string name="feature_challengeranking_force_remove_failed">Fehler beim Entfernen des Benutzers. Bitte versuchen Sie es später erneut.</string>
+    <string name="feature_challengeranking_score_format">%d Punkte</string>
+    <string name="feature_challengeranking_switched_to_score_rank">Zur Rangliste basierend auf Fortschritt gewechselt.</string>
+    <string name="feature_challengeranking_switched_to_time_rank">Zur Rangliste basierend auf Zeit gewechselt.</string>
 </resources>

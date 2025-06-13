@@ -29,6 +29,7 @@ internal fun GetStartedChallengeDetailResponse.toDetailedStartedChallengeModel()
     mode = if (isFreeMode) Mode.FREE else Mode.CHALLENGE,
     isCompleted = isCompleted,
     rank = rank,
+    scoreRank = scoreRank,
     startDateTime = startDateTime.toLocalDateTime(),
     currentParticipantCounts = currentParticipantCount,
 )

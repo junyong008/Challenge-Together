@@ -36,6 +36,7 @@ fun NavGraphBuilder.startedChallengeScreen(
     onResetRecordClick: (challengeId: Int) -> Unit,
     onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit,
     onRankingClick: (challengeId: Int) -> Unit,
+    onProgressClick: (challengeId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
 ) {
     composable<ServiceRoute.StartedChallenge>(
@@ -57,6 +58,7 @@ fun NavGraphBuilder.startedChallengeScreen(
             onResetRecordClick = onResetRecordClick,
             onBoardClick = onBoardClick,
             onRankingClick = onRankingClick,
+            onProgressClick = onProgressClick,
             onShowSnackbar = onShowSnackbar,
         )
     }

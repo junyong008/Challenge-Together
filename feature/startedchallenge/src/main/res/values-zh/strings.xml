@@ -19,8 +19,9 @@
     <string name="feature_startedchallenge_reset_history_description">您可以查看过去的重置记录。</string>
     <string name="feature_startedchallenge_board">公告板</string>
     <string name="feature_startedchallenge_board_description">留下关于您的挑战的记录或笔记。</string>
+    <string name="feature_startedchallenge_progress_description">一目了然地查看你的康复历程。</string>
     <string name="feature_startedchallenge_ranking">排名</string>
-    <string name="feature_startedchallenge_ranking_description">您目前维持在第 %1$s 名！</string>
+    <string name="feature_startedchallenge_ranking_description">您目前维持在第 %1$s, %2$s 名！</string>
     <string name="feature_startedchallenge_mode">模式</string>
     <string name="feature_startedchallenge_calender">日历</string>
     <string name="feature_startedchallenge_quote">引用</string>
@@ -49,6 +50,11 @@
     <string name="feature_startedchallenge_confirm_delete">删除</string>
     <string name="feature_startedchallenge_delete_failed">删除失败。请稍后再试。</string>
     <string name="feature_startedchallenge_delete_successful">挑战已删除。</string>
+    <string name="feature_startedchallenge_continue">继续</string>
+    <string name="feature_startedchallenge_continue_title">继续挑战</string>
+    <string name="feature_startedchallenge_continue_description">要继续这个挑战吗？</string>
+    <string name="feature_startedchallenge_continue_failed">无法继续。请稍后再试。</string>
+    <string name="feature_startedchallenge_continue_successful">挑战已继续。</string>
 
     <string name="feature_startedchallenge_quote_1">征服自己的人才能征服世界。</string>
     <string name="feature_startedchallenge_quote_2">我的明天取决于我今天的选择。</string>
@@ -103,4 +109,5 @@
     <string name="feature_startedchallenge_quote_51">只要不放弃，没人能击败你。</string>
     <string name="feature_startedchallenge_quote_52">每一个困难时刻，\n都是变得更强的机会。</string>
     <string name="feature_startedchallenge_quote_53">成功是等待与耐心的结果。</string>
+    <string name="feature_startedchallenge_progress">进度</string>
 </resources>

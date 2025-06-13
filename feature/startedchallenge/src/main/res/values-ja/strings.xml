@@ -19,8 +19,9 @@
     <string name="feature_startedchallenge_reset_history_description">過去のリセット記録を見ることができます。</string>
     <string name="feature_startedchallenge_board">掲示板</string>
     <string name="feature_startedchallenge_board_description">チャレンジについての記録やメモを残してください。</string>
+    <string name="feature_startedchallenge_progress_description">回復の過程を一目で確認できます。</string>
     <string name="feature_startedchallenge_ranking">ランキング</string>
-    <string name="feature_startedchallenge_ranking_description">現在、ランク%1$sを維持しています！</string>
+    <string name="feature_startedchallenge_ranking_description">現在、ランク%1$s, %2$sを維持しています！</string>
     <string name="feature_startedchallenge_mode">モード</string>
     <string name="feature_startedchallenge_calender">カレンダー</string>
     <string name="feature_startedchallenge_quote">引用</string>
@@ -49,6 +50,11 @@
     <string name="feature_startedchallenge_confirm_delete">削除</string>
     <string name="feature_startedchallenge_delete_failed">削除に失敗しました。後でもう一度試してください。</string>
     <string name="feature_startedchallenge_delete_successful">チャレンジが削除されました。</string>
+    <string name="feature_startedchallenge_continue">続ける</string>
+    <string name="feature_startedchallenge_continue_title">チャレンジを続ける</string>
+    <string name="feature_startedchallenge_continue_description">このチャレンジを続けますか？</string>
+    <string name="feature_startedchallenge_continue_failed">続行に失敗しました。後でもう一度お試しください。</string>
+    <string name="feature_startedchallenge_continue_successful">チャレンジが続行されました。</string>
 
     <string name="feature_startedchallenge_quote_1">自分を克服する者は世界を征服する。</string>
     <string name="feature_startedchallenge_quote_2">私の明日は今日の選択にかかっている。</string>
@@ -103,4 +109,5 @@
     <string name="feature_startedchallenge_quote_51">あなたが諦めない限り、誰もあなたを打ち負かすことはできません。</string>
     <string name="feature_startedchallenge_quote_52">すべての困難な瞬間には、より強くなる機会がやってくる。</string>
     <string name="feature_startedchallenge_quote_53">成功は待つことと忍耐の結果です。</string>
+    <string name="feature_startedchallenge_progress">進捗</string>
 </resources>

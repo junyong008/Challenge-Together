@@ -19,8 +19,9 @@
     <string name="feature_startedchallenge_reset_history_description">आप पिछले रीसेट रिकॉर्ड देख सकते हैं।</string>
     <string name="feature_startedchallenge_board">बोर्ड</string>
     <string name="feature_startedchallenge_board_description">अपनी चुनौती के बारे में रिकॉर्ड या नोट छोड़ें।</string>
+    <string name="feature_startedchallenge_progress_description">अपनी रिकवरी यात्रा एक नज़र में देखें।</string>
     <string name="feature_startedchallenge_ranking">रैंकिंग</string>
-    <string name="feature_startedchallenge_ranking_description">आप वर्तमान में रैंक %1$s बनाए रख रहे हैं!</string>
+    <string name="feature_startedchallenge_ranking_description">आप वर्तमान में रैंक %1$s, %2$s बनाए रख रहे हैं!</string>
     <string name="feature_startedchallenge_mode">मोड</string>
     <string name="feature_startedchallenge_calender">कैलेंडर</string>
     <string name="feature_startedchallenge_quote">उद्धरण</string>
@@ -49,6 +50,11 @@
     <string name="feature_startedchallenge_confirm_delete">हटाएं</string>
     <string name="feature_startedchallenge_delete_failed">हटाने में विफल। कृपया बाद में फिर से प्रयास करें।</string>
     <string name="feature_startedchallenge_delete_successful">चुनौती हटा दी गई है।</string>
+    <string name="feature_startedchallenge_continue">जारी रखें</string>
+    <string name="feature_startedchallenge_continue_title">चैलेंज जारी रखें</string>
+    <string name="feature_startedchallenge_continue_description">क्या आप इस चैलेंज को जारी रखना चाहेंगे?</string>
+    <string name="feature_startedchallenge_continue_failed">जारी रखना विफल हो गया। कृपया बाद में पुन: प्रयास करें।</string>
+    <string name="feature_startedchallenge_continue_successful">चैलेंज जारी रखा गया है।</string>
 
     <string name="feature_startedchallenge_quote_1">जो अपने आप को जीतता है, वह दुनिया को जीतता है।</string>
     <string name="feature_startedchallenge_quote_2">मेरा कल मेरे आज के चुनावों पर निर्भर करता है।</string>
@@ -103,4 +109,5 @@
     <string name="feature_startedchallenge_quote_51">जब तक आप हार नहीं मानते,\nकोई भी आपको नहीं हरा सकता।</string>
     <string name="feature_startedchallenge_quote_52">हर कठिन क्षण में,\nएक अवसर आता है ताकि हम और मजबूत बन सकें।</string>
     <string name="feature_startedchallenge_quote_53">सफलता प्रतीक्षा और धैर्य का परिणाम है।</string>
+    <string name="feature_startedchallenge_progress">प्रगति</string>
 </resources>

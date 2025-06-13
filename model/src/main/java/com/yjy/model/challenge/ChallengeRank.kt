@@ -6,9 +6,11 @@ import java.time.LocalDateTime
 
 data class ChallengeRank(
     val rank: Int,
+    val scoreRank: Int,
     val user: User,
     val memberId: Int,
     val recentResetDateTime: LocalDateTime,
+    val recoveryScore: Int,
     val currentRecordInSeconds: Long,
     val targetDays: TargetDays,
     val isInActive: Boolean,

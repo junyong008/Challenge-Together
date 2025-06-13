@@ -7,11 +7,13 @@ import com.yjy.model.common.User
 
 internal fun GetChallengeRankingResponse.toModel() = ChallengeRank(
     rank = rank,
+    scoreRank = scoreRank,
     user = User(
         name = name,
         tier = Tier.getCurrentTier(bestRecordInSeconds),
     ),
     memberId = memberId,
+    recoveryScore = score,
     recentResetDateTime = recentResetDateTime.toLocalDateTime(),
     currentRecordInSeconds = 0L,
     targetDays = targetDays.toTargetDays(),

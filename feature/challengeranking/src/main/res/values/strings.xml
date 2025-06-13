@@ -3,6 +3,7 @@
     <string name="feature_challengeranking_tip_title">Tips</string>
     <string name="feature_challengeranking_tip_long_absence">Users inactive for 7 days can be forcibly removed by other participants.</string>
     <string name="feature_challengeranking_tip_alone">If you remain alone in the challenge, the ranking will disappear, and challenge edits will become available.</string>
+    <string name="feature_challengeranking_tip_progress_score">Progress scores are updated whenever participants enter the progress screen.</string>
     <string name="feature_challengeranking_force_remove_title">Force Remove</string>
     <string name="feature_challengeranking_force_remove_description">Inactive users can be forcibly removed. Would you like to remove this user?</string>
     <string name="feature_challengeranking_remove">Remove</string>
@@ -14,4 +15,7 @@
     <string name="feature_challengeranking_user_reconnected">The user has just reconnected.</string>
     <string name="feature_challengeranking_check_network_connection">Please check your network connection.</string>
     <string name="feature_challengeranking_force_remove_failed">Failed to remove the user. Please try again later.</string>
+    <string name="feature_challengeranking_score_format">%d points</string>
+    <string name="feature_challengeranking_switched_to_score_rank">Switched to ranking by progress.</string>
+    <string name="feature_challengeranking_switched_to_time_rank">Switched to ranking by time record.</string>
 </resources>

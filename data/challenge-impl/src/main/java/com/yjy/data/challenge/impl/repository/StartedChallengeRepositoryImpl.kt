@@ -17,6 +17,7 @@ import com.yjy.data.network.datasource.StartedChallengeDataSource
 import com.yjy.data.network.request.challenge.ResetChallengeRequest
 import com.yjy.model.challenge.ChallengeRank
 import com.yjy.model.challenge.DetailedStartedChallenge
+import com.yjy.model.challenge.RecoveryProgress
 import com.yjy.model.challenge.ResetInfo
 import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
@@ -75,6 +76,9 @@ internal class StartedChallengeRepositoryImpl @Inject constructor(
         startedChallengeDataSource.deleteStartedChallenge(challengeId)
             .onSuccess { challengeDao.deleteById(challengeId) }
 
+    override suspend fun continueStartedChallenge(challengeId: Int): NetworkResult<Unit> =
+        startedChallengeDataSource.continueStartedChallenge(challengeId)
+
     override suspend fun forceRemoveStartedChallengeMember(memberId: Int): NetworkResult<Unit> =
         startedChallengeDataSource.forceRemoveFromStartedChallenge(memberId)
 
@@ -131,6 +135,9 @@ internal class StartedChallengeRepositoryImpl @Inject constructor(
             },
             onFailure = { flowOf(it) },
         )
+
+    override suspend fun getChallengeProgress(challengeId: Int): NetworkResult<RecoveryProgress> =
+        startedChallengeDataSource.getChallengeProgress(challengeId).map { it.toModel() }
 
     private fun ChallengeRank.updateCurrentRecord(currentTime: LocalDateTime) = copy(
         currentRecordInSeconds = ChronoUnit.SECONDS.between(recentResetDateTime, currentTime),

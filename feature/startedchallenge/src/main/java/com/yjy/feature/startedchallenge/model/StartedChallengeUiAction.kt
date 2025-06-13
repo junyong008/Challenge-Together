@@ -10,4 +10,5 @@ sealed interface StartedChallengeUiAction {
     ) : StartedChallengeUiAction
 
     data class OnDeleteChallengeClick(val challengeId: Int) : StartedChallengeUiAction
+    data class OnContinueChallengeClick(val challengeId: Int) : StartedChallengeUiAction
 }
