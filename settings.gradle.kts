@@ -78,6 +78,7 @@ include(
     ":feature:resetrecord",
     ":feature:challengeboard",
     ":feature:challengeranking",
+    ":feature:challengeprogress",
 
     ":feature:intro",
     ":feature:login",

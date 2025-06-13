@@ -30,6 +30,7 @@ object ChallengeTogetherIcons {
     val Hide = R.drawable.ic_hide
     val Home = R.drawable.ic_home
     val Infinite = R.drawable.ic_infinite
+    val Info = R.drawable.ic_info
     val Key = R.drawable.ic_key
     val Language = R.drawable.ic_language
     val LikeOff = R.drawable.ic_like_off

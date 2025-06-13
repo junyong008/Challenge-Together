@@ -28,6 +28,7 @@ import com.yjy.common.designsystem.theme.CustomColorProvider
 @Composable
 fun BaseBottomSheet(
     onDismiss: () -> Unit,
+    modifier: Modifier = Modifier,
     disableDragToDismiss: Boolean = false,
     showCloseButton: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
@@ -50,7 +51,7 @@ fun BaseBottomSheet(
             .imePadding(),
     ) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,

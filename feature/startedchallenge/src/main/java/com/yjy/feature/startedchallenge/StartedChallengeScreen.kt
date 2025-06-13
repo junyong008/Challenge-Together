@@ -118,6 +118,7 @@ internal fun StartedChallengeRoute(
     onResetRecordClick: (challengeId: Int) -> Unit,
     onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit,
     onRankingClick: (challengeId: Int) -> Unit,
+    onProgressClick: (challengeId: Int) -> Unit,
     onShowSnackbar: suspend (SnackbarType, String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StartedChallengeViewModel = hiltViewModel(),
@@ -140,6 +141,7 @@ internal fun StartedChallengeRoute(
         onResetRecordClick = onResetRecordClick,
         onBoardClick = onBoardClick,
         onRankingClick = onRankingClick,
+        onProgressClick = onProgressClick,
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -161,6 +163,7 @@ internal fun StartedChallengeScreen(
     onResetRecordClick: (challengeId: Int) -> Unit = {},
     onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit = { _, _ -> },
     onRankingClick: (challengeId: Int) -> Unit = {},
+    onProgressClick: (challengeId: Int) -> Unit = {},
     onShowSnackbar: suspend (SnackbarType, String) -> Unit = { _, _ -> },
 ) {
     var shouldShowResetBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -357,6 +360,7 @@ internal fun StartedChallengeScreen(
                             onBoardClick(challengeId, isEditable)
                         },
                         onRankingClick = { onRankingClick(challenge.id) },
+                        onProgressClick = { onProgressClick(challenge.id) },
                     )
                 }
             }
@@ -372,6 +376,7 @@ private fun ChallengeBody(
     onResetRecordClick: (challengeId: Int) -> Unit,
     onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit,
     onRankingClick: (challengeId: Int) -> Unit,
+    onProgressClick: (challengeId: Int) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -418,6 +423,7 @@ private fun ChallengeBody(
                 )
             },
             onRankingClick = { onRankingClick(challenge.id) },
+            onProgressClick = { onProgressClick(challenge.id) },
             modifier = Modifier.padding(horizontal = 16.dp),
         )
         Spacer(modifier = Modifier.height(32.dp))
@@ -886,6 +892,7 @@ private fun ChallengeButtons(
     onResetRecordClick: () -> Unit,
     onBoardClick: () -> Unit,
     onRankingClick: () -> Unit,
+    onProgressClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
@@ -901,6 +908,13 @@ private fun ChallengeButtons(
             titleResId = R.string.feature_startedchallenge_board,
             description = stringResource(id = R.string.feature_startedchallenge_board_description),
             imageResId = designSystemR.drawable.image_board,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        BaseButton(
+            onClick = onProgressClick,
+            titleResId = R.string.feature_startedchallenge_progress,
+            description = stringResource(id = R.string.feature_startedchallenge_progress_description),
+            imageResId = designSystemR.drawable.image_compass,
         )
         if (currentParticipantCounts > 1) {
             Spacer(modifier = Modifier.height(8.dp))
