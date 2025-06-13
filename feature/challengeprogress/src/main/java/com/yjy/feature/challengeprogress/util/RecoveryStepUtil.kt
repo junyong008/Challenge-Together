@@ -9,6 +9,7 @@ import com.yjy.model.challenge.core.Category
 @Composable
 internal fun getRecoverySteps(category: Category): List<RecoveryStep> {
     return when (category) {
+        Category.ALL -> getCommonRecoverySteps()
         Category.QUIT_SMOKING -> getQuitSmokingSteps()
         Category.QUIT_DRINKING -> getQuitAlcoholSteps()
         Category.QUIT_PORN -> getQuitPornSteps()
@@ -23,7 +24,55 @@ internal fun getRecoverySteps(category: Category): List<RecoveryStep> {
         Category.QUIT_SHOPPING -> getQuitShoppingSteps()
         Category.QUIT_SWEARING -> getQuitSwearingSteps()
         Category.QUIT_SMARTPHONE -> getQuitSmartphoneSteps()
-        else -> emptyList()
+    }
+}
+
+@Composable
+private fun getCommonRecoverySteps(): List<RecoveryStep> {
+    val titleResIds = intArrayOf(
+        R.string.feature_challengeprogress_recovery_step_common_title_1,
+        R.string.feature_challengeprogress_recovery_step_common_title_2,
+        R.string.feature_challengeprogress_recovery_step_common_title_3,
+        R.string.feature_challengeprogress_recovery_step_common_title_4,
+        R.string.feature_challengeprogress_recovery_step_common_title_5,
+        R.string.feature_challengeprogress_recovery_step_common_title_6,
+        R.string.feature_challengeprogress_recovery_step_common_title_7,
+        R.string.feature_challengeprogress_recovery_step_common_title_8,
+        R.string.feature_challengeprogress_recovery_step_common_title_9,
+        R.string.feature_challengeprogress_recovery_step_common_title_10,
+        R.string.feature_challengeprogress_recovery_step_common_title_11,
+        R.string.feature_challengeprogress_recovery_step_common_title_12,
+        R.string.feature_challengeprogress_recovery_step_common_title_13,
+        R.string.feature_challengeprogress_recovery_step_common_title_14,
+        R.string.feature_challengeprogress_recovery_step_common_title_15,
+    )
+
+    val descriptionResIds = intArrayOf(
+        R.string.feature_challengeprogress_recovery_step_common_description_1,
+        R.string.feature_challengeprogress_recovery_step_common_description_2,
+        R.string.feature_challengeprogress_recovery_step_common_description_3,
+        R.string.feature_challengeprogress_recovery_step_common_description_4,
+        R.string.feature_challengeprogress_recovery_step_common_description_5,
+        R.string.feature_challengeprogress_recovery_step_common_description_6,
+        R.string.feature_challengeprogress_recovery_step_common_description_7,
+        R.string.feature_challengeprogress_recovery_step_common_description_8,
+        R.string.feature_challengeprogress_recovery_step_common_description_9,
+        R.string.feature_challengeprogress_recovery_step_common_description_10,
+        R.string.feature_challengeprogress_recovery_step_common_description_11,
+        R.string.feature_challengeprogress_recovery_step_common_description_12,
+        R.string.feature_challengeprogress_recovery_step_common_description_13,
+        R.string.feature_challengeprogress_recovery_step_common_description_14,
+        R.string.feature_challengeprogress_recovery_step_common_description_15,
+    )
+
+    val requireScores = intArrayOf(20, 60, 90, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000)
+
+    return titleResIds.mapIndexed { index, titleResId ->
+        RecoveryStep(
+            title = stringResource(id = titleResId),
+            description = stringResource(id = descriptionResIds[index]),
+            requireScore = requireScores[index],
+        )
     }
 }
 
@@ -115,7 +164,7 @@ private fun getQuitPornSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -166,7 +215,7 @@ private fun getQuitAlcoholSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -217,7 +266,7 @@ private fun getQuitGamingSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -268,7 +317,7 @@ private fun getQuitYoutubeSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -319,7 +368,7 @@ private fun getQuitSnsSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -370,7 +419,7 @@ private fun getQuitGlutenSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -421,7 +470,7 @@ private fun getQuitGamblingSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -472,7 +521,7 @@ private fun getQuitDrugsSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -523,7 +572,7 @@ private fun getQuitCaffeineSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -574,7 +623,7 @@ private fun getQuitEatingOutSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -625,7 +674,7 @@ private fun getQuitShoppingSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -676,7 +725,7 @@ private fun getQuitSwearingSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -727,7 +776,7 @@ private fun getQuitSmartphoneSteps(): List<RecoveryStep> {
     )
 
     val requireScores = intArrayOf(
-        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000
+        20, 60, 70, 100, 250, 250, 250, 300, 500, 600, 600, 1000, 1200, 1800, 1000,
     )
 
     return titleResIds.mapIndexed { index, titleResId ->
@@ -738,4 +787,3 @@ private fun getQuitSmartphoneSteps(): List<RecoveryStep> {
         )
     }
 }
-

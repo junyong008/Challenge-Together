@@ -31,4 +31,6 @@ data class GetStartedChallengeDetailResponse(
     val isPrivate: Boolean,
     @SerialName("RANK")
     val rank: Int,
+    @SerialName("SCORERANK")
+    val scoreRank: Int,
 )

@@ -170,6 +170,7 @@ internal fun StartedChallengeScreen(
     var shouldShowMenuBottomSheet by remember { mutableStateOf(false) }
     var shouldShowDeleteConfirmDialog by remember { mutableStateOf(false) }
     var shouldShowCalendarDialog by rememberSaveable { mutableStateOf(false) }
+    var shouldShowContinueDialog by rememberSaveable { mutableStateOf(false) }
 
     var resetDateTime by rememberSaveable { mutableStateOf(LocalDateTime.now()) }
 
@@ -208,6 +209,8 @@ internal fun StartedChallengeScreen(
     val resetFailureMessage = stringResource(id = R.string.feature_startedchallenge_reset_failed)
     val deleteSuccessMessage = stringResource(id = R.string.feature_startedchallenge_delete_successful)
     val deleteFailureMessage = stringResource(id = R.string.feature_startedchallenge_delete_failed)
+    val continueSuccessMessage = stringResource(id = R.string.feature_startedchallenge_continue_successful)
+    val continueFailureMessage = stringResource(id = R.string.feature_startedchallenge_continue_failed)
 
     ObserveAsEvents(flow = uiEvent) { event ->
         when (event) {
@@ -235,6 +238,12 @@ internal fun StartedChallengeScreen(
 
             StartedChallengeUiEvent.DeleteFailure ->
                 onShowSnackbar(SnackbarType.ERROR, deleteFailureMessage)
+
+            StartedChallengeUiEvent.ContinueSuccess ->
+                onShowSnackbar(SnackbarType.SUCCESS, continueSuccessMessage)
+
+            StartedChallengeUiEvent.ContinueFailure ->
+                onShowSnackbar(SnackbarType.ERROR, continueFailureMessage)
         }
     }
 
@@ -320,6 +329,19 @@ internal fun StartedChallengeScreen(
             )
         }
 
+        if (shouldShowContinueDialog) {
+            ChallengeTogetherDialog(
+                title = stringResource(id = R.string.feature_startedchallenge_continue_title),
+                description = stringResource(id = R.string.feature_startedchallenge_continue_description),
+                positiveTextRes = R.string.feature_startedchallenge_continue,
+                onClickPositive = {
+                    shouldShowContinueDialog = false
+                    processAction(StartedChallengeUiAction.OnContinueChallengeClick(challenge.id))
+                },
+                onClickNegative = { shouldShowContinueDialog = false },
+            )
+        }
+
         CompositionLocalProvider(
             LocalOverscrollConfiguration provides null,
         ) {
@@ -351,9 +373,13 @@ internal fun StartedChallengeScreen(
                     ChallengeBody(
                         challenge = challenge,
                         isResetting = uiState.isResetting,
+                        isContinuing = uiState.isContinuing,
                         onResetButtonClick = {
                             resetDateTime = LocalDateTime.now()
                             shouldShowResetBottomSheet = true
+                        },
+                        onContinueButtonClick = {
+                            shouldShowContinueDialog = true
                         },
                         onResetRecordClick = { onResetRecordClick(challenge.id) },
                         onBoardClick = { challengeId, isEditable ->
@@ -372,7 +398,9 @@ internal fun StartedChallengeScreen(
 private fun ChallengeBody(
     challenge: DetailedStartedChallenge,
     isResetting: Boolean,
+    isContinuing: Boolean,
     onResetButtonClick: () -> Unit,
+    onContinueButtonClick: () -> Unit,
     onResetRecordClick: (challengeId: Int) -> Unit,
     onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit,
     onRankingClick: (challengeId: Int) -> Unit,
@@ -410,10 +438,17 @@ private fun ChallengeBody(
                 onClick = onResetButtonClick,
                 enabled = !isResetting,
             )
+        } else if (challenge.currentParticipantCounts <= 1) {
+            Spacer(modifier = Modifier.height(20.dp))
+            ContinueButton(
+                onClick = onContinueButtonClick,
+                enabled = !isContinuing,
+            )
         }
         Spacer(modifier = Modifier.height(32.dp))
         ChallengeButtons(
             rank = challenge.rank,
+            scoreRank = challenge.scoreRank,
             currentParticipantCounts = challenge.currentParticipantCounts,
             onResetRecordClick = { onResetRecordClick(challenge.id) },
             onBoardClick = {
@@ -888,6 +923,7 @@ private fun FoldableItem(
 @Composable
 private fun ChallengeButtons(
     rank: Int,
+    scoreRank: Int,
     currentParticipantCounts: Int,
     onResetRecordClick: () -> Unit,
     onBoardClick: () -> Unit,
@@ -904,17 +940,17 @@ private fun ChallengeButtons(
         )
         Spacer(modifier = Modifier.height(8.dp))
         BaseButton(
-            onClick = onBoardClick,
-            titleResId = R.string.feature_startedchallenge_board,
-            description = stringResource(id = R.string.feature_startedchallenge_board_description),
-            imageResId = designSystemR.drawable.image_board,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        BaseButton(
             onClick = onProgressClick,
             titleResId = R.string.feature_startedchallenge_progress,
             description = stringResource(id = R.string.feature_startedchallenge_progress_description),
             imageResId = designSystemR.drawable.image_compass,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        BaseButton(
+            onClick = onBoardClick,
+            titleResId = R.string.feature_startedchallenge_board,
+            description = stringResource(id = R.string.feature_startedchallenge_board_description),
+            imageResId = designSystemR.drawable.image_board,
         )
         if (currentParticipantCounts > 1) {
             Spacer(modifier = Modifier.height(8.dp))
@@ -924,6 +960,7 @@ private fun ChallengeButtons(
                 description = stringResource(
                     id = R.string.feature_startedchallenge_ranking_description,
                     rank,
+                    scoreRank,
                 ),
                 imageResId = designSystemR.drawable.image_rank,
             )
@@ -1014,6 +1051,53 @@ private fun ResetButton(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = stringResource(id = R.string.feature_startedchallenge_reset),
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                    )
+                }
+
+                if (!enabled) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = CustomColorProvider.colorScheme.brand,
+                    )
+                }
+            }
+        },
+    )
+}
+
+@Composable
+private fun ContinueButton(
+    onClick: () -> Unit,
+    enabled: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    ChallengeTogetherOutlinedButton(
+        modifier = modifier,
+        onClick = onClick,
+        enabled = enabled,
+        shape = MaterialTheme.shapes.extraLarge,
+        borderColor = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+        contentColor = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+        content = {
+            Box(
+                contentAlignment = Alignment.Center,
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.alpha(if (enabled) 1f else 0f),
+                ) {
+                    Icon(
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Play),
+                        contentDescription = stringResource(
+                            id = R.string.feature_startedchallenge_continue,
+                        ),
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(id = R.string.feature_startedchallenge_continue),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                     )
@@ -1246,6 +1330,7 @@ fun StartedChallengeScreenPreview() {
                         mode = Mode.CHALLENGE,
                         isCompleted = false,
                         rank = 1,
+                        scoreRank = 2,
                         startDateTime = LocalDateTime.now(),
                         currentRecordInSeconds = 1000L,
                     ),

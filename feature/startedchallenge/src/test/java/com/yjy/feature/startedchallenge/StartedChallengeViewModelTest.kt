@@ -96,6 +96,7 @@ class StartedChallengeViewModelTest {
         currentParticipantCounts = 1,
         isCompleted = false,
         rank = 1,
+        scoreRank = 1,
     )
 
     @Test

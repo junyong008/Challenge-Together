@@ -5,11 +5,45 @@
     <string name="feature_challengeprogress_what_is_progress_score">진척도 점수란?</string>
     <string name="feature_challengeprogress_not_opened">아직 열리지 않음.</string>
     <string name="feature_challengeprogress_recovery_step">회복 단계</string>
-    <string name="feature_challengeprogress_progress_info">챌리의 자체 알고리즘으로 계산된 회복 경과 지표입니다.\n\n도전 기간, 리셋 빈도, 활동 등을 반영해 실제 회복 흐름에 기반한 점수가 쌓이며, 점수에 따라 다양한 회복 효과가 단계별로 열립니다.\n\n리셋이 있어도 회복의 흔적은 사라지지 않습니다. 중단과 반복 속에서도 당신의 변화는 계속 기록됩니다.</string>
+    <string name="feature_challengeprogress_progress_info">챌리의 자체 알고리즘으로 계산된 회복 경과 지표입니다.\n\n도전 기간, 리셋 빈도, 활동 등을 반영해 실제 회복 흐름에 기반한 점수가 쌓이며, 점수에 따라 다양한 회복 효과가 단계별로 열립니다.\n\n리셋이 있어도 회복의 흔적은 사라지지 않습니다.\n중단과 반복 속에서도 당신의 변화는 계속 기록됩니다.</string>
+    <string name="feature_challengeprogress_progress_bold_1">회복 경과 지표</string>
+    <string name="feature_challengeprogress_progress_bold_2">실제 회복 흐름에 기반한 점수</string>
     <string name="feature_challengeprogress_daily_mission">오늘의 미션</string>
     <string name="feature_challengeprogress_check_in">접속하기</string>
     <string name="feature_challengeprogress_emotion_record">게시판에 감정 기록하기</string>
     <string name="feature_challengeprogress_community_engage">커뮤니티에서 소통하기</string>
+
+    <!-- Recovery Step - All -->
+    <string name="feature_challengeprogress_recovery_step_common_title_1">처음의 제어</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_1">습관에 휘둘리기 전에 멈췄습니다. 변화가 시작됐습니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_2">충동 인식</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_2">이젠 습관에 끌리기보단, 충동을 스스로 인식하기 시작했습니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_3">감정의 표면화</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_3">불안함이나 초조함이 나타납니다. 뇌가 회복 중이라는 신호입니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_4">습관에서 벗어남</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_4">자동으로 반복되던 패턴을 끊고, 습관 없이 하루를 보내게 됩니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_5">금단의 인정</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_5">몸과 마음의 불편함이 드러났다가 사라집니다. 회복의 과정입니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_6">집중력의 복귀</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_6">짧은 순간 집중력이 돌아옵니다. 세상이 또렷해지기 시작합니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_7">기분 안정</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_7">기분 변화가 줄어들고, 차분한 상태가 조금씩 유지됩니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_8">자신감의 회복</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_8">의지에 대한 신뢰가 생기고, 조절 가능성에 대한 믿음이 생깁니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_9">일상의 승리</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_9">작은 루틴이 강화되고, 실수도 더 이상 무너지지 않게 됩니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_10">사회적 여유</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_10">숨기거나 움츠러들지 않고, 자연스럽게 타인과 소통하게 됩니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_11">생각의 명료함</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_11">뿌연 생각이 사라지고, 결정과 판단이 또렷해집니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_12">에너지 재건</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_12">몸과 마음이 다시 연결됩니다. 수면, 소화, 기분이 좋아집니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_13">주변의 인식 변화</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_13">에너지와 변화가 드러나고, 주변 사람들이 먼저 알아봅니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_14">자연스러운 자유</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_14">이젠 억지로 참는 것이 아니라, 자연스럽게 멀어진 상태입니다.</string>
+    <string name="feature_challengeprogress_recovery_step_common_title_15">진짜 나로의 회복</string>
+    <string name="feature_challengeprogress_recovery_step_common_description_15">그 습관이 나를 정의하지 않습니다. 본래의 나로 살게 됩니다.</string>
 
     <!-- Recovery Step - Quit Smoking -->
     <string name="feature_challengeprogress_recovery_step_quit_smoking_title_1">첫 숨의 회복</string>

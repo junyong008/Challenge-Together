@@ -1,5 +1,6 @@
 package com.yjy.feature.challengeprogress
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
@@ -22,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -45,7 +47,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -123,19 +129,23 @@ internal fun ChallengeProgressScreen(
             is ChallengeProgressUiState.Success -> {
                 val score = progressState.recoveryProgress.score
                 val category = progressState.recoveryProgress.category
+                val isCompletedChallenge = progressState.recoveryProgress.isCompletedChallenge
+                val hasCompletedCheckIn = progressState.recoveryProgress.hasCompletedCheckIn
+                val hasCompletedEmotionRecord = progressState.recoveryProgress.hasCompletedEmotionRecord
+                val hasCompletedCommunityEngage = progressState.recoveryProgress.hasCompletedCommunityEngage
                 val recoverySteps = getRecoverySteps(category)
                 var remainRecoveryScore = animatedScore
 
                 LaunchedEffect(score) {
                     val animationSpec = tween<Float>(
                         durationMillis = 1500,
-                        easing = FastOutSlowInEasing
+                        easing = FastOutSlowInEasing,
                     )
 
                     animate(
                         initialValue = 0f,
                         targetValue = score.toFloat(),
-                        animationSpec = animationSpec
+                        animationSpec = animationSpec,
                     ) { value, _ ->
                         animatedScore = value.toInt()
                     }
@@ -164,6 +174,23 @@ internal fun ChallengeProgressScreen(
                             .verticalScroll(scrollState),
                     ) {
                         Spacer(modifier = Modifier.height(24.dp))
+                        if (!isCompletedChallenge) {
+                            Text(
+                                text = stringResource(id = R.string.feature_challengeprogress_daily_mission),
+                                style = MaterialTheme.typography.titleSmall,
+                                color = CustomColorProvider.colorScheme.onBackground,
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Missions(
+                                hasCompletedCheckIn = hasCompletedCheckIn,
+                                hasCompletedEmotionRecord = hasCompletedEmotionRecord,
+                                hasCompletedCommunityEngage = hasCompletedCommunityEngage,
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                            )
+                            Spacer(modifier = Modifier.height(32.dp))
+                        }
                         Text(
                             text = stringResource(id = R.string.feature_challengeprogress_recovery_step),
                             style = MaterialTheme.typography.titleSmall,
@@ -178,6 +205,7 @@ internal fun ChallengeProgressScreen(
                                 description = recoveryStep.description,
                                 currentScore = remainRecoveryScore.coerceIn(0, recoveryStep.requireScore),
                                 maxScore = recoveryStep.requireScore,
+                                isCompletedChallenge = isCompletedChallenge,
                                 recoveryState = RecoveryStepState.fromScore(
                                     currentScore = remainRecoveryScore,
                                     requireScore = recoveryStep.requireScore,
@@ -193,11 +221,95 @@ internal fun ChallengeProgressScreen(
 }
 
 @Composable
+private fun Missions(
+    hasCompletedCheckIn: Boolean,
+    hasCompletedEmotionRecord: Boolean,
+    hasCompletedCommunityEngage: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Mission(
+            icon = ChallengeTogetherIcons.CheckOnly,
+            title = stringResource(id = R.string.feature_challengeprogress_check_in),
+            isCompleted = hasCompletedCheckIn,
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Mission(
+            icon = ChallengeTogetherIcons.Edit,
+            title = stringResource(id = R.string.feature_challengeprogress_emotion_record),
+            isCompleted = hasCompletedEmotionRecord,
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Mission(
+            icon = ChallengeTogetherIcons.Share,
+            title = stringResource(id = R.string.feature_challengeprogress_community_engage),
+            isCompleted = hasCompletedCommunityEngage,
+        )
+    }
+}
+
+@Composable
+private fun Mission(
+    @DrawableRes icon: Int,
+    title: String,
+    isCompleted: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(id = icon),
+            contentDescription = title,
+            tint = if (isCompleted) {
+                CustomColorProvider.colorScheme.brandDim
+            } else {
+                CustomColorProvider.colorScheme.onSurfaceMuted
+            },
+            modifier = Modifier
+                .size(36.dp)
+                .clip(MaterialTheme.shapes.medium)
+                .background(CustomColorProvider.colorScheme.surface)
+                .padding(8.dp),
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = title,
+            color = if (isCompleted) {
+                CustomColorProvider.colorScheme.brandDim
+            } else {
+                CustomColorProvider.colorScheme.onBackgroundMuted
+            },
+            style = if (isCompleted) {
+                MaterialTheme.typography.bodySmall
+            } else {
+                MaterialTheme.typography.labelSmall
+            },
+            modifier = Modifier.weight(1f),
+        )
+        Box(
+            modifier = Modifier
+                .size(6.dp)
+                .clip(CircleShape)
+                .background(
+                    if (isCompleted) {
+                        CustomColorProvider.colorScheme.brandDim
+                    } else {
+                        CustomColorProvider.colorScheme.divider
+                    },
+                ),
+        )
+    }
+}
+
+@Composable
 private fun Step(
     title: String,
     description: String,
     currentScore: Int,
     maxScore: Int,
+    isCompletedChallenge: Boolean,
     recoveryState: RecoveryStepState,
 ) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -207,6 +319,7 @@ private fun Step(
             description = description,
             currentScore = currentScore,
             maxScore = maxScore,
+            isCompletedChallenge = isCompletedChallenge,
             recoveryState = recoveryState,
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -218,6 +331,7 @@ private fun StepBody(
     description: String,
     currentScore: Int,
     maxScore: Int,
+    isCompletedChallenge: Boolean,
     recoveryState: RecoveryStepState,
 ) {
     Row(
@@ -240,6 +354,7 @@ private fun StepBody(
             RecoveryStepProgressBar(
                 currentScore = currentScore,
                 maxScore = maxScore,
+                isDisabled = isCompletedChallenge && recoveryState == RecoveryStepState.IN_PROGRESS,
             )
             Spacer(modifier = Modifier.height(50.dp))
         }
@@ -267,6 +382,7 @@ private fun StepHeader(
 private fun RecoveryStepProgressBar(
     currentScore: Int,
     maxScore: Int,
+    isDisabled: Boolean,
 ) {
     val progress = currentScore.toFloat() / maxScore.coerceAtLeast(1)
 
@@ -279,6 +395,7 @@ private fun RecoveryStepProgressBar(
             modifier = Modifier
                 .height(12.dp)
                 .weight(1f),
+            enabled = !isDisabled,
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
@@ -309,7 +426,7 @@ private fun RecoveryStepStateLine(
         pathEffect = when (recoveryState) {
             RecoveryStepState.IN_PROGRESS -> PathEffect.dashPathEffect(floatArrayOf(12f, 16f))
             else -> null
-        }
+        },
     )
 
     Canvas(
@@ -348,7 +465,7 @@ private fun RecoveryStepStateIndicator(
                     modifier = Modifier
                         .size(6.dp)
                         .clip(shape)
-                        .background(CustomColorProvider.colorScheme.brandDim),
+                        .background(CustomColorProvider.colorScheme.surface),
                 )
             }
         }
@@ -399,8 +516,6 @@ private fun ProgressScore(
     score: Int,
     modifier: Modifier = Modifier,
 ) {
-    var animatedScore by remember { mutableIntStateOf(0) }
-
     val numberFormat = remember {
         NumberFormat.getNumberInstance(Locale.getDefault()).apply {
             isGroupingUsed = true
@@ -469,6 +584,36 @@ private fun ProgressInfoButton(
 private fun ProgressInfoBottomSheet(
     onDismiss: () -> Unit,
 ) {
+    val fullText = stringResource(R.string.feature_challengeprogress_progress_info)
+    val boldWords = listOf(
+        stringResource(R.string.feature_challengeprogress_progress_bold_1),
+        stringResource(R.string.feature_challengeprogress_progress_bold_2),
+    )
+
+    val annotatedText = buildAnnotatedString {
+        var currentIndex = 0
+        while (currentIndex < fullText.length) {
+            val nextMatch = boldWords
+                .mapNotNull { word ->
+                    val index = fullText.indexOf(word, currentIndex)
+                    if (index != -1) index to word else null
+                }
+                .minByOrNull { it.first }
+
+            if (nextMatch == null) {
+                append(fullText.substring(currentIndex))
+                break
+            }
+
+            val (matchIndex, matchWord) = nextMatch
+            append(fullText.substring(currentIndex, matchIndex))
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                append(matchWord)
+            }
+            currentIndex = matchIndex + matchWord.length
+        }
+    }
+
     BaseBottomSheet(
         onDismiss = onDismiss,
         modifier = Modifier.padding(horizontal = 8.dp),
@@ -500,7 +645,7 @@ private fun ProgressInfoBottomSheet(
         }
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = stringResource(id = R.string.feature_challengeprogress_progress_info),
+            text = annotatedText,
             color = CustomColorProvider.colorScheme.onSurface,
             style = MaterialTheme.typography.labelSmall,
             textAlign = TextAlign.Start,
@@ -520,7 +665,11 @@ fun ChallengeProgressScreenPreview() {
                         challengeId = 1,
                         category = Category.QUIT_SMOKING,
                         score = 1536,
-                    )
+                        isCompletedChallenge = false,
+                        hasCompletedCheckIn = true,
+                        hasCompletedEmotionRecord = false,
+                        hasCompletedCommunityEngage = false,
+                    ),
                 ),
             )
         }
