@@ -4,6 +4,7 @@
     <string name="feature_challengeranking_tip_title">Tips</string>
     <string name="feature_challengeranking_tip_long_absence">7일 이상 접속하지 않은 사용자는 다른 참가자들이 강제 퇴장시킬 수 있습니다.</string>
     <string name="feature_challengeranking_tip_alone">도전에 참가자가 혼자만 남을 경우, 랭킹이 제거되며 도전 내용을 수정할 수 있습니다.</string>
+    <string name="feature_challengeranking_tip_progress_score">각 참가자가 진척도 화면에 접속하면 진척도 점수가 업데이트됩니다.</string>
     <string name="feature_challengeranking_force_remove_title">강제퇴장</string>
     <string name="feature_challengeranking_force_remove_description">장기간 미 접속자로 강제 퇴장이 가능해요.\n해당 사용자를 강제 퇴장시킬까요?</string>
     <string name="feature_challengeranking_remove">내보내기</string>
@@ -15,4 +16,7 @@
     <string name="feature_challengeranking_check_network_connection">인터넷 연결 상태를 확인해 주세요.</string>
     <string name="feature_challengeranking_force_remove_success">해당 사용자를 내보냈습니다.</string>
     <string name="feature_challengeranking_force_remove_failed">내보내기에 실패했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_challengeranking_score_format">%d점</string>
+    <string name="feature_challengeranking_switched_to_score_rank">진척도 기준 랭크로 전환되었습니다.</string>
+    <string name="feature_challengeranking_switched_to_time_rank">시간 기록 기준 랭크로 전환되었습니다.</string>
 </resources>

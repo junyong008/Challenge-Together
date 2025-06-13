@@ -4,6 +4,7 @@
     <string name="feature_challengeranking_tip_title">टिप्स</string>
     <string name="feature_challengeranking_tip_long_absence">7 दिनों तक निष्क्रिय उपयोगकर्ताओं को अन्य प्रतिभागियों द्वारा मजबूरन हटाया जा सकता है।</string>
     <string name="feature_challengeranking_tip_alone">यदि आप चुनौती में अकेले रहते हैं, तो रैंकिंग गायब हो जाएगी, और चुनौती संपादन उपलब्ध हो जाएंगे।</string>
+    <string name="feature_challengeranking_tip_progress_score">जब प्रतिभागी प्रगति स्क्रीन खोलते हैं, तो प्रगति अंक अपडेट हो जाते हैं।</string>
     <string name="feature_challengeranking_force_remove_title">मजबूरन हटाना</string>
     <string name="feature_challengeranking_force_remove_description">निष्क्रिय उपयोगकर्ताओं को मजबूरन हटाया जा सकता है।\nक्या आप इस उपयोगकर्ता को हटाना चाहेंगे?</string>
     <string name="feature_challengeranking_remove">हटाएं</string>
@@ -15,4 +16,7 @@
     <string name="feature_challengeranking_user_reconnected">उपयोगकर्ता अभी फिर से जुड़ा है।</string>
     <string name="feature_challengeranking_check_network_connection">कृपया अपना नेटवर्क कनेक्शन जांचें।</string>
     <string name="feature_challengeranking_force_remove_failed">उपयोगकर्ता को हटाने में विफल। कृपया बाद में फिर से प्रयास करें।</string>
+    <string name="feature_challengeranking_score_format">%d अंक</string>
+    <string name="feature_challengeranking_switched_to_score_rank">प्रगति के आधार पर रैंकिंग में बदला गया।</string>
+    <string name="feature_challengeranking_switched_to_time_rank">समय रिकॉर्ड के आधार पर रैंकिंग में बदला गया।</string>
 </resources>

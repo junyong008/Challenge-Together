@@ -17,6 +17,7 @@ data class DetailedStartedChallenge(
     val mode: Mode,
     val isCompleted: Boolean,
     val rank: Int,
+    val scoreRank: Int,
     val startDateTime: LocalDateTime,
     val currentParticipantCounts: Int,
 ) : Challenge()

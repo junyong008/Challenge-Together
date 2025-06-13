@@ -19,8 +19,9 @@
     <string name="feature_startedchallenge_reset_history_description">Puedes ver los registros de restablecimiento anteriores.</string>
     <string name="feature_startedchallenge_board">Tablero</string>
     <string name="feature_startedchallenge_board_description">Deja registros o notas sobre tu desafío.</string>
+    <string name="feature_startedchallenge_progress_description">Visualiza tu camino de recuperación de un vistazo.</string>
     <string name="feature_startedchallenge_ranking">Clasificación</string>
-    <string name="feature_startedchallenge_ranking_description">¡Actualmente mantienes el rango %1$s!</string>
+    <string name="feature_startedchallenge_ranking_description">¡Actualmente mantienes el rango %1$s, %2$s!</string>
     <string name="feature_startedchallenge_mode">Modo</string>
     <string name="feature_startedchallenge_calender">Calendario</string>
     <string name="feature_startedchallenge_quote">Cita</string>
@@ -49,6 +50,11 @@
     <string name="feature_startedchallenge_confirm_delete">Eliminar</string>
     <string name="feature_startedchallenge_delete_failed">Eliminación fallida. Por favor, intenta nuevamente más tarde.</string>
     <string name="feature_startedchallenge_delete_successful">El desafío ha sido eliminado.</string>
+    <string name="feature_startedchallenge_continue">Continuar</string>
+    <string name="feature_startedchallenge_continue_title">Continuar desafío</string>
+    <string name="feature_startedchallenge_continue_description">¿Deseas continuar este desafío?</string>
+    <string name="feature_startedchallenge_continue_failed">Error al continuar. Por favor, inténtalo más tarde.</string>
+    <string name="feature_startedchallenge_continue_successful">El desafío ha sido continuado.</string>
 
     <string name="feature_startedchallenge_quote_1">Quien se conquista a sí mismo conquierta el mundo.</string>
     <string name="feature_startedchallenge_quote_2">Mi mañana depende de mis elecciones hoy.</string>
@@ -103,4 +109,5 @@
     <string name="feature_startedchallenge_quote_51">Mientras no te rindas,\nninguno puede romperte.</string>
     <string name="feature_startedchallenge_quote_52">En cada momento difícil,\nviene una oportunidad para hacerse más fuerte.</string>
     <string name="feature_startedchallenge_quote_53">El éxito es el resultado de esperar y tener paciencia.</string>
+    <string name="feature_startedchallenge_progress">Progreso</string>
 </resources>

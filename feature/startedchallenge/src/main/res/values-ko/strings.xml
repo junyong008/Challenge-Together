@@ -19,8 +19,9 @@
     <string name="feature_startedchallenge_reset_history_description">과거에 리셋한 기록을 볼 수 있어요.</string>
     <string name="feature_startedchallenge_board">게시판</string>
     <string name="feature_startedchallenge_board_description">도전에 관한 이야기를 나눠보세요.</string>
+    <string name="feature_startedchallenge_progress_description">회복 과정을 한눈에 볼 수 있어요.</string>
     <string name="feature_startedchallenge_ranking">랭킹</string>
-    <string name="feature_startedchallenge_ranking_description">현재 순위는 %1$s위를 유지 중이에요!</string>
+    <string name="feature_startedchallenge_ranking_description">현재 순위는 %1$s, %2$s위를 유지 중이에요!</string>
     <string name="feature_startedchallenge_mode">모드</string>
     <string name="feature_startedchallenge_calender">달력</string>
     <string name="feature_startedchallenge_quote">명언</string>
@@ -49,6 +50,11 @@
     <string name="feature_startedchallenge_confirm_delete">삭제하기</string>
     <string name="feature_startedchallenge_delete_failed">삭제에 실패했습니다.\n잠시 후 다시 시도해 주세요.</string>
     <string name="feature_startedchallenge_delete_successful">삭제되었습니다.</string>
+    <string name="feature_startedchallenge_continue">이어하기</string>
+    <string name="feature_startedchallenge_continue_title">도전 이어하기</string>
+    <string name="feature_startedchallenge_continue_description">이 도전을 이어서 진행할까요?</string>
+    <string name="feature_startedchallenge_continue_failed">이어하기에 실패했습니다. 나중에 다시 시도해주세요.</string>
+    <string name="feature_startedchallenge_continue_successful">도전을 계속 진행합니다.</string>
 
     <string name="feature_startedchallenge_quote_1">자신을 이긴 사람은 세상을 이긴다.</string>
     <string name="feature_startedchallenge_quote_2">나의 내일은 오늘의 선택에 달려있다.</string>
@@ -103,4 +109,5 @@
     <string name="feature_startedchallenge_quote_51">당신이 포기하지 않는 한,\n아무도 당신을 꺾을 수 없다.</string>
     <string name="feature_startedchallenge_quote_52">어려운 순간마다\n더욱 강해질 수 있는 기회가 온다.</string>
     <string name="feature_startedchallenge_quote_53">성공은 기다림과 인내의 결과물이다.</string>
+    <string name="feature_startedchallenge_progress">진척도</string>
 </resources>

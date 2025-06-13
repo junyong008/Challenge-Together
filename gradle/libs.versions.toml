@@ -2,8 +2,8 @@
 minSdk = "24"
 targetSdk = "34"
 compileSdk = "35"
-versionCode = "23"
-versionName = "2.4.0"
+versionCode = "24"
+versionName = "2.5.0"
 packageName = "com.yjy.challengetogether"
 
 # 라이브러리 버전

@@ -4,6 +4,7 @@
     <string name="feature_challengeranking_tip_title">Conseils</string>
     <string name="feature_challengeranking_tip_long_absence">Les utilisateurs inactifs pendant 7 jours peuvent être supprimés de force par d\'autres participants.</string>
     <string name="feature_challengeranking_tip_alone">Si vous restez seul dans le défi, le classement disparaîtra, et les modifications du défi deviendront disponibles.</string>
+    <string name="feature_challengeranking_tip_progress_score">Les scores de progression sont mis à jour lorsque les participants accèdent à l\'écran de progression.</string>
     <string name="feature_challengeranking_force_remove_title">Élimination forcée</string>
     <string name="feature_challengeranking_force_remove_description">Les utilisateurs inactifs peuvent être éliminés de force.\nSouhaitez-vous supprimer cet utilisateur ?</string>
     <string name="feature_challengeranking_remove">Supprimer</string>
@@ -15,4 +16,7 @@
     <string name="feature_challengeranking_user_reconnected">L\'utilisateur vient de se reconnecter.</string>
     <string name="feature_challengeranking_check_network_connection">Veuillez vérifier votre connexion réseau.</string>
     <string name="feature_challengeranking_force_remove_failed">Échec de la suppression de l\'utilisateur. Veuillez réessayer plus tard.</string>
+    <string name="feature_challengeranking_score_format">%d points</string>
+    <string name="feature_challengeranking_switched_to_score_rank">Passé au classement basé sur la progression.</string>
+    <string name="feature_challengeranking_switched_to_time_rank">Passé au classement basé sur le temps.</string>
 </resources>

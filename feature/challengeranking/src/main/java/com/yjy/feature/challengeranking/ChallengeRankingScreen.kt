@@ -16,12 +16,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -30,7 +34,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -49,6 +56,7 @@ import com.yjy.common.designsystem.component.ClickableText
 import com.yjy.common.designsystem.component.LoadingWheel
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.component.StableImage
+import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
 import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.DevicePreviews
@@ -112,6 +120,7 @@ internal fun ChallengeRankingScreen(
         }
     }
 
+    var isScoreMode by rememberSaveable { mutableStateOf(false) }
     var selectedMemberIdToRemove by rememberSaveable { mutableStateOf<Int?>(null) }
 
     if (selectedMemberIdToRemove != null) {
@@ -137,9 +146,21 @@ internal fun ChallengeRankingScreen(
                     onNavigationClick = onBackClick,
                     titleRes = R.string.feature_challengeranking_title,
                     backgroundColor = CustomColorProvider.colorScheme.surface,
+                    rightContent = {
+                        challengeRanksUiState.challengeRanksOrNull()?.let {
+                            ModeChangeButton(
+                                onClick = { isScoreMode = !isScoreMode },
+                                modifier = Modifier.padding(end = 4.dp),
+                                isScoreMode = isScoreMode,
+                            )
+                        }
+                    },
                 )
                 challengeRanksUiState.challengeRanksOrNull()?.findMyRank()?.let { myRank ->
-                    RankingHeader(myChallengeRank = myRank)
+                    RankingHeader(
+                        isScoreMode = isScoreMode,
+                        myChallengeRank = myRank,
+                    )
                 }
             }
         },
@@ -161,6 +182,7 @@ internal fun ChallengeRankingScreen(
 
             is ChallengeRankingUiState.Success -> {
                 RankingBody(
+                    isScoreMode = isScoreMode,
                     challengeRanks = challengeRanksUiState.challengeRanks,
                     onForceRemoveClick = { selectedMemberIdToRemove = it },
                     modifier = Modifier.padding(padding),
@@ -173,19 +195,54 @@ internal fun ChallengeRankingScreen(
 private fun List<ChallengeRank>.findMyRank(): ChallengeRank? = firstOrNull { it.isMine }
 
 @Composable
+private fun ModeChangeButton(
+    onClick: () -> Unit,
+    isScoreMode: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier,
+    ) {
+        Icon(
+            ImageVector.vectorResource(id = ChallengeTogetherIcons.Rotation),
+            contentDescription = null,
+            tint = if (isScoreMode) {
+                CustomColorProvider.colorScheme.onBackground
+            } else {
+                CustomColorProvider.colorScheme.onBackgroundMuted
+            },
+        )
+    }
+}
+
+@Composable
 private fun RankingBody(
+    isScoreMode: Boolean,
     challengeRanks: List<ChallengeRank>,
     onForceRemoveClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(isScoreMode) {
+        listState.scrollToItem(0)
+    }
+
     LazyColumn(
+        state = listState,
         modifier = modifier.padding(horizontal = 16.dp),
     ) {
         items(
-            items = challengeRanks.sortedByDescending { it.currentRecordInSeconds },
+            items = if (isScoreMode) {
+                challengeRanks.sortedByDescending { it.recoveryScore }
+            } else {
+                challengeRanks.sortedByDescending { it.currentRecordInSeconds }
+            },
             key = { it.memberId },
         ) { challengeRank ->
             RankItem(
+                isScoreMode = isScoreMode,
                 challengeRank = challengeRank,
                 onForceRemoveClick = { onForceRemoveClick(challengeRank.memberId) },
             )
@@ -220,11 +277,17 @@ private fun TipDescriptions() {
             text = stringResource(id = R.string.feature_challengeranking_tip_alone),
             modifier = Modifier.padding(start = 4.dp),
         )
+        Spacer(modifier = Modifier.height(8.dp))
+        BulletText(
+            text = stringResource(id = R.string.feature_challengeranking_tip_progress_score),
+            modifier = Modifier.padding(start = 4.dp),
+        )
     }
 }
 
 @Composable
 private fun RankItem(
+    isScoreMode: Boolean,
     challengeRank: ChallengeRank,
     onForceRemoveClick: () -> Unit,
 ) {
@@ -233,28 +296,38 @@ private fun RankItem(
         modifier = Modifier.padding(vertical = 16.dp),
     ) {
         RankingProfile(tier = challengeRank.user.tier)
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(6.dp))
         Column(modifier = Modifier.weight(1f)) {
             RankNickName(
                 challengeRank = challengeRank,
                 onForceRemoveClick = onForceRemoveClick,
             )
             Text(
-                text = if (challengeRank.isComplete) {
-                    stringResource(id = R.string.feature_challengeranking_success)
-                } else {
-                    formatTimeDuration(challengeRank.currentRecordInSeconds)
+                text = when {
+                    isScoreMode -> stringResource(
+                        id = R.string.feature_challengeranking_score_format,
+                        challengeRank.recoveryScore,
+                    )
+
+                    challengeRank.isComplete -> stringResource(id = R.string.feature_challengeranking_success)
+                    else -> formatTimeDuration(challengeRank.currentRecordInSeconds)
                 },
                 style = MaterialTheme.typography.bodyLarge,
-                color = if (challengeRank.isComplete) {
-                    CustomColorProvider.colorScheme.onBackground
-                } else {
-                    CustomColorProvider.colorScheme.red
+                color = when {
+                    isScoreMode -> CustomColorProvider.colorScheme.brandDim
+                    challengeRank.isComplete -> CustomColorProvider.colorScheme.onBackground
+                    else -> CustomColorProvider.colorScheme.red
                 },
                 modifier = Modifier.padding(start = 8.dp),
             )
         }
-        RankNumber(rank = challengeRank.rank)
+        RankNumber(
+            rank = if (isScoreMode) {
+                challengeRank.scoreRank
+            } else {
+                challengeRank.rank
+            },
+        )
     }
 }
 
@@ -288,13 +361,17 @@ private fun RankNickName(
 }
 
 @Composable
-private fun RankingHeader(myChallengeRank: ChallengeRank) {
+private fun RankingHeader(
+    isScoreMode: Boolean,
+    myChallengeRank: ChallengeRank,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
     ) {
         RankingProfile(
             tier = myChallengeRank.user.tier,
+            shape = CircleShape,
             modifier = Modifier.size(70.dp),
             padding = 14.dp,
             backgroundColor = CustomColorProvider.colorScheme.background,
@@ -306,14 +383,31 @@ private fun RankingHeader(myChallengeRank: ChallengeRank) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = CustomColorProvider.colorScheme.onSurface,
             )
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = formatTimeDuration(myChallengeRank.currentRecordInSeconds),
+                text = when {
+                    isScoreMode -> stringResource(
+                        id = R.string.feature_challengeranking_score_format,
+                        myChallengeRank.recoveryScore,
+                    )
+
+                    myChallengeRank.isComplete -> stringResource(id = R.string.feature_challengeranking_success)
+                    else -> formatTimeDuration(myChallengeRank.currentRecordInSeconds)
+                },
                 style = MaterialTheme.typography.titleSmall,
-                color = CustomColorProvider.colorScheme.red,
+                color = when {
+                    isScoreMode -> CustomColorProvider.colorScheme.brandDim
+                    myChallengeRank.isComplete -> CustomColorProvider.colorScheme.onBackground
+                    else -> CustomColorProvider.colorScheme.red
+                },
             )
         }
         RankNumber(
-            rank = myChallengeRank.rank,
+            rank = if (isScoreMode) {
+                myChallengeRank.scoreRank
+            } else {
+                myChallengeRank.rank
+            },
             size = 40.dp,
             textStyle = MaterialTheme.typography.titleLarge,
             textColor = CustomColorProvider.colorScheme.onSurface,
@@ -354,6 +448,7 @@ private fun RankNumber(
 @Composable
 private fun RankingProfile(
     tier: Tier,
+    shape: Shape = MaterialTheme.shapes.large,
     modifier: Modifier = Modifier,
     padding: Dp = 8.dp,
     backgroundColor: Color = CustomColorProvider.colorScheme.surface,
@@ -361,7 +456,7 @@ private fun RankingProfile(
     Box(modifier = modifier.width(46.dp)) {
         Box(
             modifier = Modifier
-                .clip(CircleShape)
+                .clip(shape)
                 .background(backgroundColor)
                 .padding(padding),
             contentAlignment = Alignment.Center,

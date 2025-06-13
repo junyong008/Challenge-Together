@@ -4,6 +4,7 @@
     <string name="feature_challengeranking_tip_title">Consigli</string>
     <string name="feature_challengeranking_tip_long_absence">Gli utenti inattivi per 7 giorni possono essere rimossi forzatamente da altri partecipanti.</string>
     <string name="feature_challengeranking_tip_alone">Se rimani solo nella sfida, la classifica scomparirà e le modifiche alla sfida diventeranno disponibili.</string>
+    <string name="feature_challengeranking_tip_progress_score">I punteggi di progresso vengono aggiornati ogni volta che i partecipanti aprono la schermata dei progressi.</string>
     <string name="feature_challengeranking_force_remove_title">Rimozione forzata</string>
     <string name="feature_challengeranking_force_remove_description">Gli utenti inattivi possono essere rimossi forzatamente.\nVuoi rimuovere questo utente?</string>
     <string name="feature_challengeranking_remove">Rimuovi</string>
@@ -15,4 +16,7 @@
     <string name="feature_challengeranking_user_reconnected">L\'utente si è appena riconnesso.</string>
     <string name="feature_challengeranking_check_network_connection">Si prega di controllare la connessione di rete.</string>
     <string name="feature_challengeranking_force_remove_failed">Impossibile rimuovere l\'utente. Si prega di riprovare più tardi.</string>
+    <string name="feature_challengeranking_score_format">%d punti</string>
+    <string name="feature_challengeranking_switched_to_score_rank">Passato alla classifica per progresso.</string>
+    <string name="feature_challengeranking_switched_to_time_rank">Passato alla classifica per tempo registrato.</string>
 </resources>

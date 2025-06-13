@@ -97,6 +97,7 @@ class StartedChallengeViewModel @Inject constructor(
                 resetRecord(action.challengeId, action.resetDateTime, action.memo)
 
             is StartedChallengeUiAction.OnDeleteChallengeClick -> deleteChallenge(action.challengeId)
+            is StartedChallengeUiAction.OnContinueChallengeClick -> continueChallenge(action.challengeId)
         }
     }
 
@@ -107,6 +108,18 @@ class StartedChallengeViewModel @Inject constructor(
             .onSuccess { sendEvent(StartedChallengeUiEvent.DeleteSuccess) }
             .onFailure { sendEvent(StartedChallengeUiEvent.DeleteFailure) }
         _uiState.update { it.copy(isDeleting = false) }
+    }
+
+    private fun continueChallenge(challengeId: Int) = viewModelScope.launch {
+        _uiState.update { it.copy(isContinuing = true) }
+
+        startedChallengeRepository.continueStartedChallenge(challengeId)
+            .onSuccess {
+                sendEvent(StartedChallengeUiEvent.ContinueSuccess)
+                challengeDetail.restart()
+            }
+            .onFailure { sendEvent(StartedChallengeUiEvent.ContinueFailure) }
+        _uiState.update { it.copy(isContinuing = false) }
     }
 
     private fun resetRecord(challengeId: Int, resetDateTime: LocalDateTime, memo: String) = viewModelScope.launch {

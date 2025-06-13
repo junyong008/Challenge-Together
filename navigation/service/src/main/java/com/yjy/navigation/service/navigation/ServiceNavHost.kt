@@ -17,6 +17,8 @@ import com.yjy.feature.applock.navigation.appLockNavGraph
 import com.yjy.feature.applock.navigation.navigateToAppLockSetting
 import com.yjy.feature.challengeboard.navigation.challengeBoardScreen
 import com.yjy.feature.challengeboard.navigation.navigateToChallengeBoard
+import com.yjy.feature.challengeprogress.navigation.challengeProgressScreen
+import com.yjy.feature.challengeprogress.navigation.navigateToChallengeProgress
 import com.yjy.feature.challengeranking.navigation.challengeRankingScreen
 import com.yjy.feature.challengeranking.navigation.navigateToChallengeRanking
 import com.yjy.feature.changename.navigation.changeNameScreen
@@ -189,6 +191,7 @@ internal fun ServiceNavHost(
             onResetRecordClick = navController::navigateToResetRecord,
             onBoardClick = navController::navigateToChallengeBoard,
             onRankingClick = navController::navigateToChallengeRanking,
+            onProgressClick = navController::navigateToChallengeProgress,
             onShowSnackbar = onShowSnackbar,
         )
         resetRecordScreen(
@@ -201,6 +204,9 @@ internal fun ServiceNavHost(
         challengeRankingScreen(
             onBackClick = navController::popBackStack,
             onShowSnackbar = onShowSnackbar,
+        )
+        challengeProgressScreen(
+            onBackClick = navController::popBackStack,
         )
         changePasswordScreen(
             onBackClick = navController::popBackStack,
