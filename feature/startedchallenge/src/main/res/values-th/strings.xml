@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="feature_startedchallenge_today_quote">คำคมประจำวัน</string>
+    <string name="feature_startedchallenge_reason_placeholder">เช่น เพื่อสุขภาพของฉัน…</string>
+    <string name="feature_startedchallenge_reason_to_start">เหตุผลในการท้าทาย</string>
+    <string name="feature_startedchallenge_remind">ตั้งสติใหม่</string>
+    <string name="feature_startedchallenge_remind_description">ลองนึกถึงเหตุผลที่คุณเริ่มต้นความท้าทายนี้</string>
+    <string name="feature_startedchallenge_edit_reason_failed">ไม่สามารถแก้ไขได้\nโปรดลองอีกครั้งในภายหลัง</string>
+    <string name="feature_startedchallenge_delete_reason_title">ลบรายการ</string>
+    <string name="feature_startedchallenge_delete_reason_description">คุณต้องการลบ\n\"%1$s\" หรือไม่?</string>
     <string name="feature_startedchallenge_not_found">ความท้าทายไม่มีอยู่จริง</string>
     <string name="feature_startedchallenge_not_started">ความท้าทายยังไม่เริ่มต้น</string>
     <string name="feature_startedchallenge_not_participating">คุณไม่ได้เข้าร่วมความท้าทายนี้</string>

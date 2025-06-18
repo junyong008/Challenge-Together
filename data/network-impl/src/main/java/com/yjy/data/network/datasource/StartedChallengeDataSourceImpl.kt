@@ -1,10 +1,12 @@
 package com.yjy.data.network.datasource
 
 import com.yjy.common.network.NetworkResult
+import com.yjy.data.network.request.challenge.AddReasonToStartChallengeRequest
 import com.yjy.data.network.request.challenge.ResetChallengeRequest
 import com.yjy.data.network.response.challenge.GetChallengeProgressResponse
 import com.yjy.data.network.response.challenge.GetChallengeRankingResponse
 import com.yjy.data.network.response.challenge.GetResetInfoResponse
+import com.yjy.data.network.response.challenge.GetStartReasonResponse
 import com.yjy.data.network.response.challenge.GetStartedChallengeDetailResponse
 import com.yjy.data.network.service.ChallengeTogetherService
 import javax.inject.Inject
@@ -15,6 +17,12 @@ internal class StartedChallengeDataSourceImpl @Inject constructor(
 
     override suspend fun resetStartedChallenge(request: ResetChallengeRequest): NetworkResult<Unit> =
         challengeTogetherService.resetChallenge(request)
+
+    override suspend fun addReasonToStartChallenge(request: AddReasonToStartChallengeRequest): NetworkResult<Unit> =
+        challengeTogetherService.addReasonToStartChallenge(request)
+
+    override suspend fun deleteReasonToStartChallenge(reasonId: Int): NetworkResult<Unit> =
+        challengeTogetherService.deleteReasonToStartChallenge(reasonId)
 
     override suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit> =
         challengeTogetherService.deleteStartedChallenge(challengeId)
@@ -30,6 +38,9 @@ internal class StartedChallengeDataSourceImpl @Inject constructor(
 
     override suspend fun getResetInfo(challengeId: Int): NetworkResult<GetResetInfoResponse> =
         challengeTogetherService.getResetInfo(challengeId)
+
+    override suspend fun getStartReasons(challengeId: Int): NetworkResult<List<GetStartReasonResponse>> =
+        challengeTogetherService.getChallengeStartReasons(challengeId)
 
     override suspend fun getChallengeProgress(challengeId: Int): NetworkResult<GetChallengeProgressResponse> =
         challengeTogetherService.getChallengeProgress(challengeId)

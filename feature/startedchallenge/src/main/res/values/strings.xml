@@ -30,6 +30,14 @@
     <string name="feature_startedchallenge_mode">Mode</string>
     <string name="feature_startedchallenge_calender">Calender</string>
     <string name="feature_startedchallenge_quote">Quote</string>
+    <string name="feature_startedchallenge_today_quote">Today\'s Quote</string>
+    <string name="feature_startedchallenge_reason_placeholder">e.g. For my health…</string>
+    <string name="feature_startedchallenge_reason_to_start">Reason to Challenge</string>
+    <string name="feature_startedchallenge_remind">Refocus</string>
+    <string name="feature_startedchallenge_remind_description">Remember why you started this challenge.</string>
+    <string name="feature_startedchallenge_edit_reason_failed">Failed to edit.\nPlease try again later.</string>
+    <string name="feature_startedchallenge_delete_reason_title">Delete Entry</string>
+    <string name="feature_startedchallenge_delete_reason_description">Do you want to delete\n\"%1$s\"?</string>
     <string name="feature_startedchallenge_refresh_quote">Refresh Quote</string>
     <string name="feature_startedchallenge_challenge_info">Info</string>
     <string name="feature_startedchallenge_start_time">Start Time</string>

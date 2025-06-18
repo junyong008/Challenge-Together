@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="feature_startedchallenge_today_quote">Zitat des Tages</string>
+    <string name="feature_startedchallenge_reason_placeholder">z. B. Für meine Gesundheit…</string>
+    <string name="feature_startedchallenge_reason_to_start">Grund für die Herausforderung</string>
+    <string name="feature_startedchallenge_remind">Neu fokussieren</string>
+    <string name="feature_startedchallenge_remind_description">Erinnere dich, warum du diese Herausforderung begonnen hast.</string>
+    <string name="feature_startedchallenge_edit_reason_failed">Bearbeitung fehlgeschlagen.\nBitte versuche es später erneut.</string>
+    <string name="feature_startedchallenge_delete_reason_title">Eintrag löschen</string>
+    <string name="feature_startedchallenge_delete_reason_description">Möchten Sie\n\"%1$s\" löschen?</string>
     <string name="feature_startedchallenge_not_found">Die Herausforderung existiert nicht.</string>
     <string name="feature_startedchallenge_not_started">Die Herausforderung hat noch nicht begonnen.</string>
     <string name="feature_startedchallenge_not_participating">Du nimmst an dieser Herausforderung nicht teil.</string>

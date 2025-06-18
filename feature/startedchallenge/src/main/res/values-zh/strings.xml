@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="feature_startedchallenge_today_quote">今日名言</string>
+    <string name="feature_startedchallenge_reason_placeholder">例如：为了健康…</string>
+    <string name="feature_startedchallenge_reason_to_start">挑战的理由</string>
+    <string name="feature_startedchallenge_remind">重拾初心</string>
+    <string name="feature_startedchallenge_remind_description">回想一下你为何开始这个挑战。</string>
+    <string name="feature_startedchallenge_edit_reason_failed">编辑失败。\n请稍后再试。</string>
+    <string name="feature_startedchallenge_delete_reason_title">删除项目</string>
+    <string name="feature_startedchallenge_delete_reason_description">您要删除\n\"%1$s\" 吗？</string>
     <string name="feature_startedchallenge_not_found">该挑战不存在。</string>
     <string name="feature_startedchallenge_not_started">该挑战尚未开始。</string>
     <string name="feature_startedchallenge_not_participating">您没有参与此挑战。</string>

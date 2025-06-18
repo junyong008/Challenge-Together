@@ -11,6 +11,7 @@ import com.yjy.data.network.request.auth.NaverLoginRequest
 import com.yjy.data.network.request.auth.SignUpRequest
 import com.yjy.data.network.request.auth.VerifyRequest
 import com.yjy.data.network.request.challenge.AddChallengeRequest
+import com.yjy.data.network.request.challenge.AddReasonToStartChallengeRequest
 import com.yjy.data.network.request.challenge.EditChallengeTitleDescriptionRequest
 import com.yjy.data.network.request.challenge.ReportChallengePostRequest
 import com.yjy.data.network.request.challenge.ResetChallengeRequest
@@ -30,6 +31,7 @@ import com.yjy.data.network.response.challenge.GetChallengeRankingResponse
 import com.yjy.data.network.response.challenge.GetMyChallengesResponse
 import com.yjy.data.network.response.challenge.GetRecordsResponse
 import com.yjy.data.network.response.challenge.GetResetInfoResponse
+import com.yjy.data.network.response.challenge.GetStartReasonResponse
 import com.yjy.data.network.response.challenge.GetStartedChallengeDetailResponse
 import com.yjy.data.network.response.challenge.GetWaitingChallengeDetailResponse
 import com.yjy.data.network.response.challenge.WaitingChallengeResponse
@@ -168,9 +170,19 @@ internal interface ChallengeTogetherService {
         @Body request: ResetChallengeRequest,
     ): NetworkResult<Unit>
 
+    @POST("service/challenge/add-reason")
+    suspend fun addReasonToStartChallenge(
+        @Body request: AddReasonToStartChallengeRequest,
+    ): NetworkResult<Unit>
+
     @DELETE("service/challenge/delete/started")
     suspend fun deleteStartedChallenge(
         @Query("challengeId") challengeId: Int,
+    ): NetworkResult<Unit>
+
+    @DELETE("service/challenge/delete/reason")
+    suspend fun deleteReasonToStartChallenge(
+        @Query("reasonId") reasonId: Int,
     ): NetworkResult<Unit>
 
     @POST("service/challenge/continue")
@@ -192,6 +204,11 @@ internal interface ChallengeTogetherService {
     suspend fun getResetInfo(
         @Query("challengeId") challengeId: Int,
     ): NetworkResult<GetResetInfoResponse>
+
+    @GET("service/challenge/get/start-reasons")
+    suspend fun getChallengeStartReasons(
+        @Query("challengeId") challengeId: Int,
+    ): NetworkResult<List<GetStartReasonResponse>>
 
     @GET("service/challenge/get/progress")
     suspend fun getChallengeProgress(
