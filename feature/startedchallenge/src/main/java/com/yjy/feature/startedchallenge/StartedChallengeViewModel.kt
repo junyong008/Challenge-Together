@@ -175,7 +175,10 @@ class StartedChallengeViewModel @Inject constructor(
 
         startedChallengeRepository.addReasonToStartChallenge(challengeId = challengeId, reason = reasonToStart)
             .onSuccess { refreshReasons() }
-            .onFailure { sendEvent(StartedChallengeUiEvent.EditReasonToStartFailure) }
+            .onFailure {
+                sendEvent(StartedChallengeUiEvent.EditReasonToStartFailure)
+                _uiState.update { it.copy(isEditingReasonToStart = false) }
+            }
     }
 
     private fun deleteReasonToStart(reasonId: Int) = viewModelScope.launch {
@@ -183,6 +186,9 @@ class StartedChallengeViewModel @Inject constructor(
 
         startedChallengeRepository.deleteReasonToStartChallenge(reasonId = reasonId)
             .onSuccess { refreshReasons() }
-            .onFailure { sendEvent(StartedChallengeUiEvent.EditReasonToStartFailure) }
+            .onFailure {
+                sendEvent(StartedChallengeUiEvent.EditReasonToStartFailure)
+                _uiState.update { it.copy(isEditingReasonToStart = false) }
+            }
     }
 }
