@@ -473,7 +473,7 @@ private fun SettingSection(
         Spacer(modifier = Modifier.height(12.dp))
         MyCard(
             titleResId = R.string.feature_my_notification_settings,
-            iconResId = ChallengeTogetherIcons.Bell,
+            iconResId = ChallengeTogetherIcons.Notification,
             onClick = onNotificationSettingClick,
         )
         Spacer(modifier = Modifier.height(8.dp))

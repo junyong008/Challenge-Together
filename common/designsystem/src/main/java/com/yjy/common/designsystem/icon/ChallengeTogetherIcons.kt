@@ -43,6 +43,7 @@ object ChallengeTogetherIcons {
     val MoreHorizontal = R.drawable.ic_more_horiz
     val MoreVertical = R.drawable.ic_more_vert
     val My = R.drawable.ic_my
+    val Notification = R.drawable.ic_notification
     val NotificationChallenge = R.drawable.ic_noti_challenge
     val NotificationCommunity = R.drawable.ic_noti_community
     val NotificationOff = R.drawable.ic_notification_off
