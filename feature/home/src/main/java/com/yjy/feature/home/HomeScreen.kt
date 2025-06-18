@@ -51,6 +51,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
@@ -62,6 +63,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.DialogWindowProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -910,6 +912,7 @@ private fun TierUpAnimationDialog(
             dismissOnClickOutside = false,
         ),
     ) {
+        (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(0.9f)
         val promotedTierText = stringResource(id = to.getDisplayNameResId())
         val animation = when (from) {
             Tier.IRON -> R.raw.anim_iron_to_bronze
