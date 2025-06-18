@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -154,19 +155,29 @@ internal fun DeleteAccountScreen(
                 titleRes = R.string.feature_deleteaccount_title,
                 descriptionRes = R.string.feature_deleteaccount_warning_title,
             )
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(70.dp))
             StableImage(
                 drawableResId = R.drawable.image_trash,
                 descriptionResId = R.string.feature_deleteaccount_info_graphic,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .size(115.dp),
+                    .size(130.dp),
             )
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(70.dp))
+            HorizontalDivider(
+                thickness = 1.dp,
+                modifier = Modifier.padding(horizontal = 8.dp),
+                color = CustomColorProvider.colorScheme.divider,
+            )
             InfoTexts(
                 modifier = Modifier
-                    .padding(horizontal = 24.dp)
-                    .align(Alignment.CenterHorizontally),
+                    .padding(horizontal = 8.dp)
+                    .align(Alignment.Start),
+            )
+            HorizontalDivider(
+                thickness = 1.dp,
+                modifier = Modifier.padding(horizontal = 8.dp),
+                color = CustomColorProvider.colorScheme.divider,
             )
         }
     }
@@ -177,22 +188,26 @@ private fun InfoTexts(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
+        Spacer(modifier = Modifier.height(24.dp))
         BulletText(
             text = stringResource(id = R.string.feature_deleteaccount_warning_challenges),
-            style = MaterialTheme.typography.labelMedium,
+            style = MaterialTheme.typography.labelSmall,
             color = CustomColorProvider.colorScheme.onBackground,
+            bulletColor = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
         Spacer(modifier = Modifier.height(24.dp))
         BulletText(
             text = stringResource(id = R.string.feature_deleteaccount_warning_community),
-            style = MaterialTheme.typography.labelMedium,
+            style = MaterialTheme.typography.labelSmall,
             color = CustomColorProvider.colorScheme.onBackground,
+            bulletColor = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
         Spacer(modifier = Modifier.height(24.dp))
         BulletText(
             text = stringResource(id = R.string.feature_deleteaccount_warning_irreversible),
-            style = MaterialTheme.typography.labelMedium,
+            style = MaterialTheme.typography.labelSmall,
             color = CustomColorProvider.colorScheme.onBackground,
+            bulletColor = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
         Spacer(modifier = Modifier.height(24.dp))
     }

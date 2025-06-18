@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="feature_startedchallenge_today_quote">Citazione del giorno</string>
+    <string name="feature_startedchallenge_reason_placeholder">Es: Per la mia salute…</string>
+    <string name="feature_startedchallenge_reason_to_start">Motivo della sfida</string>
+    <string name="feature_startedchallenge_remind">Rifocalizzati</string>
+    <string name="feature_startedchallenge_remind_description">Ricorda perché hai iniziato questa sfida.</string>
+    <string name="feature_startedchallenge_edit_reason_failed">Modifica non riuscita.\nRiprova più tardi.</string>
+    <string name="feature_startedchallenge_delete_reason_title">Elimina voce</string>
+    <string name="feature_startedchallenge_delete_reason_description">Vuoi eliminare\n\"%1$s\"?</string>
     <string name="feature_startedchallenge_not_found">La sfida non esiste.</string>
     <string name="feature_startedchallenge_not_started">La sfida non è ancora iniziata.</string>
     <string name="feature_startedchallenge_not_participating">Non stai partecipando a questa sfida.</string>

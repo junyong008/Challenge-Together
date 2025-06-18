@@ -7,6 +7,7 @@ sealed interface StartedChallengeUiEvent {
     data object DeleteFailure : StartedChallengeUiEvent
     data object ContinueSuccess : StartedChallengeUiEvent
     data object ContinueFailure : StartedChallengeUiEvent
+    data object EditReasonToStartFailure : StartedChallengeUiEvent
 
     sealed class LoadFailure : StartedChallengeUiEvent {
         data object NotFound : LoadFailure()

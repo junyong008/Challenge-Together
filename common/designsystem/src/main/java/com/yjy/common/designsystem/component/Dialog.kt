@@ -292,6 +292,53 @@ fun PasswordDialog(
 }
 
 @Composable
+fun TextInputDialog(
+    title: String = "",
+    description: String = "",
+    value: String = "",
+    placeholder: String = "",
+    maxTextLength: Int = 0,
+    enableConfirmButton: Boolean = true,
+    onValueChange: (String) -> Unit = {},
+    onConfirm: (text: String) -> Unit,
+    onClickNegative: () -> Unit,
+) {
+    BaseDialog(
+        onDismissRequest = onClickNegative,
+        title = title,
+        description = description,
+        dismissOnClickOutside = false,
+    ) {
+        SingleLineTextField(
+            value = value,
+            onValueChange = onValueChange,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done,
+            ),
+            textColor = CustomColorProvider.colorScheme.onBackground,
+            backgroundColor = CustomColorProvider.colorScheme.background,
+            placeholderText = placeholder,
+            placeholderColor = CustomColorProvider.colorScheme.onBackground.copy(alpha = 0.2f),
+        )
+        Spacer(modifier = Modifier.size(4.dp))
+        Text(
+            text = "${value.length}/$maxTextLength",
+            color = CustomColorProvider.colorScheme.onSurfaceMuted,
+            style = MaterialTheme.typography.labelSmall,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.End,
+        )
+        Spacer(modifier = Modifier.size(8.dp))
+        DialogButtonRow(
+            enablePositiveText = enableConfirmButton,
+            onClickNegative = onClickNegative,
+            onClickPositive = { onConfirm(value) },
+        )
+    }
+}
+
+@Composable
 fun ReportDialog(
     onClickReport: (ReportReason) -> Unit,
     onClickNegative: () -> Unit,
@@ -506,12 +553,17 @@ fun YearMonthPickerDialog(
 private fun BaseDialog(
     onDismissRequest: () -> Unit,
     title: String,
+    dismissOnBackPress: Boolean = true,
+    dismissOnClickOutside: Boolean = true,
     description: String = "",
     content: @Composable () -> Unit,
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
-        properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true),
+        properties = DialogProperties(
+            dismissOnBackPress = dismissOnBackPress,
+            dismissOnClickOutside = dismissOnClickOutside,
+        ),
     ) {
         Column(
             modifier = Modifier
@@ -568,6 +620,8 @@ private fun NumberInputField(
 private fun DialogButtonRow(
     onClickNegative: () -> Unit,
     onClickPositive: () -> Unit,
+    enablePositiveText: Boolean = true,
+    enableNegativeText: Boolean = true,
     @StringRes positiveTextRes: Int = R.string.common_designsystem_dialog_confirm,
     @StringRes negativeTextRes: Int = R.string.common_designsystem_dialog_cancel,
     positiveTextColor: Color = CustomColorProvider.colorScheme.brand,
@@ -583,6 +637,7 @@ private fun DialogButtonRow(
             color = negativeTextColor,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
+            enabled = enableNegativeText,
             textAlign = TextAlign.Center,
             textDecoration = TextDecoration.None,
         )
@@ -592,6 +647,7 @@ private fun DialogButtonRow(
             color = positiveTextColor,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
+            enabled = enablePositiveText,
             textAlign = TextAlign.Center,
             textDecoration = TextDecoration.None,
         )
@@ -645,6 +701,20 @@ fun PasswordDialogPreview() {
             PasswordDialog(
                 onConfirm = {},
                 onClickNegative = {},
+            )
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun TextInputDialogPreview() {
+    ChallengeTogetherTheme {
+        ChallengeTogetherBackground {
+            TextInputDialog(
+                onConfirm = {},
+                onClickNegative = {},
+                maxTextLength = 100,
             )
         }
     }

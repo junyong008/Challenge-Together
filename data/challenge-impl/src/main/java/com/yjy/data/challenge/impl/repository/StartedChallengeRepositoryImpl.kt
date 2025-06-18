@@ -14,6 +14,7 @@ import com.yjy.data.challenge.impl.util.TimeManager
 import com.yjy.data.database.dao.ChallengeDao
 import com.yjy.data.database.model.ChallengeEntity
 import com.yjy.data.network.datasource.StartedChallengeDataSource
+import com.yjy.data.network.request.challenge.AddReasonToStartChallengeRequest
 import com.yjy.data.network.request.challenge.ResetChallengeRequest
 import com.yjy.model.challenge.ChallengeRank
 import com.yjy.model.challenge.DetailedStartedChallenge
@@ -21,6 +22,7 @@ import com.yjy.model.challenge.RecoveryProgress
 import com.yjy.model.challenge.ResetInfo
 import com.yjy.model.challenge.ResetRecord
 import com.yjy.model.challenge.SimpleStartedChallenge
+import com.yjy.model.challenge.StartReason
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
@@ -71,6 +73,17 @@ internal class StartedChallengeRepositoryImpl @Inject constructor(
                 resetMemo = memo,
             ),
         )
+
+    override suspend fun addReasonToStartChallenge(challengeId: Int, reason: String): NetworkResult<Unit> =
+        startedChallengeDataSource.addReasonToStartChallenge(
+            request = AddReasonToStartChallengeRequest(
+                challengeId = challengeId,
+                reason = reason,
+            ),
+        )
+
+    override suspend fun deleteReasonToStartChallenge(reasonId: Int): NetworkResult<Unit> =
+        startedChallengeDataSource.deleteReasonToStartChallenge(reasonId)
 
     override suspend fun deleteStartedChallenge(challengeId: Int): NetworkResult<Unit> =
         startedChallengeDataSource.deleteStartedChallenge(challengeId)
@@ -124,6 +137,9 @@ internal class StartedChallengeRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun getStartReasons(challengeId: Int): NetworkResult<List<StartReason>> =
+        startedChallengeDataSource.getStartReasons(challengeId).map { reasons -> reasons.map { it.toModel() } }
 
     override suspend fun getChallengeRanking(challengeId: Int): Flow<NetworkResult<List<ChallengeRank>>> =
         startedChallengeDataSource.getChallengeRanking(challengeId).fold(

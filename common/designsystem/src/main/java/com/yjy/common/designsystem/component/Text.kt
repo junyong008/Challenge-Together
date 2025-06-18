@@ -2,6 +2,7 @@ package com.yjy.common.designsystem.component
 
 import android.content.ClipboardManager
 import android.content.Context
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -35,6 +36,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -61,11 +63,18 @@ fun ClickableText(
     textDecoration: TextDecoration? = TextDecoration.Underline,
     enabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(8.dp),
+    useSingleClick: Boolean = true,
 ) {
     val annotatedString = when (text) {
         is String -> AnnotatedString(text)
         is AnnotatedString -> text
         else -> throw IllegalArgumentException("Unsupported text type")
+    }
+
+    val clickableModifier = if (useSingleClick) {
+        Modifier.clickableSingle(enabled = enabled, onClick = onClick)
+    } else {
+        Modifier.clickable(enabled = enabled, onClick = onClick)
     }
 
     Text(
@@ -77,10 +86,7 @@ fun ClickableText(
         textAlign = textAlign,
         modifier = modifier
             .clip(MaterialTheme.shapes.medium)
-            .clickableSingle(
-                enabled = enabled,
-                onClick = onClick,
-            )
+            .then(clickableModifier)
             .padding(contentPadding),
     )
 }
@@ -159,6 +165,7 @@ fun BulletText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = CustomColorProvider.colorScheme.onBackgroundMuted,
+    bulletColor: Color = color,
     style: TextStyle = MaterialTheme.typography.labelSmall,
 ) {
     val bullet = "•  "
@@ -176,7 +183,9 @@ fun BulletText(
                     ),
                 ),
             ) {
-                append(bullet)
+                withStyle(style = SpanStyle(color = bulletColor)) {
+                    append(bullet)
+                }
                 append(text)
             }
         },

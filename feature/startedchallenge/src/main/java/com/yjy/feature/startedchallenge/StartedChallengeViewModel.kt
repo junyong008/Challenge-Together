@@ -15,21 +15,25 @@ import com.yjy.data.challenge.api.StartedChallengeRepository
 import com.yjy.domain.GetStartedChallengeDetailUseCase
 import com.yjy.domain.ResetStartedChallengeUseCase
 import com.yjy.feature.startedchallenge.model.ChallengeDetailUiState
+import com.yjy.feature.startedchallenge.model.StartReasonsUiState
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiAction
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiEvent
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -45,6 +49,7 @@ class StartedChallengeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val challengeId = savedStateHandle.getStateFlow<Int?>("challengeId", null)
+    private val refreshReasonsTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     private val _uiState = MutableStateFlow(StartedChallengeUiState())
     val uiState: StateFlow<StartedChallengeUiState> = _uiState.asStateFlow()
@@ -85,6 +90,31 @@ class StartedChallengeViewModel @Inject constructor(
         initialValue = ChallengeDetailUiState.Loading,
     )
 
+    val startReasonsState = merge(
+        challengeId,
+        refreshReasonsTrigger.map { challengeId.value },
+    ).filterNotNull().flatMapLatest { id ->
+        flow {
+            startedChallengeRepository.getStartReasons(id)
+                .onSuccess {
+                    _uiState.update { state -> state.copy(isEditingReasonToStart = false) }
+                    emit(StartReasonsUiState.Success(it))
+                }
+                .onFailure {
+                    sendEvent(StartedChallengeUiEvent.LoadFailure.Unknown)
+                    emit(StartReasonsUiState.Loading)
+                }
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = StartReasonsUiState.Loading,
+    )
+
+    private fun refreshReasons() {
+        refreshReasonsTrigger.tryEmit(Unit)
+    }
+
     private fun sendEvent(event: StartedChallengeUiEvent) {
         viewModelScope.launch {
             _uiEvent.send(event)
@@ -96,6 +126,10 @@ class StartedChallengeViewModel @Inject constructor(
             is StartedChallengeUiAction.OnResetClick ->
                 resetRecord(action.challengeId, action.resetDateTime, action.memo)
 
+            is StartedChallengeUiAction.OnAddReasonToStart ->
+                addReasonToStart(action.challengeId, action.reasonToStart)
+
+            is StartedChallengeUiAction.OnDeleteReasonToStart -> deleteReasonToStart(action.reasonId)
             is StartedChallengeUiAction.OnDeleteChallengeClick -> deleteChallenge(action.challengeId)
             is StartedChallengeUiAction.OnContinueChallengeClick -> continueChallenge(action.challengeId)
         }
@@ -134,5 +168,27 @@ class StartedChallengeViewModel @Inject constructor(
                 sendEvent(StartedChallengeUiEvent.ResetFailure)
             }
         _uiState.update { it.copy(isResetting = false) }
+    }
+
+    private fun addReasonToStart(challengeId: Int, reasonToStart: String) = viewModelScope.launch {
+        _uiState.update { it.copy(isEditingReasonToStart = true) }
+
+        startedChallengeRepository.addReasonToStartChallenge(challengeId = challengeId, reason = reasonToStart)
+            .onSuccess { refreshReasons() }
+            .onFailure {
+                sendEvent(StartedChallengeUiEvent.EditReasonToStartFailure)
+                _uiState.update { it.copy(isEditingReasonToStart = false) }
+            }
+    }
+
+    private fun deleteReasonToStart(reasonId: Int) = viewModelScope.launch {
+        _uiState.update { it.copy(isEditingReasonToStart = true) }
+
+        startedChallengeRepository.deleteReasonToStartChallenge(reasonId = reasonId)
+            .onSuccess { refreshReasons() }
+            .onFailure {
+                sendEvent(StartedChallengeUiEvent.EditReasonToStartFailure)
+                _uiState.update { it.copy(isEditingReasonToStart = false) }
+            }
     }
 }

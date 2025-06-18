@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="feature_startedchallenge_today_quote">오늘의 명언</string>
+    <string name="feature_startedchallenge_reason_placeholder">예: 건강을 위해…</string>
+    <string name="feature_startedchallenge_reason_to_start">도전하는 이유</string>
+    <string name="feature_startedchallenge_remind">마음 다잡기</string>
+    <string name="feature_startedchallenge_remind_description">이 도전을 시작한 이유를 떠올려 보세요.</string>
+    <string name="feature_startedchallenge_edit_reason_failed">수정에 실패했습니다.\n잠시 후 다시 시도해 주세요.</string>
+    <string name="feature_startedchallenge_delete_reason_title">항목 삭제</string>
+    <string name="feature_startedchallenge_delete_reason_description">\"%1$s\"\n항목을 삭제하시겠습니까?</string>
     <string name="feature_startedchallenge_not_found">도전방이 존재하지 않습니다.</string>
     <string name="feature_startedchallenge_not_started">아직 시작하지 않은 도전입니다.</string>
     <string name="feature_startedchallenge_not_participating">참여하고 있지 않은 도전입니다.</string>

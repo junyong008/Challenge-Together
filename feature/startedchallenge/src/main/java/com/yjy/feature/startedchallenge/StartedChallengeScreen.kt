@@ -1,15 +1,30 @@
 package com.yjy.feature.startedchallenge
 
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,7 +41,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -58,9 +75,12 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yjy.common.core.constants.ChallengeConst
+import com.yjy.common.core.constants.ChallengeConst.MAX_REASON_TO_START_COUNT
+import com.yjy.common.core.constants.ChallengeConst.MAX_REASON_TO_START_LENGTH
 import com.yjy.common.core.constants.TimeConst.SECONDS_PER_DAY
 import com.yjy.common.core.extensions.clickableSingle
 import com.yjy.common.core.util.NavigationAnimation.fadeIn
@@ -69,6 +89,7 @@ import com.yjy.common.core.util.ObserveAsEvents
 import com.yjy.common.core.util.formatLocalDateTime
 import com.yjy.common.core.util.formatTimeDuration
 import com.yjy.common.designsystem.component.BaseBottomSheet
+import com.yjy.common.designsystem.component.BulletText
 import com.yjy.common.designsystem.component.Calendar
 import com.yjy.common.designsystem.component.CalendarDialog
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
@@ -84,6 +105,7 @@ import com.yjy.common.designsystem.component.RoundedGradientProgressBar
 import com.yjy.common.designsystem.component.SelectionMode
 import com.yjy.common.designsystem.component.SnackbarType
 import com.yjy.common.designsystem.component.StableImage
+import com.yjy.common.designsystem.component.TextInputDialog
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
 import com.yjy.common.designsystem.extensions.getIconResId
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
@@ -91,16 +113,20 @@ import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 import com.yjy.common.ui.DevicePreviews
 import com.yjy.feature.startedchallenge.model.ChallengeDetailUiState
+import com.yjy.feature.startedchallenge.model.StartReasonsUiState
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiAction
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiEvent
 import com.yjy.feature.startedchallenge.model.StartedChallengeUiState
 import com.yjy.feature.startedchallenge.model.challengeOrNull
 import com.yjy.feature.startedchallenge.model.isLoading
+import com.yjy.feature.startedchallenge.model.reasonsOrEmpty
 import com.yjy.model.challenge.DetailedStartedChallenge
+import com.yjy.model.challenge.StartReason
 import com.yjy.model.challenge.core.Category
 import com.yjy.model.challenge.core.Mode
 import com.yjy.model.challenge.core.TargetDays
 import com.yjy.platform.widget.WidgetManager
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import java.time.LocalDate
@@ -124,11 +150,13 @@ internal fun StartedChallengeRoute(
     viewModel: StartedChallengeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val startReasonsState by viewModel.startReasonsState.collectAsStateWithLifecycle()
     val challengeDetail by viewModel.challengeDetail.collectAsStateWithLifecycle()
 
     StartedChallengeScreen(
         modifier = modifier,
         challengeDetail = challengeDetail,
+        startReasonsState = startReasonsState,
         uiState = uiState,
         uiEvent = viewModel.uiEvent,
         processAction = viewModel::processAction,
@@ -151,6 +179,7 @@ internal fun StartedChallengeRoute(
 internal fun StartedChallengeScreen(
     modifier: Modifier = Modifier,
     challengeDetail: ChallengeDetailUiState = ChallengeDetailUiState.Loading,
+    startReasonsState: StartReasonsUiState = StartReasonsUiState.Loading,
     uiState: StartedChallengeUiState = StartedChallengeUiState(),
     uiEvent: Flow<StartedChallengeUiEvent> = flowOf(),
     processAction: (StartedChallengeUiAction) -> Unit = {},
@@ -168,10 +197,14 @@ internal fun StartedChallengeScreen(
 ) {
     var shouldShowResetBottomSheet by rememberSaveable { mutableStateOf(false) }
     var shouldShowMenuBottomSheet by remember { mutableStateOf(false) }
+    var shouldShowRemindDialog by remember { mutableStateOf(false) }
+    var shouldShowAddReasonDialog by remember { mutableStateOf(false) }
     var shouldShowDeleteConfirmDialog by remember { mutableStateOf(false) }
     var shouldShowCalendarDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowContinueDialog by rememberSaveable { mutableStateOf(false) }
+    var selectedReasonToDelete by remember { mutableStateOf<StartReason?>(null) }
 
+    var inputReasonToStart by rememberSaveable { mutableStateOf("") }
     var resetDateTime by rememberSaveable { mutableStateOf(LocalDateTime.now()) }
 
     val density = LocalDensity.current
@@ -211,6 +244,7 @@ internal fun StartedChallengeScreen(
     val deleteFailureMessage = stringResource(id = R.string.feature_startedchallenge_delete_failed)
     val continueSuccessMessage = stringResource(id = R.string.feature_startedchallenge_continue_successful)
     val continueFailureMessage = stringResource(id = R.string.feature_startedchallenge_continue_failed)
+    val editReasonFailureMessage = stringResource(id = R.string.feature_startedchallenge_edit_reason_failed)
 
     ObserveAsEvents(flow = uiEvent) { event ->
         when (event) {
@@ -244,6 +278,11 @@ internal fun StartedChallengeScreen(
 
             StartedChallengeUiEvent.ContinueFailure ->
                 onShowSnackbar(SnackbarType.ERROR, continueFailureMessage)
+
+            StartedChallengeUiEvent.EditReasonToStartFailure -> {
+                shouldShowRemindDialog = false
+                onShowSnackbar(SnackbarType.ERROR, editReasonFailureMessage)
+            }
         }
     }
 
@@ -314,6 +353,42 @@ internal fun StartedChallengeScreen(
             )
         }
 
+        if (shouldShowAddReasonDialog) {
+            TextInputDialog(
+                value = inputReasonToStart,
+                title = stringResource(id = R.string.feature_startedchallenge_reason_to_start),
+                description = stringResource(id = R.string.feature_startedchallenge_remind_description),
+                maxTextLength = MAX_REASON_TO_START_LENGTH,
+                placeholder = stringResource(id = R.string.feature_startedchallenge_reason_placeholder),
+                onValueChange = { inputReasonToStart = it.take(MAX_REASON_TO_START_LENGTH) },
+                enableConfirmButton = inputReasonToStart.isNotBlank(),
+                onConfirm = { reason ->
+                    shouldShowAddReasonDialog = false
+                    processAction(StartedChallengeUiAction.OnAddReasonToStart(challenge.id, reason))
+                },
+                onClickNegative = { shouldShowAddReasonDialog = false },
+            )
+        }
+
+        if (selectedReasonToDelete != null) {
+            ChallengeTogetherDialog(
+                title = stringResource(id = R.string.feature_startedchallenge_delete_reason_title),
+                description = stringResource(
+                    id = R.string.feature_startedchallenge_delete_reason_description,
+                    selectedReasonToDelete!!.value,
+                ),
+                positiveTextRes = R.string.feature_startedchallenge_confirm_delete,
+                positiveTextColor = CustomColorProvider.colorScheme.red,
+                onClickPositive = {
+                    processAction(
+                        StartedChallengeUiAction.OnDeleteReasonToStart(reasonId = selectedReasonToDelete!!.id),
+                    )
+                    selectedReasonToDelete = null
+                },
+                onClickNegative = { selectedReasonToDelete = null },
+            )
+        }
+
         if (shouldShowDeleteConfirmDialog) {
             ChallengeTogetherDialog(
                 title = stringResource(id = R.string.feature_startedchallenge_delete_prompt),
@@ -341,6 +416,20 @@ internal fun StartedChallengeScreen(
                 onClickNegative = { shouldShowContinueDialog = false },
             )
         }
+
+        AnimatedRemindDialog(
+            showDialog = shouldShowRemindDialog,
+            reasons = startReasonsState.reasonsOrEmpty(),
+            isLoading = startReasonsState.isLoading() || uiState.isEditingReasonToStart,
+            onAddReasonClick = {
+                inputReasonToStart = ""
+                shouldShowAddReasonDialog = true
+            },
+            onDeleteReasonClick = { reason ->
+                selectedReasonToDelete = reason
+            },
+            onDismiss = { shouldShowRemindDialog = false },
+        )
 
         CompositionLocalProvider(
             LocalOverscrollConfiguration provides null,
@@ -378,6 +467,10 @@ internal fun StartedChallengeScreen(
                             resetDateTime = LocalDateTime.now()
                             shouldShowResetBottomSheet = true
                         },
+                        onRemindButtonClick = {
+                            shouldShowRemindDialog = true
+                            context.vibrateClickFeedback()
+                        },
                         onContinueButtonClick = {
                             shouldShowContinueDialog = true
                         },
@@ -400,6 +493,7 @@ private fun ChallengeBody(
     isResetting: Boolean,
     isContinuing: Boolean,
     onResetButtonClick: () -> Unit,
+    onRemindButtonClick: () -> Unit,
     onContinueButtonClick: () -> Unit,
     onResetRecordClick: (challengeId: Int) -> Unit,
     onBoardClick: (challengeId: Int, isEditable: Boolean) -> Unit,
@@ -434,10 +528,14 @@ private fun ChallengeBody(
         )
         if (challenge.currentRecordInSeconds < challenge.targetDays.toDays() * SECONDS_PER_DAY) {
             Spacer(modifier = Modifier.height(20.dp))
-            ResetButton(
-                onClick = onResetButtonClick,
-                enabled = !isResetting,
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                ResetButton(
+                    onClick = onResetButtonClick,
+                    enabled = !isResetting,
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                RemindButton(onClick = onRemindButtonClick)
+            }
         } else if (challenge.currentParticipantCounts <= 1) {
             Spacer(modifier = Modifier.height(20.dp))
             ContinueButton(
@@ -624,6 +722,325 @@ private fun ResetBottomSheet(
     }
 }
 
+private const val ANIMATED_REMIND_DIALOG_CLOSE_DELAY = 200
+private const val QUOTE_ANIMATION_DURATION = 300
+
+@Composable
+fun AnimatedRemindDialog(
+    showDialog: Boolean,
+    reasons: List<StartReason>,
+    isLoading: Boolean,
+    onAddReasonClick: () -> Unit,
+    onDeleteReasonClick: (reason: StartReason) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var showAnimatedDialog by remember { mutableStateOf(false) }
+    var animateIn by remember { mutableStateOf(false) }
+
+    LaunchedEffect(showDialog) {
+        if (!showDialog) {
+            animateIn = false
+            delay(ANIMATED_REMIND_DIALOG_CLOSE_DELAY.toLong())
+            showAnimatedDialog = false
+        } else {
+            showAnimatedDialog = true
+        }
+    }
+
+    LaunchedEffect(showAnimatedDialog) {
+        if (showAnimatedDialog) { animateIn = true }
+    }
+
+    if (!showAnimatedDialog) return
+
+    val quotesResIds = remember {
+        listOf(
+            R.string.feature_startedchallenge_quote_1,
+            R.string.feature_startedchallenge_quote_2,
+            R.string.feature_startedchallenge_quote_3,
+            R.string.feature_startedchallenge_quote_4,
+            R.string.feature_startedchallenge_quote_5,
+            R.string.feature_startedchallenge_quote_6,
+            R.string.feature_startedchallenge_quote_7,
+            R.string.feature_startedchallenge_quote_8,
+            R.string.feature_startedchallenge_quote_9,
+            R.string.feature_startedchallenge_quote_10,
+            R.string.feature_startedchallenge_quote_11,
+            R.string.feature_startedchallenge_quote_12,
+            R.string.feature_startedchallenge_quote_13,
+            R.string.feature_startedchallenge_quote_14,
+            R.string.feature_startedchallenge_quote_15,
+            R.string.feature_startedchallenge_quote_16,
+            R.string.feature_startedchallenge_quote_17,
+            R.string.feature_startedchallenge_quote_18,
+            R.string.feature_startedchallenge_quote_19,
+            R.string.feature_startedchallenge_quote_20,
+            R.string.feature_startedchallenge_quote_21,
+            R.string.feature_startedchallenge_quote_22,
+            R.string.feature_startedchallenge_quote_23,
+            R.string.feature_startedchallenge_quote_24,
+            R.string.feature_startedchallenge_quote_25,
+            R.string.feature_startedchallenge_quote_26,
+            R.string.feature_startedchallenge_quote_27,
+            R.string.feature_startedchallenge_quote_28,
+            R.string.feature_startedchallenge_quote_29,
+            R.string.feature_startedchallenge_quote_30,
+            R.string.feature_startedchallenge_quote_31,
+            R.string.feature_startedchallenge_quote_32,
+            R.string.feature_startedchallenge_quote_33,
+            R.string.feature_startedchallenge_quote_34,
+            R.string.feature_startedchallenge_quote_35,
+            R.string.feature_startedchallenge_quote_36,
+            R.string.feature_startedchallenge_quote_37,
+            R.string.feature_startedchallenge_quote_38,
+            R.string.feature_startedchallenge_quote_39,
+            R.string.feature_startedchallenge_quote_40,
+            R.string.feature_startedchallenge_quote_41,
+            R.string.feature_startedchallenge_quote_42,
+            R.string.feature_startedchallenge_quote_43,
+            R.string.feature_startedchallenge_quote_44,
+            R.string.feature_startedchallenge_quote_45,
+            R.string.feature_startedchallenge_quote_46,
+            R.string.feature_startedchallenge_quote_47,
+            R.string.feature_startedchallenge_quote_48,
+            R.string.feature_startedchallenge_quote_49,
+            R.string.feature_startedchallenge_quote_50,
+            R.string.feature_startedchallenge_quote_51,
+            R.string.feature_startedchallenge_quote_52,
+            R.string.feature_startedchallenge_quote_53,
+        )
+    }
+    val quotes = quotesResIds.map { resId -> stringResource(id = resId) }
+    var currentQuoteIndex by remember {
+        mutableIntStateOf(quotes.indices.random())
+    }
+
+    var quoteAlpha by remember { mutableFloatStateOf(1f) }
+    val alphaAnimation by animateFloatAsState(
+        targetValue = if (quoteAlpha.isFinite()) quoteAlpha else 1f,
+        animationSpec = tween(QUOTE_ANIMATION_DURATION),
+        label = "Quote Alpha Animation",
+        finishedListener = {
+            if (it == 0f) {
+                currentQuoteIndex = (quotes.indices - currentQuoteIndex).random()
+                quoteAlpha = 1f
+            }
+        },
+    )
+
+    Dialog(onDismissRequest = onDismiss) {
+        AnimatedVisibility(
+            visible = animateIn,
+            enter = slideInVertically(
+                initialOffsetY = { fullHeight -> fullHeight / 4 },
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioLowBouncy,
+                    stiffness = Spring.StiffnessMediumLow,
+                ),
+            ) + scaleIn(
+                initialScale = 0.6f,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioLowBouncy,
+                    stiffness = Spring.StiffnessMediumLow,
+                ),
+            ) + fadeIn(
+                animationSpec = tween(durationMillis = 300),
+            ),
+            exit = slideOutVertically(
+                targetOffsetY = { fullHeight -> fullHeight / 4 },
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioLowBouncy,
+                    stiffness = Spring.StiffnessMediumLow,
+                ),
+            ) + scaleOut(
+                targetScale = 0.6f,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioLowBouncy,
+                    stiffness = Spring.StiffnessMediumLow,
+                ),
+            ) + fadeOut(
+                animationSpec = tween(durationMillis = ANIMATED_REMIND_DIALOG_CLOSE_DELAY),
+            ),
+        ) {
+            Column(
+                modifier = Modifier
+                    .clip(MaterialTheme.shapes.large)
+                    .background(CustomColorProvider.colorScheme.surface)
+                    .padding(horizontal = 24.dp, vertical = 24.dp)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Spacer(modifier = Modifier.height(32.dp))
+                StableImage(
+                    drawableResId = R.drawable.image_heart,
+                    descriptionResId = R.string.feature_startedchallenge_remind,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .size(90.dp),
+                )
+                Spacer(modifier = Modifier.height(24.dp))
+                Text(
+                    text = stringResource(id = R.string.feature_startedchallenge_remind),
+                    color = CustomColorProvider.colorScheme.onSurface,
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = stringResource(id = R.string.feature_startedchallenge_remind_description),
+                    color = CustomColorProvider.colorScheme.onSurfaceMuted,
+                    style = MaterialTheme.typography.labelMedium,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(modifier = Modifier.height(28.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(MaterialTheme.shapes.large)
+                        .background(CustomColorProvider.colorScheme.background),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = stringResource(id = R.string.feature_startedchallenge_reason_to_start),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = CustomColorProvider.colorScheme.onBackground,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        textAlign = TextAlign.Start,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .animateContentSize(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Column(modifier = Modifier.alpha(if (isLoading) 0f else 1f)) {
+                            reasons.forEach { reason ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 16.dp)
+                                        .clip(MaterialTheme.shapes.medium)
+                                        .clickable { onDeleteReasonClick(reason) }
+                                        .padding(horizontal = 4.dp, vertical = 6.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    BulletText(
+                                        text = reason.value,
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = CustomColorProvider.colorScheme.onBackground,
+                                        bulletColor = CustomColorProvider.colorScheme.onBackgroundMuted,
+                                    )
+                                }
+                            }
+
+                            if (reasons.size < MAX_REASON_TO_START_COUNT) {
+                                if (reasons.isNotEmpty()) {
+                                    HorizontalDivider(
+                                        color = CustomColorProvider.colorScheme.divider,
+                                        thickness = 1.dp,
+                                        modifier = Modifier.padding(
+                                            start = 16.dp,
+                                            end = 16.dp,
+                                            top = 16.dp,
+                                            bottom = 4.dp,
+                                        ),
+                                    )
+                                }
+                                AddReasonToStartButton(onClick = onAddReasonClick)
+                                Spacer(modifier = Modifier.height(4.dp))
+                            } else {
+                                Spacer(modifier = Modifier.height(14.dp))
+                            }
+                        }
+
+                        if (isLoading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(20.dp),
+                                strokeWidth = 3.dp,
+                                color = CustomColorProvider.colorScheme.brand,
+                            )
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(MaterialTheme.shapes.large)
+                        .background(CustomColorProvider.colorScheme.background)
+                        .clickable { quoteAlpha = 0f }
+                        .padding(16.dp)
+                        .animateContentSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.feature_startedchallenge_today_quote),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = CustomColorProvider.colorScheme.onBackground,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Start,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Icon(
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.QuoteLeft),
+                        contentDescription = stringResource(id = R.string.feature_startedchallenge_quote),
+                        tint = CustomColorProvider.colorScheme.onBackgroundMuted,
+                        modifier = Modifier.align(Alignment.Start),
+                    )
+                    Text(
+                        text = quotes[currentQuoteIndex],
+                        style = MaterialTheme.typography.labelMedium,
+                        color = CustomColorProvider.colorScheme.onBackground,
+                        modifier = Modifier
+                            .padding(horizontal = 30.dp, vertical = 8.dp)
+                            .graphicsLayer(alpha = alphaAnimation),
+                        textAlign = TextAlign.Center,
+                    )
+                    Icon(
+                        ImageVector.vectorResource(id = ChallengeTogetherIcons.QuoteRight),
+                        contentDescription = stringResource(id = R.string.feature_startedchallenge_quote),
+                        tint = CustomColorProvider.colorScheme.onBackgroundMuted,
+                        modifier = Modifier.align(Alignment.End),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun AddReasonToStartButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp, horizontal = 4.dp),
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(ChallengeTogetherIcons.AddCircle),
+            contentDescription = stringResource(R.string.feature_startedchallenge_emotion_record_prompt),
+            tint = CustomColorProvider.colorScheme.onBackgroundMuted,
+            modifier = Modifier.size(20.dp),
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = stringResource(id = R.string.feature_startedchallenge_reason_to_start),
+            color = CustomColorProvider.colorScheme.onBackgroundMuted,
+            style = MaterialTheme.typography.bodySmall,
+        )
+    }
+}
+
 @Composable
 private fun ChallengeInfos(
     mode: Mode,
@@ -642,9 +1059,6 @@ private fun ChallengeInfos(
                 showAdjacentMonthsDays = true,
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
             )
-        }
-        FoldableItem(titleResId = R.string.feature_startedchallenge_quote) {
-            Quote()
         }
         FoldableItem(titleResId = R.string.feature_startedchallenge_challenge_info) {
             ChallengeInfo(
@@ -705,140 +1119,6 @@ private fun ChallengeInfo(
                 textAlign = TextAlign.End,
                 style = MaterialTheme.typography.labelSmall,
                 color = CustomColorProvider.colorScheme.onSurfaceMuted,
-            )
-        }
-    }
-}
-
-private const val QUOTE_ANIMATION_DURATION = 300
-
-@Composable
-private fun Quote() {
-    val quotesResIds = remember {
-        listOf(
-            R.string.feature_startedchallenge_quote_1,
-            R.string.feature_startedchallenge_quote_2,
-            R.string.feature_startedchallenge_quote_3,
-            R.string.feature_startedchallenge_quote_4,
-            R.string.feature_startedchallenge_quote_5,
-            R.string.feature_startedchallenge_quote_6,
-            R.string.feature_startedchallenge_quote_7,
-            R.string.feature_startedchallenge_quote_8,
-            R.string.feature_startedchallenge_quote_9,
-            R.string.feature_startedchallenge_quote_10,
-            R.string.feature_startedchallenge_quote_11,
-            R.string.feature_startedchallenge_quote_12,
-            R.string.feature_startedchallenge_quote_13,
-            R.string.feature_startedchallenge_quote_14,
-            R.string.feature_startedchallenge_quote_15,
-            R.string.feature_startedchallenge_quote_16,
-            R.string.feature_startedchallenge_quote_17,
-            R.string.feature_startedchallenge_quote_18,
-            R.string.feature_startedchallenge_quote_19,
-            R.string.feature_startedchallenge_quote_20,
-            R.string.feature_startedchallenge_quote_21,
-            R.string.feature_startedchallenge_quote_22,
-            R.string.feature_startedchallenge_quote_23,
-            R.string.feature_startedchallenge_quote_24,
-            R.string.feature_startedchallenge_quote_25,
-            R.string.feature_startedchallenge_quote_26,
-            R.string.feature_startedchallenge_quote_27,
-            R.string.feature_startedchallenge_quote_28,
-            R.string.feature_startedchallenge_quote_29,
-            R.string.feature_startedchallenge_quote_30,
-            R.string.feature_startedchallenge_quote_31,
-            R.string.feature_startedchallenge_quote_32,
-            R.string.feature_startedchallenge_quote_33,
-            R.string.feature_startedchallenge_quote_34,
-            R.string.feature_startedchallenge_quote_35,
-            R.string.feature_startedchallenge_quote_36,
-            R.string.feature_startedchallenge_quote_37,
-            R.string.feature_startedchallenge_quote_38,
-            R.string.feature_startedchallenge_quote_39,
-            R.string.feature_startedchallenge_quote_40,
-            R.string.feature_startedchallenge_quote_41,
-            R.string.feature_startedchallenge_quote_42,
-            R.string.feature_startedchallenge_quote_43,
-            R.string.feature_startedchallenge_quote_44,
-            R.string.feature_startedchallenge_quote_45,
-            R.string.feature_startedchallenge_quote_46,
-            R.string.feature_startedchallenge_quote_47,
-            R.string.feature_startedchallenge_quote_48,
-            R.string.feature_startedchallenge_quote_49,
-            R.string.feature_startedchallenge_quote_50,
-            R.string.feature_startedchallenge_quote_51,
-            R.string.feature_startedchallenge_quote_52,
-            R.string.feature_startedchallenge_quote_53,
-        )
-    }
-
-    val quotes = quotesResIds.map { resId -> stringResource(id = resId) }
-
-    var currentQuoteIndex by remember {
-        mutableIntStateOf(quotes.indices.random())
-    }
-
-    var alpha by remember { mutableFloatStateOf(1f) }
-
-    val alphaAnimation by animateFloatAsState(
-        targetValue = if (alpha.isFinite()) alpha else 1f,
-        animationSpec = tween(QUOTE_ANIMATION_DURATION),
-        label = "Quote Alpha Animation",
-        finishedListener = {
-            if (it == 0f) {
-                currentQuoteIndex = (quotes.indices - currentQuoteIndex).random()
-                alpha = 1f
-            }
-        },
-    )
-
-    Column {
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth()
-                .clip(MaterialTheme.shapes.large)
-                .background(CustomColorProvider.colorScheme.surface)
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Icon(
-                ImageVector.vectorResource(id = ChallengeTogetherIcons.QuoteLeft),
-                contentDescription = stringResource(id = R.string.feature_startedchallenge_quote),
-                tint = CustomColorProvider.colorScheme.onSurfaceMuted,
-                modifier = Modifier.align(Alignment.Start),
-            )
-            Text(
-                text = quotes[currentQuoteIndex],
-                style = MaterialTheme.typography.labelMedium,
-                color = CustomColorProvider.colorScheme.onSurface,
-                modifier = Modifier
-                    .padding(horizontal = 30.dp, vertical = 8.dp)
-                    .graphicsLayer(alpha = alphaAnimation),
-                textAlign = TextAlign.Center,
-            )
-            Icon(
-                ImageVector.vectorResource(id = ChallengeTogetherIcons.QuoteRight),
-                contentDescription = stringResource(id = R.string.feature_startedchallenge_quote),
-                tint = CustomColorProvider.colorScheme.onSurfaceMuted,
-                modifier = Modifier.align(Alignment.End),
-            )
-        }
-        IconButton(
-            onClick = {
-                // 버튼 클릭 시 페이드 아웃 시작
-                alpha = 0f
-            },
-            modifier = Modifier
-                .align(Alignment.End)
-                .padding(end = 4.dp),
-        ) {
-            Icon(
-                ImageVector.vectorResource(id = ChallengeTogetherIcons.Refresh),
-                contentDescription = stringResource(
-                    id = R.string.feature_startedchallenge_refresh_quote,
-                ),
-                tint = CustomColorProvider.colorScheme.onBackgroundMuted,
             )
         }
     }
@@ -1068,6 +1348,32 @@ private fun ResetButton(
 }
 
 @Composable
+private fun RemindButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .clip(CircleShape)
+            .border(
+                width = 1.dp,
+                color = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+                shape = CircleShape,
+            )
+            .clickable(onClick = onClick)
+            .padding(15.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(id = ChallengeTogetherIcons.LikeOn),
+            contentDescription = stringResource(id = R.string.feature_startedchallenge_remind),
+            tint = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+            modifier = Modifier.size(20.dp),
+        )
+    }
+}
+
+@Composable
 private fun ContinueButton(
     onClick: () -> Unit,
     enabled: Boolean,
@@ -1263,6 +1569,7 @@ private fun TitleWithDescription(
                 ),
                 onClick = { isExpanded = !isExpanded },
                 color = CustomColorProvider.colorScheme.onBackgroundMuted,
+                useSingleClick = false,
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
@@ -1308,6 +1615,23 @@ private fun MenuButton(onClick: () -> Unit) {
             ),
             tint = CustomColorProvider.colorScheme.onBackgroundMuted,
         )
+    }
+}
+
+private fun Context.vibrateClickFeedback() {
+    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        vibratorManager.defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    }
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        vibrator.vibrate(VibrationEffect.createOneShot(10, 255))
+    } else {
+        @Suppress("DEPRECATION")
+        vibrator.vibrate(10)
     }
 }
 

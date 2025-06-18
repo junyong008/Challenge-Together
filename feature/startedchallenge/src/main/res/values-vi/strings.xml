@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="feature_startedchallenge_today_quote">Câu nói hôm nay</string>
+    <string name="feature_startedchallenge_reason_placeholder">VD: Vì sức khỏe của tôi…</string>
+    <string name="feature_startedchallenge_reason_to_start">Lý do để thử thách</string>
+    <string name="feature_startedchallenge_remind">Tập trung lại</string>
+    <string name="feature_startedchallenge_remind_description">Hãy nhớ lý do bạn bắt đầu thử thách này.</string>
+    <string name="feature_startedchallenge_edit_reason_failed">Chỉnh sửa thất bại.\nVui lòng thử lại sau.</string>
+    <string name="feature_startedchallenge_delete_reason_title">Xóa mục</string>
+    <string name="feature_startedchallenge_delete_reason_description">Bạn có muốn xóa\n\"%1$s\" không?</string>
     <string name="feature_startedchallenge_not_found">Thử thách không tồn tại.</string>
     <string name="feature_startedchallenge_not_started">Thử thách chưa bắt đầu.</string>
     <string name="feature_startedchallenge_not_participating">Bạn không tham gia thử thách này.</string>

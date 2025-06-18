@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="feature_startedchallenge_today_quote">今日の名言</string>
+    <string name="feature_startedchallenge_reason_placeholder">例：健康のために…</string>
+    <string name="feature_startedchallenge_reason_to_start">挑戦する理由</string>
+    <string name="feature_startedchallenge_remind">気持ちを引き締める</string>
+    <string name="feature_startedchallenge_remind_description">この挑戦を始めた理由を思い出しましょう。</string>
+    <string name="feature_startedchallenge_edit_reason_failed">編集に失敗しました。\nしばらくしてから再度お試しください。</string>
+    <string name="feature_startedchallenge_delete_reason_title">項目を削除</string>
+    <string name="feature_startedchallenge_delete_reason_description">\"%1$s\"\nを削除しますか？</string>
     <string name="feature_startedchallenge_not_found">そのチャレンジは存在しません。</string>
     <string name="feature_startedchallenge_not_started">チャレンジはまだ開始されていません。</string>
     <string name="feature_startedchallenge_not_participating">このチャレンジには参加していません。</string>

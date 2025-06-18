@@ -9,6 +9,12 @@ sealed interface StartedChallengeUiAction {
         val memo: String,
     ) : StartedChallengeUiAction
 
+    data class OnAddReasonToStart(
+        val challengeId: Int,
+        val reasonToStart: String,
+    ) : StartedChallengeUiAction
+
+    data class OnDeleteReasonToStart(val reasonId: Int) : StartedChallengeUiAction
     data class OnDeleteChallengeClick(val challengeId: Int) : StartedChallengeUiAction
     data class OnContinueChallengeClick(val challengeId: Int) : StartedChallengeUiAction
 }

@@ -4,6 +4,7 @@ import com.yjy.common.designsystem.R
 
 object ChallengeTogetherIcons {
     val Add = R.drawable.ic_add
+    val AddCircle = R.drawable.ic_add_circle
     val ArrowDown = R.drawable.ic_arrow_down
     val ArrowLeft = R.drawable.ic_arrow_left
     val ArrowRight = R.drawable.ic_arrow_right
@@ -42,6 +43,7 @@ object ChallengeTogetherIcons {
     val MoreHorizontal = R.drawable.ic_more_horiz
     val MoreVertical = R.drawable.ic_more_vert
     val My = R.drawable.ic_my
+    val NotificationFilled = R.drawable.ic_notification_filled
     val NotificationChallenge = R.drawable.ic_noti_challenge
     val NotificationCommunity = R.drawable.ic_noti_community
     val NotificationOff = R.drawable.ic_notification_off

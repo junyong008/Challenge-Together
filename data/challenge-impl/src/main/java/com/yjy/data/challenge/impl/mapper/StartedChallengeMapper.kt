@@ -1,9 +1,11 @@
 package com.yjy.data.challenge.impl.mapper
 
 import com.yjy.data.database.model.ChallengeEntity
+import com.yjy.data.network.response.challenge.GetStartReasonResponse
 import com.yjy.data.network.response.challenge.GetStartedChallengeDetailResponse
 import com.yjy.model.challenge.DetailedStartedChallenge
 import com.yjy.model.challenge.SimpleStartedChallenge
+import com.yjy.model.challenge.StartReason
 import com.yjy.model.challenge.core.Mode
 
 internal fun ChallengeEntity.toSimpleStartedChallengeModel() = SimpleStartedChallenge(
@@ -47,4 +49,9 @@ internal fun GetStartedChallengeDetailResponse.toEntity() = ChallengeEntity(
     isPrivate = isPrivate,
     isCompleted = isCompleted,
     mode = if (isFreeMode) Mode.FREE.name else Mode.CHALLENGE.name,
+)
+
+internal fun GetStartReasonResponse.toModel() = StartReason(
+    id = id,
+    value = reason,
 )
