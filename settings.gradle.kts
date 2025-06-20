@@ -79,6 +79,7 @@ include(
     ":feature:challengeboard",
     ":feature:challengeranking",
     ":feature:challengeprogress",
+    ":feature:challengereward",
 
     ":feature:intro",
     ":feature:login",

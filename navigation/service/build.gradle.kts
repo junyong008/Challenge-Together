@@ -62,6 +62,7 @@ dependencies {
         projects.feature.challengeboard,
         projects.feature.challengeranking,
         projects.feature.challengeprogress,
+        projects.feature.challengereward,
         projects.feature.changepassword,
 
         libs.accompanist.permissions,

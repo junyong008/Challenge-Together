@@ -103,6 +103,9 @@ sealed interface ServiceRoute : Route {
     data class ChallengeProgress(val challengeId: Int) : ServiceRoute
 
     @Serializable
+    data class ChallengeReward(val challengeId: Int) : ServiceRoute
+
+    @Serializable
     data class EditCategory(
         val challengeId: Int,
         val category: Category,

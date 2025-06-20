@@ -1,0 +1,18 @@
+<resources>
+    <string name="feature_challengereward_title">Reward</string>
+    <string name="feature_challengereward_start_tracking">Start Tracking</string>
+    <string name="feature_challengereward_start_title">Track your savings</string>
+    <string name="feature_challengereward_start_description">See how much time and money you\'ve quietly saved.</string>
+    <string name="feature_challengereward_unit_setting_title">Spending Habit</string>
+    <string name="feature_challengereward_unit_setting_description">Enter a spending habit you commonly do.</string>
+    <string name="feature_challengereward_unit_label">Unit</string>
+    <string name="feature_challengereward_unit_money">Money</string>
+    <string name="feature_challengereward_unit_time">Time</string>
+    <string name="feature_challengereward_unit_custom">Custom</string>
+    <string name="feature_challengereward_confirm">Confirm</string>
+    <string name="feature_challengereward_unit_custom_hint">e.g. Points, XP, etc.</string>
+    <string name="feature_challengereward_period_daily">Daily</string>
+    <string name="feature_challengereward_period_weekly">Weekly</string>
+    <string name="feature_challengereward_period_monthly">Monthly</string>
+    <string name="feature_challengereward_example_description">e.g. If you stick to your habit every day, %s will accumulate.</string>
+</resources>

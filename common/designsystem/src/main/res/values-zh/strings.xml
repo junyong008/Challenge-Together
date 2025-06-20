@@ -53,6 +53,7 @@
     <string name="common_designsystem_tier_master_description">大师等级</string>
     <string name="common_designsystem_tier_legend_description">传奇等级</string>
 
+    <string name="common_designsystem_reward_unit_time">小时</string>
     <string name="common_designsystem_category_all">全部</string>
     <string name="common_designsystem_category_quit_smoking">戒烟</string>
     <string name="common_designsystem_category_quit_drinking">戒酒</string>
