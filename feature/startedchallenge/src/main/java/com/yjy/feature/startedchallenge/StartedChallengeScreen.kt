@@ -466,6 +466,7 @@ internal fun StartedChallengeScreen(
                         challenge = challenge,
                         isResetting = uiState.isResetting,
                         isContinuing = uiState.isContinuing,
+                        shouldShowRemindDialog = shouldShowRemindDialog,
                         onResetButtonClick = {
                             resetDateTime = LocalDateTime.now()
                             shouldShowResetBottomSheet = true
@@ -496,6 +497,7 @@ private fun ChallengeBody(
     challenge: DetailedStartedChallenge,
     isResetting: Boolean,
     isContinuing: Boolean,
+    shouldShowRemindDialog: Boolean,
     onResetButtonClick: () -> Unit,
     onRemindButtonClick: () -> Unit,
     onContinueButtonClick: () -> Unit,
@@ -539,7 +541,10 @@ private fun ChallengeBody(
                     enabled = !isResetting,
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                RemindButton(onClick = onRemindButtonClick)
+                RemindButton(
+                    onClick = onRemindButtonClick,
+                    shouldShowRemindDialog = shouldShowRemindDialog,
+                )
             }
         } else if (challenge.currentParticipantCounts <= 1) {
             Spacer(modifier = Modifier.height(20.dp))
@@ -1363,6 +1368,7 @@ private fun ResetButton(
 
 @Composable
 private fun RemindButton(
+    shouldShowRemindDialog: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -1381,7 +1387,11 @@ private fun RemindButton(
         Icon(
             imageVector = ImageVector.vectorResource(id = ChallengeTogetherIcons.LikeOn),
             contentDescription = stringResource(id = R.string.feature_startedchallenge_remind),
-            tint = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+            tint = if (shouldShowRemindDialog) {
+                CustomColorProvider.colorScheme.red
+            } else {
+                CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f)
+            },
             modifier = Modifier.size(20.dp),
         )
     }

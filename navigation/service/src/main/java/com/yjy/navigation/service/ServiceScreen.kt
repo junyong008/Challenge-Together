@@ -229,8 +229,8 @@ internal fun ServiceScreen(
                     MainTab.HOME -> {
                         FloatingActionButton(
                             onClick = { navigator.navigateToAddChallenge() },
-                            containerColor = CustomColorProvider.colorScheme.brand,
-                            contentColor = CustomColorProvider.colorScheme.onBrand,
+                            containerColor = CustomColorProvider.colorScheme.brandDim,
+                            contentColor = CustomColorProvider.colorScheme.onBrandDim,
                             shape = CircleShape,
                         ) {
                             Icon(
@@ -243,8 +243,8 @@ internal fun ServiceScreen(
                     MainTab.COMMUNITY -> {
                         FloatingActionButton(
                             onClick = { navigator.navigateToAddCommunityPost() },
-                            containerColor = CustomColorProvider.colorScheme.brand,
-                            contentColor = CustomColorProvider.colorScheme.onBrand,
+                            containerColor = CustomColorProvider.colorScheme.brandDim,
+                            contentColor = CustomColorProvider.colorScheme.onBrandDim,
                             shape = CircleShape,
                         ) {
                             Icon(

@@ -21,7 +21,6 @@ import com.yjy.common.designsystem.theme.ChallengeTogetherTheme
 import com.yjy.common.designsystem.theme.CustomColorProvider
 
 const val PERCENT_MULTIPLIER = 100
-const val MIN_PERCENT_FOR_SMOOTH = 0.02f
 
 @Composable
 fun RoundedLinearProgressBar(
@@ -62,9 +61,11 @@ fun RoundedLinearProgressBar(
 
         if (progressValue > 0f) {
             val progressWidth = (size.width * progressValue - gapPx).coerceAtLeast(0f)
+            val finalProgressWidth = maxOf(progressWidth, strokeWidth)
+
             drawRoundRect(
                 color = if (enabled) progressColor else disableProgressColor,
-                size = Size(progressWidth, strokeWidth - gapPx),
+                size = Size(finalProgressWidth, strokeWidth - gapPx),
                 topLeft = Offset(gapOffset, gapOffset),
                 cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2),
             )
@@ -111,8 +112,9 @@ fun RoundedGradientProgressBar(
             cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2),
         )
 
-        if (progressValue > MIN_PERCENT_FOR_SMOOTH) {
+        if (progressValue > 0f) {
             val progressWidth = (size.width * progressValue - gapPx).coerceAtLeast(0f)
+            val finalProgressWidth = maxOf(progressWidth, strokeWidth)
 
             drawRoundRect(
                 brush = Brush.horizontalGradient(
@@ -122,9 +124,9 @@ fun RoundedGradientProgressBar(
                         listOf(disableStartColor, disableEndColor)
                     },
                     startX = gapOffset,
-                    endX = progressWidth + gapOffset,
+                    endX = finalProgressWidth + gapOffset,
                 ),
-                size = Size(progressWidth, strokeWidth - gapPx),
+                size = Size(finalProgressWidth, strokeWidth - gapPx),
                 topLeft = Offset(gapOffset, gapOffset),
                 cornerRadius = CornerRadius(strokeWidth / 2, strokeWidth / 2),
             )

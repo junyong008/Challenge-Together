@@ -532,8 +532,8 @@ private fun ProfileCard(
             CircleMedal(
                 tier = tier,
                 modifier = Modifier
-                    .padding(12.dp)
-                    .size(26.dp),
+                    .padding(8.dp)
+                    .size(30.dp),
             )
         }
     }

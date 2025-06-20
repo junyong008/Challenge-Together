@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -349,7 +348,7 @@ private fun NotificationItem(
                 modifier = Modifier
                     .padding(16.dp)
                     .size(48.dp)
-                    .clip(CircleShape)
+                    .clip(MaterialTheme.shapes.large)
                     .background(CustomColorProvider.colorScheme.surface),
                 contentAlignment = Alignment.Center,
             ) {

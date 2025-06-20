@@ -1,6 +1,11 @@
 package com.yjy.feature.community
 
+import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -439,7 +444,10 @@ internal fun PostScreen(
                     isLiked = post.isLiked,
                     isLiking = uiState.isLikingPost,
                     likeCount = post.likeCount,
-                    onClick = { processAction(CommunityPostUiAction.OnToggleLikeClick(post.postId)) },
+                    onClick = {
+                        processAction(CommunityPostUiAction.OnToggleLikeClick(post.postId))
+                        context.vibrateClickFeedback()
+                    },
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                 )
                 linkedChallengeIds.forEach {
@@ -1115,6 +1123,23 @@ private fun InputCommentTextField(
                 .fillMaxWidth()
                 .heightIn(min = 50.dp, max = 200.dp),
         )
+    }
+}
+
+private fun Context.vibrateClickFeedback() {
+    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        vibratorManager.defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    }
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        vibrator.vibrate(VibrationEffect.createOneShot(10, 255))
+    } else {
+        @Suppress("DEPRECATION")
+        vibrator.vibrate(10)
     }
 }
 

@@ -624,7 +624,7 @@ private fun DialogButtonRow(
     enableNegativeText: Boolean = true,
     @StringRes positiveTextRes: Int = R.string.common_designsystem_dialog_confirm,
     @StringRes negativeTextRes: Int = R.string.common_designsystem_dialog_cancel,
-    positiveTextColor: Color = CustomColorProvider.colorScheme.brand,
+    positiveTextColor: Color = CustomColorProvider.colorScheme.brandDim,
     negativeTextColor: Color = CustomColorProvider.colorScheme.onSurfaceMuted,
 ) {
     Row(
@@ -635,7 +635,7 @@ private fun DialogButtonRow(
             text = stringResource(id = negativeTextRes),
             onClick = onClickNegative,
             color = negativeTextColor,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.weight(1f),
             enabled = enableNegativeText,
             textAlign = TextAlign.Center,
@@ -645,7 +645,7 @@ private fun DialogButtonRow(
             text = stringResource(id = positiveTextRes),
             onClick = onClickPositive,
             color = positiveTextColor,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.weight(1f),
             enabled = enablePositiveText,
             textAlign = TextAlign.Center,

@@ -30,7 +30,7 @@ fun ChallengeTogetherChip(
             .clip(MaterialTheme.shapes.small)
             .background(
                 if (isSelected) {
-                    CustomColorProvider.colorScheme.brandBright
+                    CustomColorProvider.colorScheme.chipSelected
                 } else {
                     CustomColorProvider.colorScheme.chipBackground
                 },
@@ -42,7 +42,7 @@ fun ChallengeTogetherChip(
         Text(
             text = chipText,
             color = if (isSelected) {
-                CustomColorProvider.colorScheme.onBrandBright
+                CustomColorProvider.colorScheme.onChipSelected
             } else {
                 CustomColorProvider.colorScheme.onChipBackground
             },

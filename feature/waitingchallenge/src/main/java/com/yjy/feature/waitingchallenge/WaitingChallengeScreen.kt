@@ -220,12 +220,6 @@ internal fun WaitingChallengeScreen(
         val challenge = challengeDetail.challengeOrNull() ?: return
 
         if (shouldShowMenuBottomSheet) {
-            val shareMessage = stringResource(
-                id = R.string.feature_waitingchallenge_menu_share_message,
-                challenge.title,
-                challenge.participants.size,
-            )
-
             MenuBottomSheet(
                 isAuthor = challenge.isAuthor,
                 onShareClick = {
@@ -236,7 +230,8 @@ internal fun WaitingChallengeScreen(
                     val shareIntent = Intent().apply {
                         action = Intent.ACTION_SEND
                         type = "text/plain"
-                        putExtra(Intent.EXTRA_TEXT, "$shareMessage\n\n$shareLink")
+
+                        putExtra(Intent.EXTRA_TEXT, shareLink)
                     }
 
                     context.startActivity(Intent.createChooser(shareIntent, null))

@@ -92,7 +92,7 @@ private fun RowScope.ServiceBottomBarItem(
             },
             contentDescription = stringResource(id = tab.iconTextId),
             tint = if (selected) {
-                CustomColorProvider.colorScheme.brand
+                CustomColorProvider.colorScheme.navigationSelected
             } else {
                 CustomColorProvider.colorScheme.onSurfaceMuted
             },
@@ -101,7 +101,7 @@ private fun RowScope.ServiceBottomBarItem(
         Text(
             text = stringResource(id = tab.iconTextId),
             color = if (selected) {
-                CustomColorProvider.colorScheme.brand
+                CustomColorProvider.colorScheme.navigationSelected
             } else {
                 CustomColorProvider.colorScheme.onSurfaceMuted
             },

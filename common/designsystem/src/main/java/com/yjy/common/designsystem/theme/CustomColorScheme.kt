@@ -40,8 +40,11 @@ data class CustomColorScheme(
     val red: Color,
     val snackbar: Color,
     val onSnackbar: Color,
+    val chipSelected: Color,
+    val onChipSelected: Color,
     val chipBackground: Color,
     val onChipBackground: Color,
+    val navigationSelected: Color,
     val kakaoBackground: Color,
     val googleBackground: Color,
     val naverBackground: Color,
@@ -66,8 +69,11 @@ private object CustomColorLightTokens {
     val red = redLight
     val snackbar = snackbarLight
     val onSnackbar = onSnackbarLight
+    val chipSelected = chipSelectedLight
+    val onChipSelected = onChipSelectedLight
     val chipBackground = chipBackgroundLight
     val onChipBackground = onChipBackgroundLight
+    val navigationSelected = navigationSelectedLight
     val kakaoBackground = kakaoBrand
     val googleBackground = googleBrand
     val naverBackground = naverBrand
@@ -92,8 +98,11 @@ private object CustomColorDarkTokens {
     val red = redDark
     val snackbar = snackbarDark
     val onSnackbar = onSnackbarDark
+    val chipSelected = chipSelectedDark
+    val onChipSelected = onChipSelectedDark
     val chipBackground = chipBackgroundDark
     val onChipBackground = onChipBackgroundDark
+    val navigationSelected = navigationSelectedDark
     val kakaoBackground = kakaoBrand
     val googleBackground = googleBrand
     val naverBackground = naverBrand
@@ -118,8 +127,11 @@ internal fun customLightColorScheme(
     red: Color = CustomColorLightTokens.red,
     snackbar: Color = CustomColorLightTokens.snackbar,
     onSnackbar: Color = CustomColorLightTokens.onSnackbar,
+    chipSelected: Color = CustomColorLightTokens.chipSelected,
+    onChipSelected: Color = CustomColorLightTokens.onChipSelected,
     chipBackground: Color = CustomColorLightTokens.chipBackground,
     onChipBackground: Color = CustomColorLightTokens.onChipBackground,
+    navigationSelected: Color = CustomColorLightTokens.navigationSelected,
     kakaoBackground: Color = CustomColorLightTokens.kakaoBackground,
     googleBackground: Color = CustomColorLightTokens.googleBackground,
     naverBackground: Color = CustomColorLightTokens.naverBackground,
@@ -142,8 +154,11 @@ internal fun customLightColorScheme(
     red = red,
     snackbar = snackbar,
     onSnackbar = onSnackbar,
+    chipSelected = chipSelected,
+    onChipSelected = onChipSelected,
     chipBackground = chipBackground,
     onChipBackground = onChipBackground,
+    navigationSelected = navigationSelected,
     kakaoBackground = kakaoBackground,
     googleBackground = googleBackground,
     naverBackground = naverBackground,
@@ -168,8 +183,11 @@ internal fun customDarkColorScheme(
     red: Color = CustomColorDarkTokens.red,
     snackbar: Color = CustomColorDarkTokens.snackbar,
     onSnackbar: Color = CustomColorDarkTokens.onSnackbar,
+    chipSelected: Color = CustomColorDarkTokens.chipSelected,
+    onChipSelected: Color = CustomColorDarkTokens.onChipSelected,
     chipBackground: Color = CustomColorDarkTokens.chipBackground,
     onChipBackground: Color = CustomColorDarkTokens.onChipBackground,
+    navigationSelected: Color = CustomColorDarkTokens.navigationSelected,
     kakaoBackground: Color = CustomColorDarkTokens.kakaoBackground,
     googleBackground: Color = CustomColorDarkTokens.googleBackground,
     naverBackground: Color = CustomColorDarkTokens.naverBackground,
@@ -192,8 +210,11 @@ internal fun customDarkColorScheme(
     red = red,
     snackbar = snackbar,
     onSnackbar = onSnackbar,
+    chipSelected = chipSelected,
+    onChipSelected = onChipSelected,
     chipBackground = chipBackground,
     onChipBackground = onChipBackground,
+    navigationSelected = navigationSelected,
     kakaoBackground = kakaoBackground,
     googleBackground = googleBackground,
     naverBackground = naverBackground,
