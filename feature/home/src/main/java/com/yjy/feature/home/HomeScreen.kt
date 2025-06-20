@@ -28,6 +28,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.HorizontalDivider
@@ -73,11 +74,11 @@ import com.yjy.common.designsystem.component.BaseBottomSheet
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherChip
 import com.yjy.common.designsystem.component.ChallengeTogetherOutlinedButton
+import com.yjy.common.designsystem.component.CircleMedal
 import com.yjy.common.designsystem.component.ClickableText
 import com.yjy.common.designsystem.component.DebouncedIconButton
 import com.yjy.common.designsystem.component.LoadingWheel
 import com.yjy.common.designsystem.component.LottieImage
-import com.yjy.common.designsystem.component.RibbonMedal
 import com.yjy.common.designsystem.component.RoundedLinearProgressBar
 import com.yjy.common.designsystem.component.StableImage
 import com.yjy.common.designsystem.extensions.getDisplayNameResId
@@ -487,7 +488,7 @@ private fun ProfileCard(
     Row(
         modifier = Modifier
             .padding(horizontal = 16.dp)
-            .heightIn(min = 180.dp)
+            .heightIn(min = 155.dp)
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.large)
             .background(CustomColorProvider.colorScheme.surface),
@@ -495,7 +496,7 @@ private fun ProfileCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 4.dp)
                 .weight(1f)
                 .align(Alignment.Bottom),
         ) {
@@ -520,13 +521,21 @@ private fun ProfileCard(
                     .fillMaxWidth(),
             )
         }
-        RibbonMedal(
-            tier = tier,
+        Box(
             modifier = Modifier
-                .padding(end = 10.dp, bottom = 24.dp, top = 24.dp)
-                .size(150.dp)
-                .align(Alignment.CenterVertically),
-        )
+                .align(Alignment.Top)
+                .padding(top = 16.dp, end = 16.dp)
+                .clip(CircleShape)
+                .background(CustomColorProvider.colorScheme.background),
+            contentAlignment = Alignment.Center,
+        ) {
+            CircleMedal(
+                tier = tier,
+                modifier = Modifier
+                    .padding(12.dp)
+                    .size(26.dp),
+            )
+        }
     }
 }
 
