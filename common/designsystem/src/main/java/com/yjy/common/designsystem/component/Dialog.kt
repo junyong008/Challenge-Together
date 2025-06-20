@@ -550,7 +550,7 @@ fun YearMonthPickerDialog(
 }
 
 @Composable
-private fun BaseDialog(
+fun BaseDialog(
     onDismissRequest: () -> Unit,
     title: String,
     dismissOnBackPress: Boolean = true,
@@ -617,7 +617,7 @@ private fun NumberInputField(
 }
 
 @Composable
-private fun DialogButtonRow(
+fun DialogButtonRow(
     onClickNegative: () -> Unit,
     onClickPositive: () -> Unit,
     enablePositiveText: Boolean = true,

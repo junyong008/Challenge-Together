@@ -10,3 +10,4 @@ sealed interface RewardInfoUiState {
 
 fun RewardInfoUiState.isSuccess() = this is RewardInfoUiState.Success
 fun RewardInfoUiState.getRewardInfo() = (this as? RewardInfoUiState.Success)?.rewardInfo
+fun RewardInfoUiState.isInit() = (this as? RewardInfoUiState.Success)?.rewardInfo == null

@@ -56,6 +56,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yjy.common.core.util.NavigationAnimation.fadeIn
 import com.yjy.common.core.util.NavigationAnimation.fadeOut
+import com.yjy.common.core.util.keyboardHide
 import com.yjy.common.designsystem.ComponentPreviews
 import com.yjy.common.designsystem.R
 import com.yjy.common.designsystem.icon.ChallengeTogetherIcons
@@ -118,7 +119,8 @@ fun ChallengeTogetherTextField(
                     shape = shape,
                 )
                 .heightIn(min = 50.dp)
-                .height(IntrinsicSize.Min),
+                .height(IntrinsicSize.Min)
+                .keyboardHide(),
         ) { innerTextField ->
 
             Row(verticalAlignment = Alignment.CenterVertically) {

@@ -36,6 +36,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -95,7 +96,6 @@ import com.yjy.common.designsystem.component.CalendarDialog
 import com.yjy.common.designsystem.component.ChallengeTogetherBackground
 import com.yjy.common.designsystem.component.ChallengeTogetherButton
 import com.yjy.common.designsystem.component.ChallengeTogetherDialog
-import com.yjy.common.designsystem.component.ChallengeTogetherOutlinedButton
 import com.yjy.common.designsystem.component.ChallengeTogetherTextField
 import com.yjy.common.designsystem.component.ChallengeTogetherTopAppBar
 import com.yjy.common.designsystem.component.ClickableText
@@ -1325,45 +1325,48 @@ private fun ResetButton(
     enabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    ChallengeTogetherOutlinedButton(
-        modifier = modifier,
-        onClick = onClick,
-        enabled = enabled,
-        shape = MaterialTheme.shapes.extraLarge,
-        borderColor = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
-        contentColor = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
-        content = {
-            Box(
-                contentAlignment = Alignment.Center,
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.alpha(if (enabled) 1f else 0f),
-                ) {
-                    Icon(
-                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Refresh),
-                        contentDescription = stringResource(
-                            id = R.string.feature_startedchallenge_reset,
-                        ),
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = stringResource(id = R.string.feature_startedchallenge_reset),
-                        style = MaterialTheme.typography.bodyMedium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .clip(MaterialTheme.shapes.extraLarge)
+            .heightIn(min = 50.dp)
+            .border(
+                width = 1.dp,
+                color = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+                shape = MaterialTheme.shapes.extraLarge,
+            )
+            .clickable(onClick = onClick)
+            .padding(vertical = 12.dp, horizontal = 18.dp),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.alpha(if (enabled) 1f else 0f),
+        ) {
+            Icon(
+                ImageVector.vectorResource(id = ChallengeTogetherIcons.Refresh),
+                contentDescription = stringResource(
+                    id = R.string.feature_startedchallenge_reset,
+                ),
+                tint = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = stringResource(id = R.string.feature_startedchallenge_reset),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                color = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+            )
+            Spacer(modifier = Modifier.width(6.dp))
+        }
 
-                if (!enabled) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        color = CustomColorProvider.colorScheme.brand,
-                    )
-                }
-            }
-        },
-    )
+        if (!enabled) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(24.dp),
+                color = CustomColorProvider.colorScheme.brand,
+            )
+        }
+    }
 }
 
 @Composable
@@ -1403,45 +1406,48 @@ private fun ContinueButton(
     enabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    ChallengeTogetherOutlinedButton(
-        modifier = modifier,
-        onClick = onClick,
-        enabled = enabled,
-        shape = MaterialTheme.shapes.extraLarge,
-        borderColor = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
-        contentColor = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
-        content = {
-            Box(
-                contentAlignment = Alignment.Center,
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.alpha(if (enabled) 1f else 0f),
-                ) {
-                    Icon(
-                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Play),
-                        contentDescription = stringResource(
-                            id = R.string.feature_startedchallenge_continue,
-                        ),
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = stringResource(id = R.string.feature_startedchallenge_continue),
-                        style = MaterialTheme.typography.bodyMedium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .clip(MaterialTheme.shapes.extraLarge)
+            .heightIn(min = 50.dp)
+            .border(
+                width = 1.dp,
+                color = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+                shape = MaterialTheme.shapes.extraLarge,
+            )
+            .clickable(onClick = onClick)
+            .padding(vertical = 12.dp, horizontal = 18.dp),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.alpha(if (enabled) 1f else 0f),
+        ) {
+            Icon(
+                ImageVector.vectorResource(id = ChallengeTogetherIcons.Play),
+                contentDescription = stringResource(
+                    id = R.string.feature_startedchallenge_continue,
+                ),
+                tint = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = stringResource(id = R.string.feature_startedchallenge_continue),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                color = CustomColorProvider.colorScheme.onBackgroundMuted.copy(alpha = 0.7f),
+            )
+            Spacer(modifier = Modifier.width(6.dp))
+        }
 
-                if (!enabled) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        color = CustomColorProvider.colorScheme.brand,
-                    )
-                }
-            }
-        },
-    )
+        if (!enabled) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(24.dp),
+                color = CustomColorProvider.colorScheme.brand,
+            )
+        }
+    }
 }
 
 @Composable
