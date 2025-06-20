@@ -591,6 +591,8 @@ private fun StartedChallengesSection(
                 selectedCategory = selectedCategory,
                 onCategorySelected = onCategorySelected,
             )
+        } else {
+            Spacer(modifier = Modifier.height(4.dp))
         }
         Spacer(modifier = Modifier.height(8.dp))
         StartedChallengesList(
@@ -618,7 +620,7 @@ private fun WaitingChallengesSection(
             color = CustomColorProvider.colorScheme.onBackground,
             style = MaterialTheme.typography.bodyLarge,
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         WaitingChallengesList(
             waitingChallenges = waitingChallenges,
             onChallengeClick = onChallengeClick,

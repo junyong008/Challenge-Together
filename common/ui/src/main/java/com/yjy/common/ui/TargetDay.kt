@@ -67,7 +67,7 @@ fun TargetDay(
             onTargetDaysUpdated = onTargetDaysUpdated,
             containerColor = CustomColorProvider.colorScheme.surface,
             contentColor = CustomColorProvider.colorScheme.onSurface,
-            shape = MaterialTheme.shapes.large,
+            shape = MaterialTheme.shapes.extraLarge,
             textStyle = MaterialTheme.typography.displaySmall,
             enabled = enabled,
         )
@@ -165,8 +165,9 @@ private fun TargetDaySwitch(
     switchBackgroundColor: Color = CustomColorProvider.colorScheme.surface,
     selectedColor: Color = CustomColorProvider.colorScheme.brand,
     onSelectedColor: Color = CustomColorProvider.colorScheme.onBrand,
-    unselectedColor: Color = CustomColorProvider.colorScheme.onSurface.copy(alpha = 0.3f),
-    textStyle: TextStyle = MaterialTheme.typography.labelSmall,
+    unselectedColor: Color = CustomColorProvider.colorScheme.onSurfaceMuted,
+    selectedTextStyle: TextStyle = MaterialTheme.typography.bodySmall,
+    unSelectedTextStyle: TextStyle = MaterialTheme.typography.labelSmall,
     shape: Shape = MaterialTheme.shapes.extraLarge,
     gap: Dp = 6.dp,
 ) {
@@ -232,7 +233,7 @@ private fun TargetDaySwitch(
                         isLeftSelected -> onSelectedColor
                         else -> unselectedColor
                     },
-                    style = textStyle,
+                    style = if (isLeftSelected) selectedTextStyle else unSelectedTextStyle,
                 )
             }
             Box(
@@ -262,7 +263,7 @@ private fun TargetDaySwitch(
                         isLeftSelected -> unselectedColor
                         else -> onSelectedColor
                     },
-                    style = textStyle,
+                    style = if (isLeftSelected) unSelectedTextStyle else selectedTextStyle,
                 )
             }
         }

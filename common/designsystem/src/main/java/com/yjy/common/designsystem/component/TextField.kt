@@ -191,6 +191,7 @@ fun SingleLineTextField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     trailingIconColor: Color = CustomColorProvider.colorScheme.onSurfaceMuted,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions(),
@@ -204,6 +205,7 @@ fun SingleLineTextField(
     contentAlignment: Alignment = Alignment.CenterStart,
     passwordIconColor: Color = CustomColorProvider.colorScheme.onSurfaceMuted,
     isPassword: Boolean = false,
+    showDefaultClearButton: Boolean = true,
 ) {
     ChallengeTogetherTextField(
         value = value,
@@ -212,18 +214,21 @@ fun SingleLineTextField(
         enabled = enabled,
         leadingIcon = leadingIcon,
         trailingIcon = {
-            if (value.isNotEmpty()) {
-                IconButton(
-                    onClick = { if (enabled) onValueChange("") },
-                    modifier = Modifier.size(40.dp),
-                ) {
-                    Icon(
-                        ImageVector.vectorResource(id = ChallengeTogetherIcons.Cancel),
-                        contentDescription = stringResource(
-                            id = R.string.common_designsystem_clear_content_description,
-                        ),
-                        tint = trailingIconColor,
-                    )
+            when {
+                trailingIcon != null -> trailingIcon()
+                showDefaultClearButton && value.isNotEmpty() -> {
+                    IconButton(
+                        onClick = { if (enabled) onValueChange("") },
+                        modifier = Modifier.size(40.dp),
+                    ) {
+                        Icon(
+                            ImageVector.vectorResource(id = ChallengeTogetherIcons.Cancel),
+                            contentDescription = stringResource(
+                                id = R.string.common_designsystem_clear_content_description,
+                            ),
+                            tint = trailingIconColor,
+                        )
+                    }
                 }
             }
         },

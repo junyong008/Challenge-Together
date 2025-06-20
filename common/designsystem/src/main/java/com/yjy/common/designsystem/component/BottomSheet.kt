@@ -33,12 +33,14 @@ fun BaseBottomSheet(
     showCloseButton: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+        confirmValueChange = { !disableDragToDismiss },
+    )
+
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState(
-            skipPartiallyExpanded = true,
-            confirmValueChange = { !disableDragToDismiss },
-        ),
+        sheetState = sheetState,
         containerColor = CustomColorProvider.colorScheme.surface,
         dragHandle = null,
         shape = MaterialTheme.shapes.large.copy(
